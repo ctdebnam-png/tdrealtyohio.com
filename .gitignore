@@ -33,3 +33,7 @@ assets/media/verified_data.json
 # - assets/media/manifest.json (required for site)
 # - assets/media/optimized/ (required for site)
 # - assets/media/attribution/ (required for compliance)
+
+# R2 Media Pipeline - generated files
+public/media/
+image-credits.html

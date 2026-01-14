@@ -14,6 +14,9 @@
     "validate:links": "node scripts/media_pipeline/validate_links.js",
     "media:sync": "tsx scripts/media-sync.ts",
     "media:verify": "tsx scripts/media-verify.ts",
+    "media:inject": "tsx scripts/inject-media.ts",
+    "media:credits": "tsx scripts/generate-credits.ts",
+    "build": "npm run media:sync && npm run media:inject && npm run media:credits",
     "prebuild": "npm run media:sync || true",
     "postbuild": "npm run media:verify"
   },
