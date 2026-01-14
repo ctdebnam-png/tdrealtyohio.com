@@ -36,6 +36,12 @@ const R2_CONFIG = {
 };
 
 const OPENVERSE_USER_AGENT = process.env.OPENVERSE_USER_AGENT || 'TDRealtyOhio/2.0 (https://tdrealtyohio.com)';
+const REQUEST_HEADERS = {
+  'User-Agent': OPENVERSE_USER_AGENT,
+  Accept: 'application/json',
+  Origin: 'https://tdrealtyohio.com',
+  Referer: 'https://tdrealtyohio.com/',
+};
 
 // Check if R2 is configured
 const isR2Configured = Boolean(
@@ -96,26 +102,33 @@ async function loadTopics(): Promise<TopicsConfig> {
  * Search Openverse API
  */
 async function searchOpenverse(query: string, page: number = 1): Promise<any[]> {
-  try {
-    const response = await axios.get('https://api.openverse.org/v1/images/', {
-      params: {
-        q: query,
-        page,
-        page_size: PAGE_SIZE,
-        license: ALLOWED_LICENSES.join(','),
-        mature: false,
-      },
-      headers: {
-        'User-Agent': OPENVERSE_USER_AGENT,
-      },
-      timeout: 10000,
-    });
+  const params = {
+    q: query,
+    page,
+    page_size: PAGE_SIZE,
+    license: ALLOWED_LICENSES.join(','),
+    mature: false,
+  };
+  const endpoints = [
+    'https://api.openverse.org/v1/images/',
+    'https://openverse.org/api/v1/images/',
+  ];
 
-    return response.data.results || [];
-  } catch (error: any) {
-    console.warn(`⚠️  Openverse search failed for "${query}": ${error.message}`);
-    return [];
+  for (const endpoint of endpoints) {
+    try {
+      const response = await axios.get(endpoint, {
+        params,
+        headers: REQUEST_HEADERS,
+        timeout: 10000,
+      });
+
+      return response.data.results || [];
+    } catch (error: any) {
+      console.warn(`⚠️  Openverse search failed for "${query}" via ${endpoint}: ${error.message}`);
+    }
   }
+
+  return [];
 }
 
 /**
@@ -135,6 +148,7 @@ async function searchWikimedia(query: string): Promise<any[]> {
         iiprop: 'url|size|extmetadata',
         iiurlwidth: MIN_WIDTH,
       },
+      headers: REQUEST_HEADERS,
       timeout: 10000,
     });
 
@@ -185,6 +199,10 @@ async function downloadImage(url: string): Promise<Buffer | null> {
   try {
     const response = await axios.get(url, {
       responseType: 'arraybuffer',
+      headers: {
+        'User-Agent': OPENVERSE_USER_AGENT,
+        Accept: 'image/*',
+      },
       timeout: 30000,
       maxContentLength: 50 * 1024 * 1024, // 50MB max
     });
