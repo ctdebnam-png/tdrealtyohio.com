@@ -98,6 +98,154 @@ Every fetched asset passes through **6 automated verification gates**:
 
 ---
 
+## R2 Media Ingestion Pipeline
+
+In addition to the existing media pipeline, this repository includes a **new R2-based media ingestion system** that downloads legally-reusable images from Openverse and Wikimedia Commons, converts them to WebP, and uploads them to Cloudflare R2 for CDN delivery.
+
+### Features
+
+- ✅ **Legal compliance:** Only CC0, PDM, CC-BY, CC-BY-SA licenses
+- ✅ **No hotlinking:** All images served from your domain via R2
+- ✅ **Quality standards:** Minimum 1600px width
+- ✅ **Modern formats:** WebP required
+- ✅ **Full attribution:** Metadata stored for every image
+- ✅ **Local dev fallback:** Works without R2 configuration
+
+### Environment Variables
+
+Configure these in your Cloudflare Pages settings or `.env` file:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `R2_ACCOUNT_ID` | Yes | Your Cloudflare account ID |
+| `R2_ACCESS_KEY_ID` | Yes | R2 API access key ID |
+| `R2_SECRET_ACCESS_KEY` | Yes | R2 API secret access key |
+| `R2_BUCKET` | Yes | R2 bucket name (e.g., `tdrealtyohio-media`) |
+| `R2_PUBLIC_BASE_URL` | Yes | Public CDN URL (e.g., `https://media.tdrealtyohio.com`) |
+| `OPENVERSE_USER_AGENT` | Optional | User agent for Openverse API (default: `TDRealtyOhio/2.0`) |
+
+### Getting R2 Credentials
+
+1. Go to **Cloudflare Dashboard → R2**
+2. Create a new bucket (e.g., `tdrealtyohio-media`)
+3. Go to **R2 → Settings → Manage R2 API Tokens**
+4. Create a new API token with **Object Read & Write** permissions
+5. Copy the credentials to your environment variables
+
+### Setting Up Public Domain for R2
+
+To serve images from your own domain (e.g., `media.tdrealtyohio.com`):
+
+1. In Cloudflare R2, go to your bucket → **Settings**
+2. Under **Public Access**, click **Connect Domain**
+3. Add your custom domain (e.g., `media.tdrealtyohio.com`)
+4. Update `R2_PUBLIC_BASE_URL` environment variable to match
+
+### Usage
+
+#### Run Media Sync
+
+```bash
+# Sync media (download, convert, upload to R2)
+npm run media:sync
+```
+
+This will:
+1. Read topics from `media/topics.json`
+2. Search Openverse API for each query
+3. Fallback to Wikimedia Commons if needed
+4. Download images and convert to WebP
+5. Upload to R2 (or use source URLs if R2 not configured)
+6. Generate `public/media/manifest.json` with attribution
+7. Generate `public/media/health.json` with statistics
+
+#### Verify Media
+
+```bash
+# Verify manifest has ≥12 images with all required fields
+npm run media:verify
+```
+
+#### Integrated Build
+
+The pipeline is integrated into the build process:
+
+```bash
+npm run build
+```
+
+This runs:
+1. **prebuild:** `npm run media:sync || true` (continues even if sync fails)
+2. **postbuild:** `npm run media:verify` (exits with error if validation fails)
+
+### Customizing Topics
+
+Edit `media/topics.json` to customize search queries:
+
+```json
+{
+  "hero": [
+    "columbus ohio skyline",
+    "ohio real estate"
+  ],
+  "sellers": [
+    "home for sale sign",
+    "house exterior"
+  ]
+}
+```
+
+Each topic should have 2+ queries to ensure sufficient image diversity.
+
+### Local Development
+
+If R2 environment variables are not set, the pipeline will:
+- ✅ Still download and convert images
+- ✅ Generate manifest with source URLs instead of CDN URLs
+- ⚠️ Log warning: "R2 not configured — using source URLs directly"
+- ✅ Allow development without R2 setup
+
+### Manifest Schema
+
+`public/media/manifest.json` contains an array of image metadata:
+
+```json
+[
+  {
+    "id": "openverse_12345",
+    "topic": "hero",
+    "cdnUrl": "https://media.tdrealtyohio.com/columbus-ohio-skyline-a1b2c3d4.webp",
+    "sourceUrl": "https://openverse.org/image/12345",
+    "license": "cc0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "creator": "John Doe",
+    "attribution": "Photo by John Doe - CC0",
+    "width": 1920,
+    "height": 1080,
+    "retrievedAt": "2026-01-14T12:00:00.000Z"
+  }
+]
+```
+
+### Health Report
+
+`public/media/health.json` provides pipeline statistics:
+
+```json
+{
+  "timestamp": "2026-01-14T12:00:00.000Z",
+  "totalImages": 15,
+  "byTopic": {
+    "hero": 6,
+    "sellers": 4,
+    "buyers": 5
+  },
+  "r2Configured": true
+}
+```
+
+---
+
 ## Directory Structure
 
 ```
@@ -112,14 +260,22 @@ tdrealtyohio.com/
 │       ├── manifest-schema.json # JSON schema for validation
 │       ├── fetched_data.json    # Tracking of fetched assets
 │       └── verified_data.json   # Verification results + stats
+├── public/
+│   └── media/
+│       ├── manifest.json        # R2 media manifest
+│       └── health.json          # R2 pipeline health report
+├── media/
+│   └── topics.json              # R2 search topics configuration
 ├── scripts/
-│   └── media_pipeline/
-│       ├── fetch_media.js       # Fetches from 4 API sources
-│       ├── verify_media.js      # Runs 6 verification gates
-│       ├── build_manifest.js    # Builds per-page manifest
-│       ├── integrate_hero_media.js  # Updates HTML pages
-│       ├── validate_manifest.js     # Schema validation
-│       └── validate_links.js        # Build validation
+│   ├── media_pipeline/
+│   │   ├── fetch_media.js       # Fetches from 4 API sources
+│   │   ├── verify_media.js      # Runs 6 verification gates
+│   │   ├── build_manifest.js    # Builds per-page manifest
+│   │   ├── integrate_hero_media.js  # Updates HTML pages
+│   │   ├── validate_manifest.js     # Schema validation
+│   │   └── validate_links.js        # Build validation
+│   ├── media-sync.ts            # R2 media ingestion pipeline
+│   └── media-verify.ts          # R2 manifest verification
 ├── media-sources.json           # Config: keywords per page
 ├── .github/
 │   └── workflows/

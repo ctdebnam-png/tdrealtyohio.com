@@ -11,14 +11,25 @@
     "pipeline:integrate": "node scripts/media_pipeline/integrate_hero_media.js",
     "pipeline:full": "npm run pipeline:fetch && npm run pipeline:verify && npm run pipeline:build && npm run pipeline:integrate",
     "validate:manifest": "node scripts/media_pipeline/validate_manifest.js",
-    "validate:links": "node scripts/media_pipeline/validate_links.js"
+    "validate:links": "node scripts/media_pipeline/validate_links.js",
+    "media:sync": "tsx scripts/media-sync.ts",
+    "media:verify": "tsx scripts/media-verify.ts",
+    "prebuild": "npm run media:sync || true",
+    "postbuild": "npm run media:verify"
   },
   "dependencies": {
     "axios": "^1.6.5",
     "sharp": "^0.33.1",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
-    "jsdom": "^23.0.1"
+    "jsdom": "^23.0.1",
+    "@aws-sdk/client-s3": "^3.490.0",
+    "@aws-sdk/lib-storage": "^3.490.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
   },
   "engines": {
     "node": ">=18.0.0"
