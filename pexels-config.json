@@ -1,0 +1,12 @@
+{
+  "queries": [
+    "Columbus Ohio skyline",
+    "Ohio suburb homes",
+    "real estate agent meeting",
+    "home exterior",
+    "modern kitchen",
+    "sold sign"
+  ],
+  "imagesPerQuery": 3,
+  "orientation": "landscape"
+}
