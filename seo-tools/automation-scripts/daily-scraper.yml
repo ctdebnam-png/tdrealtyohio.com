@@ -1,0 +1,36 @@
+name: Daily Market Data Scraper
+
+on:
+  schedule:
+    - cron: '0 10 * * *'  # 10 AM UTC daily (6 AM EST)
+  workflow_dispatch:  # Manual trigger button
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 anthropic
+      
+      - name: Scrape market data
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/scrape_market.py
+      
+      - name: Commit and push data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add data/
+          git commit -m "Update market data $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push

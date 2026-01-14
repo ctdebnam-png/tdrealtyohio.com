@@ -1,0 +1,50 @@
+name: Weekly SEO Audit
+
+on:
+  schedule:
+    - cron: '0 12 * * 5'  # Fridays at noon UTC (8 AM EST)
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install anthropic requests beautifulsoup4
+      
+      - name: Run SEO audit
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/audit_site.py
+      
+      - name: Create GitHub Issue with audit results
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('reports/latest_audit.md', 'utf8');
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🔍 SEO Audit Report - ${new Date().toISOString().split('T')[0]}`,
+              body: report,
+              labels: ['seo', 'audit', 'automated']
+            });
+      
+      - name: Commit audit report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add reports/
+          git commit -m "Add SEO audit report $(date +'%Y-%m-%d')" || echo "No changes"
+          git push
