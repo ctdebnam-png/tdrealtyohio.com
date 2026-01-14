@@ -36,11 +36,11 @@ const R2_CONFIG = {
 };
 
 const OPENVERSE_USER_AGENT = process.env.OPENVERSE_USER_AGENT || 'TDRealtyOhio/2.0 (https://tdrealtyohio.com)';
+const OPENVERSE_ACCESS_TOKEN = process.env.OPENVERSE_ACCESS_TOKEN || process.env.OPENVERSE_API_KEY;
 const REQUEST_HEADERS = {
   'User-Agent': OPENVERSE_USER_AGENT,
   Accept: 'application/json',
-  Origin: 'https://tdrealtyohio.com',
-  Referer: 'https://tdrealtyohio.com/',
+  ...(OPENVERSE_ACCESS_TOKEN ? { Authorization: `Bearer ${OPENVERSE_ACCESS_TOKEN}` } : {}),
 };
 
 // Check if R2 is configured
@@ -101,7 +101,7 @@ async function loadTopics(): Promise<TopicsConfig> {
 /**
  * Search Openverse API
  */
-async function searchOpenverse(query: string, page: number = 1): Promise<any[]> {
+async function searchOpenverse(query: string, page: number = 1): Promise<any[] | null> {
   const params = {
     q: query,
     page,
@@ -124,7 +124,11 @@ async function searchOpenverse(query: string, page: number = 1): Promise<any[]> 
 
       return response.data.results || [];
     } catch (error: any) {
+      const status = error?.response?.status;
       console.warn(`⚠️  Openverse search failed for "${query}" via ${endpoint}: ${error.message}`);
+      if (status === 403) {
+        return null;
+      }
     }
   }
 
@@ -288,6 +292,10 @@ async function processQuery(query: string, topic: string): Promise<ImageMetadata
   // Try Openverse first
   for (let page = 1; page <= MAX_PAGES && foundCount < TARGET_IMAGES_PER_TOPIC; page++) {
     const results = await searchOpenverse(query, page);
+    if (results === null) {
+      console.warn('  ⚠️  Openverse returned 403; stopping Openverse retries for this query.');
+      break;
+    }
 
     for (const result of results) {
       if (foundCount >= TARGET_IMAGES_PER_TOPIC) break;
