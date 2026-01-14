@@ -35,7 +35,58 @@ const R2_CONFIG = {
   publicBaseUrl: process.env.R2_PUBLIC_BASE_URL,
 };
 
-const OPENVERSE_USER_AGENT = process.env.OPENVERSE_USER_AGENT || 'TDRealtyOhio/2.0 (https://tdrealtyohio.com)';
+const OPENVERSE_USER_AGENT = process.env.OPENVERSE_USER_AGENT || 'TDRealtyOhio/2.0 (https://tdrealtyohio.com; info@tdrealtyohio.com)';
+const OPENVERSE_ACCESS_TOKEN = process.env.OPENVERSE_ACCESS_TOKEN || process.env.OPENVERSE_API_KEY;
+const OPENVERSE_CLIENT_ID = process.env.OPENVERSE_CLIENT_ID;
+const OPENVERSE_CLIENT_SECRET = process.env.OPENVERSE_CLIENT_SECRET;
+
+const BASE_HEADERS = {
+  'User-Agent': OPENVERSE_USER_AGENT,
+  Accept: 'application/json',
+};
+
+let openverseToken: string | null = null;
+
+async function getOpenverseHeaders(): Promise<Record<string, string>> {
+  if (OPENVERSE_ACCESS_TOKEN) {
+    return { ...BASE_HEADERS, Authorization: `Bearer ${OPENVERSE_ACCESS_TOKEN}` };
+  }
+
+  if (openverseToken) {
+    return { ...BASE_HEADERS, Authorization: `Bearer ${openverseToken}` };
+  }
+
+  if (!OPENVERSE_CLIENT_ID || !OPENVERSE_CLIENT_SECRET) {
+    return BASE_HEADERS;
+  }
+
+  try {
+    const response = await axios.post(
+      'https://api.openverse.org/v1/auth_tokens/token/',
+      new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: OPENVERSE_CLIENT_ID,
+        client_secret: OPENVERSE_CLIENT_SECRET,
+      }),
+      {
+        headers: {
+          ...BASE_HEADERS,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout: 10000,
+      }
+    );
+
+    openverseToken = response.data.access_token;
+    if (openverseToken) {
+      return { ...BASE_HEADERS, Authorization: `Bearer ${openverseToken}` };
+    }
+  } catch (error: any) {
+    console.warn(`⚠️  Openverse token request failed: ${error.message}`);
+  }
+
+  return BASE_HEADERS;
+}
 
 // Check if R2 is configured
 const isR2Configured = Boolean(
@@ -95,27 +146,39 @@ async function loadTopics(): Promise<TopicsConfig> {
 /**
  * Search Openverse API
  */
-async function searchOpenverse(query: string, page: number = 1): Promise<any[]> {
-  try {
-    const response = await axios.get('https://api.openverse.org/v1/images/', {
-      params: {
-        q: query,
-        page,
-        page_size: PAGE_SIZE,
-        license: ALLOWED_LICENSES.join(','),
-        mature: false,
-      },
-      headers: {
-        'User-Agent': OPENVERSE_USER_AGENT,
-      },
-      timeout: 10000,
-    });
+async function searchOpenverse(query: string, page: number = 1): Promise<any[] | null> {
+  const params = {
+    q: query,
+    page,
+    page_size: PAGE_SIZE,
+    license: ALLOWED_LICENSES.join(','),
+    mature: false,
+  };
+  const endpoints = [
+    'https://api.openverse.org/v1/images/',
+    'https://openverse.org/api/v1/images/',
+  ];
 
-    return response.data.results || [];
-  } catch (error: any) {
-    console.warn(`⚠️  Openverse search failed for "${query}": ${error.message}`);
-    return [];
+  for (const endpoint of endpoints) {
+    try {
+      const headers = await getOpenverseHeaders();
+      const response = await axios.get(endpoint, {
+        params,
+        headers,
+        timeout: 10000,
+      });
+
+      return response.data.results || [];
+    } catch (error: any) {
+      const status = error?.response?.status;
+      console.warn(`⚠️  Openverse search failed for "${query}" via ${endpoint}: ${error.message}`);
+      if (status === 403) {
+        return null;
+      }
+    }
   }
+
+  return [];
 }
 
 /**
@@ -135,6 +198,7 @@ async function searchWikimedia(query: string): Promise<any[]> {
         iiprop: 'url|size|extmetadata',
         iiurlwidth: MIN_WIDTH,
       },
+      headers: BASE_HEADERS,
       timeout: 10000,
     });
 
@@ -185,6 +249,10 @@ async function downloadImage(url: string): Promise<Buffer | null> {
   try {
     const response = await axios.get(url, {
       responseType: 'arraybuffer',
+      headers: {
+        'User-Agent': OPENVERSE_USER_AGENT,
+        Accept: 'image/*',
+      },
       timeout: 30000,
       maxContentLength: 50 * 1024 * 1024, // 50MB max
     });
@@ -270,6 +338,10 @@ async function processQuery(query: string, topic: string): Promise<ImageMetadata
   // Try Openverse first
   for (let page = 1; page <= MAX_PAGES && foundCount < TARGET_IMAGES_PER_TOPIC; page++) {
     const results = await searchOpenverse(query, page);
+    if (results === null) {
+      console.warn('  ⚠️  Openverse returned 403; stopping Openverse retries for this query.');
+      break;
+    }
 
     for (const result of results) {
       if (foundCount >= TARGET_IMAGES_PER_TOPIC) break;
