@@ -1,0 +1,185 @@
+name: Legal Media Pipeline
+
+on:
+  # Run weekly on Sundays at 3 AM UTC
+  schedule:
+    - cron: '0 3 * * 0'
+
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      force_fetch:
+        description: 'Force fetch new media even if already exists'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  media-pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify API keys are set
+        run: |
+          echo "Checking for required API keys..."
+          if [ -z "${{ secrets.PEXELS_API_KEY }}" ]; then
+            echo "⚠️ PEXELS_API_KEY not set"
+          else
+            echo "✓ PEXELS_API_KEY is set"
+          fi
+          if [ -z "${{ secrets.PIXABAY_API_KEY }}" ]; then
+            echo "⚠️ PIXABAY_API_KEY not set"
+          else
+            echo "✓ PIXABAY_API_KEY is set"
+          fi
+          if [ -z "${{ secrets.UNSPLASH_ACCESS_KEY }}" ]; then
+            echo "⚠️ UNSPLASH_ACCESS_KEY not set"
+          else
+            echo "✓ UNSPLASH_ACCESS_KEY is set"
+          fi
+
+      - name: Stage 1 - Fetch Media from APIs
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: |
+          echo "🚀 Stage 1: Fetching media from legal sources..."
+          npm run pipeline:fetch
+        continue-on-error: false
+
+      - name: Stage 2 - Verify Media (License, Safety, Quality, Dedupe, Performance)
+        run: |
+          echo "🔍 Stage 2: Running verification gates..."
+          npm run pipeline:verify
+        continue-on-error: false
+
+      - name: Stage 3 - Build Manifest
+        run: |
+          echo "🔨 Stage 3: Building manifest..."
+          npm run pipeline:build
+        continue-on-error: false
+
+      - name: Stage 4 - Validate Manifest
+        run: |
+          echo "✓ Stage 4: Validating manifest against schema..."
+          npm run validate:manifest
+        continue-on-error: false
+
+      - name: Stage 5 - Integrate Hero Media into HTML
+        run: |
+          echo "📝 Stage 5: Integrating hero media into HTML pages..."
+          npm run pipeline:integrate
+        continue-on-error: false
+
+      - name: Stage 6 - Validate Build Output
+        run: |
+          echo "🔍 Stage 6: Validating build output and links..."
+          npm run validate:links
+        continue-on-error: false
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet assets/media/ || echo "media_changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet *.html areas/*.html || echo "html_changed=true" >> $GITHUB_OUTPUT
+          if [ "${{ steps.git-check.outputs.media_changed }}" == "true" ] || [ "${{ steps.git-check.outputs.html_changed }}" == "true" ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate change summary
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          echo "## Media Pipeline Summary" > pipeline-summary.md
+          echo "" >> pipeline-summary.md
+
+          if [ -f "assets/media/verified_data.json" ]; then
+            echo "### Verified Assets" >> pipeline-summary.md
+            node -e "
+              const data = require('./assets/media/verified_data.json');
+              console.log('- Total verified: ' + data.assets.length);
+              console.log('- Rejected: ' + data.rejected.length);
+              console.log('');
+              console.log('#### By Source:');
+              for (const [source, count] of Object.entries(data.stats.by_source)) {
+                console.log('- ' + source + ': ' + count);
+              }
+            " >> pipeline-summary.md
+          fi
+
+          echo "" >> pipeline-summary.md
+          echo "### Changes" >> pipeline-summary.md
+          echo '```' >> pipeline-summary.md
+          git diff --stat assets/media/ *.html areas/*.html >> pipeline-summary.md
+          echo '```' >> pipeline-summary.md
+
+          echo "" >> pipeline-summary.md
+          echo "### Verification Gates Passed" >> pipeline-summary.md
+          echo "- ✅ License verification" >> pipeline-summary.md
+          echo "- ✅ Content safety (watermark/logo detection)" >> pipeline-summary.md
+          echo "- ✅ Quality checks (resolution, dimensions, duration)" >> pipeline-summary.md
+          echo "- ✅ Deduplication (perceptual hashing)" >> pipeline-summary.md
+          echo "- ✅ Performance optimization (WebP, responsive sizes)" >> pipeline-summary.md
+          echo "- ✅ Build validation (manifest schema, file existence)" >> pipeline-summary.md
+
+          cat pipeline-summary.md
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            feat: Update hero media from legal sources
+
+            - Fetched media from Pexels, Pixabay, Unsplash, and Wikimedia Commons
+            - All assets passed verification gates (license, safety, quality, dedupe, performance)
+            - Updated manifest and integrated hero media into HTML pages
+            - All build validation checks passed
+          branch: automated-media-update-${{ github.run_number }}
+          delete-branch: true
+          title: '🖼️ Automated Media Pipeline Update'
+          body-path: pipeline-summary.md
+          labels: |
+            automated
+            media-pipeline
+            hero-media
+
+      - name: No changes detected
+        if: steps.git-check.outputs.changes != 'true'
+        run: |
+          echo "✓ Pipeline completed successfully"
+          echo "ℹ️ No new media to add - all pages already have current hero media"
+
+      - name: Upload artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-logs
+          path: |
+            assets/media/fetched_data.json
+            assets/media/verified_data.json
+            assets/media/manifest.json
+          retention-days: 7

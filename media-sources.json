@@ -1,0 +1,273 @@
+{
+  "$schema": "./assets/media/manifest-schema.json",
+  "sources": {
+    "pexels": {
+      "enabled": true,
+      "api_url": "https://api.pexels.com/v1",
+      "video_api_url": "https://api.pexels.com/videos"
+    },
+    "pixabay": {
+      "enabled": true,
+      "api_url": "https://pixabay.com/api"
+    },
+    "unsplash": {
+      "enabled": true,
+      "api_url": "https://api.unsplash.com"
+    },
+    "wikimedia": {
+      "enabled": true,
+      "api_url": "https://commons.wikimedia.org/w/api.php"
+    }
+  },
+  "pages": {
+    "home": {
+      "page_file": "index.html",
+      "keywords": ["Columbus Ohio skyline", "Columbus downtown", "Ohio state capital building"],
+      "prefer_video": true,
+      "media_count": {
+        "images": 2,
+        "videos": 1
+      }
+    },
+    "about": {
+      "page_file": "about.html",
+      "keywords": ["real estate agent professional", "handshake business deal", "office meeting"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 2,
+        "videos": 0
+      }
+    },
+    "buyers": {
+      "page_file": "buyers.html",
+      "keywords": ["family moving into home", "house keys hand over", "happy couple new home"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 2,
+        "videos": 0
+      }
+    },
+    "sellers": {
+      "page_file": "sellers.html",
+      "keywords": ["for sale sign front yard", "home exterior curb appeal", "sold sign celebration"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 2,
+        "videos": 0
+      }
+    },
+    "contact": {
+      "page_file": "contact.html",
+      "keywords": ["office space modern", "contact us communication", "phone call business"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "compare": {
+      "page_file": "compare.html",
+      "keywords": ["calculator money", "comparison analysis", "financial planning"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "pre-listing-inspection": {
+      "page_file": "pre-listing-inspection.html",
+      "keywords": ["home inspection", "inspector checklist", "house examination"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "gallery": {
+      "page_file": "gallery.html",
+      "keywords": ["real estate photography", "home interior design", "modern architecture"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 3,
+        "videos": 0
+      }
+    },
+    "areas/blacklick": {
+      "page_file": "areas/blacklick.html",
+      "keywords": ["Blacklick Ohio", "Ohio suburban neighborhood", "suburban homes"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/clintonville": {
+      "page_file": "areas/clintonville.html",
+      "keywords": ["Clintonville Columbus Ohio", "historic neighborhood", "tree lined street"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/columbus": {
+      "page_file": "areas/columbus.html",
+      "keywords": ["Columbus Ohio city", "Columbus skyline aerial", "urban downtown"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/delaware": {
+      "page_file": "areas/delaware.html",
+      "keywords": ["Delaware Ohio", "small town America", "Ohio residential street"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/dublin": {
+      "page_file": "areas/dublin.html",
+      "keywords": ["Dublin Ohio", "upscale neighborhood", "modern suburban homes"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/gahanna": {
+      "page_file": "areas/gahanna.html",
+      "keywords": ["Gahanna Ohio", "family friendly neighborhood", "suburban street"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/galena": {
+      "page_file": "areas/galena.html",
+      "keywords": ["Galena Ohio", "rural Ohio", "countryside homes"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/hilliard": {
+      "page_file": "areas/hilliard.html",
+      "keywords": ["Hilliard Ohio", "suburban development", "residential neighborhood"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/lewis-center": {
+      "page_file": "areas/lewis-center.html",
+      "keywords": ["Lewis Center Ohio", "growing community", "new construction homes"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/new-albany": {
+      "page_file": "areas/new-albany.html",
+      "keywords": ["New Albany Ohio", "luxury homes", "executive neighborhood"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/pataskala": {
+      "page_file": "areas/pataskala.html",
+      "keywords": ["Pataskala Ohio", "residential area", "Ohio neighborhood"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/pickerington": {
+      "page_file": "areas/pickerington.html",
+      "keywords": ["Pickerington Ohio", "family homes", "suburban living"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/powell": {
+      "page_file": "areas/powell.html",
+      "keywords": ["Powell Ohio", "residential community", "suburban homes"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/sunbury": {
+      "page_file": "areas/sunbury.html",
+      "keywords": ["Sunbury Ohio", "small town", "residential street"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/upper-arlington": {
+      "page_file": "areas/upper-arlington.html",
+      "keywords": ["Upper Arlington Ohio", "established neighborhood", "tree lined streets"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/westerville": {
+      "page_file": "areas/westerville.html",
+      "keywords": ["Westerville Ohio", "suburban community", "residential homes"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    },
+    "areas/worthington": {
+      "page_file": "areas/worthington.html",
+      "keywords": ["Worthington Ohio", "historic neighborhood", "charming community"],
+      "prefer_video": false,
+      "media_count": {
+        "images": 1,
+        "videos": 0
+      }
+    }
+  },
+  "global_settings": {
+    "image_quality": {
+      "min_width": 1600,
+      "min_height": 900,
+      "prefer_orientation": "landscape",
+      "webp_quality": 85,
+      "jpeg_quality": 90,
+      "max_hero_size_kb": 250
+    },
+    "video_quality": {
+      "min_resolution": "720p",
+      "max_duration_seconds": 15,
+      "prefer_duration_seconds": 10
+    },
+    "performance": {
+      "generate_responsive_sizes": [640, 1024, 1600],
+      "generate_webp": true,
+      "lazy_load": true
+    },
+    "safety": {
+      "reject_watermarked": true,
+      "reject_logos": true
+    }
+  }
+}
