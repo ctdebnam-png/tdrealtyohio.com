@@ -20,3 +20,16 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Media pipeline - tracking files (keep for deduplication)
+assets/media/fetched_data.json
+assets/media/verified_data.json
+
+# Media pipeline - large files (optional: uncomment to exclude from repo)
+# assets/media/images/
+# assets/media/videos/
+
+# Always keep these:
+# - assets/media/manifest.json (required for site)
+# - assets/media/optimized/ (required for site)
+# - assets/media/attribution/ (required for compliance)

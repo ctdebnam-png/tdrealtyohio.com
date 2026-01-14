@@ -1,14 +1,24 @@
 {
   "name": "tdrealtyohio-media-pipeline",
-  "version": "1.0.0",
-  "description": "Automated Pexels media pipeline for TD Realty Ohio",
+  "version": "2.0.0",
+  "description": "Automated multi-source legal media pipeline for TD Realty Ohio",
   "private": true,
   "scripts": {
-    "refresh-media": "node scripts/refresh-media.js"
+    "refresh-media": "node scripts/refresh-media.js",
+    "pipeline:fetch": "node scripts/media_pipeline/fetch_media.js",
+    "pipeline:verify": "node scripts/media_pipeline/verify_media.js",
+    "pipeline:build": "node scripts/media_pipeline/build_manifest.js",
+    "pipeline:integrate": "node scripts/media_pipeline/integrate_hero_media.js",
+    "pipeline:full": "npm run pipeline:fetch && npm run pipeline:verify && npm run pipeline:build && npm run pipeline:integrate",
+    "validate:manifest": "node scripts/media_pipeline/validate_manifest.js",
+    "validate:links": "node scripts/media_pipeline/validate_links.js"
   },
   "dependencies": {
     "axios": "^1.6.5",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "jsdom": "^23.0.1"
   },
   "engines": {
     "node": ">=18.0.0"
