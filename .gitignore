@@ -33,3 +33,7 @@ assets/media/verified_data.json
 # - assets/media/manifest.json (required for site)
 # - assets/media/optimized/ (required for site)
 # - assets/media/attribution/ (required for compliance)
+
+# R2 media pipeline outputs (generated)
+public/media/manifest.json
+public/media/health.json
