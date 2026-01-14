@@ -231,18 +231,19 @@
     -->
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <nav class="nav">
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <span class="logo-td">TD</span>
                 <span class="logo-text">Realty Ohio</span>
             </a>
-            <button class="nav-toggle" aria-label="Toggle navigation">
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-controls="primary-navigation" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="primary-navigation">
                 <li><a href="sellers.html">Sellers</a></li>
                 <li><a href="buyers.html">Buyers</a></li>
                 <li><a href="pre-listing-inspection.html">Pre-Listing Inspection</a></li>
@@ -253,6 +254,7 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <section class="hero">
         <div class="container">
             <h1>Columbus Ohio's <span class="highlight">1% Commission</span> Real Estate Broker</h1>
@@ -506,6 +508,8 @@
             </div>
         </div>
     </section>
+
+    </main>
 
     <footer class="footer">
         <div class="container">
