@@ -35,13 +35,58 @@ const R2_CONFIG = {
   publicBaseUrl: process.env.R2_PUBLIC_BASE_URL,
 };
 
-const OPENVERSE_USER_AGENT = process.env.OPENVERSE_USER_AGENT || 'TDRealtyOhio/2.0 (https://tdrealtyohio.com)';
+const OPENVERSE_USER_AGENT = process.env.OPENVERSE_USER_AGENT || 'TDRealtyOhio/2.0 (https://tdrealtyohio.com; info@tdrealtyohio.com)';
 const OPENVERSE_ACCESS_TOKEN = process.env.OPENVERSE_ACCESS_TOKEN || process.env.OPENVERSE_API_KEY;
-const REQUEST_HEADERS = {
+const OPENVERSE_CLIENT_ID = process.env.OPENVERSE_CLIENT_ID;
+const OPENVERSE_CLIENT_SECRET = process.env.OPENVERSE_CLIENT_SECRET;
+
+const BASE_HEADERS = {
   'User-Agent': OPENVERSE_USER_AGENT,
   Accept: 'application/json',
-  ...(OPENVERSE_ACCESS_TOKEN ? { Authorization: `Bearer ${OPENVERSE_ACCESS_TOKEN}` } : {}),
 };
+
+let openverseToken: string | null = null;
+
+async function getOpenverseHeaders(): Promise<Record<string, string>> {
+  if (OPENVERSE_ACCESS_TOKEN) {
+    return { ...BASE_HEADERS, Authorization: `Bearer ${OPENVERSE_ACCESS_TOKEN}` };
+  }
+
+  if (openverseToken) {
+    return { ...BASE_HEADERS, Authorization: `Bearer ${openverseToken}` };
+  }
+
+  if (!OPENVERSE_CLIENT_ID || !OPENVERSE_CLIENT_SECRET) {
+    return BASE_HEADERS;
+  }
+
+  try {
+    const response = await axios.post(
+      'https://api.openverse.org/v1/auth_tokens/token/',
+      new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: OPENVERSE_CLIENT_ID,
+        client_secret: OPENVERSE_CLIENT_SECRET,
+      }),
+      {
+        headers: {
+          ...BASE_HEADERS,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout: 10000,
+      }
+    );
+
+    openverseToken = response.data.access_token;
+    if (openverseToken) {
+      return { ...BASE_HEADERS, Authorization: `Bearer ${openverseToken}` };
+    }
+  } catch (error: any) {
+    console.warn(`⚠️  Openverse token request failed: ${error.message}`);
+  }
+
+  return BASE_HEADERS;
+}
 
 // Check if R2 is configured
 const isR2Configured = Boolean(
@@ -116,9 +161,10 @@ async function searchOpenverse(query: string, page: number = 1): Promise<any[] |
 
   for (const endpoint of endpoints) {
     try {
+      const headers = await getOpenverseHeaders();
       const response = await axios.get(endpoint, {
         params,
-        headers: REQUEST_HEADERS,
+        headers,
         timeout: 10000,
       });
 
@@ -152,7 +198,7 @@ async function searchWikimedia(query: string): Promise<any[]> {
         iiprop: 'url|size|extmetadata',
         iiurlwidth: MIN_WIDTH,
       },
-      headers: REQUEST_HEADERS,
+      headers: BASE_HEADERS,
       timeout: 10000,
     });
 
