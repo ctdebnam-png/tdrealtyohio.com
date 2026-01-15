@@ -6,7 +6,7 @@
  */
 
 const IntelligentMediaManager = require('./index');
-require('dotenv').config();
+const apiConfig = require('./api-config');
 
 async function runTests() {
   console.log('\n' + '═'.repeat(80));
@@ -102,28 +102,15 @@ async function runTests() {
  * Check if API keys are configured
  */
 function checkAPIKeys() {
-  const required = [
-    'PEXELS_API_KEY',
-    'PIXABAY_API_KEY',
-    'UNSPLASH_ACCESS_KEY'
-  ];
-
-  const missing = [];
-
-  for (const key of required) {
-    if (!process.env[key]) {
-      missing.push(key);
-    }
-  }
-
-  if (missing.length > 0) {
-    console.error('❌ Missing required API keys:');
-    missing.forEach(key => console.error(`   - ${key}`));
-    console.error('\nPlease set these environment variables or add them to .env file');
+  try {
+    apiConfig.validateSecrets();
+    console.log('');
+  } catch (error) {
+    console.error('\n❌ API key validation failed');
+    console.error('   Run: npm run test:secrets');
+    console.error('   To diagnose the issue\n');
     process.exit(1);
   }
-
-  console.log('✅ All API keys configured\n');
 }
 
 /**

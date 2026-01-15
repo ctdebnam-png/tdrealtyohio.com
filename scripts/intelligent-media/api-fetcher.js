@@ -5,6 +5,7 @@
 
 const axios = require('axios');
 const config = require('./config.json');
+const apiConfig = require('./api-config');
 
 class APIFetcher {
   constructor() {
@@ -15,11 +16,11 @@ class APIFetcher {
       unsplash: new RateLimiter(this.config.unsplash.rateLimit)
     };
 
-    // API keys from environment
+    // API keys from centralized config (loads from secrets/environment)
     this.apiKeys = {
-      pexels: process.env.PEXELS_API_KEY,
-      pixabay: process.env.PIXABAY_API_KEY,
-      unsplash: process.env.UNSPLASH_ACCESS_KEY
+      pexels: apiConfig.API_KEYS.pexels,
+      pixabay: apiConfig.API_KEYS.pixabay,
+      unsplash: apiConfig.API_KEYS.unsplash.accessKey
     };
 
     // Validate API keys
@@ -39,10 +40,8 @@ class APIFetcher {
 
     if (missing.length > 0) {
       console.warn(`⚠️  Missing API keys for: ${missing.join(', ')}`);
-      console.warn('   Set these environment variables:');
-      missing.forEach(service => {
-        console.warn(`   - ${service}_API_KEY`);
-      });
+      console.warn('   Run: npm run test:secrets');
+      console.warn('   To diagnose API key configuration issues');
     }
   }
 

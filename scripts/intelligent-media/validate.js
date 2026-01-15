@@ -88,8 +88,6 @@ for (const file of configFiles) {
 // Test 5: Check API keys
 console.log('\n5. Checking API keys (optional)...');
 
-require('dotenv').config();
-
 const apiKeys = [
   { name: 'PEXELS_API_KEY', key: process.env.PEXELS_API_KEY },
   { name: 'PIXABAY_API_KEY', key: process.env.PIXABAY_API_KEY },

@@ -18,6 +18,9 @@
     "intelligent:batch": "node scripts/intelligent-media/batch.js",
     "intelligent:stats": "node scripts/intelligent-media/stats.js",
     "intelligent:refresh": "node scripts/intelligent-media/refresh.js",
+    "intelligent:validate": "node scripts/intelligent-media/validate.js",
+    "test:secrets": "node scripts/intelligent-media/test-api-access.js",
+    "test:connections": "node scripts/intelligent-media/test-api-connections.js",
     "prebuild": "npm run media:sync || true",
     "postbuild": "npm run media:verify"
   },

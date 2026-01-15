@@ -5,7 +5,7 @@
  */
 
 const IntelligentMediaManager = require('./index');
-require('dotenv').config();
+const apiConfig = require('./api-config');
 
 async function refreshImages() {
   const args = process.argv.slice(2);
