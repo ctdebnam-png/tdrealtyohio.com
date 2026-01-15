@@ -86,7 +86,7 @@
     }
 
     function renderLeadSummary(lead) {
-      const html = `
+      let html = `
         <p><strong>ID:</strong> ${lead.id}</p>
         <p><strong>Source:</strong> <span class="badge badge-info">${lead.source_key}</span></p>
         <p><strong>Geo:</strong> <span class="badge badge-info">${lead.geo_key}</span></p>
@@ -95,7 +95,66 @@
         <p><strong>Tier:</strong> <span class="badge ${lead.tier === 'A' ? 'badge-success' : lead.tier === 'B' ? 'badge-info' : 'badge-warning'}">${lead.tier || 'N/A'}</span></p>
         <p><strong>Last Activity:</strong> ${formatDateTime(lead.last_activity_at)}</p>
       `;
+
+      // If lead has metadata (structured data from forms like CMA request)
+      if (lead.metadata && Object.keys(lead.metadata).length > 0) {
+        html += renderStructuredData(lead.metadata);
+      }
+
       document.getElementById('lead-summary').innerHTML = html;
+    }
+
+    function renderStructuredData(data) {
+      // Check if this is a CMA request from net sheet
+      if (data.intent_type === 'seller' && data.estimated_sale_price) {
+        return `
+          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid #eee;">
+            <h3 style="margin-bottom: 1rem; color: #C1393D;">Net Sheet CMA Request Data</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+              <div>
+                <strong>Sale Price:</strong> ${formatCurrency(data.estimated_sale_price)}<br>
+                <strong>Price Band:</strong> <span class="badge badge-info">${data.price_band || 'N/A'}</span><br>
+                <strong>Net Proceeds:</strong> ${formatCurrency(data.net_low)} – ${formatCurrency(data.net_high)}
+              </div>
+
+              <div>
+                <strong>Timeline:</strong> ${data.timeline_bucket || 'N/A'}<br>
+                <strong>Urgency:</strong> <span class="badge ${data.urgency === 'high' ? 'badge-danger' : data.urgency === 'medium' ? 'badge-warning' : 'badge-info'}">${data.urgency || 'N/A'}</span><br>
+                <strong>Has Agent:</strong> ${data.seller_has_agent || 'N/A'}
+              </div>
+
+              <div>
+                <strong>Mortgage Balance:</strong> ${data.mortgage_balance_band || 'N/A'}<br>
+                <strong>HELOC/Second:</strong> ${data.heloc_or_second || 'N/A'}<br>
+                <strong>HOA:</strong> ${data.hoa_monthly_band || 'N/A'}
+              </div>
+
+              <div>
+                <strong>Commission:</strong> ${data.commission_percent || 0}%<br>
+                <strong>Closing Costs:</strong> ${data.closing_cost_percent || 0}%<br>
+                <strong>Concessions:</strong> ${data.concessions_percent || 0}%
+              </div>
+            </div>
+
+            ${data.improvements_last_2y ? `<p style="margin-top: 1rem;"><strong>Recent Improvements:</strong> ${data.improvements_last_2y}</p>` : ''}
+            ${data.property_tax_monthly_band ? `<p><strong>Property Tax Band:</strong> ${data.property_tax_monthly_band}</p>` : ''}
+          </div>
+        `;
+      }
+
+      // Generic structured data display
+      return `
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid #eee;">
+          <h3 style="margin-bottom: 1rem;">Structured Data</h3>
+          <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; font-size: 0.875rem;">${JSON.stringify(data, null, 2)}</pre>
+        </div>
+      `;
+    }
+
+    function formatCurrency(num) {
+      if (!num) return 'N/A';
+      return '$' + (Math.round(num / 1000) * 1000).toLocaleString('en-US');
     }
 
     function renderOutcomeTimeline(outcomes) {

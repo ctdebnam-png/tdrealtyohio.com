@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free net proceeds calculator for Columbus Ohio home sellers. Get an accurate estimate of what you'll walk away with after selling your home.">
+    <title>Net Proceeds Calculator | TD Realty Ohio</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tdrealtyohio.com/sell/net-sheet">
+    <meta property="og:title" content="Free Net Proceeds Calculator | TD Realty Ohio">
+    <meta property="og:description" content="Calculate your estimated net proceeds when selling your Columbus Ohio home. Free, accurate, instant results.">
+
+    <meta name="keywords" content="net proceeds calculator, home sale proceeds Columbus, net sheet calculator Ohio, what will I make selling my house, home seller proceeds estimate">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tdrealtyohio.com/sell/net-sheet">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/net-sheet.css">
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-td">TD</span>
+                <span class="logo-text">Realty Ohio</span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="../sellers.html">Sellers</a></li>
+                <li><a href="../buyers.html">Buyers</a></li>
+                <li><a href="../compare.html">Compare</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../contact.html" class="nav-cta">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="net-sheet-container">
+        <!-- HEADER -->
+        <div class="net-sheet-header">
+            <h1>Net Proceeds Calculator</h1>
+            <p>Get an accurate estimate of what you'll walk away with when selling your Columbus-area home. All calculations are transparent and deterministic—no surprises.</p>
+        </div>
+
+        <!-- FORM -->
+        <form id="net-sheet-form">
+            <!-- SECTION 1: Location -->
+            <div class="form-section">
+                <h2>Location</h2>
+                <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    We don't need your property address. ZIP code or city/state is sufficient for accurate estimates.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="zip">ZIP Code</label>
+                        <input type="text" id="zip" name="zip" placeholder="43017" maxlength="5" pattern="[0-9]{5}">
+                        <small>5-digit ZIP (optional if city/state provided)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" placeholder="Dublin">
+                        <small>Optional if ZIP provided</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state">
+                            <option value="">Select...</option>
+                            <option value="OH" selected>Ohio</option>
+                            <option value="IN">Indiana</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="MI">Michigan</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="WV">West Virginia</option>
+                        </select>
+                        <small>Required if city provided</small>
+                    </div>
+                </div>
+                <div id="location-error" class="error-message"></div>
+            </div>
+
+            <!-- SECTION 2: Sale Assumptions -->
+            <div class="form-section">
+                <h2>Sale Assumptions</h2>
+                <div class="form-group required">
+                    <label for="estimated_sale_price">Estimated Sale Price</label>
+                    <input type="number" id="estimated_sale_price" name="estimated_sale_price" placeholder="450000" min="50000" max="5000000" step="1000" required>
+                    <small>Your expected sale price ($50,000 - $5,000,000)</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group required">
+                        <label for="target_close_timeline_bucket">Timeline to Close</label>
+                        <select id="target_close_timeline_bucket" name="target_close_timeline_bucket" required>
+                            <option value="">Select...</option>
+                            <option value="0-30">Within 30 days</option>
+                            <option value="31-90">31-90 days</option>
+                            <option value="90+">90+ days</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="urgency">Urgency Level</label>
+                        <select id="urgency" name="urgency" required>
+                            <option value="">Select...</option>
+                            <option value="high">High - Need to sell quickly</option>
+                            <option value="medium">Medium - Flexible timeline</option>
+                            <option value="low">Low - Exploring options</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group required">
+                    <label for="seller_has_agent">Current Agent Status</label>
+                    <select id="seller_has_agent" name="seller_has_agent" required>
+                        <option value="">Select...</option>
+                        <option value="no">No agent yet</option>
+                        <option value="interviewing">Currently interviewing agents</option>
+                        <option value="yes">Already have an agent</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Mortgage & Liens -->
+            <div class="form-section">
+                <h2>Mortgage & Liens</h2>
+                <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    We only need approximate ranges—not exact amounts. This keeps calculations credible without requiring sensitive financial details.
+                </p>
+
+                <div class="form-group required">
+                    <label for="mortgage_balance_band">Current Mortgage Balance (approx.)</label>
+                    <select id="mortgage_balance_band" name="mortgage_balance_band" required>
+                        <option value="">Select...</option>
+                        <option value="<50k">Less than $50,000</option>
+                        <option value="50-150k">$50,000 - $150,000</option>
+                        <option value="150-350k">$150,000 - $350,000</option>
+                        <option value="350k+">$350,000 or more</option>
+                    </select>
+                    <small>Your remaining mortgage principal</small>
+                </div>
+
+                <div class="form-group required">
+                    <label for="heloc_or_second">HELOC or Second Mortgage?</label>
+                    <select id="heloc_or_second" name="heloc_or_second" required>
+                        <option value="">Select...</option>
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    <small>Do you have a home equity line or second mortgage?</small>
+                </div>
+            </div>
+
+            <!-- SECTION 4: Costs & Fees -->
+            <div class="form-section">
+                <h2>Costs & Fees</h2>
+                <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    Default values are industry-standard estimates. Feel free to adjust based on your specific situation.
+                </p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="commission_percent">Commission Rate (%)</label>
+                        <input type="number" id="commission_percent" name="commission_percent" value="5.5" min="0" max="10" step="0.1">
+                        <small>Listing + buyer agent commission (typically 5-6%)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="seller_concessions_percent">Seller Concessions (%)</label>
+                        <input type="number" id="seller_concessions_percent" name="seller_concessions_percent" value="0" min="0" max="6" step="0.1">
+                        <small>Credits toward buyer closing costs (typically 0-3%)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="closing_cost_percent">Closing Costs (%)</label>
+                        <input type="number" id="closing_cost_percent" name="closing_cost_percent" value="1.5" min="0" max="5" step="0.1">
+                        <small>Title, escrow, transfer taxes (typically 1-3%)</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hoa_monthly_band">HOA Fees (monthly)</label>
+                        <select id="hoa_monthly_band" name="hoa_monthly_band">
+                            <option value="none">No HOA</option>
+                            <option value="<200">Less than $200/month</option>
+                            <option value="200-500">$200 - $500/month</option>
+                            <option value="500+">$500+/month</option>
+                        </select>
+                        <small>For informational purposes (not included in calculation)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="property_tax_monthly_band">Property Tax (monthly)</label>
+                        <select id="property_tax_monthly_band" name="property_tax_monthly_band">
+                            <option value="unknown">Unknown</option>
+                            <option value="<300">Less than $300/month</option>
+                            <option value="300-700">$300 - $700/month</option>
+                            <option value="700+">$700+/month</option>
+                        </select>
+                        <small>For informational purposes (prorated at closing)</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: Optional -->
+            <div class="form-section">
+                <h2>Property Improvements (Optional)</h2>
+                <div class="form-group">
+                    <label for="improvements_last_2y">Major Improvements in Last 2 Years</label>
+                    <select id="improvements_last_2y" name="improvements_last_2y">
+                        <option value="">Select...</option>
+                        <option value="none">None</option>
+                        <option value="minor">Minor (paint, landscaping, etc.)</option>
+                        <option value="major">Major (kitchen, bath, roof, HVAC, etc.)</option>
+                    </select>
+                    <small>Helps us understand your property's condition</small>
+                </div>
+            </div>
+
+            <!-- CALCULATE BUTTON -->
+            <div class="button-group">
+                <button type="button" id="calculate-btn" class="btn btn-primary">
+                    Calculate My Net Proceeds
+                </button>
+            </div>
+        </form>
+
+        <!-- RESULTS SECTION (hidden initially) -->
+        <div id="results-section" style="display: none;">
+            <h2>Your Estimated Net Proceeds</h2>
+
+            <div class="results-breakdown">
+                <div class="result-row">
+                    <span class="result-label">Estimated Sale Price:</span>
+                    <span class="result-value" id="result-gross">$0</span>
+                </div>
+
+                <div class="result-row">
+                    <span class="result-label">Commission: <span class="result-note" id="result-commission-percent"></span></span>
+                    <span class="result-value" id="result-commission">$0</span>
+                </div>
+
+                <div class="result-row">
+                    <span class="result-label">Seller Concessions: <span class="result-note" id="result-concessions-percent"></span></span>
+                    <span class="result-value" id="result-concessions">$0</span>
+                </div>
+
+                <div class="result-row">
+                    <span class="result-label">Closing Costs: <span class="result-note" id="result-closing-percent"></span></span>
+                    <span class="result-value" id="result-closing">$0</span>
+                </div>
+
+                <div class="result-row">
+                    <span class="result-label">Estimated Mortgage Payoff:</span>
+                    <span class="result-value" id="result-payoff-range">$0</span>
+                </div>
+
+                <div class="result-row net-range">
+                    <span class="result-label">Your Net Proceeds Range:</span>
+                    <span class="result-value" id="result-net-range">$0 – $0</span>
+                </div>
+            </div>
+
+            <div class="assumptions">
+                <h3>⚠️ Important Assumptions</h3>
+                <ul id="assumptions-list"></ul>
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="export-pdf-btn" class="btn btn-secondary">
+                    Download PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- CMA REQUEST SECTION -->
+        <div id="cma-request-section">
+            <h2>Want a Detailed Market Analysis?</h2>
+            <p>Our free Comparative Market Analysis (CMA) includes:</p>
+            <ul style="margin-bottom: 2rem; color: #666;">
+                <li>✓ Detailed comps from your neighborhood</li>
+                <li>✓ Accurate price recommendation</li>
+                <li>✓ Marketing strategy review</li>
+                <li>✓ No obligation—just expert insights</li>
+            </ul>
+
+            <form id="cma-request-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cma_name">Name</label>
+                        <input type="text" id="cma_name" name="name" placeholder="John Smith">
+                        <small>Optional</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cma_email">Email *</label>
+                        <input type="email" id="cma_email" name="email" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cma_phone">Phone</label>
+                        <input type="tel" id="cma_phone" name="phone" placeholder="(614) 555-1234">
+                        <small>Required if you enable SMS consent below</small>
+                    </div>
+                </div>
+
+                <div class="consent-group">
+                    <input type="checkbox" id="consent_email" name="consent_email">
+                    <label for="consent_email">Yes, I'd like to receive market updates and insights via email.</label>
+                </div>
+
+                <div class="consent-group">
+                    <input type="checkbox" id="consent_sms" name="consent_sms">
+                    <label for="consent_sms">Yes, I'd like to receive updates via SMS/text message.</label>
+                </div>
+
+                <div class="turnstile-container">
+                    <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Request Free CMA Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="logo">
+                    <span class="logo-td">TD</span>
+                    <span class="logo-text">Realty Ohio</span>
+                </div>
+                <p>Columbus, Ohio's 1% Commission Realty</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="../sellers.html">For Sellers</a></li>
+                        <li><a href="../buyers.html">For Buyers</a></li>
+                        <li><a href="../pre-listing-inspection.html">Pre-Listing Inspection</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="../about.html">About Us</a></li>
+                        <li><a href="../contact.html">Contact</a></li>
+                        <li><a href="../compare.html">Compare Rates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:+16149568656">(614) 956-8656</a></li>
+                        <li><a href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a></li>
+                        <li>Columbus, Ohio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 TD Realty Ohio, LLC. All rights reserved. | <a href="../legal/privacy.html">Privacy Policy</a> | <a href="../legal/terms.html">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/analytics.js"></script>
+    <script src="../assets/js/net-sheet.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

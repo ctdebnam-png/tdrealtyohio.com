@@ -1,0 +1,437 @@
+/**
+ * TD Realty Ohio - Net Sheet Calculator Styles
+ */
+
+/* =============================================================================
+   FORM LAYOUT
+   ============================================================================= */
+
+.net-sheet-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.net-sheet-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.net-sheet-header h1 {
+  font-size: 2.5rem;
+  color: #0B2340;
+  margin-bottom: 0.5rem;
+}
+
+.net-sheet-header p {
+  font-size: 1.125rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.form-section {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2 {
+  font-size: 1.5rem;
+  color: #0B2340;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #C1393D;
+  padding-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #C1393D;
+  box-shadow: 0 0 0 3px rgba(193, 57, 61, 0.1);
+}
+
+.form-group small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.form-group.required label::after {
+  content: ' *';
+  color: #C1393D;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.error-message {
+  color: #C1393D;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: #C1393D;
+  color: white;
+  flex: 1;
+  min-width: 200px;
+}
+
+.btn-primary:hover {
+  background: #a02f33;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(193, 57, 61, 0.3);
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background: #0B2340;
+  color: white;
+  flex: 1;
+  min-width: 200px;
+}
+
+.btn-secondary:hover {
+  background: #081933;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(11, 35, 64, 0.3);
+}
+
+/* =============================================================================
+   RESULTS DISPLAY
+   ============================================================================= */
+
+#results-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+#results-section h2 {
+  font-size: 2rem;
+  color: #0B2340;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.results-breakdown {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1.125rem;
+}
+
+.result-row:last-child {
+  border-bottom: none;
+}
+
+.result-row.total {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0B2340;
+  border-top: 3px solid #C1393D;
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.result-row.net-range {
+  background: #e8f5e9;
+  margin: 1rem -1rem 0 -1rem;
+  padding: 1.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.result-label {
+  color: #666;
+}
+
+.result-value {
+  font-weight: 600;
+  color: #333;
+}
+
+.result-note {
+  font-size: 0.875rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.assumptions {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-top: 2rem;
+}
+
+.assumptions h3 {
+  font-size: 1.25rem;
+  color: #856404;
+  margin-bottom: 1rem;
+}
+
+.assumptions ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.assumptions li {
+  margin-bottom: 0.5rem;
+  color: #856404;
+  font-size: 0.95rem;
+}
+
+/* =============================================================================
+   CMA REQUEST FORM
+   ============================================================================= */
+
+#cma-request-section {
+  background: white;
+  border: 2px solid #C1393D;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+#cma-request-section h2 {
+  color: #C1393D;
+  margin-bottom: 1rem;
+}
+
+#cma-request-section p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.consent-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.consent-group input[type="checkbox"] {
+  width: auto;
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.consent-group label {
+  margin: 0;
+  font-weight: normal;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.turnstile-container {
+  margin: 1.5rem 0;
+}
+
+.success-message {
+  text-align: center;
+  padding: 2rem;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  color: #155724;
+}
+
+.success-message h3 {
+  color: #155724;
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+}
+
+.success-message p {
+  color: #155724;
+  margin-bottom: 1rem;
+}
+
+/* =============================================================================
+   PRINT STYLES (for PDF export)
+   ============================================================================= */
+
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show only results section */
+  #results-section,
+  #results-section * {
+    visibility: visible;
+  }
+
+  #results-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white;
+    padding: 1cm;
+    margin: 0;
+  }
+
+  /* Hide buttons and interactive elements */
+  .button-group,
+  #export-pdf-btn,
+  #cma-request-section,
+  .nav,
+  .header,
+  .footer {
+    display: none !important;
+  }
+
+  /* Optimize print layout */
+  .results-breakdown {
+    page-break-inside: avoid;
+  }
+
+  .result-row.net-range {
+    background: #f0f0f0;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .assumptions {
+    page-break-inside: avoid;
+    background: #f9f9f9;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Add header to print */
+  #results-section::before {
+    content: "TD Realty Ohio - Net Proceeds Estimate";
+    display: block;
+    font-size: 18pt;
+    font-weight: bold;
+    margin-bottom: 1cm;
+    text-align: center;
+    color: #0B2340;
+  }
+
+  /* Add footer to print */
+  #results-section::after {
+    content: "TD Realty Ohio | (614) 956-8656 | tdrealtyohio.com";
+    display: block;
+    font-size: 10pt;
+    margin-top: 1cm;
+    padding-top: 0.5cm;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    color: #666;
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+
+@media (max-width: 768px) {
+  .net-sheet-header h1 {
+    font-size: 2rem;
+  }
+
+  .form-section {
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .result-row {
+    font-size: 1rem;
+  }
+
+  .result-row.total {
+    font-size: 1.25rem;
+  }
+
+  .result-row.net-range {
+    font-size: 1.5rem;
+  }
+}
