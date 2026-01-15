@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Detail - Outcome Tracker</title>
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+  <div class="header">
+    <h1>Lead Detail & Outcome Entry</h1>
+  </div>
+
+  <div class="container">
+    <div id="loading" class="loading">Loading lead details...</div>
+
+    <div id="lead-content" style="display: none;">
+      <!-- Lead Summary Card -->
+      <div class="card">
+        <h2 class="card-title">Lead Summary</h2>
+        <div id="lead-summary"></div>
+      </div>
+
+      <!-- Record Outcome Card -->
+      <div class="card">
+        <h2 class="card-title">Record Outcome</h2>
+        <form id="outcome-form">
+          <div class="form-group">
+            <label for="outcome-type">Outcome Type*</label>
+            <select id="outcome-type" required>
+              <option value="">Select outcome...</option>
+              <option value="contacted">Contacted</option>
+              <option value="appointment_set">Appointment Set</option>
+              <option value="listing_signed">Listing Signed</option>
+              <option value="buyer_agreement">Buyer Agreement</option>
+              <option value="closed_won">Closed Won</option>
+              <option value="closed_lost">Closed Lost</option>
+              <option value="invalid">Invalid</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="occurred-at">Occurred At</label>
+            <input type="datetime-local" id="occurred-at">
+            <small style="color: var(--text-muted);">Leave blank to use current time</small>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" placeholder="Add any relevant notes..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Record Outcome</button>
+        </form>
+      </div>
+
+      <!-- Outcome Timeline Card -->
+      <div class="card">
+        <h2 class="card-title">Outcome History</h2>
+        <div id="outcome-timeline" class="timeline"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/admin.js"></script>
+  <script>
+    const leadId = new URLSearchParams(window.location.search).get('id');
+    const tenantSlug = getTenantSlug();
+
+    // Load lead details
+    async function loadLeadDetails() {
+      try {
+        const [leadData, outcomesData] = await Promise.all([
+          apiRequest(`/api/t/${tenantSlug}/leads/${leadId}`),
+          apiRequest(`/api/t/${tenantSlug}/leads/${leadId}/outcomes`)
+        ]);
+
+        renderLeadSummary(leadData.data);
+        renderOutcomeTimeline(outcomesData.data);
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('lead-content').style.display = 'block';
+      } catch (error) {
+        document.getElementById('loading').innerHTML = `<div class="alert alert-error">Error: ${error.message}</div>`;
+      }
+    }
+
+    function renderLeadSummary(lead) {
+      const html = `
+        <p><strong>ID:</strong> ${lead.id}</p>
+        <p><strong>Source:</strong> <span class="badge badge-info">${lead.source_key}</span></p>
+        <p><strong>Geo:</strong> <span class="badge badge-info">${lead.geo_key}</span></p>
+        <p><strong>Intent:</strong> ${lead.intent_type || 'N/A'}</p>
+        <p><strong>Timeline:</strong> ${lead.timeline_bucket || 'N/A'}</p>
+        <p><strong>Tier:</strong> <span class="badge ${lead.tier === 'A' ? 'badge-success' : lead.tier === 'B' ? 'badge-info' : 'badge-warning'}">${lead.tier || 'N/A'}</span></p>
+        <p><strong>Last Activity:</strong> ${formatDateTime(lead.last_activity_at)}</p>
+      `;
+      document.getElementById('lead-summary').innerHTML = html;
+    }
+
+    function renderOutcomeTimeline(outcomes) {
+      if (outcomes.length === 0) {
+        document.getElementById('outcome-timeline').innerHTML = '<p class="empty-state">No outcomes recorded yet</p>';
+        return;
+      }
+
+      const html = outcomes.map(outcome => `
+        <div class="timeline-item">
+          <div>
+            <strong>${outcome.outcome_type.replace(/_/g, ' ')}</strong>
+            <span class="badge ${getStageBadge(outcome.outcome_stage)}">${outcome.outcome_stage}</span>
+          </div>
+          <div style="font-size: 0.875rem; color: var(--text-muted);">
+            ${formatDateTime(outcome.occurred_at)} • ${outcome.recorded_by}
+          </div>
+          ${outcome.notes ? `<p style="margin-top: 0.5rem;">${outcome.notes}</p>` : ''}
+          ${outcome.metadata.warnings && outcome.metadata.warnings.length > 0 ? `
+            <div class="alert alert-warning" style="margin-top: 0.5rem; padding: 0.5rem;">
+              ${outcome.metadata.warnings.join(', ')}
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+
+      document.getElementById('outcome-timeline').innerHTML = html;
+    }
+
+    function getStageBadge(stage) {
+      const map = {
+        'top_of_funnel': 'badge-info',
+        'mid_funnel': 'badge-warning',
+        'won': 'badge-success',
+        'lost': 'badge-danger',
+        'invalid': 'badge-danger'
+      };
+      return map[stage] || 'badge-info';
+    }
+
+    // Handle form submission
+    document.getElementById('outcome-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const outcomeType = document.getElementById('outcome-type').value;
+      const occurredAt = document.getElementById('occurred-at').value;
+      const notes = document.getElementById('notes').value;
+
+      try {
+        const result = await apiRequest(`/api/t/${tenantSlug}/outcomes`, {
+          method: 'POST',
+          body: JSON.stringify({
+            lead_id: leadId,
+            outcome_type: outcomeType,
+            occurred_at: occurredAt || undefined,
+            notes: notes || undefined,
+          }),
+        });
+
+        if (result.warnings && result.warnings.length > 0) {
+          showWarning(`Outcome recorded with warnings: ${result.warnings.join(', ')}`);
+        } else {
+          showSuccess('Outcome recorded successfully!');
+        }
+
+        // Reload timeline
+        const outcomesData = await apiRequest(`/api/t/${tenantSlug}/leads/${leadId}/outcomes`);
+        renderOutcomeTimeline(outcomesData.data);
+
+        // Reset form
+        document.getElementById('outcome-form').reset();
+      } catch (error) {
+        showError(error.message);
+      }
+    });
+
+    // Initialize
+    loadLeadDetails();
+  </script>
+</body>
+</html>

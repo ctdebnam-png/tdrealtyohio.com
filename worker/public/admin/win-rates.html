@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Win Rates Dashboard - Outcome Tracker</title>
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+  <div class="header">
+    <h1>Local Win Rates Dashboard</h1>
+  </div>
+
+  <div class="container">
+    <!-- Filters -->
+    <div class="card">
+      <div class="filters">
+        <div class="form-group">
+          <label for="from-week">From Week</label>
+          <input type="week" id="from-week">
+        </div>
+        <div class="form-group">
+          <label for="to-week">To Week</label>
+          <input type="week" id="to-week">
+        </div>
+        <div class="form-group">
+          <label for="intent-type">Intent Type</label>
+          <select id="intent-type">
+            <option value="all">All</option>
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="min-denom">Min Closed (Won+Lost)</label>
+          <input type="number" id="min-denom" value="5" min="1">
+        </div>
+      </div>
+      <button onclick="applyFilters()" class="btn btn-primary">Apply Filters</button>
+      <button onclick="exportData()" class="btn btn-success" style="margin-left: 0.5rem;">Export CSV</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('source')">By Source</div>
+      <div class="tab" onclick="switchTab('geo')">By Geo</div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="card">
+      <div id="loading" class="loading">Loading win rates...</div>
+      <div id="data-content" style="display: none;">
+        <table class="table" id="win-rates-table">
+          <thead>
+            <tr>
+              <th id="key-header">Source</th>
+              <th>Intent</th>
+              <th>Leads</th>
+              <th>Appointments</th>
+              <th>Appt Rate</th>
+              <th>Won</th>
+              <th>Lost</th>
+              <th>Win Rate</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/admin.js"></script>
+  <script>
+    const tenantSlug = getTenantSlug();
+    let currentTab = 'source';
+    let currentData = [];
+
+    // Initialize date inputs to last 4 weeks
+    function initializeDates() {
+      const today = new Date();
+      const toWeek = getWeekString(today);
+      const fromDate = new Date(today);
+      fromDate.setDate(fromDate.getDate() - 28);
+      const fromWeek = getWeekString(fromDate);
+
+      document.getElementById('to-week').value = toWeek;
+      document.getElementById('from-week').value = fromWeek;
+    }
+
+    function getWeekString(date) {
+      const year = date.getFullYear();
+      const startOfYear = new Date(year, 0, 1);
+      const days = Math.floor((date - startOfYear) / (24 * 60 * 60 * 1000));
+      const week = Math.ceil((days + startOfYear.getDay() + 1) / 7);
+      return `${year}-W${String(week).padStart(2, '0')}`;
+    }
+
+    function convertWeekInputToYYYYWW(weekInput) {
+      // Convert from "YYYY-Www" to "YYYY-WW"
+      return weekInput.replace('-W', '-');
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+
+      // Update tab styles
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Update table header
+      document.getElementById('key-header').textContent = tab === 'source' ? 'Source' : 'Geo';
+
+      // Reload data
+      loadWinRates();
+    }
+
+    async function loadWinRates() {
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('data-content').style.display = 'none';
+
+      try {
+        const fromWeek = convertWeekInputToYYYYWW(document.getElementById('from-week').value);
+        const toWeek = convertWeekInputToYYYYWW(document.getElementById('to-week').value);
+        const intentType = document.getElementById('intent-type').value;
+        const minDenom = document.getElementById('min-denom').value;
+
+        const params = new URLSearchParams({
+          from: fromWeek,
+          to: toWeek,
+          intent_type: intentType,
+          min_denominator: minDenom,
+        });
+
+        const endpoint = currentTab === 'source' ? 'by-source' : 'by-geo';
+        const result = await apiRequest(`/api/t/${tenantSlug}/win-rates/${endpoint}?${params}`);
+
+        currentData = result.data;
+        renderTable(currentData);
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('data-content').style.display = 'block';
+      } catch (error) {
+        document.getElementById('loading').innerHTML = `<div class="alert alert-error">Error: ${error.message}</div>`;
+      }
+    }
+
+    function renderTable(data) {
+      if (data.length === 0) {
+        document.getElementById('table-body').innerHTML = '<tr><td colspan="8" class="empty-state">No data found</td></tr>';
+        return;
+      }
+
+      const rows = data.map(row => `
+        <tr>
+          <td><strong>${row.key}</strong></td>
+          <td>${row.intent_type}</td>
+          <td>${row.leads_entered}</td>
+          <td>${row.appointments}</td>
+          <td>${formatPercent(row.appointment_rate)}</td>
+          <td><span class="badge badge-success">${row.won}</span></td>
+          <td><span class="badge badge-danger">${row.lost}</span></td>
+          <td><strong>${formatPercent(row.win_rate)}</strong></td>
+        </tr>
+      `).join('');
+
+      document.getElementById('table-body').innerHTML = rows;
+    }
+
+    function applyFilters() {
+      loadWinRates();
+    }
+
+    function exportData() {
+      const fromWeek = convertWeekInputToYYYYWW(document.getElementById('from-week').value);
+      const toWeek = convertWeekInputToYYYYWW(document.getElementById('to-week').value);
+      const intentType = document.getElementById('intent-type').value;
+      const minDenom = document.getElementById('min-denom').value;
+
+      const params = new URLSearchParams({
+        from: fromWeek,
+        to: toWeek,
+        intent_type: intentType,
+        min_denominator: minDenom,
+        type: currentTab,
+      });
+
+      window.location.href = `/api/t/${tenantSlug}/win-rates/export?${params}`;
+    }
+
+    // Initialize
+    initializeDates();
+    loadWinRates();
+  </script>
+</body>
+</html>

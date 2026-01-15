@@ -1,0 +1,31 @@
+name = "td-realty-outcome-tracker"
+main = "src/index.ts"
+compatibility_date = "2024-01-15"
+compatibility_flags = ["nodejs_compat"]
+
+# D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "td-realty-leads"
+database_id = "YOUR_D1_DATABASE_ID"  # Replace after creating database
+
+# KV Namespace (for auth sessions and caching)
+[[kv_namespaces]]
+binding = "AUTH"
+id = "YOUR_KV_NAMESPACE_ID"  # Replace after creating KV namespace
+
+# Cron Triggers
+[triggers]
+crons = [
+  "0 2 * * 0",   # Weekly aggregation: Sunday 2am UTC
+  "0 6 * * *"    # Daily nudges: Daily 6am UTC
+]
+
+# Environment Variables
+[vars]
+ENVIRONMENT = "production"
+
+# Development overrides
+[env.development]
+[env.development.vars]
+ENVIRONMENT = "development"
