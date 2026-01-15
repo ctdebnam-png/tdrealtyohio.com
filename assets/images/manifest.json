@@ -1,0 +1,211 @@
+{
+  "version": "2.0.0",
+  "generated": "2026-01-15T10:50:15.245Z",
+  "images": {
+    "home": {
+      "hero": {
+        "url": "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6",
+        "params": "w=1920&h=1080&fit=crop&q=85",
+        "alt": "Beautiful Columbus Ohio neighborhood with modern homes, tree-lined streets, and blue sky - TD Realty Ohio 1% commission real estate",
+        "sizes": {
+          "desktop": "w=1920",
+          "tablet": "w=1024",
+          "mobile": "w=640"
+        }
+      },
+      "features": [
+        {
+          "id": "commission",
+          "name": "icon-commission.svg",
+          "alt": "1% commission rate - save thousands on your home sale",
+          "svg": true
+        },
+        {
+          "id": "inspection",
+          "name": "icon-inspection.svg",
+          "alt": "Pre-listing inspection included with every listing",
+          "svg": true
+        },
+        {
+          "id": "fullservice",
+          "name": "icon-fullservice.svg",
+          "alt": "Full-service real estate brokerage - not discount service",
+          "svg": true
+        },
+        {
+          "id": "local",
+          "name": "icon-local.svg",
+          "alt": "Central Ohio expertise - serving Columbus since 2017",
+          "svg": true
+        }
+      ],
+      "ogImage": {
+        "url": "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6",
+        "params": "w=1200&h=630&fit=crop&q=80",
+        "alt": "TD Realty Ohio - 1% Commission Real Estate Columbus"
+      }
+    },
+    "sellers": {
+      "hero": {
+        "url": "https://images.unsplash.com/photo-1560184897-ae75f418493e",
+        "params": "w=1920&h=1080&fit=crop&q=85",
+        "alt": "Stunning home exterior for sale in Columbus Ohio - professional real estate photography",
+        "sizes": {
+          "desktop": "w=1920",
+          "tablet": "w=1024",
+          "mobile": "w=640"
+        }
+      },
+      "ogImage": {
+        "url": "https://images.unsplash.com/photo-1560184897-ae75f418493e",
+        "params": "w=1200&h=630&fit=crop&q=80",
+        "alt": "Sell Your Columbus Home for 1% Commission"
+      }
+    },
+    "buyers": {
+      "hero": {
+        "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+        "params": "w=1920&h=1080&fit=crop&q=85",
+        "alt": "Beautiful home interior welcoming new homebuyers in Central Ohio",
+        "sizes": {
+          "desktop": "w=1920",
+          "tablet": "w=1024",
+          "mobile": "w=640"
+        }
+      },
+      "ogImage": {
+        "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+        "params": "w=1200&h=630&fit=crop&q=80",
+        "alt": "Buy Your Columbus Home with Expert Guidance"
+      }
+    },
+    "inspection": {
+      "hero": {
+        "url": "https://images.unsplash.com/photo-1581578731548-c64695cc6952",
+        "params": "w=1920&h=1080&fit=crop&q=85",
+        "alt": "Professional home inspector examining property - pre-listing inspection included",
+        "sizes": {
+          "desktop": "w=1920",
+          "tablet": "w=1024",
+          "mobile": "w=640"
+        }
+      },
+      "ogImage": {
+        "url": "https://images.unsplash.com/photo-1581578731548-c64695cc6952",
+        "params": "w=1200&h=630&fit=crop&q=80",
+        "alt": "Free Pre-Listing Inspection with Every TD Realty Listing"
+      }
+    },
+    "about": {
+      "hero": {
+        "url": "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+        "params": "w=1920&h=1080&fit=crop&q=85",
+        "alt": "Professional real estate broker serving Columbus Ohio communities",
+        "sizes": {
+          "desktop": "w=1920",
+          "tablet": "w=1024",
+          "mobile": "w=640"
+        }
+      },
+      "ogImage": {
+        "url": "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+        "params": "w=1200&h=630&fit=crop&q=80",
+        "alt": "About TD Realty Ohio - Your Central Ohio Real Estate Expert"
+      }
+    },
+    "contact": {
+      "ogImage": {
+        "url": "https://images.unsplash.com/photo-1534536281715-e28d76689b4d",
+        "params": "w=1200&h=630&fit=crop&q=80",
+        "alt": "Contact TD Realty Ohio - (614) 956-8656"
+      }
+    },
+    "areas": {
+      "columbus": {
+        "url": "https://images.unsplash.com/photo-1464146072230-91cabc968266",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Columbus Ohio downtown skyline and neighborhoods - real estate market"
+      },
+      "dublin": {
+        "url": "https://images.unsplash.com/photo-1560518883-ce09059eeffa",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Dublin Ohio suburban homes with award-winning schools"
+      },
+      "westerville": {
+        "url": "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Westerville Ohio uptown charm and residential neighborhoods"
+      },
+      "powell": {
+        "url": "https://images.unsplash.com/photo-1570129477492-45c003edd2be",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Powell Ohio family-friendly neighborhoods and homes"
+      },
+      "new-albany": {
+        "url": "https://images.unsplash.com/photo-1605146769289-440113cc3d00",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "New Albany Ohio executive homes and upscale communities"
+      },
+      "upper-arlington": {
+        "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Upper Arlington Ohio established community with tree-lined streets"
+      },
+      "hilliard": {
+        "url": "https://images.unsplash.com/photo-1523217582562-09d0def993a6",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Hilliard Ohio suburban homes and growing community"
+      },
+      "gahanna": {
+        "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Gahanna Ohio creekside homes and neighborhoods"
+      },
+      "worthington": {
+        "url": "https://images.unsplash.com/photo-1567496898647-8aa1e0d7d774",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Worthington Ohio historic homes and charming downtown"
+      },
+      "delaware": {
+        "url": "https://images.unsplash.com/photo-1572120360610-d971b9d7767c",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Delaware Ohio county homes and growing communities"
+      },
+      "lewis-center": {
+        "url": "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Lewis Center Ohio growing suburban community"
+      },
+      "galena": {
+        "url": "https://images.unsplash.com/photo-1576941089067-2de3c901e126",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Galena Ohio rural and suburban homes"
+      },
+      "sunbury": {
+        "url": "https://images.unsplash.com/photo-1613977257363-707ba9348227",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Sunbury Ohio residential neighborhoods"
+      },
+      "pickerington": {
+        "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Pickerington Ohio homes and family communities"
+      },
+      "pataskala": {
+        "url": "https://images.unsplash.com/photo-1592595896551-12b371d546d5",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Pataskala Ohio neighborhood homes"
+      },
+      "blacklick": {
+        "url": "https://images.unsplash.com/photo-1598228723793-52759bba239c",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Blacklick Ohio residential area homes"
+      },
+      "clintonville": {
+        "url": "https://images.unsplash.com/photo-1575517111478-7f6afd0973db",
+        "params": "w=800&h=600&fit=crop&q=85",
+        "alt": "Clintonville Columbus neighborhood with historic homes"
+      }
+    }
+  }
+}
