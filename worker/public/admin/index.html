@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Outcome Tracker</title>
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+  <div class="header">
+    <h1>Outcome Tracker Admin Dashboard</h1>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2 class="card-title">Welcome to Outcome Capture v1</h2>
+      <p>Use the navigation below to access different features:</p>
+    </div>
+
+    <!-- Navigation Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+      <a href="win-rates.html" style="text-decoration: none;">
+        <div class="card" style="cursor: pointer; transition: transform 0.2s;">
+          <h3 style="color: var(--primary);">📊 Win Rates Dashboard</h3>
+          <p style="color: var(--text-muted);">View conversion metrics by source and geography</p>
+        </div>
+      </a>
+
+      <a href="missing-outcomes.html" style="text-decoration: none;">
+        <div class="card" style="cursor: pointer; transition: transform 0.2s;">
+          <h3 style="color: var(--warning);">⚠️ Missing Outcomes</h3>
+          <p style="color: var(--text-muted);">Leads needing outcome updates (7+ days stale)</p>
+        </div>
+      </a>
+
+      <a href="bulk-outcomes.html" style="text-decoration: none;">
+        <div class="card" style="cursor: pointer; transition: transform 0.2s;">
+          <h3 style="color: var(--success);">✅ Bulk Outcomes</h3>
+          <p style="color: var(--text-muted);">Apply outcomes to multiple leads at once</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Quick Stats (placeholder) -->
+    <div class="card" style="margin-top: 2rem;">
+      <h2 class="card-title">Quick Stats (This Week)</h2>
+      <div id="stats-loading" class="loading">Loading statistics...</div>
+      <div id="stats-content" style="display: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div>
+          <div style="font-size: 2rem; font-weight: 600; color: var(--primary);" id="stat-leads">-</div>
+          <div style="color: var(--text-muted);">Leads with Outcomes</div>
+        </div>
+        <div>
+          <div style="font-size: 2rem; font-weight: 600; color: var(--success);" id="stat-won">-</div>
+          <div style="color: var(--text-muted);">Closed Won</div>
+        </div>
+        <div>
+          <div style="font-size: 2rem; font-weight: 600; color: var(--danger);" id="stat-lost">-</div>
+          <div style="color: var(--text-muted);">Closed Lost</div>
+        </div>
+        <div>
+          <div style="font-size: 2rem; font-weight: 600; color: var(--text);" id="stat-rate">-</div>
+          <div style="color: var(--text-muted);">Win Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Info -->
+    <div class="card">
+      <h2 class="card-title">System Information</h2>
+      <p><strong>Version:</strong> Outcome Capture v1.0</p>
+      <p><strong>Tenant:</strong> <span id="tenant-slug">-</span></p>
+      <p><strong>Environment:</strong> Cloudflare Workers + D1</p>
+    </div>
+  </div>
+
+  <script src="assets/admin.js"></script>
+  <script>
+    const tenantSlug = getTenantSlug();
+    document.getElementById('tenant-slug').textContent = tenantSlug;
+
+    // Load quick stats (mock for now)
+    async function loadStats() {
+      // In production, this would call a real stats API
+      setTimeout(() => {
+        document.getElementById('stat-leads').textContent = '24';
+        document.getElementById('stat-won').textContent = '8';
+        document.getElementById('stat-lost').textContent = '3';
+        document.getElementById('stat-rate').textContent = '72.7%';
+
+        document.getElementById('stats-loading').style.display = 'none';
+        document.getElementById('stats-content').style.display = 'grid';
+      }, 500);
+    }
+
+    loadStats();
+  </script>
+</body>
+</html>

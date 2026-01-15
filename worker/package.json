@@ -1,0 +1,27 @@
+{
+  "name": "td-realty-outcome-tracker",
+  "version": "1.0.0",
+  "description": "Outcome Capture v1 - Lead outcome tracking and win rate analytics",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "migrations:apply": "wrangler d1 migrations apply td-realty-leads",
+    "migrations:list": "wrangler d1 migrations list td-realty-leads",
+    "db:execute": "wrangler d1 execute td-realty-leads"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0",
+    "wrangler": "^3.90.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
