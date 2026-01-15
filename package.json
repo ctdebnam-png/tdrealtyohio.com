@@ -14,22 +14,28 @@
     "validate:links": "node scripts/media_pipeline/validate_links.js",
     "media:sync": "tsx scripts/media-sync.ts",
     "media:verify": "tsx scripts/media-verify.ts",
+    "intelligent:test": "node scripts/intelligent-media/test.js",
+    "intelligent:batch": "node scripts/intelligent-media/batch.js",
+    "intelligent:stats": "node scripts/intelligent-media/stats.js",
+    "intelligent:refresh": "node scripts/intelligent-media/refresh.js",
     "prebuild": "npm run media:sync || true",
     "postbuild": "npm run media:verify"
   },
   "dependencies": {
-    "axios": "^1.6.5",
-    "sharp": "^0.33.1",
+    "@aws-sdk/client-s3": "^3.490.0",
+    "@aws-sdk/lib-storage": "^3.490.0",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
+    "axios": "^1.6.5",
+    "dotenv": "^16.6.1",
     "jsdom": "^23.0.1",
-    "@aws-sdk/client-s3": "^3.490.0",
-    "@aws-sdk/lib-storage": "^3.490.0"
+    "sharp": "^0.33.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "@types/node": "^20.11.0",
     "tsx": "^4.7.0",
-    "typescript": "^5.3.3",
-    "@types/node": "^20.11.0"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
