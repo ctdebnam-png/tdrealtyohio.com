@@ -1,0 +1,159 @@
+{
+  "categories": {
+    "hero": {
+      "name": "Hero Images",
+      "minResolution": 1920,
+      "aspectRatio": 1.78,
+      "pages": {
+        "homepage": {
+          "keywords": ["Columbus Ohio luxury homes skyline", "modern real estate professional", "Columbus Ohio downtown skyline"],
+          "fallbacks": ["luxury real estate", "professional realtor", "modern home"],
+          "count": 1
+        },
+        "services-selling": {
+          "keywords": ["for sale sign sold", "happy family moving home", "sold house celebration"],
+          "fallbacks": ["real estate for sale", "home selling", "property sale"],
+          "count": 1
+        },
+        "services-buying": {
+          "keywords": ["couple with house keys new home", "homeowners celebration new house", "happy family new home keys"],
+          "fallbacks": ["home buyers", "new homeowners", "house keys"],
+          "count": 1
+        },
+        "pre-listing-inspection": {
+          "keywords": ["home inspector professional clipboard", "house inspection professional", "home inspector examining property"],
+          "fallbacks": ["home inspection", "property inspector", "house examination"],
+          "count": 1
+        },
+        "calculator": {
+          "keywords": ["calculator money savings real estate", "home value financial planning", "real estate commission calculator"],
+          "fallbacks": ["financial calculator", "money savings", "home finance"],
+          "count": 1
+        }
+      }
+    },
+    "neighborhood": {
+      "name": "Neighborhood Pages",
+      "minResolution": 1600,
+      "aspectRatio": 1.5,
+      "locations": {
+        "dublin": {
+          "primary": ["Dublin Columbus Ohio homes", "Dublin OH residential street", "Dublin Ohio suburban homes"],
+          "fallbacks": ["Ohio suburban homes", "Midwest residential neighborhood", "American family neighborhood"],
+          "count": 5
+        },
+        "worthington": {
+          "primary": ["Worthington Columbus Ohio homes", "Worthington OH residential street", "Worthington Ohio neighborhood"],
+          "fallbacks": ["Ohio suburban homes", "Midwest residential neighborhood", "historic neighborhood"],
+          "count": 5
+        },
+        "bexley": {
+          "primary": ["Bexley Columbus Ohio homes", "Bexley OH residential street", "Bexley Ohio historic homes"],
+          "fallbacks": ["Ohio historic homes", "historic neighborhood", "American family neighborhood"],
+          "count": 5
+        },
+        "upper-arlington": {
+          "primary": ["Upper Arlington Columbus Ohio homes", "Upper Arlington OH residential", "Upper Arlington neighborhood"],
+          "fallbacks": ["Ohio suburban homes", "upscale neighborhood", "family neighborhood"],
+          "count": 5
+        },
+        "grandview-heights": {
+          "primary": ["Grandview Heights Columbus Ohio", "Grandview Heights OH homes", "Grandview Columbus neighborhood"],
+          "fallbacks": ["Ohio suburban homes", "walkable neighborhood", "urban neighborhood"],
+          "count": 5
+        },
+        "german-village": {
+          "primary": ["German Village Columbus Ohio", "German Village OH historic", "Columbus German Village brick homes"],
+          "fallbacks": ["historic brick homes", "urban historic neighborhood", "German architecture"],
+          "count": 5
+        },
+        "new-albany": {
+          "primary": ["New Albany Columbus Ohio homes", "New Albany OH residential", "New Albany luxury homes"],
+          "fallbacks": ["luxury suburban homes", "upscale neighborhood", "Ohio luxury real estate"],
+          "count": 5
+        },
+        "powell": {
+          "primary": ["Powell Columbus Ohio homes", "Powell OH residential", "Powell Ohio neighborhood"],
+          "fallbacks": ["Ohio suburban homes", "family neighborhood", "Midwest suburb"],
+          "count": 5
+        }
+      }
+    },
+    "blog": {
+      "name": "Blog Content Images",
+      "minResolution": 1200,
+      "aspectRatio": 1.5,
+      "topics": {
+        "commission-savings": {
+          "keywords": ["calculator money savings", "financial savings planning", "piggy bank money"],
+          "count": 3
+        },
+        "market-updates": {
+          "keywords": ["housing market trends", "real estate market data", "Columbus skyline business"],
+          "count": 3
+        },
+        "home-tips": {
+          "keywords": ["home maintenance tools", "house staging interior", "curb appeal landscaping"],
+          "count": 3
+        },
+        "process": {
+          "keywords": ["moving boxes home", "home inspection checklist", "closing documents signing"],
+          "count": 3
+        }
+      }
+    },
+    "trust": {
+      "name": "Trust & Social Proof",
+      "minResolution": 800,
+      "aspectRatio": 1.33,
+      "types": {
+        "reviews": {
+          "keywords": ["five star review", "customer satisfaction rating", "happy clients testimonial"],
+          "count": 2
+        },
+        "professional": {
+          "keywords": ["handshake business deal", "professional consultation meeting", "office meeting real estate"],
+          "count": 2
+        },
+        "success": {
+          "keywords": ["success celebration", "thumbs up approval", "happy customer"],
+          "count": 2
+        }
+      }
+    },
+    "icons": {
+      "name": "Icons & Supplementary",
+      "minResolution": 600,
+      "aspectRatio": 1.0,
+      "types": {
+        "calculator": {
+          "keywords": ["calculator icon", "financial calculator", "money calculation"],
+          "count": 1
+        },
+        "savings": {
+          "keywords": ["money savings icon", "piggy bank", "coins savings"],
+          "count": 1
+        },
+        "home": {
+          "keywords": ["home icon", "house symbol", "real estate icon"],
+          "count": 1
+        },
+        "checkmark": {
+          "keywords": ["checkmark icon", "approval symbol", "success checkmark"],
+          "count": 1
+        },
+        "contact": {
+          "keywords": ["phone contact icon", "email communication", "calendar appointment"],
+          "count": 3
+        }
+      }
+    }
+  },
+  "metadata": {
+    "siteName": "TD Realty Ohio",
+    "location": "Columbus, Ohio",
+    "businessType": "Real Estate",
+    "primaryKeywords": ["1% commission realtor", "low commission real estate", "Columbus Ohio realtor"],
+    "brandVoice": "professional but approachable"
+  }
+}
