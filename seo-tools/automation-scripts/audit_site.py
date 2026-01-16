@@ -207,7 +207,7 @@ This automated audit analyzed {len(page_data)} pages on tdrealtyohio.com.
 
 Add these items to your project board and track completion.
 
-**Questions?** Contact Travis Debnam at (614) 956-8656
+**Questions?** Contact Travis Debnam at info@tdrealtyohio.com
 
 ---
 

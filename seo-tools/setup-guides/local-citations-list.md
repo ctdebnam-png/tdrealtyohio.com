@@ -13,9 +13,8 @@ Citations = Your business listed on directories with consistent NAP (Name, Addre
 ```
 Business Name: TD Realty Ohio, LLC
 Address: Westerville, OH 43081  (or full street address if you want)
-Phone: (614) 956-8656
+Email: info@tdrealtyohio.com
 Website: https://tdrealtyohio.com
-Email: travis@tdrealtyohio.com
 ```
 
 **Important:** 
@@ -339,7 +338,7 @@ Facebook: [Facebook review link]
 
 Thank you!
 Travis Debnam
-(614) 956-8656
+info@tdrealtyohio.com
 ```
 
 2. **Make it easy:**

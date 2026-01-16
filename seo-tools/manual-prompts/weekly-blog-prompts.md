@@ -17,7 +17,7 @@ BUSINESS INFO:
 - Service: 1% commission when clients buy AND sell with us (2% for sell-only)
 - Licensed since 2017
 - Broker: Travis Debnam (#2023006467)
-- Phone: (614) 956-8656
+ - Email: info@tdrealtyohio.com
 - Member: Columbus REALTORS® and National Association of REALTORS®
 
 TARGET AUDIENCE: Homeowners in Central Ohio considering selling their home
@@ -40,7 +40,7 @@ REQUIREMENTS:
   * /sellers.html (when mentioning seller services)
   * /buyers.html (when mentioning buying)
   * /pre-listing-inspection.html (when relevant)
-- End with clear CTA: Call (614) 956-8656 or schedule consultation
+   - End with clear CTA: Email info@tdrealtyohio.com or schedule consultation
 - Professional but conversational tone
 - Use specific Columbus neighborhoods and cities
 
@@ -116,7 +116,7 @@ INCLUDE:
 - Commission savings calculator using [City] median price
 - Neighborhoods/areas we serve in [City]
 - FAQ section (3-5 questions)
-- Contact CTA with phone (614) 956-8656
+ - Contact CTA with email info@tdrealtyohio.com
 
 Add proper meta tags and schema markup in HTML comments.
 

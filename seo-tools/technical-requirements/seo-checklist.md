@@ -11,42 +11,42 @@ This checklist covers all technical SEO requirements for tdrealtyohio.com to ran
 **Homepage:**
 ```html
 <title>TD Realty Ohio | 1% Listing Fee Columbus | Full-Service Real Estate</title>
-<meta name="description" content="Sell your Central Ohio home for just 1% commission. Full-service real estate brokerage serving Columbus since 2017. Save thousands. Call (614) 956-8656">
+<meta name="description" content="Sell your Central Ohio home for just 1% commission. Full-service real estate brokerage serving Columbus since 2017. Save thousands. Email info@tdrealtyohio.com">
 <link rel="canonical" href="https://tdrealtyohio.com/">
 ```
 
 **Sellers Page:**
 ```html
 <title>Sell Your Home for 1% Commission | Columbus Ohio Realtor</title>
-<meta name="description" content="List your Columbus home for 1% when you buy with us. Full MLS listing, professional photography, marketing. Licensed broker. Call (614) 956-8656">
+<meta name="description" content="List your Columbus home for 1% when you buy with us. Full MLS listing, professional photography, marketing. Licensed broker. Email info@tdrealtyohio.com">
 <link rel="canonical" href="https://tdrealtyohio.com/sellers.html">
 ```
 
 **Buyers Page:**
 ```html
 <title>Columbus Home Buyers | Free Buyer Representation | TD Realty Ohio</title>
-<meta name="description" content="Buy your Central Ohio home with TD Realty Ohio. Expert representation, local market knowledge. Combine with selling for 1% listing fee. Call (614) 956-8656">
+<meta name="description" content="Buy your Central Ohio home with TD Realty Ohio. Expert representation, local market knowledge. Combine with selling for 1% listing fee. Email info@tdrealtyohio.com">
 <link rel="canonical" href="https://tdrealtyohio.com/buyers.html">
 ```
 
 **Pre-Listing Inspection:**
 ```html
 <title>Pre-Listing Home Inspection Columbus | TD Realty Ohio</title>
-<meta name="description" content="Get a pre-listing inspection in Columbus before selling. Price accurately, avoid surprises, close faster. Part of our full-service 1% listing. Call (614) 956-8656">
+<meta name="description" content="Get a pre-listing inspection in Columbus before selling. Price accurately, avoid surprises, close faster. Part of our full-service 1% listing. Email info@tdrealtyohio.com">
 <link rel="canonical" href="https://tdrealtyohio.com/pre-listing-inspection.html">
 ```
 
 **About Page:**
 ```html
 <title>About TD Realty Ohio | Licensed Columbus Broker Since 2017</title>
-<meta name="description" content="Meet Travis Debnam, licensed Ohio broker #2023006467. Serving Central Ohio with 1% commission real estate since 2017. Member Columbus REALTORS®. Call (614) 956-8656">
+<meta name="description" content="Meet Travis Debnam, licensed Ohio broker #2023006467. Serving Central Ohio with 1% commission real estate since 2017. Member Columbus REALTORS®. Email info@tdrealtyohio.com">
 <link rel="canonical" href="https://tdrealtyohio.com/about.html">
 ```
 
 **Contact Page:**
 ```html
-<title>Contact TD Realty Ohio | Columbus Real Estate | (614) 956-8656</title>
-<meta name="description" content="Schedule a free consultation with TD Realty Ohio. Serving Westerville, Columbus, and Central Ohio. Licensed broker, 1% commission. Call (614) 956-8656">
+<title>Contact TD Realty Ohio | Columbus Real Estate</title>
+<meta name="description" content="Schedule a free consultation with TD Realty Ohio. Serving Westerville, Columbus, and Central Ohio. Licensed broker, 1% commission. Email info@tdrealtyohio.com">
 <link rel="canonical" href="https://tdrealtyohio.com/contact.html">
 ```
 
@@ -77,8 +77,7 @@ This checklist covers all technical SEO requirements for tdrealtyohio.com to ran
     "latitude": 40.1262,
     "longitude": -82.9291
   },
-  "telephone": "+16149568656",
-  "email": "travis@tdrealtyohio.com",
+  "email": "info@tdrealtyohio.com",
   "url": "https://tdrealtyohio.com",
   "priceRange": "1% Commission",
   "areaServed": [
@@ -281,16 +280,19 @@ From city pages:
 
 **Critical mobile elements:**
 
-1. **Click-to-call everywhere:**
-```html
-<a href="tel:+16149568656" class="mobile-cta">(614) 956-8656</a>
-```
+1. **Click-to-email everywhere:**
+
+    Use a mailto link to encourage visitors on mobile devices to send an email rather than placing a call.
+
+    ```html
+    <a href="mailto:info@tdrealtyohio.com" class="mobile-cta">Email us</a>
+    ```
 
 2. **Mobile-friendly forms:**
-- Large input fields (min 44px tap target)
-- Clear labels
-- Minimal required fields
-- Auto-complete attributes
+    - Large input fields (min 44px tap target)
+    - Clear labels
+    - Minimal required fields
+    - Auto-complete attributes
 
 3. **Fast load time:**
 - Compress images (use WebP format)

@@ -68,6 +68,47 @@ img {
     height: auto;
 }
 
+/* ========================================
+   Accessibility Enhancements
+   ----------------------------------------
+   These styles improve keyboard navigation
+   visibility and allow users to skip
+   directly to the main content.  Focus
+   outlines use the site’s accent color
+   to stand out against backgrounds.
+   The skip-link is visually hidden until
+   it receives focus, at which point it
+   becomes visible at the top of the page.
+*/
+a:focus,
+button:focus,
+input:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.skip-link {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.skip-link:focus {
+    left: 10px;
+    top: 10px;
+    width: auto;
+    height: auto;
+    padding: 8px 16px;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 600;
+    text-decoration: none;
+    z-index: 10000;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;

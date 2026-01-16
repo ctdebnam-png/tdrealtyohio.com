@@ -204,7 +204,7 @@ if (contactForm) {
             }
             contactForm.reset();
         } catch (err) {
-            alert('Sorry, something went wrong. Please call (614) 956-8656.');
+            alert('Sorry, something went wrong. Please email info@tdrealtyohio.com.');
         }
     });
 }

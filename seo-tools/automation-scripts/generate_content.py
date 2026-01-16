@@ -122,7 +122,7 @@ BUSINESS CONTEXT:
 - 1% when you buy AND sell with us, 2% for sell-only
 - Licensed since 2017, serving Central Ohio
 - Broker: Travis Debnam (#2023006467)
-- Phone: (614) 956-8656
+        - Email: info@tdrealtyohio.com
 
 TARGET LOCATION: {city}, Ohio
 MEDIAN HOME PRICE: ${median_price:,}
@@ -159,12 +159,12 @@ REQUIRED CONTENT STRUCTURE:
    
 8. Contact CTA Section
    - Strong call-to-action
-   - Phone: (614) 956-8656
+   - Email: info@tdrealtyohio.com
    - Link to contact form
 
 TECHNICAL REQUIREMENTS:
 - Meta title (in HTML comment): "{city} Real Estate Agent | 1% Commission | TD Realty Ohio"
-- Meta description (in HTML comment): "Sell your {city} home for just 1% commission. Full-service real estate with huge savings. Licensed broker serving {city} since 2017. Call (614) 956-8656"
+   - Meta description (in HTML comment): "Sell your {city} home for just 1% commission. Full-service real estate with huge savings. Licensed broker serving {city} since 2017. Contact us via email at info@tdrealtyohio.com"
 - Schema markup in <script type="application/ld+json"> for:
   - LocalBusiness
   - Service

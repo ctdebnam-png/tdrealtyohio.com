@@ -300,8 +300,7 @@ This package contains everything needed to implement an automated SEO content ge
 ## Questions?
 
 Contact Travis Debnam at TD Realty Ohio
-- Phone: (614) 956-8656
-- Email: travis@tdrealtyohio.com
+- Email: info@tdrealtyohio.com
 - License: Broker #2023006467
 
 ---
