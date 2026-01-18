@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-label="Email contact icon">
+  <rect x="8" y="16" width="48" height="32" fill="none" stroke="#2F6FED" stroke-width="3" rx="4"/>
+  <line x1="8" y1="18" x2="56" y2="18" stroke="#2F6FED" stroke-width="2"/>
+  <polyline points="8,18 32,36 56,18" fill="none" stroke="#F2C14E" stroke-width="3" stroke-linejoin="round"/>
+</svg>

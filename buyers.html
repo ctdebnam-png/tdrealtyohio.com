@@ -16,7 +16,17 @@
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
   <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+  <link rel="apple-touch-icon" href="/assets/images/favicon.svg" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#2F6FED" />
+
   <link rel="stylesheet" href="/assets/css/tdro-ui.css" />
+  <link rel="stylesheet" href="/assets/css/calculators.css" />
+
+  <script src="/assets/js/td-config.js" defer></script>
+  <script src="/assets/js/td-media.js" defer></script>
+  <script src="/assets/js/tdro-ui.js" defer></script>
+  <script src="/assets/js/buyer-calculator.js" defer></script>
 
   <script type="application/ld+json">
   {
@@ -127,23 +137,38 @@
               </div>
             </div>
           </div>
+
+          <div class="td-hero__visual">
+            <img data-td-hero-key="buyers" alt="Keys and cash back illustration" width="800" height="600" />
+          </div>
         </div>
       </div>
     </section>
 
     <section class="td-section">
       <div class="td-container">
-        <div class="td-card">
-          <div class="td-card__in" style="text-align: center;">
-            <h2 class="td-h2">First-Time Buyers Get 1% Cash Back</h2>
-            <p class="td-p">
-              When you purchase your first home with TD Realty Ohio, you receive 1 percent of the purchase price back at closing.
-              On a $300,000 home with a 3 percent buyer broker commission ($9,000), we give you $3,000 back at closing and keep $6,000.
-              You receive $3,000 cash at closing to help with moving costs, furniture, or repairs.
-            </p>
-            <div style="margin-top: 30px;">
-              <a class="td-btn td-btn--primary" href="/contact/">Learn More About First-Time Buyer Program</a>
-            </div>
+        <div class="td-calc td-calc--embed">
+          <div class="td-calc__header">
+            <h3>First time buyer credit</h3>
+            <p>Enter a purchase price to see 1% back at closing.</p>
+          </div>
+
+          <div id="td-buyer-calculator"></div>
+
+          <div class="td-calc__example">
+            <p><strong>Example on $300,000 home:</strong></p>
+            <p>Traditional agent: Keeps $9,000 (3%), buyer gets $0</p>
+            <p>You: Receive $9,000, give $3,000 back to buyer, keep $6,000</p>
+            <p>Buyer receives: $3,000 at closing</p>
+          </div>
+
+          <div class="td-calc__cta">
+            <a class="td-btn td-btn--primary" href="tel:+16143928858">(614) 392-8858</a>
+            <a class="td-btn td-btn--secondary" href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a>
+          </div>
+
+          <div class="td-calc__fineprint">
+            <p>TD Realty Ohio, LLC. Brokerage License 2023006602. Travis Debnam, Broker. License 2023006467.</p>
           </div>
         </div>
       </div>
@@ -474,8 +499,6 @@
       </div>
     </div>
   </footer>
-
-  <script src="/assets/js/tdro-ui.js"></script>
 
 </body>
 </html>

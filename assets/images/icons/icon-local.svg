@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-label="Local area icon">
+  <circle cx="32" cy="24" r="16" fill="none" stroke="#2F6FED" stroke-width="3"/>
+  <path d="M 32 8 Q 32 4 32 4 L 32 24 Z" fill="#2F6FED"/>
+  <circle cx="32" cy="4" r="4" fill="#2F6FED"/>
+  <path d="M 24 36 L 20 56 L 32 48 L 44 56 L 40 36" fill="none" stroke="#2F6FED" stroke-width="2" stroke-linejoin="round"/>
+</svg>

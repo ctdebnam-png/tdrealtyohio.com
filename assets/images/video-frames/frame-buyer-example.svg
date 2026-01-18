@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" aria-label="$300,000 example: $3,000 back">
+  <rect width="1080" height="1920" fill="#0B1220"/>
+  <text x="540" y="350" font-family="Arial, sans-serif" font-size="100" font-weight="bold" fill="#F2C14E" text-anchor="middle">$300,000</text>
+  <text x="540" y="480" font-family="Arial, sans-serif" font-size="80" fill="#E9EEFB" text-anchor="middle">example:</text>
+  <rect x="120" y="600" width="840" height="680" fill="none" stroke="#2F6FED" stroke-width="6" rx="20"/>
+  <text x="540" y="720" font-family="Arial, sans-serif" font-size="50" fill="#E9EEFB" text-anchor="middle">Commission: $9,000 (3%)</text>
+  <line x1="180" y1="780" x2="900" y2="780" stroke="#2F6FED" stroke-width="3"/>
+  <text x="540" y="870" font-family="Arial, sans-serif" font-size="56" fill="#E9EEFB" text-anchor="middle">You give buyer:</text>
+  <text x="540" y="980" font-family="Arial, sans-serif" font-size="90" font-weight="bold" fill="#F2C14E" text-anchor="middle">$3,000</text>
+  <line x1="180" y1="1050" x2="900" y2="1050" stroke="#2F6FED" stroke-width="3"/>
+  <text x="540" y="1150" font-family="Arial, sans-serif" font-size="56" fill="#E9EEFB" text-anchor="middle">You keep: $6,000</text>
+  <text x="540" y="1250" font-family="Arial, sans-serif" font-size="50" fill="#F2C14E" text-anchor="middle">Buyer receives $3,000</text>
+  <text x="540" y="1450" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="#E9EEFB" text-anchor="middle">TD Realty Ohio, LLC</text>
+  <text x="540" y="1550" font-family="Arial, sans-serif" font-size="40" fill="#E9EEFB" text-anchor="middle">Brokerage license 2023006602</text>
+  <text x="540" y="1620" font-family="Arial, sans-serif" font-size="40" fill="#E9EEFB" text-anchor="middle">Broker license 2023006467</text>
+  <text x="540" y="1740" font-family="Arial, sans-serif" font-size="48" fill="#2F6FED" text-anchor="middle">(614) 392-8858</text>
+  <text x="540" y="1820" font-family="Arial, sans-serif" font-size="42" fill="#2F6FED" text-anchor="middle">info@tdrealtyohio.com</text>
+</svg>

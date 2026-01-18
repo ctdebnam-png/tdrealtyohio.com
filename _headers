@@ -1,0 +1,38 @@
+# TD Realty Ohio - Security Headers for Cloudflare Pages
+
+/*
+  # Content Security Policy - Allow only self-hosted resources
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' mailto: tel:; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https:; upgrade-insecure-requests;
+
+  # Strict Transport Security - Force HTTPS for 1 year including subdomains
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+  # Prevent MIME type sniffing
+  X-Content-Type-Options: nosniff
+
+  # Referrer Policy - Only send origin on cross-origin requests
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Permissions Policy - Disable unnecessary browser features
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+  # Prevent clickjacking
+  X-Frame-Options: DENY
+
+  # Enable XSS protection in older browsers
+  X-XSS-Protection: 1; mode=block
+
+  # Cache control for HTML pages (revalidate frequently)
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.css
+  # Cache CSS files for 1 year
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  # Cache JavaScript files for 1 year
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  # Cache static assets for 1 year
+  Cache-Control: public, max-age=31536000, immutable
