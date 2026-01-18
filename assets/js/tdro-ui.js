@@ -110,6 +110,45 @@
   }
 
   // ========================================
+  // POPULATE MEDIA ASSETS
+  // ========================================
+  function populateMediaAssets() {
+    // Only proceed if TD_MEDIA is loaded
+    if (typeof window.TD_MEDIA === 'undefined') {
+      console.warn('TD_MEDIA manifest not loaded. Skipping media asset population.');
+      return;
+    }
+
+    try {
+      // Hero images - Set src attribute based on data-td-hero-key
+      document.querySelectorAll('[data-td-hero-key]').forEach(el => {
+        const key = el.getAttribute('data-td-hero-key');
+        if (window.TD_MEDIA.hero && window.TD_MEDIA.hero[key]) {
+          el.src = window.TD_MEDIA.hero[key];
+        }
+      });
+
+      // Section images - Set src attribute based on data-td-section-image-key
+      document.querySelectorAll('[data-td-section-image-key]').forEach(el => {
+        const key = el.getAttribute('data-td-section-image-key');
+        if (window.TD_MEDIA.sections && window.TD_MEDIA.sections[key]) {
+          el.src = window.TD_MEDIA.sections[key];
+        }
+      });
+
+      // Icon images - Set src attribute based on data-td-icon-key
+      document.querySelectorAll('[data-td-icon-key]').forEach(el => {
+        const key = el.getAttribute('data-td-icon-key');
+        if (window.TD_MEDIA.icons && window.TD_MEDIA.icons[key]) {
+          el.src = window.TD_MEDIA.icons[key];
+        }
+      });
+    } catch (e) {
+      console.error('Error populating media assets:', e);
+    }
+  }
+
+  // ========================================
   // MOBILE NAVIGATION
   // ========================================
   function initNavigation() {
@@ -230,6 +269,13 @@
       populateContactData();
     } catch (e) {
       console.error('Failed to populate contact data:', e);
+    }
+
+    // Populate media assets from manifest
+    try {
+      populateMediaAssets();
+    } catch (e) {
+      console.error('Failed to populate media assets:', e);
     }
 
     // Initialize other UI components - failures here should not break contact data

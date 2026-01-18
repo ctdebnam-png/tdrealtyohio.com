@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="/assets/css/tdro-ui.css" />
 
   <script src="/assets/js/td-config.js" defer></script>
+  <script src="/assets/js/td-media.js" defer></script>
   <script src="/assets/js/tdro-ui.js" defer></script>
 
   <script type="application/ld+json">
@@ -164,27 +165,8 @@
             </div>
           </div>
 
-          <div class="td-carousel" data-carousel="hero" data-interval-ms="6500" tabindex="0" aria-label="Property image carousel">
-            <div class="td-carousel-track" data-carousel-track>
-              <div class="td-carousel-slide is-active" data-carousel-slide aria-hidden="false">
-                <img alt="Modern home exterior" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&fit=crop&q=80" />
-                <div class="td-carousel-overlay" aria-hidden="true"></div>
-              </div>
-              <div class="td-carousel-slide" data-carousel-slide aria-hidden="true">
-                <img alt="Luxury kitchen interior" src="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=1600&fit=crop&q=80" />
-                <div class="td-carousel-overlay" aria-hidden="true"></div>
-              </div>
-              <div class="td-carousel-slide" data-carousel-slide aria-hidden="true">
-                <img alt="Beautiful living room" src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1600&fit=crop&q=80" />
-                <div class="td-carousel-overlay" aria-hidden="true"></div>
-              </div>
-            </div>
-
-            <div class="td-carousel-controls" aria-label="Carousel controls">
-              <button class="td-carousel-btn" type="button" data-carousel-prev aria-label="Previous slide">‹</button>
-              <div class="td-carousel-dots" data-carousel-dots aria-label="Slide selection"></div>
-              <button class="td-carousel-btn" type="button" data-carousel-next aria-label="Next slide">›</button>
-            </div>
+          <div class="td-hero__visual">
+            <img data-td-hero-key="home" alt="Home with savings illustration" width="800" height="600" />
           </div>
         </div>
       </div>
@@ -508,8 +490,6 @@
       update();
     })();
   </script>
-
-  <script src="/assets/js/carousel.js"></script>
 
 </body>
 </html>

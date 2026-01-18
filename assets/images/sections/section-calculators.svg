@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" aria-label="Calculator and chart illustration">
+  <rect x="50" y="60" width="200" height="280" fill="none" stroke="#2F6FED" stroke-width="4" rx="8"/>
+  <rect x="70" y="85" width="160" height="50" fill="#2F6FED" opacity="0.2"/>
+  <text x="150" y="118" font-family="sans-serif" font-size="24" font-weight="bold" fill="#2F6FED" text-anchor="middle">$450K</text>
+  <rect x="80" y="155" width="65" height="35" fill="none" stroke="#2F6FED" stroke-width="2" rx="4"/>
+  <rect x="165" y="155" width="65" height="35" fill="none" stroke="#2F6FED" stroke-width="2" rx="4"/>
+  <rect x="80" y="205" width="65" height="35" fill="none" stroke="#2F6FED" stroke-width="2" rx="4"/>
+  <rect x="165" y="205" width="65" height="35" fill="none" stroke="#2F6FED" stroke-width="2" rx="4"/>
+  <rect x="80" y="255" width="150" height="60" fill="#F2C14E" opacity="0.3" rx="4"/>
+  <text x="155" y="292" font-family="sans-serif" font-size="18" font-weight="bold" fill="#F2C14E" text-anchor="middle">$9,000 Saved</text>
+  <rect x="320" y="80" width="230" height="240" fill="none" stroke="#2F6FED" stroke-width="3" rx="6"/>
+  <line x1="340" y1="280" x2="530" y2="280" stroke="#2F6FED" stroke-width="2"/>
+  <line x1="340" y1="280" x2="340" y2="120" stroke="#2F6FED" stroke-width="2"/>
+  <polyline points="360,240 400,180 440,210 480,140 520,170" fill="none" stroke="#F2C14E" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="360" cy="240" r="6" fill="#F2C14E"/>
+  <circle cx="400" cy="180" r="6" fill="#F2C14E"/>
+  <circle cx="440" cy="210" r="6" fill="#F2C14E"/>
+  <circle cx="480" cy="140" r="6" fill="#F2C14E"/>
+  <circle cx="520" cy="170" r="6" fill="#F2C14E"/>
+</svg>
