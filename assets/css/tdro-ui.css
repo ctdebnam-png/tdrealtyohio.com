@@ -570,3 +570,47 @@
     font-size:var(--td-small);
   }
 }
+
+/* Trust stats responsive */
+.td-trust-stats{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:20px;
+  text-align:center;
+}
+.td-trust-stats__item{
+  padding:10px;
+}
+.td-trust-stats__value{
+  font-size:32px;
+  font-weight:850;
+  color:var(--td-text);
+}
+.td-trust-stats__value--highlight{
+  color:var(--td-ok);
+}
+.td-trust-stats__label{
+  color:var(--td-muted);
+  font-size:14px;
+  margin-top:4px;
+}
+@media (max-width:600px){
+  .td-trust-stats{
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+  }
+  .td-trust-stats__value{
+    font-size:28px;
+  }
+}
+
+/* Mobile-optimized CTA buttons */
+@media (max-width:480px){
+  .td-hero__actions{
+    flex-direction:column;
+  }
+  .td-hero__actions .td-btn{
+    width:100%;
+    justify-content:center;
+  }
+}
