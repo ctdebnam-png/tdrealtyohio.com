@@ -1,92 +1,178 @@
-# TD Realty Ohio - Modern Site Rebuild
+# TD Realty Ohio Website
 
-## What I Built
+A clean, professional real estate website for TD Realty Ohio, LLC. Built with vanilla HTML, CSS, and JavaScript for maximum performance and easy deployment.
 
-A clean, modern, CONSISTENT website using one design system (tdro-ui.css):
+## Features
 
-✅ **Homepage with carousel** - rotating Central Ohio property images
-✅ **Sellers page** - completely rebuilt to match homepage design
-✅ **First-time homebuyer 1% cash back** - prominently featured
-✅ **Interactive calculators** - showing real savings
-✅ **ONE design system** - no more competing styles
-✅ **Modern dark theme** - professional and cohesive across ALL pages
+- **Low Commission Focus**: Clear presentation of 1-2% listing rates vs traditional 3%
+- **Interactive Calculators**: Real-time savings calculators for sellers and buyers
+- **Mobile Responsive**: Fully responsive design for all screen sizes
+- **SEO Optimized**: Meta tags, structured data (JSON-LD), and semantic HTML
+- **Single CSS/JS Files**: No competing stylesheets, easy to maintain
+- **Centralized Configuration**: All contact info in one JavaScript config object
 
-## Files to Deploy
+## Pages
 
-### 1. Generate Images First (IMPORTANT)
-See **IMAGE-PROMPTS.md** for detailed instructions.
+| Page | Purpose |
+|------|---------|
+| `index.html` | Homepage with hero, stats, calculator, services, areas |
+| `sellers.html` | Seller services, commission paths, process, FAQs |
+| `buyers.html` | First-time buyer cash back program, calculator |
+| `pre-listing-inspection.html` | Free pre-listing inspection benefit |
+| `contact.html` | Contact form and information |
+| `about.html` | About Travis Debnam and TD Realty Ohio |
+| `areas/index.html` | Service area grid |
 
-**Quick version:**
-1. Go to ChatGPT (chatgpt.com)
-2. Use the 3 prompts from IMAGE-PROMPTS.md
-3. Download the 3 generated images
-4. Name them: ohio-home-1.jpg, ohio-home-2.jpg, ohio-home-3.jpg
-5. Upload to `/assets/images/` in your repo
+## Project Structure
 
-OR use your own actual Central Ohio listing photos (even better!)
+```
+tdrealtyohio.com/
+├── index.html
+├── sellers.html
+├── buyers.html
+├── pre-listing-inspection.html
+├── contact.html
+├── about.html
+├── areas/
+│   └── index.html
+├── assets/
+│   ├── css/
+│   │   └── styles.css      # Single stylesheet
+│   ├── js/
+│   │   └── main.js         # Config object, calculators, UI
+│   └── images/             # Local images (optional)
+├── fetch-images.js         # Optional image fetcher script
+└── README.md
+```
 
-### 2. index.html
-**Location:** Root of your repo (replaces current index.html)
-**What it does:** Your new general homepage with carousel
+## Configuration
 
-### 3. sellers.html  
-**Location:** `/sellers/index.html` (if using folder structure) OR `/sellers.html` (if not)
-**What it does:** Sellers page rebuilt to match homepage design
+All business information is centralized in the `TD_CONFIG` object in `assets/js/main.js`:
 
-### 4. carousel.js
-**Location:** `/assets/js/carousel.js`
-**What it does:** Powers the hero image carousel
+```javascript
+const TD_CONFIG = {
+  company: {
+    name: 'TD Realty Ohio, LLC',
+    broker: 'Travis Debnam'
+  },
+  contact: {
+    phone: '(614) 392-8858',
+    email: 'info@tdrealtyohio.com',
+    location: 'Westerville, Ohio'
+  },
+  licenses: {
+    broker: '2023006467',
+    brokerage: '2023006602'
+  },
+  rates: {
+    traditional: 0.03,
+    buyAndSell: 0.01,
+    sellOnly: 0.02
+  }
+  // ... more configuration
+};
+```
 
-### 5. tdro-ui.css
-**Location:** `/assets/css/tdro-ui.css` (replaces current tdro-ui.css)
-**What it does:** Updated stylesheet with carousel styles
+To update contact information, modify this config object. Elements with `data-*` attributes are automatically populated.
 
-## Deployment Steps
+## Images
 
-### Step 1: Generate Images
-Follow IMAGE-PROMPTS.md to create the 3 Central Ohio home images
+The site uses Unsplash URLs directly in the HTML for simplicity. No local images are required.
 
-### Step 2: Upload to GitHub
-1. Go to https://github.com/ctdebnam-png/tdrealtyohio.com
-2. Upload images to `/assets/images/`
-3. Upload `index.html` to root (replace existing)
-4. Upload `sellers.html` to `/sellers/` folder (create folder if needed, name file `index.html`) OR replace existing `sellers.html` at root
-5. Upload `carousel.js` to `/assets/js/`
-6. Upload `tdro-ui.css` to `/assets/css/` (replace existing)
-7. Commit all changes
+### Optional: Local Images with Pexels API
 
-### Step 3: Test
-- Homepage carousel should rotate images
-- Sellers page should look identical to homepage (same header, footer, colors)
-- Calculator should work on both pages
-- Mobile should be responsive
+If you prefer to host images locally:
 
-## What's Different Now
+1. Get a free API key from [Pexels](https://www.pexels.com/api/)
+2. Run the fetch script:
+   ```bash
+   PEXELS_API_KEY=your_api_key node fetch-images.js
+   ```
+3. Update image `src` attributes in HTML files to use local paths
 
-**BEFORE:** Two competing design systems fighting each other
-- sellers.html used main.css (light theme)
-- index.html used tdro-ui.css (dark theme)
-- Pages looked completely different
+## Deployment
 
-**NOW:** ONE modern design system
-- Both pages use tdro-ui.css (dark theme)
-- Same header, footer, buttons, cards everywhere
-- Professional, cohesive look across the entire site
+### Cloudflare Pages
 
-## Next Steps
+1. Push code to GitHub repository
+2. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+3. Go to **Workers & Pages** > **Create application** > **Pages**
+4. Connect your GitHub repository
+5. Configure build settings:
+   - **Framework preset**: None
+   - **Build command**: (leave empty)
+   - **Build output directory**: `/` (root)
+6. Deploy
 
-1. **Convert remaining pages** (buyers, about, contact, etc.) to use tdro-ui.css
-2. **Delete main.css** once everything is converted
-3. **Add more Central Ohio content** (neighborhoods, market data, etc.)
-4. **Expand carousel** - add more local property images as you get listings
+### Custom Domain
 
-## Notes
+1. In Cloudflare Pages, go to your project settings
+2. Click **Custom domains** > **Set up a custom domain**
+3. Enter `tdrealtyohio.com`
+4. Follow DNS configuration instructions
 
-- Carousel uses local images (no more generic Unsplash)
-- All pages now match in design
-- Calculator works the same on both pages
-- Mobile responsive throughout
-- No CloudFlare email obfuscation issues
-- tdro-ui.js handles all phone/email population
+### Other Platforms
 
-This is now a solid, professional foundation that looks like ONE cohesive brokerage site.
+The site is static HTML/CSS/JS and works on any static hosting:
+
+- **Netlify**: Drag and drop the folder or connect GitHub
+- **Vercel**: Import from GitHub
+- **GitHub Pages**: Enable in repository settings
+- **Any web server**: Upload files via FTP/SFTP
+
+## Development
+
+### Local Development
+
+Open `index.html` directly in a browser, or use a local server:
+
+```bash
+# Python 3
+python -m http.server 8000
+
+# Node.js (npx)
+npx serve
+
+# PHP
+php -S localhost:8000
+```
+
+### Making Changes
+
+1. **Styles**: Edit `assets/css/styles.css`
+2. **JavaScript**: Edit `assets/js/main.js`
+3. **Content**: Edit individual HTML files
+4. **Contact Info**: Update `TD_CONFIG` in `main.js`
+
+### Design System
+
+| Element | Value |
+|---------|-------|
+| Primary Color (Navy) | `#1a2e44` |
+| Accent Color (Gold) | `#c9a227` |
+| Heading Font | Libre Baskerville |
+| Body Font | Source Sans 3 |
+| Border Radius | 4px (sm), 8px (md), 12px (lg) |
+| Max Width | 1200px |
+
+## Compliance
+
+The site includes required real estate compliance elements:
+
+- Equal Housing Opportunity statement
+- REALTOR membership mention
+- Broker and brokerage license numbers
+- Links to Privacy Policy, Terms, Fair Housing, Accessibility
+- Buyer representation disclosure on buyer pages
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- Mobile browsers (iOS Safari, Chrome for Android)
+
+## License
+
+This website is proprietary to TD Realty Ohio, LLC. All rights reserved.
