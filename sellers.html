@@ -1,63 +1,136 @@
+FILE_START path=sellers.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="List your Columbus home for 1% commission when you buy with us, 2% sell-only. Full MLS, photography, marketing included. Email info@tdrealtyohio.com">
+    <meta name="description" content="List your Columbus home for 1% commission when you buy with us, 2% sell-only. Full MLS, photography, marketing included. Call (614) 392-8858 or email info@tdrealtyohio.com">
     <title>Sell Your Home for 1% | Columbus Ohio | TD Realty</title>
-    
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tdrealtyohio.com/sellers.html">
     <meta property="og:title" content="Sell Your Columbus Home for 1% Commission | TD Realty Ohio">
     <meta property="og:description" content="Full-service real estate with just 1% listing commission when you buy and sell. Pre-listing inspection included.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1560184897-ae75f418493e?w=1200&h=630&fit=crop&q=80">
-    
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sell Your Columbus Home for 1% Commission | TD Realty Ohio">
     <meta name="twitter:description" content="Full-service real estate with just 1% listing commission. Pre-listing inspection included.">
-    
+
     <meta name="keywords" content="sell home Columbus Ohio, 1% commission realtor Columbus, low commission real estate Central Ohio, discount realtor Columbus, save on realtor fees Columbus, 1 percent listing fee Ohio, cheap realtor Columbus Ohio, sell my house Columbus, best listing agent Columbus, reduced commission realtor">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="geo.region" content="US-OH">
     <meta name="geo.placename" content="Columbus, Ohio">
     <link rel="canonical" href="https://tdrealtyohio.com/sellers.html">
+
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
-    
+
+    <!-- Minimal ticker styling until Component 1 tokens/modules are centralized -->
+    <style>
+        .td-ticker {
+            position: sticky;
+            top: 70px;
+            z-index: 999;
+            background: var(--navy);
+            color: var(--white);
+            border-bottom: 1px solid rgba(255,255,255,0.10);
+        }
+        .td-ticker .container {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .td-ticker-inner {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .td-ticker-left {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .td-ticker-badge {
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.14);
+            color: var(--white);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 650;
+            letter-spacing: 0.2px;
+        }
+        .td-ticker-line {
+            font-size: 13px;
+            color: rgba(255,255,255,0.85);
+        }
+        .td-ticker-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 13px;
+        }
+        .td-ticker a {
+            color: var(--gold-light);
+            text-decoration: none;
+            font-weight: 650;
+        }
+        .td-ticker a:hover {
+            color: var(--gold);
+        }
+        @media (max-width: 768px) {
+            .td-ticker { top: 64px; }
+        }
+    </style>
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Real Estate Listing Services",
-        "name": "1% Commission Home Listing - Columbus Ohio",
-        "description": "List your Columbus, Ohio home for just 1% commission when you buy and sell with TD Realty Ohio.",
-        "provider": {
-            "@type": "RealEstateAgent",
-            "name": "TD Realty Ohio, LLC",
-            "url": "https://tdrealtyohio.com"
-        },
-        "areaServed": {
-            "@type": "City",
-            "name": "Columbus",
-            "addressRegion": "OH"
-        }
+        "@graph": [
+            {
+                "@type": "RealEstateAgent",
+                "@id": "https://tdrealtyohio.com/#agent",
+                "name": "TD Realty Ohio, LLC",
+                "url": "https://tdrealtyohio.com",
+                "email": "info@tdrealtyohio.com",
+                "telephone": "+16143928858"
+            },
+            {
+                "@type": "Service",
+                "@id": "https://tdrealtyohio.com/sellers.html#service",
+                "serviceType": "Real Estate Listing Services",
+                "name": "1% Commission Home Listing - Columbus Ohio",
+                "description": "List your Columbus, Ohio home for 1% commission when you buy and sell with TD Realty Ohio, or 2% for sell-only.",
+                "provider": { "@id": "https://tdrealtyohio.com/#agent" },
+                "areaServed": {
+                    "@type": "City",
+                    "name": "Columbus",
+                    "addressRegion": "OH"
+                }
+            }
+        ]
     }
     </script>
-    
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "FAQPage",
+        "@id": "https://tdrealtyohio.com/sellers.html#faq",
         "mainEntity": [
             {
                 "@type": "Question",
                 "name": "How can you offer such low commission rates in Columbus?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "We operate efficiently with lower overhead than traditional Columbus brokerages. Technology allows us to deliver the same professional service at a lower cost, and we pass those savings directly to our clients."
+                    "text": "We operate with an efficiency focused model and a streamlined process compared to some traditional brokerages. Technology and standardized workflows reduce time and overhead, which can support reduced listing commission structures. Use a consultation to confirm the fee path that applies to your timeline and whether you plan to buy after selling."
                 }
             },
             {
@@ -65,7 +138,7 @@
                 "name": "Is there a catch with the 1% listing rate?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "No catch. The 1% rate applies when you sell your current home AND purchase your next home with TD Realty Ohio. If you're only selling, the rate is 2%. Both rates include full-service representation with no hidden fees."
+                    "text": "The 1% rate applies when you sell your current home and purchase your next home with TD Realty Ohio. If you are only selling, the listing rate is 2%. Both options are intended to provide full service representation with clear terms discussed during the consultation."
                 }
             },
             {
@@ -73,7 +146,7 @@
                 "name": "Do I still pay the buyer's agent commission?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Our rate covers your listing agent commission only. The buyer's agent commission is negotiated separately and is typically offered as part of the listing to attract buyer interest."
+                    "text": "These rates refer to the listing side only. Buyer side compensation is negotiated separately and depends on the listing strategy and the terms you accept. Discuss your plan during the consultation so the listing agreement reflects what you intend to offer."
                 }
             },
             {
@@ -81,25 +154,37 @@
                 "name": "What if my home needs repairs after the pre-listing inspection?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "You have options: make the repairs before listing, adjust your asking price, or disclose the issues and let buyers factor them into their offers. No surprises during the buyer's inspection means smoother transactions."
+                    "text": "A pre-listing inspection gives you information earlier so you can choose a path. Options can include making repairs before listing, adjusting pricing, or disclosing issues so buyers can evaluate them during offers. The goal is to reduce surprises and improve decision making before negotiations."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What areas of Columbus do you serve?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "TD Realty Ohio serves Central Ohio including Columbus and surrounding areas such as Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, Upper Arlington, Worthington, Lewis Center, Pickerington, and nearby communities. If you are outside these areas, use the contact page to confirm coverage. Coverage varies by timeline and property specifics."
                 }
             }
         ]
     }
     </script>
 </head>
+
 <body>
+
     <nav class="nav">
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <span class="logo-td">TD</span>
                 <span class="logo-text">Realty Ohio</span>
             </a>
-            <button class="nav-toggle" aria-label="Toggle navigation">
+
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
+
             <ul class="nav-menu">
                 <li><a href="sellers.html" class="active">Sellers</a></li>
                 <li><a href="buyers.html">Buyers</a></li>
@@ -107,9 +192,33 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+
+            <!-- Standardized top-right contact CTAs -->
+            <div class="nav-ctas" style="display:flex; gap:10px; align-items:center; margin-left:16px;">
+                <a class="btn btn-outline" href="tel:+16143928858" aria-label="Call TD Realty Ohio at (614) 392-8858">Call (614) 392-8858</a>
+                <a class="btn btn-primary" href="contact.html" aria-label="Schedule a free consultation">Free Consultation</a>
+            </div>
         </div>
     </nav>
 
+    <!-- Sitewide ticker component -->
+    <div class="td-ticker" data-td-ticker>
+        <div class="container">
+            <div class="td-ticker-inner">
+                <div class="td-ticker-left">
+                    <span class="td-ticker-badge">TD Realty Ohio</span>
+                    <span class="td-ticker-line" data-td-ticker-line>
+                        1% listing fee applies when you buy and sell with TD Realty Ohio. Sell-only listing fee is 2%.
+                    </span>
+                </div>
+                <div class="td-ticker-right">
+                    <a href="tel:+16143928858" data-td-phone-tel>(614) 392-8858</a>
+                    <span style="color: rgba(255,255,255,0.55);">|</span>
+                    <a href="mailto:info@tdrealtyohio.com" data-td-email-mailto>info@tdrealtyohio.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <nav class="breadcrumb" aria-label="Breadcrumb">
         <div class="container">
@@ -123,6 +232,11 @@
         <div class="container">
             <h1>Sell Your Columbus Home for 1% Commission</h1>
             <p>Full-service real estate with transparent, reduced commission rates. Keep more of your equity when you sell your Central Ohio home.</p>
+            <div style="margin-top: 18px; display:flex; gap:12px; flex-wrap: wrap;">
+                <a href="contact.html" class="btn btn-primary">Schedule Free Consultation</a>
+                <a href="tel:+16143928858" class="btn btn-outline">Call (614) 392-8858</a>
+                <a href="mailto:info@tdrealtyohio.com" class="btn btn-secondary">Email info@tdrealtyohio.com</a>
+            </div>
         </div>
     </section>
 
@@ -132,6 +246,7 @@
                 <h2>Our Columbus Home Selling Commission Rates</h2>
                 <p>Simple, transparent pricing with no hidden fees. Save thousands compared to traditional 3% agents.</p>
             </div>
+
             <div class="pricing-grid">
                 <div class="pricing-card featured">
                     <span class="pricing-badge">Best Value</span>
@@ -153,6 +268,7 @@
                         <a href="contact.html" class="btn btn-primary" style="width: 100%; text-align: center;">Get Started</a>
                     </div>
                 </div>
+
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Sell Only</h3>
@@ -173,6 +289,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -182,6 +299,7 @@
                 <h2>What's Included When You Sell With TD Realty Ohio</h2>
                 <p>Everything you'd expect from a top Columbus brokerage, at a better price.</p>
             </div>
+
             <div class="cards-grid">
                 <div class="card">
                     <h3>Pre-Listing Home Inspection</h3>
@@ -208,6 +326,7 @@
                     <p>Complete handling of all paperwork, deadlines, and coordination from listing to closing. Licensed broker handling your transaction.</p>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -217,6 +336,7 @@
                 <h2>The Columbus Home Selling Process</h2>
                 <p>A clear path from listing to closing your Central Ohio home sale.</p>
             </div>
+
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">1</div>
@@ -261,6 +381,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -269,7 +390,8 @@
             <div class="section-title">
                 <h2>Common Questions About Selling for 1% Commission</h2>
             </div>
-            <div class="faq-section">
+
+            <div class="faq-section" id="faq">
                 <div class="faq-item">
                     <button class="faq-question">
                         <span>How can you offer such low rates in Columbus?</span>
@@ -277,10 +399,11 @@
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>We operate efficiently with lower overhead than traditional Columbus brokerages. We don't have expensive office space or large support staff. Technology allows us to deliver the same professional service at a lower cost, and we pass those savings directly to our clients.</p>
+                            <p>We use a streamlined process and standardized workflows to reduce overhead and keep delivery consistent. That approach can support reduced listing commission options while still providing representation through the transaction. Use a consultation to confirm which fee path applies to your timeline and whether you plan to buy after selling.</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="faq-item">
                     <button class="faq-question">
                         <span>Is there a catch with the 1% rate?</span>
@@ -288,10 +411,11 @@
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>No catch. The 1% rate applies when you sell your current home AND purchase your next home with TD Realty Ohio. If you're only selling, the rate is 2%. Both rates include full-service representation with no hidden fees or reduced service.</p>
+                            <p>The 1% listing rate applies when you sell your current home and purchase your next home with TD Realty Ohio. If you are only selling, the listing rate is 2%. Use the consultation to confirm your plan and how the fee path is documented.</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="faq-item">
                     <button class="faq-question">
                         <span>Do I still pay the buyer's agent commission?</span>
@@ -299,10 +423,11 @@
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>Our rate covers your listing agent commission only. The buyer's agent commission is negotiated separately and is typically offered as part of the listing to attract buyer interest, but the specifics depend on your situation and the current Columbus market.</p>
+                            <p>These rates refer to the listing side only. Buyer side compensation is negotiated separately and depends on the listing strategy and the terms you accept. The consultation is where you decide what you want to offer and how that fits your overall net proceeds plan.</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="faq-item">
                     <button class="faq-question">
                         <span>What if my home needs repairs after inspection?</span>
@@ -310,10 +435,11 @@
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>That's the benefit of a pre-listing inspection. You have options: make the repairs before listing, adjust your asking price to account for needed work, or disclose the issues and let buyers factor them into their offers. No surprises during the buyer's inspection means smoother transactions.</p>
+                            <p>A pre-listing inspection gives you information earlier so you can choose a path. Options can include making repairs before listing, adjusting pricing, or disclosing issues so buyers can evaluate them during offers. The goal is to reduce surprises and keep negotiation decisions based on known condition items.</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="faq-item">
                     <button class="faq-question">
                         <span>What areas of Columbus do you serve?</span>
@@ -321,22 +447,24 @@
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>We serve all of Central Ohio including Columbus, Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, Upper Arlington, Worthington, Lewis Center, Pickerington, Pataskala, Blacklick, Galena, Sunbury, and Clintonville.</p>
+                            <p>We serve Central Ohio including Columbus, Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, Upper Arlington, Worthington, Lewis Center, Pickerington, and nearby communities. If you are outside these areas, use the contact page to confirm coverage. Coverage can vary based on timeline and property specifics.</p>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
     <section class="cta-section">
         <div class="container">
             <h2>Ready to Sell Your Columbus Home?</h2>
-            <p>Get a free consultation and find out how much you could save with TD Realty Ohio's 1% commission.</p>
+            <p>Get a free consultation and find out how much you could save with TD Realty Ohio's reduced listing commission options.</p>
             <div class="cta-buttons">
                 <a href="contact.html" class="btn btn-primary">Schedule Free Consultation</a>
                 <a href="compare.html" class="btn btn-outline">Compare 1% vs 3%</a>
-                    <a href="mailto:info@tdrealtyohio.com" class="btn btn-secondary">Email info@tdrealtyohio.com</a>
+                <a href="tel:+16143928858" class="btn btn-outline">Call (614) 392-8858</a>
+                <a href="mailto:info@tdrealtyohio.com" class="btn btn-secondary">Email info@tdrealtyohio.com</a>
             </div>
         </div>
     </section>
@@ -349,8 +477,14 @@
                         <span class="logo-td">TD</span>
                         <span class="logo-text" style="color: white;">Realty Ohio</span>
                     </a>
-                    <p>Columbus Ohio's trusted 1% commission real estate broker. Full-service brokerage serving Central Ohio since 2017.</p>
+                    <p>Columbus Ohio's real estate brokerage offering reduced listing commission options with full-service representation.</p>
+
+                    <div style="margin-top: 14px; display:flex; gap:10px; flex-wrap: wrap;">
+                        <a class="btn btn-outline" href="tel:+16143928858" aria-label="Call TD Realty Ohio at (614) 392-8858">Call (614) 392-8858</a>
+                        <a class="btn btn-secondary" href="mailto:info@tdrealtyohio.com" aria-label="Email TD Realty Ohio">Email info@tdrealtyohio.com</a>
+                    </div>
                 </div>
+
                 <div>
                     <h4>Services</h4>
                     <ul>
@@ -359,6 +493,7 @@
                         <li><a href="pre-listing-inspection.html">Pre-Listing Inspection</a></li>
                     </ul>
                 </div>
+
                 <div>
                     <h4>Company</h4>
                     <ul>
@@ -367,15 +502,17 @@
                         <li><a href="blog/">Blog</a></li>
                     </ul>
                 </div>
+
                 <div>
                     <h4>Contact</h4>
                     <ul>
-                        <!-- Phone number removed -->
+                        <li><a href="tel:+16143928858">(614) 392-8858</a></li>
                         <li><a href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a></li>
                         <li>Westerville, Ohio</li>
                     </ul>
                 </div>
             </div>
+
             <div class="footer-bottom">
                 <div class="footer-legal">
                     <p><strong>TD Realty Ohio, LLC (License #2023006602)</strong></p>
@@ -397,14 +534,17 @@
                         <span class="eho-text">Equal Housing Opportunity. We are committed to providing equal professional service without discrimination.</span>
                     </div>
                 </div>
+
                 <div class="footer-links">
                     <a href="legal/privacy-policy.html">Privacy Policy</a>
                     <a href="legal/terms-of-service.html">Terms of Service</a>
                     <a href="legal/fair-housing.html">Fair Housing</a>
                     <a href="legal/ada-compliance.html">Accessibility</a>
                 </div>
+
                 <p style="margin-top: 20px; color: rgba(255,255,255,0.5);">&copy; 2026 TD Realty Ohio, LLC. All rights reserved.</p>
             </div>
+
         </div>
     </footer>
 
@@ -413,13 +553,35 @@
             <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
         </svg>
     </button>
-    
+
     <a href="mailto:info@tdrealtyohio.com" class="mobile-call-btn" aria-label="Email TD Realty Ohio">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
         </svg>
     </a>
 
+    <script>
+        (function () {
+            var lines = [
+                "1% listing fee applies when you buy and sell with TD Realty Ohio. Sell-only listing fee is 2%.",
+                "Pre-listing inspection included with listings, then pricing and prep decisions are based on known condition items.",
+                "Call (614) 392-8858 or email info@tdrealtyohio.com to request a written fee summary for your address."
+            ];
+
+            var el = document.querySelector('[data-td-ticker-line]');
+            if (!el) return;
+
+            var i = 0;
+            function rotate() {
+                i = (i + 1) % lines.length;
+                el.textContent = lines[i];
+            }
+
+            setInterval(rotate, 6500);
+        })();
+    </script>
+
     <script src="assets/js/main.js"></script>
 </body>
 </html>
+FILE_END path=sellers.html

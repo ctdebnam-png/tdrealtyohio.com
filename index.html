@@ -16,236 +16,107 @@
 
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
+  <link rel="stylesheet" href="/assets/css/tdro-ui.css" />
+
   <style>
-    :root {
-      --bg: #0b1020;
-      --panel: #111a33;
-      --text: #eef2ff;
-      --muted: #c7d2fe;
-      --border: rgba(199, 210, 254, 0.20);
-      --btn: #ffffff;
-      --btnText: #0b1020;
-      --link: #c7d2fe;
-      --max: 1120px;
-      --radius: 14px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(1200px 700px at 30% 0%, rgba(99,102,241,0.22), transparent 60%),
-                  radial-gradient(900px 600px at 90% 20%, rgba(59,130,246,0.18), transparent 60%),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-    }
-    a { color: var(--link); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 22px 18px; }
-    header {
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(10px);
-      background: rgba(11,16,32,0.75);
-      border-bottom: 1px solid var(--border);
-      z-index: 10;
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-    }
-    .brandMark {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(99,102,241,0.9), rgba(59,130,246,0.9));
-      box-shadow: 0 10px 22px rgba(0,0,0,0.35);
-    }
-    .navLinks {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      align-items: center;
-      justify-content: flex-end;
-      font-size: 14px;
-    }
-    .btnRow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: flex-start;
-      margin-top: 14px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 11px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.06);
-      color: var(--text);
-      font-weight: 650;
-      font-size: 14px;
-    }
-    .btnPrimary {
-      background: var(--btn);
-      color: var(--btnText);
-      border-color: rgba(255,255,255,0.55);
-    }
-    .hero {
-      padding: 28px 0 18px 0;
-    }
-    .grid {
+    /* Page-specific helpers (kept small so the Component 1 system stays in control). */
+    .td-westerville-grid {
       display: grid;
       grid-template-columns: 1.12fr 0.88fr;
       gap: 16px;
       align-items: stretch;
     }
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: 1fr; }
-      .navLinks { display: none; }
+    @media (max-width: 920px) {
+      .td-westerville-grid { grid-template-columns: 1fr; }
     }
-    .card {
-      border: 1px solid var(--border);
-      background: rgba(17,26,51,0.72);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: 0 18px 36px rgba(0,0,0,0.28);
-    }
-    h1 { margin: 0 0 10px 0; font-size: 34px; line-height: 1.12; }
-    h2 { margin: 0 0 10px 0; font-size: 24px; line-height: 1.2; }
-    h3 { margin: 0 0 8px 0; font-size: 18px; line-height: 1.25; }
-    p { margin: 0 0 10px 0; color: var(--muted); }
-    .kpis {
+
+    .td-kpis {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0,1fr));
       gap: 10px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
-    @media (max-width: 900px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
-    .kpi {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 12px;
+    @media (max-width: 920px) {
+      .td-kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
-    .kpi strong { display: block; font-size: 16px; color: var(--text); }
-    .kpi span { display: block; font-size: 13px; color: var(--muted); margin-top: 6px; }
-    .section { padding: 12px 0; }
-    .twoCol {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    @media (max-width: 900px) { .twoCol { grid-template-columns: 1fr; } }
-    .tile {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
+    .td-kpi {
+      border-radius: var(--td-radius-md);
+      border: 1px solid rgba(233,238,251,.12);
+      background: rgba(15,26,47,.55);
       padding: 14px;
     }
-    .table {
+    .td-kpi strong { display:block; font-weight:800; }
+    .td-kpi span { display:block; margin-top: 6px; color: var(--td-muted); font-size: var(--td-small); }
+
+    .td-table-wrap { overflow-x: auto; margin-top: 14px; }
+    .td-table {
       width: 100%;
       border-collapse: collapse;
+      border-radius: var(--td-radius-md);
       overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(233,238,251,.12);
+      background: rgba(15,26,47,.55);
     }
-    .table th, .table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
+    .td-table th, .td-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(233,238,251,.12);
       text-align: left;
+      color: var(--td-muted);
       font-size: 14px;
-      color: var(--muted);
+      vertical-align: top;
     }
-    .table th { color: var(--text); font-weight: 700; background: rgba(255,255,255,0.04); }
-    .table tr:last-child td { border-bottom: none; }
-    .calcRow {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 10px;
+    .td-table th {
+      color: var(--td-text);
+      background: rgba(233,238,251,.06);
+      font-weight: 800;
     }
-    .inputRow {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    label { font-size: 14px; color: var(--text); font-weight: 650; }
-    input[type="number"]{
-      width: min(320px, 100%);
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      font-size: 16px;
-      outline: none;
-    }
-    .note {
+    .td-table tr:last-child td { border-bottom: none; }
+
+    .td-pills { display:flex; flex-wrap:wrap; gap:10px; margin-top: 12px; }
+    .td-pill {
+      border: 1px solid rgba(233,238,251,.14);
+      border-radius: 999px;
+      padding: 8px 12px;
       font-size: 13px;
-      color: var(--muted);
-      border-left: 3px solid rgba(199,210,254,0.35);
-      padding-left: 10px;
-      margin-top: 10px;
+      color: var(--td-muted);
+      background: rgba(15,26,47,.55);
+      text-decoration: none;
     }
+    .td-pill:hover { color: var(--td-text); text-decoration: none; border-color: rgba(233,238,251,.22); }
+
     details {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
+      border: 1px solid rgba(233,238,251,.12);
+      background: rgba(15,26,47,.55);
+      border-radius: var(--td-radius-md);
       padding: 12px 12px;
     }
-    summary { cursor: pointer; font-weight: 700; color: var(--text); }
+    summary { cursor: pointer; font-weight: 800; color: var(--td-text); }
     details p { margin-top: 10px; }
-    footer {
-      border-top: 1px solid var(--border);
-      margin-top: 18px;
-      padding: 18px 0 26px 0;
-    }
-    .footGrid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 900px) { .footGrid { grid-template-columns: 1fr; } }
-    .small { font-size: 13px; color: var(--muted); }
-    .legal { margin-top: 10px; font-size: 12px; color: rgba(199,210,254,0.82); }
-    .pillRow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-    .pill {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 8px 10px;
-      font-size: 13px;
-      color: var(--muted);
-      background: rgba(255,255,255,0.04);
+
+    .td-legal {
+      color: var(--td-muted);
+      font-size: 12px;
+      margin-top: 14px;
+      line-height: 1.6;
     }
   </style>
 </head>
 
-<body>
-  <header>
-    <div class="wrap">
-      <div class="nav" aria-label="Primary navigation">
-        <div class="brand">
-          <div class="brandMark" aria-hidden="true"></div>
-          <a href="/" aria-label="TD Realty Ohio Home">TD Realty Ohio</a>
-        </div>
+<body class="td-ui">
 
-        <nav class="navLinks">
+  <header class="td-site-header">
+    <div class="td-container">
+      <div class="td-site-header__bar">
+        <a class="td-brand" href="/" aria-label="TD Realty Ohio Home">
+          <span class="td-brand__mark" aria-hidden="true"></span>
+          <span class="td-brand__name">TD Realty Ohio</span>
+        </a>
+
+        <button class="td-nav-toggle" data-td-nav-toggle aria-expanded="false" aria-label="Open menu">
+          Menu
+        </button>
+
+        <nav class="td-nav" data-td-nav aria-label="Primary navigation">
           <a href="/sellers/">Sellers</a>
           <a href="/buyers/">Buyers</a>
           <a href="/pre-listing-inspection/">Pre Listing Inspection</a>
@@ -254,444 +125,529 @@
           <a href="/contact/">Contact</a>
         </nav>
 
-        <div class="btnRow" style="margin-top:0;">
-          <a class="btn" href="/sellers/#commission-comparison" data-track="nav_secondary_cta">Commission Comparison</a>
-          <a class="btn btnPrimary" href="/contact/" data-track="nav_primary_cta">Free Consultation</a>
+        <div class="td-header-cta">
+          <a class="td-btn td-btn--ghost" data-td-phone-tel href="tel:+16143928858">
+            Call <span data-td-phone-display>(614) 392-8858</span>
+          </a>
+          <a class="td-btn td-btn--primary" href="/contact/">Free Consultation</a>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="hero">
-      <div class="grid">
-        <div class="card">
-          <h1>Sell Your Westerville Home for a 1% Listing Commission</h1>
-          <p>
-            TD Realty Ohio is a full service brokerage that offers reduced listing commissions for Central Ohio sellers.
-            The 1% listing commission applies when you list your home and purchase your next home with us, and the sell only rate is 2%.
-            A pre listing inspection is included so pricing and negotiations can be anchored to known condition.
-          </p>
-
-          <div class="btnRow">
-            <a class="btn btnPrimary" href="/contact/" data-track="hero_primary_cta">Schedule a Free Consultation</a>
-            <a class="btn" href="mailto:[email protected]" data-track="hero_secondary_cta">Email [email protected]</a>
-          </div>
-
-          <div class="kpis" aria-label="Key service facts">
-            <div class="kpi">
-              <strong>Serving since 2017</strong>
-              <span>Central Ohio focus</span>
-            </div>
-            <div class="kpi">
-              <strong>1% or 2%</strong>
-              <span>Buy and sell vs sell only</span>
-            </div>
-            <div class="kpi">
-              <strong>Pre listing inspection</strong>
-              <span>Included for listings</span>
-            </div>
-            <div class="kpi">
-              <strong>Westerville based</strong>
-              <span>Local market execution</span>
-            </div>
-          </div>
-
-          <p class="note">
-            Placeholder you must verify before publishing: phone number and any appointment booking URL.
-            Replace [INSERT VERIFIED PHONE] and [INSERT VERIFIED BOOKING LINK] in the footer and CTA modules if you want them displayed.
-          </p>
+  <div class="td-ticker" data-td-ticker>
+    <div class="td-container">
+      <div class="td-ticker__in">
+        <div class="td-ticker__label" data-td-ticker-label>TD Realty Ohio</div>
+        <div class="td-ticker__line" data-td-ticker-line></div>
+        <div class="td-ticker__meta">
+          <a data-td-phone-tel href="tel:+16143928858"><span data-td-phone-display>(614) 392-8858</span></a>
+          <span>•</span>
+          <a data-td-email-mailto href="mailto:info@tdrealtyohio.com"><span data-td-email>info@tdrealtyohio.com</span></a>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <aside class="card" aria-label="Lead capture and quick comparison">
-          <h2>Quick Savings Estimate</h2>
-          <p>
-            This estimator compares a traditional 3% listing fee to your TD Realty Ohio listing fee.
-            It is a starting point for planning and does not include buyer side compensation or closing costs.
-            Use it to estimate the listing side commission difference only.
-          </p>
+  <main>
+    <section class="td-hero">
+      <div class="td-container">
+        <div class="td-westerville-grid">
+          <div class="td-card td-hero__panel">
+            <div class="td-card__in">
+              <div class="td-badge">
+                <span class="td-kicker">Westerville sellers</span>
+                <span style="color:var(--td-muted); font-size:var(--td-small);">Listing fee options</span>
+              </div>
 
-          <div class="calcRow" id="savings-calculator">
-            <div class="inputRow">
-              <label for="price">Home sale price</label>
-              <input id="price" type="number" inputmode="numeric" min="0" step="1000" value="400000" aria-describedby="calcHelp" />
+              <h1 class="td-h1">Sell Your Westerville Home for a 1% Listing Commission</h1>
+
+              <p class="td-p">
+                TD Realty Ohio is a full service brokerage that offers reduced listing commissions for Central Ohio sellers.
+                The 1% listing commission applies when you list your home and purchase your next home with us, and the sell only rate is 2%.
+                A pre listing inspection is included so pricing and negotiations can be anchored to known condition.
+              </p>
+
+              <div class="td-hero__actions">
+                <a class="td-btn td-btn--primary" href="/contact/" data-track="hero_primary_cta">Schedule a Free Consultation</a>
+                <a class="td-btn td-btn--secondary" data-td-email-mailto href="mailto:info@tdrealtyohio.com" data-track="hero_secondary_cta">
+                  Email <span data-td-email>info@tdrealtyohio.com</span>
+                </a>
+              </div>
+
+              <div class="td-kpis" aria-label="Key service facts">
+                <div class="td-kpi">
+                  <strong>Serving since 2017</strong>
+                  <span>Central Ohio focus</span>
+                </div>
+                <div class="td-kpi">
+                  <strong>1% or 2%</strong>
+                  <span>Buy and sell vs sell only</span>
+                </div>
+                <div class="td-kpi">
+                  <strong>Pre listing inspection</strong>
+                  <span>Included for listings</span>
+                </div>
+                <div class="td-kpi">
+                  <strong>Westerville based</strong>
+                  <span>Local market execution</span>
+                </div>
+              </div>
+
+              <div class="td-hero__fineprint">
+                Phone <a data-td-phone-tel href="tel:+16143928858"><span data-td-phone-display>(614) 392-8858</span></a>.
+                Email <a data-td-email-mailto href="mailto:info@tdrealtyohio.com"><span data-td-email>info@tdrealtyohio.com</span></a>.
+              </div>
             </div>
+          </div>
 
-            <div class="inputRow">
-              <label style="display:flex; gap:10px; align-items:center;">
-                <input id="buysell" type="checkbox" checked />
-                I am selling and buying with TD Realty Ohio (1% listing fee)
-              </label>
+          <aside class="td-card">
+            <div class="td-card__in" aria-label="Lead capture and quick comparison">
+              <h2 class="td-h2">Quick Savings Estimate</h2>
+
+              <p class="td-p">
+                This estimator compares a traditional 3% listing fee to your TD Realty Ohio listing fee.
+                It is a starting point for planning and does not include buyer side compensation or closing costs.
+                Use it to estimate the listing side commission difference only.
+              </p>
+
+              <div style="height:12px;"></div>
+
+              <div id="savings-calculator">
+                <div class="td-field">
+                  <label for="price">Home sale price</label>
+                  <input id="price" type="number" inputmode="numeric" min="0" step="1000" value="400000" aria-describedby="calcHelp" />
+                </div>
+
+                <div style="height:10px;"></div>
+
+                <label style="display:flex; gap:10px; align-items:center; color:var(--td-text); font-weight:750;">
+                  <input id="buysell" type="checkbox" checked />
+                  I am selling and buying with TD Realty Ohio (1% listing fee)
+                </label>
+
+                <div style="height:12px;"></div>
+
+                <div class="td-card" aria-live="polite" style="box-shadow:none;">
+                  <div class="td-card__in" style="display:grid; gap:10px;">
+                    <div><strong style="color:var(--td-text);">Traditional 3% listing fee</strong> <span id="trad" style="float:right; color:var(--td-text);"></span></div>
+                    <div><strong style="color:var(--td-text);">TD Realty Ohio listing fee</strong> <span id="td" style="float:right; color:var(--td-text);"></span></div>
+                    <div><strong style="color:var(--td-text);">Estimated listing side savings</strong> <span id="save" style="float:right; color:var(--td-text);"></span></div>
+                  </div>
+                </div>
+
+                <p id="calcHelp" style="color:var(--td-muted); font-size:var(--td-small); margin-top:12px;">
+                  The 1% rate applies only when you list your home and purchase your next home with TD Realty Ohio.
+                  If you are only selling, this calculator uses a 2% listing fee.
+                </p>
+
+                <div class="td-hero__actions" style="margin-top:12px;">
+                  <a class="td-btn td-btn--primary" href="/contact/" data-track="calc_primary_cta">Request a Pricing Plan for Westerville</a>
+                  <a class="td-btn td-btn--secondary" href="/pre-listing-inspection/" data-track="calc_secondary_cta">How the Inspection Helps</a>
+                </div>
+              </div>
             </div>
+          </aside>
+        </div>
+      </div>
+    </section>
 
-            <div class="tile" aria-live="polite">
-              <div style="display:grid; gap:8px;">
-                <div><strong style="color:var(--text);">Traditional 3% listing fee</strong> <span id="trad" style="float:right; color:var(--text);"></span></div>
-                <div><strong style="color:var(--text);">TD Realty Ohio listing fee</strong> <span id="td" style="float:right; color:var(--text);"></span></div>
-                <div><strong style="color:var(--text);">Estimated listing side savings</strong> <span id="save" style="float:right; color:var(--text);"></span></div>
+    <section class="td-section">
+      <div class="td-container">
+        <div class="td-card">
+          <div class="td-card__in">
+            <h2 class="td-h2">Why Westerville Sellers Choose TD Realty Ohio</h2>
+
+            <p class="td-p">
+              This page is built for Westerville sellers who want a reduced listing commission without removing full service representation.
+              The service promise is straightforward: photography, MLS exposure, negotiation, and transaction management remain included, and the fee structure is stated.
+              The pre listing inspection is used to reduce surprises and support price positioning before the first showings.
+            </p>
+
+            <div style="height:14px;"></div>
+
+            <div class="td-grid td-grid--2">
+              <div class="td-card">
+                <div class="td-card__in">
+                  <h3 class="td-h3">Reduced listing commission with defined rules</h3>
+                  <p class="td-p">
+                    The buy and sell path is priced at a 1% listing commission and the sell only path is priced at 2%.
+                    This allows Westerville sellers to plan based on their next move rather than guessing how fees will be presented later.
+                    If you want a written fee summary for your address, use the consultation link and request it in writing.
+                  </p>
+                </div>
+              </div>
+
+              <div class="td-card">
+                <div class="td-card__in">
+                  <h3 class="td-h3">Inspection included to support pricing and negotiation</h3>
+                  <p class="td-p">
+                    The inspection is done before the listing goes live so you can decide what to repair, what to disclose, and how to position the home.
+                    This approach can reduce renegotiations after a buyer inspection and it can tighten the decision making timeline during offers.
+                    If you have a prior inspection, you can still request a plan to reconcile any differences.
+                  </p>
+                </div>
+              </div>
+
+              <div class="td-card">
+                <div class="td-card__in">
+                  <h3 class="td-h3">Westerville execution details</h3>
+                  <p class="td-p">
+                    Westerville has a mix of housing ages, renovation levels, and micro location effects that show up in appraisal and buyer reactions.
+                    A local execution plan should account for staging decisions, showing windows, and offer review structure.
+                    The consultation is the place to define the exact timeline for your property and your move.
+                  </p>
+                </div>
+              </div>
+
+              <div class="td-card">
+                <div class="td-card__in">
+                  <h3 class="td-h3">Full service representation</h3>
+                  <p class="td-p">
+                    Reduced listing fees often raise a question about service scope, so this page is explicit that representation remains full service.
+                    Your listing still requires pricing strategy, marketing execution, negotiation, and closing coordination.
+                    If you want a written scope checklist, request it during your consultation.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <p class="small" id="calcHelp">
-              The 1% rate applies only when you list your home and purchase your next home with TD Realty Ohio.
-              If you are only selling, this calculator uses a 2% listing fee.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section" id="commission-comparison">
+      <div class="td-container">
+        <div class="td-card">
+          <div class="td-card__in">
+            <h2 class="td-h2">What You Get</h2>
+
+            <p class="td-p">
+              This comparison is intended to keep the offer understandable for Westerville sellers who are evaluating different fee models.
+              It focuses on listing side items that can be controlled at the listing agreement stage.
+              Buyer side compensation and closing costs vary by transaction and should be discussed in the consultation for your specific plan.
             </p>
 
-            <div class="btnRow">
-              <a class="btn btnPrimary" href="/contact/" data-track="calc_primary_cta">Request a Pricing Plan for Westerville</a>
-              <a class="btn" href="/pre-listing-inspection/" data-track="calc_secondary_cta">How the Inspection Helps</a>
+            <div class="td-table-wrap" role="region" aria-label="Service comparison table">
+              <table class="td-table" role="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Service item</th>
+                    <th scope="col">TD Realty Ohio</th>
+                    <th scope="col">Typical 3% listing agent</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Listing commission</td>
+                    <td>1% (buy and sell) or 2% (sell only)</td>
+                    <td>3%</td>
+                  </tr>
+                  <tr>
+                    <td>Professional photography</td>
+                    <td>Included</td>
+                    <td>Included</td>
+                  </tr>
+                  <tr>
+                    <td>MLS listing and syndication</td>
+                    <td>Included</td>
+                    <td>Included</td>
+                  </tr>
+                  <tr>
+                    <td>Pre listing inspection</td>
+                    <td>Included</td>
+                    <td>Not typical</td>
+                  </tr>
+                  <tr>
+                    <td>Negotiation and transaction management</td>
+                    <td>Included</td>
+                    <td>Included</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </aside>
-      </div>
-    </section>
 
-    <section class="section" aria-label="Why choose TD Realty Ohio in Westerville">
-      <div class="card">
-        <h2>Why Westerville Sellers Choose TD Realty Ohio</h2>
-        <p>
-          This page is built for Westerville sellers who want a reduced listing commission without removing full service representation.
-          The service promise is straightforward: photography, MLS exposure, negotiation, and transaction management remain included, and the fee structure is stated.
-          The pre listing inspection is used to reduce surprises and support price positioning before the first showings.
-        </p>
-
-        <div class="twoCol">
-          <div class="tile">
-            <h3>Reduced listing commission with defined rules</h3>
-            <p>
-              The buy and sell path is priced at a 1% listing commission and the sell only path is priced at 2%.
-              This allows Westerville sellers to plan based on their next move rather than guessing how fees will be presented later.
-              If you want a written fee summary for your address, use the consultation link and request it in writing.
-            </p>
-          </div>
-
-          <div class="tile">
-            <h3>Inspection included to support pricing and negotiation</h3>
-            <p>
-              The inspection is done before the listing goes live so you can decide what to repair, what to disclose, and how to position the home.
-              This approach can reduce renegotiations after a buyer inspection and it can tighten the decision making timeline during offers.
-              If you have a prior inspection, you can still request a plan to reconcile any differences.
-            </p>
-          </div>
-
-          <div class="tile">
-            <h3>Westerville execution details</h3>
-            <p>
-              Westerville has a mix of housing ages, renovation levels, and micro location effects that show up in appraisal and buyer reactions.
-              A local execution plan should account for staging decisions, showing windows, and offer review structure.
-              The consultation is the place to define the exact timeline for your property and your move.
-            </p>
-          </div>
-
-          <div class="tile">
-            <h3>Full service representation</h3>
-            <p>
-              Reduced listing fees often raise a question about service scope, so this page is explicit that representation remains full service.
-              Your listing still requires pricing strategy, marketing execution, negotiation, and closing coordination.
-              If you want a written scope checklist, request it during your consultation.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="What is included table">
-      <div class="card" id="commission-comparison">
-        <h2>What You Get</h2>
-        <p>
-          This comparison is intended to keep the offer understandable for Westerville sellers who are evaluating different fee models.
-          It focuses on listing side items that can be controlled at the listing agreement stage.
-          Buyer side compensation and closing costs vary by transaction and should be discussed in the consultation for your specific plan.
-        </p>
-
-        <table class="table" role="table" aria-label="Service comparison table">
-          <thead>
-            <tr>
-              <th scope="col">Service item</th>
-              <th scope="col">TD Realty Ohio</th>
-              <th scope="col">Typical 3% listing agent</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Listing commission</td>
-              <td>1% (buy and sell) or 2% (sell only)</td>
-              <td>3%</td>
-            </tr>
-            <tr>
-              <td>Professional photography</td>
-              <td>Included</td>
-              <td>Included</td>
-            </tr>
-            <tr>
-              <td>MLS listing and syndication</td>
-              <td>Included</td>
-              <td>Included</td>
-            </tr>
-            <tr>
-              <td>Pre listing inspection</td>
-              <td>Included</td>
-              <td>Not typical</td>
-            </tr>
-            <tr>
-              <td>Negotiation and transaction management</td>
-              <td>Included</td>
-              <td>Included</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="btnRow">
-          <a class="btn btnPrimary" href="/contact/" data-track="table_primary_cta">Get a Westerville Listing Plan</a>
-          <a class="btn" href="/sellers/" data-track="table_secondary_cta">See the Seller Process</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="Proof module and compliance disclosures">
-      <div class="card">
-        <h2>Brokerage Identifiers and Required Disclosures</h2>
-        <p>
-          This module is designed to reduce friction for a seller who wants to verify who they are working with before they schedule time.
-          The license numbers below are included on the main site and are repeated here so this page can stand alone.
-          If any of these items change, update the text on this page and the structured data block in the footer.
-        </p>
-
-        <div class="twoCol">
-          <div class="tile">
-            <h3>Licensing</h3>
-            <p class="small" style="margin-bottom:0;">
-              TD Realty Ohio, LLC (License #2023006602)<br />
-              Travis Debnam, Broker (License #2023006467)
-            </p>
-          </div>
-          <div class="tile">
-            <h3>Membership statements</h3>
-            <p class="small" style="margin-bottom:0;">
-              Member of Columbus REALTORS® and National Association of REALTORS®<br />
-              Equal Housing Opportunity
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="Objection handling module">
-      <div class="card">
-        <h2>Common Questions Westerville Sellers Ask Before Choosing a Reduced Fee Listing</h2>
-        <p>
-          Reduced fee offers are frequently compared to flat fee MLS entries, referral sites, and traditional listing agents.
-          The goal here is to address the decision points that typically block a consultation, without relying on unsupported claims.
-          If you want these answers tightened to your exact process language, replace the text while keeping the question structure for SEO and usability.
-        </p>
-
-        <div class="twoCol">
-          <details>
-            <summary>Does a reduced listing commission change service quality?</summary>
-            <p>
-              A reduced listing commission does not require reduced representation if the service scope is defined and executed.
-              The right comparison is whether the marketing, pricing strategy, negotiation, and closing coordination are covered, and what is excluded.
-              Use the consultation to request the written scope for your listing so you can compare it to other options line by line.
-            </p>
-          </details>
-
-          <details>
-            <summary>Is a flat fee MLS listing the same thing as full representation?</summary>
-            <p>
-              A flat fee MLS listing often focuses on MLS entry and may leave pricing, negotiation, and contract execution to the seller.
-              Some sellers prefer that approach, but others want representation through inspection responses, appraisal items, and closing coordination.
-              This page is for sellers who want representation while still using a reduced listing fee structure.
-            </p>
-          </details>
-
-          <details>
-            <summary>How does the pre listing inspection affect pricing and negotiations?</summary>
-            <p>
-              The inspection gives a clearer view of condition items before the listing goes live, which can change how the home is positioned.
-              It can also reduce the likelihood of late stage renegotiations after a buyer inspection, depending on what is found and how it is handled.
-              The best use is to turn unknowns into a plan before offers arrive.
-            </p>
-          </details>
-
-          <details>
-            <summary>Can I get the 1% fee if I am not buying right away?</summary>
-            <p>
-              The 1% listing fee is tied to listing your home and purchasing your next home with TD Realty Ohio.
-              If you are selling only, the page and calculator use the 2% sell only listing fee.
-              If your timing is uncertain, the consultation is where you define what triggers the buy and sell plan.
-            </p>
-          </details>
-        </div>
-
-        <div class="btnRow">
-          <a class="btn btnPrimary" href="/contact/" data-track="objection_primary_cta">Ask These Questions on a Call</a>
-          <a class="btn" href="/faq/" data-track="objection_secondary_cta">Read the Full FAQ</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="FAQ module for rich results">
-      <div class="card">
-        <h2>Westerville Seller FAQ</h2>
-        <p>
-          These FAQs are written to match high intent searches that precede contacting a broker.
-          They are also included in JSON LD as an FAQPage for eligibility in search features, subject to Google policies.
-          Keep the answers accurate and avoid adding claims that you cannot verify publicly.
-        </p>
-
-        <div class="twoCol">
-          <details>
-            <summary>What is the TD Realty Ohio listing commission in Westerville?</summary>
-            <p>
-              The listing commission is 1% when you list your home and purchase your next home with TD Realty Ohio.
-              If you are selling only, the listing commission is 2%.
-              Buyer side compensation and other closing costs are separate and depend on the terms you accept.
-            </p>
-          </details>
-
-          <details>
-            <summary>Is the pre listing inspection included for Westerville listings?</summary>
-            <p>
-              The pre listing inspection is included as part of the listing offer described on the main TD Realty Ohio site.
-              The intent is to identify condition items before showings and offers.
-              The consultation is where you confirm timing and any special circumstances for your property.
-            </p>
-          </details>
-
-          <details>
-            <summary>Do you serve only Westerville or the entire Columbus area?</summary>
-            <p>
-              TD Realty Ohio serves Central Ohio and includes Westerville as a primary service area.
-              If you are outside Westerville, use the main Sellers page to navigate to other city pages.
-              If your neighborhood is not listed, use the contact page to confirm coverage.
-            </p>
-          </details>
-
-          <details>
-            <summary>How do I start if I want to sell in Westerville?</summary>
-            <p>
-              The next step is a free consultation where you define timeline, pricing plan, prep items, and listing schedule.
-              Use the contact page and include your address, your preferred timing, and whether you expect to buy after selling.
-              If you prefer email, the email link on this page routes directly to the published inbox.
-            </p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="Internal links module for discovery">
-      <div class="card">
-        <h2>Explore Nearby Central Ohio Seller Pages</h2>
-        <p>
-          Internal links help users and search engines discover related pages, and they also reduce reliance on navigation menus.
-          This module is intentionally placed near the bottom so a seller can take action first, then browse if they are still researching.
-          Keep the links limited to Central Ohio markets you serve.
-        </p>
-
-        <div class="pillRow">
-          <a class="pill" href="/columbus/" data-track="internal_city_columbus">Columbus</a>
-          <a class="pill" href="/dublin/" data-track="internal_city_dublin">Dublin</a>
-          <a class="pill" href="/powell/" data-track="internal_city_powell">Powell</a>
-          <a class="pill" href="/new-albany/" data-track="internal_city_newalbany">New Albany</a>
-          <a class="pill" href="/upper-arlington/" data-track="internal_city_ua">Upper Arlington</a>
-          <a class="pill" href="/worthington/" data-track="internal_city_worthington">Worthington</a>
-          <a class="pill" href="/hilliard/" data-track="internal_city_hilliard">Hilliard</a>
-          <a class="pill" href="/gahanna/" data-track="internal_city_gahanna">Gahanna</a>
-        </div>
-
-        <div class="btnRow">
-          <a class="btn btnPrimary" href="/contact/" data-track="internal_primary_cta">Get a Westerville Pricing Plan</a>
-          <a class="btn" href="/blog/" data-track="internal_secondary_cta">Read Seller Guides</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-label="Primary CTA module">
-      <div class="card">
-        <h2>Ready to Talk About Your Westerville Sale?</h2>
-        <p>
-          Use the free consultation to confirm which fee path applies, define a timeline, and identify prep items that affect pricing and buyer response.
-          If you want a written plan, request a written summary that includes the listing fee, your expected timeline, and the next steps.
-          For the fastest routing, include your address and whether you plan to buy after selling.
-        </p>
-
-        <div class="btnRow">
-          <a class="btn btnPrimary" href="/contact/" data-track="final_primary_cta">Schedule Free Consultation</a>
-          <a class="btn" href="[INSERT VERIFIED BOOKING LINK]" data-track="final_booking_cta">Book a Time Slot</a>
-          <a class="btn" href="tel:[INSERT VERIFIED PHONE]" data-track="final_phone_cta">Call [INSERT VERIFIED PHONE]</a>
-        </div>
-
-        <p class="small" style="margin-top:10px;">
-          If you do not use a booking link, delete the booking button and keep the contact page CTA only.
-          If you do not want a phone number displayed, delete the phone button and remove the phone from schema.
-          Keep at least one conversion path above the fold and at least one repeated at the bottom.
-        </p>
-      </div>
-    </section>
-
-    <footer>
-      <div class="wrap" style="padding-left:0; padding-right:0;">
-        <div class="footGrid">
-          <div>
-            <div class="brand" style="margin-bottom:8px;">
-              <div class="brandMark" aria-hidden="true"></div>
-              <span>TD Realty Ohio</span>
+            <div class="td-hero__actions" style="margin-top:14px;">
+              <a class="td-btn td-btn--primary" href="/contact/" data-track="table_primary_cta">Get a Westerville Listing Plan</a>
+              <a class="td-btn td-btn--secondary" href="/sellers/" data-track="table_secondary_cta">See the Seller Process</a>
             </div>
-            <p class="small">
-              Westerville based real estate brokerage serving Central Ohio with reduced listing commission options and full service representation.
-              1% applies when you buy and sell with TD Realty Ohio, and 2% applies for sell only.
-              Pre listing inspection included as described on the main site.
-            </p>
-          </div>
 
-          <div>
-            <h3 style="margin:0 0 8px 0;">Services</h3>
-            <div class="small">
-              <div><a href="/sellers/">Sell Your Home</a></div>
-              <div><a href="/buyers/">Buy a Home</a></div>
-              <div><a href="/pre-listing-inspection/">Pre Listing Inspection</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section">
+      <div class="td-container">
+        <div class="td-card">
+          <div class="td-card__in">
+            <h2 class="td-h2">Brokerage Identifiers and Required Disclosures</h2>
+
+            <p class="td-p">
+              This module is designed to reduce friction for a seller who wants to verify who they are working with before they schedule time.
+              The license numbers below are included on the main site and are repeated here so this page can stand alone.
+              If any of these items change, update the text on this page and the schema block at the bottom.
+            </p>
+
+            <div style="height:14px;"></div>
+
+            <div class="td-grid td-grid--2">
+              <div class="td-card">
+                <div class="td-card__in">
+                  <h3 class="td-h3">Licensing</h3>
+                  <p class="td-p" style="margin:0;">
+                    TD Realty Ohio, LLC (License <span data-td-brokerage-license>2023006602</span)<br />
+                    Travis Debnam, Broker (License <span data-td-broker-license>2023006467</span>)
+                  </p>
+                </div>
+              </div>
+
+              <div class="td-card">
+                <div class="td-card__in">
+                  <h3 class="td-h3">Membership statements</h3>
+                  <p class="td-p" style="margin:0;">
+                    Member of Columbus REALTORS® and National Association of REALTORS®<br />
+                    Equal Housing Opportunity
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section">
+      <div class="td-container">
+        <div class="td-card">
+          <div class="td-card__in">
+            <h2 class="td-h2">Common Questions Westerville Sellers Ask Before Choosing a Reduced Fee Listing</h2>
+
+            <p class="td-p">
+              Reduced fee offers are frequently compared to flat fee MLS entries, referral sites, and traditional listing agents.
+              The goal here is to address the decision points that typically block a consultation, without relying on unsupported claims.
+              If you want these answers tightened to your exact process language, keep the question structure and adjust the wording.
+            </p>
+
+            <div style="height:14px;"></div>
+
+            <div class="td-grid td-grid--2">
+              <details>
+                <summary>Does a reduced listing commission change service quality?</summary>
+                <p class="td-p">
+                  A reduced listing commission does not require reduced representation if the service scope is defined and executed.
+                  The right comparison is whether the marketing, pricing strategy, negotiation, and closing coordination are covered, and what is excluded.
+                  Use the consultation to request the written scope for your listing so you can compare it to other options line by line.
+                </p>
+              </details>
+
+              <details>
+                <summary>Is a flat fee MLS listing the same thing as full representation?</summary>
+                <p class="td-p">
+                  A flat fee MLS listing often focuses on MLS entry and may leave pricing, negotiation, and contract execution to the seller.
+                  Some sellers prefer that approach, but others want representation through inspection responses, appraisal items, and closing coordination.
+                  This page is for sellers who want representation while still using a reduced listing fee structure.
+                </p>
+              </details>
+
+              <details>
+                <summary>How does the pre listing inspection affect pricing and negotiations?</summary>
+                <p class="td-p">
+                  The inspection gives a clearer view of condition items before the listing goes live, which can change how the home is positioned.
+                  It can also reduce the likelihood of late stage renegotiations after a buyer inspection, depending on what is found and how it is handled.
+                  The best use is to turn unknowns into a plan before offers arrive.
+                </p>
+              </details>
+
+              <details>
+                <summary>Can I get the 1% fee if I am not buying right away?</summary>
+                <p class="td-p">
+                  The 1% listing fee is tied to listing your home and purchasing your next home with TD Realty Ohio.
+                  If you are selling only, the page and calculator use the 2% sell only listing fee.
+                  If your timing is uncertain, the consultation is where you define what triggers the buy and sell plan.
+                </p>
+              </details>
+            </div>
+
+            <div class="td-hero__actions" style="margin-top:14px;">
+              <a class="td-btn td-btn--primary" href="/contact/" data-track="objection_primary_cta">Ask These Questions on a Call</a>
+              <a class="td-btn td-btn--secondary" href="/faq/" data-track="objection_secondary_cta">Read the Full FAQ</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section">
+      <div class="td-container">
+        <div class="td-card">
+          <div class="td-card__in">
+            <h2 class="td-h2">Westerville Seller FAQ</h2>
+
+            <p class="td-p">
+              These FAQs are written to match high intent searches that precede contacting a broker.
+              They are also included in JSON LD as an FAQPage for eligibility in search features, subject to Google policies.
+              Keep the answers accurate and avoid adding claims that you cannot verify publicly.
+            </p>
+
+            <div style="height:14px;"></div>
+
+            <div class="td-grid td-grid--2">
+              <details>
+                <summary>What is the TD Realty Ohio listing commission in Westerville?</summary>
+                <p class="td-p">
+                  The listing commission is 1% when you list your home and purchase your next home with TD Realty Ohio.
+                  If you are selling only, the listing commission is 2%.
+                  Buyer side compensation and other closing costs are separate and depend on the terms you accept.
+                </p>
+              </details>
+
+              <details>
+                <summary>Is the pre listing inspection included for Westerville listings?</summary>
+                <p class="td-p">
+                  The pre listing inspection is included as part of the listing offer described on the main TD Realty Ohio site.
+                  The intent is to identify condition items before showings and offers.
+                  The consultation is where you confirm timing and any special circumstances for your property.
+                </p>
+              </details>
+
+              <details>
+                <summary>Do you serve only Westerville or the entire Columbus area?</summary>
+                <p class="td-p">
+                  TD Realty Ohio serves Central Ohio and includes Westerville as a primary service area.
+                  If you are outside Westerville, use the main Sellers page to navigate to other city pages.
+                  If your neighborhood is not listed, use the contact page to confirm coverage.
+                </p>
+              </details>
+
+              <details>
+                <summary>How do I start if I want to sell in Westerville?</summary>
+                <p class="td-p">
+                  The next step is a free consultation where you define timeline, pricing plan, prep items, and listing schedule.
+                  Use the contact page and include your address, your preferred timing, and whether you expect to buy after selling.
+                  If you prefer email, use the email link on this page.
+                </p>
+              </details>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section">
+      <div class="td-container">
+        <div class="td-card">
+          <div class="td-card__in">
+            <h2 class="td-h2">Explore Nearby Central Ohio Seller Pages</h2>
+
+            <p class="td-p">
+              Internal links help users and search engines discover related pages, and they also reduce reliance on navigation menus.
+              This module is intentionally placed near the bottom so a seller can take action first, then browse if they are still researching.
+              Keep the links limited to Central Ohio markets you serve.
+            </p>
+
+            <div class="td-pills" aria-label="Nearby city pages">
+              <a class="td-pill" href="/columbus/" data-track="internal_city_columbus">Columbus</a>
+              <a class="td-pill" href="/dublin/" data-track="internal_city_dublin">Dublin</a>
+              <a class="td-pill" href="/powell/" data-track="internal_city_powell">Powell</a>
+              <a class="td-pill" href="/new-albany/" data-track="internal_city_newalbany">New Albany</a>
+              <a class="td-pill" href="/upper-arlington/" data-track="internal_city_ua">Upper Arlington</a>
+              <a class="td-pill" href="/worthington/" data-track="internal_city_worthington">Worthington</a>
+              <a class="td-pill" href="/hilliard/" data-track="internal_city_hilliard">Hilliard</a>
+              <a class="td-pill" href="/gahanna/" data-track="internal_city_gahanna">Gahanna</a>
+            </div>
+
+            <div class="td-hero__actions" style="margin-top:14px;">
+              <a class="td-btn td-btn--primary" href="/contact/" data-track="internal_primary_cta">Get a Westerville Pricing Plan</a>
+              <a class="td-btn td-btn--secondary" href="/blog/" data-track="internal_secondary_cta">Read Seller Guides</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section">
+      <div class="td-container">
+        <div class="td-card">
+          <div class="td-card__in">
+            <h2 class="td-h2">Ready to Talk About Your Westerville Sale?</h2>
+
+            <p class="td-p">
+              Use the free consultation to confirm which fee path applies, define a timeline, and identify prep items that affect pricing and buyer response.
+              If you want a written plan, request a written summary that includes the listing fee, your expected timeline, and the next steps.
+              For routing, include your address and whether you plan to buy after selling.
+            </p>
+
+            <div class="td-hero__actions">
+              <a class="td-btn td-btn--primary" href="/contact/" data-track="final_primary_cta">Schedule Free Consultation</a>
+              <a class="td-btn td-btn--secondary" data-td-phone-tel href="tel:+16143928858" data-track="final_phone_cta">
+                Call <span data-td-phone-display>(614) 392-8858</span>
+              </a>
+              <a class="td-btn td-btn--ghost" data-td-email-mailto href="mailto:info@tdrealtyohio.com" data-track="final_email_cta">
+                Email <span data-td-email>info@tdrealtyohio.com</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="td-site-footer">
+    <div class="td-container">
+      <div class="td-footer__grid">
+        <div>
+          <div class="td-brand">
+            <span class="td-brand__mark" aria-hidden="true"></span>
+            <div>
+              <div class="td-brand__name">TD Realty Ohio</div>
+              <div class="td-footer__fine">TD Realty Ohio, LLC</div>
             </div>
           </div>
 
-          <div>
-            <h3 style="margin:0 0 8px 0;">Resources</h3>
-            <div class="small">
-              <div><a href="/blog/">Real Estate Blog</a></div>
-              <div><a href="/faq/">FAQ</a></div>
-              <div><a href="/about/">About</a></div>
-              <div><a href="/contact/">Contact</a></div>
-            </div>
+          <div class="td-footer__fine">
+            Phone: <a data-td-phone-tel href="tel:+16143928858"><span data-td-phone-display>(614) 392-8858</span></a><br>
+            Email: <a data-td-email-mailto href="mailto:info@tdrealtyohio.com"><span data-td-email>info@tdrealtyohio.com</span></a><br>
+            Brokerage license <span data-td-brokerage-license>2023006602</span>. Broker license <span data-td-broker-license>2023006467</span>.
           </div>
 
-          <div>
-            <h3 style="margin:0 0 8px 0;">Contact</h3>
-            <div class="small">
-              <div><a href="mailto:[email protected]">[email protected]</a></div>
-              <div>Westerville, Ohio</div>
-              <div><a href="tel:[INSERT VERIFIED PHONE]">[INSERT VERIFIED PHONE]</a></div>
-            </div>
+          <div class="td-legal">
+            Member of Columbus REALTORS® and National Association of REALTORS®.
+            Equal Housing Opportunity. We are committed to providing equal professional service without discrimination.
           </div>
         </div>
 
-        <div class="legal">
-          TD Realty Ohio, LLC (License #2023006602). Travis Debnam, Broker (License #2023006467).
-          Member of Columbus REALTORS® and National Association of REALTORS®.
-          Equal Housing Opportunity. We are committed to providing equal professional service without discrimination.
+        <div class="td-footer__links">
+          <a href="/sellers/">Sell Your Home</a>
+          <a href="/buyers/">Buy a Home</a>
+          <a href="/pre-listing-inspection/">Pre Listing Inspection</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+
+      <hr class="td-hr" />
+
+      <div class="td-section td-section--tight">
+        <div class="td-pills" aria-label="Site policies">
+          <a class="td-pill" href="/privacy-policy/">Privacy Policy</a>
+          <a class="td-pill" href="/terms/">Terms of Service</a>
+          <a class="td-pill" href="/fair-housing/">Fair Housing</a>
+          <a class="td-pill" href="/accessibility/">Accessibility</a>
         </div>
 
-        <div class="pillRow" style="margin-top:12px;">
-          <a class="pill" href="/privacy-policy/">Privacy Policy</a>
-          <a class="pill" href="/terms/">Terms of Service</a>
-          <a class="pill" href="/fair-housing/">Fair Housing</a>
-          <a class="pill" href="/accessibility/">Accessibility</a>
-        </div>
-
-        <div class="small" style="margin-top:10px;">
+        <div class="td-footer__fine" style="margin-top:12px;">
           © 2026 TD Realty Ohio, LLC. All rights reserved.
         </div>
       </div>
-    </footer>
-  </main>
+    </div>
+  </footer>
 
   <script>
     (function () {
@@ -731,6 +687,8 @@
     })();
   </script>
 
+  <script src="/assets/js/tdro-ui.js" defer></script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -740,8 +698,8 @@
         "@id": "https://tdrealtyohio.com/#agent",
         "name": "TD Realty Ohio",
         "url": "https://tdrealtyohio.com/",
-        "email": "[email protected]",
-        "telephone": "[INSERT VERIFIED PHONE]",
+        "email": "info@tdrealtyohio.com",
+        "telephone": "+16143928858",
         "areaServed": [
           { "@type": "City", "name": "Westerville", "addressRegion": "OH", "addressCountry": "US" },
           { "@type": "City", "name": "Columbus", "addressRegion": "OH", "addressCountry": "US" }
