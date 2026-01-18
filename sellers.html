@@ -16,6 +16,11 @@
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
   <link rel="stylesheet" href="/assets/css/tdro-ui.css" />
+  <link rel="stylesheet" href="/assets/css/calculators.css" />
+
+  <script src="/assets/js/td-config.js" defer></script>
+  <script src="/assets/js/tdro-ui.js" defer></script>
+  <script src="/assets/js/seller-calculator.js" defer></script>
 </head>
 
 <body class="td-ui">
@@ -107,53 +112,27 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="td-card">
-            <div class="td-card__in">
-              <h2 class="td-h2">Commission Calculator</h2>
+    <section class="td-section">
+      <div class="td-container">
+        <div class="td-calc td-calc--embed">
+          <div class="td-calc__header">
+            <h3>Net proceeds estimate</h3>
+            <p>Change the price to see the difference between a typical listing fee and TD Realty Ohio.</p>
+          </div>
 
-              <div style="margin-top: 14px; display: grid; gap: 10px;">
-                <label style="display: grid; gap: 6px;">
-                  <span style="color: var(--td-muted); font-size: var(--td-small);">Estimated sale price</span>
-                  <input
-                    id="price"
-                    type="number"
-                    min="0"
-                    step="1000"
-                    placeholder="e.g. 350000"
-                    value="350000"
-                    style="padding: 12px; border-radius: 14px; border: 1px solid rgba(233,238,251,.14); background: rgba(11,18,32,.55); color: var(--td-text);"
-                  />
-                </label>
+          <div id="td-seller-calculator"></div>
 
-                <label style="display: flex; gap: 10px; align-items: center; cursor: pointer; padding: 10px; border-radius: 10px; border: 1px solid rgba(233,238,251,.14); background: rgba(15,26,47,.55);">
-                  <input id="buysell" type="checkbox" checked style="width: 18px; height: 18px; cursor: pointer;" />
-                  <span>I plan to buy my next home with TD Realty Ohio (1%)</span>
-                </label>
-              </div>
+          <div class="td-calc__cta">
+            <a class="td-btn td-btn--primary" href="tel:+16143928858">(614) 392-8858</a>
+            <a class="td-btn td-btn--secondary" href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a>
+          </div>
 
-              <div style="margin-top: 20px; display: grid; gap: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 12px; border: 1px solid rgba(233,238,251,.12); background: rgba(15,26,47,.55);">
-                  <span style="color: var(--td-muted); font-size: 14px;">Traditional 3%</span>
-                  <span id="trad" style="font-weight: 700;">$0</span>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 12px; border: 1px solid rgba(233,238,251,.12); background: rgba(15,26,47,.55);">
-                  <span style="color: var(--td-muted); font-size: 14px;">TD Realty Ohio</span>
-                  <span id="td" style="font-weight: 700; color: var(--td-ok);">$0</span>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px; border-radius: 12px; border: 2px solid var(--td-ok); background: rgba(70,211,154,.08);">
-                  <span style="font-weight: 700;">Your savings</span>
-                  <span id="save" style="font-weight: 850; font-size: 22px; color: var(--td-ok);">$0</span>
-                </div>
-              </div>
-
-              <p class="td-hero__fineprint">
-                Buyer side compensation and other closing costs are separate and depend on the terms you accept.
-                This calculator shows listing side fee only.
-              </p>
-            </div>
+          <div class="td-calc__fineprint">
+            <p>TD Realty Ohio, LLC. Brokerage License 2023006602. Travis Debnam, Broker. License 2023006467.</p>
           </div>
         </div>
       </div>
@@ -454,46 +433,6 @@
       </div>
     </div>
   </footer>
-
-  <script>
-    (function () {
-      function money(n) {
-        try {
-          return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
-        } catch (e) {
-          return "$" + Math.round(n).toString();
-        }
-      }
-
-      var price = document.getElementById("price");
-      var buysell = document.getElementById("buysell");
-      var trad = document.getElementById("trad");
-      var td = document.getElementById("td");
-      var save = document.getElementById("save");
-
-      function update() {
-        var p = Number(price.value || 0);
-        if (p < 0) p = 0;
-
-        var tdRate = buysell.checked ? 0.01 : 0.02;
-        var tradRate = 0.03;
-
-        var tradFee = p * tradRate;
-        var tdFee = p * tdRate;
-        var savings = Math.max(0, tradFee - tdFee);
-
-        trad.textContent = money(tradFee);
-        td.textContent = money(tdFee);
-        save.textContent = money(savings);
-      }
-
-      price.addEventListener("input", update);
-      buysell.addEventListener("change", update);
-      update();
-    })();
-  </script>
-
-  <script src="/assets/js/tdro-ui.js"></script>
 
 </body>
 </html>
