@@ -15,12 +15,67 @@
 
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+  <link rel="apple-touch-icon" href="/assets/images/favicon.svg" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#2F6FED" />
+
   <link rel="stylesheet" href="/assets/css/tdro-ui.css" />
   <link rel="stylesheet" href="/assets/css/calculators.css" />
 
   <script src="/assets/js/td-config.js" defer></script>
   <script src="/assets/js/tdro-ui.js" defer></script>
   <script src="/assets/js/seller-calculator.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "TD Realty Ohio, LLC",
+    "url": "https://tdrealtyohio.com",
+    "logo": "https://tdrealtyohio.com/assets/images/favicon.svg",
+    "description": "Licensed Ohio real estate brokerage offering 1% listing commission when you buy and sell, 2% for sell only. Pre-listing inspection included with every listing.",
+    "telephone": "+16143928858",
+    "email": "info@tdrealtyohio.com",
+    "areaServed": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "addressLocality": "Westerville",
+        "@id": "Westerville, Ohio"
+      },
+      "name": "Central Ohio"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Westerville",
+      "addressRegion": "OH",
+      "addressCountry": "US"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Travis Debnam",
+      "jobTitle": "Real Estate Broker",
+      "additionalProperty": {
+        "@type": "PropertyValue",
+        "name": "Ohio Broker License",
+        "value": "2023006467"
+      }
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Ohio Brokerage License",
+        "value": "2023006602"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "Founded",
+        "value": "2017"
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body class="td-ui">

@@ -7,59 +7,106 @@
   // BUSINESS CONTACT DATA - Read from global config
   // ========================================
 
-  // Wait for TD_REALTY config to be available
-  if (typeof window.TD_REALTY === 'undefined') {
-    console.error('TD_REALTY config not loaded. Make sure td-config.js is loaded before tdro-ui.js');
-    return;
-  }
-
-  const BUSINESS_DATA = {
-    phone: window.TD_REALTY.contact.phone,
-    email: window.TD_REALTY.contact.email,
+  // Canonical fallback values - SINGLE SOURCE OF TRUTH if config fails to load
+  const CANONICAL_FALLBACK = {
+    phone: {
+      display: '(614) 392-8858',
+      tel: 'tel:+16143928858'
+    },
+    email: {
+      display: 'info@tdrealtyohio.com',
+      mailto: 'mailto:info@tdrealtyohio.com'
+    },
     licenses: {
-      brokerage: window.TD_REALTY.business.brokerageLicense,
-      broker: window.TD_REALTY.business.broker.license
+      brokerage: '2023006602',
+      broker: '2023006467'
     },
     ticker: {
-      label: window.TD_REALTY.business.name
+      label: 'TD Realty Ohio, LLC'
     }
   };
+
+  // Try to use TD_REALTY config, fall back to canonical values if not available
+  let BUSINESS_DATA;
+  if (typeof window.TD_REALTY === 'undefined') {
+    console.warn('TD_REALTY config not loaded. Using canonical fallback values. Check that td-config.js is loaded before tdro-ui.js');
+    BUSINESS_DATA = CANONICAL_FALLBACK;
+  } else {
+    try {
+      BUSINESS_DATA = {
+        phone: window.TD_REALTY.contact.phone,
+        email: window.TD_REALTY.contact.email,
+        licenses: {
+          brokerage: window.TD_REALTY.business.brokerageLicense,
+          broker: window.TD_REALTY.business.broker.license
+        },
+        ticker: {
+          label: window.TD_REALTY.business.name
+        }
+      };
+    } catch (e) {
+      console.error('Error reading TD_REALTY config:', e);
+      console.warn('Using canonical fallback values');
+      BUSINESS_DATA = CANONICAL_FALLBACK;
+    }
+  }
 
   // ========================================
   // POPULATE DATA ATTRIBUTES
   // ========================================
   function populateContactData() {
-    // Phone numbers
-    document.querySelectorAll('[data-td-phone-display]').forEach(el => {
-      el.textContent = BUSINESS_DATA.phone.display;
-    });
+    try {
+      // Phone numbers
+      document.querySelectorAll('[data-td-phone-display]').forEach(el => {
+        el.textContent = BUSINESS_DATA.phone.display;
+      });
 
-    document.querySelectorAll('[data-td-phone-tel]').forEach(el => {
-      el.href = BUSINESS_DATA.phone.tel;
-    });
+      document.querySelectorAll('[data-td-phone-tel]').forEach(el => {
+        el.href = BUSINESS_DATA.phone.tel;
+      });
 
-    // Email addresses
-    document.querySelectorAll('[data-td-email]').forEach(el => {
-      el.textContent = BUSINESS_DATA.email.display;
-    });
+      // Email addresses
+      document.querySelectorAll('[data-td-email]').forEach(el => {
+        el.textContent = BUSINESS_DATA.email.display;
+      });
 
-    document.querySelectorAll('[data-td-email-mailto]').forEach(el => {
-      el.href = BUSINESS_DATA.email.mailto;
-    });
+      document.querySelectorAll('[data-td-email-mailto]').forEach(el => {
+        el.href = BUSINESS_DATA.email.mailto;
+      });
 
-    // License numbers
-    document.querySelectorAll('[data-td-brokerage-license]').forEach(el => {
-      el.textContent = BUSINESS_DATA.licenses.brokerage;
-    });
+      // License numbers
+      document.querySelectorAll('[data-td-brokerage-license]').forEach(el => {
+        el.textContent = BUSINESS_DATA.licenses.brokerage;
+      });
 
-    document.querySelectorAll('[data-td-broker-license]').forEach(el => {
-      el.textContent = BUSINESS_DATA.licenses.broker;
-    });
+      document.querySelectorAll('[data-td-broker-license]').forEach(el => {
+        el.textContent = BUSINESS_DATA.licenses.broker;
+      });
 
-    // Ticker label
-    document.querySelectorAll('[data-td-ticker-label]').forEach(el => {
-      el.textContent = BUSINESS_DATA.ticker.label;
-    });
+      // Ticker label
+      document.querySelectorAll('[data-td-ticker-label]').forEach(el => {
+        el.textContent = BUSINESS_DATA.ticker.label;
+      });
+    } catch (e) {
+      console.error('Error populating contact data:', e);
+      // Try one more time with canonical fallback
+      try {
+        document.querySelectorAll('[data-td-phone-display]').forEach(el => {
+          el.textContent = CANONICAL_FALLBACK.phone.display;
+        });
+        document.querySelectorAll('[data-td-email]').forEach(el => {
+          el.textContent = CANONICAL_FALLBACK.email.display;
+        });
+        document.querySelectorAll('[data-td-brokerage-license]').forEach(el => {
+          el.textContent = CANONICAL_FALLBACK.licenses.brokerage;
+        });
+        document.querySelectorAll('[data-td-broker-license]').forEach(el => {
+          el.textContent = CANONICAL_FALLBACK.licenses.broker;
+        });
+      } catch (fallbackError) {
+        console.error('Critical error: Unable to populate contact data even with fallback values', fallbackError);
+      }
+    }
   }
 
   // ========================================
@@ -178,11 +225,18 @@
   }
 
   function init() {
-    populateContactData();
-    initNavigation();
-    initFAQs();
-    initSmoothScroll();
-    initTicker();
+    // Populate contact data first - this is critical for trust signals
+    try {
+      populateContactData();
+    } catch (e) {
+      console.error('Failed to populate contact data:', e);
+    }
+
+    // Initialize other UI components - failures here should not break contact data
+    try { initNavigation(); } catch (e) { console.error('Navigation init failed:', e); }
+    try { initFAQs(); } catch (e) { console.error('FAQs init failed:', e); }
+    try { initSmoothScroll(); } catch (e) { console.error('Smooth scroll init failed:', e); }
+    try { initTicker(); } catch (e) { console.error('Ticker init failed:', e); }
   }
 
 })();

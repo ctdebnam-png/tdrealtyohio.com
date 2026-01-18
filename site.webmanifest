@@ -1,0 +1,17 @@
+{
+  "name": "TD Realty Ohio - 1% Commission Real Estate",
+  "short_name": "TD Realty Ohio",
+  "description": "1% listing commission when you buy and sell. First-time buyers get 1% cash back. Central Ohio real estate brokerage serving Columbus, Westerville, Dublin, and surrounding areas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1220",
+  "theme_color": "#2F6FED",
+  "icons": [
+    {
+      "src": "/assets/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
