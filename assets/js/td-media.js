@@ -12,7 +12,7 @@ window.TD_MEDIA = {
 
   // Hero illustrations - One per major page type
   hero: {
-    home: '/assets/images/hero/hero-home.svg',
+    home: '/assets/illustrations/home-savings-illustration.svg',
     sellers: '/assets/images/hero/hero-sellers.svg',
     buyers: '/assets/images/hero/hero-buyers.svg',
     contact: '/assets/images/hero/hero-contact.svg',
