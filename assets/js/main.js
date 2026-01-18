@@ -226,6 +226,32 @@ function initFaqAccordion() {
   });
 }
 
+// ===== PROCESS STEP ACCORDION =====
+function initProcessAccordion() {
+  const processSteps = document.querySelectorAll('.process-step-expandable');
+
+  processSteps.forEach(step => {
+    const header = step.querySelector('.process-step-header');
+
+    header.addEventListener('click', () => {
+      const isActive = step.classList.contains('active');
+      const wasExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other steps
+      processSteps.forEach(otherStep => {
+        if (otherStep !== step) {
+          otherStep.classList.remove('active');
+          otherStep.querySelector('.process-step-header').setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Toggle current step
+      step.classList.toggle('active');
+      header.setAttribute('aria-expanded', !wasExpanded);
+    });
+  });
+}
+
 // ===== CONTACT FORM =====
 function initContactForm() {
   const form = document.getElementById('contact-form');
@@ -363,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSellerCalculator();
   initBuyerCalculator();
   initFaqAccordion();
+  initProcessAccordion();
   initContactForm();
   initSmoothScroll();
   initHeaderScroll();

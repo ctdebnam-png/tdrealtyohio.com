@@ -709,6 +709,156 @@ main {
   font-weight: 700;
 }
 
+/* Expandable Process Steps (Accordion) */
+.process-step-expandable {
+  margin-bottom: 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+
+.process-step-expandable:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.process-step-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: var(--white);
+  cursor: pointer;
+  transition: background-color var(--transition);
+  width: 100%;
+  border: none;
+  text-align: left;
+}
+
+.process-step-header:hover {
+  background-color: var(--gray-100);
+}
+
+.process-step-expandable.active .process-step-header {
+  background-color: var(--navy);
+}
+
+.process-step-expandable.active .step-number {
+  background-color: var(--gold);
+  color: var(--navy);
+}
+
+.process-step-expandable.active .step-title {
+  color: var(--white);
+}
+
+.process-step-expandable.active .step-brief {
+  color: var(--gray-300);
+}
+
+.process-step-expandable.active .step-expand-icon {
+  color: var(--gold);
+  transform: rotate(180deg);
+}
+
+.step-header-content {
+  flex: 1;
+}
+
+.step-title {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+  transition: color var(--transition);
+}
+
+.step-brief {
+  font-size: 0.9375rem;
+  color: var(--gray-600);
+  margin: 0;
+  transition: color var(--transition);
+}
+
+.step-expand-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--gray-500);
+  transition: transform var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+
+.step-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.process-step-expandable.active .step-details {
+  max-height: 600px;
+}
+
+.step-details-inner {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  padding-left: calc(60px + 3rem);
+  border-top: 1px solid var(--gray-200);
+}
+
+.step-details-inner h4 {
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.step-details-inner h4:first-child {
+  margin-top: 1.5rem;
+}
+
+.step-details-inner p {
+  font-size: 0.9375rem;
+  color: var(--gray-700);
+  margin-bottom: 0.75rem;
+}
+
+.step-details-inner ul {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
+}
+
+.step-details-inner li {
+  font-size: 0.9375rem;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.step-details-inner li:last-child {
+  margin-bottom: 0;
+}
+
+.step-tip {
+  background-color: var(--off-white);
+  border-left: 3px solid var(--gold);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.step-tip-label {
+  font-weight: 600;
+  color: var(--gold-dark);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.step-tip p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
 .step-number::before {
   content: counter(step);
 }

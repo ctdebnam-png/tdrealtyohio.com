@@ -43,24 +43,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/areas/columbus.html</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/westerville.html</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/dublin.html</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://tdrealtyohio.com/privacy.html</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>yearly</changefreq>
