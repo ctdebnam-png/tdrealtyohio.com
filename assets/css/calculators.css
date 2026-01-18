@@ -1,0 +1,204 @@
+/**
+ * TD Realty Ohio - Interactive Calculator Styles
+ *
+ * Styles for seller net proceeds and buyer credit calculators
+ */
+
+.td-calc {
+  background: var(--td-surface-2);
+  border-radius: var(--td-radius-md);
+  padding: 30px;
+  box-shadow: var(--td-shadow-2);
+}
+
+.td-calc__header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.td-calc__header h3 {
+  margin-bottom: 8px;
+}
+
+.td-calc__header p {
+  color: var(--td-text-muted);
+  margin: 0;
+}
+
+/* Inputs */
+.td-calc__inputs {
+  margin-bottom: 30px;
+}
+
+.td-calc__input-group {
+  margin-bottom: 20px;
+}
+
+.td-calc__input-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--td-text);
+  font-size: 14px;
+}
+
+.td-calc__input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 24px;
+  font-weight: 700;
+  background: var(--td-surface-1);
+  border: 2px solid var(--td-border);
+  border-radius: var(--td-radius-sm);
+  color: var(--td-text);
+  transition: all 0.2s;
+}
+
+.td-calc__input:focus {
+  outline: none;
+  border-color: var(--td-primary);
+  box-shadow: 0 0 0 3px rgba(43, 109, 255, 0.1);
+}
+
+/* Toggle */
+.td-calc__toggle-group {
+  background: var(--td-surface-1);
+  border-radius: var(--td-radius-sm);
+  padding: 16px;
+}
+
+.td-calc__toggle-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--td-text);
+  gap: 12px;
+}
+
+.td-calc__checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--td-primary);
+}
+
+.td-calc__toggle-help {
+  margin: 8px 0 0 32px;
+  font-size: 13px;
+  color: var(--td-text-muted);
+}
+
+/* Results */
+.td-calc__results {
+  background: var(--td-surface-1);
+  border-radius: var(--td-radius-sm);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.td-calc__result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--td-border);
+}
+
+.td-calc__result-row:last-child {
+  border-bottom: none;
+}
+
+.td-calc__result-row--traditional {
+  opacity: 0.7;
+}
+
+.td-calc__result-row--td {
+  color: var(--td-primary);
+}
+
+.td-calc__result-row--savings,
+.td-calc__result-row--highlight {
+  background: linear-gradient(135deg, rgba(43, 109, 255, 0.05) 0%, rgba(242, 193, 78, 0.05) 100%);
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: var(--td-radius-sm);
+}
+
+.td-calc__result-label {
+  font-weight: 500;
+  color: var(--td-text);
+  font-size: 15px;
+}
+
+.td-calc__result-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--td-text);
+}
+
+.td-calc__result-value--highlight {
+  color: var(--td-accent);
+  font-size: 32px;
+}
+
+/* Footer */
+.td-calc__footer {
+  text-align: center;
+}
+
+.td-calc__example {
+  margin-bottom: 20px;
+}
+
+.td-calc__note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--td-text-muted);
+  margin: 0;
+  padding: 16px;
+  background: var(--td-surface-1);
+  border-radius: var(--td-radius-sm);
+  border-left: 3px solid var(--td-primary);
+}
+
+.td-calc__note strong {
+  color: var(--td-text);
+}
+
+.td-calc__cta {
+  margin-top: 20px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .td-calc {
+    padding: 20px;
+  }
+
+  .td-calc__input {
+    font-size: 20px;
+    padding: 12px 14px;
+  }
+
+  .td-calc__result-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 0;
+  }
+
+  .td-calc__result-value {
+    font-size: 20px;
+  }
+
+  .td-calc__result-value--highlight {
+    font-size: 28px;
+  }
+
+  .td-calc__note {
+    font-size: 13px;
+    padding: 12px;
+  }
+}

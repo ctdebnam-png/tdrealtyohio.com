@@ -4,23 +4,24 @@
   'use strict';
 
   // ========================================
-  // BUSINESS CONTACT DATA
+  // BUSINESS CONTACT DATA - Read from global config
   // ========================================
+
+  // Wait for TD_REALTY config to be available
+  if (typeof window.TD_REALTY === 'undefined') {
+    console.error('TD_REALTY config not loaded. Make sure td-config.js is loaded before tdro-ui.js');
+    return;
+  }
+
   const BUSINESS_DATA = {
-    phone: {
-      display: '(614) 392-8858',
-      tel: 'tel:+16143928858'
-    },
-    email: {
-      display: 'info@tdrealtyohio.com',
-      mailto: 'mailto:info@tdrealtyohio.com'
-    },
+    phone: window.TD_REALTY.contact.phone,
+    email: window.TD_REALTY.contact.email,
     licenses: {
-      brokerage: '2023006602',
-      broker: '2023006467'
+      brokerage: window.TD_REALTY.business.brokerageLicense,
+      broker: window.TD_REALTY.business.broker.license
     },
     ticker: {
-      label: 'TD Realty Ohio'
+      label: window.TD_REALTY.business.name
     }
   };
 
