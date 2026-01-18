@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Savings on home sale illustration">
+  <rect width="1200" height="900" fill="none"/>
+  <g stroke="#0A2E6D" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- House outline -->
+    <path d="M190 420 L600 150 L1010 420"/>
+    <path d="M280 410 V770 H920 V410"/>
+    <!-- Door -->
+    <path d="M560 770 V590 H640 V770"/>
+    <!-- Window -->
+    <rect x="350" y="520" width="160" height="130" rx="10"/>
+    <path d="M430 520 V650"/>
+    <path d="M350 585 H510"/>
+    <rect x="690" y="520" width="160" height="130" rx="10"/>
+    <path d="M770 520 V650"/>
+    <path d="M690 585 H850"/>
+  </g>
+
+  <!-- Savings tag -->
+  <g>
+    <path d="M870 215 H1120 V370 L1020 470 L870 370 Z" fill="#0A2E6D"/>
+    <circle cx="1100" cy="255" r="18" fill="#D4AF37"/>
+    <text x="995" y="335" fill="#D4AF37" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="800" text-anchor="middle">1%</text>
+  </g>
+
+  <!-- Down arrow -->
+  <g stroke="#D4AF37" stroke-width="18" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M600 820 V860"/>
+    <path d="M560 850 L600 890 L640 850"/>
+  </g>
+</svg>
