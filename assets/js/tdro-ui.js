@@ -257,12 +257,6 @@
   // ========================================
   // INITIALIZE ON DOM READY
   // ========================================
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
   function init() {
     // Populate contact data first - this is critical for trust signals
     try {
@@ -283,6 +277,12 @@
     try { initFAQs(); } catch (e) { console.error('FAQs init failed:', e); }
     try { initSmoothScroll(); } catch (e) { console.error('Smooth scroll init failed:', e); }
     try { initTicker(); } catch (e) { console.error('Ticker init failed:', e); }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 
 })();

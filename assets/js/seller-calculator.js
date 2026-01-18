@@ -10,17 +10,40 @@
 (function() {
   'use strict';
 
-  // Wait for config to be available
-  if (typeof window.TD_REALTY === 'undefined') {
-    console.error('TD_REALTY config not loaded');
-    return;
+  // Format currency without cents
+  function formatCurrency(amount) {
+    return '$' + Math.round(amount).toLocaleString('en-US');
   }
 
-  const TD = window.TD_REALTY;
+  // Calculate commission values
+  function calculateCommissions(salePrice, isBuyingAndSelling) {
+    const tdRate = isBuyingAndSelling ? 0.01 : 0.02; // 1% or 2%
+    const traditionalRate = 0.03; // 3%
+
+    const tdFee = salePrice * tdRate;
+    const traditionalFee = salePrice * traditionalRate;
+    const savings = traditionalFee - tdFee;
+
+    return {
+      tdRate: isBuyingAndSelling ? '1%' : '2%',
+      tdFee: tdFee,
+      traditionalFee: traditionalFee,
+      savings: savings,
+      formatted: {
+        tdFee: formatCurrency(tdFee),
+        traditionalFee: formatCurrency(traditionalFee),
+        savings: formatCurrency(savings)
+      }
+    };
+  }
 
   function createCalculator() {
     const container = document.getElementById('td-seller-calculator');
     if (!container) return;
+
+    // Default property price
+    const defaultPrice = 400000;
+    const initialCalc = calculateCommissions(defaultPrice, true);
 
     const html = `
       <div class="td-calc">
@@ -30,7 +53,7 @@
             <input
               type="text"
               id="td-sale-price"
-              value="500,000"
+              value="400,000"
               class="td-calc__input"
             />
           </div>
@@ -52,19 +75,19 @@
         <div class="td-calc__results">
           <div class="td-calc__result-row td-calc__result-row--traditional">
             <div class="td-calc__result-label">Traditional 3% Commission</div>
-            <div class="td-calc__result-value" id="td-traditional-fee">$15,000</div>
+            <div class="td-calc__result-value" id="td-traditional-fee">${initialCalc.formatted.traditionalFee}</div>
           </div>
 
           <div class="td-calc__result-row td-calc__result-row--td">
             <div class="td-calc__result-label">
-              TD Realty <span id="td-rate-display">1%</span> Commission
+              TD Realty <span id="td-rate-display">${initialCalc.tdRate}</span> Commission
             </div>
-            <div class="td-calc__result-value" id="td-fee">$5,000</div>
+            <div class="td-calc__result-value" id="td-fee">${initialCalc.formatted.tdFee}</div>
           </div>
 
           <div class="td-calc__result-row td-calc__result-row--savings">
             <div class="td-calc__result-label">Your Savings</div>
-            <div class="td-calc__result-value td-calc__result-value--highlight" id="td-savings">$10,000</div>
+            <div class="td-calc__result-value td-calc__result-value--highlight" id="td-savings">${initialCalc.formatted.savings}</div>
           </div>
         </div>
 
@@ -100,16 +123,26 @@
 
     // Calculate and update results
     function calculate() {
-      const salePriceStr = salePriceInput.value.replace(/[^0-9]/g, '');
-      const salePrice = parseInt(salePriceStr) || 500000;
-      const isBuyingAndSelling = buyingSellingCheckbox.checked;
+      try {
+        const salePriceStr = salePriceInput.value.replace(/[^0-9]/g, '');
+        let salePrice = parseInt(salePriceStr);
 
-      const result = TD.calculateSellerSavings(salePrice, isBuyingAndSelling);
+        // Handle blank or invalid input - default to 400,000
+        if (!salePrice || isNaN(salePrice) || salePrice < 0) {
+          salePrice = defaultPrice;
+          salePriceInput.value = salePrice.toLocaleString('en-US');
+        }
 
-      traditionalFeeEl.textContent = result.formatted.traditionalFee;
-      tdFeeEl.textContent = result.formatted.tdFee;
-      savingsEl.textContent = result.formatted.savings;
-      rateDisplayEl.textContent = result.tdRate;
+        const isBuyingAndSelling = buyingSellingCheckbox.checked;
+        const result = calculateCommissions(salePrice, isBuyingAndSelling);
+
+        traditionalFeeEl.textContent = result.formatted.traditionalFee;
+        tdFeeEl.textContent = result.formatted.tdFee;
+        savingsEl.textContent = result.formatted.savings;
+        rateDisplayEl.textContent = result.tdRate;
+      } catch (error) {
+        console.error('Calculator error:', error);
+      }
     }
 
     // Event listeners
@@ -119,14 +152,18 @@
     });
 
     salePriceInput.addEventListener('blur', function() {
-      const value = parseInt(this.value.replace(/[^0-9]/g, '')) || 500000;
-      this.value = value.toLocaleString('en-US');
+      const value = parseInt(this.value.replace(/[^0-9]/g, ''));
+      if (value && !isNaN(value) && value > 0) {
+        this.value = value.toLocaleString('en-US');
+      } else {
+        this.value = defaultPrice.toLocaleString('en-US');
+      }
       calculate();
     });
 
     buyingSellingCheckbox.addEventListener('change', calculate);
 
-    // Initial calculation
+    // Initial calculation on page load
     calculate();
   }
 
