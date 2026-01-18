@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Contact TD Realty Ohio for 1% commission real estate service in Columbus, Ohio. Schedule a free consultation or email info@tdrealtyohio.com for a prompt response." />
-  <title>Contact TD Realty Ohio</title>
+  <title>Contact TD Realty Ohio | 1% Commission Real Estate</title>
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://tdrealtyohio.com/contact.html" />
+  <meta property="og:url" content="https://tdrealtyohio.com/contact/" />
   <meta property="og:title" content="Contact TD Realty Ohio | 1% Commission Real Estate" />
   <meta property="og:description" content="Schedule a free consultation for 1% commission real estate service in Columbus, Ohio." />
   <meta property="og:image" content="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1200&h=630&fit=crop&q=80" />
@@ -20,92 +20,259 @@
   <meta name="twitter:description" content="Schedule a free consultation for 1% commission real estate service in Columbus, Ohio." />
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-image.jpg" />
 
-  <link rel="canonical" href="https://tdrealtyohio.com/contact.html" />
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 2rem; line-height: 1.4; }
-    .container { max-width: 720px; margin: 0 auto; }
-    h1 { margin: 0 0 0.5rem 0; }
-    p { margin: 0 0 1.25rem 0; }
-    .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
-    .form-group { margin-bottom: 1rem; }
-    label { display: block; font-weight: 600; margin-bottom: 0.4rem; }
-    input, select, textarea { width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #d1d5db; border-radius: 10px; font-size: 1rem; }
-    textarea { min-height: 140px; resize: vertical; }
-    .btn { display: inline-block; width: 100%; padding: 0.8rem 1rem; border: 0; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; background: #111827; color: #fff; }
-    .muted { color: #6b7280; font-size: 0.95rem; }
-    .success { display: none; padding: 1rem; border-radius: 12px; border: 1px solid #bbf7d0; background: #ecfdf5; }
-    .error { display: none; padding: 1rem; border-radius: 12px; border: 1px solid #fecaca; background: #fef2f2; }
-    a { color: inherit; }
-  </style>
+  <link rel="canonical" href="https://tdrealtyohio.com/contact/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+  <link rel="stylesheet" href="/assets/css/tdro-ui.css" />
 </head>
-<body>
-  <div class="container">
-    <h1>Contact</h1>
-    <p class="muted">Send a message and we’ll reply as soon as possible.</p>
 
-    <div class="card" id="formCard">
-      <!-- Replace the Formspree endpoint below with the exact one shown in your Formspree dashboard if needed. -->
-      <form id="contactForm" action="https://formspree.io/f/mykkypyd" method="POST" accept-charset="UTF-8">
-        <div class="form-group">
-          <label for="name">Name *</label>
-          <input type="text" id="name" name="name" autocomplete="name" required />
+<body class="td-ui">
+
+  <header class="td-site-header">
+    <div class="td-container">
+      <div class="td-site-header__bar">
+        <a class="td-brand" href="/" aria-label="TD Realty Ohio Home">
+          <span class="td-brand__mark" aria-hidden="true"></span>
+          <span class="td-brand__name">TD Realty Ohio</span>
+        </a>
+
+        <button class="td-nav-toggle" data-td-nav-toggle aria-expanded="false" aria-label="Open menu">
+          Menu
+        </button>
+
+        <nav class="td-nav" data-td-nav aria-label="Primary navigation">
+          <a href="/sellers/">Sellers</a>
+          <a href="/buyers/">Buyers</a>
+          <a href="/pre-listing-inspection/">Pre Listing Inspection</a>
+          <a href="/gallery/">Gallery</a>
+          <a href="/about/">About</a>
+          <a href="/contact/" aria-current="page">Contact</a>
+        </nav>
+
+        <div class="td-header-cta">
+          <a class="td-btn td-btn--ghost" data-td-phone-tel>
+            Call <span data-td-phone-display></span>
+          </a>
+          <a class="td-btn td-btn--primary" href="/contact/">Free Consultation</a>
         </div>
-
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" name="email" autocomplete="email" required />
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" autocomplete="tel" />
-        </div>
-
-        <div class="form-group">
-          <label for="intent">I’m interested in…</label>
-          <select id="intent" name="intent">
-            <option value="">Select one</option>
-            <option value="Sell">Selling my home</option>
-            <option value="Buy">Buying a home</option>
-            <option value="Sell + Buy">Both buying and selling</option>
-            <option value="General">General question</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Message *</label>
-          <textarea id="message" name="message" required placeholder="Tell me about your real estate goals..."></textarea>
-        </div>
-
-        <!-- Formspree helpers -->
-        <input type="text" name="_gotcha" style="display:none" />
-        <input type="hidden" name="_subject" value="New lead from tdrealtyohio.com" />
-
-        <button class="btn" type="submit">Send Message</button>
-      </form>
-
-      <p class="muted" style="margin-top: 0.75rem;">
-        <!-- Removed phone contact to encourage digital communication -->
-      </p>
-
-      <div class="error" id="formError" role="alert" aria-live="polite" style="margin-top: 1rem;">
-        Sorry, something went wrong. Please email <a href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a>.
       </div>
+    </div>
+  </header>
 
-      <div class="success" id="formSuccess" role="status" aria-live="polite" style="margin-top: 1rem;">
-        <h2 style="margin: 0 0 0.4rem 0; font-size: 1.1rem;">Message sent</h2>
-        <p style="margin: 0;">Thanks for reaching out. We’ll get back to you within 24 hours.</p>
+  <div class="td-ticker" data-td-ticker>
+    <div class="td-container">
+      <div class="td-ticker__in">
+        <div class="td-ticker__label" data-td-ticker-label></div>
+        <div class="td-ticker__line" data-td-ticker-line></div>
+        <div class="td-ticker__meta">
+          <a data-td-phone-tel><span data-td-phone-display></span></a>
+          <span>•</span>
+          <a data-td-email-mailto><span data-td-email></span></a>
+        </div>
       </div>
     </div>
   </div>
+
+  <main>
+    <section class="td-section">
+      <div class="td-container">
+        <div style="max-width: 680px; margin: 0 auto;">
+          <div class="td-card">
+            <div class="td-card__in">
+              <h1 class="td-h1">Get in Touch</h1>
+              <p class="td-p" style="margin-bottom: 30px;">
+                Send us a message and we'll respond within 24 hours. Or call us directly to schedule a free consultation.
+              </p>
+
+              <form id="contactForm" class="td-form" action="https://formspree.io/f/mykkypyd" method="POST" accept-charset="UTF-8">
+                <div class="td-field">
+                  <label for="name">Name *</label>
+                  <input type="text" id="name" name="name" autocomplete="name" required />
+                </div>
+
+                <div class="td-field">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" autocomplete="email" required />
+                </div>
+
+                <div class="td-field">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" />
+                </div>
+
+                <div class="td-field">
+                  <label for="intent">I'm interested in…</label>
+                  <select id="intent" name="intent">
+                    <option value="">Select one</option>
+                    <option value="Sell">Selling my home</option>
+                    <option value="Buy">Buying a home</option>
+                    <option value="Sell + Buy">Both buying and selling</option>
+                    <option value="General">General question</option>
+                  </select>
+                </div>
+
+                <div class="td-field">
+                  <label for="message">Message *</label>
+                  <textarea id="message" name="message" required placeholder="Tell me about your real estate goals..."></textarea>
+                </div>
+
+                <!-- Formspree helpers -->
+                <input type="text" name="_gotcha" style="display:none" />
+                <input type="hidden" name="_subject" value="New lead from tdrealtyohio.com" />
+
+                <button class="td-btn td-btn--primary" type="submit" style="width: 100%; margin-top: 10px;">Send Message</button>
+              </form>
+
+              <div class="td-form" style="margin-top: 20px;">
+                <div class="td-error" id="formError" role="alert" aria-live="polite" style="display: none; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,107,107,.3); background: rgba(255,107,107,.1); color: #ff6b6b;">
+                  Sorry, something went wrong. Please email <a href="mailto:info@tdrealtyohio.com" style="color: #ff6b6b; text-decoration: underline;">info@tdrealtyohio.com</a>.
+                </div>
+
+                <div class="td-success" id="formSuccess" role="status" aria-live="polite" style="display: none; padding: 12px; border-radius: 10px; border: 1px solid rgba(70,211,154,.3); background: rgba(70,211,154,.1); color: #46d39a;">
+                  <strong>Message sent</strong>
+                  <p style="margin: 6px 0 0 0; font-size: 14px;">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+                </div>
+              </div>
+
+              <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(233,238,251,.10);">
+                <h3 class="td-h3">Other ways to reach us</h3>
+                <div style="display: grid; gap: 16px; margin-top: 16px;">
+                  <div>
+                    <div class="td-kicker" style="margin-bottom: 8px;">Phone</div>
+                    <a data-td-phone-tel style="color: var(--td-text); font-weight: 600; text-decoration: none;">
+                      <span data-td-phone-display></span>
+                    </a>
+                  </div>
+                  <div>
+                    <div class="td-kicker" style="margin-bottom: 8px;">Email</div>
+                    <a data-td-email-mailto style="color: var(--td-text); font-weight: 600; text-decoration: none;">
+                      <span data-td-email></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section" style="background: var(--td-surface-2);">
+      <div class="td-container">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+          <h2 class="td-h2">Ready to discuss your real estate goals?</h2>
+          <p class="td-p" style="margin-bottom: 30px;">
+            Whether you're buying, selling, or both, our expert team is here to help you achieve your real estate objectives with transparency and results.
+          </p>
+          <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a class="td-btn td-btn--primary" href="#contactForm">Send a Message</a>
+            <a class="td-btn td-btn--secondary" data-td-phone-tel>
+              Call <span data-td-phone-display></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="td-site-footer">
+    <div class="td-container">
+      <div class="td-site-footer__grid">
+        <div>
+          <a class="td-brand" href="/" style="margin-bottom: 15px; display: inline-block;">
+            <span class="td-brand__mark" aria-hidden="true"></span>
+            <span class="td-brand__name">TD Realty Ohio</span>
+          </a>
+          <p class="td-small" style="color: var(--td-text-muted); max-width: 280px;">
+            Full-service real estate brokerage serving Central Ohio with transparent, reduced commission rates.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="td-h4" style="margin-bottom: 15px;">Services</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li><a href="/sellers/" style="color: var(--td-text-muted); text-decoration: none;">For Sellers</a></li>
+            <li><a href="/buyers/" style="color: var(--td-text-muted); text-decoration: none;">For Buyers</a></li>
+            <li><a href="/pre-listing-inspection/" style="color: var(--td-text-muted); text-decoration: none;">Pre-Listing Inspection</a></li>
+            <li><a href="/areas/" style="color: var(--td-text-muted); text-decoration: none;">Service Areas</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="td-h4" style="margin-bottom: 15px;">Company</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li><a href="/about/" style="color: var(--td-text-muted); text-decoration: none;">About</a></li>
+            <li><a href="/contact/" style="color: var(--td-text-muted); text-decoration: none;">Contact</a></li>
+            <li><a href="/blog/" style="color: var(--td-text-muted); text-decoration: none;">Blog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="td-h4" style="margin-bottom: 15px;">Contact</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li>
+              <a data-td-phone-tel style="color: var(--td-text-muted); text-decoration: none;">
+                <span data-td-phone-display></span>
+              </a>
+            </li>
+            <li>
+              <a data-td-email-mailto style="color: var(--td-text-muted); text-decoration: none;">
+                <span data-td-email></span>
+              </a>
+            </li>
+            <li style="color: var(--td-text-muted);">Westerville, Ohio</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="td-site-footer__legal">
+        <div style="margin-bottom: 20px;">
+          <p class="td-small" style="color: var(--td-text-muted); margin-bottom: 5px;">
+            <strong style="color: var(--td-text);">TD Realty Ohio, LLC</strong> (Brokerage License #<span data-td-brokerage-license></span>)
+          </p>
+          <p class="td-small" style="color: var(--td-text-muted); margin-bottom: 5px;">
+            Travis Debnam, Broker (License #<span data-td-broker-license></span>)
+          </p>
+          <p class="td-small" style="color: var(--td-text-muted);">
+            Member of Columbus REALTORS® and National Association of REALTORS®
+          </p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: var(--td-surface-2); border-radius: var(--td-radius-sm);">
+          <svg width="40" height="40" viewBox="0 0 40 40" style="flex-shrink: 0;">
+            <rect width="40" height="40" fill="white"/>
+            <rect x="2" y="2" width="36" height="36" fill="none" stroke="#000" stroke-width="2"/>
+            <polygon points="20,6 6,18 34,18" fill="#000"/>
+            <rect x="10" y="18" width="20" height="16" fill="#000"/>
+            <rect x="14" y="22" width="5" height="5" fill="white"/>
+            <rect x="21" y="22" width="5" height="5" fill="white"/>
+            <rect x="16" y="28" width="8" height="6" fill="white"/>
+            <text x="20" y="39" text-anchor="middle" font-size="3" font-weight="bold" fill="#000">=</text>
+          </svg>
+          <p class="td-small" style="color: var(--td-text-muted); margin: 0;">
+            Equal Housing Opportunity. We are committed to providing equal professional service without discrimination.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+          <a href="/legal/privacy-policy/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Privacy Policy</a>
+          <a href="/legal/terms-of-service/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Terms of Service</a>
+          <a href="/legal/fair-housing/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Fair Housing</a>
+          <a href="/legal/ada-compliance/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Accessibility</a>
+        </div>
+
+        <p class="td-small" style="color: var(--td-text-muted); opacity: 0.6;">
+          &copy; 2026 TD Realty Ohio, LLC. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
 
   <script>
     (() => {
       const form = document.getElementById("contactForm");
       const success = document.getElementById("formSuccess");
       const error = document.getElementById("formError");
-      const card = document.getElementById("formCard");
-      if (!form || !success || !error || !card) return;
+      if (!form || !success || !error) return;
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -124,14 +291,20 @@
           if (res.ok) {
             form.reset();
             success.style.display = "block";
+            success.scrollIntoView({ behavior: "smooth", block: "nearest" });
           } else {
             error.style.display = "block";
+            error.scrollIntoView({ behavior: "smooth", block: "nearest" });
           }
         } catch {
           error.style.display = "block";
+          error.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
       });
     })();
   </script>
+
+  <script src="/assets/js/tdro-ui.js"></script>
+
 </body>
 </html>

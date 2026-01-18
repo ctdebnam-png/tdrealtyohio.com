@@ -1,319 +1,408 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Compare 1% vs 3% real estate commission in Columbus Ohio. See exactly how much you save with TD Realty Ohio's reduced commission model.">
-    <title>1% vs 3% Commission Comparison | TD Realty Ohio</title>
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tdrealtyohio.com/compare.html">
-    <meta property="og:title" content="1% vs 3% Commission: How Much You Really Save">
-    <meta property="og:description" content="Side-by-side comparison of 1% commission vs traditional 3% agents in Columbus Ohio.">
-    <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-image.jpg">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="1% vs 3% Commission: How Much You Really Save">
-    <meta name="twitter:description" content="Side-by-side comparison of 1% commission vs traditional 3% agents in Columbus Ohio.">
-    <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-image.jpg">
+  <title>1% vs 3% Commission Comparison | TD Realty Ohio</title>
+  <meta name="description" content="Compare 1% vs 3% real estate commission in Columbus Ohio. See exactly how much you save with TD Realty Ohio's reduced commission model." />
+  <link rel="canonical" href="https://tdrealtyohio.com/compare/" />
 
-    <meta name="keywords" content="1% vs 3% commission, real estate commission comparison, discount realtor Columbus, save on realtor fees">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <link rel="canonical" href="https://tdrealtyohio.com/compare.html">
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
-    
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What's the difference between 1% and 3% real estate commission?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "On a $500,000 home, 1% commission is $5,000 while 3% commission is $15,000. That's a $10,000 difference that stays in your pocket with TD Realty Ohio's reduced commission model."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do I get less service with 1% commission?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "No. TD Realty Ohio provides full-service real estate including MLS listing, professional photography, marketing, negotiation, and transaction management. The only difference is our efficient business model allows us to charge less."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Why do traditional agents charge 3% commission?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Traditional commission rates were set decades ago when real estate marketing was expensive. Today, technology has reduced costs significantly, but many agents haven't adjusted their fees. TD Realty Ohio passes these savings to you."
-                }
-            }
-        ]
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tdrealtyohio.com/compare/" />
+  <meta property="og:title" content="1% vs 3% Commission: How Much You Really Save" />
+  <meta property="og:description" content="Side-by-side comparison of 1% commission vs traditional 3% agents in Columbus Ohio." />
+
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+  <link rel="stylesheet" href="/assets/css/tdro-ui.css" />
+
+  <style>
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--td-surface-1);
+      border-radius: var(--td-radius-md);
+      overflow: hidden;
     }
-    </script>
+    .comparison-table thead {
+      background: linear-gradient(135deg, var(--td-primary) 0%, #1e4ed8 100%);
+    }
+    .comparison-table th {
+      padding: 20px 15px;
+      text-align: left;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .comparison-table td {
+      padding: 18px 15px;
+      border-bottom: 1px solid var(--td-border);
+      color: var(--td-text-muted);
+    }
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    .comparison-table tr.featured {
+      background: var(--td-surface-2);
+    }
+    .comparison-table td.savings {
+      color: var(--td-accent);
+      font-weight: 700;
+      font-size: 18px;
+    }
+    @media (max-width: 768px) {
+      .comparison-table th,
+      .comparison-table td {
+        padding: 12px 10px;
+        font-size: 14px;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What's the difference between 1% and 3% real estate commission?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On a $500,000 home, 1% commission is $5,000 while 3% commission is $15,000. That's a $10,000 difference that stays in your pocket with TD Realty Ohio's reduced commission model."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I get less service with 1% commission?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. TD Realty Ohio provides full-service real estate including MLS listing, professional photography, marketing, negotiation, and transaction management. The only difference is our efficient business model allows us to charge less."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do traditional agents charge 3% commission?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Traditional commission rates were set decades ago when real estate marketing was expensive. Today, technology has reduced costs significantly, but many agents haven't adjusted their fees. TD Realty Ohio passes these savings to you."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
-<body>
-    <nav class="nav">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <span class="logo-td">TD</span>
-                <span class="logo-text">Realty Ohio</span>
-            </a>
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
+
+<body class="td-ui">
+
+  <header class="td-site-header">
+    <div class="td-container">
+      <div class="td-site-header__bar">
+        <a class="td-brand" href="/" aria-label="TD Realty Ohio Home">
+          <span class="td-brand__mark" aria-hidden="true"></span>
+          <span class="td-brand__name">TD Realty Ohio</span>
+        </a>
+
+        <button class="td-nav-toggle" data-td-nav-toggle aria-expanded="false" aria-label="Open menu">
+          Menu
+        </button>
+
+        <nav class="td-nav" data-td-nav aria-label="Primary navigation">
+          <a href="/sellers/">Sellers</a>
+          <a href="/buyers/">Buyers</a>
+          <a href="/pre-listing-inspection/">Pre Listing Inspection</a>
+          <a href="/gallery/">Gallery</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+
+        <div class="td-header-cta">
+          <a class="td-btn td-btn--ghost" data-td-phone-tel>
+            Call <span data-td-phone-display></span>
+          </a>
+          <a class="td-btn td-btn--primary" href="/contact/">Free Consultation</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="td-ticker" data-td-ticker>
+    <div class="td-container">
+      <div class="td-ticker__in">
+        <div class="td-ticker__label" data-td-ticker-label></div>
+        <div class="td-ticker__line" data-td-ticker-line></div>
+        <div class="td-ticker__meta">
+          <a data-td-phone-tel><span data-td-phone-display></span></a>
+          <span>•</span>
+          <a data-td-email-mailto><span data-td-email></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="td-hero">
+      <div class="td-container">
+        <div class="td-hero__grid">
+          <div class="td-card td-hero__panel">
+            <div class="td-card__in">
+              <div class="td-badge">
+                <span class="td-kicker">Commission comparison</span>
+              </div>
+
+              <h1 class="td-h1">1% vs 3% Commission: The Real Difference</h1>
+
+              <p class="td-p">
+                See exactly how much you save with TD Realty Ohio compared to traditional Columbus real estate agents charging 3 percent commission.
+              </p>
+
+              <div class="td-hero__actions">
+                <a class="td-btn td-btn--primary" href="/contact/">Calculate Your Savings</a>
+                <a class="td-btn td-btn--secondary" href="/sellers/">See Full Pricing</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section">
+      <div class="td-container">
+        <div style="overflow-x: auto;">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Home Price</th>
+                <th>Traditional 3%</th>
+                <th>TD Realty 1%</th>
+                <th>Your Savings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$300,000</td>
+                <td>$9,000</td>
+                <td>$3,000</td>
+                <td class="savings">$6,000</td>
+              </tr>
+              <tr>
+                <td>$400,000</td>
+                <td>$12,000</td>
+                <td>$4,000</td>
+                <td class="savings">$8,000</td>
+              </tr>
+              <tr class="featured">
+                <td>$500,000</td>
+                <td>$15,000</td>
+                <td>$5,000</td>
+                <td class="savings">$10,000</td>
+              </tr>
+              <tr>
+                <td>$600,000</td>
+                <td>$18,000</td>
+                <td>$6,000</td>
+                <td class="savings">$12,000</td>
+              </tr>
+              <tr>
+                <td>$750,000</td>
+                <td>$22,500</td>
+                <td>$7,500</td>
+                <td class="savings">$15,000</td>
+              </tr>
+              <tr>
+                <td>$1,000,000</td>
+                <td>$30,000</td>
+                <td>$10,000</td>
+                <td class="savings">$20,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <p class="td-small" style="color: var(--td-text-muted);">
+            * The 1 percent rate applies when you buy and sell with TD Realty Ohio. Sell-only rate is 2 percent.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="td-section" style="background: var(--td-surface-2); padding-top: 60px; padding-bottom: 60px;">
+      <div class="td-container">
+        <div style="text-align: center; margin-bottom: 50px;">
+          <h2 class="td-h2">Common Questions</h2>
+        </div>
+
+        <div style="max-width: 800px; margin: 0 auto;">
+          <div class="td-faq-item">
+            <button class="td-faq-q">
+              <span>What's the difference between 1% and 3% real estate commission?</span>
+              <span class="td-faq-icon">+</span>
             </button>
-            <ul class="nav-menu">
-                <li><a href="sellers.html">Sellers</a></li>
-                <li><a href="buyers.html">Buyers</a></li>
-                <li><a href="pre-listing-inspection.html">Pre-Listing Inspection</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+            <div class="td-faq-a">
+              <p>
+                On a $500,000 home, 1 percent commission is $5,000 while 3 percent commission is $15,000.
+                That's a $10,000 difference that stays in your pocket with TD Realty Ohio's reduced commission model.
+              </p>
+            </div>
+          </div>
 
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-        <div class="container">
-            <ol class="breadcrumb-list">
-                <li><a href="index.html">Home</a></li>
-                <li><span class="current">1% vs 3% Comparison</span></li>
-            </ol>
-        </div>
-    </nav>
+          <div class="td-faq-item">
+            <button class="td-faq-q">
+              <span>Do I get less service with 1% commission?</span>
+              <span class="td-faq-icon">+</span>
+            </button>
+            <div class="td-faq-a">
+              <p>
+                No. TD Realty Ohio provides full-service real estate including MLS listing, professional photography, marketing, negotiation, and transaction management.
+                The only difference is our efficient business model allows us to charge less.
+              </p>
+            </div>
+          </div>
 
-    <section class="page-hero">
-        <div class="container">
-            <h1>1% vs 3% Commission: The Real Difference</h1>
-            <p>See exactly how much you save with TD Realty Ohio compared to traditional Columbus real estate agents charging 3% commission.</p>
+          <div class="td-faq-item">
+            <button class="td-faq-q">
+              <span>Why do traditional agents charge 3% commission?</span>
+              <span class="td-faq-icon">+</span>
+            </button>
+            <div class="td-faq-a">
+              <p>
+                Traditional commission rates were set decades ago when real estate marketing was expensive.
+                Today, technology has reduced costs significantly, but many agents haven't adjusted their fees.
+                TD Realty Ohio passes these savings to you.
+              </p>
+            </div>
+          </div>
+
+          <div class="td-faq-item">
+            <button class="td-faq-q">
+              <span>How does the 1% rate work?</span>
+              <span class="td-faq-icon">+</span>
+            </button>
+            <div class="td-faq-a">
+              <p>
+                The 1 percent listing commission applies when you list your home AND purchase your next home with TD Realty Ohio.
+                If you're only selling (not buying), the sell-only listing commission is 2 percent.
+                Both rates include a pre-listing inspection and full MLS service.
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section class="section">
-        <div class="container">
-            <div class="comparison-table-wrapper">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Home Price</th>
-                            <th>Traditional 3%</th>
-                            <th>TD Realty 1%</th>
-                            <th>Your Savings</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>$300,000</td>
-                            <td>$9,000</td>
-                            <td>$3,000</td>
-                            <td class="savings">$6,000</td>
-                        </tr>
-                        <tr>
-                            <td>$400,000</td>
-                            <td>$12,000</td>
-                            <td>$4,000</td>
-                            <td class="savings">$8,000</td>
-                        </tr>
-                        <tr class="featured">
-                            <td>$500,000</td>
-                            <td>$15,000</td>
-                            <td>$5,000</td>
-                            <td class="savings">$10,000</td>
-                        </tr>
-                        <tr>
-                            <td>$600,000</td>
-                            <td>$18,000</td>
-                            <td>$6,000</td>
-                            <td class="savings">$12,000</td>
-                        </tr>
-                        <tr>
-                            <td>$750,000</td>
-                            <td>$22,500</td>
-                            <td>$7,500</td>
-                            <td class="savings">$15,000</td>
-                        </tr>
-                        <tr>
-                            <td>$1,000,000</td>
-                            <td>$30,000</td>
-                            <td>$10,000</td>
-                            <td class="savings">$20,000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p style="text-align: center; margin-top: 15px; color: var(--gray-600); font-size: 14px;">*1% rate applies when you buy and sell with TD Realty Ohio. Sell-only rate is 2%.</p>
-
-            <div class="content-section" style="margin-top: 60px;">
-                <h2>What You Get: TD Realty Ohio vs Traditional Agents</h2>
-                
-                <div class="feature-comparison">
-                    <div class="feature-col">
-                        <h3>TD Realty Ohio (1-2%)</h3>
-                        <ul class="feature-list check">
-                            <li>Full MLS listing</li>
-                            <li>Professional photography</li>
-                            <li>Online marketing & syndication</li>
-                            <li>Showing coordination</li>
-                            <li>Expert negotiation</li>
-                            <li>Contract to closing management</li>
-                            <li>Pre-listing inspection option</li>
-                            <li>Licensed broker representation</li>
-                            <li>Columbus REALTORS® member</li>
-                        </ul>
-                    </div>
-                    <div class="feature-col">
-                        <h3>Traditional Agent (3%)</h3>
-                        <ul class="feature-list check">
-                            <li>Full MLS listing</li>
-                            <li>Professional photography</li>
-                            <li>Online marketing & syndication</li>
-                            <li>Showing coordination</li>
-                            <li>Expert negotiation</li>
-                            <li>Contract to closing management</li>
-                            <li>Pre-listing inspection (sometimes)</li>
-                            <li>Licensed agent representation</li>
-                            <li>REALTORS® member</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <p style="text-align: center; margin-top: 30px; font-size: 18px; font-weight: 600; color: var(--navy);">Same services. $6,000-$20,000 less in commission.</p>
-            </div>
-
-            <div class="content-section" style="margin-top: 60px;">
-                <h2>Why Traditional Commission Rates Are Outdated</h2>
-                <p>The 6% total commission model (3% to listing agent, 3% to buyer's agent) was established decades ago when selling a home required expensive newspaper ads, physical brochures, and significant marketing overhead.</p>
-                
-                <p>Today, technology has changed everything:</p>
-                <ul>
-                    <li><strong>MLS syndication</strong> automatically distributes your listing to Zillow, Realtor.com, and hundreds of other sites</li>
-                    <li><strong>Digital photography</strong> has dramatically reduced marketing costs</li>
-                    <li><strong>Online showing scheduling</strong> streamlines the process</li>
-                    <li><strong>Electronic signatures</strong> speed up transactions</li>
-                </ul>
-                
-                <p>Yet many agents still charge 3% as if it's 1995. TD Realty Ohio has built an efficient, technology-enabled brokerage that delivers the same results for less. We pass those savings directly to you.</p>
-            </div>
-
-            <div class="content-section" style="margin-top: 60px;">
-                <h2>Frequently Asked Questions</h2>
-                
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Will my home sell for less with a 1% agent?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <div class="faq-answer-inner">
-                            <p>No. Your home's sale price is determined by the market—buyer demand, comparable sales, and property condition—not by how much you pay your agent. You get the same MLS exposure, the same marketing reach, and the same negotiation expertise with TD Realty Ohio.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How can you charge less and stay in business?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <div class="faq-answer-inner">
-                            <p>We run an efficient operation. Lower overhead, smart use of technology, and a focus on providing excellent service rather than flashy offices. We'd rather help more families save money than maximize our per-transaction profit.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>What's the catch?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <div class="faq-answer-inner">
-                            <p>There isn't one. You get 1% commission when you buy and sell with us, or 2% for sell-only. Full service, licensed broker representation, member of Columbus REALTORS® and NAR. The only difference is thousands more dollars in your pocket at closing.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="td-section" style="background: linear-gradient(135deg, var(--td-primary) 0%, #1e4ed8 100%); padding-top: 80px; padding-bottom: 80px;">
+      <div class="td-container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+          <h2 class="td-h2" style="color: white;">Ready to Save Thousands?</h2>
+          <p class="td-p" style="color: rgba(255,255,255,0.9); margin-bottom: 30px;">
+            Let's discuss your home sale and calculate your exact savings.
+          </p>
+          <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a class="td-btn" style="background: white; color: var(--td-primary);" href="/contact/">Schedule Free Consultation</a>
+            <a class="td-btn td-btn--ghost" style="border-color: white; color: white;" href="/sellers/">See Full Pricing</a>
+          </div>
         </div>
+      </div>
     </section>
+  </main>
 
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Save Thousands on Your Home Sale?</h2>
-            <p>Schedule a free consultation to discuss selling your Columbus area home for 1-2% commission.</p>
-            <div class="cta-buttons">
-                <a href="contact.html" class="btn btn-primary">Schedule Free Consultation</a>
-                <a href="mailto:info@tdrealtyohio.com" class="btn btn-secondary">Email info@tdrealtyohio.com</a>
-            </div>
+  <footer class="td-site-footer">
+    <div class="td-container">
+      <div class="td-site-footer__grid">
+        <div>
+          <a class="td-brand" href="/" style="margin-bottom: 15px; display: inline-block;">
+            <span class="td-brand__mark" aria-hidden="true"></span>
+            <span class="td-brand__name">TD Realty Ohio</span>
+          </a>
+          <p class="td-small" style="color: var(--td-text-muted); max-width: 280px;">
+            Full-service real estate brokerage serving Central Ohio with transparent, reduced commission rates.
+          </p>
         </div>
-    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <a href="index.html" class="logo" style="margin-bottom: 15px;">
-                        <span class="logo-td">TD</span>
-                        <span class="logo-text" style="color: white;">Realty Ohio</span>
-                    </a>
-                    <p>Columbus Ohio's trusted 1% commission real estate broker. Full-service brokerage serving Central Ohio since 2017.</p>
-                </div>
-                <div>
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="sellers.html">Sell Your Home</a></li>
-                        <li><a href="buyers.html">Buy a Home</a></li>
-                        <li><a href="pre-listing-inspection.html">Pre-Listing Inspection</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="blog/">Real Estate Blog</a></li>
-                        <li><a href="resources/faq.html">FAQ</a></li>
-                        <li><a href="areas/">Service Areas</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Contact</h4>
-                    <ul>
-                        <!-- Phone number removed -->
-                        <li><a href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a></li>
-                        <li>Westerville, Ohio</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="footer-legal">
-                    <p><strong>TD Realty Ohio, LLC (License #2023006602)</strong></p>
-                    <p>Travis Debnam, Broker (License #2023006467)</p>
-                    <p>Member of Columbus REALTORS® and National Association of REALTORS®</p>
-                </div>
-                <div class="footer-links">
-                    <a href="legal/privacy-policy.html">Privacy</a>
-                    <a href="legal/terms-of-service.html">Terms</a>
-                    <a href="legal/fair-housing.html">Fair Housing</a>
-                </div>
-                <p style="margin-top: 20px; color: rgba(255,255,255,0.5);">&copy; 2026 TD Realty Ohio, LLC.</p>
-            </div>
+        <div>
+          <h4 class="td-h4" style="margin-bottom: 15px;">Services</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li><a href="/sellers/" style="color: var(--td-text-muted); text-decoration: none;">For Sellers</a></li>
+            <li><a href="/buyers/" style="color: var(--td-text-muted); text-decoration: none;">For Buyers</a></li>
+            <li><a href="/pre-listing-inspection/" style="color: var(--td-text-muted); text-decoration: none;">Pre-Listing Inspection</a></li>
+            <li><a href="/areas/" style="color: var(--td-text-muted); text-decoration: none;">Service Areas</a></li>
+          </ul>
         </div>
-    </footer>
 
-    <button class="back-to-top" aria-label="Back to top">
-        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
-    </button>
-    <a href="mailto:info@tdrealtyohio.com" class="mobile-call-btn" aria-label="Email">
-        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-    </a>
-    <script src="assets/js/main.js"></script>
+        <div>
+          <h4 class="td-h4" style="margin-bottom: 15px;">Company</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li><a href="/about/" style="color: var(--td-text-muted); text-decoration: none;">About</a></li>
+            <li><a href="/contact/" style="color: var(--td-text-muted); text-decoration: none;">Contact</a></li>
+            <li><a href="/blog/" style="color: var(--td-text-muted); text-decoration: none;">Blog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="td-h4" style="margin-bottom: 15px;">Contact</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li>
+              <a data-td-phone-tel style="color: var(--td-text-muted); text-decoration: none;">
+                <span data-td-phone-display></span>
+              </a>
+            </li>
+            <li>
+              <a data-td-email-mailto style="color: var(--td-text-muted); text-decoration: none;">
+                <span data-td-email></span>
+              </a>
+            </li>
+            <li style="color: var(--td-text-muted);">Westerville, Ohio</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="td-site-footer__legal">
+        <div style="margin-bottom: 20px;">
+          <p class="td-small" style="color: var(--td-text-muted); margin-bottom: 5px;">
+            <strong style="color: var(--td-text);">TD Realty Ohio, LLC</strong> (Brokerage License #<span data-td-brokerage-license></span>)
+          </p>
+          <p class="td-small" style="color: var(--td-text-muted); margin-bottom: 5px;">
+            Travis Debnam, Broker (License #<span data-td-broker-license></span>)
+          </p>
+          <p class="td-small" style="color: var(--td-text-muted);">
+            Member of Columbus REALTORS® and National Association of REALTORS®
+          </p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; background: var(--td-surface-2); border-radius: var(--td-radius-sm);">
+          <svg width="40" height="40" viewBox="0 0 40 40" style="flex-shrink: 0;">
+            <rect width="40" height="40" fill="white"/>
+            <rect x="2" y="2" width="36" height="36" fill="none" stroke="#000" stroke-width="2"/>
+            <polygon points="20,6 6,18 34,18" fill="#000"/>
+            <rect x="10" y="18" width="20" height="16" fill="#000"/>
+            <rect x="14" y="22" width="5" height="5" fill="white"/>
+            <rect x="21" y="22" width="5" height="5" fill="white"/>
+            <rect x="16" y="28" width="8" height="6" fill="white"/>
+            <text x="20" y="39" text-anchor="middle" font-size="3" font-weight="bold" fill="#000">=</text>
+          </svg>
+          <p class="td-small" style="color: var(--td-text-muted); margin: 0;">
+            Equal Housing Opportunity. We are committed to providing equal professional service without discrimination.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+          <a href="/legal/privacy-policy/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Privacy Policy</a>
+          <a href="/legal/terms-of-service/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Terms of Service</a>
+          <a href="/legal/fair-housing/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Fair Housing</a>
+          <a href="/legal/ada-compliance/" style="color: var(--td-text-muted); text-decoration: none; font-size: 14px;">Accessibility</a>
+        </div>
+
+        <p class="td-small" style="color: var(--td-text-muted); opacity: 0.6;">
+          &copy; 2026 TD Realty Ohio, LLC. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/tdro-ui.js"></script>
+
 </body>
 </html>
