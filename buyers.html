@@ -7,11 +7,21 @@
   <meta name="description" content="First-time homebuyers get 1% of the purchase price back at closing. Full buyer representation in Columbus, Westerville, Dublin, and Central Ohio.">
   <meta name="keywords" content="first time homebuyer Columbus Ohio, buyer rebate, cash back at closing, buyer's agent Central Ohio">
 
+  <!-- Canonical -->
+  <link rel="canonical" href="https://tdrealtyohio.com/buyers.html">
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="First-Time Homebuyer Cash Back | TD Realty Ohio">
   <meta property="og:description" content="Get 1% of your purchase price back at closing. Full buyer representation.">
   <meta property="og:url" content="https://tdrealtyohio.com/buyers.html">
+  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-buyers.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="First-Time Homebuyer Cash Back | TD Realty Ohio">
+  <meta name="twitter:description" content="Get 1% of your purchase price back at closing. Full buyer representation.">
+  <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-buyers.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,9 +106,16 @@
 
           <div class="calculator" id="buyer-calculator">
             <h3 class="calculator-title">Cash Back Calculator</h3>
-            <div class="calculator-input-group">
-              <label class="calculator-label" for="purchase-price">Purchase Price</label>
-              <input type="text" id="purchase-price" class="calculator-input" data-price-input placeholder="$300,000" value="$300,000">
+            <div class="calculator-slider-group">
+              <div class="calculator-slider-header">
+                <label class="calculator-label">Purchase Price</label>
+                <span class="calculator-slider-value" data-price-display>$300,000</span>
+              </div>
+              <input type="range" class="calculator-range" data-price-slider min="100000" max="1000000" step="10000" value="300000">
+              <div class="slider-labels">
+                <span>$100K</span>
+                <span>$1M</span>
+              </div>
             </div>
             <div class="calculator-results">
               <div class="result-row">
@@ -356,25 +373,82 @@
         </div>
       </div>
 
+      <div class="footer-compliance-logos">
+        <img src="/assets/images/compliance/equal-housing.svg" alt="Equal Housing Opportunity" width="40" height="40">
+        <img src="/assets/images/compliance/realtor-logo.svg" alt="REALTOR" width="100" height="36">
+      </div>
       <div class="footer-bottom">
         <div class="footer-legal">
           <a href="/privacy.html">Privacy Policy</a>
           <a href="/terms.html">Terms of Service</a>
           <a href="/fair-housing.html">Fair Housing</a>
-          <a href="/accessibility.html">Accessibility</a>
-        </div>
-        <div class="footer-compliance">
-          <span style="font-size: 0.75rem; color: var(--gray-400);">Equal Housing Opportunity</span>
         </div>
       </div>
 
       <div class="footer-license">
-        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602<br>
-        Member of Columbus REALTORS, Ohio REALTORS, and the National Association of REALTORS
+        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602
       </div>
     </div>
   </footer>
 
   <script src="/assets/js/main.js"></script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Who qualifies for the 1% cash back?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The cash back program is available to first-time homebuyers. If you've owned a home before, other arrangements may be possible depending on the transaction. Contact us to discuss your situation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I pay for buyer representation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Compensation varies by transaction and is negotiable. In many cases, the seller offers compensation to the buyer's agent. We'll explain all options and costs before you commit to working together."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the 1% listing rate work if I'm also selling?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If you're buying AND selling with TD Realty Ohio, you can list your current home for 1% instead of 2%. This is separate from the first-time buyer cash back program, which applies to the purchase side."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use the cash back for closing costs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, in most cases the cash back can be credited toward closing costs or prepaid items. Some loan programs have restrictions, so we'll verify what's allowed with your lender early in the process."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What areas do you serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TD Realty Ohio serves all of Central Ohio including Columbus, Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, Upper Arlington, Worthington, and surrounding communities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get started?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Contact us to schedule a buyer consultation. We'll discuss your needs, timeline, budget, and preferred areas. There's no obligation, and we'll explain exactly how the process works before you commit."
+        }
+      }
+    ]
+  }
+  </script>
 </body>
 </html>

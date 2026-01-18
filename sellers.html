@@ -7,11 +7,21 @@
   <meta name="description" content="Sell your Central Ohio home for just 1-2% listing commission instead of 3%. Full MLS exposure, professional marketing, and free pre-listing inspection included.">
   <meta name="keywords" content="sell home Columbus Ohio, low commission realtor, 1 percent listing fee, discount real estate agent Ohio">
 
+  <!-- Canonical -->
+  <link rel="canonical" href="https://tdrealtyohio.com/sellers.html">
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Sell Your Home for 1-2% Commission | TD Realty Ohio">
   <meta property="og:description" content="Save thousands on listing commissions. Full service, lower cost.">
   <meta property="og:url" content="https://tdrealtyohio.com/sellers.html">
+  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-sellers.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sell Your Home for 1-2% Commission | TD Realty Ohio">
+  <meta name="twitter:description" content="Save thousands on listing commissions. Full service, lower cost.">
+  <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-sellers.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,9 +120,16 @@
 
           <div class="calculator" id="seller-calculator">
             <h3 class="calculator-title">Commission Savings Calculator</h3>
-            <div class="calculator-input-group">
-              <label class="calculator-label" for="home-price">Home Sale Price</label>
-              <input type="text" id="home-price" class="calculator-input" data-price-input placeholder="$400,000" value="$400,000">
+            <div class="calculator-slider-group">
+              <div class="calculator-slider-header">
+                <label class="calculator-label">Home Sale Price</label>
+                <span class="calculator-slider-value" data-price-display>$400,000</span>
+              </div>
+              <input type="range" class="calculator-range" data-price-slider min="100000" max="1000000" step="10000" value="400000">
+              <div class="slider-labels">
+                <span>$100K</span>
+                <span>$1M</span>
+              </div>
             </div>
             <div class="calculator-toggle">
               <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Buying & Selling (1%)</button>
@@ -365,15 +382,15 @@
         </div>
       </div>
 
+      <div class="footer-compliance-logos">
+        <img src="/assets/images/compliance/equal-housing.svg" alt="Equal Housing Opportunity" width="40" height="40">
+        <img src="/assets/images/compliance/realtor-logo.svg" alt="REALTOR" width="100" height="36">
+      </div>
       <div class="footer-bottom">
         <div class="footer-legal">
           <a href="/privacy.html">Privacy Policy</a>
           <a href="/terms.html">Terms of Service</a>
           <a href="/fair-housing.html">Fair Housing</a>
-          <a href="/accessibility.html">Accessibility</a>
-        </div>
-        <div class="footer-compliance">
-          <span style="font-size: 0.75rem; color: var(--gray-400);">Equal Housing Opportunity</span>
         </div>
       </div>
 
@@ -385,5 +402,63 @@
   </footer>
 
   <script src="/assets/js/main.js"></script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How can you offer such low commission rates?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An efficiency-focused business model, technology, and streamlined workflows reduce overhead. These savings are passed directly to clients. You get the same full-service representation for less."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a catch with the 1% listing rate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The 1% rate applies when you sell AND purchase your next home with TD Realty Ohio. If you're only selling (not buying), the rate is 2%. Both rates include the same full-service representation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I still pay the buyer's agent commission?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The 1-2% rates quoted are for the listing side only. Buyer's agent compensation is negotiated separately with each transaction. This has always been the case in real estate, though it's now more transparent."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if my home needs repairs after the pre-listing inspection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You have options: make the repairs before listing, adjust your asking price to account for the condition, or simply disclose the issues and sell as-is. We'll discuss the pros and cons of each approach for your specific situation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What marketing is included?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Professional photography, MLS listing, and syndication to all major real estate websites including Zillow, Realtor.com, Redfin, and more. Your listing gets the same exposure as any traditional agent's listing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does it take to sell?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Market conditions and pricing determine how quickly a home sells. Properly priced homes in good condition typically receive offers within the first few weeks. From accepted offer to closing is usually 30-45 days."
+        }
+      }
+    ]
+  }
+  </script>
 </body>
 </html>
