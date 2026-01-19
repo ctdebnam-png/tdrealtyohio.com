@@ -1,10 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 100" width="80" height="100">
   <!-- Blue square background -->
-  <rect x="5" y="5" width="70" height="70" fill="#0061a8"/>
+  <rect x="5" y="5" width="70" height="70" fill="#2563eb"/>
   <!-- White R -->
   <path d="M20,15 L20,65 L32,65 L32,48 L38,48 L52,65 L67,65 L50,45 C58,42 62,35 62,27 C62,18 55,15 45,15 Z M32,25 L42,25 C48,25 50,28 50,32 C50,36 48,39 42,39 L32,39 Z" fill="#ffffff"/>
   <!-- REALTOR text -->
   <text x="40" y="88" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="1">REALTOR</text>
-  <!-- Registered trademark -->
   <text x="73" y="82" fill="#ffffff" font-size="6" font-family="Arial, sans-serif">®</text>
 </svg>
