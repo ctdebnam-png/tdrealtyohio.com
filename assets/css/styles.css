@@ -241,10 +241,16 @@ li { margin-bottom: 0.5rem; }
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--navy);
+  text-decoration: none;
+  border: none;
+  outline: none;
 }
 
-.logo:hover {
+.logo:hover,
+.logo:focus {
   color: var(--navy);
+  text-decoration: none;
+  outline: none;
 }
 
 .logo-mark {
@@ -1640,8 +1646,7 @@ main {
 .footer-compliance-logos img {
   height: 36px;
   width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.7;
+  opacity: 0.9;
   transition: opacity var(--transition);
 }
 
