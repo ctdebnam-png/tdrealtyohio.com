@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TD Realty SEO System - Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">TD Realty SEO System</div>
+          <div class="logo-subtitle">tdrealtyohio.com</div>
+        </div>
+      </a>
+      <div class="flex items-center gap-3">
+        <span id="status-indicator" class="badge badge-success">All Systems Go</span>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+          <span id="theme-icon">&#9790;</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Quick Start Guide -->
+    <section class="quick-start fade-in" id="quick-start">
+      <div class="flex justify-between items-center">
+        <h2>Quick Start Guide</h2>
+        <button class="btn btn-outline" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white;" onclick="hideQuickStart()">
+          Hide Guide
+        </button>
+      </div>
+      <p style="opacity: 0.9; margin-bottom: 1rem;">Welcome to your SEO Command Center! Follow these steps to get started:</p>
+      <div class="quick-start-steps grid-2">
+        <div class="quick-start-step">
+          <div class="quick-start-step-number">1</div>
+          <div>
+            <strong>Set Up Your Business Info</strong>
+            <p style="opacity: 0.8; font-size: 0.875rem; margin-top: 0.25rem;">Go to Settings and enter your complete NAP (Name, Address, Phone)</p>
+          </div>
+        </div>
+        <div class="quick-start-step">
+          <div class="quick-start-step-number">2</div>
+          <div>
+            <strong>Complete Technical SEO Tasks</strong>
+            <p style="opacity: 0.8; font-size: 0.875rem; margin-top: 0.25rem;">Start with the Command Center checklist - prioritize technical tasks first</p>
+          </div>
+        </div>
+        <div class="quick-start-step">
+          <div class="quick-start-step-number">3</div>
+          <div>
+            <strong>Submit to Directories</strong>
+            <p style="opacity: 0.8; font-size: 0.875rem; margin-top: 0.25rem;">Track your citations in the Citation Tracker - aim for 15+ in week 1</p>
+          </div>
+        </div>
+        <div class="quick-start-step">
+          <div class="quick-start-step-number">4</div>
+          <div>
+            <strong>Follow the Content Calendar</strong>
+            <p style="opacity: 0.8; font-size: 0.875rem; margin-top: 0.25rem;">Publish 1 blog + 1 neighborhood page per week for maximum impact</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overall Progress Stats -->
+    <section class="card fade-in mb-4">
+      <div class="card-header">
+        <h2 class="card-title">Overall Progress</h2>
+        <span class="text-muted text-sm" id="last-updated"></span>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-4">
+          <div class="stat-card">
+            <div class="stat-value" id="overall-progress">0%</div>
+            <div class="stat-label">Overall Completion</div>
+            <div class="progress-bar mt-2" style="height: 8px;">
+              <div class="progress-fill" id="progress-bar-fill" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="tasks-completed">0</div>
+            <div class="stat-label">Tasks Completed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="tasks-this-week">0</div>
+            <div class="stat-label">Completed This Week</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="days-since-content">--</div>
+            <div class="stat-label">Days Since Content</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alerts Section -->
+    <section id="alerts-section" class="mb-4 fade-in">
+      <!-- Alerts will be injected here -->
+    </section>
+
+    <!-- Navigation Cards -->
+    <h2 class="mb-3">Tools & Dashboards</h2>
+    <div class="grid grid-4 mb-4">
+      <a href="command-center.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128202;</div>
+        <div class="nav-card-title">SEO Command Center</div>
+        <div class="nav-card-desc">Track all SEO tasks, view alerts, and generate weekly priorities.</div>
+        <div class="nav-card-status">
+          <span id="command-center-status">Loading...</span>
+        </div>
+      </a>
+
+      <a href="content-calendar.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128197;</div>
+        <div class="nav-card-title">Content Calendar</div>
+        <div class="nav-card-desc">12-week publishing schedule with blog posts and neighborhood pages.</div>
+        <div class="nav-card-status">
+          <span id="calendar-status">Pre-built schedule ready</span>
+        </div>
+      </a>
+
+      <a href="citation-tracker.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128205;</div>
+        <div class="nav-card-title">Citation Tracker</div>
+        <div class="nav-card-desc">Monitor directory submissions and NAP consistency.</div>
+        <div class="nav-card-status">
+          <span id="citation-status">Loading...</span>
+        </div>
+      </a>
+
+      <a href="review-tracker.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#11088;</div>
+        <div class="nav-card-title">Review Monitor</div>
+        <div class="nav-card-desc">Track Google reviews, manage requests, and monitor reputation.</div>
+        <div class="nav-card-status">
+          <span id="review-status">Loading...</span>
+        </div>
+      </a>
+
+      <a href="weekly-report.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128200;</div>
+        <div class="nav-card-title">Weekly Report</div>
+        <div class="nav-card-desc">Auto-generated weekly summary of progress and priorities.</div>
+        <div class="nav-card-status">
+          Generate every Monday
+        </div>
+      </a>
+
+      <a href="settings.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#9881;</div>
+        <div class="nav-card-title">Settings</div>
+        <div class="nav-card-desc">Configure business info, keywords, competitors, and notifications.</div>
+        <div class="nav-card-status">
+          <span id="settings-status">Configure your NAP</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Audit Tools Section -->
+    <h2 class="mb-3">SEO Audit Tools</h2>
+    <div class="grid grid-4 mb-4">
+      <a href="audit-tools/title-checker.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128196;</div>
+        <div class="nav-card-title">Title Tag Checker</div>
+        <div class="nav-card-desc">Analyze title tags for length and keyword optimization.</div>
+      </a>
+
+      <a href="audit-tools/meta-checker.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128221;</div>
+        <div class="nav-card-title">Meta Description Checker</div>
+        <div class="nav-card-desc">Audit meta descriptions for SEO best practices.</div>
+      </a>
+
+      <a href="audit-tools/link-analyzer.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128279;</div>
+        <div class="nav-card-title">Internal Link Analyzer</div>
+        <div class="nav-card-desc">Analyze internal linking structure and opportunities.</div>
+      </a>
+
+      <a href="audit-tools/schema-generator.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128736;</div>
+        <div class="nav-card-title">Schema Generator</div>
+        <div class="nav-card-desc">Generate LocalBusiness, FAQPage, and Article schema markup.</div>
+      </a>
+
+      <a href="audit-tools/competitor-tracker.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#127919;</div>
+        <div class="nav-card-title">Competitor Tracker</div>
+        <div class="nav-card-desc">Track keyword rankings vs competitors over time.</div>
+      </a>
+    </div>
+
+    <!-- Content Templates Section -->
+    <h2 class="mb-3">Content Templates</h2>
+    <div class="grid grid-3 mb-4">
+      <a href="content-templates/blog-template-generator.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#9997;</div>
+        <div class="nav-card-title">Blog Post Generator</div>
+        <div class="nav-card-desc">SEO-optimized blog post templates with schema markup.</div>
+      </a>
+
+      <a href="content-templates/neighborhood-template.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#127968;</div>
+        <div class="nav-card-title">Neighborhood Page</div>
+        <div class="nav-card-desc">City-specific landing page templates for local SEO.</div>
+      </a>
+
+      <a href="content-templates/comparison-template.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#9878;</div>
+        <div class="nav-card-title">Comparison Post</div>
+        <div class="nav-card-desc">Competitor comparison templates with feature tables.</div>
+      </a>
+    </div>
+
+    <!-- Guides Section -->
+    <h2 class="mb-3">Guides & Resources</h2>
+    <div class="grid grid-3 mb-4">
+      <a href="guides/gsc-setup-guide.html" class="nav-card fade-in">
+        <div class="nav-card-icon">&#128218;</div>
+        <div class="nav-card-title">GSC Setup Guide</div>
+        <div class="nav-card-desc">Step-by-step Google Search Console verification and setup.</div>
+      </a>
+    </div>
+
+    <!-- Weekly Priorities -->
+    <section class="card fade-in mb-4">
+      <div class="card-header">
+        <h2 class="card-title">&#127919; This Week's Priorities</h2>
+        <a href="command-center.html" class="btn btn-sm btn-outline">View All Tasks</a>
+      </div>
+      <div class="card-body">
+        <div id="weekly-priorities">
+          <p class="text-muted">Loading priorities...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-muted text-sm mt-4" style="padding: 2rem 0;">
+      <p>TD Realty SEO System &middot; Built for tdrealtyohio.com</p>
+      <p class="mt-2">All data stored locally in your browser. No external servers.</p>
+    </footer>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      updateDashboard();
+      updateAlerts();
+      updateWeeklyPriorities();
+      updateStatusCards();
+
+      // Check if quick start should be hidden
+      const hideQuickStartPref = TDR.DataManager.get('hide_quick_start', false);
+      if (hideQuickStartPref) {
+        document.getElementById('quick-start').style.display = 'none';
+      }
+    });
+
+    function updateDashboard() {
+      const progress = TDR.TaskManager.getProgress();
+
+      document.getElementById('overall-progress').textContent = progress.percentage + '%';
+      document.getElementById('progress-bar-fill').style.width = progress.percentage + '%';
+      document.getElementById('tasks-completed').textContent = progress.completed + '/' + progress.total;
+      document.getElementById('tasks-this-week').textContent = progress.completedThisWeek;
+
+      // Update progress bar color
+      const progressFill = document.getElementById('progress-bar-fill');
+      progressFill.className = 'progress-fill';
+      if (progress.percentage >= 75) {
+        progressFill.classList.add('success');
+      } else if (progress.percentage >= 50) {
+        // Default blue
+      } else if (progress.percentage >= 25) {
+        progressFill.classList.add('warning');
+      } else {
+        progressFill.classList.add('danger');
+      }
+
+      // Days since content
+      const lastContentDate = TDR.DataManager.get(TDR.STORAGE_KEYS.LAST_CONTENT_DATE);
+      const daysEl = document.getElementById('days-since-content');
+      if (lastContentDate) {
+        const days = TDR.Utils.daysSince(lastContentDate);
+        daysEl.textContent = days;
+        if (days >= 14) {
+          daysEl.style.color = 'var(--danger)';
+        } else if (days >= 7) {
+          daysEl.style.color = 'var(--warning)';
+        } else {
+          daysEl.style.color = 'var(--success)';
+        }
+      } else {
+        daysEl.textContent = '--';
+      }
+
+      // Last updated
+      document.getElementById('last-updated').textContent = 'Updated: ' + new Date().toLocaleString();
+
+      // Command center status
+      const techProgress = TDR.TaskManager.getCategoryProgress('technical');
+      document.getElementById('command-center-status').textContent =
+        `Technical: ${techProgress.completed}/${techProgress.total} complete`;
+    }
+
+    function updateAlerts() {
+      const alerts = TDR.AlertSystem.getAlerts();
+      const container = document.getElementById('alerts-section');
+      const statusIndicator = document.getElementById('status-indicator');
+
+      if (alerts.length === 0) {
+        container.innerHTML = `
+          <div class="alert alert-success">
+            <span class="alert-icon">&#10003;</span>
+            <div class="alert-content">
+              <div class="alert-title">All Systems Go!</div>
+              <p>No urgent issues. Keep up the great work!</p>
+            </div>
+          </div>
+        `;
+        statusIndicator.className = 'badge badge-success';
+        statusIndicator.textContent = 'All Systems Go';
+      } else {
+        const hasError = alerts.some(a => a.type === 'danger');
+        const hasWarning = alerts.some(a => a.type === 'warning');
+
+        if (hasError) {
+          statusIndicator.className = 'badge badge-danger';
+          statusIndicator.textContent = 'Action Required';
+        } else if (hasWarning) {
+          statusIndicator.className = 'badge badge-warning';
+          statusIndicator.textContent = 'Attention Needed';
+        }
+
+        container.innerHTML = alerts.map(alert => `
+          <div class="alert alert-${alert.type}">
+            <span class="alert-icon">${alert.type === 'danger' ? '&#9888;' : '&#9432;'}</span>
+            <div class="alert-content">
+              <div class="alert-title">${alert.title}</div>
+              <p>${alert.message}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function updateWeeklyPriorities() {
+      const priorities = TDR.TaskManager.getWeeklyPriorities();
+      const container = document.getElementById('weekly-priorities');
+
+      if (priorities.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">&#127881;</div>
+            <div class="empty-state-title">All caught up!</div>
+            <p>All tasks are completed. Time to set new goals!</p>
+          </div>
+        `;
+        return;
+      }
+
+      const categoryLabels = {
+        technical: { icon: '&#9881;', label: 'Technical SEO' },
+        citations: { icon: '&#128205;', label: 'Citations' },
+        content: { icon: '&#9997;', label: 'Content' },
+        neighborhoods: { icon: '&#127968;', label: 'Neighborhoods' },
+        reviews: { icon: '&#11088;', label: 'Reviews' },
+        backlinks: { icon: '&#128279;', label: 'Backlinks' }
+      };
+
+      container.innerHTML = `
+        <div class="checkbox-group">
+          ${priorities.map((task, i) => `
+            <div class="checkbox-item">
+              <span style="font-weight: bold; color: var(--accent-primary); min-width: 24px;">${i + 1}.</span>
+              <div style="flex: 1;">
+                <div class="checkbox-label">${task.text}</div>
+                <span class="badge badge-info text-xs mt-1">
+                  ${categoryLabels[task.category]?.label || task.category}
+                </span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function updateStatusCards() {
+      // Citation status
+      const citations = TDR.DataManager.get(TDR.STORAGE_KEYS.CITATIONS, []);
+      const liveCitations = citations.filter(c => c.status === 'live').length;
+      document.getElementById('citation-status').textContent = `${liveCitations} live citations`;
+
+      // Review status
+      const reviews = TDR.DataManager.get('tdr_google_reviews', 0);
+      document.getElementById('review-status').textContent = `${reviews} Google reviews`;
+
+      // Settings status
+      const settings = TDR.DataManager.getSettings();
+      if (settings.phone && settings.address) {
+        document.getElementById('settings-status').textContent = 'NAP configured';
+      }
+    }
+
+    function toggleTheme() {
+      const newTheme = TDR.ThemeManager.toggle();
+      document.getElementById('theme-icon').innerHTML = newTheme === 'dark' ? '&#9788;' : '&#9790;';
+    }
+
+    function hideQuickStart() {
+      document.getElementById('quick-start').style.display = 'none';
+      TDR.DataManager.set('hide_quick_start', true);
+    }
+
+    // Update theme icon on load
+    document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+  </script>
+</body>
+</html>

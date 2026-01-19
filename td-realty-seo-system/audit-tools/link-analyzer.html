@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internal Link Analyzer - TD Realty SEO System</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">Internal Link Analyzer</div>
+          <div class="logo-subtitle">Optimize Site Structure</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html" class="nav-link">Dashboard</a>
+        <a href="title-checker.html" class="nav-link">Title Checker</a>
+        <a href="meta-checker.html" class="nav-link">Meta Checker</a>
+        <a href="link-analyzer.html" class="nav-link active">Link Analyzer</a>
+        <a href="schema-generator.html" class="nav-link">Schema</a>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Input Section -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128279; Paste HTML Content</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">Page HTML or Content</label>
+          <textarea class="form-textarea" id="html-input" rows="12"
+                    placeholder="Paste your page HTML content here. The analyzer will extract and analyze all internal links."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Your Domain (for identifying internal links)</label>
+          <input type="text" class="form-input" id="domain-input" value="tdrealtyohio.com"
+                 placeholder="e.g., tdrealtyohio.com">
+        </div>
+
+        <button class="btn btn-primary" onclick="analyzeLinks()">Analyze Links</button>
+        <button class="btn btn-secondary" onclick="loadSampleContent()">Load Sample Content</button>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="card mb-4 fade-in" id="results-section" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">&#9989; Analysis Results</h2>
+      </div>
+      <div class="card-body">
+        <!-- Stats -->
+        <div class="grid grid-4 mb-4">
+          <div class="stat-card">
+            <div class="stat-value" id="total-links">0</div>
+            <div class="stat-label">Total Links</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="internal-links">0</div>
+            <div class="stat-label">Internal Links</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="external-links">0</div>
+            <div class="stat-label">External Links</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="link-ratio">0%</div>
+            <div class="stat-label">Internal Ratio</div>
+          </div>
+        </div>
+
+        <!-- Internal Links Table -->
+        <h3 class="font-medium mb-2">Internal Links Found</h3>
+        <div class="table-container mb-4">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Anchor Text</th>
+                <th>URL</th>
+                <th>Analysis</th>
+              </tr>
+            </thead>
+            <tbody id="internal-links-table">
+              <!-- Links injected here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- External Links Table -->
+        <h3 class="font-medium mb-2">External Links Found</h3>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Anchor Text</th>
+                <th>URL</th>
+                <th>Attributes</th>
+              </tr>
+            </thead>
+            <tbody id="external-links-table">
+              <!-- Links injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Link Suggestions -->
+    <section class="card mb-4 fade-in" id="suggestions-section" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">&#128161; Internal Linking Suggestions</h2>
+      </div>
+      <div class="card-body">
+        <p class="text-sm text-muted mb-3">Based on your content, consider adding links to these pages:</p>
+        <div id="link-suggestions">
+          <!-- Suggestions injected here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Your Pages Reference -->
+    <section class="card fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128214; Recommended Pages to Link To</h2>
+      </div>
+      <div class="card-body">
+        <p class="text-sm text-muted mb-3">Use these anchor text suggestions when linking to your key pages:</p>
+
+        <div class="accordion-container">
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+              <span>Homepage Links</span>
+              <span class="accordion-icon">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                <ul class="text-sm">
+                  <li><strong>/</strong> - "TD Realty Ohio", "1% commission realtor Columbus"</li>
+                  <li><strong>/contact</strong> - "contact us", "get a free consultation", "schedule a consultation"</li>
+                  <li><strong>/about</strong> - "about TD Realty", "meet our team", "about Travis Riddle"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+              <span>Service Page Links</span>
+              <span class="accordion-icon">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                <ul class="text-sm">
+                  <li><strong>/sellers</strong> - "sell your home", "listing services", "1% listing commission"</li>
+                  <li><strong>/buyers</strong> - "buy a home", "first-time homebuyer", "buyer services"</li>
+                  <li><strong>/commission-calculator</strong> - "calculate your savings", "commission savings"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header active" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+              <span>Neighborhood Page Links</span>
+              <span class="accordion-icon">&#9660;</span>
+            </div>
+            <div class="accordion-content active">
+              <div class="accordion-body">
+                <ul class="text-sm">
+                  <li><strong>/columbus-realtor</strong> - "Columbus real estate", "Columbus homes"</li>
+                  <li><strong>/westerville-realtor</strong> - "Westerville realtor", "Westerville homes"</li>
+                  <li><strong>/dublin-realtor</strong> - "Dublin real estate", "Dublin Ohio homes"</li>
+                  <li><strong>/gahanna-realtor</strong> - "Gahanna realtor", "Gahanna real estate"</li>
+                  <li><strong>/new-albany-realtor</strong> - "New Albany homes", "New Albany realtor"</li>
+                  <li><strong>/powell-realtor</strong> - "Powell real estate", "Powell Ohio homes"</li>
+                  <li><em>...and other neighborhood pages</em></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+              <span>Blog Post Links</span>
+              <span class="accordion-icon">&#9660;</span>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                <ul class="text-sm">
+                  <li><strong>/blog/1-percent-commission-guide</strong> - "1% commission guide", "how 1% commission works"</li>
+                  <li><strong>/blog/sell-house-for-less</strong> - "sell your house for less", "save on commission"</li>
+                  <li><strong>/blog/first-time-homebuyer-guide</strong> - "first-time buyer guide", "homebuyer tips"</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-success mt-4">
+          <span class="alert-icon">&#128161;</span>
+          <div class="alert-content">
+            <strong>Pro Tip:</strong> Aim for 3-5 internal links per 1,000 words of content. Link to relevant pages using descriptive anchor text that includes keywords.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/app.js"></script>
+  <script>
+    const keywordPages = {
+      '1%': '/sellers',
+      'one percent': '/sellers',
+      'commission': '/sellers',
+      'sell': '/sellers',
+      'selling': '/sellers',
+      'listing': '/sellers',
+      'buy': '/buyers',
+      'buying': '/buyers',
+      'first-time': '/blog/first-time-homebuyer-guide',
+      'homebuyer': '/buyers',
+      'columbus': '/columbus-realtor',
+      'westerville': '/westerville-realtor',
+      'dublin': '/dublin-realtor',
+      'gahanna': '/gahanna-realtor',
+      'new albany': '/new-albany-realtor',
+      'powell': '/powell-realtor',
+      'hilliard': '/hilliard-realtor',
+      'worthington': '/worthington-realtor',
+      'inspection': '/blog/pre-listing-inspection',
+      'contact': '/contact',
+      'consultation': '/contact',
+      'travis': '/about'
+    };
+
+    function analyzeLinks() {
+      const html = document.getElementById('html-input').value;
+      const domain = document.getElementById('domain-input').value.toLowerCase().replace(/^https?:\/\//, '').replace(/\/$/, '');
+
+      if (!html) {
+        alert('Please paste some HTML content to analyze');
+        return;
+      }
+
+      // Parse links from HTML
+      const linkRegex = /<a[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi;
+      const links = [];
+      let match;
+
+      while ((match = linkRegex.exec(html)) !== null) {
+        const url = match[1];
+        const anchorText = match[2].replace(/<[^>]+>/g, '').trim();
+        const fullMatch = match[0];
+
+        const isInternal = url.startsWith('/') ||
+                          url.includes(domain) ||
+                          (!url.startsWith('http') && !url.startsWith('mailto') && !url.startsWith('tel'));
+
+        const hasNofollow = /rel=["'][^"']*nofollow[^"']*["']/i.test(fullMatch);
+        const hasNewTab = /target=["']_blank["']/i.test(fullMatch);
+
+        links.push({
+          url,
+          anchorText: anchorText || '[No anchor text]',
+          isInternal,
+          hasNofollow,
+          hasNewTab
+        });
+      }
+
+      // Separate internal and external
+      const internalLinks = links.filter(l => l.isInternal);
+      const externalLinks = links.filter(l => !l.isInternal);
+
+      // Update stats
+      document.getElementById('total-links').textContent = links.length;
+      document.getElementById('internal-links').textContent = internalLinks.length;
+      document.getElementById('external-links').textContent = externalLinks.length;
+      document.getElementById('link-ratio').textContent =
+        links.length > 0 ? Math.round((internalLinks.length / links.length) * 100) + '%' : '0%';
+
+      // Render internal links table
+      const internalTable = document.getElementById('internal-links-table');
+      if (internalLinks.length > 0) {
+        internalTable.innerHTML = internalLinks.map(link => {
+          const issues = [];
+          if (link.anchorText === '[No anchor text]') issues.push('Missing anchor text');
+          if (link.anchorText.toLowerCase() === 'click here' || link.anchorText.toLowerCase() === 'read more') {
+            issues.push('Generic anchor text');
+          }
+
+          return `
+            <tr>
+              <td>${escapeHtml(link.anchorText)}</td>
+              <td><code class="text-sm">${escapeHtml(link.url)}</code></td>
+              <td>
+                ${issues.length > 0
+                  ? `<span class="badge badge-warning">${issues.join(', ')}</span>`
+                  : '<span class="badge badge-success">Good</span>'}
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } else {
+        internalTable.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No internal links found</td></tr>';
+      }
+
+      // Render external links table
+      const externalTable = document.getElementById('external-links-table');
+      if (externalLinks.length > 0) {
+        externalTable.innerHTML = externalLinks.map(link => `
+          <tr>
+            <td>${escapeHtml(link.anchorText)}</td>
+            <td><code class="text-sm">${escapeHtml(link.url)}</code></td>
+            <td>
+              ${link.hasNofollow ? '<span class="badge badge-info">nofollow</span>' : ''}
+              ${link.hasNewTab ? '<span class="badge badge-info">new tab</span>' : ''}
+              ${!link.hasNofollow && !link.hasNewTab ? '<span class="text-muted">-</span>' : ''}
+            </td>
+          </tr>
+        `).join('');
+      } else {
+        externalTable.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No external links found</td></tr>';
+      }
+
+      // Generate linking suggestions based on content
+      generateSuggestions(html, internalLinks);
+
+      document.getElementById('results-section').style.display = 'block';
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function generateSuggestions(content, existingLinks) {
+      const lowerContent = content.toLowerCase();
+      const existingUrls = existingLinks.map(l => l.url.toLowerCase());
+      const suggestions = [];
+
+      for (const [keyword, page] of Object.entries(keywordPages)) {
+        if (lowerContent.includes(keyword) && !existingUrls.some(url => url.includes(page))) {
+          suggestions.push({
+            keyword,
+            page,
+            reason: `Content mentions "${keyword}" but doesn't link to ${page}`
+          });
+        }
+      }
+
+      const suggestionsContainer = document.getElementById('link-suggestions');
+      const suggestionsSection = document.getElementById('suggestions-section');
+
+      if (suggestions.length > 0) {
+        suggestionsSection.style.display = 'block';
+        suggestionsContainer.innerHTML = suggestions.slice(0, 10).map(s => `
+          <div class="flex items-center gap-3 mb-3 p-3" style="background: var(--bg-tertiary); border-radius: var(--radius-md);">
+            <span style="font-size: 1.5rem;">&#128279;</span>
+            <div style="flex: 1;">
+              <strong>Link "${s.keyword}" to ${s.page}</strong>
+              <p class="text-sm text-muted">${s.reason}</p>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        suggestionsSection.style.display = 'none';
+      }
+    }
+
+    function loadSampleContent() {
+      document.getElementById('html-input').value = `
+<article>
+  <h1>Why Choose a 1% Commission Realtor in Columbus, Ohio?</h1>
+
+  <p>If you're planning to sell your home in Columbus, you might be wondering if a discount realtor is worth it.
+     The answer is yes! With TD Realty Ohio's 1% listing commission, you can save thousands while still getting
+     full-service representation.</p>
+
+  <h2>How Much Can You Save?</h2>
+
+  <p>On a $400,000 home, the traditional 3% listing commission would cost you $12,000. With our
+     <a href="/sellers">1% commission structure</a>, you'd pay just $4,000 - saving $8,000!</p>
+
+  <h2>Serving All of Central Ohio</h2>
+
+  <p>Whether you're in Westerville, Dublin, or anywhere else in the Columbus metro area, we're here to help.
+     Check out our <a href="/westerville-realtor">Westerville real estate services</a> or
+     <a href="/dublin-realtor">Dublin home listings</a>.</p>
+
+  <p>For more information about the home selling process, read our
+     <a href="https://www.realtor.com/advice/sell/" target="_blank" rel="nofollow">guide to selling your home</a>.</p>
+
+  <h2>Ready to Get Started?</h2>
+
+  <p>Contact Travis Riddle at TD Realty Ohio for a free consultation. As a local Columbus broker with years of
+     experience, Travis can help you sell your home for less while getting top dollar.</p>
+
+  <p><a href="/contact">Schedule your free consultation today</a></p>
+</article>
+      `.trim();
+      analyzeLinks();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function toggleTheme() {
+      TDR.ThemeManager.toggle();
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    });
+  </script>
+</body>
+</html>

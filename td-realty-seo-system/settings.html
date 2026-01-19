@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - TD Realty SEO System</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">Settings</div>
+          <div class="logo-subtitle">Configuration</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Dashboard</a>
+        <a href="command-center.html" class="nav-link">Command Center</a>
+        <a href="content-calendar.html" class="nav-link">Calendar</a>
+        <a href="citation-tracker.html" class="nav-link">Citations</a>
+        <a href="review-tracker.html" class="nav-link">Reviews</a>
+        <a href="settings.html" class="nav-link active">Settings</a>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Business Information -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#127970; Business Information (NAP)</h2>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-warning mb-4">
+          <span class="alert-icon">&#9888;</span>
+          <div class="alert-content">
+            <strong>Important:</strong> Your NAP (Name, Address, Phone) must be consistent across ALL directories and citations. Any variation can hurt your local SEO rankings.
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label class="form-label">Business Name (exactly as registered)</label>
+            <input type="text" class="form-input" id="business-name" value="TD Realty Ohio, LLC">
+          </div>
+          <div class="form-group">
+            <label class="form-label">DBA / Display Name</label>
+            <input type="text" class="form-input" id="display-name" value="TD Realty Ohio">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Broker Name</label>
+            <input type="text" class="form-input" id="broker-name" value="Travis Riddle">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Broker License Number</label>
+            <input type="text" class="form-input" id="broker-license" value="2023006467">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Brokerage License Number</label>
+            <input type="text" class="form-input" id="brokerage-license" value="2023006602">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Year Founded</label>
+            <input type="text" class="form-input" id="founded" value="2017">
+          </div>
+        </div>
+
+        <h3 class="font-medium mt-4 mb-3">Address</h3>
+        <div class="grid grid-2">
+          <div class="form-group" style="grid-column: span 2;">
+            <label class="form-label">Street Address</label>
+            <input type="text" class="form-input" id="address" placeholder="123 Main Street, Suite 100">
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" class="form-input" id="city" value="Columbus">
+          </div>
+          <div class="form-group">
+            <label class="form-label">State</label>
+            <input type="text" class="form-input" id="state" value="Ohio">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ZIP Code</label>
+            <input type="text" class="form-input" id="zip" placeholder="43215">
+          </div>
+          <div class="form-group">
+            <label class="form-label">County</label>
+            <input type="text" class="form-input" id="county" value="Franklin">
+          </div>
+        </div>
+
+        <h3 class="font-medium mt-4 mb-3">Contact</h3>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label class="form-label">Phone Number (format: (XXX) XXX-XXXX)</label>
+            <input type="tel" class="form-input" id="phone" placeholder="(614) 555-1234">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="email" placeholder="travis@tdrealtyohio.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Website</label>
+            <input type="url" class="form-input" id="website" value="https://tdrealtyohio.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Google Business Profile URL</label>
+            <input type="url" class="form-input" id="gbp-url" placeholder="https://g.page/...">
+          </div>
+        </div>
+
+        <button class="btn btn-primary mt-4" onclick="saveBusinessInfo()">Save Business Information</button>
+      </div>
+    </section>
+
+    <!-- Service Areas -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128205; Service Areas</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">Cities Served (one per line)</label>
+          <textarea class="form-textarea" id="service-cities" rows="6">Columbus
+Westerville
+Dublin
+Gahanna
+New Albany
+Powell
+Lewis Center
+Delaware
+Galena
+Sunbury
+Blacklick
+Pataskala
+Pickerington
+Hilliard
+Upper Arlington
+Worthington
+Clintonville</textarea>
+        </div>
+        <button class="btn btn-primary" onclick="saveServiceAreas()">Save Service Areas</button>
+      </div>
+    </section>
+
+    <!-- Target Keywords -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#127919; Target Keywords</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">Primary Keywords (one per line, in priority order)</label>
+          <textarea class="form-textarea" id="target-keywords" rows="8">1% commission realtor Columbus Ohio
+discount realtor Columbus Ohio
+sell house for less Columbus
+low commission realtor Columbus
+1 percent listing fee Ohio
+flat fee realtor Columbus
+cheap realtor Columbus Ohio
+save money selling house Columbus</textarea>
+        </div>
+        <button class="btn btn-primary" onclick="saveKeywords()">Save Keywords</button>
+      </div>
+    </section>
+
+    <!-- Competitors -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128270; Competitors to Track</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">Competitor Websites (one per line)</label>
+          <textarea class="form-textarea" id="competitors" rows="5">homesthatclick.com
+sellfor1percent.com
+sell4onepercent.com
+listwithclever.com</textarea>
+        </div>
+        <button class="btn btn-primary" onclick="saveCompetitors()">Save Competitors</button>
+      </div>
+    </section>
+
+    <!-- Notification Settings -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128276; Notification Settings</h2>
+      </div>
+      <div class="card-body">
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox" class="checkbox-input" id="notif-enabled" checked>
+            <span class="checkbox-label">Enable browser notifications</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="checkbox-input" id="notif-content" checked>
+            <span class="checkbox-label">Alert when no content published in 7+ days</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="checkbox-input" id="notif-reviews" checked>
+            <span class="checkbox-label">Alert when Google reviews below target</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" class="checkbox-input" id="notif-weekly" checked>
+            <span class="checkbox-label">Remind to generate weekly report (Mondays)</span>
+          </label>
+        </div>
+
+        <div class="form-group mt-3">
+          <label class="form-label">Google Review Target</label>
+          <input type="number" class="form-input" id="review-target" value="20" min="1" style="width: 100px;">
+        </div>
+
+        <button class="btn btn-primary mt-3" onclick="saveNotificationSettings()">Save Notification Settings</button>
+        <button class="btn btn-secondary mt-3" onclick="testNotification()">Test Notification</button>
+      </div>
+    </section>
+
+    <!-- Data Management -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128190; Data Management</h2>
+      </div>
+      <div class="card-body">
+        <p class="text-sm text-muted mb-4">All data is stored locally in your browser's localStorage. Export regularly for backup.</p>
+
+        <div class="grid grid-3">
+          <div>
+            <h3 class="font-medium mb-2">Export Data</h3>
+            <button class="btn btn-outline" onclick="exportAllData()">Export All Data (JSON)</button>
+          </div>
+          <div>
+            <h3 class="font-medium mb-2">Import Data</h3>
+            <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importData()">
+            <button class="btn btn-outline" onclick="document.getElementById('import-file').click()">Import Data (JSON)</button>
+          </div>
+          <div>
+            <h3 class="font-medium mb-2">Reset Data</h3>
+            <button class="btn btn-danger" onclick="resetAllData()">Reset All Data</button>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h3 class="font-medium mb-2">Storage Usage</h3>
+          <p class="text-sm text-muted" id="storage-usage">Calculating...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Media Links -->
+    <section class="card fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128279; Social Media Profiles</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label class="form-label">Facebook Page</label>
+            <input type="url" class="form-input" id="social-facebook" placeholder="https://facebook.com/...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Instagram</label>
+            <input type="url" class="form-input" id="social-instagram" placeholder="https://instagram.com/...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">LinkedIn</label>
+            <input type="url" class="form-input" id="social-linkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">YouTube</label>
+            <input type="url" class="form-input" id="social-youtube" placeholder="https://youtube.com/...">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="saveSocialLinks()">Save Social Links</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSettings();
+      calculateStorageUsage();
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    });
+
+    function loadSettings() {
+      const settings = TDR.DataManager.getSettings();
+
+      // Business info
+      document.getElementById('business-name').value = settings.businessName || '';
+      document.getElementById('display-name').value = settings.displayName || 'TD Realty Ohio';
+      document.getElementById('broker-name').value = settings.broker || 'Travis Riddle';
+      document.getElementById('broker-license').value = settings.brokerLicense || '2023006467';
+      document.getElementById('brokerage-license').value = settings.brokerageLicense || '2023006602';
+      document.getElementById('founded').value = settings.founded || '2017';
+      document.getElementById('address').value = settings.address || '';
+      document.getElementById('city').value = settings.city || 'Columbus';
+      document.getElementById('state').value = settings.state || 'Ohio';
+      document.getElementById('zip').value = settings.zip || '';
+      document.getElementById('county').value = settings.county || 'Franklin';
+      document.getElementById('phone').value = settings.phone || '';
+      document.getElementById('email').value = settings.email || '';
+      document.getElementById('website').value = settings.website || 'https://tdrealtyohio.com';
+      document.getElementById('gbp-url').value = settings.gbpUrl || '';
+
+      // Service areas
+      if (settings.serviceCities) {
+        document.getElementById('service-cities').value = settings.serviceCities.join('\n');
+      }
+
+      // Keywords
+      if (settings.targetKeywords) {
+        document.getElementById('target-keywords').value = settings.targetKeywords.join('\n');
+      }
+
+      // Competitors
+      if (settings.competitors) {
+        document.getElementById('competitors').value = settings.competitors.join('\n');
+      }
+
+      // Notifications
+      const notifSettings = TDR.DataManager.get(TDR.STORAGE_KEYS.NOTIFICATIONS, {});
+      document.getElementById('notif-enabled').checked = notifSettings.enabled !== false;
+      document.getElementById('notif-content').checked = notifSettings.contentAlert !== false;
+      document.getElementById('notif-reviews').checked = notifSettings.reviewAlert !== false;
+      document.getElementById('notif-weekly').checked = notifSettings.weeklyReminder !== false;
+      document.getElementById('review-target').value = notifSettings.reviewTarget || 20;
+
+      // Social
+      document.getElementById('social-facebook').value = settings.socialFacebook || '';
+      document.getElementById('social-instagram').value = settings.socialInstagram || '';
+      document.getElementById('social-linkedin').value = settings.socialLinkedin || '';
+      document.getElementById('social-youtube').value = settings.socialYoutube || '';
+    }
+
+    function saveBusinessInfo() {
+      const settings = TDR.DataManager.getSettings();
+
+      settings.businessName = document.getElementById('business-name').value;
+      settings.displayName = document.getElementById('display-name').value;
+      settings.broker = document.getElementById('broker-name').value;
+      settings.brokerLicense = document.getElementById('broker-license').value;
+      settings.brokerageLicense = document.getElementById('brokerage-license').value;
+      settings.founded = document.getElementById('founded').value;
+      settings.address = document.getElementById('address').value;
+      settings.city = document.getElementById('city').value;
+      settings.state = document.getElementById('state').value;
+      settings.zip = document.getElementById('zip').value;
+      settings.county = document.getElementById('county').value;
+      settings.phone = document.getElementById('phone').value;
+      settings.email = document.getElementById('email').value;
+      settings.website = document.getElementById('website').value;
+      settings.gbpUrl = document.getElementById('gbp-url').value;
+
+      TDR.DataManager.saveSettings(settings);
+      alert('Business information saved!');
+    }
+
+    function saveServiceAreas() {
+      const settings = TDR.DataManager.getSettings();
+      settings.serviceCities = document.getElementById('service-cities').value
+        .split('\n')
+        .map(c => c.trim())
+        .filter(c => c);
+      TDR.DataManager.saveSettings(settings);
+      alert('Service areas saved!');
+    }
+
+    function saveKeywords() {
+      const settings = TDR.DataManager.getSettings();
+      settings.targetKeywords = document.getElementById('target-keywords').value
+        .split('\n')
+        .map(k => k.trim())
+        .filter(k => k);
+      TDR.DataManager.saveSettings(settings);
+      alert('Keywords saved!');
+    }
+
+    function saveCompetitors() {
+      const settings = TDR.DataManager.getSettings();
+      settings.competitors = document.getElementById('competitors').value
+        .split('\n')
+        .map(c => c.trim())
+        .filter(c => c);
+      TDR.DataManager.saveSettings(settings);
+      alert('Competitors saved!');
+    }
+
+    function saveNotificationSettings() {
+      const notifSettings = {
+        enabled: document.getElementById('notif-enabled').checked,
+        contentAlert: document.getElementById('notif-content').checked,
+        reviewAlert: document.getElementById('notif-reviews').checked,
+        weeklyReminder: document.getElementById('notif-weekly').checked,
+        reviewTarget: parseInt(document.getElementById('review-target').value) || 20
+      };
+      TDR.DataManager.set(TDR.STORAGE_KEYS.NOTIFICATIONS, notifSettings);
+      alert('Notification settings saved!');
+    }
+
+    function testNotification() {
+      TDR.NotificationSystem.requestPermission();
+      setTimeout(() => {
+        TDR.NotificationSystem.send('Test Notification', 'TD Realty SEO System notifications are working!');
+      }, 500);
+    }
+
+    function saveSocialLinks() {
+      const settings = TDR.DataManager.getSettings();
+      settings.socialFacebook = document.getElementById('social-facebook').value;
+      settings.socialInstagram = document.getElementById('social-instagram').value;
+      settings.socialLinkedin = document.getElementById('social-linkedin').value;
+      settings.socialYoutube = document.getElementById('social-youtube').value;
+      TDR.DataManager.saveSettings(settings);
+      alert('Social links saved!');
+    }
+
+    function exportAllData() {
+      const allData = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('tdr_')) {
+          try {
+            allData[key] = JSON.parse(localStorage.getItem(key));
+          } catch (e) {
+            allData[key] = localStorage.getItem(key);
+          }
+        }
+      }
+
+      TDR.ExportManager.download(
+        JSON.stringify(allData, null, 2),
+        `td-realty-seo-backup-${new Date().toISOString().split('T')[0]}.json`
+      );
+    }
+
+    function importData() {
+      const file = document.getElementById('import-file').files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          Object.entries(data).forEach(([key, value]) => {
+            if (key.startsWith('tdr_')) {
+              localStorage.setItem(key, JSON.stringify(value));
+            }
+          });
+          alert('Data imported successfully! Reloading page...');
+          location.reload();
+        } catch (error) {
+          alert('Error importing data: ' + error.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetAllData() {
+      if (!confirm('Are you sure you want to reset ALL data? This cannot be undone!')) return;
+      if (!confirm('This will delete all your tasks, citations, reviews, and settings. Are you absolutely sure?')) return;
+
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('tdr_')) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(key => localStorage.removeItem(key));
+
+      alert('All data has been reset. Reloading page...');
+      location.reload();
+    }
+
+    function calculateStorageUsage() {
+      let total = 0;
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('tdr_')) {
+          total += localStorage.getItem(key).length;
+        }
+      }
+      const kb = (total / 1024).toFixed(2);
+      const maxKb = 5120; // ~5MB typical localStorage limit
+      document.getElementById('storage-usage').textContent =
+        `${kb} KB used (approximately ${((total / 1024 / maxKb) * 100).toFixed(1)}% of typical 5MB limit)`;
+    }
+
+    function toggleTheme() {
+      TDR.ThemeManager.toggle();
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    }
+  </script>
+</body>
+</html>

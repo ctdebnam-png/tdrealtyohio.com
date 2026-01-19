@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Description Checker - TD Realty SEO System</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">Meta Description Checker</div>
+          <div class="logo-subtitle">Optimize for CTR</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html" class="nav-link">Dashboard</a>
+        <a href="title-checker.html" class="nav-link">Title Checker</a>
+        <a href="meta-checker.html" class="nav-link active">Meta Checker</a>
+        <a href="schema-generator.html" class="nav-link">Schema</a>
+        <a href="competitor-tracker.html" class="nav-link">Rankings</a>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Input Section -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128221; Meta Description Analyzer</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label class="form-label">Target Keyword</label>
+            <input type="text" class="form-input" id="target-keyword"
+                   placeholder="e.g., 1% commission realtor Columbus Ohio"
+                   oninput="analyzeDescription()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Page Type</label>
+            <select class="form-select" id="page-type" onchange="generateSuggestion()">
+              <option value="homepage">Homepage</option>
+              <option value="service">Service Page</option>
+              <option value="neighborhood">Neighborhood Page</option>
+              <option value="blog">Blog Post</option>
+              <option value="comparison">Comparison Post</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Meta Description <span id="char-count" class="text-muted">(0/160)</span></label>
+          <textarea class="form-textarea" id="meta-description" rows="4"
+                    placeholder="Enter your meta description here..."
+                    oninput="analyzeDescription()"></textarea>
+        </div>
+
+        <div class="flex gap-2">
+          <button class="btn btn-primary" onclick="analyzeDescription()">Analyze</button>
+          <button class="btn btn-secondary" onclick="generateSuggestion()">Generate Suggestion</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERP Preview -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128269; Google SERP Preview</h2>
+      </div>
+      <div class="card-body">
+        <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; max-width: 600px;">
+          <div style="color: #1a0dab; font-size: 1.25rem; cursor: pointer;" id="preview-title">
+            1% Commission Realtor Columbus Ohio | TD Realty
+          </div>
+          <div style="color: #006621; font-size: 0.875rem; margin-top: 0.25rem;" id="preview-url">
+            https://tdrealtyohio.com
+          </div>
+          <div style="color: #545454; font-size: 0.875rem; margin-top: 0.5rem; line-height: 1.4;" id="preview-meta">
+            Your meta description will appear here. Make it compelling to increase click-through rates!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analysis Results -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#9989; Analysis Results</h2>
+        <span class="badge" id="overall-status">Enter description</span>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-3">
+          <div class="stat-card" style="text-align: center;">
+            <div class="stat-label">Character Count</div>
+            <div class="stat-value" id="stat-chars">0</div>
+            <div class="progress-bar mt-2">
+              <div class="progress-fill" id="char-progress" style="width: 0%"></div>
+            </div>
+            <div class="text-xs text-muted mt-1">Optimal: 120-160</div>
+          </div>
+          <div class="stat-card" style="text-align: center;">
+            <div class="stat-label">Keyword Present</div>
+            <div class="stat-value" id="stat-keyword">-</div>
+          </div>
+          <div class="stat-card" style="text-align: center;">
+            <div class="stat-label">CTA Present</div>
+            <div class="stat-value" id="stat-cta">-</div>
+          </div>
+        </div>
+
+        <div class="mt-4" id="checklist-results">
+          <!-- Checklist items will be injected here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Suggestions -->
+    <section class="card mb-4 fade-in" id="suggestions-section" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">&#128161; Improvement Suggestions</h2>
+      </div>
+      <div class="card-body">
+        <ul id="suggestions-list">
+          <!-- Suggestions injected here -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- Best Practices -->
+    <section class="card fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128218; Meta Description Best Practices</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-2">
+          <div>
+            <h3 class="font-medium mb-2">Elements of a Great Meta Description</h3>
+            <ul class="text-sm">
+              <li><strong>Length:</strong> 120-160 characters (155 ideal)</li>
+              <li><strong>Keyword:</strong> Include target keyword naturally</li>
+              <li><strong>Value Prop:</strong> Highlight unique benefits</li>
+              <li><strong>CTA:</strong> Include action words</li>
+              <li><strong>Specifics:</strong> Numbers, percentages work well</li>
+              <li><strong>Urgency:</strong> Create reason to click now</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium mb-2">Power Words for Real Estate</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+              <span class="badge badge-info">Save</span>
+              <span class="badge badge-info">Free</span>
+              <span class="badge badge-info">Expert</span>
+              <span class="badge badge-info">Trusted</span>
+              <span class="badge badge-info">Local</span>
+              <span class="badge badge-info">Proven</span>
+              <span class="badge badge-info">Exclusive</span>
+              <span class="badge badge-info">Guaranteed</span>
+              <span class="badge badge-info">Professional</span>
+              <span class="badge badge-info">Affordable</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h3 class="font-medium mb-2">Template Examples</h3>
+          <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md);">
+            <p class="text-sm mb-2"><strong>Homepage:</strong></p>
+            <code style="display: block; margin-bottom: 1rem; font-size: 0.8rem;">Save thousands with TD Realty's 1% listing commission in Columbus, Ohio. Full-service real estate, FREE pre-listing inspection. Get your free consultation today!</code>
+
+            <p class="text-sm mb-2"><strong>Neighborhood Page:</strong></p>
+            <code style="display: block; margin-bottom: 1rem; font-size: 0.8rem;">Looking for a discount realtor in [City], Ohio? TD Realty offers 1% listing commission. Save $X,XXX on your home sale. Free consultation available!</code>
+
+            <p class="text-sm mb-2"><strong>Blog Post:</strong></p>
+            <code style="display: block; font-size: 0.8rem;">Discover how to [topic] in Columbus, Ohio. Expert tips from TD Realty's licensed broker. Learn how to save money on your next home sale.</code>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/app.js"></script>
+  <script>
+    const ctaWords = ['call', 'contact', 'get', 'learn', 'discover', 'find', 'start', 'schedule', 'request', 'free', 'today', 'now'];
+    const powerWords = ['save', 'free', 'expert', 'trusted', 'local', 'proven', 'exclusive', 'guaranteed', 'professional', 'affordable', 'best', 'top'];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    });
+
+    function analyzeDescription() {
+      const meta = document.getElementById('meta-description').value;
+      const keyword = document.getElementById('target-keyword').value.toLowerCase().trim();
+      const charCount = meta.length;
+
+      // Update character count
+      document.getElementById('char-count').textContent = `(${charCount}/160)`;
+      document.getElementById('stat-chars').textContent = charCount;
+
+      // Update progress bar
+      const progress = Math.min((charCount / 160) * 100, 100);
+      const progressBar = document.getElementById('char-progress');
+      progressBar.style.width = progress + '%';
+      progressBar.className = 'progress-fill';
+      if (charCount > 160) {
+        progressBar.classList.add('danger');
+      } else if (charCount >= 120) {
+        progressBar.classList.add('success');
+      } else if (charCount >= 80) {
+        progressBar.classList.add('warning');
+      }
+
+      // Update SERP preview
+      const previewMeta = document.getElementById('preview-meta');
+      if (meta.length > 160) {
+        previewMeta.textContent = meta.substring(0, 157) + '...';
+      } else {
+        previewMeta.textContent = meta || 'Your meta description will appear here.';
+      }
+
+      // Check keyword
+      const hasKeyword = keyword && meta.toLowerCase().includes(keyword);
+      document.getElementById('stat-keyword').innerHTML = hasKeyword
+        ? '<span style="color: var(--success);">Yes</span>'
+        : '<span style="color: var(--danger);">No</span>';
+
+      // Check CTA
+      const lowerMeta = meta.toLowerCase();
+      const hasCta = ctaWords.some(word => lowerMeta.includes(word));
+      document.getElementById('stat-cta').innerHTML = hasCta
+        ? '<span style="color: var(--success);">Yes</span>'
+        : '<span style="color: var(--warning);">No</span>';
+
+      // Build checklist
+      const checks = [
+        { label: 'Length between 120-160 characters', pass: charCount >= 120 && charCount <= 160 },
+        { label: 'Not too short (under 80 chars)', pass: charCount >= 80 },
+        { label: 'Not too long (over 160 chars)', pass: charCount <= 160 },
+        { label: 'Contains target keyword', pass: hasKeyword || !keyword },
+        { label: 'Includes call-to-action', pass: hasCta },
+        { label: 'Contains power words', pass: powerWords.some(w => lowerMeta.includes(w)) },
+        { label: 'No duplicate characters (!!!)', pass: !/(.)\1{2,}/.test(meta) },
+        { label: 'Starts with capital letter', pass: meta.length > 0 && meta[0] === meta[0].toUpperCase() },
+        { label: 'Ends with punctuation', pass: /[.!?]$/.test(meta.trim()) }
+      ];
+
+      const checklistHtml = checks.map(check => `
+        <div class="flex items-center gap-2 mb-2">
+          <span style="color: ${check.pass ? 'var(--success)' : 'var(--danger)'}; font-size: 1.25rem;">
+            ${check.pass ? '&#10003;' : '&#10007;'}
+          </span>
+          <span>${check.label}</span>
+        </div>
+      `).join('');
+      document.getElementById('checklist-results').innerHTML = checklistHtml;
+
+      // Overall status
+      const passCount = checks.filter(c => c.pass).length;
+      const statusEl = document.getElementById('overall-status');
+      if (passCount >= 8) {
+        statusEl.className = 'badge badge-success';
+        statusEl.textContent = 'Excellent';
+      } else if (passCount >= 6) {
+        statusEl.className = 'badge badge-warning';
+        statusEl.textContent = 'Good';
+      } else {
+        statusEl.className = 'badge badge-danger';
+        statusEl.textContent = 'Needs Work';
+      }
+
+      // Generate suggestions
+      const suggestions = [];
+      if (charCount < 120) suggestions.push('Add more descriptive text to reach 120+ characters');
+      if (charCount > 160) suggestions.push(`Shorten by ${charCount - 160} characters to avoid truncation`);
+      if (keyword && !hasKeyword) suggestions.push(`Include your target keyword: "${keyword}"`);
+      if (!hasCta) suggestions.push('Add a call-to-action like "Contact us today" or "Get your free consultation"');
+      if (!powerWords.some(w => lowerMeta.includes(w))) suggestions.push('Include power words like "save", "free", or "expert"');
+      if (!lowerMeta.includes('1%') && !lowerMeta.includes('one percent')) suggestions.push('Highlight your 1% commission to stand out');
+      if (!lowerMeta.includes('columbus') && !lowerMeta.includes('ohio')) suggestions.push('Include location (Columbus, Ohio) for local SEO');
+
+      if (suggestions.length > 0) {
+        document.getElementById('suggestions-section').style.display = 'block';
+        document.getElementById('suggestions-list').innerHTML = suggestions.map(s => `<li class="mb-2">${s}</li>`).join('');
+      } else {
+        document.getElementById('suggestions-section').style.display = 'none';
+      }
+    }
+
+    function generateSuggestion() {
+      const keyword = document.getElementById('target-keyword').value || '1% commission realtor Columbus Ohio';
+      const pageType = document.getElementById('page-type').value;
+
+      const templates = {
+        homepage: `Save thousands with TD Realty's 1% listing commission in Columbus, Ohio. Full-service real estate with FREE pre-listing inspection included. Contact us for your free consultation today!`,
+        service: `Looking for a ${keyword}? TD Realty Ohio offers 1% listing commission when you buy and sell with us. Save thousands - get your free consultation!`,
+        neighborhood: `Sell your [City] home for less with TD Realty's 1% listing commission. Full-service representation, local expertise, FREE pre-listing inspection. Contact us today!`,
+        blog: `Discover everything you need to know about ${keyword}. Expert insights from TD Realty Ohio's licensed broker. Learn how to save thousands on your home sale.`,
+        comparison: `Comparing discount realtors in Columbus? See how TD Realty's 1% commission, FREE inspection, and local expertise stack up. Make an informed choice for your home sale.`
+      };
+
+      document.getElementById('meta-description').value = templates[pageType];
+      analyzeDescription();
+    }
+
+    function toggleTheme() {
+      TDR.ThemeManager.toggle();
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    }
+  </script>
+</body>
+</html>
