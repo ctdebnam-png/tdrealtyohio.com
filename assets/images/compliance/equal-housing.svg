@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
-  <rect width="50" height="50" fill="#1a2e44"/>
-  <path d="M25 8 L8 22 L8 42 L42 42 L42 22 Z" fill="none" stroke="#ffffff" stroke-width="2"/>
-  <rect x="14" y="28" width="22" height="14" fill="none" stroke="#ffffff" stroke-width="1.5"/>
-  <line x1="25" y1="8" x2="25" y2="42" stroke="#ffffff" stroke-width="1"/>
-  <text x="25" y="48" text-anchor="middle" fill="#ffffff" font-size="4" font-family="Arial, sans-serif">EQUAL HOUSING</text>
-  <text x="25" y="52" text-anchor="middle" fill="#ffffff" font-size="3" font-family="Arial, sans-serif">OPPORTUNITY</text>
-</svg>
