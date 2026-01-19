@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1a2e44"/>
+
+  <!-- Logo circle -->
+  <circle cx="600" cy="250" r="120" fill="#c9a227"/>
+  <text x="600" y="275" text-anchor="middle" dominant-baseline="middle" fill="#1a2e44" font-size="96" font-weight="700" font-family="Georgia, Times, serif">TD</text>
+
+  <!-- Company name -->
+  <text x="600" y="430" text-anchor="middle" fill="#ffffff" font-size="72" font-weight="700" font-family="Georgia, Times, serif">TD Realty Ohio</text>
+
+  <!-- Tagline -->
+  <text x="600" y="510" text-anchor="middle" fill="#c9a227" font-size="36" font-family="sans-serif">1% Commission Real Estate</text>
+
+  <!-- Location -->
+  <text x="600" y="570" text-anchor="middle" fill="#94a3b8" font-size="28" font-family="sans-serif">Central Ohio</text>
+</svg>
