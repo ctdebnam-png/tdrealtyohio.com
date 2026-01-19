@@ -18,17 +18,17 @@ const STORAGE_KEYS = {
 // Default Business Info
 const DEFAULT_SETTINGS = {
   businessName: 'TD Realty Ohio, LLC',
-  broker: 'Travis Riddle',
+  broker: 'Travis Debnam',
   brokerLicense: '2023006467',
   brokerageLicense: '2023006602',
   founded: '2017',
   website: 'tdrealtyohio.com',
-  phone: '',
-  email: '',
-  address: '',
+  phone: '(614) 392-8858',
+  email: 'info@tdrealtyohio.com',
+  address: 'Westerville',
   city: 'Columbus',
   state: 'Ohio',
-  zip: '',
+  zip: '43081',
   targetKeywords: [
     '1% commission realtor Columbus Ohio',
     'discount realtor Columbus Ohio',
