@@ -267,24 +267,38 @@ function initContactForm() {
     submitBtn.textContent = 'Sending...';
 
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
 
-    console.log('Form submission:', data);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+      if (response.ok) {
+        submitBtn.textContent = 'Message Sent!';
+        submitBtn.classList.remove('btn-primary');
+        submitBtn.classList.add('btn-secondary');
+        form.reset();
 
-    submitBtn.textContent = 'Message Sent!';
-    submitBtn.classList.remove('btn-primary');
-    submitBtn.classList.add('btn-secondary');
-
-    form.reset();
-
-    setTimeout(() => {
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          submitBtn.classList.remove('btn-secondary');
+          submitBtn.classList.add('btn-primary');
+        }, 3000);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      submitBtn.textContent = 'Error - Try Again';
       submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-      submitBtn.classList.remove('btn-secondary');
-      submitBtn.classList.add('btn-primary');
-    }, 3000);
+      setTimeout(() => {
+        submitBtn.textContent = originalText;
+      }, 3000);
+    }
   });
 }
 
