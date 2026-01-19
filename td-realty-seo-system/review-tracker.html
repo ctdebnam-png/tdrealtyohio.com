@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Tracker - TD Realty SEO System</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">Review Tracker</div>
+          <div class="logo-subtitle">Reputation Monitor</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Dashboard</a>
+        <a href="command-center.html" class="nav-link">Command Center</a>
+        <a href="content-calendar.html" class="nav-link">Calendar</a>
+        <a href="citation-tracker.html" class="nav-link">Citations</a>
+        <a href="review-tracker.html" class="nav-link active">Reviews</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Review Stats -->
+    <section class="card mb-4 fade-in">
+      <div class="card-body">
+        <div class="grid grid-4">
+          <div class="stat-card">
+            <div class="stat-value" id="total-reviews">0</div>
+            <div class="stat-label">Total Reviews</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" style="color: var(--warning);" id="avg-rating">0.0</div>
+            <div class="stat-label">Average Rating</div>
+            <div id="stars-display" class="mt-1"></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="google-reviews">0</div>
+            <div class="stat-label">Google Reviews</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="response-rate">0%</div>
+            <div class="stat-label">Response Rate</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('reviews')">Reviews Log</button>
+      <button class="tab" onclick="showTab('requests')">Review Requests</button>
+      <button class="tab" onclick="showTab('templates')">Email Templates</button>
+    </div>
+
+    <!-- Reviews Log Tab -->
+    <section class="card mb-4 fade-in tab-content" id="reviews-tab">
+      <div class="card-header">
+        <h2 class="card-title">&#11088; Add Review</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-4">
+          <div class="form-group">
+            <label class="form-label">Platform</label>
+            <select class="form-select" id="add-review-platform">
+              <option value="google">Google</option>
+              <option value="zillow">Zillow</option>
+              <option value="yelp">Yelp</option>
+              <option value="facebook">Facebook</option>
+              <option value="realtor">Realtor.com</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Reviewer Name</label>
+            <input type="text" class="form-input" id="add-review-name" placeholder="John D.">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Rating</label>
+            <select class="form-select" id="add-review-rating">
+              <option value="5">5 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="2">2 Stars</option>
+              <option value="1">1 Star</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" id="add-review-date">
+          </div>
+        </div>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label class="form-label">Review Snippet</label>
+            <textarea class="form-textarea" id="add-review-text" rows="2" placeholder="Key quote from the review..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Response Status</label>
+            <select class="form-select" id="add-review-response">
+              <option value="responded">Responded</option>
+              <option value="pending">Pending Response</option>
+              <option value="na">N/A</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addReview()">Add Review</button>
+      </div>
+
+      <!-- Reviews List -->
+      <div class="card-header" style="margin-top: 1rem;">
+        <h2 class="card-title">Review Log</h2>
+        <select class="form-select" id="filter-platform" style="width: auto;" onchange="renderReviews()">
+          <option value="">All Platforms</option>
+          <option value="google">Google</option>
+          <option value="zillow">Zillow</option>
+          <option value="yelp">Yelp</option>
+          <option value="facebook">Facebook</option>
+          <option value="realtor">Realtor.com</option>
+        </select>
+      </div>
+      <div class="card-body">
+        <div id="reviews-list">
+          <!-- Reviews rendered here -->
+        </div>
+        <div id="no-reviews" class="empty-state" style="display: none;">
+          <div class="empty-state-icon">&#11088;</div>
+          <div class="empty-state-title">No reviews logged yet</div>
+          <p>Start by adding your existing Google reviews above.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Review Requests Tab -->
+    <section class="card mb-4 fade-in tab-content" id="requests-tab" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">&#128231; Track Review Requests</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label class="form-label">Client Name</label>
+            <input type="text" class="form-input" id="add-request-name" placeholder="Client name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Transaction Date</label>
+            <input type="date" class="form-input" id="add-request-txdate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Sent Date</label>
+            <input type="date" class="form-input" id="add-request-sent">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addRequest()">Add Request</button>
+      </div>
+
+      <div class="card-header" style="margin-top: 1rem;">
+        <h2 class="card-title">Review Request Tracker</h2>
+      </div>
+      <div class="card-body">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Transaction Date</th>
+                <th>Request Sent</th>
+                <th>Reminder Sent</th>
+                <th>Review Received</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="requests-body">
+              <!-- Requests rendered here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="no-requests" class="empty-state" style="display: none;">
+          <div class="empty-state-icon">&#128231;</div>
+          <div class="empty-state-title">No requests tracked yet</div>
+          <p>Track your review outreach to past clients.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Email Templates Tab -->
+    <section class="card mb-4 fade-in tab-content" id="templates-tab" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">&#128231; Review Request Email Templates</h2>
+      </div>
+      <div class="card-body">
+        <!-- Initial Request -->
+        <div class="mb-4" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md);">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="font-medium">Initial Review Request</h3>
+            <button class="btn btn-sm btn-outline" onclick="copyTemplate('initial')">Copy Template</button>
+          </div>
+          <div id="template-initial" style="white-space: pre-wrap; font-family: inherit; font-size: 0.9rem;">Subject: Quick favor? Share your experience with TD Realty
+
+Hi [Client Name],
+
+I hope you're settling into your new home! It was such a pleasure helping you with your real estate journey.
+
+If you have a moment, I'd be incredibly grateful if you could share your experience by leaving a quick Google review. Your feedback helps other families find trustworthy help when buying or selling their homes.
+
+Leave a review here: [YOUR GOOGLE REVIEW LINK]
+
+It only takes about 2 minutes, and it means the world to me and my business.
+
+Thank you so much for your trust in TD Realty Ohio!
+
+Best regards,
+Travis Riddle
+Broker, TD Realty Ohio, LLC
+[Your Phone]
+tdrealtyohio.com</div>
+        </div>
+
+        <!-- First Reminder -->
+        <div class="mb-4" style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md);">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="font-medium">7-Day Follow-Up Reminder</h3>
+            <button class="btn btn-sm btn-outline" onclick="copyTemplate('reminder1')">Copy Template</button>
+          </div>
+          <div id="template-reminder1" style="white-space: pre-wrap; font-family: inherit; font-size: 0.9rem;">Subject: Still hoping to hear from you!
+
+Hi [Client Name],
+
+Just wanted to follow up on my previous email. If you have a spare minute, I'd really appreciate a quick Google review about your experience working with me.
+
+Your honest feedback - whether it's what went well or what I could improve - helps me serve future clients better.
+
+Leave a review here: [YOUR GOOGLE REVIEW LINK]
+
+Thank you for considering it!
+
+Best,
+Travis Riddle
+TD Realty Ohio, LLC</div>
+        </div>
+
+        <!-- Final Reminder -->
+        <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: var(--radius-md);">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="font-medium">14-Day Final Reminder</h3>
+            <button class="btn btn-sm btn-outline" onclick="copyTemplate('reminder2')">Copy Template</button>
+          </div>
+          <div id="template-reminder2" style="white-space: pre-wrap; font-family: inherit; font-size: 0.9rem;">Subject: One last request (I promise!)
+
+Hi [Client Name],
+
+This is my last nudge - I promise! If you had a positive experience working with TD Realty, a Google review would mean so much to me.
+
+If there's anything that could have gone better, I'd love to hear that feedback directly too.
+
+Review link: [YOUR GOOGLE REVIEW LINK]
+
+Either way, thank you again for choosing TD Realty Ohio. I'm always here if you need anything!
+
+Warm regards,
+Travis Riddle
+Broker, TD Realty Ohio, LLC</div>
+        </div>
+
+        <div class="alert alert-success mt-4">
+          <span class="alert-icon">&#128161;</span>
+          <div class="alert-content">
+            <strong>Pro Tips:</strong>
+            <ul class="mt-2 text-sm">
+              <li>Send the initial request within 1-2 weeks of closing</li>
+              <li>Personalize each email with specific details from their transaction</li>
+              <li>Make it easy - include a direct link to your Google Business Profile</li>
+              <li>Don't incentivize reviews (against Google's terms)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    let reviews = [];
+    let requests = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      renderReviews();
+      renderRequests();
+      updateStats();
+      document.getElementById('add-review-date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    });
+
+    function loadData() {
+      reviews = TDR.DataManager.get(TDR.STORAGE_KEYS.REVIEWS, []);
+      requests = TDR.DataManager.get('tdr_review_requests', []);
+    }
+
+    function saveData() {
+      TDR.DataManager.set(TDR.STORAGE_KEYS.REVIEWS, reviews);
+      TDR.DataManager.set('tdr_review_requests', requests);
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab').forEach((t, i) => {
+        t.classList.remove('active');
+        if (t.textContent.toLowerCase().includes(tab.split('-')[0])) {
+          t.classList.add('active');
+        }
+      });
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.getElementById(`${tab}-tab`).style.display = 'block';
+    }
+
+    function addReview() {
+      const platform = document.getElementById('add-review-platform').value;
+      const name = document.getElementById('add-review-name').value.trim();
+      const rating = parseInt(document.getElementById('add-review-rating').value);
+      const date = document.getElementById('add-review-date').value;
+      const text = document.getElementById('add-review-text').value.trim();
+      const response = document.getElementById('add-review-response').value;
+
+      if (!name) {
+        alert('Please enter reviewer name');
+        return;
+      }
+
+      reviews.push({
+        id: TDR.Utils.generateId(),
+        platform,
+        name,
+        rating,
+        date,
+        text,
+        response,
+        addedDate: new Date().toISOString()
+      });
+
+      saveData();
+      renderReviews();
+      updateStats();
+
+      // Update Google reviews count for alerts
+      const googleCount = reviews.filter(r => r.platform === 'google').length;
+      TDR.DataManager.set('tdr_google_reviews', googleCount);
+
+      // Clear form
+      document.getElementById('add-review-name').value = '';
+      document.getElementById('add-review-text').value = '';
+      document.getElementById('add-review-date').value = new Date().toISOString().split('T')[0];
+    }
+
+    function renderReviews() {
+      const filter = document.getElementById('filter-platform').value;
+      const container = document.getElementById('reviews-list');
+      const noReviews = document.getElementById('no-reviews');
+
+      let filtered = [...reviews];
+      if (filter) {
+        filtered = filtered.filter(r => r.platform === filter);
+      }
+
+      filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        noReviews.style.display = 'block';
+        return;
+      }
+
+      noReviews.style.display = 'none';
+
+      container.innerHTML = filtered.map(review => `
+        <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="flex items-center gap-2">
+                <strong>${escapeHtml(review.name)}</strong>
+                <span class="badge badge-info">${review.platform}</span>
+                <span style="color: var(--warning);">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+              </div>
+              <div class="text-sm text-muted mt-1">${TDR.Utils.formatDate(review.date)}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge ${review.response === 'responded' ? 'badge-success' : review.response === 'pending' ? 'badge-warning' : 'badge-info'}">
+                ${review.response === 'responded' ? 'Responded' : review.response === 'pending' ? 'Needs Response' : 'N/A'}
+              </span>
+              <button class="btn btn-sm btn-danger" onclick="deleteReview('${review.id}')" style="padding: 0.25rem 0.5rem;">&#10005;</button>
+            </div>
+          </div>
+          ${review.text ? `<p class="mt-2 text-sm" style="font-style: italic;">"${escapeHtml(review.text)}"</p>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function deleteReview(id) {
+      if (!confirm('Delete this review?')) return;
+      reviews = reviews.filter(r => r.id !== id);
+      saveData();
+      renderReviews();
+      updateStats();
+    }
+
+    function addRequest() {
+      const name = document.getElementById('add-request-name').value.trim();
+      const txDate = document.getElementById('add-request-txdate').value;
+      const sentDate = document.getElementById('add-request-sent').value;
+
+      if (!name) {
+        alert('Please enter client name');
+        return;
+      }
+
+      requests.push({
+        id: TDR.Utils.generateId(),
+        name,
+        transactionDate: txDate,
+        requestSent: sentDate,
+        reminderSent: null,
+        reviewReceived: false,
+        platform: null
+      });
+
+      saveData();
+      renderRequests();
+
+      // Clear form
+      document.getElementById('add-request-name').value = '';
+      document.getElementById('add-request-txdate').value = '';
+      document.getElementById('add-request-sent').value = '';
+    }
+
+    function renderRequests() {
+      const tbody = document.getElementById('requests-body');
+      const noRequests = document.getElementById('no-requests');
+
+      if (requests.length === 0) {
+        tbody.innerHTML = '';
+        noRequests.style.display = 'block';
+        return;
+      }
+
+      noRequests.style.display = 'none';
+
+      requests.sort((a, b) => new Date(b.transactionDate || 0) - new Date(a.transactionDate || 0));
+
+      tbody.innerHTML = requests.map(req => `
+        <tr>
+          <td><strong>${escapeHtml(req.name)}</strong></td>
+          <td class="text-sm">${req.transactionDate ? TDR.Utils.formatDate(req.transactionDate) : '-'}</td>
+          <td class="text-sm">${req.requestSent ? TDR.Utils.formatDate(req.requestSent) : '-'}</td>
+          <td>
+            ${req.reminderSent
+              ? `<span class="text-sm">${TDR.Utils.formatDate(req.reminderSent)}</span>`
+              : `<button class="btn btn-sm btn-outline" onclick="markReminderSent('${req.id}')">Mark Sent</button>`}
+          </td>
+          <td>
+            ${req.reviewReceived
+              ? '<span class="badge badge-success">Yes</span>'
+              : `<button class="btn btn-sm btn-success" onclick="markReviewReceived('${req.id}')">Received!</button>`}
+          </td>
+          <td>
+            <button class="btn btn-sm btn-danger" onclick="deleteRequest('${req.id}')" style="padding: 0.25rem 0.5rem;">&#10005;</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function markReminderSent(id) {
+      const req = requests.find(r => r.id === id);
+      if (req) {
+        req.reminderSent = new Date().toISOString();
+        saveData();
+        renderRequests();
+      }
+    }
+
+    function markReviewReceived(id) {
+      const req = requests.find(r => r.id === id);
+      if (req) {
+        req.reviewReceived = true;
+        saveData();
+        renderRequests();
+      }
+    }
+
+    function deleteRequest(id) {
+      if (!confirm('Delete this request?')) return;
+      requests = requests.filter(r => r.id !== id);
+      saveData();
+      renderRequests();
+    }
+
+    function updateStats() {
+      const total = reviews.length;
+      const googleCount = reviews.filter(r => r.platform === 'google').length;
+      const avgRating = total > 0
+        ? (reviews.reduce((sum, r) => sum + r.rating, 0) / total).toFixed(1)
+        : '0.0';
+      const responded = reviews.filter(r => r.response === 'responded').length;
+      const needResponse = reviews.filter(r => r.response !== 'na').length;
+      const responseRate = needResponse > 0 ? Math.round((responded / needResponse) * 100) : 0;
+
+      document.getElementById('total-reviews').textContent = total;
+      document.getElementById('google-reviews').textContent = googleCount;
+      document.getElementById('avg-rating').textContent = avgRating;
+      document.getElementById('response-rate').textContent = responseRate + '%';
+
+      // Update stars display
+      const fullStars = Math.floor(parseFloat(avgRating));
+      const hasHalf = parseFloat(avgRating) - fullStars >= 0.5;
+      document.getElementById('stars-display').innerHTML =
+        '<span style="color: var(--warning);">' +
+        '★'.repeat(fullStars) +
+        (hasHalf ? '½' : '') +
+        '☆'.repeat(5 - fullStars - (hasHalf ? 1 : 0)) +
+        '</span>';
+    }
+
+    function copyTemplate(type) {
+      const template = document.getElementById(`template-${type}`).textContent;
+      navigator.clipboard.writeText(template).then(() => {
+        alert('Template copied to clipboard!');
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function toggleTheme() {
+      TDR.ThemeManager.toggle();
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    }
+  </script>
+</body>
+</html>

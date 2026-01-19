@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparison Post Generator - TD Realty SEO System</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    .comparison-table th,
+    .comparison-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.75rem;
+      text-align: left;
+    }
+    .comparison-table th {
+      background: var(--bg-tertiary);
+    }
+    .comparison-table .winner {
+      background: var(--success-light);
+    }
+    .code-output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.875rem;
+      white-space: pre-wrap;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .preview-section {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .verdict-box {
+      background: linear-gradient(135deg, var(--success), #16a34a);
+      color: white;
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">Comparison Post Generator</div>
+          <div class="logo-subtitle">Competitor Comparison Templates</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html" class="nav-link">Dashboard</a>
+        <a href="../content-calendar.html" class="nav-link">Calendar</a>
+        <a href="blog-template-generator.html" class="nav-link">Blog Template</a>
+        <a href="neighborhood-template.html" class="nav-link">Neighborhood</a>
+        <a href="comparison-template.html" class="nav-link active">Comparison</a>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid grid-2">
+      <!-- Input Form -->
+      <section class="card fade-in">
+        <div class="card-header">
+          <h2 class="card-title">&#9878; Comparison Settings</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Competitor to Compare</label>
+            <select class="form-select" id="competitor" onchange="updatePreview()">
+              <option value="homesthatclick">Homes That Click</option>
+              <option value="sellfor1percent">Sell for 1 Percent</option>
+              <option value="sell4onepercent">Sell 4 One Percent</option>
+              <option value="listwithclever">List With Clever</option>
+              <option value="redfin">Redfin</option>
+              <option value="custom">Custom Competitor</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="custom-competitor-group" style="display: none;">
+            <label class="form-label">Custom Competitor Name</label>
+            <input type="text" class="form-input" id="custom-competitor-name"
+                   placeholder="e.g., ABC Realty" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Competitor Commission Rate</label>
+            <select class="form-select" id="competitor-rate" onchange="updatePreview()">
+              <option value="1">1% (full service claimed)</option>
+              <option value="1.5">1.5%</option>
+              <option value="2">2%</option>
+              <option value="2.5">2.5%</option>
+              <option value="3">3% (traditional)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Target Keyword</label>
+            <input type="text" class="form-input" id="target-keyword"
+                   placeholder="e.g., homes that click alternative" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">TD Realty Advantages (one per line)</label>
+            <textarea class="form-textarea" id="td-advantages" rows="5" oninput="updatePreview()">FREE pre-listing inspection included
+1% cashback for first-time homebuyers
+Local Columbus-based broker
+Established since 2017
+Full MLS exposure</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Competitor Disadvantages (one per line)</label>
+            <textarea class="form-textarea" id="competitor-disadvantages" rows="4" oninput="updatePreview()">No free inspection
+No buyer cashback
+May use out-of-state agents
+Hidden fees possible</textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEO Preview -->
+      <section class="card fade-in">
+        <div class="card-header">
+          <h2 class="card-title">&#128269; SEO Preview</h2>
+        </div>
+        <div class="card-body">
+          <div class="mb-4">
+            <label class="form-label">Search Result Preview</label>
+            <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 1rem;">
+              <div style="color: #1a0dab; font-size: 1.125rem;" id="seo-title">TD Realty vs Homes That Click: Which Is Better?</div>
+              <div style="color: #006621; font-size: 0.875rem;" id="seo-url">tdrealtyohio.com/blog/td-realty-vs-homes-that-click</div>
+              <div style="color: #545454; font-size: 0.875rem; margin-top: 0.5rem;" id="seo-meta">
+                Comparing TD Realty Ohio vs Homes That Click for Columbus home sellers...
+              </div>
+            </div>
+          </div>
+
+          <div class="verdict-box">
+            <h3 style="margin-bottom: 0.5rem;">Our Verdict</h3>
+            <p id="verdict-text">TD Realty offers better value with FREE pre-listing inspection and 1% cashback for first-time buyers - benefits you won't find at the competition.</p>
+          </div>
+
+          <div class="mt-4">
+            <h3 class="font-medium mb-2">Quick Comparison</h3>
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>TD Realty</th>
+                  <th id="competitor-header">Competitor</th>
+                </tr>
+              </thead>
+              <tbody id="quick-comparison">
+                <!-- Generated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Generated Content -->
+    <section class="card mt-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128221; Generated Comparison Post</h2>
+        <div class="flex gap-2">
+          <button class="btn btn-sm btn-outline" onclick="showTab('preview')">Preview</button>
+          <button class="btn btn-sm btn-outline" onclick="showTab('html')">HTML Code</button>
+          <button class="btn btn-sm btn-outline" onclick="showTab('schema')">Schema JSON</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- Preview Tab -->
+        <div id="preview-tab" class="tab-content">
+          <div class="preview-section" id="page-preview">
+            <!-- Generated preview -->
+          </div>
+        </div>
+
+        <!-- HTML Tab -->
+        <div id="html-tab" class="tab-content" style="display: none;">
+          <div class="flex justify-between mb-2">
+            <span class="text-sm text-muted">Copy this HTML template</span>
+            <button class="btn btn-sm btn-primary" onclick="copyHtml()">Copy HTML</button>
+          </div>
+          <div class="code-output" id="html-output"></div>
+        </div>
+
+        <!-- Schema Tab -->
+        <div id="schema-tab" class="tab-content" style="display: none;">
+          <div class="flex justify-between mb-2">
+            <span class="text-sm text-muted">Article schema for comparison post</span>
+            <button class="btn btn-sm btn-primary" onclick="copySchema()">Copy Schema</button>
+          </div>
+          <div class="code-output" id="schema-output"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/app.js"></script>
+  <script>
+    const competitorData = {
+      homesthatclick: {
+        name: 'Homes That Click',
+        url: 'homesthatclick.com',
+        description: 'A discount real estate brokerage offering 1% listing services',
+        rate: '1'
+      },
+      sellfor1percent: {
+        name: 'Sell for 1 Percent',
+        url: 'sellfor1percent.com',
+        description: 'A discount listing service offering 1% commission',
+        rate: '1'
+      },
+      sell4onepercent: {
+        name: 'Sell 4 One Percent',
+        url: 'sell4onepercent.com',
+        description: 'Another 1% listing commission service',
+        rate: '1'
+      },
+      listwithclever: {
+        name: 'List With Clever',
+        url: 'listwithclever.com',
+        description: 'A nationwide discount real estate referral service',
+        rate: '1.5'
+      },
+      redfin: {
+        name: 'Redfin',
+        url: 'redfin.com',
+        description: 'Technology-driven real estate brokerage',
+        rate: '1.5'
+      },
+      custom: {
+        name: 'Competitor',
+        url: '',
+        description: '',
+        rate: '2'
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('competitor').addEventListener('change', function() {
+        document.getElementById('custom-competitor-group').style.display =
+          this.value === 'custom' ? 'block' : 'none';
+      });
+      updatePreview();
+      updateThemeIcon();
+    });
+
+    function getCompetitorName() {
+      const selected = document.getElementById('competitor').value;
+      if (selected === 'custom') {
+        return document.getElementById('custom-competitor-name').value || 'Competitor';
+      }
+      return competitorData[selected].name;
+    }
+
+    function updatePreview() {
+      const competitorKey = document.getElementById('competitor').value;
+      const competitor = competitorData[competitorKey];
+      const competitorName = getCompetitorName();
+      const competitorRate = document.getElementById('competitor-rate').value;
+      const keyword = document.getElementById('target-keyword').value || `${competitorName.toLowerCase()} alternative`;
+      const advantages = document.getElementById('td-advantages').value.split('\n').filter(a => a.trim());
+      const disadvantages = document.getElementById('competitor-disadvantages').value.split('\n').filter(d => d.trim());
+
+      // Update header
+      document.getElementById('competitor-header').textContent = competitorName;
+
+      // Update SEO preview
+      const title = `TD Realty vs ${competitorName}: Which Is Better for Columbus Sellers?`;
+      document.getElementById('seo-title').textContent = title.length > 60 ? title.substring(0, 57) + '...' : title;
+      document.getElementById('seo-url').textContent = `tdrealtyohio.com/blog/td-realty-vs-${competitorName.toLowerCase().replace(/\s+/g, '-')}`;
+      document.getElementById('seo-meta').textContent =
+        `Comparing TD Realty Ohio vs ${competitorName} for Columbus home sellers. See which 1% commission realtor offers better value and service.`;
+
+      // Update verdict
+      document.getElementById('verdict-text').textContent =
+        `TD Realty offers better value with FREE pre-listing inspection and 1% cashback for first-time buyers - benefits you won't find at ${competitorName}.`;
+
+      // Update quick comparison table
+      const comparisonHtml = `
+        <tr>
+          <td>Listing Commission</td>
+          <td class="winner">1% (buy+sell) / 2% (sell only)</td>
+          <td>${competitorRate}%</td>
+        </tr>
+        <tr>
+          <td>Free Pre-Listing Inspection</td>
+          <td class="winner">Yes, included</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Buyer Cashback</td>
+          <td class="winner">1% for first-time buyers</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Local Columbus Agent</td>
+          <td class="winner">Yes, always</td>
+          <td>Varies</td>
+        </tr>
+        <tr>
+          <td>Full MLS Listing</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Established</td>
+          <td>2017</td>
+          <td>-</td>
+        </tr>
+      `;
+      document.getElementById('quick-comparison').innerHTML = comparisonHtml;
+
+      // Generate full preview
+      const preview = generatePreview(competitorName, competitorRate, advantages, disadvantages);
+      document.getElementById('page-preview').innerHTML = preview;
+
+      // Generate HTML
+      const html = generateHtml(competitorName, competitorRate, keyword, advantages, disadvantages);
+      document.getElementById('html-output').textContent = html;
+
+      // Generate Schema
+      const schema = generateSchema(competitorName, keyword);
+      document.getElementById('schema-output').textContent = JSON.stringify(schema, null, 2);
+    }
+
+    function generatePreview(competitorName, competitorRate, advantages, disadvantages) {
+      return `
+        <h1>TD Realty vs ${competitorName}: Which Is Better for Columbus Sellers?</h1>
+        <p><em>An honest comparison of two discount real estate options in Central Ohio</em></p>
+
+        <p>If you're looking to sell your Columbus home and save on commission, you've likely come across
+           both TD Realty Ohio and ${competitorName}. Both offer lower commission rates than traditional
+           3% listing agents, but which one provides better value? Let's break it down.</p>
+
+        <h2>Quick Comparison: TD Realty vs ${competitorName}</h2>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>TD Realty Ohio</th>
+              <th>${competitorName}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Listing Commission</td>
+              <td class="winner"><strong>1%</strong> (buy+sell) / 2% (sell only)</td>
+              <td>${competitorRate}%</td>
+            </tr>
+            <tr>
+              <td>Free Pre-Listing Inspection</td>
+              <td class="winner"><strong>Yes</strong></td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Buyer Cashback</td>
+              <td class="winner"><strong>1%</strong> for first-time buyers</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Local Agent</td>
+              <td class="winner"><strong>Always Columbus-based</strong></td>
+              <td>May vary</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>What TD Realty Offers That ${competitorName} Doesn't</h2>
+        <ul>
+          ${advantages.map(a => `<li><strong>${a}</strong></li>`).join('\n          ')}
+        </ul>
+
+        <h2>Potential Concerns with ${competitorName}</h2>
+        <ul>
+          ${disadvantages.map(d => `<li>${d}</li>`).join('\n          ')}
+        </ul>
+
+        <h2>TD Realty Ohio: The Better Choice for Columbus Sellers</h2>
+        <p>While ${competitorName} may seem like a good option at first glance, TD Realty Ohio offers
+           several unique benefits that provide real value:</p>
+        <ol>
+          <li><strong>FREE Pre-Listing Inspection</strong> - Know your home's condition before listing. This can help you avoid surprises during buyer inspections and strengthen your negotiating position.</li>
+          <li><strong>1% Cashback for First-Time Buyers</strong> - If you're also buying, get 1% back at closing. No other discount broker offers this.</li>
+          <li><strong>True Local Expertise</strong> - Travis Riddle, our broker, knows Columbus and Central Ohio inside out. You'll never be handed off to an out-of-state agent.</li>
+          <li><strong>Established Since 2017</strong> - We've helped Columbus families buy and sell homes for years, building a track record you can trust.</li>
+        </ol>
+
+        <div style="background: var(--success-light); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+          <h3>Our Verdict</h3>
+          <p><strong>TD Realty Ohio is the better choice</strong> for Columbus home sellers who want to save on commission without sacrificing service. The free pre-listing inspection alone can save you thousands in potential repair negotiations.</p>
+        </div>
+
+        <h2>Ready to Save Thousands?</h2>
+        <p>Contact TD Realty Ohio today for a free consultation. See why Columbus sellers choose us over ${competitorName} and other discount brokers.</p>
+        <p><strong>[CALL TO ACTION: Get Your Free Consultation]</strong></p>
+
+        <hr>
+        <p class="text-sm text-muted">
+          <em>Disclaimer: Information about ${competitorName} was gathered from publicly available sources and may not reflect their current offerings. We encourage you to do your own research.</em>
+        </p>
+      `;
+    }
+
+    function generateHtml(competitorName, competitorRate, keyword, advantages, disadvantages) {
+      const slug = `td-realty-vs-${competitorName.toLowerCase().replace(/\s+/g, '-')}`;
+
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TD Realty vs ${competitorName}: Which Is Better? | TD Realty Ohio</title>
+  <meta name="description" content="Comparing TD Realty Ohio vs ${competitorName} for Columbus home sellers. See which 1% commission realtor offers better value and service.">
+  <meta name="keywords" content="${keyword}, ${competitorName} alternative, discount realtor Columbus">
+  <link rel="canonical" href="https://tdrealtyohio.com/blog/${slug}">
+</head>
+<body>
+  <article>
+    <h1>TD Realty vs ${competitorName}: Which Is Better for Columbus Sellers?</h1>
+    <p class="subtitle">An honest comparison of discount real estate options in Central Ohio</p>
+
+    <section id="intro">
+      <p>If you're looking to sell your Columbus home and save on commission, you've likely
+         come across both TD Realty Ohio and ${competitorName}. Let's compare them.</p>
+    </section>
+
+    <section id="comparison-table">
+      <h2>Quick Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>TD Realty</th>
+            <th>${competitorName}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Listing Commission</td>
+            <td>1% (buy+sell) / 2% (sell only)</td>
+            <td>${competitorRate}%</td>
+          </tr>
+          <tr>
+            <td>Free Pre-Listing Inspection</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Buyer Cashback</td>
+            <td>1% for first-time buyers</td>
+            <td>No</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="td-advantages">
+      <h2>What TD Realty Offers</h2>
+      <ul>
+        ${advantages.map(a => `<li>${a}</li>`).join('\n        ')}
+      </ul>
+    </section>
+
+    <section id="competitor-concerns">
+      <h2>Potential Concerns with ${competitorName}</h2>
+      <ul>
+        ${disadvantages.map(d => `<li>${d}</li>`).join('\n        ')}
+      </ul>
+    </section>
+
+    <section id="verdict">
+      <h2>Our Verdict</h2>
+      <p><strong>TD Realty Ohio is the better choice</strong> for Columbus home sellers.</p>
+    </section>
+
+    <section id="cta">
+      <h2>Ready to Save Thousands?</h2>
+      <a href="/contact" class="btn">Get Your Free Consultation</a>
+    </section>
+
+    <footer>
+      <p><em>Disclaimer: Information about ${competitorName} was gathered from publicly
+         available sources and may not reflect current offerings.</em></p>
+    </footer>
+  </article>
+</body>
+</html>`;
+    }
+
+    function generateSchema(competitorName, keyword) {
+      return {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": `TD Realty vs ${competitorName}: Which Is Better for Columbus Sellers?`,
+        "description": `Comparing TD Realty Ohio vs ${competitorName} for Columbus home sellers.`,
+        "keywords": keyword,
+        "author": {
+          "@type": "Person",
+          "name": "Travis Riddle"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "TD Realty Ohio, LLC"
+        },
+        "datePublished": new Date().toISOString().split('T')[0],
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "TD Realty Ohio",
+            "description": "1% commission realtor in Columbus, Ohio"
+          },
+          {
+            "@type": "Thing",
+            "name": competitorName,
+            "description": "Discount real estate service"
+          }
+        ]
+      };
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.getElementById(`${tab}-tab`).style.display = 'block';
+    }
+
+    function copyHtml() {
+      const html = document.getElementById('html-output').textContent;
+      navigator.clipboard.writeText(html).then(() => alert('HTML copied to clipboard!'));
+    }
+
+    function copySchema() {
+      const schema = document.getElementById('schema-output').textContent;
+      navigator.clipboard.writeText(schema).then(() => alert('Schema JSON copied to clipboard!'));
+    }
+
+    function toggleTheme() {
+      TDR.ThemeManager.toggle();
+      updateThemeIcon();
+    }
+
+    function updateThemeIcon() {
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    }
+  </script>
+</body>
+</html>

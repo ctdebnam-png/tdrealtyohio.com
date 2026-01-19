@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citation Tracker - TD Realty SEO System</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">Citation Tracker</div>
+          <div class="logo-subtitle">Directory Submissions</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Dashboard</a>
+        <a href="command-center.html" class="nav-link">Command Center</a>
+        <a href="content-calendar.html" class="nav-link">Calendar</a>
+        <a href="citation-tracker.html" class="nav-link active">Citations</a>
+        <a href="review-tracker.html" class="nav-link">Reviews</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- NAP Reference Card -->
+    <section class="card mb-4 fade-in" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white;">
+      <div class="card-header" style="border-color: rgba(255,255,255,0.2);">
+        <h2 class="card-title" style="color: white;">&#128205; Your NAP (Name, Address, Phone)</h2>
+        <a href="settings.html" class="btn btn-sm" style="background: rgba(255,255,255,0.2); color: white;">Edit in Settings</a>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-3">
+          <div>
+            <div class="text-sm" style="opacity: 0.8;">Business Name</div>
+            <div class="font-bold" id="nap-name">TD Realty Ohio, LLC</div>
+          </div>
+          <div>
+            <div class="text-sm" style="opacity: 0.8;">Address</div>
+            <div class="font-bold" id="nap-address">Not set - update in Settings</div>
+          </div>
+          <div>
+            <div class="text-sm" style="opacity: 0.8;">Phone</div>
+            <div class="font-bold" id="nap-phone">Not set - update in Settings</div>
+          </div>
+        </div>
+        <p class="text-sm mt-3" style="opacity: 0.8;">
+          <strong>Important:</strong> Keep NAP consistent across ALL directories. Any variation can hurt local SEO.
+        </p>
+      </div>
+    </section>
+
+    <!-- Citation Stats -->
+    <section class="card mb-4 fade-in">
+      <div class="card-body">
+        <div class="grid grid-4">
+          <div class="stat-card">
+            <div class="stat-value" id="total-citations">0</div>
+            <div class="stat-label">Total Citations</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" style="color: var(--success);" id="live-citations">0</div>
+            <div class="stat-label">Live</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" style="color: var(--warning);" id="pending-citations">0</div>
+            <div class="stat-label">Pending</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="citation-score">0%</div>
+            <div class="stat-label">Citation Score</div>
+            <div class="progress-bar mt-2">
+              <div class="progress-fill" id="score-progress" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Citation Form -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#10133; Add Citation</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label class="form-label">Directory Name</label>
+            <select class="form-select" id="add-directory">
+              <option value="">Select or type custom...</option>
+              <option value="Google Business Profile">Google Business Profile</option>
+              <option value="Yelp">Yelp</option>
+              <option value="BBB">Better Business Bureau</option>
+              <option value="Facebook Business">Facebook Business</option>
+              <option value="Zillow Agent">Zillow Agent Profile</option>
+              <option value="Realtor.com">Realtor.com Agent Profile</option>
+              <option value="Homes.com">Homes.com</option>
+              <option value="YellowPages">YellowPages</option>
+              <option value="Manta">Manta</option>
+              <option value="Local.com">Local.com</option>
+              <option value="Foursquare">Foursquare/Factual</option>
+              <option value="Apple Maps">Apple Maps</option>
+              <option value="Bing Places">Bing Places</option>
+              <option value="Columbus Chamber">Columbus Chamber of Commerce</option>
+              <option value="Columbus REALTORS">Columbus REALTORS Directory</option>
+              <option value="Nextdoor">Nextdoor Business</option>
+              <option value="Hotfrog">Hotfrog</option>
+              <option value="MapQuest">MapQuest</option>
+              <option value="CitySearch">CitySearch</option>
+              <option value="custom">Custom Directory</option>
+            </select>
+          </div>
+          <div class="form-group" id="custom-name-group" style="display: none;">
+            <label class="form-label">Custom Directory Name</label>
+            <input type="text" class="form-input" id="add-custom-name" placeholder="Enter directory name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Listing URL</label>
+            <input type="text" class="form-input" id="add-url" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="add-status">
+              <option value="pending">Pending</option>
+              <option value="live">Live</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label class="form-label">NAP Correct?</label>
+            <select class="form-select" id="add-nap">
+              <option value="yes">Yes - Matches exactly</option>
+              <option value="no">No - Has errors</option>
+              <option value="unknown">Unknown - Need to verify</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Notes</label>
+            <input type="text" class="form-input" id="add-notes" placeholder="Any additional notes...">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addCitation()">Add Citation</button>
+      </div>
+    </section>
+
+    <!-- Citation List -->
+    <section class="card fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128203; Citation Database</h2>
+        <div class="flex gap-2">
+          <select class="form-select" id="filter-status" style="width: auto;" onchange="renderCitations()">
+            <option value="">All Statuses</option>
+            <option value="live">Live</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <button class="btn btn-sm btn-outline" onclick="exportCitations()">Export CSV</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Directory</th>
+                <th>Status</th>
+                <th>NAP Correct</th>
+                <th>Date Added</th>
+                <th>Listing URL</th>
+                <th>Notes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="citations-body">
+              <!-- Citations will be rendered here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="no-citations" class="empty-state" style="display: none;">
+          <div class="empty-state-icon">&#128205;</div>
+          <div class="empty-state-title">No citations yet</div>
+          <p>Start by adding your Google Business Profile above.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended Directories -->
+    <section class="card mt-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128161; Recommended Directories</h2>
+      </div>
+      <div class="card-body">
+        <p class="text-sm text-muted mb-3">Priority directories for real estate agents (in order of importance):</p>
+        <div class="grid grid-3">
+          <div>
+            <h3 class="font-medium mb-2">Tier 1 (Essential)</h3>
+            <ul class="text-sm">
+              <li>Google Business Profile</li>
+              <li>Yelp</li>
+              <li>Facebook Business</li>
+              <li>Zillow Agent Profile</li>
+              <li>Realtor.com Agent Profile</li>
+              <li>Apple Maps</li>
+              <li>Bing Places</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium mb-2">Tier 2 (Important)</h3>
+            <ul class="text-sm">
+              <li>BBB</li>
+              <li>Homes.com</li>
+              <li>YellowPages</li>
+              <li>Columbus REALTORS</li>
+              <li>Nextdoor Business</li>
+              <li>Foursquare</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium mb-2">Tier 3 (Nice to Have)</h3>
+            <ul class="text-sm">
+              <li>Manta</li>
+              <li>Local.com</li>
+              <li>Hotfrog</li>
+              <li>CitySearch</li>
+              <li>MapQuest</li>
+              <li>Chamber of Commerce</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    let citations = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCitations();
+      loadNap();
+      renderCitations();
+      updateStats();
+      document.getElementById('add-directory').addEventListener('change', function() {
+        document.getElementById('custom-name-group').style.display =
+          this.value === 'custom' ? 'block' : 'none';
+      });
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    });
+
+    function loadCitations() {
+      citations = TDR.DataManager.get(TDR.STORAGE_KEYS.CITATIONS, []);
+    }
+
+    function saveCitations() {
+      TDR.DataManager.set(TDR.STORAGE_KEYS.CITATIONS, citations);
+    }
+
+    function loadNap() {
+      const settings = TDR.DataManager.getSettings();
+      document.getElementById('nap-name').textContent = settings.businessName || 'TD Realty Ohio, LLC';
+      document.getElementById('nap-address').textContent =
+        settings.address ? `${settings.address}, ${settings.city}, ${settings.state} ${settings.zip}` : 'Not set - update in Settings';
+      document.getElementById('nap-phone').textContent = settings.phone || 'Not set - update in Settings';
+    }
+
+    function addCitation() {
+      const directory = document.getElementById('add-directory').value;
+      const customName = document.getElementById('add-custom-name').value;
+      const url = document.getElementById('add-url').value;
+      const status = document.getElementById('add-status').value;
+      const napCorrect = document.getElementById('add-nap').value;
+      const notes = document.getElementById('add-notes').value;
+
+      const name = directory === 'custom' ? customName : directory;
+
+      if (!name) {
+        alert('Please select or enter a directory name');
+        return;
+      }
+
+      // Check for duplicates
+      if (citations.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+        alert('This directory has already been added');
+        return;
+      }
+
+      citations.push({
+        id: TDR.Utils.generateId(),
+        name,
+        url,
+        status,
+        napCorrect,
+        notes,
+        dateAdded: new Date().toISOString()
+      });
+
+      saveCitations();
+      renderCitations();
+      updateStats();
+
+      // Clear form
+      document.getElementById('add-directory').value = '';
+      document.getElementById('add-custom-name').value = '';
+      document.getElementById('add-url').value = '';
+      document.getElementById('add-status').value = 'pending';
+      document.getElementById('add-nap').value = 'yes';
+      document.getElementById('add-notes').value = '';
+      document.getElementById('custom-name-group').style.display = 'none';
+    }
+
+    function renderCitations() {
+      const filter = document.getElementById('filter-status').value;
+      const tbody = document.getElementById('citations-body');
+      const noCitations = document.getElementById('no-citations');
+
+      let filtered = [...citations];
+      if (filter) {
+        filtered = filtered.filter(c => c.status === filter);
+      }
+
+      // Sort by date descending
+      filtered.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        noCitations.style.display = 'block';
+        return;
+      }
+
+      noCitations.style.display = 'none';
+
+      tbody.innerHTML = filtered.map(citation => `
+        <tr>
+          <td><strong>${escapeHtml(citation.name)}</strong></td>
+          <td>
+            <select class="form-select" style="width: auto; padding: 0.25rem 0.5rem; font-size: 0.8rem;"
+                    onchange="updateCitationStatus('${citation.id}', this.value)">
+              <option value="pending" ${citation.status === 'pending' ? 'selected' : ''}>Pending</option>
+              <option value="live" ${citation.status === 'live' ? 'selected' : ''}>Live</option>
+              <option value="rejected" ${citation.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+            </select>
+          </td>
+          <td>
+            <span class="badge ${citation.napCorrect === 'yes' ? 'badge-success' : citation.napCorrect === 'no' ? 'badge-danger' : 'badge-warning'}">
+              ${citation.napCorrect === 'yes' ? 'Yes' : citation.napCorrect === 'no' ? 'No' : '?'}
+            </span>
+          </td>
+          <td class="text-sm">${TDR.Utils.formatDate(citation.dateAdded)}</td>
+          <td>
+            ${citation.url
+              ? `<a href="${escapeHtml(citation.url)}" target="_blank" class="text-sm" style="color: var(--accent-primary);">View Listing</a>`
+              : '<span class="text-muted">-</span>'}
+          </td>
+          <td class="text-sm">${escapeHtml(citation.notes || '-')}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" onclick="deleteCitation('${citation.id}')" style="padding: 0.25rem 0.5rem;">
+              &#10005;
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateCitationStatus(id, status) {
+      const citation = citations.find(c => c.id === id);
+      if (citation) {
+        citation.status = status;
+        saveCitations();
+        updateStats();
+      }
+    }
+
+    function deleteCitation(id) {
+      if (!confirm('Delete this citation?')) return;
+      citations = citations.filter(c => c.id !== id);
+      saveCitations();
+      renderCitations();
+      updateStats();
+    }
+
+    function updateStats() {
+      const total = citations.length;
+      const live = citations.filter(c => c.status === 'live').length;
+      const pending = citations.filter(c => c.status === 'pending').length;
+      const maxCitations = 20; // Target number
+      const score = Math.min(Math.round((live / maxCitations) * 100), 100);
+
+      document.getElementById('total-citations').textContent = total;
+      document.getElementById('live-citations').textContent = live;
+      document.getElementById('pending-citations').textContent = pending;
+      document.getElementById('citation-score').textContent = score + '%';
+      document.getElementById('score-progress').style.width = score + '%';
+    }
+
+    function exportCitations() {
+      if (citations.length === 0) {
+        alert('No citations to export');
+        return;
+      }
+
+      const headers = ['Directory', 'Status', 'NAP Correct', 'URL', 'Date Added', 'Notes'];
+      const rows = citations.map(c => [
+        c.name,
+        c.status,
+        c.napCorrect,
+        c.url || '',
+        c.dateAdded,
+        c.notes || ''
+      ]);
+
+      const csv = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+      TDR.ExportManager.download(csv, `td-realty-citations-${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function toggleTheme() {
+      TDR.ThemeManager.toggle();
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    }
+  </script>
+</body>
+</html>

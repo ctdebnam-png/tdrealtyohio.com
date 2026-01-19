@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title Tag Checker - TD Realty SEO System</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">TD</div>
+        <div>
+          <div class="logo-text">Title Tag Checker</div>
+          <div class="logo-subtitle">Analyze & Optimize</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html" class="nav-link">Dashboard</a>
+        <a href="title-checker.html" class="nav-link active">Title Checker</a>
+        <a href="meta-checker.html" class="nav-link">Meta Checker</a>
+        <a href="schema-generator.html" class="nav-link">Schema</a>
+        <a href="competitor-tracker.html" class="nav-link">Rankings</a>
+      </nav>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">&#9790;</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Instructions -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128196; Title Tag Checker</h2>
+      </div>
+      <div class="card-body">
+        <p class="mb-3">Analyze your page title tags for SEO best practices. Enter your titles below to check:</p>
+        <ul class="text-sm text-muted">
+          <li>Character count (optimal: 50-60 characters)</li>
+          <li>Target keyword presence</li>
+          <li>Brand name inclusion</li>
+          <li>Improvement suggestions</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Input Section -->
+    <section class="card mb-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">Enter Titles to Analyze</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">Target Keyword</label>
+          <input type="text" class="form-input" id="target-keyword"
+                 placeholder="e.g., 1% commission realtor Columbus Ohio">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Page Titles (one per line)</label>
+          <textarea class="form-textarea" id="titles-input" rows="10"
+                    placeholder="Enter your title tags, one per line. Example:
+1% Commission Realtor Columbus Ohio | TD Realty
+Westerville Real Estate - Discount Realtor | TD Realty Ohio
+How to Sell Your House for Less in Columbus"></textarea>
+        </div>
+
+        <button class="btn btn-primary" onclick="analyzeTitles()">Analyze Titles</button>
+        <button class="btn btn-secondary" onclick="loadSampleTitles()">Load Sample Titles</button>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="card fade-in" id="results-section" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">&#9989; Analysis Results</h2>
+        <div class="flex gap-2">
+          <span class="badge badge-success" id="pass-count">0 Pass</span>
+          <span class="badge badge-warning" id="warn-count">0 Warnings</span>
+          <span class="badge badge-danger" id="fail-count">0 Issues</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-container">
+          <table class="table" id="results-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Length</th>
+                <th>Keyword</th>
+                <th>Status</th>
+                <th>Suggestions</th>
+              </tr>
+            </thead>
+            <tbody id="results-body">
+              <!-- Results injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Best Practices -->
+    <section class="card mt-4 fade-in">
+      <div class="card-header">
+        <h2 class="card-title">&#128218; Title Tag Best Practices</h2>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-2">
+          <div>
+            <h3 class="font-medium mb-2">Do's</h3>
+            <ul class="text-sm">
+              <li>Keep titles 50-60 characters</li>
+              <li>Include target keyword near the beginning</li>
+              <li>Add brand name at the end</li>
+              <li>Make each title unique</li>
+              <li>Write for humans first, search engines second</li>
+              <li>Include location for local SEO</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-medium mb-2">Don'ts</h3>
+            <ul class="text-sm">
+              <li>Don't exceed 60 characters</li>
+              <li>Don't keyword stuff</li>
+              <li>Don't use all caps</li>
+              <li>Don't duplicate titles across pages</li>
+              <li>Don't use generic titles like "Home"</li>
+              <li>Don't start with your brand name</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h3 class="font-medium mb-2">Example Title Formats</h3>
+          <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md);">
+            <code style="display: block; margin-bottom: 0.5rem;">Primary Keyword - Secondary Keyword | Brand Name</code>
+            <code style="display: block; margin-bottom: 0.5rem;">Primary Keyword in [City] | Brand Name</code>
+            <code style="display: block;">How to [Action] + Keyword | Brand Name</code>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/app.js"></script>
+  <script>
+    function analyzeTitles() {
+      const keyword = document.getElementById('target-keyword').value.toLowerCase().trim();
+      const titlesText = document.getElementById('titles-input').value;
+      const titles = titlesText.split('\n').filter(t => t.trim());
+
+      if (titles.length === 0) {
+        alert('Please enter at least one title to analyze');
+        return;
+      }
+
+      const results = titles.map(title => analyzeTitle(title.trim(), keyword));
+
+      // Count statuses
+      const passCount = results.filter(r => r.status === 'pass').length;
+      const warnCount = results.filter(r => r.status === 'warning').length;
+      const failCount = results.filter(r => r.status === 'fail').length;
+
+      document.getElementById('pass-count').textContent = `${passCount} Pass`;
+      document.getElementById('warn-count').textContent = `${warnCount} Warnings`;
+      document.getElementById('fail-count').textContent = `${failCount} Issues`;
+
+      // Render results
+      const tbody = document.getElementById('results-body');
+      tbody.innerHTML = results.map(result => `
+        <tr>
+          <td>
+            <strong>${escapeHtml(result.title)}</strong>
+            ${result.truncated ? `<br><span class="text-xs text-muted">Displays as: ${escapeHtml(result.truncated)}</span>` : ''}
+          </td>
+          <td>
+            <span class="${result.lengthStatus === 'good' ? 'text-success' : result.lengthStatus === 'warning' ? 'text-warning' : 'text-danger'}">
+              ${result.length}
+            </span>
+            <span class="text-xs text-muted">/60</span>
+          </td>
+          <td>
+            ${result.hasKeyword
+              ? '<span class="badge badge-success">Found</span>'
+              : '<span class="badge badge-danger">Missing</span>'}
+            ${result.keywordPosition ? `<br><span class="text-xs text-muted">Position: ${result.keywordPosition}</span>` : ''}
+          </td>
+          <td>
+            <span class="badge badge-${result.status === 'pass' ? 'success' : result.status === 'warning' ? 'warning' : 'danger'}">
+              ${result.status === 'pass' ? 'Good' : result.status === 'warning' ? 'OK' : 'Fix'}
+            </span>
+          </td>
+          <td class="text-sm">
+            ${result.suggestions.length > 0
+              ? `<ul style="margin: 0; padding-left: 1rem;">${result.suggestions.map(s => `<li>${s}</li>`).join('')}</ul>`
+              : '<span class="text-success">No issues</span>'}
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById('results-section').style.display = 'block';
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function analyzeTitle(title, keyword) {
+      const result = {
+        title,
+        length: title.length,
+        lengthStatus: 'good',
+        hasKeyword: false,
+        keywordPosition: null,
+        status: 'pass',
+        suggestions: [],
+        truncated: null
+      };
+
+      // Check length
+      if (title.length > 60) {
+        result.lengthStatus = 'fail';
+        result.truncated = title.substring(0, 57) + '...';
+        result.suggestions.push(`Shorten by ${title.length - 60} characters`);
+        result.status = 'fail';
+      } else if (title.length < 30) {
+        result.lengthStatus = 'warning';
+        result.suggestions.push('Consider adding more descriptive text');
+        if (result.status === 'pass') result.status = 'warning';
+      } else if (title.length < 50) {
+        result.lengthStatus = 'warning';
+      }
+
+      // Check keyword
+      if (keyword) {
+        const lowerTitle = title.toLowerCase();
+        const keywordIndex = lowerTitle.indexOf(keyword);
+        if (keywordIndex !== -1) {
+          result.hasKeyword = true;
+          result.keywordPosition = keywordIndex < 20 ? 'Front (ideal)' : 'Middle/End';
+          if (keywordIndex >= 30) {
+            result.suggestions.push('Move keyword closer to the beginning');
+            if (result.status === 'pass') result.status = 'warning';
+          }
+        } else {
+          result.hasKeyword = false;
+          result.suggestions.push('Add target keyword to title');
+          result.status = 'fail';
+        }
+      }
+
+      // Check for brand
+      const hasBrand = title.toLowerCase().includes('td realty');
+      if (!hasBrand) {
+        result.suggestions.push('Consider adding "TD Realty" brand');
+      }
+
+      // Check for pipe or dash separator
+      const hasSeparator = title.includes('|') || title.includes('-') || title.includes(':');
+      if (!hasSeparator && title.length > 40) {
+        result.suggestions.push('Add separator (| or -) for readability');
+      }
+
+      // Check for all caps
+      if (title === title.toUpperCase() && title.length > 10) {
+        result.suggestions.push('Avoid using ALL CAPS');
+        result.status = 'fail';
+      }
+
+      return result;
+    }
+
+    function loadSampleTitles() {
+      document.getElementById('target-keyword').value = '1% commission realtor Columbus Ohio';
+      document.getElementById('titles-input').value = `1% Commission Realtor Columbus Ohio | TD Realty
+Westerville Real Estate - Discount Realtor | TD Realty Ohio
+How to Sell Your House for Less in Columbus OH - TD Realty
+Dublin Ohio Homes for Sale | Low Commission Realtor | TD Realty Ohio LLC Serving Central Ohio Area
+Home
+BEST DISCOUNT REALTOR IN COLUMBUS OHIO - TD REALTY
+TD Realty vs Homes That Click: Which 1% Realtor Is Better? | Columbus
+First-Time Homebuyer Guide Columbus Ohio | TD Realty`;
+      analyzeTitles();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function toggleTheme() {
+      TDR.ThemeManager.toggle();
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('theme-icon').innerHTML = TDR.ThemeManager.isDark() ? '&#9788;' : '&#9790;';
+    });
+  </script>
+</body>
+</html>
