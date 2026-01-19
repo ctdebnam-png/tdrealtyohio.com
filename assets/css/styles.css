@@ -482,10 +482,6 @@ main {
   border: 1px solid var(--gray-200);
 }
 
-.service-card:hover {
-  border-color: var(--gold);
-}
-
 .service-icon {
   width: 64px;
   height: 64px;
@@ -716,6 +712,10 @@ main {
 }
 
 /* Expandable Process Steps (Accordion) */
+.process-steps-expandable {
+  counter-reset: step;
+}
+
 .process-step-expandable {
   margin-bottom: 1rem;
   border: 1px solid var(--gray-200);
