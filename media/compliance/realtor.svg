@@ -1,10 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 100" width="80" height="100">
-  <!-- Blue square background -->
-  <rect x="5" y="5" width="70" height="70" fill="#0061a8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 110" width="90" height="110">
+  <!-- White background -->
+  <rect x="0" y="0" width="90" height="110" fill="#ffffff" rx="4"/>
+  <!-- Blue square -->
+  <rect x="10" y="8" width="70" height="70" fill="#0061a8"/>
   <!-- White R -->
-  <path d="M20,15 L20,65 L32,65 L32,48 L38,48 L52,65 L67,65 L50,45 C58,42 62,35 62,27 C62,18 55,15 45,15 Z M32,25 L42,25 C48,25 50,28 50,32 C50,36 48,39 42,39 L32,39 Z" fill="#ffffff"/>
+  <path d="M25,18 L25,68 L37,68 L37,51 L43,51 L57,68 L72,68 L55,48 C63,45 67,38 67,30 C67,21 60,18 50,18 Z M37,28 L47,28 C53,28 55,31 55,35 C55,39 53,42 47,42 L37,42 Z" fill="#ffffff"/>
   <!-- REALTOR text -->
-  <text x="40" y="88" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="1">REALTOR</text>
-  <!-- Registered trademark -->
-  <text x="73" y="82" fill="#ffffff" font-size="6" font-family="Arial, sans-serif">®</text>
+  <text x="45" y="95" text-anchor="middle" fill="#0061a8" font-size="14" font-weight="400" font-family="Arial, sans-serif" letter-spacing="1">REALTOR</text>
+  <text x="82" y="88" fill="#0061a8" font-size="8" font-family="Arial, sans-serif">®</text>
 </svg>
