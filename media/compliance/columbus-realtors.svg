@@ -1,20 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80">
-  <!-- Skyline -->
-  <g fill="#3b82f6">
-    <!-- Buildings -->
-    <rect x="115" y="8" width="12" height="28"/>
-    <rect x="130" y="3" width="10" height="33"/>
-    <rect x="143" y="12" width="14" height="24"/>
-    <rect x="160" y="6" width="11" height="30"/>
-    <rect x="174" y="15" width="10" height="21"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 90" width="220" height="90">
+  <!-- White background -->
+  <rect x="0" y="0" width="220" height="90" fill="#ffffff" rx="4"/>
+  <!-- Skyline buildings - blue -->
+  <g fill="#0077c8">
+    <rect x="125" y="12" width="12" height="28"/>
+    <rect x="140" y="7" width="10" height="33"/>
+    <rect x="153" y="16" width="14" height="24"/>
+    <rect x="170" y="10" width="11" height="30"/>
+    <rect x="184" y="19" width="10" height="21"/>
   </g>
-  <!-- House roof -->
-  <path d="M108,36 L145,12 L185,36 Z" fill="none" stroke="#d1d5db" stroke-width="3"/>
+  <!-- House roof - grey -->
+  <path d="M118,40 L155,16 L195,40" fill="none" stroke="#6d6e71" stroke-width="3"/>
   <!-- Red star -->
-  <polygon points="145,22 147,28 153,28 148,32 150,38 145,34 140,38 142,32 137,28 143,28" fill="#ef4444"/>
-  <!-- COLUMBUS text -->
-  <text x="100" y="55" text-anchor="middle" fill="#d1d5db" font-size="20" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="2">COLUMBUS</text>
-  <!-- REALTORS text -->
-  <text x="100" y="73" text-anchor="middle" fill="#3b82f6" font-size="18" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="3">REALTORS</text>
-  <text x="165" y="65" fill="#3b82f6" font-size="8" font-family="Arial, sans-serif">®</text>
+  <polygon points="155,26 157,32 163,32 158,36 160,42 155,38 150,42 152,36 147,32 153,32" fill="#ed1c24"/>
+  <!-- COLUMBUS text - grey -->
+  <text x="110" y="58" text-anchor="middle" fill="#6d6e71" font-size="22" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="2">COLUMBUS</text>
+  <!-- REALTORS text - blue -->
+  <text x="110" y="78" text-anchor="middle" fill="#0077c8" font-size="20" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="4">REALTORS</text>
+  <text x="200" y="72" fill="#0077c8" font-size="10" font-family="Arial, sans-serif">®</text>
 </svg>

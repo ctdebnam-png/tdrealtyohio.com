@@ -1,12 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
-  <!-- House shape -->
-  <polygon points="50,5 95,45 95,95 5,95 5,45" fill="#ffffff"/>
-  <!-- Roof -->
-  <polygon points="50,0 100,45 95,50 50,10 5,50 0,45" fill="#ffffff"/>
-  <!-- Equals sign (cutout effect) -->
-  <rect x="25" y="50" width="50" height="12" fill="#1a2e44"/>
-  <rect x="25" y="70" width="50" height="12" fill="#1a2e44"/>
+  <!-- White background -->
+  <rect x="0" y="0" width="100" height="120" fill="#ffffff" rx="4"/>
+  <!-- House outline -->
+  <path d="M50,8 L92,42 L92,92 L8,92 L8,42 Z" fill="#000000"/>
+  <!-- Roof peak -->
+  <path d="M50,2 L98,42 L92,48 L50,12 L8,48 L2,42 Z" fill="#000000"/>
+  <!-- White rectangle (equals sign background) -->
+  <rect x="22" y="45" width="56" height="38" fill="#ffffff"/>
+  <!-- Equals sign bars -->
+  <rect x="28" y="50" width="44" height="10" fill="#000000"/>
+  <rect x="28" y="68" width="44" height="10" fill="#000000"/>
   <!-- Text -->
-  <text x="50" y="105" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="bold" font-family="Arial, sans-serif">EQUAL HOUSING</text>
-  <text x="50" y="115" text-anchor="middle" fill="#ffffff" font-size="7" font-weight="bold" font-family="Arial, sans-serif">OPPORTUNITY</text>
+  <text x="50" y="104" text-anchor="middle" fill="#000000" font-size="9" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="0.5">EQUAL HOUSING</text>
+  <text x="50" y="115" text-anchor="middle" fill="#000000" font-size="8" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="0.5">OPPORTUNITY</text>
 </svg>

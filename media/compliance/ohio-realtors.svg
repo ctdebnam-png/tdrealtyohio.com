@@ -1,18 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 70" width="180" height="70">
-  <!-- Pennant/Banner shape - brighter colors -->
-  <polygon points="5,5 35,5 35,50 20,42 5,50" fill="#1e6b7b"/>
-  <polygon points="12,18 35,18 35,50 20,42 12,46" fill="#22c55e"/>
-  <polygon points="20,30 35,30 35,50 20,42" fill="#4ade80"/>
-  <!-- Dots on banner -->
-  <circle cx="15" cy="12" r="2.5" fill="#ffffff"/>
-  <circle cx="22" cy="12" r="2.5" fill="#ffffff"/>
-  <circle cx="15" cy="20" r="2.5" fill="#ffffff"/>
-  <circle cx="22" cy="20" r="2.5" fill="#ffffff"/>
-  <circle cx="29" cy="12" r="2.5" fill="#ffffff"/>
-  <circle cx="29" cy="20" r="2.5" fill="#ffffff"/>
-  <!-- OHIO text -->
-  <text x="48" y="32" fill="#ffffff" font-size="26" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="2">OHIO</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 70" width="200" height="70">
+  <!-- White background -->
+  <rect x="0" y="0" width="200" height="70" fill="#ffffff" rx="4"/>
+  <!-- Pennant/Banner shape -->
+  <polygon points="10,8 45,8 45,55 27,45 10,55" fill="#2a5f6e"/>
+  <polygon points="18,22 45,22 45,55 27,45 18,52" fill="#3a9d8c"/>
+  <polygon points="27,35 45,35 45,55 27,45" fill="#6dcdb8"/>
+  <!-- White dots -->
+  <circle cx="22" cy="15" r="3" fill="#ffffff"/>
+  <circle cx="30" cy="15" r="3" fill="#ffffff"/>
+  <circle cx="38" cy="15" r="3" fill="#ffffff"/>
+  <circle cx="22" cy="25" r="3" fill="#ffffff"/>
+  <circle cx="30" cy="25" r="3" fill="#ffffff"/>
+  <circle cx="38" cy="25" r="3" fill="#ffffff"/>
+  <!-- OHIO text - dark teal -->
+  <text x="60" y="35" fill="#2a5f6e" font-size="28" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="2">OHIO</text>
   <!-- REALTORS text -->
-  <text x="48" y="52" fill="#ffffff" font-size="16" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="3">REALTORS</text>
-  <text x="145" y="45" fill="#ffffff" font-size="7" font-family="Arial, sans-serif">®</text>
+  <text x="60" y="55" fill="#2a5f6e" font-size="18" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="4">REALTORS</text>
+  <text x="175" y="50" fill="#2a5f6e" font-size="8" font-family="Arial, sans-serif">®</text>
 </svg>
