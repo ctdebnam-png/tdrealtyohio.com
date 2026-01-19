@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="200" height="80">
+  <!-- Skyline -->
+  <g fill="#0080c8">
+    <!-- Buildings -->
+    <rect x="115" y="8" width="12" height="28"/>
+    <rect x="130" y="3" width="10" height="33"/>
+    <rect x="143" y="12" width="14" height="24"/>
+    <rect x="160" y="6" width="11" height="30"/>
+    <rect x="174" y="15" width="10" height="21"/>
+  </g>
+  <!-- House roof -->
+  <path d="M108,36 L145,12 L185,36 Z" fill="none" stroke="#6b7280" stroke-width="3"/>
+  <!-- Red star -->
+  <polygon points="145,22 147,28 153,28 148,32 150,38 145,34 140,38 142,32 137,28 143,28" fill="#dc2626"/>
+  <!-- COLUMBUS text -->
+  <text x="100" y="55" text-anchor="middle" fill="#6b7280" font-size="20" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="2">COLUMBUS</text>
+  <!-- REALTORS text -->
+  <text x="100" y="73" text-anchor="middle" fill="#0080c8" font-size="18" font-weight="bold" font-family="Arial, sans-serif" letter-spacing="3">REALTORS</text>
+  <!-- Registered trademark -->
+  <text x="165" y="65" fill="#0080c8" font-size="8" font-family="Arial, sans-serif">®</text>
+</svg>
