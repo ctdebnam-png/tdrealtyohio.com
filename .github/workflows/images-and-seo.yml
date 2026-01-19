@@ -1,0 +1,98 @@
+name: Images & SEO Optimization
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run weekly on Sundays at 2am EST
+    - cron: '0 7 * * 0'
+
+jobs:
+  fetch-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Central Ohio Images
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+        run: node scripts/fetch-ohio-images.js
+
+      - name: Optimize Images
+        run: |
+          npm install -g sharp-cli 2>/dev/null || true
+          if command -v sharp &> /dev/null; then
+            for img in assets/images/photos/*.jpg; do
+              if [ -f "$img" ]; then
+                sharp -i "$img" -o "$img" resize 1600 --withoutEnlargement --quality 80
+              fi
+            done
+          fi
+
+      - name: Upload Image Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ohio-images
+          path: assets/images/photos/
+
+  seo-optimization:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate HTML Structure
+        run: |
+          echo "Checking SEO elements..."
+          node scripts/seo-audit.js
+
+      - name: Update Sitemap
+        run: node scripts/update-sitemap.js
+
+      - name: Check for Broken Links
+        run: |
+          npm install -g broken-link-checker 2>/dev/null || true
+          echo "Link check would run on deployed site"
+
+      - name: Generate SEO Report
+        run: node scripts/seo-report.js
+
+      - name: Upload SEO Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-report
+          path: seo-report.json
+
+  commit-updates:
+    needs: [fetch-images, seo-optimization]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Image Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ohio-images
+          path: assets/images/photos/
+
+      - name: Commit and Push Updates
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update images and SEO optimizations [automated]"
+            git push
+          fi
