@@ -40,6 +40,12 @@ const TD_CONFIG = {
     buyerCommission: 0.03,
     buyerCashBack: 0.01
   },
+  calculator: {
+    minPrice: 100000,
+    maxPrice: 1000000,
+    defaultPrice: 400000,
+    step: 10000
+  },
   areas: [
     'Columbus', 'Westerville', 'Dublin', 'Powell', 'Delaware', 'Gahanna',
     'New Albany', 'Hilliard', 'Upper Arlington', 'Worthington', 'Lewis Center',
@@ -58,17 +64,22 @@ function formatCurrency(amount) {
   }).format(amount);
 }
 
-function parseCurrencyInput(value) {
-  // Remove all non-numeric characters except decimal point
-  const cleanValue = value.replace(/[^0-9.]/g, '');
-  return parseFloat(cleanValue) || 0;
+function formatCompactCurrency(amount) {
+  if (amount >= 1000000) {
+    return '$' + (amount / 1000000).toFixed(1) + 'M';
+  }
+  if (amount >= 1000) {
+    return '$' + (amount / 1000).toFixed(0) + 'K';
+  }
+  return '$' + amount;
 }
 
-function formatInputAsCurrency(input) {
-  const value = parseCurrencyInput(input.value);
-  if (value > 0) {
-    input.value = formatCurrency(value);
-  }
+function updateSliderTrack(slider) {
+  const min = parseFloat(slider.min);
+  const max = parseFloat(slider.max);
+  const value = parseFloat(slider.value);
+  const percentage = ((value - min) / (max - min)) * 100;
+  slider.style.setProperty('--value', percentage + '%');
 }
 
 // ===== MOBILE NAVIGATION =====
@@ -83,7 +94,6 @@ function initMobileNav() {
     mobileNav.classList.toggle('active');
     mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
 
-    // Update icon
     const icon = mobileMenuBtn.querySelector('svg');
     if (isOpen) {
       icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
@@ -92,7 +102,6 @@ function initMobileNav() {
     }
   });
 
-  // Close mobile nav when clicking on a link
   mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       mobileNav.classList.remove('active');
@@ -100,7 +109,6 @@ function initMobileNav() {
     });
   });
 
-  // Close mobile nav when clicking outside
   document.addEventListener('click', (e) => {
     if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
       mobileNav.classList.remove('active');
@@ -109,12 +117,13 @@ function initMobileNav() {
   });
 }
 
-// ===== SELLER CALCULATOR =====
+// ===== SELLER CALCULATOR (SLIDER VERSION) =====
 function initSellerCalculator() {
   const calculator = document.getElementById('seller-calculator');
   if (!calculator) return;
 
-  const priceInput = calculator.querySelector('[data-price-input]');
+  const priceSlider = calculator.querySelector('[data-price-slider]');
+  const priceDisplay = calculator.querySelector('[data-price-display]');
   const toggleBtns = calculator.querySelectorAll('[data-toggle-btn]');
   const traditionalEl = calculator.querySelector('[data-traditional]');
   const tdRealtyEl = calculator.querySelector('[data-td-realty]');
@@ -124,32 +133,23 @@ function initSellerCalculator() {
   let currentRate = TD_CONFIG.rates.buyAndSell;
 
   function calculate() {
-    const price = parseCurrencyInput(priceInput.value);
+    const price = priceSlider ? parseInt(priceSlider.value) : TD_CONFIG.calculator.defaultPrice;
     const traditional = price * TD_CONFIG.rates.traditional;
     const tdRealty = price * currentRate;
     const savings = traditional - tdRealty;
 
+    if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
     if (traditionalEl) traditionalEl.textContent = formatCurrency(traditional);
     if (tdRealtyEl) tdRealtyEl.textContent = formatCurrency(tdRealty);
     if (savingsEl) savingsEl.textContent = formatCurrency(savings);
   }
 
-  if (priceInput) {
-    priceInput.addEventListener('input', () => {
+  if (priceSlider) {
+    priceSlider.addEventListener('input', () => {
+      updateSliderTrack(priceSlider);
       calculate();
     });
-
-    priceInput.addEventListener('blur', () => {
-      formatInputAsCurrency(priceInput);
-      calculate();
-    });
-
-    priceInput.addEventListener('focus', () => {
-      const value = parseCurrencyInput(priceInput.value);
-      if (value > 0) {
-        priceInput.value = value;
-      }
-    });
+    updateSliderTrack(priceSlider);
   }
 
   toggleBtns.forEach(btn => {
@@ -168,50 +168,40 @@ function initSellerCalculator() {
     });
   });
 
-  // Initial calculation
   calculate();
 }
 
-// ===== BUYER CALCULATOR =====
+// ===== BUYER CALCULATOR (SLIDER VERSION) =====
 function initBuyerCalculator() {
   const calculator = document.getElementById('buyer-calculator');
   if (!calculator) return;
 
-  const priceInput = calculator.querySelector('[data-price-input]');
+  const priceSlider = calculator.querySelector('[data-price-slider]');
+  const priceDisplay = calculator.querySelector('[data-price-display]');
   const commissionEl = calculator.querySelector('[data-commission]');
   const cashBackEl = calculator.querySelector('[data-cash-back]');
   const agentKeepsEl = calculator.querySelector('[data-agent-keeps]');
 
   function calculate() {
-    const price = parseCurrencyInput(priceInput.value);
+    const price = priceSlider ? parseInt(priceSlider.value) : TD_CONFIG.calculator.defaultPrice;
     const commission = price * TD_CONFIG.rates.buyerCommission;
     const cashBack = price * TD_CONFIG.rates.buyerCashBack;
     const agentKeeps = commission - cashBack;
 
+    if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
     if (commissionEl) commissionEl.textContent = formatCurrency(commission);
     if (cashBackEl) cashBackEl.textContent = formatCurrency(cashBack);
     if (agentKeepsEl) agentKeepsEl.textContent = formatCurrency(agentKeeps);
   }
 
-  if (priceInput) {
-    priceInput.addEventListener('input', () => {
+  if (priceSlider) {
+    priceSlider.addEventListener('input', () => {
+      updateSliderTrack(priceSlider);
       calculate();
     });
-
-    priceInput.addEventListener('blur', () => {
-      formatInputAsCurrency(priceInput);
-      calculate();
-    });
-
-    priceInput.addEventListener('focus', () => {
-      const value = parseCurrencyInput(priceInput.value);
-      if (value > 0) {
-        priceInput.value = value;
-      }
-    });
+    updateSliderTrack(priceSlider);
   }
 
-  // Initial calculation
   calculate();
 }
 
@@ -225,15 +215,39 @@ function initFaqAccordion() {
     question.addEventListener('click', () => {
       const isActive = item.classList.contains('active');
 
-      // Close all other items
       faqItems.forEach(otherItem => {
         if (otherItem !== item) {
           otherItem.classList.remove('active');
         }
       });
 
-      // Toggle current item
       item.classList.toggle('active');
+    });
+  });
+}
+
+// ===== PROCESS STEP ACCORDION =====
+function initProcessAccordion() {
+  const processSteps = document.querySelectorAll('.process-step-expandable');
+
+  processSteps.forEach(step => {
+    const header = step.querySelector('.process-step-header');
+
+    header.addEventListener('click', () => {
+      const isActive = step.classList.contains('active');
+      const wasExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other steps
+      processSteps.forEach(otherStep => {
+        if (otherStep !== step) {
+          otherStep.classList.remove('active');
+          otherStep.querySelector('.process-step-header').setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Toggle current step
+      step.classList.toggle('active');
+      header.setAttribute('aria-expanded', !wasExpanded);
     });
   });
 }
@@ -249,30 +263,22 @@ function initContactForm() {
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
 
-    // Show loading state
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
 
-    // Collect form data
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // For now, just log the data and show success
-    // In production, this would send to a backend service
     console.log('Form submission:', data);
 
-    // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Show success message
     submitBtn.textContent = 'Message Sent!';
     submitBtn.classList.remove('btn-primary');
     submitBtn.classList.add('btn-secondary');
 
-    // Reset form
     form.reset();
 
-    // Reset button after delay
     setTimeout(() => {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
@@ -284,7 +290,6 @@ function initContactForm() {
 
 // ===== POPULATE CONTACT INFO =====
 function populateContactInfo() {
-  // Phone links
   document.querySelectorAll('[data-phone]').forEach(el => {
     el.textContent = TD_CONFIG.contact.phone;
     if (el.tagName === 'A') {
@@ -292,7 +297,6 @@ function populateContactInfo() {
     }
   });
 
-  // Email links
   document.querySelectorAll('[data-email]').forEach(el => {
     el.textContent = TD_CONFIG.contact.email;
     if (el.tagName === 'A') {
@@ -300,22 +304,18 @@ function populateContactInfo() {
     }
   });
 
-  // Location
   document.querySelectorAll('[data-location]').forEach(el => {
     el.textContent = TD_CONFIG.contact.location;
   });
 
-  // Broker name
   document.querySelectorAll('[data-broker-name]').forEach(el => {
     el.textContent = TD_CONFIG.company.broker;
   });
 
-  // Company name
   document.querySelectorAll('[data-company-name]').forEach(el => {
     el.textContent = TD_CONFIG.company.name;
   });
 
-  // License numbers
   document.querySelectorAll('[data-broker-license]').forEach(el => {
     el.textContent = TD_CONFIG.licenses.broker;
   });
@@ -324,7 +324,6 @@ function populateContactInfo() {
     el.textContent = TD_CONFIG.licenses.brokerage;
   });
 
-  // Zillow link
   document.querySelectorAll('[data-zillow-link]').forEach(el => {
     if (el.tagName === 'A') {
       el.href = TD_CONFIG.links.zillow;
@@ -359,18 +358,12 @@ function initHeaderScroll() {
   const header = document.querySelector('.header');
   if (!header) return;
 
-  let lastScroll = 0;
-
   window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll > 100) {
+    if (window.pageYOffset > 100) {
       header.classList.add('scrolled');
     } else {
       header.classList.remove('scrolled');
     }
-
-    lastScroll = currentScroll;
   });
 }
 
@@ -396,6 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSellerCalculator();
   initBuyerCalculator();
   initFaqAccordion();
+  initProcessAccordion();
   initContactForm();
   initSmoothScroll();
   initHeaderScroll();

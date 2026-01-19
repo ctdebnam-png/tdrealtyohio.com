@@ -7,11 +7,21 @@
   <meta name="description" content="First-time homebuyers get 1% of the purchase price back at closing. Full buyer representation in Columbus, Westerville, Dublin, and Central Ohio.">
   <meta name="keywords" content="first time homebuyer Columbus Ohio, buyer rebate, cash back at closing, buyer's agent Central Ohio">
 
+  <!-- Canonical -->
+  <link rel="canonical" href="https://tdrealtyohio.com/buyers.html">
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="First-Time Homebuyer Cash Back | TD Realty Ohio">
   <meta property="og:description" content="Get 1% of your purchase price back at closing. Full buyer representation.">
   <meta property="og:url" content="https://tdrealtyohio.com/buyers.html">
+  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-buyers.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="First-Time Homebuyer Cash Back | TD Realty Ohio">
+  <meta name="twitter:description" content="Get 1% of your purchase price back at closing. Full buyer representation.">
+  <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-buyers.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +37,7 @@
     <div class="header-inner">
       <a href="/" class="logo">
         <span class="logo-mark">TD</span>
-        <span>TD Realty Ohio</span>
+        <span>Realty Ohio</span>
       </a>
 
       <nav class="nav">
@@ -96,9 +106,16 @@
 
           <div class="calculator" id="buyer-calculator">
             <h3 class="calculator-title">Cash Back Calculator</h3>
-            <div class="calculator-input-group">
-              <label class="calculator-label" for="purchase-price">Purchase Price</label>
-              <input type="text" id="purchase-price" class="calculator-input" data-price-input placeholder="$300,000" value="$300,000">
+            <div class="calculator-slider-group">
+              <div class="calculator-slider-header">
+                <label class="calculator-label">Purchase Price</label>
+                <span class="calculator-slider-value" data-price-display>$300,000</span>
+              </div>
+              <input type="range" class="calculator-range" data-price-slider min="100000" max="1000000" step="10000" value="300000">
+              <div class="slider-labels">
+                <span>$100K</span>
+                <span>$1M</span>
+              </div>
             </div>
             <div class="calculator-results">
               <div class="result-row">
@@ -192,8 +209,231 @@
       </div>
     </section>
 
-    <!-- Disclosure -->
+    <!-- Buying Process -->
     <section class="section bg-off-white">
+      <div class="container">
+        <div class="section-header">
+          <h2>The Home Buying Process</h2>
+          <p>Click each step to learn what happens and how to prepare.</p>
+        </div>
+
+        <div class="process-steps-expandable" style="max-width: 800px; margin: 0 auto;">
+          <!-- Step 1: Get Pre-Approved -->
+          <div class="process-step-expandable">
+            <button class="process-step-header" aria-expanded="false">
+              <div class="step-number"></div>
+              <div class="step-header-content">
+                <div class="step-title">Get Pre-Approved</div>
+                <p class="step-brief">Know your budget before you start looking at homes</p>
+              </div>
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div class="step-details">
+              <div class="step-details-inner">
+                <h4>Why Pre-Approval Matters</h4>
+                <ul>
+                  <li><strong>Know your budget:</strong> Understand exactly what you can afford before falling in love with a home</li>
+                  <li><strong>Strengthen your offer:</strong> Sellers take pre-approved buyers more seriously</li>
+                  <li><strong>Speed up closing:</strong> Much of the loan paperwork is already done</li>
+                </ul>
+                <h4>What You'll Need</h4>
+                <ul>
+                  <li>Last 2 years of tax returns and W-2s</li>
+                  <li>Recent pay stubs (last 30 days)</li>
+                  <li>Bank statements (last 2-3 months)</li>
+                  <li>Government-issued ID</li>
+                  <li>Social Security number for credit check</li>
+                </ul>
+                <h4>Types of Loans</h4>
+                <ul>
+                  <li><strong>Conventional:</strong> Typically 3-20% down, good credit required</li>
+                  <li><strong>FHA:</strong> 3.5% down minimum, more flexible credit requirements</li>
+                  <li><strong>VA:</strong> 0% down for eligible veterans and service members</li>
+                  <li><strong>USDA:</strong> 0% down for eligible rural areas</li>
+                </ul>
+                <div class="step-tip">
+                  <div class="step-tip-label">Pro Tip</div>
+                  <p>Get pre-approved (not just pre-qualified). Pre-approval means the lender has verified your income, assets, and credit—it carries much more weight with sellers.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: House Hunting -->
+          <div class="process-step-expandable">
+            <button class="process-step-header" aria-expanded="false">
+              <div class="step-number"></div>
+              <div class="step-header-content">
+                <div class="step-title">House Hunting</div>
+                <p class="step-brief">Search homes, schedule showings, and find your match</p>
+              </div>
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div class="step-details">
+              <div class="step-details-inner">
+                <h4>How the Search Works</h4>
+                <ul>
+                  <li><strong>Set up your search:</strong> Criteria based on location, price, size, features</li>
+                  <li><strong>Get alerts:</strong> New listings matching your criteria sent automatically</li>
+                  <li><strong>Schedule showings:</strong> Usually can see homes within 24-48 hours of request</li>
+                  <li><strong>Compare notes:</strong> Track what you like and don't like about each home</li>
+                </ul>
+                <h4>What to Look For</h4>
+                <ul>
+                  <li>Overall condition and maintenance</li>
+                  <li>Layout and flow—does it work for your lifestyle?</li>
+                  <li>Natural light and orientation</li>
+                  <li>Storage space</li>
+                  <li>Signs of water damage or deferred maintenance</li>
+                  <li>Neighborhood, noise levels, traffic</li>
+                </ul>
+                <h4>Common Mistakes to Avoid</h4>
+                <ul>
+                  <li>Fixating on cosmetic issues (paint, carpet) that are easy to change</li>
+                  <li>Ignoring location factors that can't be changed</li>
+                  <li>Waiting for the "perfect" home in a competitive market</li>
+                </ul>
+                <div class="step-tip">
+                  <div class="step-tip-label">Pro Tip</div>
+                  <p>Visit your top choices at different times of day. Morning light, evening traffic, and weekend noise can reveal things you'd miss on a single showing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Make an Offer -->
+          <div class="process-step-expandable">
+            <button class="process-step-header" aria-expanded="false">
+              <div class="step-number"></div>
+              <div class="step-header-content">
+                <div class="step-title">Make an Offer</div>
+                <p class="step-brief">Submit a competitive offer and negotiate terms</p>
+              </div>
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div class="step-details">
+              <div class="step-details-inner">
+                <h4>Components of Your Offer</h4>
+                <ul>
+                  <li><strong>Offer price:</strong> Based on comparable sales, condition, and competition</li>
+                  <li><strong>Earnest money:</strong> Deposit showing commitment (typically 1-2% of price)</li>
+                  <li><strong>Contingencies:</strong> Conditions that must be met (inspection, financing, appraisal)</li>
+                  <li><strong>Closing date:</strong> When you want to take ownership (typically 30-45 days)</li>
+                  <li><strong>Inclusions:</strong> Appliances, fixtures, or items you want included</li>
+                </ul>
+                <h4>Offer Strategy Considerations</h4>
+                <ul>
+                  <li>How long has the home been on market?</li>
+                  <li>How many other offers are expected?</li>
+                  <li>What's the seller's motivation and timeline?</li>
+                  <li>What contingencies are you comfortable waiving?</li>
+                </ul>
+                <h4>After You Submit</h4>
+                <p>The seller can accept, reject, or counter your offer. Negotiations may go back and forth on price, closing date, contingencies, or other terms until both parties agree.</p>
+                <div class="step-tip">
+                  <div class="step-tip-label">Pro Tip</div>
+                  <p>In competitive situations, a strong pre-approval letter and flexible closing date can make your offer stand out even without being the highest price.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Under Contract -->
+          <div class="process-step-expandable">
+            <button class="process-step-header" aria-expanded="false">
+              <div class="step-number"></div>
+              <div class="step-header-content">
+                <div class="step-title">Under Contract</div>
+                <p class="step-brief">Inspections, appraisal, and loan processing</p>
+              </div>
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div class="step-details">
+              <div class="step-details-inner">
+                <h4>Timeline After Acceptance</h4>
+                <ul>
+                  <li><strong>Days 1-3:</strong> Earnest money deposited with title company</li>
+                  <li><strong>Days 3-10:</strong> Home inspection scheduled and completed</li>
+                  <li><strong>Days 7-14:</strong> Appraisal ordered and completed by lender</li>
+                  <li><strong>Days 14-30:</strong> Loan underwriting and final approval</li>
+                  <li><strong>Days 30-45:</strong> Final walkthrough and closing</li>
+                </ul>
+                <h4>The Home Inspection</h4>
+                <p>A licensed inspector examines the home's major systems and structure. You'll attend the inspection (plan for 2-3 hours) to learn about the home and ask questions.</p>
+                <p>After the inspection, you can:</p>
+                <ul>
+                  <li>Accept the home as-is</li>
+                  <li>Request repairs from the seller</li>
+                  <li>Request a credit at closing</li>
+                  <li>Cancel the contract (if inspection contingency allows)</li>
+                </ul>
+                <h4>The Appraisal</h4>
+                <p>The lender orders an appraisal to verify the home is worth the purchase price. If it appraises low, you'll need to negotiate with the seller, bring extra cash, or cancel.</p>
+                <div class="step-tip">
+                  <div class="step-tip-label">Important</div>
+                  <p>Don't make major purchases, change jobs, or open new credit accounts during this period—it can derail your loan approval.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: Closing Day -->
+          <div class="process-step-expandable">
+            <button class="process-step-header" aria-expanded="false">
+              <div class="step-number"></div>
+              <div class="step-header-content">
+                <div class="step-title">Closing Day</div>
+                <p class="step-brief">Sign documents, get keys, and become a homeowner</p>
+              </div>
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div class="step-details">
+              <div class="step-details-inner">
+                <h4>Before Closing</h4>
+                <ul>
+                  <li><strong>Final walkthrough:</strong> Verify the home is in agreed-upon condition</li>
+                  <li><strong>Review closing disclosure:</strong> Received 3 days before closing, shows all costs</li>
+                  <li><strong>Wire funds:</strong> Down payment and closing costs wired to title company (never via email instructions—always verify by phone)</li>
+                  <li><strong>Get insurance:</strong> Homeowner's insurance policy must be in place</li>
+                </ul>
+                <h4>What to Bring</h4>
+                <ul>
+                  <li>Government-issued photo ID</li>
+                  <li>Cashier's check or wire confirmation (if not already wired)</li>
+                  <li>Any remaining documents requested by lender or title</li>
+                </ul>
+                <h4>At the Closing Table</h4>
+                <p>You'll sign the mortgage documents, deed, and other legal paperwork. Plan for about an hour. Once everything is signed and funded, you'll receive the keys.</p>
+                <h4>After Closing</h4>
+                <ul>
+                  <li>Change locks immediately</li>
+                  <li>Set up utilities in your name</li>
+                  <li>File change of address with USPS</li>
+                  <li>Keep all closing documents in a safe place</li>
+                </ul>
+                <div class="step-tip">
+                  <div class="step-tip-label">Congratulations</div>
+                  <p>You're a homeowner! Keep your closing documents—you'll need them for taxes and any future refinancing or sale.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disclosure -->
+    <section class="section">
       <div class="container">
         <div class="disclosure-box" style="max-width: 800px; margin: 0 auto;">
           <h4 style="margin-bottom: 1rem;">Important Information About Buyer Representation</h4>
@@ -290,11 +530,11 @@
     <!-- CTA Section -->
     <section class="section cta-section">
       <div class="container">
-        <h2>Ready to Find Your Home?</h2>
-        <p>Schedule a free buyer consultation to discuss your goals, budget, and timeline. No obligation.</p>
+        <h2>Ready to Buy?</h2>
+        <p>Free consultation. No obligation.</p>
         <div class="hero-buttons" style="justify-content: center;">
-          <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Consultation</a>
-          <a href="tel:6143928858" class="btn btn-outline-white btn-lg">Call (614) 392-8858</a>
+          <a href="/contact.html" class="btn btn-primary btn-lg">Contact</a>
+          <a href="tel:6143928858" class="btn btn-outline-white btn-lg">(614) 392-8858</a>
         </div>
       </div>
     </section>
@@ -307,9 +547,9 @@
         <div class="footer-brand">
           <div class="footer-logo">
             <span class="logo-mark">TD</span>
-            <span>TD Realty Ohio</span>
+            <span>Realty Ohio</span>
           </div>
-          <p>Full-service real estate with lower commissions. Serving Central Ohio homebuyers and sellers since 2017.</p>
+          <p>1-2% listing commission. Central Ohio.</p>
         </div>
 
         <div>
@@ -356,25 +596,82 @@
         </div>
       </div>
 
+      <div class="footer-compliance-logos">
+        <img src="/assets/images/compliance/equal-housing.svg" alt="Equal Housing Opportunity" width="40" height="40">
+        <img src="/assets/images/compliance/realtor-logo.svg" alt="REALTOR" width="100" height="36">
+      </div>
       <div class="footer-bottom">
         <div class="footer-legal">
           <a href="/privacy.html">Privacy Policy</a>
           <a href="/terms.html">Terms of Service</a>
           <a href="/fair-housing.html">Fair Housing</a>
-          <a href="/accessibility.html">Accessibility</a>
-        </div>
-        <div class="footer-compliance">
-          <span style="font-size: 0.75rem; color: var(--gray-400);">Equal Housing Opportunity</span>
         </div>
       </div>
 
       <div class="footer-license">
-        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602<br>
-        Member of Columbus REALTORS, Ohio REALTORS, and the National Association of REALTORS
+        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602
       </div>
     </div>
   </footer>
 
   <script src="/assets/js/main.js"></script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Who qualifies for the 1% cash back?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The cash back program is available to first-time homebuyers. If you've owned a home before, other arrangements may be possible depending on the transaction. Contact us to discuss your situation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I pay for buyer representation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Compensation varies by transaction and is negotiable. In many cases, the seller offers compensation to the buyer's agent. We'll explain all options and costs before you commit to working together."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the 1% listing rate work if I'm also selling?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If you're buying AND selling with TD Realty Ohio, you can list your current home for 1% instead of 2%. This is separate from the first-time buyer cash back program, which applies to the purchase side."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use the cash back for closing costs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, in most cases the cash back can be credited toward closing costs or prepaid items. Some loan programs have restrictions, so we'll verify what's allowed with your lender early in the process."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What areas do you serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TD Realty Ohio serves all of Central Ohio including Columbus, Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, Upper Arlington, Worthington, and surrounding communities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get started?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Contact us to schedule a buyer consultation. We'll discuss your needs, timeline, budget, and preferred areas. There's no obligation, and we'll explain exactly how the process works before you commit."
+        }
+      }
+    ]
+  }
+  </script>
 </body>
 </html>
