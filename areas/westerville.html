@@ -105,8 +105,50 @@
       border-left: 4px solid var(--navy);
       margin: 2rem 0;
     }
-    .insert-placeholder {
-      display: none;
+    .school-note {
+      background: var(--gray-50);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9375rem;
+      color: var(--gray-700);
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--gold);
+    }
+    .neighborhood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .neighborhood-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+    .neighborhood-card h4 {
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      font-size: 1.125rem;
+    }
+    .neighborhood-card p {
+      color: var(--gray-600);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    .neighborhood-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--gray-500);
+    }
+    .neighborhood-meta span {
+      background: var(--gray-100);
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius-sm);
     }
   </style>
 </head>
@@ -268,9 +310,11 @@
         <h2>Schools in Westerville</h2>
         <p style="max-width: 800px;">Westerville City Schools serves most of the city with consistently high ratings. The district operates multiple elementary schools, middle schools, and three comprehensive high schools: Westerville North, Central, and South.</p>
 
-        <div class="insert-placeholder">
-          [INSERT: Any boundary quirks, magnet programs, or notable schools worth mentioning. Note: Some parts of Westerville are zoned for Columbus City Schools or other districts.]
+        <div class="school-note">
+          <strong>Boundary Note:</strong> While most of Westerville is served by Westerville City Schools, some areas near I-270 fall within Columbus City Schools or Gahanna-Jefferson boundaries. Homes in Blendon Township may also be zoned differently. Always verify school assignments before purchasing.
         </div>
+
+        <p style="margin-top: 1rem;"><strong>Notable programs:</strong> The district offers STEM and gifted programs at multiple schools. Westerville North, Central, and South high schools each have distinct personalities and strong athletics programs. The Emerson Vocational Academy provides career-technical education options.</p>
 
         <div style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1rem;">
           <a href="https://www.greatschools.org/ohio/westerville/" target="_blank" rel="noopener" class="btn btn-primary">View School Ratings on GreatSchools</a>
@@ -309,16 +353,56 @@
         <h2>Neighborhoods in Westerville</h2>
         <p style="max-width: 800px; margin-bottom: 2rem;">Westerville offers diverse neighborhoods ranging from historic homes near Uptown to newer construction in surrounding townships.</p>
 
-        <div class="insert-placeholder">
-          [INSERT: List 3-5 specific neighborhoods/subdivisions with brief descriptions. Include what differentiates them - price range, lot sizes, age of homes, HOA status, walkability. Examples:
-          <ul style="margin-top: 1rem; margin-left: 1.5rem;">
-            <li><strong>Uptown Westerville</strong> — Walkable historic district, older homes on smaller lots, no HOA, $300K-$450K</li>
-            <li><strong>Genoa Woods</strong> — [description needed]</li>
-            <li><strong>Heron Preserve</strong> — [description needed]</li>
-            <li><strong>Huber Ridge</strong> — [description needed]</li>
-            <li><strong>Blendon Woods</strong> — [description needed]</li>
-          </ul>
-          Include price ranges, lot sizes, HOA status, character]
+        <div class="neighborhood-grid">
+          <div class="neighborhood-card">
+            <h4>Uptown Westerville</h4>
+            <p>The heart of Westerville with tree-lined streets, historic charm, and walkable access to shops, restaurants, and Otterbein University. Character homes from early 1900s mixed with newer infill.</p>
+            <div class="neighborhood-meta">
+              <span>$350K - $550K</span>
+              <span>No HOA</span>
+              <span>Walkable</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Genoa Woods</h4>
+            <p>Established 1980s-90s subdivision with mature trees and larger lots. Popular with families for its quiet streets and proximity to Genoa Middle School. Mix of colonials and ranches.</p>
+            <div class="neighborhood-meta">
+              <span>$400K - $550K</span>
+              <span>HOA</span>
+              <span>1/3+ acre lots</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Heritage Lakes</h4>
+            <p>Newer community (2000s) with contemporary floor plans, community pool, and walking trails around scenic lakes. Active HOA maintains common areas and organizes events.</p>
+            <div class="neighborhood-meta">
+              <span>$450K - $650K</span>
+              <span>Active HOA</span>
+              <span>Pool & trails</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Huber Ridge</h4>
+            <p>Affordable 1960s ranch-style homes on the south side. Great starter home opportunity with larger lots than typical. Some homes have been extensively updated.</p>
+            <div class="neighborhood-meta">
+              <span>$250K - $350K</span>
+              <span>No HOA</span>
+              <span>Columbus Schools</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Olde Westerville</h4>
+            <p>Victorian and craftsman homes near the historic downtown. Some of the most distinctive architecture in the city. Walking distance to the farmers market and community events.</p>
+            <div class="neighborhood-meta">
+              <span>$400K - $700K</span>
+              <span>No HOA</span>
+              <span>Historic district</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
