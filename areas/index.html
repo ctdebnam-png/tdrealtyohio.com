@@ -3,29 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service Areas | TD Realty Ohio | Central Ohio Real Estate</title>
-  <meta name="description" content="TD Realty Ohio serves Columbus, Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, and all Central Ohio communities with low commission real estate services.">
-  <meta name="keywords" content="Central Ohio realtor, Columbus real estate, Westerville homes, Dublin Ohio realtor, Powell real estate agent">
+  <title>Central Ohio Communities | TD Realty Ohio</title>
+  <meta name="description" content="Explore Central Ohio communities served by TD Realty Ohio. Market data, school info, and local resources for Columbus, Westerville, Dublin, Powell, and more.">
 
-  <!-- Canonical -->
   <link rel="canonical" href="https://tdrealtyohio.com/areas/">
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Service Areas | TD Realty Ohio">
-  <meta property="og:description" content="Low commission real estate throughout Central Ohio.">
+  <meta property="og:title" content="Central Ohio Communities | TD Realty Ohio">
+  <meta property="og:description" content="Explore Central Ohio communities. Market data, school info, and local resources.">
   <meta property="og:url" content="https://tdrealtyohio.com/areas/">
-  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
-  <meta property="og:image:type" content="image/jpeg">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Service Areas | TD Realty Ohio">
-  <meta name="twitter:description" content="Low commission real estate throughout Central Ohio.">
-  <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
-
-  <!-- Fonts -->
-  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
@@ -34,19 +20,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css">
+
+  <style>
+    .community-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
+    .community-tab { padding: 0.75rem 1.25rem; border: 2px solid var(--gray-200); border-radius: var(--radius-md); background: var(--white); color: var(--gray-700); font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .community-tab:hover { border-color: var(--navy); color: var(--navy); }
+    .community-tab.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+    .community-content { display: none; }
+    .community-content.active { display: block; }
+    .resource-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0; }
+    .resource-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); background: var(--white); color: var(--gray-700); font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+    .resource-btn:hover { border-color: var(--navy); color: var(--navy); background: var(--gray-50); }
+    .resource-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .market-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .market-stat { background: var(--gray-50); padding: 1rem; border-radius: var(--radius-md); text-align: center; }
+    .market-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--navy); font-family: 'Libre Baskerville', serif; }
+    .market-stat-label { font-size: 0.8125rem; color: var(--gray-600); margin-top: 0.25rem; }
+    .community-description { line-height: 1.7; color: var(--gray-700); }
+    .community-calculator { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 2rem; }
+  </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="header">
     <div class="header-inner">
-      <a href="/" class="logo">
-        <span class="logo-mark">TD</span>
-        <span>Realty Ohio</span>
-      </a>
-
+      <a href="/" class="logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></a>
       <nav class="nav">
         <a href="/sellers.html" class="nav-link">Sellers</a>
         <a href="/buyers.html" class="nav-link">Buyers</a>
@@ -56,14 +54,10 @@
         <a href="/about.html" class="nav-link">About</a>
         <a href="/contact.html" class="btn btn-primary nav-cta">Contact</a>
       </nav>
-
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
-
     <nav class="mobile-nav" id="mobile-nav">
       <a href="/sellers.html" class="mobile-nav-link">Sellers</a>
       <a href="/buyers.html" class="mobile-nav-link">Buyers</a>
@@ -76,250 +70,463 @@
   </header>
 
   <main>
-    <!-- Hero Section -->
     <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%);">
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title">Serving Central Ohio</h1>
-          <p class="hero-subtitle">Low commission real estate services throughout the Columbus metro area and surrounding communities.</p>
+          <h1 class="hero-title">Central Ohio Communities</h1>
+          <p class="hero-subtitle">Market insights, school information, and local resources for communities we serve.</p>
         </div>
       </div>
     </section>
 
-    <!-- Areas Grid -->
     <section class="section">
       <div class="container">
-        <div class="section-header">
-          <h2>Communities We Serve</h2>
+        <div class="community-tabs" id="community-tabs">
+          <button class="community-tab active" data-community="columbus">Columbus</button>
+          <button class="community-tab" data-community="westerville">Westerville</button>
+          <button class="community-tab" data-community="dublin">Dublin</button>
+          <button class="community-tab" data-community="powell">Powell</button>
+          <button class="community-tab" data-community="new-albany">New Albany</button>
+          <button class="community-tab" data-community="gahanna">Gahanna</button>
+          <button class="community-tab" data-community="hilliard">Hilliard</button>
+          <button class="community-tab" data-community="upper-arlington">Upper Arlington</button>
+          <button class="community-tab" data-community="worthington">Worthington</button>
+          <button class="community-tab" data-community="grove-city">Grove City</button>
+          <button class="community-tab" data-community="delaware">Delaware</button>
         </div>
 
-        <div class="grid-4">
-          <a href="/areas/columbus/" class="area-card">
-            <img src="/assets/images/maps/downtown-columbus-ohio-1331979.jpg" alt="Columbus Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">Columbus</h3>
-            </div>
-          </a>
-          <a href="/areas/westerville/" class="area-card">
-            <img src="/assets/images/maps/Westerville-uptown.jpg" alt="Westerville Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">Westerville</h3>
-            </div>
-          </a>
-          <a href="/areas/dublin/" class="area-card">
-            <img src="/assets/images/maps/Dublin-RiversideCrossingPark_Fall.png" alt="Dublin Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">Dublin</h3>
-            </div>
-          </a>
-          <a href="/areas/gahanna/" class="area-card">
-            <img src="/assets/images/maps/Gahanna-riverside.jpg" alt="Gahanna Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">Gahanna</h3>
-            </div>
-          </a>
-        </div>
-
-        <div class="grid-4" style="margin-top: 1.5rem;">
-          <a href="/areas/powell/" class="area-card">
-            <img src="/assets/images/maps/powell-community.svg" alt="Powell Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">Powell</h3>
-            </div>
-          </a>
-          <a href="/areas/new-albany/" class="area-card">
-            <img src="/assets/images/maps/new-albany-community.svg" alt="New Albany Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">New Albany</h3>
-            </div>
-          </a>
-          <a href="/areas/hilliard/" class="area-card">
-            <img src="/assets/images/maps/hilliard-community.svg" alt="Hilliard Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">Hilliard</h3>
-            </div>
-          </a>
-          <a href="/areas/delaware/" class="area-card">
-            <img src="/assets/images/maps/delaware-community.svg" alt="Delaware Ohio realtor - 1% commission" loading="lazy">
-            <div class="area-card-overlay">
-              <h3 class="area-card-title">Delaware</h3>
-            </div>
-          </a>
-        </div>
-
-        <div class="grid-4" style="margin-top: 1.5rem;">
-          <a href="/areas/upper-arlington/" class="area-link">Upper Arlington</a>
-          <a href="/areas/worthington/" class="area-link">Worthington</a>
-          <a href="/areas/lewis-center/" class="area-link">Lewis Center</a>
-          <a href="/areas/pickerington/" class="area-link">Pickerington</a>
-          <a href="/areas/grove-city/" class="area-link">Grove City</a>
-          <a href="/areas/blacklick/" class="area-link">Blacklick</a>
-          <a href="/areas/clintonville/" class="area-link">Clintonville</a>
-          <a href="/areas/galena/" class="area-link">Galena</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Additional Areas -->
-    <section class="section bg-off-white">
-      <div class="container">
-        <div class="section-header">
-          <h2>Additional Service Areas</h2>
-          <p>Don't see your area listed? TD Realty Ohio serves all of Central Ohio.</p>
-        </div>
-
-        <div style="max-width: 800px; margin: 0 auto;">
-          <div class="grid-4" style="gap: 1rem;">
-            <a href="/areas/pataskala/" class="area-link">Pataskala</a>
-            <a href="/areas/sunbury/" class="area-link">Sunbury</a>
-            <div style="text-align: center; padding: 1rem; background: var(--white); border-radius: var(--radius-md);">Reynoldsburg</div>
-            <div style="text-align: center; padding: 1rem; background: var(--white); border-radius: var(--radius-md);">Granville</div>
-            <div style="text-align: center; padding: 1rem; background: var(--white); border-radius: var(--radius-md);">Canal Winchester</div>
-            <div style="text-align: center; padding: 1rem; background: var(--white); border-radius: var(--radius-md);">Bexley</div>
-            <div style="text-align: center; padding: 1rem; background: var(--white); border-radius: var(--radius-md);">Whitehall</div>
-            <div style="text-align: center; padding: 1rem; background: var(--white); border-radius: var(--radius-md);">Groveport</div>
+        <!-- Columbus -->
+        <div class="community-content active" id="columbus">
+          <h2>Columbus, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://www.columbus.gov/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.ccsoh.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Columbus City Schools</a>
+            <a href="https://www.columbus.gov/recreation/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events & Recreation</a>
+            <a href="https://www.niche.com/places-to-live/columbus-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
           </div>
-
-          <p class="text-center text-muted" style="margin-top: 2rem;">
-            If your community isn't listed, please reach out. TD Realty Ohio is licensed to serve all of Ohio and regularly works throughout the Central Ohio region.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why Choose Section -->
-    <section class="section">
-      <div class="container">
-        <div class="two-col">
-          <div>
-            <h2>Local Knowledge, Lower Fees</h2>
-            <p>TD Realty Ohio combines deep knowledge of Central Ohio neighborhoods with a business model designed to save you money.</p>
-            <ul class="benefits-list">
-              <li>Understanding of local market conditions and pricing trends</li>
-              <li>Knowledge of school districts, amenities, and community features</li>
-              <li>Experience with Central Ohio transaction timelines and processes</li>
-              <li>Network of local inspectors, lenders, and service providers</li>
-            </ul>
-            <p>Whether you're buying or selling in Columbus, the suburbs, or surrounding communities, you get professional service at reduced commission rates.</p>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$275K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">906K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">18</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$5,500</div><div class="market-stat-label">Your Savings (2%)</div></div>
           </div>
-          <div>
-            <div style="background-color: var(--navy); border-radius: var(--radius-lg); padding: 2rem; color: var(--white);">
-              <h3 style="color: var(--white); margin-bottom: 1.5rem;">Commission Rates</h3>
-              <div style="margin-bottom: 1.5rem;">
-                <div style="font-size: 3rem; font-family: 'Libre Baskerville', serif; font-weight: 700; color: var(--gold);">1%</div>
-                <div style="color: var(--gray-300);">When buying and selling with TD Realty Ohio</div>
+          <p class="community-description">Columbus is Ohio's capital and largest city, offering diverse neighborhoods from historic German Village to the trendy Short North Arts District. The market provides options at every price point. Columbus City Schools is the state's largest district, while many Columbus addresses also feed into suburban districts like Westerville, Dublin, and Hilliard.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Columbus Commission Calculator</h4>
+            <div class="calculator" id="columbus-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$275,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="100000" max="600000" step="5000" value="275000">
               </div>
-              <div style="margin-bottom: 1.5rem;">
-                <div style="font-size: 3rem; font-family: 'Libre Baskerville', serif; font-weight: 700; color: var(--gold);">2%</div>
-                <div style="color: var(--gray-300);">Sell-only transactions</div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
               </div>
-              <div style="font-size: 0.875rem; color: var(--gray-400);">
-                Traditional agents charge 3% on the listing side. These rates represent 1-2% savings on every transaction.
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$8,250</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$2,750</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$5,500</span></div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Westerville -->
+        <div class="community-content" id="westerville">
+          <h2>Westerville, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://www.westerville.org/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.westerville.k12.oh.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Westerville City Schools</a>
+            <a href="https://www.westerville.org/residents/parks-recreation/events-calendar" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events Calendar</a>
+            <a href="https://www.niche.com/places-to-live/westerville-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$400K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">42K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">12</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$8,000</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Westerville combines small-town charm with suburban convenience. The historic Uptown district offers local shops and restaurants, while newer developments provide modern housing options. Westerville City Schools consistently ranks among Ohio's top districts. The city is home to Otterbein University and offers extensive parks and recreation programs.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Westerville Commission Calculator</h4>
+            <div class="calculator" id="westerville-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$400,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="200000" max="800000" step="10000" value="400000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$12,000</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$4,000</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$8,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dublin -->
+        <div class="community-content" id="dublin">
+          <h2>Dublin, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://dublinohiousa.gov/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.dublinschools.net/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Dublin City Schools</a>
+            <a href="https://dublinohiousa.gov/events/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events Calendar</a>
+            <a href="https://www.niche.com/places-to-live/dublin-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$550K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">51K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$11,000</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Dublin is one of Central Ohio's premier communities, known for excellent schools, corporate headquarters, and the annual Dublin Irish Festival. The Bridge Street District offers urban-style living, while established neighborhoods feature larger lots and mature landscaping. Dublin City Schools is consistently ranked among Ohio's best.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Dublin Commission Calculator</h4>
+            <div class="calculator" id="dublin-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$550,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="300000" max="1000000" step="10000" value="550000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$16,500</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$5,500</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$11,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Powell -->
+        <div class="community-content" id="powell">
+          <h2>Powell, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://cityofpowell.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.olentangy.k12.oh.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Olentangy Local Schools</a>
+            <a href="https://cityofpowell.us/events/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events Calendar</a>
+            <a href="https://www.niche.com/places-to-live/powell-delaware-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$550K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">14K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">11</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$11,000</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Powell offers small-town charm with easy access to Columbus. The historic downtown features local shops and restaurants. Olentangy Local Schools—one of Ohio's highest-rated districts—is the primary draw for families, with multiple elementary, middle, and high school options.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Powell Commission Calculator</h4>
+            <div class="calculator" id="powell-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$550,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="300000" max="1000000" step="10000" value="550000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$16,500</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$5,500</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$11,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Albany -->
+        <div class="community-content" id="new-albany">
+          <h2>New Albany, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://newalbanyohio.org/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.napls.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>New Albany-Plain Local Schools</a>
+            <a href="https://newalbanyohio.org/events/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events Calendar</a>
+            <a href="https://www.niche.com/places-to-live/new-albany-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$650K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">12K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">15</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$13,000</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">New Albany is a master-planned community known for its Georgian architecture, extensive trail system, and top-ranked schools. New Albany-Plain Local Schools consistently ranks among Ohio's elite districts, drawing families from across the region.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">New Albany Commission Calculator</h4>
+            <div class="calculator" id="new-albany-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$650,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="400000" max="1200000" step="10000" value="650000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$19,500</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$6,500</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$13,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gahanna -->
+        <div class="community-content" id="gahanna">
+          <h2>Gahanna, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://www.gahanna.gov/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.gahanna.k12.oh.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Gahanna-Jefferson Schools</a>
+            <a href="https://www.gahanna.gov/residents/parks-recreation/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Parks & Recreation</a>
+            <a href="https://www.niche.com/places-to-live/gahanna-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$375K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">36K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">13</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$7,500</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Gahanna—the "Herb Capital of Ohio"—offers a balance of suburban living and community character. Creekside, the city's entertainment district along Big Walnut Creek, hosts events and festivals year-round. Gahanna-Jefferson City Schools provides quality education.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Gahanna Commission Calculator</h4>
+            <div class="calculator" id="gahanna-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$375,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="200000" max="700000" step="5000" value="375000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$11,250</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$3,750</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$7,500</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hilliard -->
+        <div class="community-content" id="hilliard">
+          <h2>Hilliard, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://hilliardohio.gov/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.hilliardschools.org/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Hilliard City Schools</a>
+            <a href="https://hilliardohio.gov/recreation/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Recreation Programs</a>
+            <a href="https://www.niche.com/places-to-live/hilliard-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$425K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">37K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">12</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$8,500</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Hilliard is one of Central Ohio's fastest-growing communities, with a revitalized Old Hilliard downtown and extensive new development. Hilliard City Schools serves over 16,000 students across three high schools.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Hilliard Commission Calculator</h4>
+            <div class="calculator" id="hilliard-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$425,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="250000" max="750000" step="5000" value="425000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$12,750</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$4,250</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$8,500</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upper Arlington -->
+        <div class="community-content" id="upper-arlington">
+          <h2>Upper Arlington, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://upperarlingtonoh.gov/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.uaschools.org/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Upper Arlington Schools</a>
+            <a href="https://upperarlingtonoh.gov/parks-recreation/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Parks & Recreation</a>
+            <a href="https://www.niche.com/places-to-live/upper-arlington-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$600K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">36K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">10</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$12,000</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Upper Arlington is an established, tree-lined community adjacent to Ohio State University. Known for excellent schools and strong property values, UA features a mix of classic mid-century homes and newer construction. Upper Arlington City Schools is highly regarded.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Upper Arlington Commission Calculator</h4>
+            <div class="calculator" id="upper-arlington-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$600,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="350000" max="1100000" step="10000" value="600000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$18,000</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$6,000</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$12,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Worthington -->
+        <div class="community-content" id="worthington">
+          <h2>Worthington, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://worthington.org/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.worthington.k12.oh.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Worthington Schools</a>
+            <a href="https://worthington.org/calendar" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Community Calendar</a>
+            <a href="https://www.niche.com/places-to-live/worthington-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$425K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">15K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">11</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$8,500</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Worthington is one of Ohio's oldest communities, with a charming downtown on the National Register of Historic Places. The village green hosts farmers markets and community events. Worthington City Schools ranks highly statewide.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Worthington Commission Calculator</h4>
+            <div class="calculator" id="worthington-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$425,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="250000" max="800000" step="5000" value="425000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$12,750</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$4,250</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$8,500</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grove City -->
+        <div class="community-content" id="grove-city">
+          <h2>Grove City, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://www.grovecityohio.gov/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.swcsd.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>South-Western City Schools</a>
+            <a href="https://www.grovecityohio.gov/events/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Events Calendar</a>
+            <a href="https://www.niche.com/places-to-live/grove-city-franklin-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A-</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$300K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">42K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$6,000</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Grove City offers affordable suburban living with a revitalized Town Center and strong community identity. The city hosts popular events like Arts in the Alley and provides extensive parks and recreation programs.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Grove City Commission Calculator</h4>
+            <div class="calculator" id="grove-city-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$300,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="150000" max="500000" step="5000" value="300000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$9,000</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$3,000</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$6,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delaware -->
+        <div class="community-content" id="delaware">
+          <h2>Delaware, Ohio</h2>
+          <div class="resource-buttons">
+            <a href="https://www.delawareohio.net/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
+            <a href="https://www.dcs.k12.oh.us/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Delaware City Schools</a>
+            <a href="https://www.mainstreetdelaware.com/events" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Downtown Events</a>
+            <a href="https://www.niche.com/places-to-live/delaware-delaware-oh/" target="_blank" rel="noopener" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A-</a>
+          </div>
+          <div class="market-stats">
+            <div class="market-stat"><div class="market-stat-value">$350K</div><div class="market-stat-label">Median Home Price</div></div>
+            <div class="market-stat"><div class="market-stat-value">42K</div><div class="market-stat-label">Population</div></div>
+            <div class="market-stat"><div class="market-stat-value">16</div><div class="market-stat-label">Avg Days on Market</div></div>
+            <div class="market-stat"><div class="market-stat-value">$7,000</div><div class="market-stat-label">Your Savings (2%)</div></div>
+          </div>
+          <p class="community-description">Delaware is the county seat of Delaware County, Ohio's fastest-growing county. The city combines historic charm around its downtown square with new development. Home to Ohio Wesleyan University, Delaware offers cultural amenities alongside small-town living.</p>
+          <div class="community-calculator">
+            <h4 style="margin-bottom: 1rem;">Delaware Commission Calculator</h4>
+            <div class="calculator" id="delaware-calculator">
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header"><label class="calculator-label">Home Sale Price</label><span class="calculator-slider-value" data-price-display>$350,000</span></div>
+                <input type="range" class="calculator-range" data-price-slider min="200000" max="600000" step="5000" value="350000">
+              </div>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row"><span class="result-label">Traditional (3%)</span><span class="result-value strikethrough" data-traditional>$10,500</span></div>
+                <div class="result-row"><span class="result-label">TD Realty (<span data-rate-label>1%</span>)</span><span class="result-value" data-td-realty>$3,500</span></div>
+                <div class="result-row"><span class="result-label">Your Savings</span><span class="result-value highlight" data-savings>$7,000</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="section cta-section">
       <div class="container">
-        <h2>Questions?</h2>
-        <p>Free consultation. No obligation.</p>
+        <h2>Ready to Make a Move?</h2>
+        <p>Get a free consultation for any Central Ohio community.</p>
         <div class="hero-buttons" style="justify-content: center;">
-          <a href="/contact.html" class="btn btn-primary btn-lg">Contact</a>
+          <a href="/contact.html" class="btn btn-primary btn-lg">Contact Us</a>
           <a href="tel:6143928858" class="btn btn-outline-white btn-lg">(614) 392-8858</a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-main">
-        <div class="footer-brand">
-          <div class="footer-logo">
-            <span class="logo-mark">TD</span>
-            <span>Realty Ohio</span>
-          </div>
-          <p>1-2% listing commission. Central Ohio.</p>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Services</h4>
-          <ul class="footer-links">
-            <li><a href="/sellers.html">For Sellers</a></li>
-            <li><a href="/buyers.html">For Buyers</a></li>
-            <li><a href="/pre-listing-inspection.html">Pre-Listing Inspection</a></li>
-            <li><a href="/areas/">Service Areas</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Company</h4>
-          <ul class="footer-links">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-            <li><a href="/blog/">Blog</a></li>
-            <li><a href="/agents.html">Agent Opportunities</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Contact</h4>
-          <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <a href="tel:6143928858" data-phone>(614) 392-8858</a>
-          </div>
-          <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-            <a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a>
-          </div>
-          <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            <span data-location>Westerville, Ohio</span>
-          </div>
-        </div>
+        <div class="footer-brand"><div class="footer-logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></div><p>1-2% listing commission. Central Ohio.</p></div>
+        <div><h4 class="footer-title">Services</h4><ul class="footer-links"><li><a href="/sellers.html">For Sellers</a></li><li><a href="/buyers.html">For Buyers</a></li><li><a href="/pre-listing-inspection.html">Pre-Listing Inspection</a></li><li><a href="/areas/">Service Areas</a></li></ul></div>
+        <div><h4 class="footer-title">Company</h4><ul class="footer-links"><li><a href="/about.html">About</a></li><li><a href="/contact.html">Contact</a></li><li><a href="/blog/">Blog</a></li><li><a href="/agents.html">Agent Opportunities</a></li></ul></div>
+        <div><h4 class="footer-title">Contact</h4><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:6143928858">(614) 392-8858</a></div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a></div><div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Westerville, Ohio</span></div></div>
       </div>
-
-      <div class="footer-compliance-logos">
-        <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener" title="Equal Housing Opportunity">
-          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50">
-        </a>
-        <a href="https://www.nar.realtor/" target="_blank" rel="noopener" title="National Association of REALTORS®">
-          <img src="/media/compliance/realtor.svg" alt="REALTOR®" height="50">
-        </a>
-        <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener" title="Columbus REALTORS®">
-          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS®" height="45">
-        </a>
-        <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener" title="Ohio REALTORS®">
-          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS®" height="45">
-        </a>
-      </div>
-      <div class="footer-bottom">
-        <div class="footer-legal">
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-          <a href="/fair-housing.html">Fair Housing</a>
-        </div>
-      </div>
-
-      <div class="footer-license">
-        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602
-      </div>
+      <div class="footer-license">TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602</div>
     </div>
   </footer>
 
   <script src="/assets/js/main.js"></script>
+  <script>
+    document.querySelectorAll('.community-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.community-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.community-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.community).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
