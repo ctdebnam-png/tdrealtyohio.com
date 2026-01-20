@@ -1,0 +1,122 @@
+{
+  "lastUpdated": "2025-12-01",
+  "source": "Columbus & Central Ohio Regional MLS via Columbus REALTORS",
+  "sourceUrl": "https://columbusrealtors.com/housing-reports",
+  "reportMonth": "November 2025",
+  "metro": {
+    "name": "Central Ohio",
+    "medianPrice": 325000,
+    "medianPriceChange": 4.5,
+    "avgDaysOnMarket": 28,
+    "daysOnMarketChange": 5,
+    "activeListings": 5188,
+    "activeListingsChange": 32.9,
+    "newListings": 2218,
+    "newListingsChange": 0.6,
+    "closedSales": 2150,
+    "closedSalesChange": -2.1,
+    "monthsOfInventory": 2.4
+  },
+  "areas": {
+    "westerville": {
+      "name": "Westerville",
+      "medianPrice": 385000,
+      "medianPriceChange": 5.2,
+      "avgDaysOnMarket": 21,
+      "activeListings": 245,
+      "closedSales": 185,
+      "priceRange": "$320K - $550K",
+      "marketCondition": "competitive",
+      "notes": "Homes typically sell within 3 weeks. Inventory up 25% year-over-year."
+    },
+    "columbus": {
+      "name": "Columbus",
+      "medianPrice": 275000,
+      "medianPriceChange": 3.8,
+      "avgDaysOnMarket": 32,
+      "activeListings": 1850,
+      "closedSales": 1420,
+      "priceRange": "$180K - $450K",
+      "marketCondition": "balanced",
+      "notes": "Wide price variation by neighborhood. Urban core seeing strong appreciation."
+    },
+    "dublin": {
+      "name": "Dublin",
+      "medianPrice": 525000,
+      "medianPriceChange": 4.1,
+      "avgDaysOnMarket": 25,
+      "activeListings": 320,
+      "closedSales": 210,
+      "priceRange": "$400K - $800K",
+      "marketCondition": "competitive",
+      "notes": "Strong school district demand. New construction in Bridge Park area."
+    },
+    "gahanna": {
+      "name": "Gahanna",
+      "medianPrice": 345000,
+      "medianPriceChange": 4.8,
+      "avgDaysOnMarket": 24,
+      "activeListings": 165,
+      "closedSales": 125,
+      "priceRange": "$280K - $500K",
+      "marketCondition": "competitive",
+      "notes": "Popular with families. Creekside development adding appeal."
+    },
+    "powell": {
+      "name": "Powell",
+      "medianPrice": 485000,
+      "medianPriceChange": 3.9,
+      "avgDaysOnMarket": 22,
+      "activeListings": 180,
+      "closedSales": 140,
+      "priceRange": "$380K - $700K",
+      "marketCondition": "competitive",
+      "notes": "Olentangy schools drive demand. Limited inventory."
+    },
+    "new-albany": {
+      "name": "New Albany",
+      "medianPrice": 625000,
+      "medianPriceChange": 3.2,
+      "avgDaysOnMarket": 28,
+      "activeListings": 145,
+      "closedSales": 95,
+      "priceRange": "$450K - $1M+",
+      "marketCondition": "balanced",
+      "notes": "Planned community with strong amenities. Higher price points."
+    },
+    "hilliard": {
+      "name": "Hilliard",
+      "medianPrice": 365000,
+      "medianPriceChange": 5.5,
+      "avgDaysOnMarket": 20,
+      "activeListings": 195,
+      "closedSales": 165,
+      "priceRange": "$300K - $500K",
+      "marketCondition": "competitive",
+      "notes": "Fast-selling market. Strong school district appeal."
+    },
+    "delaware": {
+      "name": "Delaware",
+      "medianPrice": 375000,
+      "medianPriceChange": 6.2,
+      "avgDaysOnMarket": 26,
+      "activeListings": 210,
+      "closedSales": 155,
+      "priceRange": "$280K - $550K",
+      "marketCondition": "competitive",
+      "notes": "Growing area with new construction. Mix of rural and suburban."
+    }
+  },
+  "_updateInstructions": {
+    "frequency": "Monthly, around the 20th when Columbus REALTORS releases new data",
+    "source": "https://columbusrealtors.com/housing-reports",
+    "steps": [
+      "1. Visit Columbus REALTORS housing reports page",
+      "2. Download the latest monthly report PDF",
+      "3. Update 'lastUpdated' and 'reportMonth' fields",
+      "4. Update metro-level stats from the 'Stats' section",
+      "5. Update area stats from the 'Areas' section (filter by city)",
+      "6. Save and commit changes"
+    ]
+  }
+}
