@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Much Home Can You Afford? | Affordability Calculator | TD Realty Ohio</title>
+  <meta name="description" content="Calculate how much home you can afford based on your income, debts, and down payment. Free affordability calculator from TD Realty Ohio.">
+  <meta name="keywords" content="home affordability calculator, how much house can I afford, mortgage calculator Columbus Ohio">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://tdrealtyohio.com/affordability.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="How Much Home Can You Afford? | TD Realty Ohio">
+  <meta property="og:description" content="Get a realistic estimate based on your income and debts.">
+  <meta property="og:url" content="https://tdrealtyohio.com/affordability.html">
+  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <meta name="theme-color" content="#1a2e44">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <style>
+    .affordability-calculator {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 2rem;
+    }
+    .calc-inputs {
+      display: grid;
+      gap: 1.5rem;
+    }
+    .calc-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .calc-input-group label {
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+    .calc-input-group .input-hint {
+      font-size: 0.8125rem;
+      color: var(--gray-500);
+    }
+    .calc-input-group input {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      width: 100%;
+    }
+    .calc-input-group input:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 1.25rem;
+      height: 1.25rem;
+      accent-color: var(--navy);
+    }
+    .calc-results {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--gray-200);
+    }
+    .primary-result {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .primary-result-label {
+      font-size: 1rem;
+      color: var(--gray-600);
+      margin-bottom: 0.5rem;
+    }
+    .primary-result-value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-family: var(--font-display);
+    }
+    .secondary-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .result-card {
+      background: var(--gray-50);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .result-card-label {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      margin-bottom: 0.25rem;
+    }
+    .result-card-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+    .payment-breakdown {
+      margin-top: 1.5rem;
+    }
+    .payment-breakdown h4 {
+      margin-bottom: 1rem;
+      color: var(--gray-700);
+    }
+    .breakdown-bar {
+      display: flex;
+      height: 2rem;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .breakdown-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      min-width: 40px;
+    }
+    .segment-pi { background: var(--navy); }
+    .segment-tax { background: #2d6a4f; }
+    .segment-insurance { background: #9c6644; }
+    .breakdown-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    .legend-dot.pi { background: var(--navy); }
+    .legend-dot.tax { background: #2d6a4f; }
+    .legend-dot.insurance { background: #9c6644; }
+    .calc-note {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      color: var(--gray-600);
+    }
+    @media (max-width: 768px) {
+      .primary-result-value {
+        font-size: 2.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-mark">TD</span>
+        <span>Realty Ohio</span>
+      </a>
+
+      <nav class="nav">
+        <a href="/sellers.html" class="nav-link">Sellers</a>
+        <a href="/buyers.html" class="nav-link">Buyers</a>
+        <a href="/pre-listing-inspection.html" class="nav-link">Pre-Listing Inspection</a>
+        <a href="/home-value.html" class="nav-link">Home Value</a>
+        <a href="/affordability.html" class="nav-link active">Affordability</a>
+        <a href="/areas/" class="nav-link">Areas</a>
+        <a href="/blog/" class="nav-link">Blog</a>
+        <a href="/about.html" class="nav-link">About</a>
+        <a href="/contact.html" class="btn btn-primary nav-cta">Contact</a>
+      </nav>
+
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mobile-nav" id="mobile-nav">
+      <a href="/sellers.html" class="mobile-nav-link">Sellers</a>
+      <a href="/buyers.html" class="mobile-nav-link">Buyers</a>
+      <a href="/pre-listing-inspection.html" class="mobile-nav-link">Pre-Listing Inspection</a>
+      <a href="/home-value.html" class="mobile-nav-link">Home Value</a>
+      <a href="/affordability.html" class="mobile-nav-link">Affordability</a>
+      <a href="/areas/" class="mobile-nav-link">Areas</a>
+      <a href="/blog/" class="mobile-nav-link">Blog</a>
+      <a href="/about.html" class="mobile-nav-link">About</a>
+      <a href="/contact.html" class="mobile-nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%);">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">How Much Home Can You Afford?</h1>
+          <p class="hero-subtitle">Get a realistic estimate based on your income and debts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="section">
+      <div class="container">
+        <div class="two-col" style="align-items: flex-start;">
+          <div>
+            <h2>Know Your Numbers Before You Shop</h2>
+            <p style="font-size: 1.125rem; margin-bottom: 1.5rem;">Before you start shopping, know your numbers. This calculator estimates your purchasing power based on standard lending guidelines.</p>
+
+            <h3 style="margin-top: 2rem;">How It Works</h3>
+            <p>Lenders use two key ratios to determine how much you can borrow:</p>
+            <ul class="benefits-list">
+              <li><strong>Front-end ratio (28%):</strong> Your monthly housing payment should not exceed 28% of your gross monthly income</li>
+              <li><strong>Back-end ratio (36%):</strong> Your total monthly debts (including housing) should not exceed 36% of your gross monthly income</li>
+            </ul>
+            <p style="margin-top: 1rem;">This calculator uses both ratios and gives you the more conservative estimate.</p>
+
+            <div class="disclosure-box" style="margin-top: 2rem;">
+              <p><strong>Note:</strong> These estimates are based on standard lending guidelines. Your actual purchasing power may vary based on credit score, loan type, and lender requirements. Property tax rates vary by county and school district in Central Ohio.</p>
+            </div>
+          </div>
+
+          <div class="affordability-calculator">
+            <h3 style="margin-bottom: 1.5rem;">Affordability Calculator</h3>
+
+            <div class="calc-inputs">
+              <div class="calc-input-group">
+                <label for="annual-income">Annual Household Income</label>
+                <input type="number" id="annual-income" placeholder="75000" min="0" step="1000">
+              </div>
+
+              <div class="calc-input-group">
+                <label for="monthly-debts">Monthly Debt Payments</label>
+                <span class="input-hint">Car payments, student loans, credit cards, etc.</span>
+                <input type="number" id="monthly-debts" placeholder="500" min="0" step="50" value="0">
+              </div>
+
+              <div class="calc-input-group">
+                <label for="down-payment">Down Payment Amount</label>
+                <input type="number" id="down-payment" placeholder="50000" min="0" step="1000">
+              </div>
+
+              <div class="calc-input-group">
+                <label for="interest-rate">Interest Rate (%)</label>
+                <input type="number" id="interest-rate" value="7.0" min="0" max="15" step="0.125">
+              </div>
+
+              <div class="checkbox-group">
+                <input type="checkbox" id="include-taxes" checked>
+                <label for="include-taxes">Include Property Taxes & Insurance</label>
+              </div>
+            </div>
+
+            <div class="calc-results">
+              <div class="primary-result">
+                <div class="primary-result-label">Estimated Home Price You Can Afford</div>
+                <div class="primary-result-value" id="result-home-price">$0</div>
+              </div>
+
+              <div class="secondary-results">
+                <div class="result-card">
+                  <div class="result-card-label">Monthly Payment</div>
+                  <div class="result-card-value" id="result-monthly-total">$0</div>
+                </div>
+                <div class="result-card">
+                  <div class="result-card-label">Principal & Interest</div>
+                  <div class="result-card-value" id="result-pi">$0</div>
+                </div>
+                <div class="result-card">
+                  <div class="result-card-label">Property Taxes</div>
+                  <div class="result-card-value" id="result-taxes">$0</div>
+                </div>
+                <div class="result-card">
+                  <div class="result-card-label">Insurance</div>
+                  <div class="result-card-value" id="result-insurance">$0</div>
+                </div>
+              </div>
+
+              <div class="payment-breakdown">
+                <h4>Payment Breakdown</h4>
+                <div class="breakdown-bar" id="breakdown-bar">
+                  <div class="breakdown-segment segment-pi" id="bar-pi" style="width: 70%;">P&I</div>
+                  <div class="breakdown-segment segment-tax" id="bar-tax" style="width: 20%;">Tax</div>
+                  <div class="breakdown-segment segment-insurance" id="bar-ins" style="width: 10%;">Ins</div>
+                </div>
+                <div class="breakdown-legend">
+                  <div class="legend-item">
+                    <span class="legend-dot pi"></span>
+                    <span>Principal & Interest</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-dot tax"></span>
+                    <span>Property Taxes</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-dot insurance"></span>
+                    <span>Insurance</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="calc-note">
+              <strong>Assumptions:</strong> 30-year fixed mortgage, 1.5% property tax rate (Franklin County average), 0.5% homeowner's insurance.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+      <div class="container">
+        <h2>Ready to Start Your Home Search?</h2>
+        <p>Contact me to discuss your options and get pre-approved.</p>
+        <div class="hero-buttons" style="justify-content: center;">
+          <a href="/contact.html" class="btn btn-primary btn-lg">Contact</a>
+          <a href="tel:6143928858" class="btn btn-outline-white btn-lg">(614) 392-8858</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="logo-mark">TD</span>
+            <span>Realty Ohio</span>
+          </div>
+          <p>1-2% listing commission. Central Ohio.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li><a href="/sellers.html">For Sellers</a></li>
+            <li><a href="/buyers.html">For Buyers</a></li>
+            <li><a href="/pre-listing-inspection.html">Pre-Listing Inspection</a></li>
+            <li><a href="/areas/">Service Areas</a></li>
+            <li><a href="/home-value.html">Free Home Value</a></li>
+            <li><a href="/affordability.html">Affordability Calculator</a></li>
+            <li><a href="/referrals.html">Referral Credit</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Company</h4>
+          <ul class="footer-links">
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="https://www.zillow.com/profile/travisdrealtor" target="_blank" rel="noopener">Zillow Reviews</a></li>
+            <li><a href="/agents.html">Agent Opportunities</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact</h4>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <a href="tel:6143928858" data-phone>(614) 392-8858</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span data-location>Westerville, Ohio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-compliance-logos">
+        <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener" title="Equal Housing Opportunity">
+          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50">
+        </a>
+        <a href="https://www.nar.realtor/" target="_blank" rel="noopener" title="National Association of REALTORS®">
+          <img src="/media/compliance/realtor.svg" alt="REALTOR®" height="50">
+        </a>
+        <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener" title="Columbus REALTORS®">
+          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS®" height="45">
+        </a>
+        <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener" title="Ohio REALTORS®">
+          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS®" height="45">
+        </a>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/fair-housing.html">Fair Housing</a>
+        </div>
+      </div>
+
+      <div class="footer-license">
+        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script>
+    // Affordability Calculator Logic
+    (function() {
+      const inputs = {
+        income: document.getElementById('annual-income'),
+        debts: document.getElementById('monthly-debts'),
+        downPayment: document.getElementById('down-payment'),
+        rate: document.getElementById('interest-rate'),
+        includeTaxes: document.getElementById('include-taxes')
+      };
+
+      const outputs = {
+        homePrice: document.getElementById('result-home-price'),
+        monthlyTotal: document.getElementById('result-monthly-total'),
+        pi: document.getElementById('result-pi'),
+        taxes: document.getElementById('result-taxes'),
+        insurance: document.getElementById('result-insurance'),
+        barPi: document.getElementById('bar-pi'),
+        barTax: document.getElementById('bar-tax'),
+        barIns: document.getElementById('bar-ins')
+      };
+
+      const TAX_RATE = 0.015; // 1.5% annually
+      const INSURANCE_RATE = 0.005; // 0.5% annually
+      const LOAN_TERM_MONTHS = 360; // 30 years
+
+      function formatCurrency(num) {
+        return '$' + Math.round(num).toLocaleString('en-US');
+      }
+
+      function calculateMonthlyPI(principal, annualRate) {
+        if (principal <= 0 || annualRate <= 0) return 0;
+        const monthlyRate = annualRate / 100 / 12;
+        const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS)) /
+                       (Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS) - 1);
+        return payment;
+      }
+
+      function calculateAffordability() {
+        const annualIncome = parseFloat(inputs.income.value) || 0;
+        const monthlyDebts = parseFloat(inputs.debts.value) || 0;
+        const downPayment = parseFloat(inputs.downPayment.value) || 0;
+        const interestRate = parseFloat(inputs.rate.value) || 7.0;
+        const includeTaxes = inputs.includeTaxes.checked;
+
+        if (annualIncome <= 0) {
+          outputs.homePrice.textContent = '$0';
+          outputs.monthlyTotal.textContent = '$0';
+          outputs.pi.textContent = '$0';
+          outputs.taxes.textContent = '$0';
+          outputs.insurance.textContent = '$0';
+          return;
+        }
+
+        const monthlyIncome = annualIncome / 12;
+
+        // Front-end ratio: 28% of gross income for housing
+        const maxHousingFrontEnd = monthlyIncome * 0.28;
+
+        // Back-end ratio: 36% of gross income for all debts
+        const maxHousingBackEnd = (monthlyIncome * 0.36) - monthlyDebts;
+
+        // Use the more conservative (lower) limit
+        let maxHousingPayment = Math.min(maxHousingFrontEnd, maxHousingBackEnd);
+        if (maxHousingPayment < 0) maxHousingPayment = 0;
+
+        // Calculate max loan amount based on PI only or PITI
+        let maxHomePrice, monthlyPI, monthlyTax, monthlyInsurance;
+
+        if (includeTaxes) {
+          // Iterative calculation since taxes/insurance depend on home price
+          // Start with an estimate and refine
+          let loanAmount = 0;
+          const monthlyRate = interestRate / 100 / 12;
+
+          // For PITI, we need to solve: PI + (price * taxRate/12) + (price * insRate/12) = maxPayment
+          // PI = loanAmount * factor where loanAmount = price - downPayment
+          // So: loanFactor * (price - down) + price * (tax + ins)/12 = maxPayment
+          // price * (loanFactor + (tax+ins)/12) = maxPayment + down * loanFactor
+
+          if (interestRate > 0) {
+            const loanFactor = (monthlyRate * Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS)) /
+                              (Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS) - 1);
+            const tiMonthly = (TAX_RATE + INSURANCE_RATE) / 12;
+
+            maxHomePrice = (maxHousingPayment + downPayment * loanFactor) / (loanFactor + tiMonthly);
+          } else {
+            // 0% interest edge case
+            maxHomePrice = (maxHousingPayment * LOAN_TERM_MONTHS + downPayment) /
+                          (1 + (TAX_RATE + INSURANCE_RATE) * LOAN_TERM_MONTHS / 12);
+          }
+
+          if (maxHomePrice < 0) maxHomePrice = 0;
+
+          loanAmount = Math.max(0, maxHomePrice - downPayment);
+          monthlyPI = calculateMonthlyPI(loanAmount, interestRate);
+          monthlyTax = (maxHomePrice * TAX_RATE) / 12;
+          monthlyInsurance = (maxHomePrice * INSURANCE_RATE) / 12;
+        } else {
+          // PI only
+          const monthlyRate = interestRate / 100 / 12;
+          let loanAmount;
+
+          if (interestRate > 0) {
+            const loanFactor = (monthlyRate * Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS)) /
+                              (Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS) - 1);
+            loanAmount = maxHousingPayment / loanFactor;
+          } else {
+            loanAmount = maxHousingPayment * LOAN_TERM_MONTHS;
+          }
+
+          maxHomePrice = loanAmount + downPayment;
+          monthlyPI = maxHousingPayment;
+          monthlyTax = 0;
+          monthlyInsurance = 0;
+        }
+
+        const monthlyTotal = monthlyPI + monthlyTax + monthlyInsurance;
+
+        // Update display
+        outputs.homePrice.textContent = formatCurrency(maxHomePrice);
+        outputs.monthlyTotal.textContent = formatCurrency(monthlyTotal);
+        outputs.pi.textContent = formatCurrency(monthlyPI);
+        outputs.taxes.textContent = formatCurrency(monthlyTax);
+        outputs.insurance.textContent = formatCurrency(monthlyInsurance);
+
+        // Update breakdown bar
+        if (monthlyTotal > 0) {
+          const piPct = (monthlyPI / monthlyTotal) * 100;
+          const taxPct = (monthlyTax / monthlyTotal) * 100;
+          const insPct = (monthlyInsurance / monthlyTotal) * 100;
+
+          outputs.barPi.style.width = piPct + '%';
+          outputs.barTax.style.width = taxPct + '%';
+          outputs.barIns.style.width = insPct + '%';
+
+          outputs.barPi.style.display = piPct > 0 ? 'flex' : 'none';
+          outputs.barTax.style.display = taxPct > 0 ? 'flex' : 'none';
+          outputs.barIns.style.display = insPct > 0 ? 'flex' : 'none';
+        }
+      }
+
+      // Add event listeners
+      Object.values(inputs).forEach(input => {
+        input.addEventListener('input', calculateAffordability);
+        input.addEventListener('change', calculateAffordability);
+      });
+
+      // Initial calculation
+      calculateAffordability();
+    })();
+  </script>
+</body>
+</html>
