@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="skyNA" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5C6BC0"/>
+      <stop offset="100%" style="stop-color:#9FA8DA"/>
+    </linearGradient>
+    <linearGradient id="grassNA" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#66BB6A"/>
+      <stop offset="100%" style="stop-color:#388E3C"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky -->
+  <rect width="800" height="500" fill="url(#skyNA)"/>
+  <!-- Ground -->
+  <rect x="0" y="350" width="800" height="150" fill="url(#grassNA)"/>
+  <!-- Elegant estate home -->
+  <g>
+    <!-- Main house body -->
+    <rect x="200" y="220" width="400" height="180" fill="#F5F5F5"/>
+    <!-- Roof -->
+    <polygon points="180,220 400,100 620,220" fill="#37474F"/>
+    <!-- Columns -->
+    <rect x="250" y="260" width="20" height="140" fill="#ECEFF1"/>
+    <rect x="330" y="260" width="20" height="140" fill="#ECEFF1"/>
+    <rect x="450" y="260" width="20" height="140" fill="#ECEFF1"/>
+    <rect x="530" y="260" width="20" height="140" fill="#ECEFF1"/>
+    <!-- Door -->
+    <rect x="365" y="300" width="70" height="100" fill="#5D4037"/>
+    <circle cx="420" cy="350" r="5" fill="#FFD700"/>
+    <!-- Windows -->
+    <rect x="230" y="250" width="50" height="60" fill="#81D4FA"/>
+    <rect x="520" y="250" width="50" height="60" fill="#81D4FA"/>
+    <rect x="330" y="150" width="40" height="50" fill="#81D4FA"/>
+    <rect x="430" y="150" width="40" height="50" fill="#81D4FA"/>
+    <!-- Shutters -->
+    <rect x="220" y="250" width="10" height="60" fill="#263238"/>
+    <rect x="280" y="250" width="10" height="60" fill="#263238"/>
+    <rect x="510" y="250" width="10" height="60" fill="#263238"/>
+    <rect x="570" y="250" width="10" height="60" fill="#263238"/>
+  </g>
+  <!-- Circular driveway -->
+  <ellipse cx="400" cy="440" rx="180" ry="40" fill="none" stroke="#9E9E9E" stroke-width="15"/>
+  <!-- Manicured shrubs -->
+  <ellipse cx="180" cy="380" rx="30" ry="25" fill="#2E7D32"/>
+  <ellipse cx="620" cy="380" rx="30" ry="25" fill="#2E7D32"/>
+  <ellipse cx="250" cy="410" rx="25" ry="20" fill="#388E3C"/>
+  <ellipse cx="550" cy="410" rx="25" ry="20" fill="#388E3C"/>
+  <!-- Trees -->
+  <g fill="#1B5E20">
+    <ellipse cx="80" cy="340" rx="50" ry="70"/>
+    <rect x="75" y="400" width="10" height="40" fill="#5D4037"/>
+  </g>
+  <g fill="#1B5E20">
+    <ellipse cx="720" cy="340" rx="50" ry="70"/>
+    <rect x="715" y="400" width="10" height="40" fill="#5D4037"/>
+  </g>
+  <!-- Overlay -->
+  <rect x="0" y="0" width="800" height="500" fill="rgba(26,46,68,0.35)"/>
+  <text x="400" y="70" text-anchor="middle" font-family="Georgia, serif" font-size="72" font-weight="bold" fill="#FFFFFF">New Albany</text>
+  <text x="400" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#FFFFFF">Franklin County, Ohio</text>
+</svg>
