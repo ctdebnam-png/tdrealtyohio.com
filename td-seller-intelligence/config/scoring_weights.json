@@ -1,0 +1,162 @@
+{
+  "description": "Propensity-to-sell scoring weights and thresholds. The Google Sheets Config tab is the source of truth - these are defaults/backup.",
+  "version": "1.0.0",
+  "thresholds": {
+    "hot_threshold": 80,
+    "warm_threshold": 50,
+    "min_years_owned": 3,
+    "min_equity": 30000,
+    "target_price_min": 200000,
+    "target_price_max": 750000
+  },
+  "propensity_weights": {
+    "weight_years_owned": 0.25,
+    "weight_equity_gain": 0.25,
+    "weight_neighborhood_turnover": 0.15,
+    "weight_owner_occupied": 0.10,
+    "weight_price_tier": 0.15,
+    "weight_home_age": 0.10
+  },
+  "years_owned_scores": {
+    "description": "Score based on how long the owner has held the property",
+    "0-2": {
+      "score": 10,
+      "reason": "Just bought, unlikely to move"
+    },
+    "3-4": {
+      "score": 40,
+      "reason": "Still settling in"
+    },
+    "5-7": {
+      "score": 80,
+      "reason": "Prime moving window"
+    },
+    "8-10": {
+      "score": 100,
+      "reason": "Very likely to move"
+    },
+    "11-15": {
+      "score": 70,
+      "reason": "May be considering next phase"
+    },
+    "16-20": {
+      "score": 50,
+      "reason": "Established, moderate likelihood"
+    },
+    "20+": {
+      "score": 40,
+      "reason": "Very settled, less likely"
+    }
+  },
+  "equity_gain_scores": {
+    "description": "Score based on equity gain percentage since purchase",
+    "negative_or_under_10": {
+      "score": 10,
+      "reason": "Little motivation to sell"
+    },
+    "10-25": {
+      "score": 40,
+      "reason": "Modest gains"
+    },
+    "25-50": {
+      "score": 70,
+      "reason": "Good gains, motivated"
+    },
+    "50-100": {
+      "score": 100,
+      "reason": "Significant gains, high motivation"
+    },
+    "over_100": {
+      "score": 85,
+      "reason": "Might be holding for more"
+    }
+  },
+  "neighborhood_turnover_scores": {
+    "description": "Score based on % of properties in ZIP sold in last 12 months",
+    "under_3": {
+      "score": 30,
+      "reason": "Stable neighborhood, low turnover"
+    },
+    "3-5": {
+      "score": 50,
+      "reason": "Average turnover"
+    },
+    "5-8": {
+      "score": 75,
+      "reason": "Active market"
+    },
+    "8-12": {
+      "score": 100,
+      "reason": "High turnover area"
+    },
+    "over_12": {
+      "score": 90,
+      "reason": "Very high turnover"
+    }
+  },
+  "owner_occupied_scores": {
+    "owner_occupied": {
+      "score": 70,
+      "reason": "Primary residence, typical selling patterns"
+    },
+    "investor": {
+      "score": 90,
+      "reason": "Investors more likely to sell"
+    }
+  },
+  "price_tier_scores": {
+    "below_target": {
+      "score": 50,
+      "reason": "Below ideal price range"
+    },
+    "in_target": {
+      "score": 100,
+      "reason": "In ideal price range"
+    },
+    "above_target": {
+      "score": 60,
+      "reason": "Above target but still good"
+    }
+  },
+  "home_age_scores": {
+    "description": "Score based on age of home",
+    "under_5": {
+      "score": 40,
+      "reason": "Very new, unlikely to sell"
+    },
+    "5-15": {
+      "score": 70,
+      "reason": "Newer home"
+    },
+    "15-30": {
+      "score": 90,
+      "reason": "May need updates, motivating sales"
+    },
+    "30-50": {
+      "score": 80,
+      "reason": "Mature home"
+    },
+    "over_50": {
+      "score": 60,
+      "reason": "Very old, varies by condition"
+    }
+  },
+  "td_fit_weights": {
+    "price_tier": 0.25,
+    "equity_position": 0.35,
+    "owner_occupied": 0.20,
+    "service_area": 0.20
+  },
+  "td_fit_equity_scores": {
+    "description": "Higher equity = more savings with 1% commission",
+    "under_50k": 40,
+    "50k-100k": 70,
+    "100k-200k": 90,
+    "over_200k": 100
+  },
+  "td_fit_service_area_scores": {
+    "primary": 100,
+    "adjacent": 70,
+    "other": 40
+  }
+}

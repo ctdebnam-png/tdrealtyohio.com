@@ -1,0 +1,103 @@
+# TD Realty Seller Intelligence - Weekly Full Scoring
+# Runs every Monday at 6:00 AM UTC to recalculate all scores and update statistics
+
+name: Weekly Full Scoring
+
+on:
+  schedule:
+    # Run every Monday at 6:00 AM UTC (1 AM EST/2 AM EDT)
+    - cron: '0 6 * * 1'
+
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no writes to Sheets)'
+        required: false
+        default: 'false'
+        type: boolean
+      full_refresh:
+        description: 'Force full recalculation of all scores'
+        required: false
+        default: 'true'
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  full-scoring:
+    name: Full Score Recalculation
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Full Score Calculation
+        env:
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
+        run: |
+          cd td-seller-intelligence
+          ARGS=""
+          if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ "${{ github.event.inputs.full_refresh }}" == "true" ] || [ "${{ github.event_name }}" == "schedule" ]; then
+            ARGS="$ARGS --full-refresh"
+          fi
+          python -m scripts.calculate_scores $ARGS
+
+      - name: Generate Summary Report
+        if: success()
+        run: |
+          echo "## Weekly Scoring Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The weekly full score recalculation has completed successfully." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run Time:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the Google Sheets for updated:" >> $GITHUB_STEP_SUMMARY
+          echo "- Hot Leads tab" >> $GITHUB_STEP_SUMMARY
+          echo "- Warm Leads tab" >> $GITHUB_STEP_SUMMARY
+          echo "- Neighborhood Stats tab" >> $GITHUB_STEP_SUMMARY
+          echo "- Run Log tab" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scoring-logs
+          path: td-seller-intelligence/*.log
+          retention-days: 7
+
+  notify-on-failure:
+    name: Notify on Failure
+    runs-on: ubuntu-latest
+    needs: full-scoring
+    if: failure()
+
+    steps:
+      - name: Create failure summary
+        run: |
+          echo "## Weekly Scoring Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The weekly full scoring workflow failed." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Please check the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details." >> $GITHUB_STEP_SUMMARY
