@@ -34,8 +34,10 @@
   // Get market condition badge
   function getConditionBadge(condition) {
     const badges = {
+      'very-competitive': { text: "Hot Market", class: 'badge-competitive' },
       'competitive': { text: "Seller's Market", class: 'badge-competitive' },
       'balanced': { text: 'Balanced Market', class: 'badge-balanced' },
+      'buyers-market': { text: "Buyer's Market", class: 'badge-buyer' },
       'buyer': { text: "Buyer's Market", class: 'badge-buyer' }
     };
     const badge = badges[condition] || badges['balanced'];
@@ -90,12 +92,6 @@
         </div>
 
         <div class="market-stats-insight">
-          <div class="insight-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M12 16v-4M12 8h.01"/>
-            </svg>
-          </div>
           <div class="insight-content">
             <strong>Market Insight:</strong> ${area.notes}
           </div>

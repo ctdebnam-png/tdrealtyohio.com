@@ -2102,29 +2102,10 @@ main {
 }
 
 .market-stats-insight {
-  display: flex;
-  gap: 1rem;
   padding: 1.5rem 2rem;
   background: var(--off-white);
   border-top: 1px solid var(--gray-200);
   border-bottom: 1px solid var(--gray-200);
-}
-
-.insight-icon {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  background: var(--navy);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.insight-icon svg {
-  width: 20px;
-  height: 20px;
-  color: var(--gold);
 }
 
 .insight-content {
@@ -2248,12 +2229,7 @@ main {
   }
 
   .market-stats-insight {
-    flex-direction: column;
     text-align: center;
-  }
-
-  .insight-icon {
-    margin: 0 auto;
   }
 
   .compare-grid {
