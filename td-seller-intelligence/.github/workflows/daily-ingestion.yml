@@ -1,0 +1,147 @@
+name: Daily Property Ingestion
+
+on:
+  schedule:
+    # Run at 2 AM EST (7 AM UTC) every day
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+    inputs:
+      counties:
+        description: 'Counties to ingest (comma-separated: franklin,delaware,licking,fairfield)'
+        required: false
+        default: 'franklin,delaware'
+      dry_run:
+        description: 'Dry run (do not write to sheets)'
+        type: boolean
+        default: false
+
+env:
+  APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+  APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
+
+jobs:
+  ingest-franklin:
+    name: Ingest Franklin County
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.inputs.counties || contains(github.event.inputs.counties, 'franklin') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Franklin County Ingestion
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.ingest.franklin_auditor \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  ingest-delaware:
+    name: Ingest Delaware County
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.inputs.counties || contains(github.event.inputs.counties, 'delaware') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Delaware County Ingestion
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.ingest.delaware_auditor \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  ingest-licking:
+    name: Ingest Licking County
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.inputs.counties || '', 'licking') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Licking County Ingestion
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.ingest.licking_auditor \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  ingest-fairfield:
+    name: Ingest Fairfield County
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.inputs.counties || '', 'fairfield') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Fairfield County Ingestion
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.ingest.fairfield_auditor \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  calculate-scores:
+    name: Calculate Propensity Scores
+    runs-on: ubuntu-latest
+    needs: [ingest-franklin, ingest-delaware]
+    if: always() && (needs.ingest-franklin.result == 'success' || needs.ingest-delaware.result == 'success')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Calculate Scores
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.scoring.calculate_scores \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose

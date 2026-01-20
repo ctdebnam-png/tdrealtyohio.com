@@ -1,0 +1,129 @@
+name: Court Monitoring
+
+on:
+  schedule:
+    # Run at 6 AM EST (11 AM UTC) every day
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    inputs:
+      monitors:
+        description: 'Monitors to run (comma-separated: divorce,probate,foreclosure,eviction)'
+        required: false
+        default: 'divorce,probate,foreclosure,eviction'
+      lookback_days:
+        description: 'Days to look back for new filings'
+        required: false
+        default: '1'
+      dry_run:
+        description: 'Dry run (do not write to sheets)'
+        type: boolean
+        default: false
+
+env:
+  APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+  APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
+
+jobs:
+  divorce-monitor:
+    name: Monitor Divorce Filings
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.inputs.monitors || contains(github.event.inputs.monitors, 'divorce') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Divorce Monitor
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.courts.divorce_monitor \
+            --lookback ${{ github.event.inputs.lookback_days || '1' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  probate-monitor:
+    name: Monitor Probate Filings
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.inputs.monitors || contains(github.event.inputs.monitors, 'probate') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Probate Monitor
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.courts.probate_monitor \
+            --lookback ${{ github.event.inputs.lookback_days || '7' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  foreclosure-monitor:
+    name: Monitor Foreclosure Filings
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.inputs.monitors || contains(github.event.inputs.monitors, 'foreclosure') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Foreclosure Monitor
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.courts.foreclosure_monitor \
+            --lookback ${{ github.event.inputs.lookback_days || '7' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  eviction-monitor:
+    name: Monitor Eviction Filings
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.inputs.monitors || contains(github.event.inputs.monitors, 'eviction') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Eviction Monitor
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.courts.eviction_monitor \
+            --lookback ${{ github.event.inputs.lookback_days || '7' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose

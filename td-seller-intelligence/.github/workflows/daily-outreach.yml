@@ -1,0 +1,150 @@
+name: Daily Outreach
+
+on:
+  schedule:
+    # Run at 9 AM EST (2 PM UTC) on weekdays
+    - cron: '0 14 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      channels:
+        description: 'Channels to process (comma-separated: mail,email,sms)'
+        required: false
+        default: 'mail,email,sms'
+      mail_limit:
+        description: 'Max mail pieces to send'
+        required: false
+        default: '20'
+      email_limit:
+        description: 'Max emails to send'
+        required: false
+        default: '50'
+      sms_limit:
+        description: 'Max SMS to send'
+        required: false
+        default: '30'
+      dry_run:
+        description: 'Dry run (do not send)'
+        type: boolean
+        default: false
+
+env:
+  APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+  APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
+  LOB_API_KEY: ${{ secrets.LOB_API_KEY }}
+  SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+  TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+  TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+  TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
+  FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+  FROM_NAME: ${{ secrets.FROM_NAME }}
+
+jobs:
+  skip-trace:
+    name: Skip Trace HOT Leads
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Run Skip Trace
+        working-directory: td-seller-intelligence
+        env:
+          BATCH_SKIP_TRACE_API_KEY: ${{ secrets.BATCH_SKIP_TRACE_API_KEY }}
+          PROPSTREAM_API_KEY: ${{ secrets.PROPSTREAM_API_KEY }}
+        run: |
+          python -m scripts.enrichment.skip_trace \
+            --priority HOT \
+            --limit 50 \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  direct-mail:
+    name: Send Direct Mail
+    runs-on: ubuntu-latest
+    needs: skip-trace
+    if: ${{ !github.event.inputs.channels || contains(github.event.inputs.channels, 'mail') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Send Direct Mail
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.outreach.direct_mail \
+            --limit ${{ github.event.inputs.mail_limit || '20' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  email-outreach:
+    name: Send Email Outreach
+    runs-on: ubuntu-latest
+    needs: skip-trace
+    if: ${{ !github.event.inputs.channels || contains(github.event.inputs.channels, 'email') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Send Email Outreach
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.outreach.email_sender \
+            --limit ${{ github.event.inputs.email_limit || '50' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
+
+  sms-outreach:
+    name: Send SMS Outreach
+    runs-on: ubuntu-latest
+    needs: skip-trace
+    if: ${{ !github.event.inputs.channels || contains(github.event.inputs.channels, 'sms') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r td-seller-intelligence/requirements.txt
+
+      - name: Send SMS Outreach
+        working-directory: td-seller-intelligence
+        run: |
+          python -m scripts.outreach.sms_sender \
+            --limit ${{ github.event.inputs.sms_limit || '30' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} \
+            --verbose
