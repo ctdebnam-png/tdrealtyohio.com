@@ -29,9 +29,7 @@ const TD_CONFIG = {
   },
   stats: {
     zillowRating: 5.0,
-    zillowReviews: 3,
-    licensedSince: 2017,
-    transactions: 48
+    licensedSince: 2017
   },
   rates: {
     traditional: 0.03,
@@ -41,8 +39,8 @@ const TD_CONFIG = {
     buyerCashBack: 0.01
   },
   calculator: {
-    minPrice: 100000,
-    maxPrice: 1000000,
+    minPrice: 200000,
+    maxPrice: 800000,
     defaultPrice: 400000,
     step: 10000
   },
