@@ -21,76 +21,84 @@ TD Realty Ohio is a 1% commission brokerage (vs. traditional 3%) serving the Col
 - **Priority Tiers**: HOT, WARM, and COLD lead classification
 - **Neighborhood Analytics**: Track market trends by ZIP code
 
-## Setup
+## Setup (5 Minutes)
 
-### Prerequisites
+This system uses Google Apps Script for simple, secure Google Sheets access. No service accounts or complex authentication needed!
 
-1. Python 3.11+
-2. Google Cloud service account with Sheets API access
-3. Google Sheets workbook for data storage
+### Step 1: Create Your Google Sheet
 
-### Google Cloud Setup
+1. Go to [Google Sheets](https://sheets.google.com) and create a new spreadsheet
+2. Name it something like "TD Realty Seller Intelligence"
+3. Note the spreadsheet URL - you'll need it later
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing
-3. Enable the Google Sheets API and Google Drive API
-4. Create a service account:
-   - Go to IAM & Admin > Service Accounts
-   - Create new service account
-   - Download JSON key file
-5. Share your Google Sheet with the service account email (with Editor access)
+### Step 2: Add the Apps Script
 
-### Installation
+1. In your new spreadsheet, go to **Extensions > Apps Script**
+2. Delete any existing code in the editor
+3. Copy the entire contents of `google-apps-script/Code.gs` from this repo
+4. Paste it into the Apps Script editor
+5. **Important**: Change the `AUTH_TOKEN` constant to a random string:
+   ```javascript
+   const AUTH_TOKEN = 'your-random-secret-token-here';
+   ```
+   (Generate one with: `openssl rand -hex 32`)
+6. Click **Save** (Ctrl+S)
+
+### Step 3: Deploy the Apps Script
+
+1. Click **Deploy > New deployment**
+2. Click the gear icon and select **Web app**
+3. Set **Description**: "TD Realty API v1"
+4. Set **Execute as**: "Me"
+5. Set **Who has access**: "Anyone"
+6. Click **Deploy**
+7. Click **Authorize access** and allow the permissions
+8. **Copy the Web app URL** - you'll need this!
+
+### Step 4: Initialize the Spreadsheet
+
+1. Go back to your Google Sheet
+2. Refresh the page
+3. You should see a new menu: **TD Realty**
+4. Click **TD Realty > Setup All Tabs**
+5. This creates all the required tabs with headers and default config
+
+### Step 5: Add GitHub Secrets
+
+Go to your GitHub repository > Settings > Secrets and variables > Actions, and add:
+
+| Secret Name | Value |
+|-------------|-------|
+| `APPS_SCRIPT_URL` | The Web app URL from Step 3 |
+| `APPS_SCRIPT_TOKEN` | The AUTH_TOKEN you set in Step 2 |
+
+### Step 6: Test It!
+
+Trigger the workflow manually:
+1. Go to your repo > Actions > "Nightly Property Ingestion"
+2. Click "Run workflow"
+3. Check the Google Sheet for results
+
+## Local Development
 
 ```bash
-# Clone the repository
+# Clone and setup
 git clone https://github.com/your-org/tdrealtyohio.com.git
 cd tdrealtyohio.com/td-seller-intelligence
 
 # Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Copy environment template
+# Create .env file
 cp .env.example .env
+# Edit .env with your APPS_SCRIPT_URL and APPS_SCRIPT_TOKEN
 ```
 
-### Environment Variables
-
-Edit `.env` with your credentials:
-
-```bash
-# Google Sheets service account credentials (JSON string)
-GOOGLE_SHEETS_CREDENTIALS='{"type": "service_account", "project_id": "...", ...}'
-
-# Your Google Sheets document ID (from the URL)
-SPREADSHEET_ID=your_spreadsheet_id_here
-```
-
-### Initialize Google Sheets
-
-Run the setup script to create all required tabs with headers:
-
-```bash
-python -m scripts.sheets_sync --setup
-```
-
-This creates the following tabs:
-- **Master Properties**: All property data
-- **Hot Leads**: Properties with propensity_score >= 80
-- **Warm Leads**: Properties with propensity_score >= 50
-- **Inbound Leads**: For tracking website/calculator submissions
-- **Enriched Leads**: Inbound leads matched with property data
-- **Neighborhood Stats**: Aggregate statistics by ZIP
-- **Config**: Tunable scoring parameters
-- **Run Log**: History of script executions
-
-## Usage
-
-### Manual Execution
+### Running Locally
 
 ```bash
 # Run Franklin County ingestion
@@ -104,27 +112,32 @@ python -m scripts.calculate_scores
 
 # Dry run (no writes to Sheets)
 python -m scripts.ingest_franklin --dry-run
-python -m scripts.calculate_scores --dry-run
 
 # Ingest a specific ZIP code only
 python -m scripts.ingest_franklin --zip 43081
 ```
 
-### GitHub Actions (Automated)
+## Automated Workflows
 
 The system runs automatically via GitHub Actions:
 
-- **Nightly Ingestion** (5 AM UTC / Midnight EST): Fetches new property data from both counties and updates scores
-- **Weekly Full Scoring** (Monday 6 AM UTC): Complete recalculation of all scores and neighborhood stats
+- **Nightly Ingestion** (5 AM UTC / Midnight EST): Fetches new property data and updates scores
+- **Weekly Full Scoring** (Monday 6 AM UTC): Complete recalculation of all scores
 
-Workflows can also be triggered manually from the GitHub Actions tab.
+Trigger workflows manually from the GitHub Actions tab anytime.
 
-### Required Secrets
+## Google Sheets Tabs
 
-Add these secrets to your GitHub repository (Settings > Secrets and variables > Actions):
-
-- `GOOGLE_SHEETS_CREDENTIALS`: The full JSON content of your service account key
-- `SPREADSHEET_ID`: Your Google Sheets document ID
+| Tab | Description |
+|-----|-------------|
+| **Master Properties** | All property data with scores |
+| **Hot Leads** | Properties with propensity_score >= 80 |
+| **Warm Leads** | Properties with propensity_score >= 50-79 |
+| **Inbound Leads** | Website/calculator submissions |
+| **Enriched Leads** | Inbound leads matched with property data |
+| **Neighborhood Stats** | Aggregate statistics by ZIP |
+| **Config** | Tunable scoring parameters |
+| **Run Log** | History of script executions |
 
 ## Scoring System
 
@@ -160,7 +173,7 @@ How well does this property match TD Realty's ideal customer?
 
 ## Configuration
 
-All scoring parameters can be adjusted in the **Config** tab of Google Sheets:
+Adjust scoring in the **Config** tab of your Google Sheet:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
@@ -171,35 +184,17 @@ All scoring parameters can be adjusted in the **Config** tab of Google Sheets:
 | min_equity | 30000 | Minimum equity for scoring |
 | target_price_min | 200000 | Ideal price range minimum |
 | target_price_max | 750000 | Ideal price range maximum |
-| weight_* | varies | Individual scoring weights |
 
-Changes to the Config tab take effect on the next scoring run.
-
-## Data Sources
-
-### Franklin County
-
-- **Primary**: Franklin County GIS ArcGIS REST API
-- **Fallback**: Franklin County Auditor property search scraping
-- **URL**: https://apps.franklincountyauditor.com/
-
-### Delaware County
-
-- **Primary**: Delaware County GIS ArcGIS REST API
-- **Fallback**: Delaware County Auditor property search scraping
-- **URL**: https://www.co.delaware.oh.us/auditor/
+Changes take effect on the next scoring run.
 
 ## Project Structure
 
 ```
 td-seller-intelligence/
-├── .github/
-│   └── workflows/
-│       ├── nightly_ingest.yml     # Daily data ingestion
-│       └── weekly_scoring.yml     # Weekly full recalculation
+├── google-apps-script/
+│   └── Code.gs                    # Apps Script for Google Sheets
 ├── scripts/
-│   ├── __init__.py
-│   ├── sheets_sync.py             # Google Sheets operations
+│   ├── sheets_sync.py             # Sheets API client
 │   ├── utils.py                   # Helper functions
 │   ├── ingest_franklin.py         # Franklin County ingester
 │   ├── ingest_delaware.py         # Delaware County ingester
@@ -214,43 +209,31 @@ td-seller-intelligence/
 
 ## Troubleshooting
 
-### Common Issues
+### "No Apps Script URL provided" error
+- Ensure `APPS_SCRIPT_URL` environment variable is set
+- Make sure you copied the full URL from the deployment
 
-**"No credentials provided" error**
-- Ensure `GOOGLE_SHEETS_CREDENTIALS` environment variable is set
-- Check that the JSON is valid (no extra quotes or escaping issues)
+### "Unauthorized" error from Apps Script
+- Verify `APPS_SCRIPT_TOKEN` matches the AUTH_TOKEN in your Apps Script
+- Make sure you saved and redeployed after changing the token
 
-**"Spreadsheet not found" error**
-- Verify `SPREADSHEET_ID` is correct (from the URL between /d/ and /edit)
-- Ensure the service account email has Editor access to the sheet
+### "API error" or timeout
+- Google Apps Script has execution time limits
+- For large data sets, the script may need multiple runs
+- Check the Run Log tab for details
 
-**"GIS API request failed"**
+### Empty data returned
 - County GIS APIs may be temporarily unavailable
-- The system will automatically fall back to web scraping
+- The system will fall back to web scraping
 - Check the Run Log tab for specific error messages
-
-**Empty data returned**
-- The county website structure may have changed
-- Check if the target ZIPs are valid
-- Try running with `--dry-run` to see what data is being fetched
-
-### Checking Logs
-
-- GitHub Actions logs: Repository > Actions > Select workflow run
-- Run Log tab in Google Sheets: Shows status of each script execution
-- Local logs: Output to console when running manually
 
 ## Adding New Counties
 
 1. Add county configuration to `config/counties.json`
-2. Create new ingester script in `scripts/` (use existing as template)
+2. Create new ingester script in `scripts/` (copy existing as template)
 3. Add ZIP codes to `scripts/utils.py` NEIGHBORHOOD_MAP
 4. Update GitHub Actions workflow to include new county
 
 ## License
 
 Internal use only - TD Realty Ohio
-
-## Support
-
-For issues or questions, contact the development team or check the GitHub Issues.

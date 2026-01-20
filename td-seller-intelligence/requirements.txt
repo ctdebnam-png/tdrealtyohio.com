@@ -1,11 +1,7 @@
 # TD Realty Seller Intelligence System
 # Python dependencies
 
-# Google Sheets integration
-gspread>=5.12.0
-google-auth>=2.23.0
-
-# HTTP requests and web scraping
+# HTTP requests (used for Apps Script Web App and web scraping)
 requests>=2.31.0
 beautifulsoup4>=4.12.0
 lxml>=4.9.0

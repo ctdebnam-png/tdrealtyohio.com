@@ -48,8 +48,8 @@ jobs:
       - name: Run Franklin County Ingester
         if: ${{ github.event.inputs.county == 'all' || github.event.inputs.county == 'franklin' || github.event_name == 'schedule' }}
         env:
-          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
-          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
         run: |
           cd td-seller-intelligence
           if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
@@ -62,8 +62,8 @@ jobs:
       - name: Run Delaware County Ingester
         if: ${{ github.event.inputs.county == 'all' || github.event.inputs.county == 'delaware' || github.event_name == 'schedule' }}
         env:
-          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
-          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
         run: |
           cd td-seller-intelligence
           if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
@@ -76,8 +76,8 @@ jobs:
       - name: Run Scoring Engine
         if: ${{ github.event.inputs.dry_run != 'true' }}
         env:
-          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
-          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
         run: |
           cd td-seller-intelligence
           python -m scripts.calculate_scores
