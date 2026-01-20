@@ -83,14 +83,50 @@
       border-left: 4px solid var(--navy);
       margin: 2rem 0;
     }
-    .insert-placeholder {
-      background: #fff3cd;
-      border: 1px dashed #856404;
-      padding: 1rem;
+    .school-note {
+      background: var(--gray-50);
+      padding: 1rem 1.25rem;
       border-radius: var(--radius-md);
-      font-size: 0.875rem;
-      color: #856404;
-      margin: 1rem 0;
+      font-size: 0.9375rem;
+      color: var(--gray-700);
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--gold);
+    }
+    .neighborhood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .neighborhood-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+    .neighborhood-card h4 {
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      font-size: 1.125rem;
+    }
+    .neighborhood-card p {
+      color: var(--gray-600);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    .neighborhood-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--gray-500);
+    }
+    .neighborhood-meta span {
+      background: var(--gray-100);
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius-sm);
     }
   </style>
 </head>
@@ -146,6 +182,13 @@
       </div>
     </section>
 
+    <!-- Market Stats Widget -->
+    <section class="section">
+      <div class="container">
+        <div id="market-stats" data-area="columbus"></div>
+      </div>
+    </section>
+
     <!-- Quick Facts -->
     <section class="section bg-off-white">
       <div class="container">
@@ -153,19 +196,19 @@
         <div class="quick-facts">
           <div class="fact-card">
             <div class="fact-label">Typical Home Prices</div>
-            <div class="fact-value insert-placeholder" style="font-size: 1rem;">[INSERT]</div>
+            <div class="fact-value">$180K - $450K</div>
           </div>
           <div class="fact-card">
-            <div class="fact-label">School District</div>
-            <div class="fact-value">Columbus City</div>
+            <div class="fact-label">School Districts</div>
+            <div class="fact-value">Varies by Area</div>
           </div>
           <div class="fact-card">
-            <div class="fact-label">Commute to Downtown</div>
-            <div class="fact-value insert-placeholder" style="font-size: 1rem;">[INSERT]</div>
+            <div class="fact-label">Character</div>
+            <div class="fact-value">Diverse & Urban</div>
           </div>
           <div class="fact-card">
             <div class="fact-label">Property Taxes</div>
-            <div class="fact-value insert-placeholder" style="font-size: 1rem;">[INSERT]</div>
+            <div class="fact-value">~2.0% rate</div>
           </div>
         </div>
       </div>
@@ -175,9 +218,13 @@
     <section class="section">
       <div class="container">
         <h2>Schools in Columbus</h2>
-        <div class="insert-placeholder">
-          [INSERT: Brief intro about Columbus City Schools and note about other districts serving parts of Columbus]
+        <p style="max-width: 800px;">Columbus City Schools is one of Ohio's largest districts, serving the majority of the city. However, Columbus has unique school boundaries where some neighborhoods are served by suburban districts despite being within city limits.</p>
+
+        <div class="school-note">
+          <strong>District Diversity:</strong> Parts of Columbus fall within Westerville, Gahanna-Jefferson, South-Western, Groveport Madison, and other suburban districts. The "win-win" areas offer Columbus addresses with suburban schools. Always verify district assignments.
         </div>
+
+        <p style="margin-top: 1rem;"><strong>Notable options:</strong> Columbus City Schools offers magnet programs including Fort Hayes Arts & Academic High School, Centennial High School, and STEM programs. Private and charter school options are abundant throughout the city.</p>
 
         <div style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1rem;">
           <a href="https://www.greatschools.org/ohio/columbus/" target="_blank" rel="noopener" class="btn btn-primary">View School Ratings on GreatSchools</a>
@@ -222,9 +269,7 @@
         </div>
 
         <div class="market-note">
-          <div class="insert-placeholder">
-            [INSERT: 2-3 sentences about current market conditions in Columbus - update quarterly]
-          </div>
+          Columbus remains a seller's market with strong demand driven by job growth from major employers including Intel's new chip plant, Ohio State University, and major healthcare systems. Urban neighborhoods are seeing particularly strong appreciation as young professionals seek walkable, amenity-rich areas.
         </div>
       </div>
     </section>
@@ -233,8 +278,68 @@
     <section class="section bg-off-white">
       <div class="container">
         <h2>Neighborhoods in Columbus</h2>
-        <div class="insert-placeholder">
-          [INSERT: List key Columbus neighborhoods with descriptions - Short North, German Village, Clintonville, Grandview, Victorian Village, etc. Include price ranges, character, walkability]
+        <p style="max-width: 800px; margin-bottom: 1rem;">Columbus offers incredibly diverse neighborhoods, from historic urban enclaves to family-friendly suburban pockets within city limits.</p>
+
+        <div class="neighborhood-grid">
+          <div class="neighborhood-card">
+            <h4>Short North Arts District</h4>
+            <p>Columbus's trendiest neighborhood with galleries, boutiques, and restaurants along High Street. Mix of renovated Victorians and modern condos. Walkable to downtown and Arena District.</p>
+            <div class="neighborhood-meta">
+              <span>$300K - $800K</span>
+              <span>Very Walkable</span>
+              <span>Urban</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>German Village</h4>
+            <p>One of the largest privately-funded historic districts in the US. Brick streets, restored 1800s homes, and the famous Book Loft. Strict architectural standards maintain character.</p>
+            <div class="neighborhood-meta">
+              <span>$400K - $900K</span>
+              <span>Historic</span>
+              <span>Walkable</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Clintonville</h4>
+            <p>Established tree-lined streets with early 1900s homes. Strong community identity, local shops along High Street, and easy access to Whetstone Park. Popular with families and professionals.</p>
+            <div class="neighborhood-meta">
+              <span>$350K - $600K</span>
+              <span>No HOA</span>
+              <span>Family-Friendly</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Grandview Heights</h4>
+            <p>Small city within Columbus known for excellent schools and walkable downtown. Character homes from the 1920s-40s. Technically a separate municipality with its own services.</p>
+            <div class="neighborhood-meta">
+              <span>$400K - $700K</span>
+              <span>Own Schools</span>
+              <span>Walkable</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Victorian Village</h4>
+            <p>Beautiful Victorian homes near downtown and the Short North. Mix of single-family homes, duplexes, and small apartment buildings. Strong preservation efforts maintain historic character.</p>
+            <div class="neighborhood-meta">
+              <span>$350K - $750K</span>
+              <span>Historic</span>
+              <span>Near OSU</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Bexley</h4>
+            <p>Affluent inner-ring suburb with top-rated schools and stately homes. Tree-lined streets, Capital University, and strong community events. Technically a separate city.</p>
+            <div class="neighborhood-meta">
+              <span>$400K - $1M+</span>
+              <span>Own Schools</span>
+              <span>Established</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -342,5 +447,6 @@
   </footer>
 
   <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/market-stats.js"></script>
 </body>
 </html>

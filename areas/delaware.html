@@ -83,14 +83,50 @@
       border-left: 4px solid var(--navy);
       margin: 2rem 0;
     }
-    .insert-placeholder {
-      background: #fff3cd;
-      border: 1px dashed #856404;
-      padding: 1rem;
+    .school-note {
+      background: var(--gray-50);
+      padding: 1rem 1.25rem;
       border-radius: var(--radius-md);
-      font-size: 0.875rem;
-      color: #856404;
-      margin: 1rem 0;
+      font-size: 0.9375rem;
+      color: var(--gray-700);
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--gold);
+    }
+    .neighborhood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .neighborhood-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+    .neighborhood-card h4 {
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      font-size: 1.125rem;
+    }
+    .neighborhood-card p {
+      color: var(--gray-600);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    .neighborhood-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--gray-500);
+    }
+    .neighborhood-meta span {
+      background: var(--gray-100);
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius-sm);
     }
   </style>
 </head>
@@ -146,6 +182,13 @@
       </div>
     </section>
 
+    <!-- Market Stats Widget -->
+    <section class="section">
+      <div class="container">
+        <div id="market-stats" data-area="delaware"></div>
+      </div>
+    </section>
+
     <!-- Quick Facts -->
     <section class="section bg-off-white">
       <div class="container">
@@ -153,19 +196,19 @@
         <div class="quick-facts">
           <div class="fact-card">
             <div class="fact-label">Typical Home Prices</div>
-            <div class="fact-value insert-placeholder" style="font-size: 1rem;">[INSERT]</div>
+            <div class="fact-value">$290K - $575K</div>
           </div>
           <div class="fact-card">
             <div class="fact-label">School District</div>
-            <div class="fact-value">Delaware City Schools</div>
+            <div class="fact-value">Delaware City</div>
           </div>
           <div class="fact-card">
             <div class="fact-label">Commute to Downtown</div>
-            <div class="fact-value insert-placeholder" style="font-size: 1rem;">[INSERT]</div>
+            <div class="fact-value">30-40 min</div>
           </div>
           <div class="fact-card">
             <div class="fact-label">Property Taxes</div>
-            <div class="fact-value insert-placeholder" style="font-size: 1rem;">[INSERT]</div>
+            <div class="fact-value">~1.7% rate</div>
           </div>
         </div>
       </div>
@@ -175,9 +218,13 @@
     <section class="section">
       <div class="container">
         <h2>Schools in Delaware</h2>
-        <div class="insert-placeholder">
-          [INSERT: Brief intro about Delaware City Schools - known for strong academics, community involvement, and preparing students for success]
+        <p style="max-width: 800px;">Delaware City Schools serves the city of Delaware and surrounding areas with Hayes High School as the district's comprehensive high school. The district balances small-town values with quality education.</p>
+
+        <div class="school-note">
+          <strong>Growing District:</strong> As Delaware County grows, the school district is expanding while maintaining its community-focused culture. Ohio Wesleyan University in downtown provides unique educational partnership opportunities.
         </div>
+
+        <p style="margin-top: 1rem;"><strong>Notable features:</strong> Strong community support, newer facilities in growing areas, and partnership opportunities with Ohio Wesleyan. The district offers good value compared to higher-priced suburban districts.</p>
 
         <div style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1rem;">
           <a href="https://www.greatschools.org/ohio/delaware/" target="_blank" rel="noopener" class="btn btn-primary">View School Ratings on GreatSchools</a>
@@ -222,9 +269,7 @@
         </div>
 
         <div class="market-note">
-          <div class="insert-placeholder">
-            [INSERT: 2-3 sentences about current market conditions in Delaware - update quarterly]
-          </div>
+          Delaware is seeing strong 6.2% year-over-year appreciation as buyers seek more affordable alternatives to Powell and Dublin. New construction is booming, particularly on the south side near Polaris. The small-town downtown combined with rural character attracts families priced out of other suburban options.
         </div>
       </div>
     </section>
@@ -233,8 +278,58 @@
     <section class="section bg-off-white">
       <div class="container">
         <h2>Neighborhoods in Delaware</h2>
-        <div class="insert-placeholder">
-          [INSERT: List key Delaware neighborhoods with descriptions - Historic Downtown, The Landings, Briarwood, Olentangy Meadows, etc. Include price ranges, character, amenities]
+        <p style="max-width: 800px; margin-bottom: 1rem;">Delaware offers everything from historic downtown charm to new construction communities, with a mix of city and rural township options.</p>
+
+        <div class="neighborhood-grid">
+          <div class="neighborhood-card">
+            <h4>Historic Downtown Delaware</h4>
+            <p>Charming downtown with brick streets, local shops, and Ohio Wesleyan University. Victorian and craftsman homes near Sandusky Street. Walking distance to restaurants and farmers market.</p>
+            <div class="neighborhood-meta">
+              <span>$300K - $500K</span>
+              <span>Walkable</span>
+              <span>Historic character</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>The Landings</h4>
+            <p>Newer planned community with variety of home styles, community amenities, and walking trails. Popular with families seeking new construction at reasonable prices.</p>
+            <div class="neighborhood-meta">
+              <span>$350K - $500K</span>
+              <span>HOA</span>
+              <span>New construction</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Briarwood</h4>
+            <p>Established neighborhood with mature trees and well-maintained homes. Mix of styles from 1980s-2000s. Good schools and community feel. Popular starter home area.</p>
+            <div class="neighborhood-meta">
+              <span>$275K - $400K</span>
+              <span>Established</span>
+              <span>Family-friendly</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>South Delaware (near Polaris)</h4>
+            <p>Rapidly developing area with new construction communities, easy access to Polaris shopping and I-71. Best of both worlds - Delaware address with Columbus convenience.</p>
+            <div class="neighborhood-meta">
+              <span>$400K - $600K</span>
+              <span>New construction</span>
+              <span>Near Polaris</span>
+            </div>
+          </div>
+
+          <div class="neighborhood-card">
+            <h4>Rural Delaware Township</h4>
+            <p>Acreage properties and rural living while still within Delaware schools. Mix of older farmhouses and newer custom builds. Great for those wanting space and privacy.</p>
+            <div class="neighborhood-meta">
+              <span>$400K - $800K</span>
+              <span>Acreage available</span>
+              <span>Rural character</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -342,5 +437,6 @@
   </footer>
 
   <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/market-stats.js"></script>
 </body>
 </html>
