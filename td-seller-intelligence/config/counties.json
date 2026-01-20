@@ -1,0 +1,129 @@
+{
+  "description": "County configuration for TD Realty Seller Intelligence data ingestion",
+  "version": "1.0.0",
+  "service_area": {
+    "primary_counties": ["Franklin", "Delaware"],
+    "future_counties": ["Licking", "Fairfield"],
+    "description": "TD Realty serves Columbus/Central Ohio metro area"
+  },
+  "counties": {
+    "franklin": {
+      "name": "Franklin County",
+      "state": "OH",
+      "auditor_url": "https://apps.franklincountyauditor.com/",
+      "gis_url": "https://gis.franklincountyauditor.com/arcgis/rest/services/",
+      "property_search_url": "https://apps.franklincountyauditor.com/Properties/Search",
+      "enabled": true,
+      "target_zips": [
+        "43081",
+        "43082",
+        "43016",
+        "43017",
+        "43065",
+        "43230",
+        "43054",
+        "43026",
+        "43220",
+        "43221",
+        "43085",
+        "43123",
+        "43147",
+        "43004",
+        "43202",
+        "43214"
+      ],
+      "zip_details": {
+        "43081": {"city": "Westerville", "neighborhood": "Westerville"},
+        "43082": {"city": "Westerville", "neighborhood": "Westerville"},
+        "43016": {"city": "Dublin", "neighborhood": "Dublin"},
+        "43017": {"city": "Dublin", "neighborhood": "Dublin"},
+        "43065": {"city": "Powell", "neighborhood": "Powell"},
+        "43230": {"city": "Gahanna", "neighborhood": "Gahanna"},
+        "43054": {"city": "New Albany", "neighborhood": "New Albany"},
+        "43026": {"city": "Hilliard", "neighborhood": "Hilliard"},
+        "43220": {"city": "Upper Arlington", "neighborhood": "Upper Arlington"},
+        "43221": {"city": "Upper Arlington", "neighborhood": "Upper Arlington"},
+        "43085": {"city": "Worthington", "neighborhood": "Worthington"},
+        "43123": {"city": "Grove City", "neighborhood": "Grove City"},
+        "43147": {"city": "Pickerington", "neighborhood": "Pickerington"},
+        "43004": {"city": "Blacklick", "neighborhood": "Blacklick"},
+        "43202": {"city": "Columbus", "neighborhood": "Clintonville"},
+        "43214": {"city": "Columbus", "neighborhood": "Clintonville"}
+      },
+      "residential_class_codes": ["R", "R1", "R2", "R3", "R4", "RESIDENTIAL", "SINGLE FAMILY", "CONDO"],
+      "rate_limit_per_second": 1.0
+    },
+    "delaware": {
+      "name": "Delaware County",
+      "state": "OH",
+      "auditor_url": "https://www.co.delaware.oh.us/auditor/",
+      "gis_url": "https://gis.co.delaware.oh.us/arcgis/rest/services/",
+      "property_search_url": "https://www.co.delaware.oh.us/auditor/property-search/",
+      "enabled": true,
+      "target_zips": [
+        "43015",
+        "43035",
+        "43065",
+        "43074"
+      ],
+      "zip_details": {
+        "43015": {"city": "Delaware", "neighborhood": "Delaware"},
+        "43035": {"city": "Lewis Center", "neighborhood": "Lewis Center"},
+        "43065": {"city": "Powell", "neighborhood": "Powell"},
+        "43074": {"city": "Sunbury", "neighborhood": "Sunbury"}
+      },
+      "residential_class_codes": ["R", "R1", "R2", "R3", "R4", "R5", "RESIDENTIAL", "SINGLE FAMILY", "CONDO"],
+      "rate_limit_per_second": 1.0
+    },
+    "licking": {
+      "name": "Licking County",
+      "state": "OH",
+      "auditor_url": "https://www.lcauditor.com/",
+      "enabled": false,
+      "notes": "Future expansion - Newark, Granville, Pataskala areas",
+      "target_zips": [
+        "43023",
+        "43055",
+        "43056",
+        "43062"
+      ],
+      "zip_details": {
+        "43023": {"city": "Granville", "neighborhood": "Granville"},
+        "43055": {"city": "Newark", "neighborhood": "Newark"},
+        "43056": {"city": "Heath", "neighborhood": "Heath"},
+        "43062": {"city": "Pataskala", "neighborhood": "Pataskala"}
+      }
+    },
+    "fairfield": {
+      "name": "Fairfield County",
+      "state": "OH",
+      "auditor_url": "https://www.co.fairfield.oh.us/auditor/",
+      "enabled": false,
+      "notes": "Future expansion - Lancaster, Pickerington areas",
+      "target_zips": [
+        "43112",
+        "43130",
+        "43147"
+      ],
+      "zip_details": {
+        "43112": {"city": "Carroll", "neighborhood": "Carroll"},
+        "43130": {"city": "Lancaster", "neighborhood": "Lancaster"},
+        "43147": {"city": "Pickerington", "neighborhood": "Pickerington"}
+      }
+    }
+  },
+  "adjacent_zips": {
+    "description": "Columbus metro ZIPs not in primary targets but still serviceable",
+    "zips": [
+      "43201", "43203", "43204", "43205", "43206", "43207", "43209",
+      "43210", "43211", "43212", "43213", "43215", "43217", "43219",
+      "43222", "43223", "43224", "43227", "43228", "43229", "43231",
+      "43232", "43235", "43240"
+    ]
+  },
+  "data_quality": {
+    "required_fields": ["parcel_id", "address", "zip"],
+    "preferred_fields": ["owner_name", "purchase_date", "purchase_price", "assessed_value"],
+    "nice_to_have_fields": ["beds", "baths", "sqft", "year_built"]
+  }
+}

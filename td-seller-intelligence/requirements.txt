@@ -1,0 +1,29 @@
+# TD Realty Seller Intelligence System
+# Python dependencies
+
+# Google Sheets integration
+gspread>=5.12.0
+google-auth>=2.23.0
+
+# HTTP requests and web scraping
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# Data processing
+pandas>=2.1.0
+
+# Environment and configuration
+python-dotenv>=1.0.0
+
+# Retry logic for API calls
+tenacity>=8.2.0
+
+# Optional: Rate limiting
+# ratelimit>=2.2.1
+
+# Development dependencies (optional)
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+# black>=23.0.0
+# flake8>=6.0.0
