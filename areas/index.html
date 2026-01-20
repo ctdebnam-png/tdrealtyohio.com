@@ -519,6 +519,7 @@
 
   <script src="/assets/js/main.js"></script>
   <script>
+    // Community tab switching
     document.querySelectorAll('.community-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.community-tab').forEach(t => t.classList.remove('active'));
@@ -526,6 +527,51 @@
         tab.classList.add('active');
         document.getElementById(tab.dataset.community).classList.add('active');
       });
+    });
+
+    // Initialize all community calculators
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
+    }
+
+    document.querySelectorAll('.calculator').forEach(calc => {
+      const slider = calc.querySelector('[data-price-slider]');
+      const priceDisplay = calc.querySelector('[data-price-display]');
+      const toggleBtns = calc.querySelectorAll('[data-toggle-btn]');
+      const traditionalEl = calc.querySelector('[data-traditional]');
+      const tdRealtyEl = calc.querySelector('[data-td-realty]');
+      const savingsEl = calc.querySelector('[data-savings]');
+      const rateLabel = calc.querySelector('[data-rate-label]');
+
+      let currentRate = 0.01;
+
+      function calculate() {
+        const price = slider ? parseInt(slider.value) : 400000;
+        const traditional = price * 0.03;
+        const tdRealty = price * currentRate;
+        const savings = traditional - tdRealty;
+
+        if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
+        if (traditionalEl) traditionalEl.textContent = formatCurrency(traditional);
+        if (tdRealtyEl) tdRealtyEl.textContent = formatCurrency(tdRealty);
+        if (savingsEl) savingsEl.textContent = formatCurrency(savings);
+      }
+
+      if (slider) {
+        slider.addEventListener('input', calculate);
+      }
+
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          toggleBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentRate = btn.dataset.rate === 'buy-sell' ? 0.01 : 0.02;
+          if (rateLabel) rateLabel.textContent = btn.dataset.rate === 'buy-sell' ? '1%' : '2%';
+          calculate();
+        });
+      });
+
+      calculate();
     });
   </script>
 </body>
