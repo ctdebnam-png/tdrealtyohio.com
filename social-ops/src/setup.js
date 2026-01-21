@@ -1,19 +1,19 @@
 import { mkdirSync, existsSync, copyFileSync, readdirSync } from 'fs';
 import { join } from 'path';
-import { loadConfig, getDirectoryPaths, getRulesTemplatesPath } from './config.js';
+import { buildConfig, getDirectoryPaths, getSharedRulesPath } from './config.js';
 
 /**
  * Ensure all required directories exist, creating them if necessary
- * @param {Object} config - Configuration object
+ * @param {string} baseDir - Base directory path
  * @returns {Object} Directory paths
  */
-export function ensureDirectories(config) {
-  const dirs = getDirectoryPaths(config.baseDir);
+export function ensureDirectories(baseDir) {
+  const dirs = getDirectoryPaths(baseDir);
 
   // Create base directory if it doesn't exist
-  if (!existsSync(config.baseDir)) {
-    mkdirSync(config.baseDir, { recursive: true });
-    console.log(`Created base directory: ${config.baseDir}`);
+  if (!existsSync(baseDir)) {
+    mkdirSync(baseDir, { recursive: true });
+    console.log(`Created base directory: ${baseDir}`);
   }
 
   // Create all subdirectories
@@ -28,23 +28,23 @@ export function ensureDirectories(config) {
 }
 
 /**
- * Copy rules template files to the rules directory if they don't exist
+ * Copy shared rules files to the working directory's rules folder if they don't exist
  * @param {Object} dirs - Directory paths object
  */
 export function initializeRules(dirs) {
-  const templatesPath = getRulesTemplatesPath();
-  const rulesPath = dirs.rules;
+  const sharedRulesPath = getSharedRulesPath();
+  const workingRulesPath = dirs.rules;
 
-  if (!existsSync(templatesPath)) {
-    console.warn('Rules templates directory not found. Skipping rules initialization.');
+  if (!existsSync(sharedRulesPath)) {
+    console.warn('Shared rules directory not found. Skipping rules initialization.');
     return;
   }
 
-  const templateFiles = readdirSync(templatesPath).filter(f => f.endsWith('.txt'));
+  const ruleFiles = readdirSync(sharedRulesPath).filter(f => f.endsWith('.txt'));
 
-  for (const file of templateFiles) {
-    const sourcePath = join(templatesPath, file);
-    const destPath = join(rulesPath, file);
+  for (const file of ruleFiles) {
+    const sourcePath = join(sharedRulesPath, file);
+    const destPath = join(workingRulesPath, file);
 
     if (!existsSync(destPath)) {
       copyFileSync(sourcePath, destPath);
@@ -55,11 +55,12 @@ export function initializeRules(dirs) {
 
 /**
  * Run full setup - ensure directories and initialize rules
+ * @param {string} baseDir - Base directory path
  * @returns {Object} Object with config and directory paths
  */
-export function runSetup() {
-  const config = loadConfig();
-  const dirs = ensureDirectories(config);
+export function runSetup(baseDir) {
+  const config = buildConfig(baseDir);
+  const dirs = ensureDirectories(config.baseDir);
   initializeRules(dirs);
 
   return { config, dirs };

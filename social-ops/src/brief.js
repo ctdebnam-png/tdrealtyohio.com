@@ -110,6 +110,11 @@ export function getOrCreateBrief(mediaInfo, dirs, config) {
   const content = readFileSync(briefPath, 'utf-8');
   const parsed = parseBrief(content);
 
+  // Apply defaults if empty
+  if (!parsed.location) {
+    parsed.location = config.defaultLocation || 'Central Ohio';
+  }
+
   return {
     path: briefPath,
     data: parsed

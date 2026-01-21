@@ -2,16 +2,18 @@ import { readFileSync, writeFileSync, existsSync, appendFileSync } from 'fs';
 import { join } from 'path';
 
 // Weekly cadence mapping: postType -> { day, time, primary platform }
+// Schedule: Mon process/market, Wed buyer tip, Fri neighborhood/seller, Sun brand
 const CADENCE_MAP = {
+  process_tip: { day: 'Monday', time: '10:00', primary: 'Facebook' },
   market_update: { day: 'Monday', time: '10:00', primary: 'LinkedIn' },
   buyer_tip: { day: 'Wednesday', time: '12:00', primary: 'Facebook' },
+  tip: { day: 'Wednesday', time: '12:00', primary: 'Facebook' },
   seller_tip: { day: 'Friday', time: '10:00', primary: 'Facebook' },
   neighborhood: { day: 'Friday', time: '14:00', primary: 'Instagram' },
+  brand: { day: 'Sunday', time: '18:00', primary: 'Instagram' },
   listing: { day: 'Tuesday', time: '11:00', primary: 'Facebook' },
   sold: { day: 'Thursday', time: '15:00', primary: 'Instagram' },
-  brand: { day: 'Sunday', time: '18:00', primary: 'Instagram' },
   open_house: { day: 'Thursday', time: '10:00', primary: 'Facebook' },
-  tip: { day: 'Wednesday', time: '12:00', primary: 'Facebook' },
   general: { day: 'Saturday', time: '11:00', primary: 'Facebook' }
 };
 

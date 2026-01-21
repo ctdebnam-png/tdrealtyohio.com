@@ -2,36 +2,80 @@
 
 import { watch as fsWatch } from 'chokidar';
 import { join, extname, basename } from 'path';
+import { existsSync, unlinkSync } from 'fs';
 import { runSetup } from './setup.js';
+import { getDefaultBaseDir } from './config.js';
 import { scanInbox, isAlreadyProcessed, getBasename } from './scanner.js';
 import { getOrCreateBrief } from './brief.js';
 import { loadRules, processMediaFile } from './generator.js';
-import { queueMediaFile, createPacket, readQueue, isInQueue } from './scheduler.js';
+import { queueMediaFile, createPacket } from './scheduler.js';
 
 // Supported media extensions
 const SUPPORTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.mp4', '.mov'];
+
+/**
+ * Parse command line arguments
+ * @param {Array} args - Command line arguments
+ * @returns {Object} Parsed options
+ */
+function parseArgs(args) {
+  const options = {
+    command: null,
+    baseDir: getDefaultBaseDir(),
+    force: false,
+    basename: null
+  };
+
+  let i = 0;
+  while (i < args.length) {
+    const arg = args[i];
+
+    if (arg === '--baseDir' || arg === '--base-dir') {
+      i++;
+      if (i < args.length) {
+        options.baseDir = args[i];
+      }
+    } else if (arg === '--force' || arg === '-f') {
+      options.force = true;
+    } else if (arg === '--help' || arg === '-h') {
+      options.command = 'help';
+    } else if (!arg.startsWith('-')) {
+      if (!options.command) {
+        options.command = arg;
+      } else if (!options.basename) {
+        options.basename = arg;
+      }
+    }
+    i++;
+  }
+
+  return options;
+}
 
 /**
  * Print banner
  */
 function printBanner() {
   console.log('');
-  console.log('╔═══════════════════════════════════════════════════════════════╗');
-  console.log('║         TD Realty Ohio - Social Media Caption Tool            ║');
-  console.log('╚═══════════════════════════════════════════════════════════════╝');
+  console.log('TD Realty Ohio - Social Media Caption Tool');
+  console.log('==========================================');
   console.log('');
 }
 
 /**
  * Run the scan command - process all media in inbox once
+ * @param {Object} options - Parsed CLI options
  */
-async function runScan() {
+async function runScan(options) {
   printBanner();
   console.log('Running scan...\n');
 
   // Setup directories and load config
-  const { config, dirs } = runSetup();
+  const { config, dirs } = runSetup(options.baseDir);
   console.log(`Base directory: ${config.baseDir}`);
+  if (options.force) {
+    console.log('Force mode: will reprocess existing files');
+  }
   console.log('');
 
   // Load rules
@@ -61,11 +105,18 @@ async function runScan() {
   let failed = 0;
 
   for (const mediaInfo of mediaFiles) {
-    // Check if already processed
-    if (isAlreadyProcessed(mediaInfo.basename, dirs)) {
+    // Check if already processed (unless --force)
+    if (!options.force && isAlreadyProcessed(mediaInfo.basename, dirs)) {
       console.log(`\nSkipped (already processed): ${mediaInfo.filename}`);
       skipped++;
       continue;
+    }
+
+    // If forcing, remove existing final.txt to regenerate
+    if (options.force && isAlreadyProcessed(mediaInfo.basename, dirs)) {
+      const finalPath = join(dirs.captions, `${mediaInfo.basename}.final.txt`);
+      unlinkSync(finalPath);
+      console.log(`\nForce regenerating: ${mediaInfo.filename}`);
     }
 
     // Get or create brief
@@ -84,7 +135,7 @@ async function runScan() {
   }
 
   // Summary
-  console.log('\n' + '─'.repeat(60));
+  console.log('\n' + '-'.repeat(60));
   console.log('Summary:');
   console.log(`  Processed: ${processed}`);
   console.log(`  Skipped:   ${skipped}`);
@@ -99,15 +150,19 @@ async function runScan() {
 
 /**
  * Run the watch command - continuously watch inbox for new files
+ * @param {Object} options - Parsed CLI options
  */
-async function runWatch() {
+async function runWatch(options) {
   printBanner();
   console.log('Starting watch mode...\n');
 
   // Setup directories and load config
-  const { config, dirs } = runSetup();
+  const { config, dirs } = runSetup(options.baseDir);
   console.log(`Base directory: ${config.baseDir}`);
   console.log(`Watching: ${dirs.inbox}`);
+  if (options.force) {
+    console.log('Force mode: will reprocess existing files');
+  }
   console.log('');
 
   // Load rules
@@ -140,8 +195,8 @@ async function runWatch() {
       return;
     }
 
-    // Skip if already processed
-    if (isAlreadyProcessed(fileBasename, dirs)) {
+    // Skip if already processed (unless --force)
+    if (!options.force && isAlreadyProcessed(fileBasename, dirs)) {
       console.log(`Skipped (already processed): ${filename}`);
       return;
     }
@@ -149,6 +204,12 @@ async function runWatch() {
     processing.add(fileBasename);
 
     try {
+      // If forcing, remove existing final.txt
+      if (options.force && isAlreadyProcessed(fileBasename, dirs)) {
+        const finalPath = join(dirs.captions, `${fileBasename}.final.txt`);
+        unlinkSync(finalPath);
+      }
+
       const mediaInfo = {
         filename,
         basename: fileBasename,
@@ -207,25 +268,25 @@ async function runWatch() {
 
 /**
  * Run the package command - create copy-paste packet for a media item
- * @param {string} targetBasename - Basename of media to package
+ * @param {Object} options - Parsed CLI options
  */
-async function runPackage(targetBasename) {
+async function runPackage(options) {
   printBanner();
 
-  if (!targetBasename) {
+  if (!options.basename) {
     console.error('Error: Please provide a basename');
-    console.error('Usage: npm run package -- <basename>');
+    console.error('Usage: npm run package -- <basename> [--baseDir <path>]');
     process.exit(1);
   }
 
   // Setup directories
-  const { config, dirs } = runSetup();
+  const { dirs } = runSetup(options.baseDir);
 
   // Create the packet
-  const success = createPacket(targetBasename, dirs);
+  const success = createPacket(options.basename, dirs);
 
   if (success) {
-    console.log(`\nPacket created: ${join(dirs.scheduled, `${targetBasename}.packet.txt`)}`);
+    console.log(`\nPacket created: ${join(dirs.scheduled, `${options.basename}.packet.txt`)}`);
   } else {
     console.error('\nFailed to create packet. Ensure the media has been processed first.');
     process.exit(1);
@@ -238,39 +299,54 @@ async function runPackage(targetBasename) {
 function printUsage() {
   printBanner();
   console.log('Usage:');
-  console.log('  npm run scan              Scan inbox and generate captions');
-  console.log('  npm run watch             Watch inbox for new files');
-  console.log('  npm run package -- <name> Create copy-paste packet');
+  console.log('  npm run scan [-- --baseDir <path>] [-- --force]');
+  console.log('  npm run watch [-- --baseDir <path>] [-- --force]');
+  console.log('  npm run package -- <basename> [--baseDir <path>]');
+  console.log('');
+  console.log('Commands:');
+  console.log('  scan      Scan inbox and generate captions for new media');
+  console.log('  watch     Watch inbox continuously for new files');
+  console.log('  package   Create copy-paste packet for a processed item');
+  console.log('');
+  console.log('Options:');
+  console.log('  --baseDir <path>  Working directory (default: ~/TD_Realty_Social)');
+  console.log('  --force, -f       Reprocess files even if already processed');
+  console.log('  --help, -h        Show this help message');
   console.log('');
   console.log('Environment:');
-  console.log('  ANTHROPIC_API_KEY         Required for caption generation');
+  console.log('  ANTHROPIC_API_KEY  Required for caption generation');
+  console.log('');
+  console.log('Examples:');
+  console.log('  npm run scan');
+  console.log('  npm run scan -- --baseDir /path/to/TD_Realty_Social');
+  console.log('  npm run scan -- --force');
+  console.log('  npm run watch');
+  console.log('  npm run package -- my_photo_name');
   console.log('');
 }
 
 // Main entry point
 async function main() {
   const args = process.argv.slice(2);
-  const command = args[0];
+  const options = parseArgs(args);
 
-  switch (command) {
+  switch (options.command) {
     case 'scan':
-      await runScan();
+      await runScan(options);
       break;
     case 'watch':
-      await runWatch();
+      await runWatch(options);
       break;
     case 'package':
-      await runPackage(args[1]);
+      await runPackage(options);
       break;
     case 'help':
-    case '--help':
-    case '-h':
       printUsage();
       break;
     default:
       printUsage();
-      if (command) {
-        console.error(`Unknown command: ${command}`);
+      if (options.command) {
+        console.error(`Unknown command: ${options.command}`);
       }
       process.exit(1);
   }

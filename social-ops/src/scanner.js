@@ -1,4 +1,4 @@
-import { readdirSync, renameSync, existsSync, appendFileSync } from 'fs';
+import { readdirSync, renameSync, existsSync, appendFileSync, writeFileSync } from 'fs';
 import { join, extname, basename, parse } from 'path';
 
 // Supported media extensions (lowercase)
@@ -6,18 +6,19 @@ const SUPPORTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.mp4', '.mov'];
 
 /**
  * Check if a filename is filesystem-safe (no special characters that cause issues)
+ * Works on both macOS and Windows
  * @param {string} filename - Filename to check
  * @returns {boolean} True if safe
  */
 export function isFilenameSafe(filename) {
-  // Allow alphanumeric, hyphens, underscores, dots, and spaces
-  // Reject: slashes, colons, quotes, pipes, asterisks, angle brackets, question marks
+  // Reject characters that are problematic on Windows or macOS:
+  // < > : " / \ | ? * and control characters
   const unsafePattern = /[<>:"/\\|?*\x00-\x1f]/;
   return !unsafePattern.test(filename);
 }
 
 /**
- * Sanitize a filename to be filesystem-safe
+ * Sanitize a filename to be filesystem-safe on both macOS and Windows
  * @param {string} filename - Original filename
  * @returns {string} Sanitized filename
  */
@@ -46,16 +47,39 @@ export function getBasename(filename) {
 }
 
 /**
- * Log a file rename operation to the scheduled directory
+ * Escape a value for CSV (handle commas and quotes)
+ * @param {string} value - Value to escape
+ * @returns {string} CSV-safe value
+ */
+function escapeCSV(value) {
+  if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+  return value;
+}
+
+/**
+ * Log a file rename operation to the scheduled directory as CSV
  * @param {string} scheduledDir - Path to scheduled directory
  * @param {string} original - Original filename
  * @param {string} renamed - New filename
  */
 export function logRename(scheduledDir, original, renamed) {
-  const logPath = join(scheduledDir, 'rename_log.txt');
+  const logPath = join(scheduledDir, 'rename_log.csv');
   const timestamp = new Date().toISOString();
-  const logEntry = `${timestamp}\t${original}\t->\t${renamed}\n`;
-  appendFileSync(logPath, logEntry, 'utf-8');
+
+  // Create file with header if it doesn't exist
+  if (!existsSync(logPath)) {
+    writeFileSync(logPath, 'timestamp,original_filename,new_filename\n', 'utf-8');
+  }
+
+  const row = [
+    escapeCSV(timestamp),
+    escapeCSV(original),
+    escapeCSV(renamed)
+  ].join(',');
+
+  appendFileSync(logPath, row + '\n', 'utf-8');
 }
 
 /**
@@ -75,6 +99,11 @@ export function scanInbox(dirs) {
   const files = readdirSync(inboxPath);
 
   for (const file of files) {
+    // Skip hidden files
+    if (file.startsWith('.')) {
+      continue;
+    }
+
     const ext = extname(file).toLowerCase();
 
     if (!SUPPORTED_EXTENSIONS.includes(ext)) {
@@ -122,12 +151,12 @@ export function scanInbox(dirs) {
 
 /**
  * Check if a media file has already been processed (has final.txt)
- * @param {string} basename - Base name of media file
+ * @param {string} fileBasename - Base name of media file
  * @param {Object} dirs - Directory paths
  * @returns {boolean} True if already processed
  */
-export function isAlreadyProcessed(basename, dirs) {
-  const finalPath = join(dirs.captions, `${basename}.final.txt`);
+export function isAlreadyProcessed(fileBasename, dirs) {
+  const finalPath = join(dirs.captions, `${fileBasename}.final.txt`);
   return existsSync(finalPath);
 }
 
@@ -165,6 +194,9 @@ export function guessPostType(filename) {
   }
   if (lower.includes('open') && lower.includes('house')) {
     return 'open_house';
+  }
+  if (lower.includes('process')) {
+    return 'process_tip';
   }
 
   return 'general';
