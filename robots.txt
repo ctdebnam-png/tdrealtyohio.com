@@ -6,6 +6,3 @@ Allow: /
 
 # Sitemap location
 Sitemap: https://tdrealtyohio.com/sitemap.xml
-
-# Crawl delay (optional, for politeness)
-Crawl-delay: 1
