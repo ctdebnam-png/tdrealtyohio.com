@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>1% Commission Realtor Columbus OH | TD Realty Ohio</title>
-  <meta name="description" content="Sell your Central Ohio home for 1-2% commission with free pre-listing inspection. Save $8,000+ on a $400K home. Call (614) 392-8858 for a free consultation.">
+  <meta name="description" content="Central Ohio real estate with 1-2% listing commission and free pre-listing inspection. First-time buyers get 1% cash back. Full-service representation. (614) 392-8858">
   <meta name="keywords" content="low commission real estate, 1% listing fee, Columbus Ohio realtor, Westerville real estate, discount real estate agent">
 
   <!-- Open Graph -->
@@ -117,7 +117,7 @@
       <div class="container">
         <div class="hero-content">
           <h1 class="hero-title">Keep More When You Sell. Save More When You Buy.</h1>
-          <p class="hero-subtitle">Sell your Central Ohio home for just 1-2% commission. First-time buyers get 1% cash back at closing. Full-service representation, real savings.</p>
+          <p class="hero-subtitle">Full-service representation. Lower commission. Free pre-listing inspection included.</p>
           <div class="hero-buttons">
             <a href="/sellers.html" class="btn btn-primary btn-lg">I'm Selling</a>
             <a href="/buyers.html" class="btn btn-outline-white btn-lg">I'm Buying</a>
@@ -130,22 +130,22 @@
     <section class="stats-bar">
       <div class="container">
         <div class="stats-grid">
-          <div class="stat-item">
+          <a href="/sellers.html" class="stat-item" style="text-decoration: none; color: inherit;">
             <div class="stat-value">1%</div>
             <div class="stat-label">Sell + Buy Rate</div>
-          </div>
-          <div class="stat-item">
+          </a>
+          <a href="/sellers.html" class="stat-item" style="text-decoration: none; color: inherit;">
             <div class="stat-value">2%</div>
             <div class="stat-label">Sell-Only Rate</div>
-          </div>
-          <div class="stat-item">
+          </a>
+          <a href="/buyers.html" class="stat-item" style="text-decoration: none; color: inherit;">
             <div class="stat-value">1%</div>
             <div class="stat-label">First-Time Buyer Cashback</div>
-          </div>
-          <div class="stat-item">
+          </a>
+          <a href="/pre-listing-inspection.html" class="stat-item" style="text-decoration: none; color: inherit;">
             <div class="stat-value">Free</div>
             <div class="stat-label">Pre-Listing Inspection</div>
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -156,45 +156,78 @@
         <div class="two-col">
           <div>
             <h2>See How Much You Could Save</h2>
-            <p>Traditional agents charge 3% on the listing side. TD Realty Ohio charges 1% when you sell and buy with us, or 2% for sell-only transactions. These rates apply to the listing side only—buyer's agent compensation is negotiated separately. <a href="#seller-calculator" style="color: var(--gold); font-weight: 500;">Use the calculator</a> to see your potential savings.</p>
+            <p>Traditional agents charge 3% on the listing side. TD Realty Ohio charges 1% when you sell and buy with us, or 2% for sell-only transactions. First-time buyers get 1% back at closing. <a href="#home-calculator" style="color: var(--gold); font-weight: 500;">Use the calculator</a> to see your potential savings.</p>
             <ul class="benefits-list">
               <li>Full MLS listing and marketing</li>
               <li>Professional photography included</li>
               <li>Expert negotiation and guidance</li>
-              <li>Free pre-listing inspection</li>
+              <li><a href="/pre-listing-inspection.html" style="color: inherit;">Free pre-listing inspection</a></li>
             </ul>
           </div>
 
-          <div class="calculator" id="seller-calculator">
-            <h3 class="calculator-title">Commission Savings Calculator</h3>
-            <div class="calculator-slider-group">
-              <div class="calculator-slider-header">
-                <label class="calculator-label">Home Sale Price</label>
-                <span class="calculator-slider-value" data-price-display>$400,000</span>
+          <div class="calculator" id="home-calculator">
+            <div class="calculator-mode-toggle" style="display: flex; margin-bottom: 1.5rem; border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--navy);">
+              <button type="button" class="mode-btn active" data-mode="seller" style="flex: 1; padding: 0.75rem; border: none; background: var(--navy); color: white; font-weight: 600; cursor: pointer;">I'm Selling</button>
+              <button type="button" class="mode-btn" data-mode="buyer" style="flex: 1; padding: 0.75rem; border: none; background: white; color: var(--navy); font-weight: 600; cursor: pointer;">I'm Buying</button>
+            </div>
+
+            <!-- Seller Calculator -->
+            <div id="seller-calc-content">
+              <h3 class="calculator-title">Commission Savings Calculator</h3>
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header">
+                  <label class="calculator-label">Home Sale Price</label>
+                  <span class="calculator-slider-value" data-price-display>$400,000</span>
+                </div>
+                <input type="range" class="calculator-range" data-price-slider min="200000" max="800000" step="10000" value="400000">
+                <div class="slider-labels">
+                  <span>$200K</span>
+                  <span>$800K</span>
+                </div>
               </div>
-              <input type="range" class="calculator-range" data-price-slider min="200000" max="800000" step="10000" value="400000">
-              <div class="slider-labels">
-                <span>$200K</span>
-                <span>$800K</span>
+              <div class="calculator-toggle">
+                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
+                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
+              </div>
+              <div class="calculator-results">
+                <div class="result-row">
+                  <span class="result-label">Traditional Agent (3%)</span>
+                  <span class="result-value strikethrough" data-traditional>$12,000</span>
+                </div>
+                <div class="result-row">
+                  <span class="result-label">TD Realty Ohio (<span data-rate-label>1%</span>)</span>
+                  <span class="result-value" data-td-realty>$4,000</span>
+                </div>
+                <div class="result-row">
+                  <span class="result-label">Your Savings</span>
+                  <span class="result-value highlight" data-savings>$8,000</span>
+                </div>
               </div>
             </div>
-            <div class="calculator-toggle">
-              <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
-              <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
-            </div>
-            <div class="calculator-results">
-              <div class="result-row">
-                <span class="result-label">Traditional Agent (3%)</span>
-                <span class="result-value strikethrough" data-traditional>$12,000</span>
+
+            <!-- Buyer Calculator -->
+            <div id="buyer-calc-content" style="display: none;">
+              <h3 class="calculator-title">First-Time Buyer Cash Back</h3>
+              <div class="calculator-slider-group">
+                <div class="calculator-slider-header">
+                  <label class="calculator-label">Purchase Price</label>
+                  <span class="calculator-slider-value" data-buyer-price-display>$400,000</span>
+                </div>
+                <input type="range" class="calculator-range" data-buyer-price-slider min="200000" max="800000" step="10000" value="400000">
+                <div class="slider-labels">
+                  <span>$200K</span>
+                  <span>$800K</span>
+                </div>
               </div>
-              <div class="result-row">
-                <span class="result-label">TD Realty Ohio (<span data-rate-label>1%</span>)</span>
-                <span class="result-value" data-td-realty>$4,000</span>
+              <div class="calculator-results">
+                <div class="result-row">
+                  <span class="result-label">Your Cash Back (1%)</span>
+                  <span class="result-value highlight" data-cash-back>$4,000</span>
+                </div>
               </div>
-              <div class="result-row">
-                <span class="result-label">Your Savings</span>
-                <span class="result-value highlight" data-savings>$8,000</span>
-              </div>
+              <p style="font-size: 0.8125rem; color: var(--gray-600); margin-top: 1rem; margin-bottom: 0;">
+                *For first-time homebuyers. <a href="/buyers.html" style="color: var(--gold);">Learn more →</a>
+              </p>
             </div>
           </div>
         </div>
@@ -219,8 +252,8 @@
                 <path d="M9 14l2 2 4-4"/>
               </svg>
             </div>
-            <h3 class="card-title">Free Pre-Listing Inspection</h3>
-            <p class="card-text">Every listing includes a professional home inspection before you hit the market. Know your home's condition upfront, price accurately, and avoid surprises that derail deals. This $400-$500 value is included at no extra cost.</p>
+            <h3 class="card-title"><a href="/pre-listing-inspection.html" style="color: inherit; text-decoration: none;">Free Pre-Listing Inspection</a></h3>
+            <p class="card-text">Every listing includes a professional home inspection before you hit the market. Know your home's condition upfront, price accurately, and avoid surprises that derail deals. <a href="/pre-listing-inspection.html" style="color: var(--gold);">Learn more →</a></p>
           </div>
 
           <div class="card service-card">
@@ -258,44 +291,6 @@
             </div>
             <h3 class="card-title">Local Team, Direct Access</h3>
             <p class="card-text">Work with a Westerville-based team that knows Central Ohio. No call centers or out-of-state support. Your dedicated agent handles your transaction from start to finish with broker support when needed.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- First-Time Buyers Section -->
-    <section class="section bg-off-white">
-      <div class="container">
-        <div class="two-col">
-          <div>
-            <h2>First-Time Homebuyer? Get 1% Cash Back</h2>
-            <p>Buying your first home is expensive. Down payment, closing costs, inspections, moving expenses—it adds up fast. TD Realty Ohio's first-time buyer program puts money back in your pocket when you need it most.</p>
-            <p>First-time buyers working with TD Realty Ohio receive <strong>1% of the purchase price back at closing</strong>. On a $300,000 home, that's $3,000. On a $400,000 home, that's $4,000. The cash back can go toward closing costs, buying down your interest rate, or covering move-in expenses.</p>
-            <p>You get full buyer representation through the entire process: finding homes, writing offers, negotiating, navigating inspection and appraisal, and getting to closing. The same service any buyer's agent provides—plus money back at the end.</p>
-            <a href="/buyers.html" class="btn btn-primary" style="margin-top: 1rem;">Learn More About Buyer Services</a>
-          </div>
-          <div>
-            <div style="background-color: white; border-radius: var(--radius-lg); padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-              <h3 style="margin-bottom: 1.5rem;">Cash Back Examples</h3>
-              <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div style="display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-200);">
-                  <span>$250,000 home</span>
-                  <span style="font-weight: 600; color: var(--gold);">$2,500 back</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-200);">
-                  <span>$300,000 home</span>
-                  <span style="font-weight: 600; color: var(--gold);">$3,000 back</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-200);">
-                  <span>$350,000 home</span>
-                  <span style="font-weight: 600; color: var(--gold);">$3,500 back</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                  <span>$400,000 home</span>
-                  <span style="font-weight: 600; color: var(--gold);">$4,000 back</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -429,6 +424,38 @@
   </footer>
 
   <script src="/assets/js/main.js"></script>
+  <script>
+    // Calculator mode toggle (seller vs buyer)
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mode-btn').forEach(b => {
+          b.classList.remove('active');
+          b.style.background = 'white';
+          b.style.color = 'var(--navy)';
+        });
+        btn.classList.add('active');
+        btn.style.background = 'var(--navy)';
+        btn.style.color = 'white';
+
+        const mode = btn.dataset.mode;
+        document.getElementById('seller-calc-content').style.display = mode === 'seller' ? 'block' : 'none';
+        document.getElementById('buyer-calc-content').style.display = mode === 'buyer' ? 'block' : 'none';
+      });
+    });
+
+    // Buyer calculator
+    const buyerSlider = document.querySelector('[data-buyer-price-slider]');
+    const buyerPriceDisplay = document.querySelector('[data-buyer-price-display]');
+    const cashBackDisplay = document.querySelector('[data-cash-back]');
+
+    if (buyerSlider) {
+      buyerSlider.addEventListener('input', () => {
+        const price = parseInt(buyerSlider.value);
+        buyerPriceDisplay.textContent = '$' + price.toLocaleString();
+        cashBackDisplay.textContent = '$' + Math.round(price * 0.01).toLocaleString();
+      });
+    }
+  </script>
 </body>
 </html>
 <!-- Verification push Mon Jan 19 02:49:16 UTC 2026 -->
