@@ -16,6 +16,7 @@
 /areas/granville/*      /areas/     301
 /areas/johnstown/*      /areas/     301
 /areas/blacklick/*      /areas/     301
+/areas/canal-winchester/* /areas/   301
 
 # Catch any other old area subpages (won't match /areas/ itself)
 /areas/*/               /areas/     301
