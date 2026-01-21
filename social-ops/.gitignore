@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Media files (these live in the synced folder, not the repo)
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.mov
+*.gif
+*.webp
+*.heic
+*.heif
+
+# Local config overrides
+config.local.json
+config.*.json
+!config.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build output
+dist/
+build/
+
+# Test coverage
+coverage/
+
+# Temporary files
+tmp/
+temp/
+*.tmp

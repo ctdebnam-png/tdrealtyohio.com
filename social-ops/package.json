@@ -1,0 +1,28 @@
+{
+  "name": "tdrealtyohio-social-ops",
+  "version": "1.0.0",
+  "description": "Social media caption automation tool for TD Realty Ohio",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "scan": "node src/cli.js scan",
+    "watch": "node src/cli.js watch",
+    "package": "node src/cli.js package"
+  },
+  "keywords": [
+    "social-media",
+    "automation",
+    "real-estate",
+    "captions"
+  ],
+  "author": "TD Realty Ohio, LLC",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "chokidar": "^3.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
