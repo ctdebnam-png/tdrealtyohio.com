@@ -1,0 +1,20 @@
+{
+  "name": "site-quality-gate",
+  "version": "1.0.0",
+  "description": "Site quality checks for TD Realty Ohio website",
+  "main": "run-checks.js",
+  "scripts": {
+    "check": "node run-checks.js",
+    "check:links": "node run-checks.js --only=links",
+    "check:seo": "node run-checks.js --only=seo",
+    "check:business": "node run-checks.js --only=business",
+    "check:sitemap": "node run-checks.js --only=sitemap"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "glob": "^10.3.10"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
