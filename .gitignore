@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Quality gate timestamped reports (keep latest.json only)
+reports/site-quality-gate/report-*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
