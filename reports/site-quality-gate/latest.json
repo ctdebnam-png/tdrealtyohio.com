@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-23T11:44:47.389Z",
+  "timestamp": "2026-01-23T11:47:12.581Z",
   "passed": true,
   "checks": {
     "links": {
@@ -17,36 +17,7 @@
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "index.html",
-          "message": "Meta description may be too long (166 chars)"
-        },
-        {
-          "file": "home-value.html",
-          "message": "Title tag may be too long (62 chars): \"Free Home Valuation | What's Your Home Worth? | TD...\""
-        },
-        {
-          "file": "affordability.html",
-          "message": "Title tag may be too long (73 chars): \"How Much Home Can You Afford? | Affordability Calc...\""
-        },
-        {
-          "file": "blog/index.html",
-          "message": "Meta description may be too long (163 chars)"
-        },
-        {
-          "file": "blog/why-agents-leaving-traditional-brokerages-100-commission/index.html",
-          "message": "Title tag may be too long (77 chars): \"Why Agents Are Leaving Traditional Brokerages for ...\""
-        },
-        {
-          "file": "blog/why-agents-leaving-traditional-brokerages-100-commission/index.html",
-          "message": "Meta description may be too long (162 chars)"
-        },
-        {
-          "file": "blog/selling-home-westerville-ohio-2025/index.html",
-          "message": "Meta description may be too long (171 chars)"
-        }
-      ],
+      "warnings": [],
       "stats": {
         "filesChecked": 24,
         "missingTags": 0
