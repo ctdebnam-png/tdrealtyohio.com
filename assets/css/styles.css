@@ -2399,3 +2399,237 @@ main {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== HEADER SCROLLED STATE ===== */
+.header.scrolled {
+  box-shadow: var(--shadow-md);
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ===== ENHANCED FOCUS STATES (Accessibility) ===== */
+*:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.3);
+}
+
+.nav-link:focus-visible,
+.mobile-nav-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.form-input:focus-visible,
+.form-select:focus-visible,
+.form-textarea:focus-visible {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(26, 46, 68, 0.15);
+}
+
+/* Form required field indicator */
+.form-label.required::after {
+  content: ' *';
+  color: var(--error);
+}
+
+/* Form validation states */
+.form-input:invalid:not(:placeholder-shown),
+.form-select:invalid:not(:placeholder-shown),
+.form-textarea:invalid:not(:placeholder-shown) {
+  border-color: var(--error);
+}
+
+.form-input:valid:not(:placeholder-shown),
+.form-textarea:valid:not(:placeholder-shown) {
+  border-color: var(--success);
+}
+
+/* ===== LOADING STATES ===== */
+.btn.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.25);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.35);
+  }
+
+  .btn {
+    border-width: 3px;
+  }
+
+  .card,
+  .service-card {
+    border-width: 2px;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  /* Hide non-essential elements */
+  .header,
+  .mobile-nav,
+  .skip-link,
+  .cta-section,
+  .hero-buttons,
+  .calculator,
+  .footer-compliance-logos,
+  .btn,
+  form,
+  .mobile-menu-btn {
+    display: none !important;
+  }
+
+  /* Reset backgrounds for printing */
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  main {
+    margin-top: 0;
+  }
+
+  /* Ensure text is readable */
+  h1, h2, h3, h4, h5, h6 {
+    color: black;
+    page-break-after: avoid;
+  }
+
+  p, li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Show link URLs */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  a[href^="tel"]::after,
+  a[href^="mailto"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Hero section print styles */
+  .hero {
+    background: none !important;
+    color: black;
+    min-height: auto;
+    padding: 2rem 0;
+  }
+
+  .hero::before {
+    display: none;
+  }
+
+  .hero-title,
+  .hero-subtitle {
+    color: black;
+  }
+
+  /* Footer print styles */
+  .footer {
+    background: white;
+    color: black;
+    padding: 1rem 0;
+    border-top: 1px solid #ccc;
+  }
+
+  .footer-main {
+    display: block;
+  }
+
+  .footer-title,
+  .footer-logo {
+    color: black;
+  }
+
+  .footer-links a {
+    color: black;
+  }
+
+  .footer-license {
+    color: #666;
+    border-top: none;
+  }
+
+  /* Page breaks */
+  .section {
+    page-break-inside: avoid;
+  }
+
+  /* Cards */
+  .card,
+  .service-card,
+  .blog-card {
+    border: 1px solid #ccc;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+  }
+}
