@@ -1,11 +1,16 @@
 {
-  "timestamp": "2026-01-23T11:49:22.856Z",
+  "timestamp": "2026-01-23T11:53:40.359Z",
   "passed": true,
   "checks": {
     "links": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "N/A",
+          "message": "65 external URLs found. Use --check-external to validate them."
+        }
+      ],
       "stats": {
         "totalLinks": 1044,
         "internalLinks": 831,
