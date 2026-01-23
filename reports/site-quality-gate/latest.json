@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-23T11:49:22.856Z",
+  "timestamp": "2026-01-23T12:03:09.088Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,8 +7,8 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 1044,
-        "internalLinks": 831,
+        "totalLinks": 1094,
+        "internalLinks": 881,
         "externalLinks": 145,
         "brokenInternal": 0,
         "skippedExternal": 0
