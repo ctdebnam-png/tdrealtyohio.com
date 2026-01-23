@@ -1,19 +1,14 @@
 {
-  "timestamp": "2026-01-22T23:03:28.337Z",
+  "timestamp": "2026-01-23T11:40:21.993Z",
   "passed": true,
   "checks": {
     "links": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "N/A",
-          "message": "65 external URLs found. Use --check-external to validate them."
-        }
-      ],
+      "warnings": [],
       "stats": {
-        "totalLinks": 982,
-        "internalLinks": 776,
+        "totalLinks": 1014,
+        "internalLinks": 805,
         "externalLinks": 145,
         "brokenInternal": 0,
         "skippedExternal": 0
@@ -53,7 +48,7 @@
         }
       ],
       "stats": {
-        "filesChecked": 23,
+        "filesChecked": 24,
         "missingTags": 0
       }
     },
@@ -62,7 +57,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "filesChecked": 23,
+        "filesChecked": 24,
         "missingPhone": 0,
         "missingEmail": 0,
         "missingLicense": 0
@@ -74,7 +69,7 @@
       "warnings": [],
       "stats": {
         "sitemapUrls": 23,
-        "htmlFiles": 23,
+        "htmlFiles": 24,
         "missingFromSitemap": 0,
         "orphanedInSitemap": 0
       }

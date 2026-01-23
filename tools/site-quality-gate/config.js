@@ -37,6 +37,9 @@ module.exports = {
     'meta[property="og:type"]'
   ],
 
+  // Files to exclude from SEO tag checks (error pages, etc.)
+  excludeFromSeoCheck: ['404.html'],
+
   // Sitemap file location
   sitemapFile: 'sitemap.xml',
 

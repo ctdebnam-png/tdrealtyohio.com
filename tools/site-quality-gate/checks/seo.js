@@ -19,9 +19,15 @@ async function checkSeo(config, verbose) {
   };
 
   const files = await getHtmlFiles(config);
+  const excludeFromSeo = config.excludeFromSeoCheck || [];
   result.stats.filesChecked = files.length;
 
   for (const file of files) {
+    // Skip files excluded from SEO checks (like 404.html)
+    if (excludeFromSeo.some(f => file.relative === f || file.relative.endsWith('/' + f))) {
+      continue;
+    }
+
     const html = readHtmlFile(file.absolute);
     const $ = cheerio.load(html);
 
