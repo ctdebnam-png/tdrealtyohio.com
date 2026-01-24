@@ -84,7 +84,7 @@ function updateSliderTrack(slider) {
 // ===== MOBILE NAVIGATION =====
 function initMobileNav() {
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const nav = document.querySelector('.header .nav');
+  const nav = document.getElementById('main-nav');
 
   if (!mobileMenuBtn || !nav) return;
 
@@ -92,33 +92,40 @@ function initMobileNav() {
     nav.classList.remove('mobile-open');
     mobileMenuBtn.setAttribute('aria-expanded', 'false');
     const icon = mobileMenuBtn.querySelector('svg');
-    icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+    if (icon) {
+      icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>';
+    }
   }
 
   function openMobileNav() {
     nav.classList.add('mobile-open');
     mobileMenuBtn.setAttribute('aria-expanded', 'true');
     const icon = mobileMenuBtn.querySelector('svg');
-    icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+    if (icon) {
+      icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/>';
+    }
   }
 
-  mobileMenuBtn.addEventListener('click', () => {
-    const isOpen = nav.classList.contains('mobile-open');
-    if (isOpen) {
+  function toggleMobileNav(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (nav.classList.contains('mobile-open')) {
       closeMobileNav();
     } else {
       openMobileNav();
     }
-  });
+  }
+
+  mobileMenuBtn.addEventListener('click', toggleMobileNav);
 
   nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      closeMobileNav();
-    });
+    link.addEventListener('click', closeMobileNav);
   });
 
   document.addEventListener('click', (e) => {
-    if (!nav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+    if (nav.classList.contains('mobile-open') &&
+        !nav.contains(e.target) &&
+        !mobileMenuBtn.contains(e.target)) {
       closeMobileNav();
     }
   });
