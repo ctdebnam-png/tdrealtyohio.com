@@ -122,6 +122,13 @@ function initMobileNav() {
       closeMobileNav();
     }
   });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('mobile-open')) {
+      closeMobileNav();
+      mobileMenuBtn.focus();
+    }
+  });
 }
 
 // ===== SELLER CALCULATOR (SLIDER VERSION) =====
@@ -286,9 +293,44 @@ function initFormHandler(formId, successMessage) {
     }
   }
 
+  // Validate required fields
+  function validateForm() {
+    let isValid = true;
+    const requiredFields = form.querySelectorAll('[required]');
+
+    requiredFields.forEach(field => {
+      const errorEl = document.getElementById(field.id + '-error');
+      if (!field.value || field.value === '') {
+        isValid = false;
+        field.classList.add('error');
+        if (errorEl) errorEl.style.display = 'block';
+      } else {
+        field.classList.remove('error');
+        if (errorEl) errorEl.style.display = 'none';
+      }
+    });
+
+    return isValid;
+  }
+
+  // Hide errors when user interacts with fields
+  form.querySelectorAll('[required]').forEach(field => {
+    field.addEventListener('change', () => {
+      const errorEl = document.getElementById(field.id + '-error');
+      if (field.value && field.value !== '') {
+        field.classList.remove('error');
+        if (errorEl) errorEl.style.display = 'none';
+      }
+    });
+  });
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     hideStatus();
+
+    if (!validateForm()) {
+      return;
+    }
 
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;

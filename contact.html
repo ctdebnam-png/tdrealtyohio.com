@@ -96,20 +96,20 @@
         <span>Realty Ohio</span>
       </a>
 
-      <nav class="nav">
-        <a href="/sellers.html" class="nav-link">Sellers</a>
-        <a href="/1-percent-commission.html" class="nav-link">1% Listing</a>
-        <a href="/buyers.html" class="nav-link">Buyers</a>
-        <a href="/pre-listing-inspection.html" class="nav-link">Pre-Listing Inspection</a>
-        <a href="/home-value.html" class="nav-link">Home Value</a>
-        <a href="/affordability.html" class="nav-link">Affordability</a>
+      <nav class="nav" id="main-nav">
+        <a href="/sellers/" class="nav-link">Sellers</a>
+        <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
+        <a href="/buyers/" class="nav-link">Buyers</a>
+        <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
+        <a href="/home-value/" class="nav-link">Home Value</a>
+        <a href="/affordability/" class="nav-link">Affordability</a>
         <a href="/areas/" class="nav-link">Areas</a>
         <a href="/blog/" class="nav-link">Blog</a>
-        <a href="/about.html" class="nav-link">About</a>
-        <a href="/contact.html" class="btn btn-primary nav-cta">Contact</a>
+        <a href="/about/" class="nav-link">About</a>
+        <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
       </nav>
 
-      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>
         </svg>
@@ -143,10 +143,12 @@
                 <div class="form-group">
                   <label for="first-name" class="form-label required">First Name</label>
                   <input type="text" id="first-name" name="firstName" class="form-input" required autocomplete="given-name" minlength="2" maxlength="50" placeholder="John">
+                  <small id="first-name-error" class="form-error" style="display: none; font-size: 0.8125rem; color: var(--error); margin-top: 0.25rem;">Please enter your first name</small>
                 </div>
                 <div class="form-group">
                   <label for="last-name" class="form-label required">Last Name</label>
                   <input type="text" id="last-name" name="lastName" class="form-input" required autocomplete="family-name" minlength="2" maxlength="50" placeholder="Doe">
+                  <small id="last-name-error" class="form-error" style="display: none; font-size: 0.8125rem; color: var(--error); margin-top: 0.25rem;">Please enter your last name</small>
                 </div>
               </div>
 
@@ -154,6 +156,7 @@
                 <div class="form-group">
                   <label for="email" class="form-label required">Email</label>
                   <input type="email" id="email" name="email" class="form-input" required autocomplete="email" placeholder="john@example.com">
+                  <small id="email-error" class="form-error" style="display: none; font-size: 0.8125rem; color: var(--error); margin-top: 0.25rem;">Please enter a valid email address</small>
                 </div>
                 <div class="form-group">
                   <label for="phone" class="form-label">Phone</label>
@@ -163,14 +166,14 @@
 
               <div class="form-group">
                 <label for="interest" class="form-label required">I'm interested in...</label>
-                <select id="interest" name="interest" class="form-select" required aria-describedby="interest-help" aria-required="true">
+                <select id="interest" name="interest" class="form-select" required aria-describedby="interest-error" aria-required="true">
                   <option value="" disabled selected>Select an option</option>
                   <option value="selling">Selling my home</option>
                   <option value="buying">Buying a home</option>
                   <option value="both">Both selling and buying</option>
                   <option value="question">I have a question</option>
                 </select>
-                <small id="interest-help" style="display: block; font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.25rem;">Required: Choose what you're looking to do</small>
+                <small id="interest-error" class="form-error" style="display: none; font-size: 0.8125rem; color: var(--error); margin-top: 0.25rem;">Please select what you're interested in</small>
               </div>
 
               <div class="form-group">
@@ -243,7 +246,7 @@
               <p style="font-size: 0.875rem; color: var(--gray-300); margin-bottom: 1rem;">
                 Looking for better splits? TD Realty Ohio offers 100% on listings and 90% on buyer sides.
               </p>
-              <a href="/agents.html" class="btn btn-outline-white" style="width: 100%;">View Agent Opportunities</a>
+              <a href="/agents/" class="btn btn-outline-white" style="width: 100%;">View Agent Opportunities</a>
             </div>
           </div>
         </div>
@@ -266,23 +269,23 @@
         <div>
           <h4 class="footer-title">Services</h4>
           <ul class="footer-links">
-            <li><a href="/sellers.html">For Sellers</a></li>
-            <li><a href="/buyers.html">For Buyers</a></li>
-            <li><a href="/pre-listing-inspection.html">Pre-Listing Inspection</a></li>
-            <li><a href="/home-value.html">Free Home Value</a></li>
-            <li><a href="/affordability.html">Affordability Calculator</a></li>
+            <li><a href="/sellers/">For Sellers</a></li>
+            <li><a href="/buyers/">For Buyers</a></li>
+            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
+            <li><a href="/home-value/">Free Home Value</a></li>
+            <li><a href="/affordability/">Affordability Calculator</a></li>
             <li><a href="/areas/">Service Areas</a></li>
-            <li><a href="/referrals.html">Referral Credit</a></li>
+            <li><a href="/referrals/">Referral Credit</a></li>
           </ul>
         </div>
 
         <div>
           <h4 class="footer-title">Company</h4>
           <ul class="footer-links">
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
             <li><a href="/blog/">Blog</a></li>
-            <li><a href="/agents.html">Agent Opportunities</a></li>
+            <li><a href="/agents/">Agent Opportunities</a></li>
           </ul>
         </div>
 
@@ -327,9 +330,9 @@
       </div>
       <div class="footer-bottom">
         <div class="footer-legal">
-          <a href="/privacy.html">Privacy Policy</a>
-          <a href="/terms.html">Terms of Service</a>
-          <a href="/fair-housing.html">Fair Housing</a>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="/terms/">Terms of Service</a>
+          <a href="/fair-housing/">Fair Housing</a>
         </div>
       </div>
 
