@@ -242,13 +242,13 @@
           </div>
 
           <div class="calculator" id="seller-calculator">
-            <div class="calculator-mode-toggle" style="display: flex; margin-bottom: 1.5rem; border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--navy);">
-              <button type="button" class="mode-btn active" data-mode="seller" style="flex: 1; padding: 0.75rem; border: none; background: var(--navy); color: white; font-weight: 600; cursor: pointer;">I'm Selling</button>
-              <button type="button" class="mode-btn" data-mode="buyer" style="flex: 1; padding: 0.75rem; border: none; background: white; color: var(--navy); font-weight: 600; cursor: pointer;">I'm Buying</button>
+            <div class="calculator-mode-toggle" role="tablist" aria-label="Calculator type" style="display: flex; margin-bottom: 1.5rem; border-radius: var(--radius-md); overflow: hidden; border: 2px solid var(--navy);">
+              <button type="button" class="mode-btn active" id="tab-seller" role="tab" aria-selected="true" aria-controls="seller-calc-content" data-mode="seller" style="flex: 1; padding: 0.75rem; border: none; background: var(--navy); color: white; font-weight: 600; cursor: pointer;">I'm Selling</button>
+              <button type="button" class="mode-btn" id="tab-buyer" role="tab" aria-selected="false" aria-controls="buyer-calc-content" data-mode="buyer" style="flex: 1; padding: 0.75rem; border: none; background: white; color: var(--navy); font-weight: 600; cursor: pointer;">I'm Buying</button>
             </div>
 
             <!-- Seller Calculator -->
-            <div id="seller-calc-content">
+            <div id="seller-calc-content" role="tabpanel" aria-labelledby="tab-seller">
               <h3 class="calculator-title">Commission Savings Calculator</h3>
               <div class="calculator-slider-group">
                 <div class="calculator-slider-header">
@@ -282,7 +282,7 @@
             </div>
 
             <!-- Buyer Calculator -->
-            <div id="buyer-calc-content" style="display: none;">
+            <div id="buyer-calc-content" role="tabpanel" aria-labelledby="tab-buyer" hidden>
               <h3 class="calculator-title">First-Time Buyer Cash Back</h3>
               <div class="calculator-slider-group">
                 <div class="calculator-slider-header">
@@ -501,21 +501,44 @@
 
   <script src="/assets/js/main.js"></script>
   <script>
-    // Calculator mode toggle (seller vs buyer)
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.mode-btn').forEach(b => {
-          b.classList.remove('active');
-          b.style.background = 'white';
-          b.style.color = 'var(--navy)';
-        });
-        btn.classList.add('active');
-        btn.style.background = 'var(--navy)';
-        btn.style.color = 'white';
+    // Calculator mode toggle (seller vs buyer) with accessible tab pattern
+    const tabs = document.querySelectorAll('.mode-btn[role="tab"]');
+    const sellerPanel = document.getElementById('seller-calc-content');
+    const buyerPanel = document.getElementById('buyer-calc-content');
 
-        const mode = btn.dataset.mode;
-        document.getElementById('seller-calc-content').style.display = mode === 'seller' ? 'block' : 'none';
-        document.getElementById('buyer-calc-content').style.display = mode === 'buyer' ? 'block' : 'none';
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Update tab states
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.style.background = 'white';
+          t.style.color = 'var(--navy)';
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.style.background = 'var(--navy)';
+        tab.style.color = 'white';
+
+        // Update panel visibility
+        const mode = tab.dataset.mode;
+        if (mode === 'seller') {
+          sellerPanel.hidden = false;
+          buyerPanel.hidden = true;
+        } else {
+          sellerPanel.hidden = true;
+          buyerPanel.hidden = false;
+        }
+      });
+
+      // Keyboard navigation for tabs
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          const currentIndex = Array.from(tabs).indexOf(tab);
+          const nextIndex = e.key === 'ArrowRight' ? (currentIndex + 1) % tabs.length : (currentIndex - 1 + tabs.length) % tabs.length;
+          tabs[nextIndex].focus();
+          tabs[nextIndex].click();
+        }
       });
     });
 

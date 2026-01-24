@@ -344,6 +344,16 @@ function initHomeValueForm() {
   initFormHandler('home-value-form', 'Request Sent!');
 }
 
+// ===== AGENT FORM =====
+function initAgentForm() {
+  initFormHandler('agent-form', 'Message Sent!');
+}
+
+// ===== REFERRAL FORM =====
+function initReferralForm() {
+  initFormHandler('referral-form', 'Submitted!');
+}
+
 // ===== POPULATE CONTACT INFO =====
 function populateContactInfo() {
   document.querySelectorAll('[data-phone]').forEach(el => {
@@ -448,6 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initProcessAccordion();
   initContactForm();
   initHomeValueForm();
+  initAgentForm();
+  initReferralForm();
   initSmoothScroll();
   initHeaderScroll();
   setActiveNavLink();
