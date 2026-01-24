@@ -1,0 +1,151 @@
+{
+  "auditDate": "2026-01-24",
+  "knownBlockerTests": [
+    {
+      "test": "Homepage mobile hamburger menu not opening",
+      "status": "PASS",
+      "evidence": "Mobile menu JS handler present in main.js:85-132. CSS .mobile-open class properly defined in styles.css:1494",
+      "notes": "Click handler toggles .mobile-open class. CSS shows display:flex when .mobile-open is applied."
+    },
+    {
+      "test": "Homepage sell-only calculator slider fill (yellow) not tracking thumb",
+      "status": "PASS",
+      "evidence": "updateSliderTrack function in main.js:76-82 sets --value CSS variable. CSS styles.css:1703 uses linear-gradient with var(--value)",
+      "notes": "Slider fill uses CSS custom property --value which is updated on input event."
+    },
+    {
+      "test": "Any internal links still using .html variants",
+      "status": "PARTIAL",
+      "evidence": "Internal navigation links use /path/ format. Canonical tags use .html format.",
+      "notes": "Internal links are correct. Issue is canonical/sitemap mismatch documented in ISS-001/ISS-002."
+    },
+    {
+      "test": "Contact form showing required message before user interaction",
+      "status": "PASS",
+      "evidence": "Error elements use style='display: none;' initially. JS shows them only on validation failure.",
+      "notes": "Form error messages hidden by default, shown only after failed validation."
+    },
+    {
+      "test": "Visible honeypot text on /referrals and /agents",
+      "status": "PASS",
+      "evidence": "Honeypot fields use .form-hp class with CSS: position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden;",
+      "notes": "Honeypot fields properly hidden from visual users while still present for bots."
+    }
+  ],
+  "interactiveElements": {
+    "navigation": {
+      "hamburgerMenu": {
+        "present": true,
+        "ariaExpanded": true,
+        "ariaControls": "main-nav",
+        "escapeCloses": true,
+        "outsideClickCloses": true,
+        "focusBehavior": "Returns focus to menu button on Escape"
+      },
+      "skipLink": {
+        "present": true,
+        "target": "#main-content",
+        "visible": "On focus"
+      }
+    },
+    "calculators": [
+      {
+        "id": "seller-calculator",
+        "page": "/",
+        "type": "Commission savings",
+        "slider": true,
+        "sliderUpdates": "On input event",
+        "toggleButtons": true,
+        "outputsUpdate": true
+      },
+      {
+        "id": "buyer-calculator",
+        "page": "/ (hidden initially)",
+        "type": "Cash back",
+        "slider": true,
+        "sliderUpdates": "On input event",
+        "outputsUpdate": true
+      },
+      {
+        "id": "affordability-calculator",
+        "page": "/affordability/",
+        "type": "Mortgage affordability",
+        "inputs": ["income", "downPayment", "monthlyDebts", "interestRate"],
+        "outputsUpdate": true
+      }
+    ],
+    "accordions": [
+      {
+        "type": "FAQ",
+        "pages": ["/sellers/", "/buyers/"],
+        "selector": ".faq-item",
+        "ariaExpanded": true,
+        "singleOpenOnly": true
+      },
+      {
+        "type": "Process steps",
+        "pages": ["/sellers/", "/buyers/"],
+        "selector": ".process-step-expandable",
+        "ariaExpanded": true,
+        "singleOpenOnly": true
+      }
+    ],
+    "tabs": [
+      {
+        "page": "/",
+        "type": "Calculator mode toggle (Seller/Buyer)",
+        "roleTablist": true,
+        "roleTab": true,
+        "ariaSelected": true,
+        "keyboardNav": "Arrow keys supported"
+      },
+      {
+        "page": "/areas/",
+        "type": "Community selection",
+        "roleTablist": true,
+        "roleTab": true,
+        "ariaSelected": true,
+        "ariaControls": true,
+        "issue": "Content panels missing role=tabpanel"
+      }
+    ],
+    "forms": [
+      {
+        "id": "contact-form",
+        "page": "/contact/",
+        "action": "https://formspree.io/f/mykkypyd",
+        "validation": "JS custom validation",
+        "honeypot": false,
+        "successState": "Button text changes, success message shown",
+        "errorState": "Field borders red, error messages shown"
+      },
+      {
+        "id": "home-value-form",
+        "page": "/home-value/",
+        "action": "https://formspree.io/f/mykkypyd",
+        "validation": "JS custom validation",
+        "honeypot": false,
+        "successState": "Button text changes, success message shown",
+        "errorState": "Field borders red, error messages shown"
+      },
+      {
+        "id": "agent-form",
+        "page": "/agents/",
+        "action": "https://formspree.io/f/mykkypyd",
+        "validation": "JS custom validation",
+        "honeypot": true,
+        "successState": "Button text changes, success message shown",
+        "errorState": "Field borders red, error messages shown"
+      },
+      {
+        "id": "referral-form",
+        "page": "/referrals/",
+        "action": "https://formspree.io/f/mykkypyd",
+        "validation": "JS custom validation",
+        "honeypot": true,
+        "successState": "Button text changes, success message shown",
+        "errorState": "Field borders red, error messages shown"
+      }
+    ]
+  }
+}
