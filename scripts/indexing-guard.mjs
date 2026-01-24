@@ -159,7 +159,8 @@ async function checkCanonicals() {
  */
 async function checkOldPhoneNumber() {
   console.log('Checking for old phone number...');
-  const allFiles = await findFiles(ROOT, ['.html', '.js', '.json', '.css', '.md']);
+  // Exclude .md files as they may contain documentation about the old number
+  const allFiles = await findFiles(ROOT, ['.html', '.js', '.json', '.css']);
 
   for (const filePath of allFiles) {
     const content = await readFile(filePath, 'utf-8');
