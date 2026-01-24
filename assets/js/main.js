@@ -84,34 +84,26 @@ function updateSliderTrack(slider) {
 // ===== MOBILE NAVIGATION =====
 function initMobileNav() {
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const mobileNav = document.getElementById('mobile-nav');
+  const nav = document.querySelector('.header .nav');
 
-  if (!mobileMenuBtn || !mobileNav) return;
+  if (!mobileMenuBtn || !nav) return;
 
-  // Ensure mobile nav is hidden from accessibility tree when closed
   function closeMobileNav() {
-    mobileNav.classList.remove('active');
-    mobileNav.setAttribute('aria-hidden', 'true');
-    mobileNav.setAttribute('inert', '');
+    nav.classList.remove('mobile-open');
     mobileMenuBtn.setAttribute('aria-expanded', 'false');
     const icon = mobileMenuBtn.querySelector('svg');
     icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
   }
 
   function openMobileNav() {
-    mobileNav.classList.add('active');
-    mobileNav.setAttribute('aria-hidden', 'false');
-    mobileNav.removeAttribute('inert');
+    nav.classList.add('mobile-open');
     mobileMenuBtn.setAttribute('aria-expanded', 'true');
     const icon = mobileMenuBtn.querySelector('svg');
     icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
   }
 
-  // Initialize: ensure hidden state is correct
-  closeMobileNav();
-
   mobileMenuBtn.addEventListener('click', () => {
-    const isOpen = mobileNav.classList.contains('active');
+    const isOpen = nav.classList.contains('mobile-open');
     if (isOpen) {
       closeMobileNav();
     } else {
@@ -119,14 +111,14 @@ function initMobileNav() {
     }
   });
 
-  mobileNav.querySelectorAll('a').forEach(link => {
+  nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       closeMobileNav();
     });
   });
 
   document.addEventListener('click', (e) => {
-    if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+    if (!nav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
       closeMobileNav();
     }
   });
@@ -434,7 +426,7 @@ function initHeaderScroll() {
 // ===== ACTIVE NAV LINK =====
 function setActiveNavLink() {
   const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+  const navLinks = document.querySelectorAll('.nav-link');
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
