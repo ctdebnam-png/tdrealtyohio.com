@@ -286,27 +286,32 @@
             <h3 style="margin-bottom: 1.5rem;">Start the Conversation</h3>
             <p style="margin-bottom: 2rem;">Fill out the form below or call directly.</p>
 
-            <form id="agent-form" class="contact-form" action="https://formspree.io/f/mykkypyd" method="POST">
+            <form id="agent-form" class="contact-form" action="https://formspree.io/f/mykkypyd" method="POST" novalidate>
               <input type="hidden" name="formType" value="Agent Inquiry">
-
-              <div class="form-group">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" id="name" name="name" class="form-input" required>
+              <!-- Honeypot field for spam prevention -->
+              <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                <label for="website">Leave blank</label>
+                <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
               </div>
 
               <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email" class="form-input" required>
+                <label for="name" class="form-label required">Name *</label>
+                <input type="text" id="name" name="name" class="form-input" required autocomplete="name" minlength="2" maxlength="100">
               </div>
 
               <div class="form-group">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="tel" id="phone" name="phone" class="form-input" required>
+                <label for="email" class="form-label required">Email *</label>
+                <input type="email" id="email" name="email" class="form-input" required autocomplete="email">
+              </div>
+
+              <div class="form-group">
+                <label for="phone" class="form-label required">Phone *</label>
+                <input type="tel" id="phone" name="phone" class="form-input" required autocomplete="tel" pattern="[\d\s\-\(\)\+]+" title="Enter a valid phone number">
               </div>
 
               <div class="form-group">
                 <label for="experience" class="form-label">Experience Level</label>
-                <select id="experience" name="experience" class="form-input">
+                <select id="experience" name="experience" class="form-select">
                   <option value="">Select one</option>
                   <option value="new">New / Getting Licensed</option>
                   <option value="1-3">1-3 Years</option>
@@ -316,6 +321,7 @@
               </div>
 
               <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Get in Touch</button>
+              <div id="agent-form-status" role="status" aria-live="polite" class="form-status" style="display: none;"></div>
             </form>
           </div>
         </div>

@@ -107,27 +107,32 @@
             <div class="calculator" style="max-width: 100%;">
               <h3 class="calculator-title">Referral Credit Form</h3>
 
-              <form id="referral-form" action="https://formspree.io/f/mykkypyd" method="POST">
+              <form id="referral-form" action="https://formspree.io/f/mykkypyd" method="POST" novalidate>
                 <input type="hidden" name="form_type" value="Referral Credit">
-
-                <div class="form-group">
-                  <label for="name" class="form-label">Your Name *</label>
-                  <input type="text" id="name" name="name" class="form-input" required>
+                <!-- Honeypot field for spam prevention -->
+                <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                  <label for="company">Leave blank</label>
+                  <input type="text" id="company" name="_gotcha" tabindex="-1" autocomplete="off">
                 </div>
 
                 <div class="form-group">
-                  <label for="email" class="form-label">Your Email *</label>
-                  <input type="email" id="email" name="email" class="form-input" required>
+                  <label for="name" class="form-label required">Your Name *</label>
+                  <input type="text" id="name" name="name" class="form-input" required autocomplete="name" minlength="2" maxlength="100">
                 </div>
 
                 <div class="form-group">
-                  <label for="phone" class="form-label">Your Phone *</label>
-                  <input type="tel" id="phone" name="phone" class="form-input" required>
+                  <label for="email" class="form-label required">Your Email *</label>
+                  <input type="email" id="email" name="email" class="form-input" required autocomplete="email">
                 </div>
 
                 <div class="form-group">
-                  <label for="referred-by" class="form-label">Who Referred You? *</label>
-                  <input type="text" id="referred-by" name="referred_by" class="form-input" required>
+                  <label for="phone" class="form-label required">Your Phone *</label>
+                  <input type="tel" id="phone" name="phone" class="form-input" required autocomplete="tel" pattern="[\d\s\-\(\)\+]+" title="Enter a valid phone number">
+                </div>
+
+                <div class="form-group">
+                  <label for="referred-by" class="form-label required">Who Referred You? *</label>
+                  <input type="text" id="referred-by" name="referred_by" class="form-input" required minlength="2" maxlength="100">
                 </div>
 
                 <div class="form-group">
@@ -141,6 +146,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Claim My Referral Credit</button>
+                <div id="referral-form-status" role="status" aria-live="polite" class="form-status" style="display: none;"></div>
               </form>
             </div>
           </div>
