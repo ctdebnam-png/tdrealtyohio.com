@@ -49,7 +49,8 @@ const TD_CONFIG = {
     'New Albany', 'Hilliard', 'Upper Arlington', 'Worthington', 'Lewis Center',
     'Pickerington', 'Grove City', 'Blacklick', 'Clintonville', 'Galena',
     'Pataskala', 'Sunbury'
-  ]
+  ],
+  marketDataLastUpdated: 'January 2026'
 };
 
 // ===== UTILITY FUNCTIONS =====
@@ -87,30 +88,46 @@ function initMobileNav() {
 
   if (!mobileMenuBtn || !mobileNav) return;
 
+  // Ensure mobile nav is hidden from accessibility tree when closed
+  function closeMobileNav() {
+    mobileNav.classList.remove('active');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    mobileNav.setAttribute('inert', '');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    const icon = mobileMenuBtn.querySelector('svg');
+    icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+  }
+
+  function openMobileNav() {
+    mobileNav.classList.add('active');
+    mobileNav.setAttribute('aria-hidden', 'false');
+    mobileNav.removeAttribute('inert');
+    mobileMenuBtn.setAttribute('aria-expanded', 'true');
+    const icon = mobileMenuBtn.querySelector('svg');
+    icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+  }
+
+  // Initialize: ensure hidden state is correct
+  closeMobileNav();
+
   mobileMenuBtn.addEventListener('click', () => {
     const isOpen = mobileNav.classList.contains('active');
-    mobileNav.classList.toggle('active');
-    mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
-
-    const icon = mobileMenuBtn.querySelector('svg');
     if (isOpen) {
-      icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+      closeMobileNav();
     } else {
-      icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+      openMobileNav();
     }
   });
 
   mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      mobileNav.classList.remove('active');
-      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      closeMobileNav();
     });
   });
 
   document.addEventListener('click', (e) => {
     if (!mobileNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-      mobileNav.classList.remove('active');
-      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      closeMobileNav();
     }
   });
 }
@@ -255,8 +272,31 @@ function initFormHandler(formId, successMessage) {
   const form = document.getElementById(formId);
   if (!form) return;
 
+  const statusEl = document.getElementById(formId + '-status');
+
+  function showStatus(message, isError) {
+    if (statusEl) {
+      statusEl.textContent = message;
+      statusEl.style.display = 'block';
+      statusEl.style.padding = '1rem';
+      statusEl.style.marginTop = '1rem';
+      statusEl.style.borderRadius = '8px';
+      statusEl.style.backgroundColor = isError ? '#fef2f2' : '#f0fdf4';
+      statusEl.style.color = isError ? '#dc2626' : '#16a34a';
+      statusEl.style.border = isError ? '1px solid #fecaca' : '1px solid #bbf7d0';
+    }
+  }
+
+  function hideStatus() {
+    if (statusEl) {
+      statusEl.style.display = 'none';
+      statusEl.textContent = '';
+    }
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    hideStatus();
 
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
@@ -280,22 +320,24 @@ function initFormHandler(formId, successMessage) {
         submitBtn.classList.remove('btn-primary');
         submitBtn.classList.add('btn-secondary');
         form.reset();
+        showStatus('Thank you! Your message has been sent. We\'ll be in touch shortly.', false);
 
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
           submitBtn.classList.remove('btn-secondary');
           submitBtn.classList.add('btn-primary');
-        }, 3000);
+        }, 5000);
       } else {
         throw new Error('Form submission failed');
       }
     } catch (error) {
       submitBtn.textContent = 'Error - Try Again';
       submitBtn.disabled = false;
+      showStatus('Something went wrong. Please try again or call us at (614) 392-8858.', true);
       setTimeout(() => {
         submitBtn.textContent = originalText;
-      }, 3000);
+      }, 5000);
     }
   });
 }

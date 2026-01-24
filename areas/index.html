@@ -125,7 +125,7 @@
     <section class="section">
       <div class="container">
         <p class="text-muted" style="text-align: center; font-size: 0.8125rem; margin-bottom: 1.5rem; color: var(--gray-500);">
-          Market data approximate. Median prices and days on market based on MLS data and public records. Last updated: January 2026.
+          Market data approximate. Median prices and days on market based on MLS data and public records. Last updated: <span data-market-updated>January 2026</span>.
           <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener" style="color: var(--gold);">Source: Columbus REALTORS</a>
         </p>
         <div class="community-tabs" id="community-tabs">
@@ -661,6 +661,11 @@
       });
     });
 
+    // Populate market data last-updated date from config
+    const marketUpdatedSpan = document.querySelector('[data-market-updated]');
+    if (marketUpdatedSpan && typeof TD_CONFIG !== 'undefined' && TD_CONFIG.marketDataLastUpdated) {
+      marketUpdatedSpan.textContent = TD_CONFIG.marketDataLastUpdated;
+    }
   </script>
 </body>
 </html>
