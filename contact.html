@@ -163,14 +163,14 @@
 
               <div class="form-group">
                 <label for="interest" class="form-label required">I'm interested in...</label>
-                <select id="interest" name="interest" class="form-select" required aria-describedby="interest-help">
-                  <option value="">Select an option</option>
+                <select id="interest" name="interest" class="form-select" required aria-describedby="interest-help" aria-required="true">
+                  <option value="" disabled selected>Select an option</option>
                   <option value="selling">Selling my home</option>
                   <option value="buying">Buying a home</option>
                   <option value="both">Both selling and buying</option>
                   <option value="question">I have a question</option>
                 </select>
-                <small id="interest-help" class="sr-only">Choose what you're looking to do</small>
+                <small id="interest-help" style="display: block; font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.25rem;">Required: Choose what you're looking to do</small>
               </div>
 
               <div class="form-group">

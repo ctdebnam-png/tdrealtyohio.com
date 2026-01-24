@@ -109,10 +109,10 @@
 
               <form id="referral-form" action="https://formspree.io/f/mykkypyd" method="POST" novalidate>
                 <input type="hidden" name="form_type" value="Referral Credit">
-                <!-- Honeypot field for spam prevention -->
-                <div style="position: absolute; left: -9999px;" aria-hidden="true">
-                  <label for="company">Leave blank</label>
-                  <input type="text" id="company" name="_gotcha" tabindex="-1" autocomplete="off">
+                <!-- Honeypot field for spam prevention - hidden from assistive technology -->
+                <div class="sr-only" aria-hidden="true">
+                  <label for="hp-company">Do not fill this field</label>
+                  <input type="text" id="hp-company" name="_gotcha" tabindex="-1" autocomplete="off">
                 </div>
 
                 <div class="form-group">
