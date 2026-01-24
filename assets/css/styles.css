@@ -357,33 +357,7 @@ li { margin-bottom: 0.5rem; }
   height: 24px;
 }
 
-.mobile-nav {
-  display: none;
-  position: fixed;
-  top: var(--header-height);
-  left: 0;
-  right: 0;
-  background-color: var(--white);
-  box-shadow: var(--shadow-md);
-  padding: 1.5rem;
-  z-index: 999;
-}
-
-.mobile-nav.active {
-  display: block;
-}
-
-.mobile-nav-link {
-  display: block;
-  padding: 1rem 0;
-  font-weight: 500;
-  color: var(--gray-700);
-  border-bottom: 1px solid var(--gray-200);
-}
-
-.mobile-nav-link:hover {
-  color: var(--navy);
-}
+/* Mobile nav styles are now handled via .nav.mobile-open below */
 
 /* ===== MAIN CONTENT ===== */
 main {
@@ -1505,6 +1479,37 @@ main {
   /* Switch to mobile navigation at 1024px due to many nav items */
   .nav {
     display: none;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    z-index: 999;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav.mobile-open {
+    display: flex;
+  }
+
+  .nav .nav-link {
+    display: block;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray-200);
+    white-space: normal;
+  }
+
+  .nav .nav-link::after {
+    display: none;
+  }
+
+  .nav .nav-cta {
+    margin-left: 0;
+    margin-top: 1rem;
+    text-align: center;
   }
 
   .mobile-menu-btn {
