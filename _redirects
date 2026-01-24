@@ -53,6 +53,31 @@
 # ----------------------------------------
 # Old individual area pages to consolidated areas page
 # ----------------------------------------
+# Exact matches for area URLs (Google discovered these)
+/areas/blacklick/           /areas/     301
+/areas/clintonville/        /areas/     301
+/areas/columbus/            /areas/     301
+/areas/delaware/            /areas/     301
+/areas/dublin/              /areas/     301
+/areas/gahanna/             /areas/     301
+/areas/galena/              /areas/     301
+/areas/grove-city/          /areas/     301
+/areas/hilliard/            /areas/     301
+/areas/lewis-center/        /areas/     301
+/areas/new-albany/          /areas/     301
+/areas/pataskala/           /areas/     301
+/areas/pickerington/        /areas/     301
+/areas/powell/              /areas/     301
+/areas/sunbury/             /areas/     301
+/areas/upper-arlington/     /areas/     301
+/areas/westerville/         /areas/     301
+/areas/worthington/         /areas/     301
+/areas/reynoldsburg/        /areas/     301
+/areas/granville/           /areas/     301
+/areas/johnstown/           /areas/     301
+/areas/canal-winchester/    /areas/     301
+
+# Wildcard matches for any subpages under areas
 /areas/columbus/*       /areas/     301
 /areas/westerville/*    /areas/     301
 /areas/dublin/*         /areas/     301
@@ -71,6 +96,10 @@
 /areas/johnstown/*      /areas/     301
 /areas/blacklick/*      /areas/     301
 /areas/canal-winchester/* /areas/   301
+/areas/clintonville/*   /areas/     301
+/areas/galena/*         /areas/     301
+/areas/upper-arlington/* /areas/    301
+/areas/worthington/*    /areas/     301
 
 # Catch any other old area subpages (won't match /areas/ itself)
 /areas/*/               /areas/     301
