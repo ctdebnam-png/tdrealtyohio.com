@@ -1,157 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Main Pages -->
   <url>
     <loc>https://tdrealtyohio.com/</loc>
-    <lastmod>2026-01-21</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/sellers.html</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/1-percent-commission.html</loc>
+    <loc>https://tdrealtyohio.com/sellers/</loc>
     <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers.html</loc>
-    <lastmod>2026-01-21</lastmod>
+    <loc>https://tdrealtyohio.com/buyers/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/pre-listing-inspection.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://tdrealtyohio.com/1-percent-commission/</loc>
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/pre-listing-inspection/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/about.html</loc>
-    <lastmod>2026-01-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/contact.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://tdrealtyohio.com/contact/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://tdrealtyohio.com/agents.html</loc>
-    <lastmod>2026-01-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Areas -->
   <url>
     <loc>https://tdrealtyohio.com/areas/</loc>
     <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Blog -->
+  <url>
+    <loc>https://tdrealtyohio.com/home-value/</loc>
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/affordability/</loc>
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/about/</loc>
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tdrealtyohio.com/agents/</loc>
+    <lastmod>2026-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://tdrealtyohio.com/blog/how-much-save-selling-columbus-home-1-percent/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/pre-listing-inspection-benefits/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/first-time-homebuyer-cash-back/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/1-percent-vs-3-percent-commission-comparison/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/central-ohio-housing-market-2026/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/selling-home-westerville-ohio-2025/</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/why-agents-leaving-traditional-brokerages-100-commission/</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Tools -->
-  <url>
-    <loc>https://tdrealtyohio.com/home-value.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/affordability.html</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/referrals.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://tdrealtyohio.com/referrals/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-
-  <!-- Sitemap -->
   <url>
-    <loc>https://tdrealtyohio.com/sitemap-page.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://tdrealtyohio.com/sitemap-page/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
-
-  <!-- Legal Pages -->
   <url>
-    <loc>https://tdrealtyohio.com/privacy.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://tdrealtyohio.com/privacy/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/terms.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://tdrealtyohio.com/terms/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/fair-housing.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <loc>https://tdrealtyohio.com/fair-housing/</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
