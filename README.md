@@ -90,6 +90,41 @@ If you prefer to host images locally:
    ```
 3. Update image `src` attributes in HTML files to use local paths
 
+## Build and Indexing
+
+### Stack
+- **Framework**: Plain static HTML (no build step required)
+- **Node version**: 22.x (for scripts only)
+- **Deploy root**: Repository root (`/`)
+- **Hosting**: Cloudflare Pages
+
+### Canonical URL Policy
+- **Host**: `https://tdrealtyohio.com` (HTTPS, non-www)
+- **Trailing slash**: Yes (e.g., `/sellers/` not `/sellers`)
+- **Legacy routes**: `.html` URLs redirect to clean routes via `_redirects`
+
+### Sitemap
+- **URL**: `https://tdrealtyohio.com/sitemap.xml`
+- Generated with canonical URLs only (no `.html` extensions)
+- Update `sitemap.xml` when adding new pages
+
+### Scripts
+
+```bash
+# Validate indexing requirements (runs after any changes)
+node scripts/indexing-guard.mjs
+
+# Regenerate sitemap from HTML files
+node scripts/generate-sitemap.mjs
+```
+
+### Indexing Guard Checks
+The guard script validates:
+- `robots.txt` exists and references sitemap
+- `sitemap.xml` exists with canonical URLs
+- All HTML files have valid canonical tags
+- No old phone number (614-956-8656) in codebase
+
 ## Deployment
 
 ### Cloudflare Pages
