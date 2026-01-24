@@ -250,9 +250,9 @@ function initProcessAccordion() {
   });
 }
 
-// ===== CONTACT FORM =====
-function initContactForm() {
-  const form = document.getElementById('contact-form');
+// ===== GENERIC FORM HANDLER =====
+function initFormHandler(formId, successMessage) {
+  const form = document.getElementById(formId);
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
@@ -276,7 +276,7 @@ function initContactForm() {
       });
 
       if (response.ok) {
-        submitBtn.textContent = 'Message Sent!';
+        submitBtn.textContent = successMessage;
         submitBtn.classList.remove('btn-primary');
         submitBtn.classList.add('btn-secondary');
         form.reset();
@@ -298,6 +298,16 @@ function initContactForm() {
       }, 3000);
     }
   });
+}
+
+// ===== CONTACT FORM =====
+function initContactForm() {
+  initFormHandler('contact-form', 'Message Sent!');
+}
+
+// ===== HOME VALUE FORM =====
+function initHomeValueForm() {
+  initFormHandler('home-value-form', 'Request Sent!');
 }
 
 // ===== POPULATE CONTACT INFO =====
@@ -403,6 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   initProcessAccordion();
   initContactForm();
+  initHomeValueForm();
   initSmoothScroll();
   initHeaderScroll();
   setActiveNavLink();
