@@ -3,34 +3,52 @@
 # ========================================
 
 # Canonical URL strategy:
-# - HTML pages: Use .html extension (e.g., /sellers.html)
-# - Directories: Use trailing slash (e.g., /areas/, /blog/)
-# - sitemap.xml: Returns valid XML with HTTP 200
+# - Clean routes (e.g., /sellers/) are canonical
+# - .html URLs redirect to clean routes (301)
+# - Clean routes rewrite to serve .html files (200)
+# - Directories use trailing slash (e.g., /areas/, /blog/)
 
 # ----------------------------------------
-# Trailing slash redirects for HTML pages
-# Redirect /page/ to /page.html
+# Redirect .html URLs to clean routes (SEO)
 # ----------------------------------------
-/sellers/               /sellers.html           301
-/buyers/                /buyers.html            301
-/contact/               /contact.html           301
-/about/                 /about.html             301
-/privacy/               /privacy.html           301
-/terms/                 /terms.html             301
-/fair-housing/          /fair-housing.html      301
-/agents/                /agents.html            301
-/referrals/             /referrals.html         301
-/home-value/            /home-value.html        301
-/affordability/         /affordability.html     301
-/sitemap-page/          /sitemap-page.html      301
-/pre-listing-inspection/ /pre-listing-inspection.html 301
-/1-percent-commission/  /1-percent-commission.html 301
+/sellers.html           /sellers/               301
+/buyers.html            /buyers/                301
+/contact.html           /contact/               301
+/about.html             /about/                 301
+/privacy.html           /privacy/               301
+/terms.html             /terms/                 301
+/fair-housing.html      /fair-housing/          301
+/agents.html            /agents/                301
+/referrals.html         /referrals/             301
+/home-value.html        /home-value/            301
+/affordability.html     /affordability/         301
+/sitemap-page.html      /sitemap-page/          301
+/pre-listing-inspection.html /pre-listing-inspection/ 301
+/1-percent-commission.html /1-percent-commission/ 301
+
+# ----------------------------------------
+# Rewrite clean routes to serve .html files
+# ----------------------------------------
+/sellers/               /sellers.html           200
+/buyers/                /buyers.html            200
+/contact/               /contact.html           200
+/about/                 /about.html             200
+/privacy/               /privacy.html           200
+/terms/                 /terms.html             200
+/fair-housing/          /fair-housing.html      200
+/agents/                /agents.html            200
+/referrals/             /referrals.html         200
+/home-value/            /home-value.html        200
+/affordability/         /affordability.html     200
+/sitemap-page/          /sitemap-page.html      200
+/pre-listing-inspection/ /pre-listing-inspection.html 200
+/1-percent-commission/  /1-percent-commission.html 200
 
 # ----------------------------------------
 # Legacy route redirects
 # ----------------------------------------
-/agent-opportunities    /agents.html            301
-/agent-opportunities/   /agents.html            301
+/agent-opportunities    /agents/                301
+/agent-opportunities/   /agents/                301
 
 # ----------------------------------------
 # Old individual area pages to consolidated areas page
