@@ -266,7 +266,7 @@
       </button>
     </div>
 
-    <nav class="mobile-nav" id="mobile-nav">
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true" inert>
       <a href="/sellers.html" class="mobile-nav-link">Sellers</a>
       <a href="/1-percent-commission.html" class="mobile-nav-link">1% Listing</a>
       <a href="/buyers.html" class="mobile-nav-link">Buyers</a>
@@ -341,30 +341,43 @@
                 <input type="checkbox" id="include-taxes" checked>
                 <label for="include-taxes">Include Property Taxes & Insurance</label>
               </div>
+
+              <div id="tax-insurance-inputs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-md); margin-top: 0.5rem;">
+                <div class="calc-input-group" style="margin-bottom: 0;">
+                  <label for="property-tax-rate" style="font-size: 0.875rem;">Property Tax Rate (%)</label>
+                  <span class="input-hint">Franklin County default: 1.5%</span>
+                  <input type="number" id="property-tax-rate" value="1.5" min="0" max="5" step="0.1" style="padding: 0.5rem 0.75rem;">
+                </div>
+                <div class="calc-input-group" style="margin-bottom: 0;">
+                  <label for="insurance-rate" style="font-size: 0.875rem;">Insurance Rate (%)</label>
+                  <span class="input-hint">Typical range: 0.3-0.8%</span>
+                  <input type="number" id="insurance-rate" value="0.5" min="0" max="2" step="0.1" style="padding: 0.5rem 0.75rem;">
+                </div>
+              </div>
             </div>
 
             <div class="calc-results">
               <div class="primary-result">
                 <div class="primary-result-label">Estimated Home Price You Can Afford</div>
-                <div class="primary-result-value" id="result-home-price">$0</div>
+                <div class="primary-result-value" id="result-home-price">Enter income</div>
               </div>
 
               <div class="secondary-results">
                 <div class="result-card">
                   <div class="result-card-label">Monthly Payment</div>
-                  <div class="result-card-value" id="result-monthly-total">$0</div>
+                  <div class="result-card-value" id="result-monthly-total">—</div>
                 </div>
                 <div class="result-card">
                   <div class="result-card-label">Principal & Interest</div>
-                  <div class="result-card-value" id="result-pi">$0</div>
+                  <div class="result-card-value" id="result-pi">—</div>
                 </div>
                 <div class="result-card">
                   <div class="result-card-label">Property Taxes</div>
-                  <div class="result-card-value" id="result-taxes">$0</div>
+                  <div class="result-card-value" id="result-taxes">—</div>
                 </div>
                 <div class="result-card">
                   <div class="result-card-label">Insurance</div>
-                  <div class="result-card-value" id="result-insurance">$0</div>
+                  <div class="result-card-value" id="result-insurance">—</div>
                 </div>
               </div>
 
@@ -393,7 +406,7 @@
             </div>
 
             <div class="calc-note">
-              <strong>Assumptions:</strong> 30-year fixed mortgage, 1.5% property tax rate (Franklin County average), 0.5% homeowner's insurance.
+              <strong>Note:</strong> 30-year fixed mortgage. Property tax and insurance rates above are editable defaults based on Franklin County averages. Rates vary by county and school district in Central Ohio—adjust for your target area.
             </div>
           </div>
         </div>
@@ -512,7 +525,9 @@
         debts: document.getElementById('monthly-debts'),
         downPayment: document.getElementById('down-payment'),
         rate: document.getElementById('interest-rate'),
-        includeTaxes: document.getElementById('include-taxes')
+        includeTaxes: document.getElementById('include-taxes'),
+        taxRate: document.getElementById('property-tax-rate'),
+        insuranceRate: document.getElementById('insurance-rate')
       };
 
       const outputs = {
@@ -526,9 +541,15 @@
         barIns: document.getElementById('bar-ins')
       };
 
-      const TAX_RATE = 0.015; // 1.5% annually
-      const INSURANCE_RATE = 0.005; // 0.5% annually
+      const taxInsuranceInputs = document.getElementById('tax-insurance-inputs');
       const LOAN_TERM_MONTHS = 360; // 30 years
+
+      // Toggle tax/insurance inputs visibility
+      function updateTaxInsuranceVisibility() {
+        taxInsuranceInputs.style.display = inputs.includeTaxes.checked ? 'grid' : 'none';
+      }
+      inputs.includeTaxes.addEventListener('change', updateTaxInsuranceVisibility);
+      updateTaxInsuranceVisibility();
 
       function formatCurrency(num) {
         return '$' + Math.round(num).toLocaleString('en-US');
@@ -548,13 +569,15 @@
         const downPayment = parseFloat(inputs.downPayment.value) || 0;
         const interestRate = parseFloat(inputs.rate.value) || 7.0;
         const includeTaxes = inputs.includeTaxes.checked;
+        const TAX_RATE = (parseFloat(inputs.taxRate.value) || 1.5) / 100;
+        const INSURANCE_RATE = (parseFloat(inputs.insuranceRate.value) || 0.5) / 100;
 
         if (annualIncome <= 0) {
-          outputs.homePrice.textContent = '$0';
-          outputs.monthlyTotal.textContent = '$0';
-          outputs.pi.textContent = '$0';
-          outputs.taxes.textContent = '$0';
-          outputs.insurance.textContent = '$0';
+          outputs.homePrice.textContent = 'Enter income';
+          outputs.monthlyTotal.textContent = '—';
+          outputs.pi.textContent = '—';
+          outputs.taxes.textContent = '—';
+          outputs.insurance.textContent = '—';
           return;
         }
 
