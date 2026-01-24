@@ -1698,6 +1698,18 @@ main {
   border-radius: 4px;
 }
 
+.calculator-range::-moz-range-track {
+  background: var(--gray-200);
+  border-radius: 4px;
+  height: 8px;
+}
+
+.calculator-range::-moz-range-progress {
+  background: var(--gold);
+  border-radius: 4px;
+  height: 8px;
+}
+
 .slider-labels {
   display: flex;
   justify-content: space-between;
