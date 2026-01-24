@@ -34,6 +34,9 @@ jobs:
         working-directory: tools/site-quality-gate
         run: npm run check -- --ci
 
+      - name: Run indexing guard
+        run: node scripts/indexing-guard.mjs
+
       - name: Upload quality report
         uses: actions/upload-artifact@v4
         if: always()
