@@ -1,0 +1,554 @@
+[
+  {
+    "route": "/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/1-percent-commission.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/about.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/affordability.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/agents.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/areas/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/1-percent-vs-3-percent-commission-comparison/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/central-ohio-housing-market-2026/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/first-time-homebuyer-cash-back/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/how-much-save-selling-columbus-home-1-percent/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/pre-listing-inspection-benefits/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/selling-home-westerville-ohio-2025/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/blog/why-agents-leaving-traditional-brokerages-100-commission/",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/buyers.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/contact.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/fair-housing.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/home-value.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/pre-listing-inspection.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/privacy.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/referrals.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/sellers.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/sitemap-page.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  },
+  {
+    "route": "/terms.html",
+    "consoleErrors": [
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "type": "console",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ],
+    "networkErrors": [
+      {
+        "url": "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
+        "failure": "net::ERR_NAME_NOT_RESOLVED"
+      },
+      {
+        "url": "https://www.googletagmanager.com/gtag/js?id=AW-17866418952",
+        "failure": "net::ERR_TUNNEL_CONNECTION_FAILED"
+      }
+    ]
+  }
+]
