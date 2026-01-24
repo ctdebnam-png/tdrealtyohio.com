@@ -343,6 +343,38 @@ li { margin-bottom: 0.5rem; }
   margin-left: 1rem;
 }
 
+.header-phone {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease;
+}
+
+.header-phone:hover {
+  background-color: var(--gray-100);
+  color: var(--navy);
+}
+
+.header-phone svg {
+  flex-shrink: 0;
+}
+
+.header-phone-text {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .header-phone-text {
+    display: inline;
+  }
+}
+
 .mobile-menu-btn {
   display: none;
   background: none;

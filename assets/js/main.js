@@ -363,6 +363,19 @@ function initFormHandler(formId, successMessage) {
         form.reset();
         showStatus('Thank you! Your message has been sent. We\'ll be in touch shortly.', false);
 
+        // Track conversion in Google Analytics/Ads
+        if (typeof gtag === 'function') {
+          gtag('event', 'form_submission', {
+            'event_category': 'Lead',
+            'event_label': formId,
+            'value': 1
+          });
+          // Google Ads conversion tracking
+          gtag('event', 'conversion', {
+            'send_to': 'AW-17866418952/form_submit'
+          });
+        }
+
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
@@ -497,6 +510,21 @@ function setActiveNavLink() {
   });
 }
 
+// ===== PHONE CLICK TRACKING =====
+function initPhoneTracking() {
+  document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'phone_click', {
+          'event_category': 'Contact',
+          'event_label': link.href.replace('tel:', ''),
+          'value': 1
+        });
+      }
+    });
+  });
+}
+
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
   populateContactInfo();
@@ -509,6 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHomeValueForm();
   initAgentForm();
   initReferralForm();
+  initPhoneTracking();
   initSmoothScroll();
   initHeaderScroll();
   setActiveNavLink();
