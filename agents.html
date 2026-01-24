@@ -288,10 +288,10 @@
 
             <form id="agent-form" class="contact-form" action="https://formspree.io/f/mykkypyd" method="POST" novalidate>
               <input type="hidden" name="formType" value="Agent Inquiry">
-              <!-- Honeypot field for spam prevention -->
-              <div style="position: absolute; left: -9999px;" aria-hidden="true">
-                <label for="website">Leave blank</label>
-                <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
+              <!-- Honeypot field for spam prevention - hidden from assistive technology -->
+              <div class="sr-only" aria-hidden="true">
+                <label for="hp-website">Do not fill this field</label>
+                <input type="text" id="hp-website" name="_gotcha" tabindex="-1" autocomplete="off">
               </div>
 
               <div class="form-group">

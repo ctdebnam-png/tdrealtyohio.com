@@ -27,6 +27,12 @@
 /1-percent-commission/  /1-percent-commission.html 301
 
 # ----------------------------------------
+# Legacy route redirects
+# ----------------------------------------
+/agent-opportunities    /agents.html            301
+/agent-opportunities/   /agents.html            301
+
+# ----------------------------------------
 # Old individual area pages to consolidated areas page
 # ----------------------------------------
 /areas/columbus/*       /areas/     301
