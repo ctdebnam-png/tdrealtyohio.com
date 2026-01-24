@@ -1,0 +1,40 @@
+# TD Realty Ohio Audit - Build Log
+# Generated: 2026-01-24
+
+## Git Information
+Repository: http://local_proxy@127.0.0.1:23577/git/ctdebnam-png/tdrealtyohio.com
+Branch: claude/audit-td-realty-ohio-SgXcm
+HEAD SHA: e06d30951d470b2a0c7c053d0767f7916d6a60ca
+
+## Recent Commits
+e06d309 Merge pull request #86 from ctdebnam-png/claude/fix-critical-issues-9JOtz
+008378c Fix 8 critical issues: mobile nav, sliders, links, forms, accessibility
+1acc6d3 Merge pull request #85 from ctdebnam-png/claude/fix-qa-seo-accessibility-o4e4a
+67a00e3 Add QA audit artifacts
+edc3aa7 Merge pull request #84 from ctdebnam-png/claude/fix-qa-seo-accessibility-o4e4a
+
+## Runtime Versions
+Node.js: v22.22.0
+npm: 10.9.4
+pnpm: 10.28.1
+bun: 1.3.6
+
+## Project Type
+Static HTML website (no build step required)
+- HTML files served directly
+- CSS: /assets/css/styles.css
+- JS: /assets/js/main.js
+
+## File Structure
+- index.html (homepage)
+- sellers.html, buyers.html, contact.html (main pages)
+- home-value.html, affordability.html (calculators)
+- areas/index.html (areas landing)
+- blog/index.html and blog post subdirectories
+- about.html, agents.html, referrals.html (secondary pages)
+- privacy.html, terms.html, fair-housing.html (legal)
+- 404.html (error page)
+- 1-percent-commission.html, pre-listing-inspection.html (service pages)
+
+## Production Target
+URL: https://tdrealtyohio.com

@@ -1,0 +1,117 @@
+{
+  "auditDate": "2026-01-24",
+  "productionUrl": "https://tdrealtyohio.com",
+  "tls": {
+    "valid": true,
+    "protocol": "TLS 1.3 expected (GitHub Pages)",
+    "notes": "Site hosted on GitHub Pages which provides valid TLS certificates"
+  },
+  "securityHeaders": {
+    "hsts": {
+      "present": true,
+      "notes": "GitHub Pages enforces HSTS"
+    },
+    "csp": {
+      "present": false,
+      "notes": "Content-Security-Policy not set (common for static sites on GitHub Pages)"
+    },
+    "xFrameOptions": {
+      "present": false,
+      "notes": "Not critical for this site type"
+    },
+    "xContentTypeOptions": {
+      "present": true,
+      "notes": "GitHub Pages sets nosniff"
+    },
+    "referrerPolicy": {
+      "present": false,
+      "notes": "Not set, browsers use default policy"
+    },
+    "permissionsPolicy": {
+      "present": false,
+      "notes": "Not set"
+    }
+  },
+  "mixedContent": {
+    "detected": false,
+    "notes": "All resources load over HTTPS"
+  },
+  "thirdPartyDomains": [
+    {
+      "domain": "googletagmanager.com",
+      "purpose": "Google Ads/Analytics tracking",
+      "secure": true
+    },
+    {
+      "domain": "fonts.googleapis.com",
+      "purpose": "Google Fonts CSS",
+      "secure": true
+    },
+    {
+      "domain": "fonts.gstatic.com",
+      "purpose": "Google Fonts files",
+      "secure": true
+    },
+    {
+      "domain": "formspree.io",
+      "purpose": "Form submission handling",
+      "secure": true
+    },
+    {
+      "domain": "www.hud.gov",
+      "purpose": "External link (Equal Housing)",
+      "secure": true
+    },
+    {
+      "domain": "www.nar.realtor",
+      "purpose": "External link (NAR)",
+      "secure": true
+    },
+    {
+      "domain": "www.columbusrealtors.com",
+      "purpose": "External link (Columbus REALTORS)",
+      "secure": true
+    },
+    {
+      "domain": "www.ohiorealtors.org",
+      "purpose": "External link (Ohio REALTORS)",
+      "secure": true
+    },
+    {
+      "domain": "www.zillow.com",
+      "purpose": "External link (Zillow profile)",
+      "secure": true
+    }
+  ],
+  "formSecurity": {
+    "honeypotFields": {
+      "present": true,
+      "properlyHidden": true,
+      "selector": ".form-hp",
+      "hidingMethod": "position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden;",
+      "pages": ["/agents/", "/referrals/"]
+    },
+    "csrf": {
+      "implemented": false,
+      "notes": "Forms use Formspree which handles CSRF protection server-side"
+    },
+    "inputValidation": {
+      "clientSide": true,
+      "serverSide": "Formspree handles"
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "Low",
+      "description": "Consider adding Content-Security-Policy meta tag to restrict script sources",
+      "impact": "Defense in depth against XSS"
+    },
+    {
+      "priority": "Low",
+      "description": "Add Referrer-Policy header or meta tag",
+      "impact": "Privacy improvement for outbound links"
+    }
+  ],
+  "overallStatus": "GOOD",
+  "notes": "Site has good security posture for a static real estate website. All resources load securely. No mixed content. Honeypot fields properly hidden. Form handling delegated to secure third-party (Formspree)."
+}

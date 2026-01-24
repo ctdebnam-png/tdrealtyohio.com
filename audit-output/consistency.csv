@@ -1,0 +1,26 @@
+Page,PhoneCorrect,EmailCorrect,BrokerLicenseCorrect,BrokerageLicenseCorrect,BuyerProgramCorrect,EqualHousingPresent,FooterLicenseComplete,Issues
+index.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+sellers.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+buyers.html,Yes,Yes,Yes,Yes,Yes - 1% cash back mentioned,Yes,Yes,None
+contact.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+home-value.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+affordability.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+areas/index.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+blog/index.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+about.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+agents.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+referrals.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+1-percent-commission.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+pre-listing-inspection.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+privacy.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+terms.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+fair-housing.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+sitemap-page.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+404.html,Yes,Yes,Yes,Yes,N/A,Yes,Yes,None
+
+Business Facts Verified:
+Phone: (614) 392-8858 - Consistent across all pages
+Email: info@tdrealtyohio.com - Consistent across all pages
+Brokerage License: 2023006602 - Correct in all footers
+Broker License: 2023006467 - Correct in all footers
+First-Time Buyer Program: 1% of purchase price credit back at closing - Verified on buyers.html and blog posts
