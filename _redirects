@@ -1,4 +1,34 @@
-# Redirect old individual area pages to consolidated areas page
+# ========================================
+# TD Realty Ohio - URL Canonicalization
+# ========================================
+
+# Canonical URL strategy:
+# - HTML pages: Use .html extension (e.g., /sellers.html)
+# - Directories: Use trailing slash (e.g., /areas/, /blog/)
+# - sitemap.xml: Returns valid XML with HTTP 200
+
+# ----------------------------------------
+# Trailing slash redirects for HTML pages
+# Redirect /page/ to /page.html
+# ----------------------------------------
+/sellers/               /sellers.html           301
+/buyers/                /buyers.html            301
+/contact/               /contact.html           301
+/about/                 /about.html             301
+/privacy/               /privacy.html           301
+/terms/                 /terms.html             301
+/fair-housing/          /fair-housing.html      301
+/agents/                /agents.html            301
+/referrals/             /referrals.html         301
+/home-value/            /home-value.html        301
+/affordability/         /affordability.html     301
+/sitemap-page/          /sitemap-page.html      301
+/pre-listing-inspection/ /pre-listing-inspection.html 301
+/1-percent-commission/  /1-percent-commission.html 301
+
+# ----------------------------------------
+# Old individual area pages to consolidated areas page
+# ----------------------------------------
 /areas/columbus/*       /areas/     301
 /areas/westerville/*    /areas/     301
 /areas/dublin/*         /areas/     301
