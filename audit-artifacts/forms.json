@@ -1,0 +1,289 @@
+{
+  "/contact.html": [
+    {
+      "id": "contact-form",
+      "action": "https://formspree.io/f/mykkypyd",
+      "method": "POST",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "firstName",
+          "id": "first-name",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "lastName",
+          "id": "last-name",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "email",
+          "id": "email",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "phone",
+          "id": "phone",
+          "required": false,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "select",
+          "type": "text",
+          "name": "interest",
+          "id": "interest",
+          "required": true,
+          "aria_describedby": "interest-help",
+          "tabindex": ""
+        },
+        {
+          "tag": "textarea",
+          "type": "text",
+          "name": "message",
+          "id": "message",
+          "required": false,
+          "aria_describedby": "message-help",
+          "tabindex": ""
+        }
+      ],
+      "labels": [
+        "first-name",
+        "last-name",
+        "email",
+        "phone",
+        "interest",
+        "message"
+      ],
+      "honeypot": null
+    }
+  ],
+  "/home-value.html": [
+    {
+      "id": "home-value-form",
+      "action": "https://formspree.io/f/mykkypyd",
+      "method": "POST",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_type",
+          "id": "",
+          "required": false,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "name",
+          "id": "name",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "email",
+          "id": "email",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "phone",
+          "id": "phone",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "property_address",
+          "id": "address",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "textarea",
+          "type": "text",
+          "name": "home_details",
+          "id": "details",
+          "required": false,
+          "aria_describedby": "",
+          "tabindex": ""
+        }
+      ],
+      "labels": [
+        "name",
+        "email",
+        "phone",
+        "address",
+        "details"
+      ],
+      "honeypot": null
+    }
+  ],
+  "/agents.html": [
+    {
+      "id": "agent-form",
+      "action": "https://formspree.io/f/mykkypyd",
+      "method": "POST",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "formType",
+          "id": "",
+          "required": false,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "name",
+          "id": "name",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "email",
+          "id": "email",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "phone",
+          "id": "phone",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "select",
+          "type": "text",
+          "name": "experience",
+          "id": "experience",
+          "required": false,
+          "aria_describedby": "",
+          "tabindex": ""
+        }
+      ],
+      "labels": [
+        "hp-website",
+        "name",
+        "email",
+        "phone",
+        "experience"
+      ],
+      "honeypot": {
+        "name": "_gotcha",
+        "id": "hp-website",
+        "tabindex": "-1",
+        "autocomplete": "off"
+      }
+    }
+  ],
+  "/referrals.html": [
+    {
+      "id": "referral-form",
+      "action": "https://formspree.io/f/mykkypyd",
+      "method": "POST",
+      "fields": [
+        {
+          "tag": "input",
+          "type": "hidden",
+          "name": "form_type",
+          "id": "",
+          "required": false,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "name",
+          "id": "name",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "email",
+          "name": "email",
+          "id": "email",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "tel",
+          "name": "phone",
+          "id": "phone",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "name": "referred_by",
+          "id": "referred-by",
+          "required": true,
+          "aria_describedby": "",
+          "tabindex": ""
+        },
+        {
+          "tag": "select",
+          "type": "text",
+          "name": "transaction_type",
+          "id": "transaction-type",
+          "required": false,
+          "aria_describedby": "",
+          "tabindex": ""
+        }
+      ],
+      "labels": [
+        "hp-company",
+        "name",
+        "email",
+        "phone",
+        "referred-by",
+        "transaction-type"
+      ],
+      "honeypot": {
+        "name": "_gotcha",
+        "id": "hp-company",
+        "tabindex": "-1",
+        "autocomplete": "off"
+      }
+    }
+  ]
+}

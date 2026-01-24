@@ -1,0 +1,40 @@
+=== PHASE 1: REPO + BUILD SANITY ===
+
+--- Git Remote ---
+origin	http://local_proxy@127.0.0.1:25647/git/ctdebnam-png/tdrealtyohio.com (fetch)
+origin	http://local_proxy@127.0.0.1:25647/git/ctdebnam-png/tdrealtyohio.com (push)
+
+--- Current Branch ---
+claude/fix-qa-seo-accessibility-o4e4a
+
+--- HEAD Commit ---
+cbaad9bc80a4dee4b6ceb2b6d799f9c89473a663
+
+--- Package.json check ---
+ls: cannot access 'package.json': No such file or directory
+No package.json found - likely static site
+
+--- Site structure ---
+-rw-r--r-- 1 root root 21132 Jan 24 13:00 1-percent-commission.html
+-rw-r--r-- 1 root root  8437 Jan 24 13:00 404.html
+-rw-r--r-- 1 root root 18026 Jan 24 13:00 about.html
+-rw-r--r-- 1 root root 28243 Jan 24 13:00 affordability.html
+-rw-r--r-- 1 root root 21331 Jan 24 13:08 agents.html
+-rw-r--r-- 1 root root 42507 Jan 24 13:00 buyers.html
+-rw-r--r-- 1 root root 16615 Jan 24 13:09 contact.html
+-rw-r--r-- 1 root root  7943 Jan 24 13:00 fair-housing.html
+-rw-r--r-- 1 root root 14419 Jan 24 13:00 home-value.html
+-rw-r--r-- 1 root root 26314 Jan 24 13:00 index.html
+-rw-r--r-- 1 root root 25709 Jan 24 13:00 pre-listing-inspection.html
+-rw-r--r-- 1 root root  7840 Jan 24 13:00 privacy.html
+-rw-r--r-- 1 root root 12739 Jan 24 13:08 referrals.html
+-rw-r--r-- 1 root root 35146 Jan 24 13:00 sellers.html
+-rw-r--r-- 1 root root 11150 Jan 24 13:06 sitemap-page.html
+-rw-r--r-- 1 root root  7723 Jan 24 13:00 terms.html
+
+--- Build approach ---
+Static HTML site - no build step required. Serving via Python http.server.
+
+--- Local Server ---
+Started Python http.server on port 4173
+Server verification: HTTP 200 from http://127.0.0.1:4173/
