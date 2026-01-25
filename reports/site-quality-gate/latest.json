@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-25T14:48:45.361Z",
+  "timestamp": "2026-01-25T15:01:06.062Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,9 +7,9 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 981,
-        "internalLinks": 726,
-        "externalLinks": 162,
+        "totalLinks": 1827,
+        "internalLinks": 1356,
+        "externalLinks": 306,
         "brokenInternal": 0,
         "skippedExternal": 0
       }
@@ -19,7 +19,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "filesChecked": 25,
+        "filesChecked": 43,
         "missingTags": 0
       }
     },
@@ -28,7 +28,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "filesChecked": 25,
+        "filesChecked": 43,
         "missingPhone": 0,
         "missingEmail": 0,
         "missingLicense": 0
@@ -39,8 +39,8 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "sitemapUrls": 24,
-        "htmlFiles": 25,
+        "sitemapUrls": 42,
+        "htmlFiles": 43,
         "missingFromSitemap": 0,
         "orphanedInSitemap": 0
       }
