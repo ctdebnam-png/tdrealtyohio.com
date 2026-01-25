@@ -102,6 +102,53 @@
   }
   </script>
 
+  <!-- Service Offer Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "1% Commission Real Estate Listing",
+    "description": "Full-service home listing for just 1% commission (for sellers also buying with TD Realty Ohio) or 2% for sell-only clients. Includes MLS listing, professional photography, marketing, and pre-listing inspection.",
+    "provider": {
+      "@type": "RealEstateAgent",
+      "name": "TD Realty Ohio, LLC",
+      "url": "https://tdrealtyohio.com"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Columbus",
+      "containedInPlace": {
+        "@type": "State",
+        "name": "Ohio"
+      }
+    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "1% Listing Commission (Buy + Sell)",
+        "description": "1% listing fee for sellers who are also buying their next home with TD Realty Ohio",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "1",
+          "priceCurrency": "USD",
+          "unitText": "percent of sale price"
+        }
+      },
+      {
+        "@type": "Offer",
+        "name": "2% Listing Commission (Sell Only)",
+        "description": "2% listing fee for sellers who are only selling, not buying",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "2",
+          "priceCurrency": "USD",
+          "unitText": "percent of sale price"
+        }
+      }
+    ]
+  }
+  </script>
+
   <style>
     .savings-calculator {
       background: var(--white);
