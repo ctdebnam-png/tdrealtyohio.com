@@ -41,7 +41,7 @@ const TD_CONFIG = {
   calculator: {
     minPrice: 200000,
     maxPrice: 800000,
-    defaultPrice: 400000,
+    defaultPrice: 300000,
     step: 10000
   },
   areas: [
