@@ -19,6 +19,7 @@
   --gold-dark: #a8871f;
   --white: #ffffff;
   --off-white: #f8f9fa;
+  --gray-50: #f9fafb;
   --gray-100: #f1f3f5;
   --gray-200: #e9ecef;
   --gray-300: #dee2e6;
@@ -162,17 +163,6 @@ li { margin-bottom: 0.5rem; }
 .bg-white { background-color: var(--white); }
 .bg-off-white { background-color: var(--off-white); }
 .bg-gray { background-color: var(--gray-100); }
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
 
 /* ===== BUTTONS ===== */
 .btn {
@@ -1769,47 +1759,6 @@ main {
   color: var(--gray-400);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-/* ===== BREADCRUMBS ===== */
-.breadcrumbs {
-  padding: 1rem 0;
-  font-size: 0.875rem;
-}
-
-.breadcrumbs-list {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  flex-wrap: wrap;
-}
-
-.breadcrumbs-list li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0;
-}
-
-.breadcrumbs-list li:not(:last-child)::after {
-  content: '/';
-  color: var(--gray-400);
-}
-
-.breadcrumbs-list a {
-  color: var(--gray-600);
-}
-
-.breadcrumbs-list a:hover {
-  color: var(--gold);
-}
-
-.breadcrumbs-list .current {
-  color: var(--navy);
-  font-weight: 500;
 }
 
 /* ===== AREA PAGE STYLES ===== */
