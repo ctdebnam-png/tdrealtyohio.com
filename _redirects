@@ -38,55 +38,38 @@
 /agent-opportunities/   /agents/                301
 
 # ----------------------------------------
-# Old individual area pages to consolidated areas page
+# City landing pages - individual pages now exist
+# Only redirect cities that DON'T have dedicated pages
 # ----------------------------------------
-# Exact matches for area URLs (Google discovered these)
-/areas/blacklick/           /areas/     301
+# These cities don't have landing pages yet - redirect to main areas page
 /areas/clintonville/        /areas/     301
-/areas/columbus/            /areas/     301
-/areas/delaware/            /areas/     301
-/areas/dublin/              /areas/     301
-/areas/gahanna/             /areas/     301
 /areas/galena/              /areas/     301
-/areas/grove-city/          /areas/     301
-/areas/hilliard/            /areas/     301
 /areas/lewis-center/        /areas/     301
-/areas/new-albany/          /areas/     301
-/areas/pataskala/           /areas/     301
-/areas/pickerington/        /areas/     301
-/areas/powell/              /areas/     301
-/areas/sunbury/             /areas/     301
-/areas/upper-arlington/     /areas/     301
-/areas/westerville/         /areas/     301
-/areas/worthington/         /areas/     301
 /areas/reynoldsburg/        /areas/     301
-/areas/granville/           /areas/     301
-/areas/johnstown/           /areas/     301
-/areas/canal-winchester/    /areas/     301
 
-# Wildcard matches for any subpages under areas
-/areas/columbus/*       /areas/     301
-/areas/westerville/*    /areas/     301
-/areas/dublin/*         /areas/     301
-/areas/powell/*         /areas/     301
-/areas/delaware/*       /areas/     301
-/areas/grove-city/*     /areas/     301
-/areas/hilliard/*       /areas/     301
-/areas/gahanna/*        /areas/     301
-/areas/new-albany/*     /areas/     301
-/areas/lewis-center/*   /areas/     301
-/areas/reynoldsburg/*   /areas/     301
-/areas/pickerington/*   /areas/     301
-/areas/pataskala/*      /areas/     301
-/areas/sunbury/*        /areas/     301
-/areas/granville/*      /areas/     301
-/areas/johnstown/*      /areas/     301
-/areas/blacklick/*      /areas/     301
-/areas/canal-winchester/* /areas/   301
+# Wildcard matches for subpages under cities (not the city pages themselves)
+# These catch deep links like /areas/columbus/neighborhood/ that don't exist
+/areas/columbus/*       /areas/columbus/     301
+/areas/westerville/*    /areas/westerville/  301
+/areas/dublin/*         /areas/dublin/       301
+/areas/powell/*         /areas/powell/       301
+/areas/delaware/*       /areas/delaware/     301
+/areas/grove-city/*     /areas/grove-city/   301
+/areas/hilliard/*       /areas/hilliard/     301
+/areas/gahanna/*        /areas/gahanna/      301
+/areas/new-albany/*     /areas/new-albany/   301
+/areas/pickerington/*   /areas/pickerington/ 301
+/areas/pataskala/*      /areas/pataskala/    301
+/areas/sunbury/*        /areas/sunbury/      301
+/areas/granville/*      /areas/granville/    301
+/areas/johnstown/*      /areas/johnstown/    301
+/areas/blacklick/*      /areas/blacklick/    301
+/areas/canal-winchester/* /areas/canal-winchester/ 301
+/areas/upper-arlington/* /areas/upper-arlington/   301
+/areas/worthington/*    /areas/worthington/  301
+
+# Redirect cities without pages to main areas
 /areas/clintonville/*   /areas/     301
 /areas/galena/*         /areas/     301
-/areas/upper-arlington/* /areas/    301
-/areas/worthington/*    /areas/     301
-
-# Catch any other old area subpages (won't match /areas/ itself)
-/areas/*/               /areas/     301
+/areas/lewis-center/*   /areas/     301
+/areas/reynoldsburg/*   /areas/     301
