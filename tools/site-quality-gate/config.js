@@ -20,9 +20,9 @@ module.exports = {
     licenses: ['2023006602', '2023006467']
   },
 
-  // First-time buyer program statement (must appear on buyers.html)
+  // First-time buyer program statement (must appear on buyers page)
   firstTimeBuyerStatement: {
-    file: 'buyers.html',
+    file: 'buyers/index.html',
     pattern: /first[- ]?time\s+(home)?buyer/i
   },
 

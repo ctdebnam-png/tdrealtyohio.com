@@ -283,19 +283,14 @@ function initFormHandler(formId, successMessage) {
   function showStatus(message, isError) {
     if (statusEl) {
       statusEl.textContent = message;
-      statusEl.style.display = 'block';
-      statusEl.style.padding = '1rem';
-      statusEl.style.marginTop = '1rem';
-      statusEl.style.borderRadius = '8px';
-      statusEl.style.backgroundColor = isError ? '#fef2f2' : '#f0fdf4';
-      statusEl.style.color = isError ? '#dc2626' : '#16a34a';
-      statusEl.style.border = isError ? '1px solid #fecaca' : '1px solid #bbf7d0';
+      statusEl.classList.remove('success', 'error');
+      statusEl.classList.add(isError ? 'error' : 'success');
     }
   }
 
   function hideStatus() {
     if (statusEl) {
-      statusEl.style.display = 'none';
+      statusEl.classList.remove('success', 'error');
       statusEl.textContent = '';
     }
   }
