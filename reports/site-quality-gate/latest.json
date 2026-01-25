@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-25T14:32:29.328Z",
+  "timestamp": "2026-01-25T14:38:57.470Z",
   "passed": true,
   "checks": {
     "links": {
@@ -17,12 +17,7 @@
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "affordability/index.html",
-          "message": "Meta description may be too long (162 chars)"
-        }
-      ],
+      "warnings": [],
       "stats": {
         "filesChecked": 25,
         "missingTags": 0
@@ -31,12 +26,7 @@
     "business": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "buyers.html",
-          "message": "File not found: buyers.html"
-        }
-      ],
+      "warnings": [],
       "stats": {
         "filesChecked": 25,
         "missingPhone": 0,
@@ -47,28 +37,11 @@
     "sitemap": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /terms"
-        },
-        {
-          "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /sitemap-page"
-        },
-        {
-          "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /privacy"
-        },
-        {
-          "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /fair-housing"
-        }
-      ],
+      "warnings": [],
       "stats": {
-        "sitemapUrls": 20,
+        "sitemapUrls": 24,
         "htmlFiles": 25,
-        "missingFromSitemap": 4,
+        "missingFromSitemap": 0,
         "orphanedInSitemap": 0
       }
     }

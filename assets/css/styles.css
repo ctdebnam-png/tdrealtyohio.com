@@ -29,8 +29,12 @@
   --gray-700: #495057;
   --gray-800: #343a40;
   --gray-900: #212529;
-  --success: #28a745;
-  --error: #dc3545;
+  --success: #16a34a;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
   --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
@@ -1144,6 +1148,41 @@ main {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+}
+
+/* Form validation states */
+.form-input.error,
+.form-select.error,
+.form-textarea.error {
+  border-color: var(--error);
+}
+
+.form-error {
+  display: none;
+  font-size: 0.8125rem;
+  color: var(--error);
+  margin-top: 0.25rem;
+}
+
+.form-status {
+  display: none;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: var(--radius-md);
+}
+
+.form-status.success {
+  display: block;
+  background-color: var(--success-bg, #f0fdf4);
+  color: var(--success);
+  border: 1px solid var(--success-border, #bbf7d0);
+}
+
+.form-status.error {
+  display: block;
+  background-color: var(--error-bg, #fef2f2);
+  color: var(--error);
+  border: 1px solid var(--error-border, #fecaca);
 }
 
 /* ===== CONTACT INFO ===== */
