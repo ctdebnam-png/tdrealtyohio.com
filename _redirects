@@ -31,15 +31,11 @@
 # Rewrite clean routes to serve .html files
 # ----------------------------------------
 /sellers/               /sellers.html           200
-/buyers/                /buyers.html            200
-/contact/               /contact.html           200
-/about/                 /about.html             200
-# privacy/, terms/, fair-housing/, agents/ served from directory index.html (no rewrite needed)
+# buyers/, contact/, about/, pre-listing-inspection/ now use directory structure (index.html)
 /referrals/             /referrals.html         200
 /home-value/            /home-value.html        200
 /affordability/         /affordability.html     200
 /sitemap-page/          /sitemap-page.html      200
-/pre-listing-inspection/ /pre-listing-inspection.html 200
 /1-percent-commission/  /1-percent-commission.html 200
 
 # ----------------------------------------
