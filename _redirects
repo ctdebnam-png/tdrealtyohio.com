@@ -28,15 +28,8 @@
 /1-percent-commission.html /1-percent-commission/ 301
 
 # ----------------------------------------
-# Rewrite clean routes to serve .html files
+# All pages now use directory structure (index.html) - no rewrites needed
 # ----------------------------------------
-/sellers/               /sellers.html           200
-# buyers/, contact/, about/, pre-listing-inspection/ now use directory structure (index.html)
-/referrals/             /referrals.html         200
-/home-value/            /home-value.html        200
-/affordability/         /affordability.html     200
-/sitemap-page/          /sitemap-page.html      200
-/1-percent-commission/  /1-percent-commission.html 200
 
 # ----------------------------------------
 # Legacy route redirects
