@@ -13,35 +13,62 @@ A clean, professional real estate website for TD Realty Ohio, LLC. Built with va
 
 ## Pages
 
-| Page | Purpose |
-|------|---------|
-| `index.html` | Homepage with hero, stats, calculator, services, areas |
-| `sellers.html` | Seller services, commission paths, process, FAQs |
-| `buyers.html` | First-time buyer cash back program, calculator |
-| `pre-listing-inspection.html` | Free pre-listing inspection benefit |
-| `contact.html` | Contact form and information |
-| `about.html` | About Travis Debnam and TD Realty Ohio |
-| `areas/index.html` | Service area grid |
+All pages use a clean directory structure (e.g., `/sellers/` not `sellers.html`).
+
+| Route | Purpose |
+|-------|---------|
+| `/` | Homepage with hero, stats, calculator, services, areas |
+| `/sellers/` | Seller services, commission paths, process, FAQs |
+| `/buyers/` | First-time buyer cash back program, calculator |
+| `/1-percent-commission/` | 1% listing commission details |
+| `/pre-listing-inspection/` | Free pre-listing inspection benefit |
+| `/home-value/` | Home value estimate tool |
+| `/affordability/` | Affordability calculator |
+| `/contact/` | Contact form and information |
+| `/about/` | About Travis Debnam and TD Realty Ohio |
+| `/agents/` | Agent referral program |
+| `/referrals/` | Client referral program |
+| `/areas/` | Service area grid |
+| `/blog/` | Blog articles |
+| `/fair-housing/` | Fair housing statement |
+| `/privacy/` | Privacy policy |
+| `/terms/` | Terms of service |
+| `/sitemap-page/` | HTML sitemap |
+| `/404.html` | Error page |
 
 ## Project Structure
 
 ```
 tdrealtyohio.com/
-├── index.html
-├── sellers.html
-├── buyers.html
-├── pre-listing-inspection.html
-├── contact.html
-├── about.html
-├── areas/
-│   └── index.html
+├── index.html              # Homepage
+├── 404.html                # Error page
+├── sellers/index.html      # Seller services
+├── buyers/index.html       # Buyer services
+├── 1-percent-commission/   # Commission details
+├── pre-listing-inspection/ # Inspection benefit
+├── home-value/             # Home value tool
+├── affordability/          # Affordability calculator
+├── contact/                # Contact page
+├── about/                  # About page
+├── agents/                 # Agent referrals
+├── referrals/              # Client referrals
+├── areas/                  # Service areas
+├── blog/                   # Blog articles
+├── fair-housing/           # Fair housing
+├── privacy/                # Privacy policy
+├── terms/                  # Terms of service
+├── sitemap-page/           # HTML sitemap
 ├── assets/
-│   ├── css/
-│   │   └── styles.css      # Single stylesheet
-│   ├── js/
-│   │   └── main.js         # Config object, calculators, UI
-│   └── images/             # Local images (optional)
-├── fetch-images.js         # Optional image fetcher script
+│   ├── css/styles.css      # Single stylesheet
+│   ├── js/main.js          # Config, calculators, UI
+│   └── images/             # Local images
+├── media/compliance/       # Compliance logos (SVG)
+├── scripts/                # Build scripts (Node.js)
+├── tools/site-quality-gate/ # Automated quality checks
+├── docs/                   # Documentation
+├── _redirects              # Cloudflare redirects
+├── robots.txt              # Search engine rules
+├── sitemap.xml             # XML sitemap
 └── README.md
 ```
 
@@ -77,18 +104,7 @@ To update contact information, modify this config object. Elements with `data-*`
 
 ## Images
 
-The site uses Unsplash URLs directly in the HTML for simplicity. No local images are required.
-
-### Optional: Local Images with Pexels API
-
-If you prefer to host images locally:
-
-1. Get a free API key from [Pexels](https://www.pexels.com/api/)
-2. Run the fetch script:
-   ```bash
-   PEXELS_API_KEY=your_api_key node fetch-images.js
-   ```
-3. Update image `src` attributes in HTML files to use local paths
+The site uses Unsplash URLs directly in the HTML. Local images are stored in `assets/images/` and compliance logos are in `media/compliance/`.
 
 ## Build and Indexing
 
