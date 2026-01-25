@@ -15,7 +15,11 @@
 /buyers.html            /buyers/                301
 /contact.html           /contact/               301
 /about.html             /about/                 301
-# privacy, terms, fair-housing, agents now use directory structure (no redirect needed)
+# privacy, terms, fair-housing, agents use directory structure - redirect old .html URLs
+/privacy.html           /privacy/               301
+/terms.html             /terms/                 301
+/fair-housing.html      /fair-housing/          301
+/agents.html            /agents/                301
 /referrals.html         /referrals/             301
 /home-value.html        /home-value/            301
 /affordability.html     /affordability/         301
@@ -30,7 +34,7 @@
 /buyers/                /buyers.html            200
 /contact/               /contact.html           200
 /about/                 /about.html             200
-# privacy, terms, fair-housing, agents now use directory structure (index.html)
+# privacy/, terms/, fair-housing/, agents/ served from directory index.html (no rewrite needed)
 /referrals/             /referrals.html         200
 /home-value/            /home-value.html        200
 /affordability/         /affordability.html     200
