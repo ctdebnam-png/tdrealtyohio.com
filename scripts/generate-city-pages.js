@@ -295,7 +295,7 @@ function generateCityPage(city) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${city.name}, OH Homes | 1% Listing | TD Realty</title>
+  <title>${city.name}, OH Homes | 1% Listing | TD Realty Ohio</title>
   <meta name="description" content="Selling your home in ${city.name}? Save thousands with TD Realty Ohio's 1% listing commission. ${formatPrice(city.medianPrice)} median home price, ${city.daysOnMarket} days average on market.">
   <meta name="keywords" content="sell home ${city.name} Ohio, ${city.name} real estate agent, 1 percent commission ${city.name}, ${city.name} listing agent">
 
