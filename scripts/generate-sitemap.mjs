@@ -18,6 +18,8 @@ const PRIORITY_MAP = {
   '/sellers/': '0.9',
   '/buyers/': '0.9',
   '/1-percent-commission/': '0.9',
+  '/sell-and-buy/': '0.9',
+  '/sell-only-2-percent/': '0.9',
   '/pre-listing-inspection/': '0.8',
   '/contact/': '0.8',
   '/home-value/': '0.7',
@@ -27,6 +29,12 @@ const PRIORITY_MAP = {
   '/agents/': '0.6',
   '/referrals/': '0.5',
   '/blog/': '0.7',
+  '/faq/': '0.7',
+  '/testimonials/': '0.7',
+  '/compare/': '0.7',
+  '/compare/1-percent-vs-3-percent/': '0.7',
+  '/compare/discount-broker-vs-full-service/': '0.7',
+  '/compare/flat-fee-mls-vs-full-service/': '0.7',
   '/sitemap-page/': '0.4',
   '/privacy/': '0.3',
   '/terms/': '0.3',
@@ -34,7 +42,8 @@ const PRIORITY_MAP = {
 };
 
 // Pages to exclude from sitemap
-const EXCLUDE = ['/404.html', '/404/'];
+// Note: /lp/ pages are ad landing pages with noindex meta tags
+const EXCLUDE = ['/404.html', '/404/', '/lp/'];
 
 /**
  * Get canonical URL from HTML file
