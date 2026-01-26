@@ -38,6 +38,28 @@ const TD_CONFIG = {
     buyerCommission: 0.03,
     buyerCashBack: 0.01
   },
+  // Centralized offer messaging - use these examples sitewide for consistency
+  offers: {
+    buyerCashBack: {
+      primaryExample: { price: 300000, cashBack: 3000 },
+      secondaryExample: { price: 400000, cashBack: 4000 },
+      description: 'First-time homebuyers receive 1% of the purchase price back at closing.',
+      disclaimer: 'Cash back program subject to lender approval. May be applied toward closing costs or prepaid items. Some loan programs have restrictions.'
+    },
+    sellAndBuy: {
+      rate: '1%',
+      description: 'List your current home for just 1% commission when you also buy your next home with TD Realty Ohio.',
+      disclaimer: 'Both transactions must occur within a reasonable timeframe. Buyer agent compensation negotiated separately.'
+    },
+    sellOnly: {
+      rate: '2%',
+      description: 'Not buying? List your home for 2% commission with the same full-service representation.',
+      disclaimer: 'Buyer agent compensation negotiated separately.'
+    }
+  },
+  memberships: {
+    line: 'Member of Columbus REALTORS, Ohio REALTORS, and the National Association of REALTORS'
+  },
   calculator: {
     minPrice: 200000,
     maxPrice: 800000,
