@@ -514,6 +514,36 @@ function setActiveNavLink() {
   });
 }
 
+// ===== PHONE CLICK TRACKING =====
+function initPhoneTracking() {
+  document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': 'contact',
+          'event_label': 'phone_call',
+          'value': 1
+        });
+      }
+    });
+  });
+}
+
+// ===== EMAIL CLICK TRACKING =====
+function initEmailTracking() {
+  document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+    link.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'click', {
+          'event_category': 'contact',
+          'event_label': 'email',
+          'value': 1
+        });
+      }
+    });
+  });
+}
+
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
   populateContactInfo();
@@ -529,6 +559,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initHeaderScroll();
   setActiveNavLink();
+  initPhoneTracking();
+  initEmailTracking();
 });
 
 // Export config for use in other scripts if needed
