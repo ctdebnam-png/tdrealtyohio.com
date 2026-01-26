@@ -69,7 +69,7 @@ const TD_CONFIG = {
   areas: [
     'Columbus', 'Westerville', 'Dublin', 'Powell', 'Delaware', 'Gahanna',
     'New Albany', 'Hilliard', 'Upper Arlington', 'Worthington', 'Lewis Center',
-    'Pickerington', 'Grove City', 'Blacklick', 'Clintonville', 'Galena',
+    'Pickerington', 'Grove City', 'Blacklick', 'Clintonville',
     'Pataskala', 'Sunbury'
   ],
   marketDataLastUpdated: 'January 2026'
