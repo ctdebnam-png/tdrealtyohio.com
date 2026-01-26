@@ -14,6 +14,7 @@ const checkLinks = require('./checks/links');
 const checkSeo = require('./checks/seo');
 const checkBusiness = require('./checks/business');
 const checkSitemap = require('./checks/sitemap');
+const checkSchema = require('./checks/schema');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -37,7 +38,8 @@ async function main() {
     { name: 'links', fn: checkLinks, label: 'Link Validation' },
     { name: 'seo', fn: checkSeo, label: 'SEO Tags' },
     { name: 'business', fn: checkBusiness, label: 'Business Facts' },
-    { name: 'sitemap', fn: checkSitemap, label: 'Sitemap Consistency' }
+    { name: 'sitemap', fn: checkSitemap, label: 'Sitemap Consistency' },
+    { name: 'schema', fn: checkSchema, label: 'Schema.org Structured Data' }
   ];
 
   for (const check of checks) {

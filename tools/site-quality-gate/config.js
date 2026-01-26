@@ -40,6 +40,9 @@ module.exports = {
   // Files to exclude from SEO tag checks (error pages, etc.)
   excludeFromSeoCheck: ['404.html'],
 
+  // Files to exclude from schema validation checks
+  excludeFromSchemaCheck: ['/404.html', '/404/', '/lp/'],
+
   // Sitemap file location
   sitemapFile: 'sitemap.xml',
 
