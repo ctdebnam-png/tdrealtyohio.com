@@ -151,6 +151,42 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tdrealtyohio.com/areas/bexley/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/areas/clintonville/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/areas/german-village/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/areas/grandview-heights/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/areas/reynoldsburg/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/areas/lewis-center/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tdrealtyohio.com/home-value/</loc>
     <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
@@ -227,6 +263,18 @@
     <lastmod>2026-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/faq/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/testimonials/</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <!-- Removed: privacy/, terms/, fair-housing/, sitemap-page/ have noindex -->
 </urlset>

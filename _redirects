@@ -42,10 +42,7 @@
 # Only redirect cities that DON'T have dedicated pages
 # ----------------------------------------
 # These cities don't have landing pages yet - redirect to main areas page
-/areas/clintonville/        /areas/     301
 /areas/galena/              /areas/     301
-/areas/lewis-center/        /areas/     301
-/areas/reynoldsburg/        /areas/     301
 
 # Wildcard matches for subpages under cities (not the city pages themselves)
 # These catch deep links like /areas/columbus/neighborhood/ that don't exist
@@ -69,7 +66,12 @@
 /areas/worthington/*    /areas/worthington/  301
 
 # Redirect cities without pages to main areas
-/areas/clintonville/*   /areas/     301
 /areas/galena/*         /areas/     301
-/areas/lewis-center/*   /areas/     301
-/areas/reynoldsburg/*   /areas/     301
+
+# Wildcard redirects for new city pages
+/areas/bexley/*             /areas/bexley/          301
+/areas/clintonville/*       /areas/clintonville/    301
+/areas/german-village/*     /areas/german-village/  301
+/areas/grandview-heights/*  /areas/grandview-heights/ 301
+/areas/reynoldsburg/*       /areas/reynoldsburg/    301
+/areas/lewis-center/*       /areas/lewis-center/    301
