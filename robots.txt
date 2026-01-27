@@ -1,6 +1,6 @@
 # TD Realty Ohio - robots.txt
 # https://tdrealtyohio.com
-# Updated: 2026-01-26
+# Updated: 2026-01-27
 
 # ==============================================
 # DEFAULT: Allow all standard search engines
