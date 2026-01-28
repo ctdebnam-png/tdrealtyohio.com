@@ -343,7 +343,8 @@ function initFormHandler(formId, successMessage) {
 
     requiredFields.forEach(field => {
       const errorEl = document.getElementById(field.id + '-error');
-      if (!field.value || field.value === '') {
+      const isEmpty = field.type === 'checkbox' ? !field.checked : (!field.value || field.value === '');
+      if (isEmpty) {
         isValid = false;
         field.classList.add('error');
         if (errorEl) errorEl.style.display = 'block';
