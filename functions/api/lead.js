@@ -39,6 +39,13 @@ function corsHeaders(origin) {
   };
 }
 
+export async function onRequestGet() {
+  return new Response(JSON.stringify({ status: 'ok', method: 'POST required' }), {
+    status: 405,
+    headers: { 'Content-Type': 'application/json', 'Allow': 'POST, OPTIONS' },
+  });
+}
+
 export async function onRequestOptions(context) {
   const origin = context.request.headers.get('Origin') || '';
   if (ALLOWED_ORIGINS.includes(origin)) {
