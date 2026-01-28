@@ -75,6 +75,25 @@ const TD_CONFIG = {
   marketDataLastUpdated: 'January 2026'
 };
 
+// ===== UTM & TRACKING =====
+(function captureUTM() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'msclkid'];
+    const stored = JSON.parse(sessionStorage.getItem('td_utm') || '{}');
+    keys.forEach(function(k) {
+      const v = params.get(k);
+      if (v) stored[k] = v;
+    });
+    if (Object.keys(stored).length) sessionStorage.setItem('td_utm', JSON.stringify(stored));
+  } catch (e) { /* storage unavailable */ }
+})();
+
+function getUTMData() {
+  try { return JSON.parse(sessionStorage.getItem('td_utm') || '{}'); }
+  catch (e) { return {}; }
+}
+
 // ===== UTILITY FUNCTIONS =====
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-US', {
@@ -356,6 +375,13 @@ function initFormHandler(formId, successMessage) {
       return;
     }
 
+    // Check consent checkbox
+    const consentCheckbox = form.querySelector('[name="consent_to_contact"]');
+    if (consentCheckbox && !consentCheckbox.checked) {
+      showStatus('Please agree to be contacted before submitting.', true);
+      return;
+    }
+
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
 
@@ -363,33 +389,122 @@ function initFormHandler(formId, successMessage) {
     submitBtn.textContent = 'Sending...';
 
     const formData = new FormData(form);
+    const utm = getUTMData();
 
+    // Determine intent and event from form type
+    const formType = formData.get('formType') || formData.get('form_type') || '';
+    let intentType = '';
+    let eventName = '';
+    const interest = formData.get('interest') || formData.get('transaction_type') || '';
+
+    if (formId === 'contact-form') {
+      eventName = 'contact_submit';
+      if (interest === 'selling') intentType = 'seller';
+      else if (interest === 'buying') intentType = 'buyer';
+      else if (interest === 'both') intentType = 'both';
+      else intentType = '';
+    } else if (formId === 'home-value-form') {
+      eventName = 'home_value_request';
+      intentType = 'seller';
+    } else if (formId === 'referral-form') {
+      eventName = 'referral_submit';
+      intentType = 'referral';
+    } else if (formId === 'agent-form') {
+      eventName = 'agent_inquiry';
+      intentType = 'agent';
+    }
+
+    // Build name from firstName + lastName if separate fields exist
+    const firstName = formData.get('firstName') || '';
+    const lastName = formData.get('lastName') || '';
+    const nameField = formData.get('name') || '';
+    const fullName = nameField || ((firstName + ' ' + lastName).trim());
+
+    // Collect form-specific extra fields
+    const extra = {};
+    if (formData.get('message')) extra.message = formData.get('message');
+    if (formData.get('property_address')) extra.property_address = formData.get('property_address');
+    if (formData.get('home_details')) extra.home_details = formData.get('home_details');
+    if (formData.get('referred_by')) extra.referred_by = formData.get('referred_by');
+    if (formData.get('experience')) extra.experience = formData.get('experience');
+    if (formData.get('interest')) extra.interest = formData.get('interest');
+    if (formData.get('transaction_type')) extra.transaction_type = formData.get('transaction_type');
+
+    const payload = {
+      name: fullName,
+      email: formData.get('email') || '',
+      phone: formData.get('phone') || '',
+      consent_to_contact: consentCheckbox ? consentCheckbox.checked : true,
+      consent_text_version: '2025-01-28',
+      privacy_ack: true,
+      page_path: window.location.pathname,
+      page_title: document.title,
+      referrer: document.referrer,
+      intent_type: intentType,
+      intent_strength: 'medium',
+      event_name: eventName,
+      utm_source: utm.utm_source || '',
+      utm_medium: utm.utm_medium || '',
+      utm_campaign: utm.utm_campaign || '',
+      utm_content: utm.utm_content || '',
+      utm_term: utm.utm_term || '',
+      gclid: utm.gclid || '',
+      msclkid: utm.msclkid || '',
+      extra: extra,
+    };
+
+    let success = false;
+
+    // Try first-party endpoint, fall back to Formspree
     try {
-      const response = await fetch(form.action, {
+      const response = await fetch('/api/lead', {
         method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' },
       });
-
       if (response.ok) {
-        submitBtn.textContent = successMessage;
-        submitBtn.classList.remove('btn-primary');
-        submitBtn.classList.add('btn-secondary');
-        form.reset();
-        showStatus('Thank you! Your message has been sent. We\'ll be in touch shortly.', false);
-
-        setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-          submitBtn.classList.remove('btn-secondary');
-          submitBtn.classList.add('btn-primary');
-        }, 5000);
-      } else {
-        throw new Error('Form submission failed');
+        success = true;
       }
-    } catch (error) {
+    } catch (err) {
+      // First-party failed, try Formspree fallback
+    }
+
+    if (!success) {
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        });
+        if (response.ok) success = true;
+      } catch (err) {
+        // Both failed
+      }
+    }
+
+    if (success) {
+      // Fire gtag event if available
+      if (typeof gtag === 'function') {
+        gtag('event', eventName, {
+          event_category: 'lead',
+          event_label: intentType,
+          page_path: window.location.pathname,
+        });
+      }
+
+      submitBtn.textContent = successMessage;
+      submitBtn.classList.remove('btn-primary');
+      submitBtn.classList.add('btn-secondary');
+      form.reset();
+      showStatus('Thank you! Your message has been sent. We\'ll be in touch shortly.', false);
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        submitBtn.classList.remove('btn-secondary');
+        submitBtn.classList.add('btn-primary');
+      }, 5000);
+    } else {
       submitBtn.textContent = 'Error - Try Again';
       submitBtn.disabled = false;
       showStatus('Something went wrong. Please try again or call us at (614) 392-8858.', true);
