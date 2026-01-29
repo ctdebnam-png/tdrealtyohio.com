@@ -39,8 +39,18 @@ function corsHeaders(origin) {
   };
 }
 
-export async function onRequestGet() {
-  return new Response(JSON.stringify({ status: 'ok', method: 'POST required' }), {
+export async function onRequestGet(context) {
+  const { env } = context;
+  const envKeys = Object.keys(env || {});
+  const hasLeads = 'LEADS' in (env || {});
+  const leadsType = env.LEADS ? typeof env.LEADS : 'undefined';
+  return new Response(JSON.stringify({
+    status: 'ok',
+    method: 'POST required',
+    env_keys: envKeys,
+    has_leads: hasLeads,
+    leads_type: leadsType,
+  }, null, 2), {
     status: 405,
     headers: { 'Content-Type': 'application/json', 'Allow': 'POST, OPTIONS' },
   });
