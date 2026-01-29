@@ -154,14 +154,18 @@ export async function onRequestPost(context) {
 
   // Store in KV with 90-day TTL
   const kvKey = `lead:${createdAt}:${leadId}`;
+  let kvStatus = 'skipped';
   try {
     if (env.LEADS) {
       await env.LEADS.put(kvKey, JSON.stringify(lead), {
         expirationTtl: 90 * 24 * 60 * 60, // 90 days in seconds
       });
+      kvStatus = 'ok';
+    } else {
+      kvStatus = 'no_binding';
     }
   } catch (err) {
-    // Log but don't fail the request — Formspree is the fallback
+    kvStatus = 'error: ' + (err.message || String(err));
     console.error('KV write failed:', err);
   }
 
@@ -196,7 +200,7 @@ export async function onRequestPost(context) {
     console.error('Formspree forward failed:', err);
   }
 
-  return new Response(JSON.stringify({ ok: true, lead_id: leadId }), {
+  return new Response(JSON.stringify({ ok: true, lead_id: leadId, kv: kvStatus }), {
     status: 200,
     headers,
   });
