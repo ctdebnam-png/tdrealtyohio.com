@@ -456,32 +456,21 @@ function initFormHandler(formId, successMessage) {
 
     let success = false;
 
-    // Try first-party endpoint, fall back to Formspree
-    try {
-      const response = await fetch('/api/lead', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (response.ok) {
-        success = true;
-      }
-    } catch (err) {
-      // First-party failed, try Formspree fallback
-    }
+    // Submit to both /api/lead (KV storage) and Formspree (email) in parallel from browser
+    const kvPromise = fetch('/api/lead', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' },
+    }).then(r => r.ok).catch(() => false);
 
-    if (!success) {
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' },
-        });
-        if (response.ok) success = true;
-      } catch (err) {
-        // Both failed
-      }
-    }
+    const formspreePromise = fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' },
+    }).then(r => r.ok).catch(() => false);
+
+    const [kvOk, formspreeOk] = await Promise.all([kvPromise, formspreePromise]);
+    success = kvOk || formspreeOk;
 
     if (success) {
       // Fire gtag event if available
