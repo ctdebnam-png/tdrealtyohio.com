@@ -154,49 +154,25 @@ export async function onRequestPost(context) {
 
   // Store in KV with 90-day TTL
   const kvKey = `lead:${createdAt}:${leadId}`;
+  let kvStatus = 'skipped';
   try {
     if (env.LEADS) {
       await env.LEADS.put(kvKey, JSON.stringify(lead), {
         expirationTtl: 90 * 24 * 60 * 60, // 90 days in seconds
       });
+      kvStatus = 'ok';
+    } else {
+      kvStatus = 'no_binding';
     }
   } catch (err) {
-    // Log but don't fail the request — Formspree is the fallback
+    kvStatus = 'error: ' + (err.message || String(err));
     console.error('KV write failed:', err);
   }
 
-  // Forward to Formspree as fallback/parallel delivery
-  try {
-    const formspreeBody = new URLSearchParams();
-    formspreeBody.append('name', lead.name);
-    formspreeBody.append('_replyto', lead.email);
-    formspreeBody.append('email', lead.email);
-    formspreeBody.append('phone', lead.phone);
-    formspreeBody.append('_subject', 'New Lead: ' + (lead.event_name || 'website').replace(/_/g, ' ') + ' from ' + (lead.name || 'Unknown'));
-    formspreeBody.append('_gotcha', ''); // honeypot must be empty to pass spam filter
-    formspreeBody.append('event_name', lead.event_name);
-    formspreeBody.append('intent_type', lead.intent_type);
-    formspreeBody.append('page_path', lead.page_path);
-    formspreeBody.append('lead_id', lead.lead_id);
-    if (lead.extra.message) formspreeBody.append('message', lead.extra.message);
-    if (lead.extra.property_address) formspreeBody.append('property_address', lead.extra.property_address);
-    if (lead.extra.referred_by) formspreeBody.append('referred_by', lead.extra.referred_by);
-    if (lead.extra.experience) formspreeBody.append('experience', lead.extra.experience);
-    if (lead.extra.interest) formspreeBody.append('interest', lead.extra.interest);
-    if (lead.extra.home_details) formspreeBody.append('home_details', lead.extra.home_details);
-    if (lead.extra.transaction_type) formspreeBody.append('transaction_type', lead.extra.transaction_type);
-    if (lead.utm_source) formspreeBody.append('utm_source', lead.utm_source);
+  // Formspree is now submitted directly from the browser (not server-side)
+  // to avoid Cloudflare IP triggering Formspree spam filters
 
-    await fetch('https://formspree.io/f/mykkypyd', {
-      method: 'POST',
-      body: formspreeBody,
-      headers: { 'Accept': 'application/json' },
-    });
-  } catch (err) {
-    console.error('Formspree forward failed:', err);
-  }
-
-  return new Response(JSON.stringify({ ok: true, lead_id: leadId }), {
+  return new Response(JSON.stringify({ ok: true, lead_id: leadId, kv: kvStatus }), {
     status: 200,
     headers,
   });
