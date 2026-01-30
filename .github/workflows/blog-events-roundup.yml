@@ -1,0 +1,56 @@
+name: Generate Weekly Events Roundup
+
+on:
+  schedule:
+    # Run every Friday at 8am EST (13:00 UTC)
+    - cron: '0 13 * * 5'
+  workflow_dispatch:
+    inputs:
+      community:
+        description: 'Specific community slug (leave blank for rotation)'
+        required: false
+        default: ''
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate events roundup
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cd scripts
+          if [ -n "${{ github.event.inputs.community }}" ]; then
+            python generate_blog.py --type events --community "${{ github.event.inputs.community }}"
+          else
+            # Rotate through communities - do 3 per week to manage costs
+            WEEK_NUM=$(date +%V)
+            COMMUNITIES=("westerville dublin powell" "delaware new_albany gahanna" "hilliard worthington columbus" "upper_arlington pickerington grove_city")
+            INDEX=$((WEEK_NUM % 4))
+            for COMMUNITY in ${COMMUNITIES[$INDEX]}; do
+              python generate_blog.py --type events --community "$COMMUNITY"
+            done
+          fi
+
+      - name: Commit and push
+        run: |
+          git config user.name "TD Realty Blog Bot"
+          git config user.email "bot@tdrealtyohio.com"
+          git add blog/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto: Events roundup $(date +%Y-%m-%d)"
+            git push
+          fi
