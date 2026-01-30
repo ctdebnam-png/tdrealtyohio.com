@@ -104,15 +104,6 @@ function formatCurrency(amount) {
   }).format(amount);
 }
 
-function formatCompactCurrency(amount) {
-  if (amount >= 1000000) {
-    return '$' + (amount / 1000000).toFixed(1) + 'M';
-  }
-  if (amount >= 1000) {
-    return '$' + (amount / 1000).toFixed(0) + 'K';
-  }
-  return '$' + amount;
-}
 
 function updateSliderTrack(slider) {
   const min = parseFloat(slider.min);
