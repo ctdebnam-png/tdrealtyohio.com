@@ -11,6 +11,7 @@
 # ----------------------------------------
 # Redirect .html URLs to clean routes (SEO)
 # ----------------------------------------
+/index.html             /                       301
 /sellers.html           /sellers/               301
 /buyers.html            /buyers/                301
 /contact.html           /contact/               301
