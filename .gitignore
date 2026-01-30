@@ -4,6 +4,10 @@ node_modules/
 # Quality gate timestamped reports (keep latest.json only)
 reports/site-quality-gate/report-*.json
 
+# Python
+__pycache__/
+*.pyc
+
 # OS files
 .DS_Store
 Thumbs.db
