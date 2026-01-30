@@ -24,11 +24,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
   <meta name="theme-color" content="#1a2e44">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="preload" href="/assets/css/styles.css" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17866418952"></script>
@@ -160,7 +160,15 @@
     "name": "TD Realty Ohio, LLC",
     "url": "https://tdrealtyohio.com",
     "telephone": "(614) 392-8858",
-    "email": "info@tdrealtyohio.com"
+    "email": "info@tdrealtyohio.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "3600 Tremont Rd Ste 250",
+      "addressLocality": "Columbus",
+      "addressRegion": "OH",
+      "postalCode": "43221",
+      "addressCountry": "US"
+    }
   }
   </script>
 </head>
@@ -455,18 +463,23 @@
           <ul class="footer-links">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
-            <li><a href="/1-percent-commission/">1% Commission</a></li>
             <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
             <li><a href="/areas/">Service Areas</a></li>
+            <li><a href="/home-value/">Free Home Value</a></li>
+            <li><a href="/affordability/">Affordability Calculator</a></li>
+            <li><a href="/referrals/">Referral Credit</a></li>
+            <li><a href="/compare/">Compare Options</a></li>
           </ul>
         </div>
 
         <div>
-          <h3 class="footer-title">Compare</h3>
+          <h3 class="footer-title">Company</h3>
           <ul class="footer-links">
-            <li><a href="/compare/1-percent-vs-3-percent/">1% vs 3% Commission</a></li>
-            <li><a href="/compare/discount-broker-vs-full-service/">Discount vs Full Service</a></li>
-            <li><a href="/compare/flat-fee-mls-vs-full-service/">Flat Fee MLS vs Full Service</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/testimonials/">Testimonials</a></li>
+            <li><a href="/agents/">Agent Opportunities</a></li>
           </ul>
         </div>
 
@@ -485,21 +498,28 @@
             </svg>
             <a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a>
           </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span data-location>Westerville, Ohio</span>
+          </div>
         </div>
       </div>
 
       <div class="footer-compliance-logos">
-        <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener noreferrer" title="Equal Housing Opportunity">
+        <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener noreferrer" title="Equal Housing Opportunity" aria-label="Equal Housing Opportunity - opens in new tab">
           <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50" width="50" loading="lazy">
         </a>
-        <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" title="National Association of REALTORS">
-          <img src="/media/compliance/realtor.svg" alt="REALTOR" height="50" width="50" loading="lazy">
+        <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" title="National Association of REALTORS®" aria-label="National Association of REALTORS - opens in new tab">
+          <img src="/media/compliance/realtor.svg" alt="REALTOR®" height="50" width="50" loading="lazy">
         </a>
-        <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" title="Columbus REALTORS">
-          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS" height="45" width="120" loading="lazy">
+        <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" title="Columbus REALTORS®" aria-label="Columbus REALTORS - opens in new tab">
+          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS®" height="45" width="120" loading="lazy">
         </a>
-        <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" title="Ohio REALTORS">
-          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS" height="45" width="120" loading="lazy">
+        <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" title="Ohio REALTORS®" aria-label="Ohio REALTORS - opens in new tab">
+          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS®" height="45" width="120" loading="lazy">
         </a>
       </div>
 
@@ -508,6 +528,7 @@
           <a href="/privacy/">Privacy Policy</a>
           <a href="/terms/">Terms of Service</a>
           <a href="/fair-housing/">Fair Housing</a>
+          <a href="/sitemap-page/">Site Map</a>
         </div>
       </div>
 
