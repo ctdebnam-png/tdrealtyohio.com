@@ -1,0 +1,39 @@
+name: Generate Mortgage Rate Update
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate rate update
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          cd scripts
+          python generate_blog.py --type rates
+
+      - name: Commit and push
+        run: |
+          git config user.name "TD Realty Blog Bot"
+          git config user.email "bot@tdrealtyohio.com"
+          git add blog/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto: Mortgage rate update $(date +%Y-%m-%d)"
+            git push
+          fi
