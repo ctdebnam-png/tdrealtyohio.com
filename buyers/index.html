@@ -101,7 +101,7 @@
         <span>Realty Ohio</span>
       </a>
 
-      <nav class="nav" id="main-nav">
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
         <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
         <a href="/buyers/" class="nav-link active">Buyers</a>
@@ -115,7 +115,7 @@
       </nav>
 
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>
         </svg>
       </button>
@@ -161,10 +161,10 @@
             <h3 class="calculator-title">Cash Back Calculator</h3>
             <div class="calculator-slider-group">
               <div class="calculator-slider-header">
-                <label class="calculator-label">Purchase Price</label>
+                <label class="calculator-label" for="buyer-price-slider">Purchase Price</label>
                 <span class="calculator-slider-value" data-price-display>$400,000</span>
               </div>
-              <input type="range" class="calculator-range" data-price-slider min="200000" max="800000" step="10000" value="400000" style="--value: 33.33%">
+              <input type="range" class="calculator-range" data-price-slider id="buyer-price-slider" min="200000" max="800000" step="10000" value="400000" style="--value: 33.33%">
               <div class="slider-labels">
                 <span>$200K</span>
                 <span>$800K</span>
@@ -215,7 +215,7 @@
         <div class="grid-3">
           <div class="card service-card">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="11" cy="11" r="8"/>
                 <path d="M21 21l-4.35-4.35"/>
               </svg>
@@ -226,7 +226,7 @@
 
           <div class="card service-card">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
                 <line x1="16" y1="13" x2="8" y2="13"/>
@@ -239,7 +239,7 @@
 
           <div class="card service-card">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M9 11l3 3L22 4"/>
                 <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
               </svg>
@@ -268,7 +268,7 @@
                 <div class="step-title">Get Pre-Approved</div>
                 <p class="step-brief">Know your budget before you start looking at homes</p>
               </div>
-              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -311,7 +311,7 @@
                 <div class="step-title">House Hunting</div>
                 <p class="step-brief">Search homes, schedule showings, and find your match</p>
               </div>
-              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -355,7 +355,7 @@
                 <div class="step-title">Make an Offer</div>
                 <p class="step-brief">Submit a competitive offer and negotiate terms</p>
               </div>
-              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -394,7 +394,7 @@
                 <div class="step-title">Under Contract</div>
                 <p class="step-brief">Inspections, appraisal, and loan processing</p>
               </div>
-              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -435,7 +435,7 @@
                 <div class="step-title">Closing Day</div>
                 <p class="step-brief">Sign documents, get keys, and become a homeowner</p>
               </div>
-              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="step-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -485,7 +485,7 @@
         <div class="grid-3">
           <a href="https://myohiohome.org/" target="_blank" rel="noopener noreferrer" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                 <polyline points="9 22 9 12 15 12 15 22"/>
               </svg>
@@ -496,7 +496,7 @@
 
           <a href="https://www.consumerfinance.gov/housing/housing-insecurity/help-for-homeowners/find-a-housing-counselor/" target="_blank" rel="noopener noreferrer" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
@@ -509,7 +509,7 @@
 
           <a href="https://www.franklincountyauditor.com/" target="_blank" rel="noopener noreferrer" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="11" cy="11" r="8"/>
                 <path d="M21 21l-4.35-4.35"/>
               </svg>
@@ -520,7 +520,7 @@
 
           <a href="https://www.delawarecountyauditor.com/" target="_blank" rel="noopener noreferrer" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="11" cy="11" r="8"/>
                 <path d="M21 21l-4.35-4.35"/>
               </svg>
@@ -531,7 +531,7 @@
 
           <a href="https://mortgage.consumerfinance.gov/" target="_blank" rel="noopener noreferrer" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
               </svg>
@@ -542,7 +542,7 @@
 
           <a href="https://www.ohiorealtors.org/resources/consumer-resources/" target="_blank" rel="noopener noreferrer" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                 <polyline points="14 2 14 8 20 8"/>
                 <line x1="16" y1="13" x2="8" y2="13"/>
@@ -577,9 +577,9 @@
 
         <div class="faq-list">
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false">
               Who qualifies for the 1% cash back?
-              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -589,9 +589,9 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false">
               Do I pay for buyer representation?
-              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -601,9 +601,9 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false">
               How does the 1% listing rate work if I'm also selling?
-              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -613,9 +613,9 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false">
               Can I use the cash back for closing costs?
-              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -625,9 +625,9 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false">
               What areas do you serve?
-              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -637,9 +637,9 @@
           </div>
 
           <div class="faq-item">
-            <button class="faq-question">
+            <button class="faq-question" aria-expanded="false">
               How do I get started?
-              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
@@ -677,7 +677,7 @@
         </div>
 
         <div>
-          <h4 class="footer-title">Services</h4>
+          <h3 class="footer-title">Services</h3>
           <ul class="footer-links">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
@@ -690,7 +690,7 @@
         </div>
 
         <div>
-          <h4 class="footer-title">Company</h4>
+          <h3 class="footer-title">Company</h3>
           <ul class="footer-links">
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
@@ -702,22 +702,22 @@
         </div>
 
         <div>
-          <h4 class="footer-title">Contact</h4>
+          <h3 class="footer-title">Contact</h3>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
             <a href="tel:6143928858" data-phone>(614) 392-8858</a>
           </div>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
             </svg>
             <a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a>
           </div>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
               <circle cx="12" cy="10" r="3"/>
             </svg>
