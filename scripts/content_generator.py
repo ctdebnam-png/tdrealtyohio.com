@@ -53,6 +53,19 @@ Focus on what the data means for real buyers and sellers in this specific commun
 Do not make up statistics. Only reference data explicitly provided in the user prompt. \
 If data is missing, acknowledge the limitation.
 
+INLINE CITATIONS: When referencing data, include inline citations using anchor links. \
+For example: "Median home prices rose 5.2% \
+(<a href="https://www.redfin.com/news/data-center/" target="_blank" \
+rel="noopener noreferrer">Redfin Data Center</a>)." \
+Every statistic must have an inline citation to its source.
+
+DEPTH: Write comprehensive analysis, not surface-level summaries. Include:
+- Year-over-year AND month-over-month context when data supports it
+- What the numbers mean practically (e.g., "a 5% price increase means $15,000 more on a $300K home")
+- Neighborhood-level insights specific to this community
+- How local market conditions compare to the broader Columbus metro trend
+- Actionable takeaways for buyers and sellers (specific strategies, not generic advice)
+
 The brokerage's key differentiators:
 - 1% listing commission (vs typical 3%) when clients buy and sell
 - 2% for sell-only transactions
@@ -63,8 +76,9 @@ Mention these naturally in the CTA section, not throughout the article.
 
 Output ONLY the article body HTML (no <html>, <head>, or <body> tags). Use <h2> for \
 major sections and <h3> for subsections. Use <p> tags for paragraphs. Include at least \
-one internal link to another tdrealtyohio.com page (e.g. /contact/, /sellers/, \
-/pre-listing-inspection/, /areas/). Include at least one external link to a data source.
+two internal links to tdrealtyohio.com pages (e.g. /contact/, /sellers/, \
+/pre-listing-inspection/, /areas/, /affordability/). Include inline citations \
+throughout the article linking to data sources.
 """
 
 EVENTS_SYSTEM_PROMPT = """\
@@ -72,6 +86,18 @@ You are a local community writer for TD Realty Ohio covering Central Ohio \
 neighborhoods. Write warmly about the community - highlight what makes it a great \
 place to live. When listing events, be practical (include dates, times, locations \
 when available).
+
+INLINE CITATIONS: Link to event sources and news articles inline. When mentioning \
+an event or news item that has a URL, hyperlink the event name directly. \
+For example: "<a href="https://example.com/event" target="_blank" \
+rel="noopener noreferrer">Summer Festival</a> runs June 14-16."
+
+DEPTH: Go beyond a simple event list. Include:
+- Context about why these events matter to the community
+- Brief history or background on recurring events
+- Practical tips (parking, what to bring, family-friendly notes)
+- How the community's character and culture show through these events
+- A "why this community" section with specific details about schools, parks, walkability
 
 Keep the real estate angle subtle - this is community content first, lead generation \
 second. One brief mention of TD Realty Ohio at the end is sufficient.
@@ -85,6 +111,18 @@ You are a real estate market analyst writing about mortgage rates for TD Realty 
 Be factual and helpful. Explain what rate changes mean in practical terms for \
 homebuyers in Central Ohio. Do not give financial advice - clearly state that you are \
 not a lender.
+
+INLINE CITATIONS: Cite data sources inline. For example: "The 30-year fixed averaged \
+6.65% this week (<a href="https://www.freddiemac.com/pmms" target="_blank" \
+rel="noopener noreferrer">Freddie Mac PMMS</a>)."
+
+DEPTH: Go beyond reporting the rate number. Include:
+- Multiple concrete payment examples at different price points ($250K, $350K, $450K)
+- How much buying power has changed vs. 3, 6, and 12 months ago
+- Historical context (where rates were 1 year ago, 5 years ago)
+- Rate lock strategy considerations
+- How rate changes interact with Central Ohio's specific market conditions
+- Different loan type comparisons (30-year vs 15-year, conventional vs FHA)
 
 Output ONLY the article body HTML (no <html>, <head>, or <body> tags). Use <h2> for \
 major sections. Use <p> tags for paragraphs.
@@ -143,9 +181,9 @@ Requirements:
 - Include a data table with current vs previous period metrics
 - Write a buyer analysis section and a seller analysis section
 - Include a CTA paragraph mentioning TD Realty Ohio's services
-- Minimum 600 words, maximum 1200 words
-- Cite Redfin Data Center as the data source
-- Include an internal link to /contact/ or /sellers/
+- Minimum 1200 words, maximum 1800 words
+- Cite Redfin Data Center as the data source with inline links
+- Include internal links to /contact/, /sellers/, and at least one other page
 """
 
     article_body = call_claude(prompt, MARKET_SYSTEM_PROMPT)
@@ -222,7 +260,7 @@ Requirements:
 - Include a brief section on why {display} is a great place to live
 - Subtle TD Realty Ohio mention at the end only
 - Include an internal link to /areas/
-- Minimum 600 words
+- Minimum 1200 words
 """
 
     article_body = call_claude(prompt, EVENTS_SYSTEM_PROMPT)
@@ -275,9 +313,9 @@ Requirements:
 - Include a "Should You Wait or Buy Now?" section
 - Mention TD Realty Ohio can connect buyers with trusted local lenders
 - Clearly state TD Realty Ohio is NOT a mortgage lender
-- Include a link to /buyers/ or /contact/
-- Minimum 600 words
-- Cite Freddie Mac Primary Mortgage Market Survey
+- Include links to /buyers/, /contact/, and /affordability/
+- Minimum 1200 words
+- Cite Freddie Mac Primary Mortgage Market Survey with inline links
 """
 
     article_body = call_claude(prompt, RATES_SYSTEM_PROMPT)

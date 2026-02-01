@@ -8,11 +8,11 @@ FRED_API_KEY = os.environ.get("FRED_API_KEY")
 
 # Claude settings
 CLAUDE_MODEL = "claude-sonnet-4-20250514"
-MAX_TOKENS = 4000
+MAX_TOKENS = 8000
 
 # Content settings
-MIN_WORD_COUNT = 600
-MAX_WORD_COUNT = 1200
+MIN_WORD_COUNT = 1200
+MAX_WORD_COUNT = 1800
 
 # Output paths - site uses plain HTML at /blog/{slug}/index.html
 BLOG_OUTPUT_DIR = "blog"
