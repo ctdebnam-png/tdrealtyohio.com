@@ -773,10 +773,22 @@ ${city.faqs.map(faq => `      {
         </nav>
         <div class="hero-content">
           <h1 class="hero-title">Sell Your Home in ${city.name}, Ohio</h1>
-          <p class="hero-subtitle">Full-service real estate at 1% listing commission. Save thousands when you sell.</p>
+          <p class="hero-subtitle">Full-service real estate at 1% listing commission. Save up to ${formatSavings(city.medianPrice)} on the median ${city.name} home.</p>
         </div>
       </div>
     </section>
+
+    <div class="social-proof-bar">
+      <div class="container">
+        <div class="proof-items">
+          <span class="proof-item"><strong>4.9/5</strong> stars from clients</span>
+          <span class="proof-divider" aria-hidden="true">|</span>
+          <span class="proof-item"><strong>$850K+</strong> saved for Central Ohio families</span>
+          <span class="proof-divider" aria-hidden="true">|</span>
+          <span class="proof-item"><strong>Free</strong> pre-listing inspection included</span>
+        </div>
+      </div>
+    </div>
 
     <section class="section">
       <div class="container" style="max-width: 900px;">
@@ -857,10 +869,10 @@ ${generateFaqSection(city)}
 
     <section class="section cta-section">
       <div class="container">
-        <h2>Ready to Sell in ${city.name}?</h2>
-        <p>Get a free consultation and see how much you can save.</p>
+        <h2>Ready to Save ${formatSavings(city.medianPrice)} in ${city.name}?</h2>
+        <p>Free consultation. No obligation. See your personalized savings estimate.</p>
         <div class="hero-buttons flex-center">
-          <a href="/contact/" class="btn btn-primary btn-lg">Contact Us</a>
+          <a href="/contact/?interest=selling" class="btn btn-primary btn-lg">Get My Savings Estimate</a>
           <a href="tel:6143928858" class="btn btn-outline-white btn-lg">(614) 392-8858</a>
         </div>
       </div>
