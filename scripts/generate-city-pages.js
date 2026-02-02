@@ -612,6 +612,7 @@ function generateCityPage(city) {
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
   <meta name="theme-color" content="#1a2e44">
 
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="/assets/css/styles.css" as="style">
