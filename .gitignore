@@ -18,6 +18,9 @@ Thumbs.db
 # Lighthouse CI
 .lighthouseci/
 
+# Generated output artifacts
+output/
+
 # Python
 __pycache__/
 *.pyc
