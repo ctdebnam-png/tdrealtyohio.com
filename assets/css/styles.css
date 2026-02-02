@@ -2587,6 +2587,41 @@ main {
 }
 
 /* ===== PRINT STYLES ===== */
+/* ── Social Proof Bar ──────────────────────────────────── */
+.social-proof-bar {
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 0.875rem 0;
+  text-align: center;
+}
+.proof-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.9375rem;
+  color: var(--gray-700);
+}
+.proof-item strong {
+  color: var(--navy);
+}
+.proof-divider {
+  color: var(--gray-300);
+}
+@media (max-width: 600px) {
+  .proof-divider { display: none; }
+  .proof-items { flex-direction: column; gap: 0.25rem; }
+}
+
+/* ── Hero Proof Line ──────────────────────────────────── */
+.hero-proof {
+  font-size: 0.9375rem;
+  opacity: 0.85;
+  margin-top: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
 @page {
   margin: 2cm 1.5cm;
 }
