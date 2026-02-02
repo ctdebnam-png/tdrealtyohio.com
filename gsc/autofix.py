@@ -455,16 +455,20 @@ def _all_page_paths() -> list[Path]:
         pages.append(root)
 
     for pattern in ["areas/*/index.html", "blog/*/index.html",
-                     "compare/*/index.html", "sellers/index.html",
-                     "buyers/index.html", "about/index.html",
-                     "contact/index.html", "agents/index.html",
-                     "testimonials/index.html", "faq/index.html",
-                     "referrals/index.html", "1-percent-commission/index.html",
-                     "pre-listing-inspection/index.html", "home-value/index.html",
-                     "affordability/index.html", "sell-and-buy/index.html",
-                     "sell-only-2-percent/index.html", "privacy/index.html",
-                     "terms/index.html", "fair-housing/index.html",
-                     "blog/index.html", "areas/index.html", "compare/index.html"]:
+                     "compare/*/index.html", "lp/*/index.html",
+                     "sellers/index.html", "buyers/index.html",
+                     "about/index.html", "contact/index.html",
+                     "agents/index.html", "testimonials/index.html",
+                     "faq/index.html", "referrals/index.html",
+                     "1-percent-commission/index.html",
+                     "pre-listing-inspection/index.html",
+                     "home-value/index.html", "affordability/index.html",
+                     "sell-and-buy/index.html",
+                     "sell-only-2-percent/index.html",
+                     "privacy/index.html", "terms/index.html",
+                     "fair-housing/index.html", "sitemap-page/index.html",
+                     "blog/index.html", "areas/index.html",
+                     "compare/index.html"]:
         pages.extend(SITE_ROOT.glob(pattern))
     return pages
 
