@@ -15,6 +15,9 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Lighthouse CI
+.lighthouseci/
+
 # Python
 __pycache__/
 *.pyc
