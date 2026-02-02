@@ -643,6 +643,15 @@ function initCookieConsent() {
   document.body.appendChild(banner);
   document.getElementById('cookie-accept').addEventListener('click', function () {
     localStorage.setItem('cookie-consent', 'accepted');
+    // Load GA now if it wasn't loaded yet (first visit acceptance)
+    if (!document.querySelector('script[src*="googletagmanager"]')) {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'AW-17866418952');
+    }
     banner.remove();
   });
   document.getElementById('cookie-decline').addEventListener('click', function () {
