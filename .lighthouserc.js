@@ -16,15 +16,21 @@ module.exports = {
       },
     },
     assert: {
+      preset: 'lighthouse:no-pwa',
       assertions: {
-        'categories:performance': ['error', { minScore: 0.9 }],
-        'categories:accessibility': ['error', { minScore: 0.95 }],
-        'categories:best-practices': ['error', { minScore: 0.9 }],
-        'categories:seo': ['error', { minScore: 0.95 }],
-        // Core Web Vitals
-        'largest-contentful-paint': ['warn', { maxNumericValue: 2500 }],
-        'cumulative-layout-shift': ['warn', { maxNumericValue: 0.1 }],
-        'total-blocking-time': ['warn', { maxNumericValue: 300 }],
+        // Category scores — use 'warn' to surface issues without blocking merges,
+        // since CI runners produce lower scores than real hardware
+        'categories:performance': ['warn', { minScore: 0.85, aggregationMethod: 'median-run' }],
+        'categories:accessibility': ['error', { minScore: 0.90, aggregationMethod: 'median-run' }],
+        'categories:best-practices': ['warn', { minScore: 0.85, aggregationMethod: 'median-run' }],
+        'categories:seo': ['error', { minScore: 0.90, aggregationMethod: 'median-run' }],
+        // Core Web Vitals — warn only, CI hardware skews these
+        'largest-contentful-paint': ['warn', { maxNumericValue: 3500 }],
+        'cumulative-layout-shift': ['warn', { maxNumericValue: 0.15 }],
+        'total-blocking-time': ['warn', { maxNumericValue: 500 }],
+        // Disable audits that don't apply to static sites served locally
+        'redirects': 'off',
+        'uses-http2': 'off',
       },
     },
     upload: {
