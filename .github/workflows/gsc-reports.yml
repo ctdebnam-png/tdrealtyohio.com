@@ -32,6 +32,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -76,19 +81,31 @@ jobs:
         if: steps.report-type.outputs.report == 'all' || steps.report-type.outputs.report == 'optimizer'
         run: python -m gsc.optimizer
 
+      - name: Regenerate sitemap
+        if: steps.report-type.outputs.report == 'all' || steps.report-type.outputs.report == 'autofix' || steps.report-type.outputs.report == 'optimizer'
+        run: node scripts/generate-sitemap.mjs
+
+      - name: Generate blog briefs
+        if: steps.report-type.outputs.report == 'all' || steps.report-type.outputs.report == 'feedback'
+        run: node scripts/blog-brief-generator.mjs
+
+      - name: Run competitor analysis (dry run)
+        if: steps.report-type.outputs.report == 'all'
+        run: node scripts/competitor-analysis.mjs --dry-run
+
       - name: Upload report artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: gsc-reports-${{ github.run_id }}
-          path: output/gsc-reports/
+          path: output/
           retention-days: 90
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/gsc-reports/ areas/ blog/ compare/ lp/ sellers/ buyers/ \
+          git add output/ sitemap.xml areas/ blog/ compare/ lp/ sellers/ buyers/ \
                   about/ contact/ agents/ testimonials/ faq/ referrals/ \
                   index.html 1-percent-commission/ pre-listing-inspection/ \
                   home-value/ affordability/ sell-and-buy/ sell-only-2-percent/ \

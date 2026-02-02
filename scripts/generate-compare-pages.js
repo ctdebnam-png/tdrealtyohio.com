@@ -1,0 +1,444 @@
+#!/usr/bin/env node
+/**
+ * Compare Pages Content Audit Generator
+ *
+ * Analyzes the 3 existing comparison pages and outputs a JSON audit report
+ * with SEO improvements, internal link suggestions, FAQ additions, and
+ * content gap analysis.
+ *
+ * Output: output/compare-pages/content-audit.json
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// ---------------------------------------------------------------------------
+// Data
+// ---------------------------------------------------------------------------
+
+const COMPARISONS = [
+  {
+    slug: '1-percent-vs-3-percent',
+    title: '1% vs 3% Listing Commission',
+    targetKeywords: [
+      '1 percent vs 3 percent commission',
+      '1% listing fee worth it',
+      'low commission realtor comparison',
+    ],
+    uniqueAngle: 'Direct cost comparison with service parity proof',
+    suggestedFaqs: [
+      {
+        q: 'Do homes sell for less with a 1% agent?',
+        a: 'No. Sale price is determined by market conditions, pricing strategy, and property condition—not commission rate. A 1% agent lists on the same MLS, uses the same marketing channels, and attracts the same buyer pool as a 3% agent.',
+      },
+      {
+        q: 'Can I negotiate a traditional agent down to 1%?',
+        a: 'Most traditional agents cannot offer 1% because their brokerage split and overhead require higher commissions to be profitable. Agents at efficiency-focused brokerages like TD Realty Ohio can offer lower rates because the business model is built for it.',
+      },
+    ],
+  },
+  {
+    slug: 'discount-broker-vs-full-service',
+    title: 'Discount Broker vs Full Service Agent',
+    targetKeywords: [
+      'discount broker vs full service',
+      'low commission realtor Columbus',
+      'discount real estate agent Ohio',
+    ],
+    uniqueAngle: 'Three-tier comparison showing TD Realty as the middle ground',
+    suggestedFaqs: [
+      {
+        q: 'What services do discount brokers typically cut?',
+        a: 'Most discount brokers reduce or eliminate professional photography, showing coordination, and hands-on negotiation support. Some provide MLS access only with no agent involvement after listing. TD Realty Ohio maintains all full-service components while reducing commission through business efficiency.',
+      },
+      {
+        q: 'How do I know if a discount broker is legitimate?',
+        a: 'Verify their Ohio real estate license, check reviews on Google and Zillow, and ask for a detailed list of services included. A legitimate low-commission agent should be transparent about exactly what you receive.',
+      },
+    ],
+  },
+  {
+    slug: 'flat-fee-mls-vs-full-service',
+    title: 'Flat Fee MLS vs Full Service Agent',
+    targetKeywords: [
+      'flat fee MLS Columbus',
+      'FSBO vs agent Ohio',
+      'flat fee listing Columbus',
+    ],
+    uniqueAngle: 'Risk-adjusted cost comparison showing hidden costs of DIY',
+    suggestedFaqs: [
+      {
+        q: 'What percentage of flat fee MLS sellers end up hiring an agent?',
+        a: 'Industry data suggests roughly 30-40% of FSBO and flat-fee sellers eventually list with an agent. Common reasons include time constraints, difficulty managing showings, and challenges in negotiation. The longer a home sits unsold, the more difficult it becomes to sell at the original target price.',
+      },
+      {
+        q: 'Does flat fee MLS affect how agents show my home?',
+        a: 'Buyer agents are primarily motivated by the buyer agent compensation you offer, not your listing arrangement. However, some agents may be less responsive to flat-fee listings if they perceive there will be no listing agent to coordinate with, creating friction in the showing and offer process.',
+      },
+    ],
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Ideal page structure definition
+// ---------------------------------------------------------------------------
+
+function buildIdealStructure(comparison) {
+  return {
+    h1: comparison.title,
+    sections: [
+      {
+        heading: 'Overview',
+        purpose: 'Hook readers with the core question and a brief answer positioning TD Realty.',
+        minWordCount: 150,
+      },
+      {
+        heading: 'Side-by-Side Comparison Table',
+        purpose: 'Visual comparison of cost, services included, and outcomes.',
+        minWordCount: 0,
+        note: 'HTML table or responsive grid; not purely prose.',
+      },
+      {
+        heading: 'Cost Breakdown',
+        purpose: 'Concrete dollar amounts at multiple home price points ($300K, $500K, $750K).',
+        minWordCount: 200,
+      },
+      {
+        heading: 'Services Comparison',
+        purpose: 'Detail every service line item and which option includes it.',
+        minWordCount: 250,
+      },
+      {
+        heading: 'Pros and Cons',
+        purpose: 'Balanced evaluation of each option, building trust through honesty.',
+        minWordCount: 200,
+      },
+      {
+        heading: 'How TD Realty Ohio Compares',
+        purpose: 'Transition from educational content to value proposition.',
+        minWordCount: 200,
+      },
+      {
+        heading: 'FAQ',
+        purpose: 'Target long-tail keywords and featured snippet opportunities.',
+        minWordCount: 300,
+      },
+      {
+        heading: 'CTA / Next Steps',
+        purpose: 'Clear call to action with link to contact or listing consultation.',
+        minWordCount: 50,
+      },
+    ],
+    uniqueAngle: comparison.uniqueAngle,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// SEO improvement suggestions per page
+// ---------------------------------------------------------------------------
+
+const SEO_IMPROVEMENTS = {
+  '1-percent-vs-3-percent': [
+    {
+      area: 'Title tag',
+      suggestion: 'Include location: "1% vs 3% Commission | Columbus Ohio Real Estate"',
+    },
+    {
+      area: 'Meta description',
+      suggestion: 'Add a dollar-savings hook: "Save $8,000+ on a $400K home with a 1% listing agent. See the full comparison."',
+    },
+    {
+      area: 'Schema markup',
+      suggestion: 'Add FAQPage structured data for all FAQ items to target featured snippets.',
+    },
+    {
+      area: 'Header hierarchy',
+      suggestion: 'Ensure a single H1 matching the primary keyword, with H2s for each comparison dimension.',
+    },
+    {
+      area: 'Image alt text',
+      suggestion: 'Add comparison chart images with descriptive alt text containing target keywords.',
+    },
+    {
+      area: 'Content depth',
+      suggestion: 'Add a "What You Actually Get" section detailing MLS listing, photography, negotiation, and closing support at each commission tier.',
+    },
+  ],
+  'discount-broker-vs-full-service': [
+    {
+      area: 'Title tag',
+      suggestion: 'Use "Discount Broker vs Full Service Agent in Columbus, Ohio | Honest Comparison"',
+    },
+    {
+      area: 'Meta description',
+      suggestion: 'Emphasize the three-tier angle: "Not all discount brokers are the same. Compare stripped-down, traditional, and efficiency-model agents."',
+    },
+    {
+      area: 'Schema markup',
+      suggestion: 'Add FAQPage and optionally a comparison/review schema.',
+    },
+    {
+      area: 'Content depth',
+      suggestion: 'Include a named comparison of common discount brokers in Ohio (Houzeo, ISoldMyHouse, etc.) without being defamatory—focus on service model differences.',
+    },
+    {
+      area: 'E-E-A-T signals',
+      suggestion: 'Add author byline with agent credentials and link to the About page.',
+    },
+    {
+      area: 'Visual content',
+      suggestion: 'Add an infographic or comparison matrix graphic that can earn backlinks and image search traffic.',
+    },
+  ],
+  'flat-fee-mls-vs-full-service': [
+    {
+      area: 'Title tag',
+      suggestion: 'Use "Flat Fee MLS vs Full Service Agent | Columbus Ohio Seller Guide"',
+    },
+    {
+      area: 'Meta description',
+      suggestion: 'Lead with risk: "Flat fee MLS saves upfront—but hidden costs can erase savings. See the full breakdown."',
+    },
+    {
+      area: 'Schema markup',
+      suggestion: 'Add FAQPage structured data. Consider HowTo schema for the flat-fee process explanation.',
+    },
+    {
+      area: 'Content depth',
+      suggestion: 'Add a "Hidden Costs of Flat Fee MLS" section covering photography, showing management, negotiation mistakes, and longer days on market.',
+    },
+    {
+      area: 'Social proof',
+      suggestion: 'Include a brief case study or testimonial from a seller who switched from flat-fee to full-service.',
+    },
+    {
+      area: 'Keyword expansion',
+      suggestion: 'Target "FSBO vs realtor Ohio" and "sell my house without an agent Columbus" as secondary keywords.',
+    },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// Internal link suggestions
+// ---------------------------------------------------------------------------
+
+const INTERNAL_LINKS = {
+  '1-percent-vs-3-percent': [
+    { anchorText: '1% listing agent in Columbus', target: '/' },
+    { anchorText: 'see what full service includes', target: '/compare/discount-broker-vs-full-service/' },
+    { anchorText: 'flat fee MLS comparison', target: '/compare/flat-fee-mls-vs-full-service/' },
+    { anchorText: 'Columbus home selling guide', target: '/areas/columbus/' },
+    { anchorText: 'get a free home valuation', target: '/contact/' },
+    { anchorText: 'our services and pricing', target: '/#services' },
+    { anchorText: 'Dublin sellers', target: '/areas/dublin/' },
+    { anchorText: 'Westerville sellers', target: '/areas/westerville/' },
+  ],
+  'discount-broker-vs-full-service': [
+    { anchorText: '1% vs 3% commission breakdown', target: '/compare/1-percent-vs-3-percent/' },
+    { anchorText: 'flat fee MLS risks', target: '/compare/flat-fee-mls-vs-full-service/' },
+    { anchorText: 'TD Realty Ohio homepage', target: '/' },
+    { anchorText: 'selling in Grove City', target: '/areas/grove-city/' },
+    { anchorText: 'selling in Reynoldsburg', target: '/areas/reynoldsburg/' },
+    { anchorText: 'schedule a listing consultation', target: '/contact/' },
+    { anchorText: 'Upper Arlington market', target: '/areas/upper-arlington/' },
+  ],
+  'flat-fee-mls-vs-full-service': [
+    { anchorText: 'compare 1% vs 3% commission', target: '/compare/1-percent-vs-3-percent/' },
+    { anchorText: 'discount broker comparison', target: '/compare/discount-broker-vs-full-service/' },
+    { anchorText: 'full-service 1% listing', target: '/' },
+    { anchorText: 'New Albany real estate', target: '/areas/new-albany/' },
+    { anchorText: 'Hilliard home sellers', target: '/areas/hilliard/' },
+    { anchorText: 'contact TD Realty Ohio', target: '/contact/' },
+    { anchorText: 'Gahanna sellers', target: '/areas/gahanna/' },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// Additional FAQ suggestions beyond the base set
+// ---------------------------------------------------------------------------
+
+const ADDITIONAL_FAQS = {
+  '1-percent-vs-3-percent': [
+    {
+      q: 'How much do I save with a 1% commission on a $400,000 home?',
+      a: 'On a $400,000 home you save $8,000 in listing commission (1% = $4,000 vs 3% = $12,000). This does not include the buyer agent commission, which is negotiated separately.',
+    },
+    {
+      q: 'Will a 1% agent spend less time marketing my home?',
+      a: 'Not at TD Realty Ohio. Our marketing package—professional photography, MLS listing, syndication to Zillow/Realtor.com/Redfin, and social media promotion—is identical regardless of commission rate.',
+    },
+    {
+      q: 'Is 1% commission legal in Ohio?',
+      a: 'Yes. Real estate commissions have always been negotiable. There is no minimum commission set by law or the MLS in Ohio.',
+    },
+    {
+      q: 'Do I still pay a buyer agent commission at 1%?',
+      a: 'The 1% rate covers the listing side only. Buyer agent compensation is a separate negotiation. TD Realty Ohio will advise you on competitive buyer agent offers for your market.',
+    },
+  ],
+  'discount-broker-vs-full-service': [
+    {
+      q: 'What is the difference between a discount broker and a 1% agent?',
+      a: 'A discount broker typically reduces services to lower cost—fewer photos, no open houses, limited negotiation support. A 1% full-service agent like TD Realty Ohio keeps all services intact and reduces commission through operational efficiency.',
+    },
+    {
+      q: 'Are discount brokers safe to use in Ohio?',
+      a: 'Any licensed Ohio real estate agent or broker is regulated by the Ohio Division of Real Estate. The key question is not safety but service level—make sure you understand exactly what is and is not included before signing a listing agreement.',
+    },
+    {
+      q: 'Can I switch from a discount broker to a full-service agent?',
+      a: 'Yes, but check your listing agreement for the contract term and cancellation policy. Some discount brokers lock you into 6-12 month agreements with early termination fees.',
+    },
+  ],
+  'flat-fee-mls-vs-full-service': [
+    {
+      q: 'How much does flat fee MLS cost in Ohio?',
+      a: 'Flat fee MLS services in Ohio typically range from $300 to $500 for basic MLS entry. Additional services like photography, showing scheduling, and contract review cost extra and can bring the total to $1,000-$2,000+.',
+    },
+    {
+      q: 'Can I list on the MLS without an agent in Ohio?',
+      a: 'You cannot directly access the MLS as a homeowner. Flat fee MLS services use a licensed broker to enter your listing. You handle everything else—showings, negotiations, paperwork—yourself.',
+    },
+    {
+      q: 'What happens if I get sued after a flat fee MLS sale?',
+      a: 'With flat fee MLS, you typically have no agent liability coverage or errors-and-omissions insurance protecting the transaction. A full-service agent carries E&O insurance and helps ensure proper disclosures, reducing your legal exposure.',
+    },
+    {
+      q: 'Is flat fee MLS worth it for expensive homes?',
+      a: 'The higher the home price, the more you stand to save on commission—but also the more you stand to lose from pricing mistakes or weak negotiation. On a $600K+ home, even a 2% pricing error costs more than the commission savings.',
+    },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// Content gap analysis
+// ---------------------------------------------------------------------------
+
+const CONTENT_GAPS = {
+  '1-percent-vs-3-percent': {
+    competitorTopics: [
+      'Calculator tool letting users input their home price to see savings',
+      'State-by-state commission rate averages',
+      'NAR settlement impact on commission structures (2024-2025)',
+      'Agent interview questions to ask before choosing a commission rate',
+    ],
+    missingContentTypes: [
+      'Interactive savings calculator',
+      'Downloadable comparison PDF / checklist',
+      'Video walkthrough of commission math',
+      'Testimonial or case study with real savings numbers',
+    ],
+    keywordGaps: [
+      'real estate commission rates Ohio 2025',
+      'how much does a realtor charge in Columbus',
+      'seller closing costs Columbus Ohio',
+      'NAR commission lawsuit impact Ohio',
+    ],
+  },
+  'discount-broker-vs-full-service': {
+    competitorTopics: [
+      'Named competitor reviews (Redfin, Houzeo, Clever, etc.)',
+      'Agent satisfaction and success rate statistics',
+      'Step-by-step process comparison for each model',
+      'Interview with a seller who used each type',
+    ],
+    missingContentTypes: [
+      'Service checklist comparison chart (printable)',
+      'Decision-tree flowchart to help sellers pick the right model',
+      'Embedded Google reviews or Zillow reviews',
+      'Video explainer on what "full service" actually means',
+    ],
+    keywordGaps: [
+      'Redfin vs traditional agent Columbus',
+      'Clever real estate Ohio reviews',
+      'best low commission realtor Columbus Ohio',
+      'full service realtor Columbus Ohio',
+    ],
+  },
+  'flat-fee-mls-vs-full-service': {
+    competitorTopics: [
+      'Detailed breakdown of what flat fee MLS includes vs does not',
+      'FSBO success rate statistics with citations',
+      'Legal risks of selling without agent representation',
+      'Timeline comparison: flat fee MLS vs agent-assisted sale',
+    ],
+    missingContentTypes: [
+      'Risk comparison matrix (visual)',
+      'Total cost calculator including hidden fees',
+      'Seller story / case study of flat fee attempt',
+      'Checklist: "Are you ready to sell without an agent?"',
+    ],
+    keywordGaps: [
+      'Houzeo Ohio reviews',
+      'sell house without realtor Columbus Ohio',
+      'FSBO mistakes to avoid',
+      'Ohio real estate disclosure requirements',
+    ],
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Build the full audit report
+// ---------------------------------------------------------------------------
+
+function generateAudit() {
+  const audit = {
+    generatedAt: new Date().toISOString(),
+    summary: {
+      totalPages: COMPARISONS.length,
+      purpose:
+        'Content audit for existing comparison pages. These pages already have good content—this report identifies incremental SEO and content improvements.',
+      pages: COMPARISONS.map((c) => `/compare/${c.slug}/`),
+    },
+    pages: {},
+  };
+
+  for (const comparison of COMPARISONS) {
+    const slug = comparison.slug;
+
+    audit.pages[slug] = {
+      url: `/compare/${slug}/`,
+      title: comparison.title,
+      targetKeywords: comparison.targetKeywords,
+      idealStructure: buildIdealStructure(comparison),
+      seoImprovements: SEO_IMPROVEMENTS[slug],
+      internalLinks: INTERNAL_LINKS[slug],
+      faqs: {
+        existing: comparison.suggestedFaqs,
+        additional: ADDITIONAL_FAQS[slug],
+        totalRecommended:
+          comparison.suggestedFaqs.length + ADDITIONAL_FAQS[slug].length,
+      },
+      contentGapAnalysis: CONTENT_GAPS[slug],
+    };
+  }
+
+  return audit;
+}
+
+// ---------------------------------------------------------------------------
+// Write output
+// ---------------------------------------------------------------------------
+
+function main() {
+  const audit = generateAudit();
+
+  const outputDir = path.join(__dirname, '..', 'output', 'compare-pages');
+  fs.mkdirSync(outputDir, { recursive: true });
+
+  const outputPath = path.join(outputDir, 'content-audit.json');
+  fs.writeFileSync(outputPath, JSON.stringify(audit, null, 2) + '\n');
+
+  console.log(`Compare pages content audit generated at: ${outputPath}`);
+  console.log(`  Pages analyzed: ${audit.summary.totalPages}`);
+  for (const slug of Object.keys(audit.pages)) {
+    const page = audit.pages[slug];
+    console.log(`  - ${page.url}`);
+    console.log(`      SEO improvements: ${page.seoImprovements.length}`);
+    console.log(`      Internal links: ${page.internalLinks.length}`);
+    console.log(`      Total FAQs recommended: ${page.faqs.totalRecommended}`);
+    console.log(`      Content gaps: ${page.contentGapAnalysis.competitorTopics.length} competitor topics, ${page.contentGapAnalysis.keywordGaps.length} keyword gaps`);
+  }
+}
+
+main();

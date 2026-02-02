@@ -20,6 +20,7 @@ const cities = [
     medianPrice: 275000,
     population: '906K',
     daysOnMarket: 18,
+    metaDescription: 'Selling your Columbus home? List for just 1% commission with TD Realty Ohio. Full-service real estate, free inspection, and professional photos included.',
     description: 'Columbus is Ohio\'s capital and largest city, offering diverse neighborhoods from historic German Village to the trendy Short North Arts District. The market provides options at every price point. Columbus City Schools is the state\'s largest district, while many Columbus addresses also feed into suburban districts like Westerville, Dublin, and Hilliard.',
     county: 'Franklin',
     neighbors: ['westerville', 'dublin', 'upper-arlington', 'gahanna', 'grove-city'],
@@ -554,7 +555,7 @@ function generateNeighborLinks(city) {
   const links = city.neighbors
     .filter(slug => cityNameBySlug[slug])
     .map(slug => `          <a href="/areas/${slug}/" class="internal-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             ${cityNameBySlug[slug]}
           </a>`)
     .join('\n');
@@ -587,7 +588,7 @@ function generateCityPage(city) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${city.name}, OH Homes | 1% Listing | TD Realty Ohio</title>
-  <meta name="description" content="Selling your home in ${city.name}? Save thousands with TD Realty Ohio's 1% listing commission. ${formatPrice(city.medianPrice)} median home price, ${city.daysOnMarket} days average on market.">
+  <meta name="description" content="${city.metaDescription || `Selling your home in ${city.name}? Save thousands with TD Realty Ohio's 1% listing commission. ${formatPrice(city.medianPrice)} median home price, ${city.daysOnMarket} days average on market.`}">
   <meta name="keywords" content="sell home ${city.name} Ohio, ${city.name} real estate agent, 1 percent commission ${city.name}, ${city.name} listing agent">
 
   <link rel="canonical" href="https://tdrealtyohio.com/areas/${city.slug}/">
@@ -609,11 +610,11 @@ function generateCityPage(city) {
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
   <meta name="theme-color" content="#1a2e44">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="preload" href="/assets/css/styles.css" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css">
 
   <!-- Google tag (gtag.js) -->
@@ -641,7 +642,7 @@ function generateCityPage(city) {
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    "name": "TD Realty Ohio",
+    "name": "TD Realty Ohio, LLC",
     "description": "Full-service real estate agent serving ${city.name}, Ohio with 1% listing commission.",
     "url": "https://tdrealtyohio.com/areas/${city.slug}/",
     "telephone": "(614) 392-8858",
@@ -709,7 +710,7 @@ ${city.faqs.map(faq => `      {
   <header class="header">
     <div class="header-inner">
       <a href="/" class="logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></a>
-      <nav class="nav" id="main-nav">
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
         <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
         <a href="/buyers/" class="nav-link">Buyers</a>
@@ -722,7 +723,7 @@ ${city.faqs.map(faq => `      {
         <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
       </nav>
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </header>
@@ -779,15 +780,15 @@ ${city.faqs.map(faq => `      {
         <h3>Local Resources</h3>
         <div class="resource-links">
           <a href="${city.cityWebsite}" target="_blank" rel="noopener noreferrer" class="resource-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
             City Website
           </a>
           <a href="${city.schoolWebsite}" target="_blank" rel="noopener noreferrer" class="resource-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
             ${city.schoolName}
           </a>
           <a href="${city.nicheUrl}" target="_blank" rel="noopener noreferrer" class="resource-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             Niche: ${city.nicheRating} Rating
           </a>
         </div>
@@ -795,19 +796,19 @@ ${city.faqs.map(faq => `      {
         <h3>Services in ${city.name}</h3>
         <div class="internal-links">
           <a href="/sellers/" class="internal-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             Sell Your ${city.name} Home
           </a>
           <a href="/buyers/" class="internal-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
             Buy in ${city.name}
           </a>
           <a href="/home-value/" class="internal-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             Free Home Value
           </a>
           <a href="/pre-listing-inspection/" class="internal-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Pre-Listing Inspection
           </a>
         </div>
@@ -841,7 +842,7 @@ ${generateFaqSection(city)}
           <p>Full-service real estate. Lower commission.</p>
         </div>
         <div>
-          <h4 class="footer-title">Services</h4>
+          <h3 class="footer-title">Services</h3>
           <ul class="footer-links">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
@@ -850,29 +851,31 @@ ${generateFaqSection(city)}
             <li><a href="/home-value/">Free Home Value</a></li>
             <li><a href="/affordability/">Affordability Calculator</a></li>
             <li><a href="/referrals/">Referral Credit</a></li>
+            <li><a href="/compare/">Compare Options</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="footer-title">Company</h4>
+          <h3 class="footer-title">Company</h3>
           <ul class="footer-links">
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li><a href="/blog/">Blog</a></li>
+            <li><a href="/testimonials/">Testimonials</a></li>
             <li><a href="/agents/">Agent Opportunities</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="footer-title">Contact</h4>
+          <h3 class="footer-title">Contact</h3>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <a href="tel:6143928858" data-phone>(614) 392-8858</a>
           </div>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a>
           </div>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span data-location>Westerville, Ohio</span>
           </div>
         </div>
