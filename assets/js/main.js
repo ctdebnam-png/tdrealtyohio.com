@@ -186,7 +186,7 @@ function initSellerCalculator() {
   let currentRate = TD_CONFIG.rates.buyAndSell;
 
   function calculate() {
-    const price = priceSlider ? parseInt(priceSlider.value) : TD_CONFIG.calculator.defaultPrice;
+    const price = priceSlider ? (parseInt(priceSlider.value) || TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
     const traditional = price * TD_CONFIG.rates.traditional;
     const tdRealty = price * currentRate;
     const savings = traditional - tdRealty;
@@ -236,7 +236,7 @@ function initBuyerCalculator() {
   const agentKeepsEl = calculator.querySelector('[data-agent-keeps]');
 
   function calculate() {
-    const price = priceSlider ? parseInt(priceSlider.value) : TD_CONFIG.calculator.defaultPrice;
+    const price = priceSlider ? (parseInt(priceSlider.value) || TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
     const commission = price * TD_CONFIG.rates.buyerCommission;
     const cashBack = price * TD_CONFIG.rates.buyerCashBack;
     const agentKeeps = commission - cashBack;

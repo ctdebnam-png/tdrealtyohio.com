@@ -2587,6 +2587,10 @@ main {
 }
 
 /* ===== PRINT STYLES ===== */
+@page {
+  margin: 2cm 1.5cm;
+}
+
 @media print {
   /* Hide non-essential elements */
   .header,
@@ -2598,7 +2602,8 @@ main {
   .footer-compliance-logos,
   .btn,
   form,
-  .mobile-menu-btn {
+  .mobile-menu-btn,
+  #cookie-consent {
     display: none !important;
   }
 
