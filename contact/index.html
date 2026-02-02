@@ -35,7 +35,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
   <meta name="theme-color" content="#1a2e44">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="/assets/css/styles.css" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
@@ -43,13 +43,18 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17866418952"></script>
+  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17866418952');
+    if (localStorage.getItem('cookie-consent') !== 'declined') {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'AW-17866418952');
+    }
   </script>
 
   <!-- Breadcrumb Schema -->
