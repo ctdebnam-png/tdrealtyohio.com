@@ -599,6 +599,8 @@ function generateCityPage(city) {
   <meta property="og:description" content="Full-service real estate in ${city.name} at 1% listing commission. Save ${formatSavings(city.medianPrice)} on the median ${formatPrice(city.medianPrice)} home.">
   <meta property="og:url" content="https://tdrealtyohio.com/areas/${city.slug}/">
   <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sell Your Home in ${city.name}, Ohio | 1% Commission">
