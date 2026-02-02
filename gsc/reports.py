@@ -9,7 +9,7 @@ Usage:
 
 import argparse
 import json
-import sys
+import re
 import xml.etree.ElementTree as ET
 from datetime import date, datetime
 from pathlib import Path
@@ -35,6 +35,21 @@ def _write_outputs(name: str, data: dict, markdown: str):
     print(f"  -> {json_path}")
     print(f"  -> {md_path}")
 
+    # Write a latest file for easy programmatic access
+    latest_json = OUTPUT_DIR / f"{name}_latest.json"
+    latest_json.write_text(json.dumps(data, indent=2, default=str))
+
+
+def _load_previous_report(name: str) -> dict | None:
+    """Load the most recent previous report for diff comparison."""
+    latest = OUTPUT_DIR / f"{name}_latest.json"
+    if not latest.exists():
+        return None
+    try:
+        return json.loads(latest.read_text())
+    except (json.JSONDecodeError, OSError):
+        return None
+
 
 # ── Sitemap URL extraction ────────────────────────────────────────────
 
@@ -47,6 +62,60 @@ def get_sitemap_urls() -> list[str]:
     root = tree.getroot()
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     return [loc.text for loc in root.findall(".//s:loc", ns) if loc.text]
+
+
+# ── Local HTML checks ─────────────────────────────────────────────────
+
+def _check_page_html(url: str) -> dict:
+    """Check a page's local HTML for SEO issues that block indexing."""
+    path = url.replace("https://tdrealtyohio.com", "").strip("/")
+    if not path:
+        html_path = Path("index.html")
+    else:
+        html_path = Path(path) / "index.html"
+
+    if not html_path.exists():
+        return {"html_exists": False}
+
+    html = html_path.read_text(errors="replace")
+    checks = {"html_exists": True}
+
+    # Check for noindex
+    checks["has_noindex"] = bool(
+        re.search(r'<meta[^>]+noindex', html, re.I)
+    )
+
+    # Check canonical tag
+    canonical_match = re.search(
+        r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)["\']', html, re.I
+    )
+    if not canonical_match:
+        canonical_match = re.search(
+            r'<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']canonical["\']', html, re.I
+        )
+    checks["canonical"] = canonical_match.group(1) if canonical_match else None
+    checks["canonical_mismatch"] = (
+        checks["canonical"] is not None and checks["canonical"] != url
+    )
+
+    # Check meta description
+    checks["has_meta_description"] = bool(
+        re.search(r'<meta\s+name=["\']description["\']', html, re.I)
+    )
+
+    # Check title tag
+    title_match = re.search(r'<title>([^<]+)</title>', html, re.I)
+    checks["title"] = title_match.group(1).strip() if title_match else None
+
+    # Check for thin content (strip tags, count words)
+    text = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.S | re.I)
+    text = re.sub(r'<style[^>]*>.*?</style>', '', text, flags=re.S | re.I)
+    text = re.sub(r'<[^>]+>', ' ', text)
+    word_count = len(text.split())
+    checks["word_count"] = word_count
+    checks["thin_content"] = word_count < 300
+
+    return checks
 
 
 # ── Performance Report ────────────────────────────────────────────────
@@ -72,6 +141,7 @@ def generate_performance_report(client: GSCClient, days: int) -> dict:
     all_pages = client.top_pages(days=days, limit=500)
     all_queries = client.top_queries(days=days, limit=100)
     daily = client.performance_by_date(days=days)
+    devices = client.performance_by_device(days=days)
 
     totals = {
         "clicks": sum(d["clicks"] for d in daily),
@@ -129,6 +199,7 @@ def generate_performance_report(client: GSCClient, days: int) -> dict:
         "generated": datetime.utcnow().isoformat(),
         "days": days,
         "totals": totals,
+        "devices": devices,
         "sitemap_url_count": len(sitemap_urls),
         "pages_with_impressions": len(pages_with_data),
         "zero_impression_pages": zero_impression_pages,
@@ -154,6 +225,17 @@ def generate_performance_report(client: GSCClient, days: int) -> dict:
     md.append(f"| Avg CTR | {totals['avg_ctr']:.2%} |")
     md.append(f"| Avg position | {totals['avg_position']} |")
     md.append(f"| Pages with data | {len(pages_with_data)}/{len(sitemap_urls)} |")
+
+    # Device breakdown
+    if devices:
+        md.append("\n## Device Breakdown\n")
+        md.append("| Device | Clicks | Impressions | CTR | Pos |")
+        md.append("|--------|--------|-------------|-----|-----|")
+        for d in devices:
+            md.append(
+                f"| {d['device']} | {d['clicks']} | {d['impressions']} "
+                f"| {d['ctr']:.2%} | {d['position']} |"
+            )
 
     # Performance by category
     md.append("\n## Performance by Category\n")
@@ -209,6 +291,13 @@ def generate_performance_report(client: GSCClient, days: int) -> dict:
             md.append(f"- {path}")
         md.append("")
 
+    # Unsitemaped pages showing in GSC
+    if unsitemaped:
+        md.append("## Pages in GSC but Not in Sitemap\n")
+        for p in unsitemaped:
+            md.append(f"- {p['page']} ({p['clicks']} clicks, {p['impressions']} impressions)")
+        md.append("")
+
     _write_outputs("performance", data, "\n".join(md) + "\n")
     return data
 
@@ -216,8 +305,14 @@ def generate_performance_report(client: GSCClient, days: int) -> dict:
 # ── Indexing Report ───────────────────────────────────────────────────
 
 def generate_indexing_report(client: GSCClient) -> dict:
-    """Check every page in sitemap against Google's index."""
+    """Check every page in sitemap against Google's index with diff tracking."""
     print("Generating indexing report...")
+
+    # Load previous report for diff
+    previous = _load_previous_report("indexing")
+    prev_verdicts = {}
+    if previous and "pages" in previous:
+        prev_verdicts = {p["url"]: p["verdict"] for p in previous["pages"]}
 
     urls = get_sitemap_urls()
     if not urls:
@@ -229,9 +324,8 @@ def generate_indexing_report(client: GSCClient) -> dict:
         print(f"  Inspecting [{i + 1}/{len(urls)}] {url}")
         try:
             info = client.inspect_url(url)
-            results.append(info)
         except Exception as e:
-            results.append({
+            info = {
                 "url": url,
                 "verdict": "ERROR",
                 "coverage_state": str(e),
@@ -241,45 +335,123 @@ def generate_indexing_report(client: GSCClient) -> dict:
                 "robots_txt_state": "UNKNOWN",
                 "crawled_as": "UNKNOWN",
                 "referring_urls": [],
-            })
+            }
+
+        # Local HTML checks
+        info["html_checks"] = _check_page_html(url)
+
+        # Diff against previous run
+        prev = prev_verdicts.get(url)
+        if prev is None:
+            info["change"] = "new"
+        elif prev != info["verdict"]:
+            info["change"] = f"{prev} -> {info['verdict']}"
+        else:
+            info["change"] = "unchanged"
+
+        results.append(info)
 
     indexed = [r for r in results if r["verdict"] == "PASS"]
-    not_indexed = [r for r in results if r["verdict"] != "PASS"]
+    not_indexed = [r for r in results if r["verdict"] not in ("PASS", "ERROR")]
+    errors = [r for r in results if r["verdict"] == "ERROR"]
+    changes = [r for r in results if r["change"] not in ("unchanged", "new")]
+    newly_indexed = [r for r in results if r["change"].endswith("-> PASS")]
+    newly_dropped = [r for r in results if r["change"].startswith("PASS ->")]
+
     summary = {
         "total": len(results),
         "indexed": len(indexed),
         "not_indexed": len(not_indexed),
+        "errors": len(errors),
         "index_rate": round(len(indexed) / len(results), 4) if results else 0,
+        "changes_since_last_run": len(changes),
+        "newly_indexed": len(newly_indexed),
+        "newly_dropped": len(newly_dropped),
     }
+
+    # Identify pages with HTML issues that may explain non-indexing
+    issues = []
+    for r in not_indexed:
+        hc = r.get("html_checks", {})
+        page_issues = []
+        if hc.get("has_noindex"):
+            page_issues.append("has noindex tag")
+        if hc.get("canonical_mismatch"):
+            page_issues.append(f"canonical mismatch: {hc['canonical']}")
+        if not hc.get("has_meta_description"):
+            page_issues.append("missing meta description")
+        if hc.get("thin_content"):
+            page_issues.append(f"thin content ({hc.get('word_count', 0)} words)")
+        if not hc.get("html_exists"):
+            page_issues.append("HTML file not found locally")
+        if page_issues:
+            issues.append({"url": r["url"], "issues": page_issues})
 
     data = {
         "report": "indexing",
         "generated": datetime.utcnow().isoformat(),
         "summary": summary,
         "pages": results,
+        "html_issues": issues,
     }
 
     # Build markdown
     md = [f"# GSC Indexing Report — {date.today().isoformat()}"]
-    md.append(f"\n**{summary['indexed']}/{summary['total']}** pages indexed ({summary['index_rate']:.0%})\n")
+    md.append(f"\n**{summary['indexed']}/{summary['total']}** pages indexed "
+              f"({summary['index_rate']:.0%})")
+    if summary["changes_since_last_run"]:
+        md.append(f" | **{summary['changes_since_last_run']} changes** since last run")
+    md.append("\n")
+
+    # Diff section
+    if newly_indexed:
+        md.append("## Newly Indexed\n")
+        for r in newly_indexed:
+            path = r["url"].replace("https://tdrealtyohio.com", "")
+            md.append(f"- {path}")
+        md.append("")
+
+    if newly_dropped:
+        md.append("## Dropped from Index\n")
+        for r in newly_dropped:
+            path = r["url"].replace("https://tdrealtyohio.com", "")
+            md.append(f"- {path} ({r['change']})")
+        md.append("")
+
+    # HTML issues
+    if issues:
+        md.append("## Potential Indexing Blockers\n")
+        md.append("Local HTML issues that may prevent indexing:\n")
+        for item in issues:
+            path = item["url"].replace("https://tdrealtyohio.com", "")
+            md.append(f"- **{path}**: {', '.join(item['issues'])}")
+        md.append("")
 
     if not_indexed:
         md.append("## Not Indexed\n")
-        md.append("| URL | Verdict | Coverage State | Last Crawl |")
-        md.append("|-----|---------|---------------|------------|")
+        md.append("| URL | Verdict | Coverage State | Robots | Last Crawl | Change |")
+        md.append("|-----|---------|---------------|--------|------------|--------|")
         for r in not_indexed:
             path = r["url"].replace("https://tdrealtyohio.com", "")
             crawl = r.get("last_crawl_time", "—") or "—"
-            md.append(f"| {path} | {r['verdict']} | {r['coverage_state']} | {crawl} |")
+            robots = r.get("robots_txt_state", "—")
+            md.append(f"| {path} | {r['verdict']} | {r['coverage_state']} "
+                       f"| {robots} | {crawl} | {r['change']} |")
 
     if indexed:
         md.append("\n## Indexed\n")
-        md.append("| URL | Last Crawl |")
-        md.append("|-----|------------|")
+        md.append("| URL | Last Crawl | Change |")
+        md.append("|-----|------------|--------|")
         for r in indexed:
             path = r["url"].replace("https://tdrealtyohio.com", "")
             crawl = r.get("last_crawl_time", "—") or "—"
-            md.append(f"| {path} | {crawl} |")
+            md.append(f"| {path} | {crawl} | {r['change']} |")
+
+    if errors:
+        md.append("\n## Errors\n")
+        for r in errors:
+            path = r["url"].replace("https://tdrealtyohio.com", "")
+            md.append(f"- **{path}**: {r['coverage_state']}")
 
     _write_outputs("indexing", data, "\n".join(md) + "\n")
     return data

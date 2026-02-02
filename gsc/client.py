@@ -6,12 +6,17 @@ Property URL is loaded from GSC_PROPERTY_URL env var.
 
 import json
 import os
+import time
 from datetime import date, timedelta
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
+
+# URL Inspection API: 2,000 requests/day, 600 requests/min
+_INSPECT_RATE_LIMIT_DELAY = 0.15  # seconds between inspection calls
 
 
 def _get_credentials():
@@ -25,8 +30,23 @@ def _get_credentials():
 
 def _get_property_url():
     """Return the GSC property URL from env."""
-    url = os.environ.get("GSC_PROPERTY_URL", "https://tdrealtyohio.com")
-    return url
+    return os.environ.get("GSC_PROPERTY_URL", "https://tdrealtyohio.com")
+
+
+def _retry_on_error(func, max_retries=3, base_delay=2.0):
+    """Retry a callable with exponential backoff on transient HTTP errors."""
+    for attempt in range(max_retries + 1):
+        try:
+            return func()
+        except HttpError as e:
+            status = e.resp.status if e.resp else 0
+            # Retry on rate limit (429) and server errors (5xx)
+            if status in (429, 500, 502, 503) and attempt < max_retries:
+                delay = base_delay * (2 ** attempt)
+                print(f"    HTTP {status}, retrying in {delay}s (attempt {attempt + 1}/{max_retries})...")
+                time.sleep(delay)
+                continue
+            raise
 
 
 class GSCClient:
@@ -36,6 +56,10 @@ class GSCClient:
         creds = _get_credentials()
         self._service = build("searchconsole", "v1", credentials=creds)
         self._property = _get_property_url()
+
+    @property
+    def property_url(self) -> str:
+        return self._property
 
     # ── Search Analytics ──────────────────────────────────────────────
 
@@ -66,17 +90,22 @@ class GSCClient:
         if dimension_filters:
             body["dimensionFilterGroups"] = [{"filters": dimension_filters}]
 
-        resp = (
-            self._service.searchanalytics()
+        resp = _retry_on_error(
+            lambda: self._service.searchanalytics()
             .query(siteUrl=self._property, body=body)
             .execute()
         )
         return resp.get("rows", [])
 
-    def top_pages(self, days: int = 28, limit: int = 25) -> list[dict]:
-        """Return top pages by clicks over the last N days."""
+    def _date_range(self, days: int) -> tuple[date, date]:
+        """Return (start, end) date range accounting for GSC data lag."""
         end = date.today() - timedelta(days=3)  # GSC data lags ~3 days
         start = end - timedelta(days=days)
+        return start, end
+
+    def top_pages(self, days: int = 28, limit: int = 25) -> list[dict]:
+        """Return top pages by clicks over the last N days."""
+        start, end = self._date_range(days)
         rows = self.query_analytics(start, end, dimensions=["page"], row_limit=limit)
         return [
             {
@@ -91,8 +120,7 @@ class GSCClient:
 
     def top_queries(self, days: int = 28, limit: int = 25) -> list[dict]:
         """Return top queries by clicks over the last N days."""
-        end = date.today() - timedelta(days=3)
-        start = end - timedelta(days=days)
+        start, end = self._date_range(days)
         rows = self.query_analytics(start, end, dimensions=["query"], row_limit=limit)
         return [
             {
@@ -107,8 +135,7 @@ class GSCClient:
 
     def performance_by_date(self, days: int = 28) -> list[dict]:
         """Return daily performance totals."""
-        end = date.today() - timedelta(days=3)
-        start = end - timedelta(days=days)
+        start, end = self._date_range(days)
         rows = self.query_analytics(start, end, dimensions=["date"], row_limit=days)
         return [
             {
@@ -121,10 +148,24 @@ class GSCClient:
             for r in rows
         ]
 
+    def performance_by_device(self, days: int = 28) -> list[dict]:
+        """Return performance broken down by device type."""
+        start, end = self._date_range(days)
+        rows = self.query_analytics(start, end, dimensions=["device"], row_limit=10)
+        return [
+            {
+                "device": r["keys"][0],
+                "clicks": r["clicks"],
+                "impressions": r["impressions"],
+                "ctr": round(r["ctr"], 4),
+                "position": round(r["position"], 1),
+            }
+            for r in rows
+        ]
+
     def page_query_breakdown(self, page_url: str, days: int = 28) -> list[dict]:
         """Return queries driving traffic to a specific page."""
-        end = date.today() - timedelta(days=3)
-        start = end - timedelta(days=days)
+        start, end = self._date_range(days)
         rows = self.query_analytics(
             start,
             end,
@@ -152,14 +193,22 @@ class GSCClient:
     # ── URL Inspection ────────────────────────────────────────────────
 
     def inspect_url(self, page_url: str) -> dict:
-        """Inspect a URL for indexing status via the URL Inspection API."""
+        """Inspect a URL for indexing status via the URL Inspection API.
+
+        Includes rate-limit pacing to stay within the 600 req/min quota.
+        """
         body = {
             "inspectionUrl": page_url,
             "siteUrl": self._property,
         }
-        resp = (
-            self._service.urlInspection().index().inspect(body=body).execute()
+        resp = _retry_on_error(
+            lambda: self._service.urlInspection()
+            .index()
+            .inspect(body=body)
+            .execute()
         )
+        time.sleep(_INSPECT_RATE_LIMIT_DELAY)
+
         result = resp.get("inspectionResult", {})
         index_status = result.get("indexStatusResult", {})
         return {
@@ -178,7 +227,11 @@ class GSCClient:
 
     def list_sitemaps(self) -> list[dict]:
         """List all sitemaps submitted for the property."""
-        resp = self._service.sitemaps().list(siteUrl=self._property).execute()
+        resp = _retry_on_error(
+            lambda: self._service.sitemaps()
+            .list(siteUrl=self._property)
+            .execute()
+        )
         sitemaps = resp.get("sitemap", [])
         return [
             {
