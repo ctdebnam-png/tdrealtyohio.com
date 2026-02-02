@@ -11,6 +11,7 @@ const cities = [
     slug: 'columbus',
     name: 'Columbus',
     state: 'Ohio',
+    postalCode: '43215',
     cityWebsite: 'https://www.columbus.gov/',
     schoolWebsite: 'https://www.ccsoh.us/',
     schoolName: 'Columbus City Schools',
@@ -20,12 +21,19 @@ const cities = [
     population: '906K',
     daysOnMarket: 18,
     description: 'Columbus is Ohio\'s capital and largest city, offering diverse neighborhoods from historic German Village to the trendy Short North Arts District. The market provides options at every price point. Columbus City Schools is the state\'s largest district, while many Columbus addresses also feed into suburban districts like Westerville, Dublin, and Hilliard.',
-    county: 'Franklin'
+    county: 'Franklin',
+    neighbors: ['westerville', 'dublin', 'upper-arlington', 'gahanna', 'grove-city'],
+    faqs: [
+      { q: 'What neighborhoods in Columbus have the best resale value?', a: 'Short North, German Village, Clintonville, and Grandview Heights consistently show strong appreciation. Newer developments in Franklinton are also gaining value rapidly.' },
+      { q: 'How does the Columbus market compare to other Ohio cities?', a: 'Columbus has outpaced Cincinnati and Cleveland in home price appreciation over the past decade, driven by job growth from tech companies, healthcare, and Ohio State University.' },
+      { q: 'What are property taxes like in Columbus?', a: 'Franklin County\'s effective property tax rate is approximately 1.6-2.0% of market value. Rates vary by school district—Columbus City Schools areas tend to be on the higher end.' },
+    ]
   },
   {
     slug: 'westerville',
     name: 'Westerville',
     state: 'Ohio',
+    postalCode: '43081',
     cityWebsite: 'https://www.westerville.org/',
     schoolWebsite: 'https://www.westerville.k12.oh.us/',
     schoolName: 'Westerville City Schools',
@@ -35,7 +43,13 @@ const cities = [
     population: '42K',
     daysOnMarket: 12,
     description: 'Westerville combines small-town charm with suburban convenience. The historic Uptown district offers local shops and restaurants, while newer developments provide modern housing options. Westerville City Schools consistently ranks among Ohio\'s top districts. The city is home to Otterbein University and offers extensive parks and recreation programs.',
-    county: 'Franklin'
+    county: 'Franklin',
+    neighbors: ['gahanna', 'lewis-center', 'new-albany', 'columbus'],
+    faqs: [
+      { q: 'Is Westerville a good place to raise a family?', a: 'Westerville is consistently rated one of Ohio\'s best family communities. The school district ranks in the top 10 statewide, and the city offers over 50 parks, a community center, and numerous youth sports programs.' },
+      { q: 'What is the Westerville housing market like?', a: 'Westerville homes typically sell within 12 days. The market is competitive with strong demand from families drawn to the school district. Homes range from $250K condos to $800K+ estates.' },
+      { q: 'What are Westerville\'s most popular neighborhoods?', a: 'Heritage District near Uptown is prized for walkability. Blendon Chase and Spring Creek offer newer construction. Huber Village and Hometowne areas provide more affordable options.' },
+    ]
   },
   {
     slug: 'dublin',
@@ -50,7 +64,14 @@ const cities = [
     population: '51K',
     daysOnMarket: 14,
     description: 'Dublin is one of Central Ohio\'s premier communities, known for excellent schools, corporate headquarters, and the annual Dublin Irish Festival. The Bridge Street District offers urban-style living, while established neighborhoods feature larger lots and mature landscaping. Dublin City Schools is consistently ranked among Ohio\'s best.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43016',
+    neighbors: ['powell', 'hilliard', 'upper-arlington', 'columbus'],
+    faqs: [
+      { q: 'What are the most sought-after neighborhoods in Dublin, Ohio?', a: 'Muirfield Village, home to the Memorial Tournament golf course, remains one of Dublin\'s most prestigious communities. Ballantrae and Tartan Fields also attract buyers seeking upscale homes with excellent Dublin City Schools access. The Bridge Street District appeals to those wanting walkable, urban-style living.' },
+      { q: 'How does Dublin City Schools rank for families considering a move?', a: 'Dublin City Schools consistently ranks in the top 5% of Ohio districts, with three comprehensive high schools and a strong STEM curriculum. The district offers International Baccalaureate programs and has graduation rates exceeding 96%.' },
+      { q: 'What is the commute like from Dublin to downtown Columbus?', a: 'Dublin to downtown Columbus is roughly 20-25 minutes via I-270 and SR-315 outside rush hour, though peak commute times can extend to 35-45 minutes. Many Dublin residents work locally at corporate campuses for Wendy\'s, Cardinal Health, and other Fortune 500 companies headquartered in the area.' },
+    ]
   },
   {
     slug: 'powell',
@@ -65,7 +86,14 @@ const cities = [
     population: '14K',
     daysOnMarket: 11,
     description: 'Powell offers small-town charm with easy access to Columbus. The historic downtown features local shops and restaurants. Olentangy Local Schools—one of Ohio\'s highest-rated districts—is the primary draw for families, with multiple elementary, middle, and high school options.',
-    county: 'Delaware'
+    county: 'Delaware',
+    postalCode: '43065',
+    neighbors: ['dublin', 'westerville', 'delaware'],
+    faqs: [
+      { q: 'What makes the Powell housing market unique in Central Ohio?', a: 'Powell commands premium prices due to the Olentangy Local Schools district, one of Ohio\'s top-rated. Homes in neighborhoods like Wedgewood, Scioto Reserve, and Olentangy Falls often sell within days. The combination of a walkable historic downtown and newer luxury developments drives consistent demand.' },
+      { q: 'How are the schools in Powell compared to surrounding areas?', a: 'Olentangy Local Schools serves most Powell addresses and is regularly ranked among the top 3 districts in Ohio. The district operates multiple elementary, middle, and high schools and is known for strong AP and extracurricular programs.' },
+      { q: 'Is Powell affordable compared to Dublin or New Albany?', a: 'Powell\'s median home price is comparable to Dublin, with both communities centering around $550K. However, Powell offers more inventory in the $350K-$450K range through older neighborhoods, making it slightly more accessible than New Albany\'s higher entry point.' },
+    ]
   },
   {
     slug: 'new-albany',
@@ -80,7 +108,14 @@ const cities = [
     population: '12K',
     daysOnMarket: 15,
     description: 'New Albany is a master-planned community known for its Georgian architecture, extensive trail system, and top-ranked schools. New Albany-Plain Local Schools consistently ranks among Ohio\'s elite districts, drawing families from across the region.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43054',
+    neighbors: ['gahanna', 'westerville', 'blacklick'],
+    faqs: [
+      { q: 'Why are New Albany home prices higher than surrounding communities?', a: 'New Albany\'s master-planned design with strict architectural standards, top-ranked schools, and the presence of Intel\'s massive semiconductor facility nearby have driven premium pricing. The community\'s extensive trail system, country club amenities, and cohesive Georgian aesthetic create strong long-term value.' },
+      { q: 'What school options are available for families in New Albany?', a: 'New Albany-Plain Local Schools is consistently ranked among Ohio\'s top 10 districts, featuring a learning campus model that clusters grade levels together. The district is known for strong academics, arts programs, and competitive athletics with a student-to-teacher ratio well below state averages.' },
+      { q: 'How does New Albany\'s cost of living compare to other premium suburbs?', a: 'New Albany\'s property tax rate in Franklin County is competitive with Dublin and Upper Arlington. However, the higher median home price of around $650K means annual tax bills are larger in absolute terms. The trade-off is strong appreciation—New Albany homes have gained value at roughly 5-7% annually.' },
+    ]
   },
   {
     slug: 'gahanna',
@@ -95,7 +130,14 @@ const cities = [
     population: '36K',
     daysOnMarket: 13,
     description: 'Gahanna—the "Herb Capital of Ohio"—offers a balance of suburban living and community character. Creekside, the city\'s entertainment district along Big Walnut Creek, hosts events and festivals year-round. Gahanna-Jefferson City Schools provides quality education.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43230',
+    neighbors: ['westerville', 'new-albany', 'blacklick', 'columbus'],
+    faqs: [
+      { q: 'What neighborhoods in Gahanna offer the best value for buyers?', a: 'Royal Manor and Havens Corners provide solid mid-range options in the $300K-$400K range with mature trees and larger lots. The Creekside area commands premiums for walkability to shops and restaurants. Newer communities like Brookfield Village offer modern construction starting in the upper $300Ks.' },
+      { q: 'How does Gahanna-Jefferson Schools perform for families?', a: 'Gahanna-Jefferson Schools earns an A rating from Niche with Lincoln High School as the district\'s flagship. The district offers a strong mix of AP courses, vocational programs through Eastland-Fairfield Career Center, and competitive athletics. Class sizes are manageable with good teacher retention.' },
+      { q: 'What is the commute from Gahanna to major Columbus employers?', a: 'Gahanna\'s location along I-270 provides 15-20 minute access to downtown Columbus, Easton Town Center, and Polaris. Port Columbus International Airport is actually within Gahanna\'s borders, making it ideal for frequent business travelers.' },
+    ]
   },
   {
     slug: 'hilliard',
@@ -110,7 +152,14 @@ const cities = [
     population: '37K',
     daysOnMarket: 12,
     description: 'Hilliard is one of Central Ohio\'s fastest-growing communities, with a revitalized Old Hilliard downtown and extensive new development. Hilliard City Schools serves over 16,000 students across three high schools.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43026',
+    neighbors: ['dublin', 'grove-city', 'upper-arlington'],
+    faqs: [
+      { q: 'Is Hilliard a good investment for homebuyers right now?', a: 'Hilliard has seen steady appreciation of 4-6% annually, driven by ongoing commercial development along Cemetery Road and the revitalized Old Hilliard district. The combination of three high schools and relatively affordable pricing compared to Dublin makes Hilliard attractive to growing families.' },
+      { q: 'What are the school options in Hilliard?', a: 'Hilliard City Schools operates three high schools—Davidson, Darby, and Bradley—serving over 16,000 students. The district is known for strong STEM programs, performing arts, and competitive sports. All three high schools consistently rank well on state report cards.' },
+      { q: 'How do Hilliard property taxes compare to neighboring communities?', a: 'Hilliard\'s effective property tax rate falls in the mid-range for Franklin County, typically lower than Upper Arlington or Dublin. On a $425K home, expect annual property taxes around $7,500-$8,500, which includes the Hilliard City Schools levy.' },
+    ]
   },
   {
     slug: 'upper-arlington',
@@ -125,7 +174,14 @@ const cities = [
     population: '36K',
     daysOnMarket: 10,
     description: 'Upper Arlington is an established, tree-lined community adjacent to Ohio State University. Known for excellent schools and strong property values, UA features a mix of classic mid-century homes and newer construction. Upper Arlington City Schools is highly regarded.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43221',
+    neighbors: ['columbus', 'hilliard', 'dublin'],
+    faqs: [
+      { q: 'Why do Upper Arlington homes sell so quickly?', a: 'Upper Arlington averages just 10 days on market—among the fastest in Central Ohio. The combination of a walkable layout, proximity to Ohio State University and Grandview, top-rated schools, and limited new construction creates persistent demand that outstrips supply.' },
+      { q: 'What makes Upper Arlington Schools stand out for families?', a: 'Upper Arlington City Schools is perennially ranked in Ohio\'s top 10 districts. The single high school model means all students attend UA High School, fostering strong community bonds. The district recently completed a major facilities upgrade with new buildings across all grade levels.' },
+      { q: 'Are there affordable options in Upper Arlington\'s housing market?', a: 'While UA\'s median price is around $600K, condos and townhomes near Lane Avenue and Kingsdale start in the $250K-$350K range. Smaller ranch homes in the southern neighborhoods occasionally list under $450K, though they attract multiple offers quickly.' },
+    ]
   },
   {
     slug: 'worthington',
@@ -140,7 +196,14 @@ const cities = [
     population: '15K',
     daysOnMarket: 11,
     description: 'Worthington is one of Ohio\'s oldest communities, with a charming downtown on the National Register of Historic Places. The village green hosts farmers markets and community events. Worthington City Schools ranks highly statewide.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43085',
+    neighbors: ['columbus', 'westerville', 'powell'],
+    faqs: [
+      { q: 'What types of homes are available in Worthington?', a: 'Worthington offers a distinctive mix of charming 1920s-1950s colonials near the historic village green and mid-century ranches in established neighborhoods. Colonial Hills and Worthington Estates are popular for families, while newer condos along High Street attract downsizers and young professionals.' },
+      { q: 'How does the Worthington school district compare to Westerville and Dublin?', a: 'Worthington Schools ranks among Ohio\'s top 15 districts with Thomas Worthington and Worthington Kilbourne as its two high schools. While slightly smaller than Westerville or Dublin, the district offers strong gifted programs, competitive athletics, and a close-knit community feel that larger districts sometimes lack.' },
+      { q: 'What are the advantages of living in Worthington versus Columbus proper?', a: 'Worthington offers a distinct small-city identity with its own police, schools, and community events while being just minutes from Polaris, Crosswoods, and downtown Columbus via I-71 or High Street. Property values hold strong due to the school district, and the village green area provides a walkable downtown with local restaurants and shops.' },
+    ]
   },
   {
     slug: 'grove-city',
@@ -155,7 +218,14 @@ const cities = [
     population: '42K',
     daysOnMarket: 14,
     description: 'Grove City offers affordable suburban living with a revitalized Town Center and strong community identity. The city hosts popular events like Arts in the Alley and provides extensive parks and recreation programs.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43123',
+    neighbors: ['columbus', 'hilliard', 'canal-winchester'],
+    faqs: [
+      { q: 'Is Grove City a good area for first-time homebuyers?', a: 'Grove City is one of the most accessible suburbs in the Columbus metro for first-time buyers, with a median price around $300K—well below Dublin or Upper Arlington. The revitalized Town Center, expanding retail along Stringtown Road, and proximity to I-71 and I-270 add convenience without the premium price tag.' },
+      { q: 'What schools serve the Grove City area?', a: 'South-Western City Schools is the primary district serving Grove City, operating multiple high schools including Grove City High School. The district has invested heavily in facilities upgrades and career-technical programs. Some southern Grove City addresses may fall in the Hamilton Local School District.' },
+      { q: 'How far is Grove City from downtown Columbus and major job centers?', a: 'Grove City is approximately 15 minutes from downtown Columbus via I-71 and about 20 minutes from the Rickenbacker logistics hub, a major employer in the region. The opening of additional retail and medical facilities along Stringtown Road means many residents can work and shop locally.' },
+    ]
   },
   {
     slug: 'delaware',
@@ -170,7 +240,14 @@ const cities = [
     population: '42K',
     daysOnMarket: 16,
     description: 'Delaware is the county seat of Delaware County, Ohio\'s fastest-growing county. The city combines historic charm around its downtown square with new development. Home to Ohio Wesleyan University, Delaware offers cultural amenities alongside small-town living.',
-    county: 'Delaware'
+    county: 'Delaware',
+    postalCode: '43015',
+    neighbors: ['powell', 'sunbury', 'johnstown'],
+    faqs: [
+      { q: 'Is Delaware, Ohio a good place to buy a home right now?', a: 'Delaware County has been Ohio\'s fastest-growing county for over a decade, and the city of Delaware benefits from that momentum. The $350K median price offers significant savings versus Powell or Dublin while still providing access to some Olentangy district addresses. Historic downtown properties and newer subdivisions both show strong appreciation.' },
+      { q: 'What are the school district options in Delaware?', a: 'Delaware City Schools serves most addresses within the city limits, offering solid academics anchored by Hayes High School. Some outer Delaware addresses feed into Olentangy or Big Walnut districts. Ohio Wesleyan University also provides cultural and educational enrichment opportunities for the community.' },
+      { q: 'What is the commute like from Delaware to Columbus?', a: 'Delaware to downtown Columbus is about 30-40 minutes via US-23 or I-71, depending on traffic. Many residents commute to Polaris or Powell-area employers in just 15-20 minutes. The planned improvements to US-23 corridor are expected to ease congestion in coming years.' },
+    ]
   },
   {
     slug: 'pickerington',
@@ -185,7 +262,14 @@ const cities = [
     population: '23K',
     daysOnMarket: 14,
     description: 'Pickerington is a growing community in Fairfield County known for its excellent schools and family-friendly atmosphere. Pickerington Local Schools serves two high schools and consistently earns high marks. The city offers a mix of established neighborhoods and new construction.',
-    county: 'Fairfield'
+    county: 'Fairfield',
+    postalCode: '43147',
+    neighbors: ['canal-winchester', 'gahanna', 'pataskala'],
+    faqs: [
+      { q: 'What makes Pickerington attractive to homebuyers from Columbus?', a: 'Pickerington offers newer construction and larger lots than many inner-ring suburbs at a lower price point. The Violet Township area surrounding Pickerington has seen rapid growth with modern subdivisions, while the historic downtown retains small-town character. Strong schools and easy I-270 access seal the deal for many families.' },
+      { q: 'How does Pickerington Local Schools compare to other Fairfield County districts?', a: 'Pickerington Local Schools is by far the highest-rated district in Fairfield County, earning an A from Niche. The district operates two high schools—Central and North—and is known for nationally competitive marching band programs, strong AP offerings, and robust athletics.' },
+      { q: 'What should buyers know about property taxes in Pickerington?', a: 'Pickerington falls in Fairfield County, which generally has lower property tax rates than Franklin County. However, the Pickerington Local Schools levy means overall tax bills are moderate. Expect to pay roughly $6,000-$7,500 annually on a $375K home, which is competitive compared to similar-quality school districts in Franklin County.' },
+    ]
   },
   {
     slug: 'pataskala',
@@ -200,7 +284,14 @@ const cities = [
     population: '18K',
     daysOnMarket: 18,
     description: 'Pataskala offers affordable housing options on the eastern edge of the Columbus metro area. The city has seen significant growth with new residential developments while maintaining its rural character. Multiple school districts serve the area including Licking Valley and Southwest Licking.',
-    county: 'Licking'
+    county: 'Licking',
+    postalCode: '43062',
+    neighbors: ['pickerington', 'gahanna', 'granville'],
+    faqs: [
+      { q: 'Why are homebuyers increasingly looking at Pataskala?', a: 'Pataskala offers some of the most affordable new construction in the Columbus metro, with homes starting in the mid-$200Ks in developments like Watkins Park and Summit Road corridors. The city has added commercial amenities along Broad Street while maintaining a semi-rural feel with larger lots that are hard to find closer to Columbus.' },
+      { q: 'What school districts serve Pataskala families?', a: 'Pataskala is served by multiple districts including Licking Valley, Southwest Licking, and Licking Heights. Southwest Licking has seen the most growth and offers newer facilities, while Licking Heights has become one of Ohio\'s most diverse districts. Families should verify which district serves a specific address before purchasing.' },
+      { q: 'How does the cost of living in Pataskala compare to western Columbus suburbs?', a: 'Pataskala\'s cost of living is significantly lower than western suburbs like Dublin or Hilliard. Licking County property tax rates are generally below Franklin County, and the $325K median home price buys considerably more square footage. The trade-off is a longer commute to western employment centers, though eastside employers along I-70 are easily accessible.' },
+    ]
   },
   {
     slug: 'sunbury',
@@ -215,7 +306,14 @@ const cities = [
     population: '7K',
     daysOnMarket: 15,
     description: 'Sunbury is a charming village in Delaware County experiencing rapid growth. Big Walnut Local Schools is highly regarded and draws families to the area. The historic downtown square hosts community events and local businesses.',
-    county: 'Delaware'
+    county: 'Delaware',
+    postalCode: '43074',
+    neighbors: ['delaware', 'johnstown', 'granville'],
+    faqs: [
+      { q: 'What is driving the housing boom in Sunbury, Ohio?', a: 'Sunbury sits in Delaware County\'s growth corridor with Big Walnut Local Schools drawing families from across the region. New subdivisions like Meadows at Sunbury and Northstar are adding hundreds of homes. The village\'s charming downtown square and proximity to Alum Creek State Park add lifestyle appeal beyond just the schools.' },
+      { q: 'How does Big Walnut Local Schools compare to nearby districts?', a: 'Big Walnut earns an A from Niche and is known for its strong community support and manageable school sizes. The district operates a single high school, which fosters tight-knit student culture. Academic performance is competitive with Olentangy and Delaware City Schools, particularly in math and science.' },
+      { q: 'Is Sunbury a practical location for commuting to Columbus?', a: 'Sunbury to downtown Columbus is approximately 30-35 minutes via I-71 or Route 3. Many residents commute to the Polaris or Westerville employment corridors in about 20 minutes. Delaware County\'s ongoing road infrastructure investments are improving commute reliability for northern suburb residents.' },
+    ]
   },
   {
     slug: 'granville',
@@ -230,7 +328,14 @@ const cities = [
     population: '6K',
     daysOnMarket: 20,
     description: 'Granville is a picturesque New England-style village home to Denison University. Known for its historic architecture, tree-lined streets, and excellent schools, Granville offers a unique small-town atmosphere with easy access to Columbus. Granville Exempted Village Schools is highly rated.',
-    county: 'Licking'
+    county: 'Licking',
+    postalCode: '43023',
+    neighbors: ['johnstown', 'sunbury', 'pataskala'],
+    faqs: [
+      { q: 'What type of buyer does Granville attract?', a: 'Granville appeals to buyers seeking a distinctive New England village character rare in Ohio. Historic homes along Broadway and Prospect Street attract preservation-minded buyers, while newer developments on the village outskirts draw families wanting Granville schools without renovation work. Denison University faculty and staff also sustain steady housing demand.' },
+      { q: 'How does Granville Exempted Village Schools perform?', a: 'Granville schools earn an A from Niche with particularly strong marks in college preparation and teacher quality. The small district size means individual attention for students, and Granville High School sends a high percentage of graduates to four-year universities. The performing arts and athletics programs punch well above the school\'s size.' },
+      { q: 'What should buyers know about Granville\'s location and commute options?', a: 'Granville is about 35 minutes east of Columbus via SR-161 and I-70, making it one of the farther commutes in the metro area. However, the village is just 5 minutes from Newark and its employment base. Buyers who work remotely or in eastern Franklin County find Granville\'s quality of life well worth the distance trade-off.' },
+    ]
   },
   {
     slug: 'johnstown',
@@ -245,7 +350,14 @@ const cities = [
     population: '5K',
     daysOnMarket: 16,
     description: 'Johnstown is a growing village in Licking County with a small-town feel and strong community identity. New development surrounds the historic village center. Johnstown-Monroe Local Schools serves the area with solid academic programs.',
-    county: 'Licking'
+    county: 'Licking',
+    postalCode: '43031',
+    neighbors: ['granville', 'sunbury', 'delaware'],
+    faqs: [
+      { q: 'What is attracting new residents to Johnstown?', a: 'Johnstown offers rural character with growing suburban amenities at prices well below the Columbus average. New subdivisions are bringing modern homes in the $300K-$400K range on larger lots than you\'d find in Westerville or Gahanna. The village\'s position between Delaware and Licking counties gives residents access to multiple employment corridors.' },
+      { q: 'How is Johnstown-Monroe Local Schools regarded by families?', a: 'Johnstown-Monroe earns an A- from Niche and is valued for its small-district advantages: manageable class sizes, strong teacher-student relationships, and a community that actively supports school levies. The district operates a single K-12 campus, making transitions seamless for students and convenient for parents.' },
+      { q: 'What are property taxes and overall costs like in Johnstown?', a: 'Licking County property taxes are notably lower than Franklin or Delaware counties, making Johnstown one of the more tax-friendly options in the greater Columbus area. On a $350K home, annual taxes typically run $5,000-$6,500. Combined with lower home prices and no city income tax, Johnstown offers real savings for budget-conscious buyers.' },
+    ]
   },
   {
     slug: 'blacklick',
@@ -260,7 +372,14 @@ const cities = [
     population: '10K',
     daysOnMarket: 14,
     description: 'Blacklick is an unincorporated community primarily within the Gahanna and Columbus areas. It offers a mix of established neighborhoods and newer developments with convenient access to I-270 and Easton. Most Blacklick addresses feed into Gahanna-Jefferson or Columbus City Schools.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43004',
+    neighbors: ['gahanna', 'new-albany', 'pickerington'],
+    faqs: [
+      { q: 'What should buyers know about purchasing a home in Blacklick?', a: 'Blacklick is unincorporated, so buyers should pay close attention to which school district, township, and tax jurisdiction applies to a specific address. Properties can fall in Gahanna-Jefferson, Columbus City, or even Licking Heights school districts. Neighborhoods like Jefferson Country Club Estates and Woodstream East offer established communities, while areas near New Albany are seeing new luxury construction.' },
+      { q: 'Which school districts serve Blacklick addresses?', a: 'Most central Blacklick addresses feed into Gahanna-Jefferson Schools, which earns an A from Niche. However, eastern Blacklick near the Licking County line may fall into Licking Heights, and some southwestern addresses are in Columbus City Schools. Always verify the exact district assignment before making an offer.' },
+      { q: 'How convenient is Blacklick for commuting and daily errands?', a: 'Blacklick\'s location along I-270 between Easton Town Center and New Albany makes it one of the most convenient eastside communities. Easton\'s shopping and dining is minutes away, and downtown Columbus is a 20-minute drive. The Blacklick Creek Greenway trail also provides recreational amenities for residents.' },
+    ]
   },
   {
     slug: 'canal-winchester',
@@ -275,7 +394,14 @@ const cities = [
     population: '10K',
     daysOnMarket: 14,
     description: 'Canal Winchester is a charming city in southeastern Franklin County with a historic downtown and strong community identity. The city hosts popular events like the Labor Day Festival and Blues & Ribfest. Canal Winchester Local Schools serves the community with quality education and a small-town feel.',
-    county: 'Franklin'
+    county: 'Franklin',
+    postalCode: '43110',
+    neighbors: ['pickerington', 'grove-city', 'gahanna'],
+    faqs: [
+      { q: 'What makes Canal Winchester appealing to homebuyers?', a: 'Canal Winchester combines small-town charm with modern amenities at an accessible price point. The historic downtown along Waterloo Street features local shops, restaurants, and community events like Blues & Ribfest. New developments on the city\'s edges offer contemporary homes while maintaining the community\'s character.' },
+      { q: 'How does Canal Winchester Local Schools serve the community?', a: 'Canal Winchester Schools earns an A- from Niche and operates a compact, community-focused district with one high school. The district is known for strong parent involvement, competitive athletics, and academic programs that regularly outperform state averages. The single-campus model means families stay connected throughout their children\'s education.' },
+      { q: 'How does Canal Winchester\'s location affect commute times and daily life?', a: 'Canal Winchester sits along US-33 with easy access to I-270, putting downtown Columbus about 20 minutes away. The Rickenbacker area and Obetz employment centers are even closer at 10-15 minutes. The city has invested in expanding local retail and dining, reducing the need to travel for everyday errands.' },
+    ]
   }
 ];
 
@@ -285,6 +411,39 @@ function formatPrice(price) {
 
 function formatSavings(price) {
   return formatPrice(price * 0.02);
+}
+
+// Build a slug->name lookup from the cities array
+const cityNameBySlug = {};
+cities.forEach(c => { cityNameBySlug[c.slug] = c.name; });
+
+function generateNeighborLinks(city) {
+  if (!city.neighbors || city.neighbors.length === 0) return '';
+  const links = city.neighbors
+    .filter(slug => cityNameBySlug[slug])
+    .map(slug => `          <a href="/areas/${slug}/" class="internal-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${cityNameBySlug[slug]}
+          </a>`)
+    .join('\n');
+  return `
+        <h3>Nearby Areas We Serve</h3>
+        <div class="internal-links">
+${links}
+        </div>`;
+}
+
+function generateFaqSection(city) {
+  if (!city.faqs || city.faqs.length === 0) return '';
+  const items = city.faqs.map(faq => `          <div class="faq-item">
+            <div class="faq-question">${faq.q}</div>
+            <div class="faq-answer">${faq.a}</div>
+          </div>`).join('\n');
+  return `
+        <h2>Frequently Asked Questions About ${city.name} Real Estate</h2>
+        <div class="faq-list">
+${items}
+        </div>`;
 }
 
 function generateCityPage(city) {
@@ -300,6 +459,7 @@ function generateCityPage(city) {
   <meta name="keywords" content="sell home ${city.name} Ohio, ${city.name} real estate agent, 1 percent commission ${city.name}, ${city.name} listing agent">
 
   <link rel="canonical" href="https://tdrealtyohio.com/areas/${city.slug}/">
+  <meta property="article:modified_time" content="${new Date().toISOString().split('T')[0]}">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Sell Your Home in ${city.name}, Ohio | Save with 1% Commission">
@@ -362,9 +522,32 @@ function generateCityPage(city) {
         "name": "Ohio"
       }
     },
-    "priceRange": "$$"
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "${city.name}",
+      "addressRegion": "OH",
+      "postalCode": "${city.postalCode}",
+      "addressCountry": "US"
+    }
   }
   </script>
+${city.faqs ? `  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+${city.faqs.map(faq => `      {
+        "@type": "Question",
+        "name": "${faq.q}",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "${faq.a}"
+        }
+      }`).join(',\n')}
+    ]
+  }
+  </script>` : ''}
 
   <style>
     .city-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
@@ -382,6 +565,11 @@ function generateCityPage(city) {
     .internal-link { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: var(--gray-50); border-radius: var(--radius-md); color: var(--navy); text-decoration: none; font-weight: 500; transition: all 0.2s; }
     .internal-link:hover { background: var(--gray-100); }
     .internal-link svg { width: 20px; height: 20px; color: var(--gold); }
+    .faq-list { margin: 2rem 0; }
+    .faq-item { border: 1px solid var(--gray-200); border-radius: var(--radius-md); margin-bottom: 1rem; overflow: hidden; }
+    .faq-question { font-weight: 600; padding: 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: var(--gray-50); }
+    .faq-question:hover { background: var(--gray-100); }
+    .faq-answer { padding: 0 1.25rem 1.25rem; line-height: 1.7; color: var(--gray-700); }
   </style>
 </head>
 <body>
@@ -491,6 +679,8 @@ function generateCityPage(city) {
             Pre-Listing Inspection
           </a>
         </div>
+${generateNeighborLinks(city)}
+${generateFaqSection(city)}
 
         <p class="text-muted" style="font-size: 0.8125rem; margin-top: 2rem;">
           Market data approximate. Based on MLS data and public records.
@@ -610,7 +800,7 @@ console.log('\n--- Sitemap entries to add ---');
 cities.forEach(city => {
   console.log(`  <url>
     <loc>https://tdrealtyohio.com/areas/${city.slug}/</loc>
-    <lastmod>2026-01-25</lastmod>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`);
