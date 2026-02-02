@@ -625,7 +625,33 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initHeaderScroll();
   setActiveNavLink();
+  initCookieConsent();
 });
+
+// ── Cookie Consent ──────────────────────────────────────
+function initCookieConsent() {
+  if (localStorage.getItem('cookie-consent')) return;
+  const banner = document.createElement('div');
+  banner.id = 'cookie-consent';
+  banner.setAttribute('role', 'dialog');
+  banner.setAttribute('aria-label', 'Cookie consent');
+  banner.innerHTML =
+    '<p>We use cookies and Google Analytics to improve your experience and measure site performance. ' +
+    '<a href="/privacy/">Privacy Policy</a></p>' +
+    '<div><button id="cookie-accept" class="btn btn-primary btn-sm">Accept</button>' +
+    '<button id="cookie-decline" class="btn btn-outline btn-sm">Decline</button></div>';
+  document.body.appendChild(banner);
+  document.getElementById('cookie-accept').addEventListener('click', function () {
+    localStorage.setItem('cookie-consent', 'accepted');
+    banner.remove();
+  });
+  document.getElementById('cookie-decline').addEventListener('click', function () {
+    localStorage.setItem('cookie-consent', 'declined');
+    // Disable GA by setting opt-out window property
+    window['ga-disable-AW-17866418952'] = true;
+    banner.remove();
+  });
+}
 
 // Export config for use in other scripts if needed
 if (typeof module !== 'undefined' && module.exports) {
