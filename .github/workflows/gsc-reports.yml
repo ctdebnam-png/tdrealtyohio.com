@@ -81,9 +81,11 @@ jobs:
         if: steps.report-type.outputs.report == 'all' || steps.report-type.outputs.report == 'optimizer'
         run: python -m gsc.optimizer
 
-      - name: Regenerate sitemap
+      - name: Regenerate sitemaps
         if: steps.report-type.outputs.report == 'all' || steps.report-type.outputs.report == 'autofix' || steps.report-type.outputs.report == 'optimizer'
-        run: node scripts/generate-sitemap.mjs
+        run: |
+          node scripts/generate-sitemap.mjs
+          node scripts/generate-sitemap-page.mjs
 
       - name: Generate blog briefs
         if: steps.report-type.outputs.report == 'all' || steps.report-type.outputs.report == 'feedback'
@@ -105,7 +107,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/ sitemap.xml areas/ blog/ compare/ lp/ sellers/ buyers/ \
+          git add output/ sitemap.xml sitemap-page/ areas/ blog/ compare/ lp/ sellers/ buyers/ \
                   about/ contact/ agents/ testimonials/ faq/ referrals/ \
                   index.html 1-percent-commission/ pre-listing-inspection/ \
                   home-value/ affordability/ sell-and-buy/ sell-only-2-percent/ \

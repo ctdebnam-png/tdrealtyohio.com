@@ -13,7 +13,6 @@ module.exports = {
       numberOfRuns: 3,
       settings: {
         chromeFlags: '--no-sandbox --headless --disable-gpu',
-        preset: 'desktop',
       },
     },
     assert: {
@@ -22,6 +21,10 @@ module.exports = {
         'categories:accessibility': ['error', { minScore: 0.95 }],
         'categories:best-practices': ['error', { minScore: 0.9 }],
         'categories:seo': ['error', { minScore: 0.95 }],
+        // Core Web Vitals
+        'largest-contentful-paint': ['warn', { maxNumericValue: 2500 }],
+        'cumulative-layout-shift': ['warn', { maxNumericValue: 0.1 }],
+        'total-blocking-time': ['warn', { maxNumericValue: 300 }],
       },
     },
     upload: {
