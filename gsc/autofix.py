@@ -422,14 +422,7 @@ def fix_internal_link_equity(dry_run: bool, result: FixResult):
             f'        </div>\n'
         )
 
-        # Insert before the CTA section
-        cta_marker = '<section class="section cta-section">'
-        if cta_marker in html:
-            html = html.replace(cta_marker, "  </div>\n    </section>\n\n" + section + "\n    " + cta_marker, 1)
-            # That double-closes — actually insert inside the content section
-            pass
-
-        # Simpler: insert before the market data disclaimer (same as crosslinks)
+        # Insert before the market data disclaimer
         marker = '<p class="text-muted"'
         html_orig = html_path.read_text()  # re-read in case crosslinks already modified
         if _RELATED_PAGES_MARKER in html_orig:
