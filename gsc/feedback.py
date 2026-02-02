@@ -16,11 +16,10 @@ from pathlib import Path
 from .client import GSCClient
 
 OUTPUT_DIR = Path("output/gsc-reports")
-BLOG_DIR = Path("blog")
+SITE_ROOT = Path(".")
+SITE_URL = "https://tdrealtyohio.com"
 
-# Scoring categories extracted from blog post meta / content signals.
-# The blog engine can produce a scores JSON alongside each post — this module
-# reads those if they exist, otherwise derives heuristic scores from HTML.
+# Scoring categories extracted from page content signals.
 SCORING_CATEGORIES = [
     "word_count",
     "heading_structure",
@@ -34,32 +33,78 @@ SCORING_CATEGORIES = [
     "freshness",
 ]
 
+# Directories that contain page index.html files
+PAGE_DIRS = ["blog", "areas", "compare", "sellers", "buyers", "about",
+             "contact", "agents", "testimonials", "faq", "referrals",
+             "1-percent-commission", "pre-listing-inspection", "home-value",
+             "affordability", "sell-and-buy", "sell-only-2-percent",
+             "privacy", "terms", "fair-housing"]
 
-def _find_blog_posts() -> list[dict]:
-    """Discover blog posts and extract basic metadata from HTML."""
-    posts = []
-    if not BLOG_DIR.exists():
-        return posts
 
-    for index_html in sorted(BLOG_DIR.glob("*/index.html")):
-        slug = index_html.parent.name
-        if slug in (".", ".."):
+def _find_all_pages() -> list[dict]:
+    """Discover all pages on the site and extract metadata from HTML."""
+    pages = []
+
+    # Root index.html
+    root_index = SITE_ROOT / "index.html"
+    if root_index.exists():
+        html = root_index.read_text(errors="replace")
+        pages.append({
+            "slug": "homepage",
+            "path": "/",
+            "url": f"{SITE_URL}/",
+            "category": "homepage",
+            "scores": _score_page(html, SITE_ROOT),
+        })
+
+    # Walk all known page directories for index.html files
+    for page_dir in PAGE_DIRS:
+        dir_path = SITE_ROOT / page_dir
+        if not dir_path.exists():
             continue
-        html = index_html.read_text(errors="replace")
-        post = {
-            "slug": slug,
-            "path": f"/blog/{slug}/",
-            "url": f"https://tdrealtyohio.com/blog/{slug}/",
-            "scores": _score_post(html, index_html.parent),
-        }
-        posts.append(post)
-    return posts
+        # Check for a direct index.html (e.g. sellers/index.html)
+        direct = dir_path / "index.html"
+        if direct.exists():
+            html = direct.read_text(errors="replace")
+            pages.append({
+                "slug": page_dir,
+                "path": f"/{page_dir}/",
+                "url": f"{SITE_URL}/{page_dir}/",
+                "category": _categorize(page_dir),
+                "scores": _score_page(html, dir_path),
+            })
+        # Check subdirectories (e.g. blog/*/index.html, areas/*/index.html)
+        for sub_index in sorted(dir_path.glob("*/index.html")):
+            slug = sub_index.parent.name
+            if slug in (".", ".."):
+                continue
+            html = sub_index.read_text(errors="replace")
+            pages.append({
+                "slug": slug,
+                "path": f"/{page_dir}/{slug}/",
+                "url": f"{SITE_URL}/{page_dir}/{slug}/",
+                "category": _categorize(page_dir),
+                "scores": _score_page(html, sub_index.parent),
+            })
+
+    return pages
 
 
-def _score_post(html: str, post_dir: Path) -> dict:
-    """Score a blog post across SEO categories.
+def _categorize(page_dir: str) -> str:
+    """Return a category label for a page directory."""
+    if page_dir == "blog":
+        return "blog"
+    if page_dir == "areas":
+        return "area"
+    if page_dir == "compare":
+        return "compare"
+    return "core"
 
-    If the blog engine has written a scores.json alongside the post,
+
+def _score_page(html: str, post_dir: Path) -> dict:
+    """Score a page across SEO categories.
+
+    If the blog engine has written a scores.json alongside the page,
     use that. Otherwise derive heuristic scores from HTML content.
     """
     scores_file = post_dir / "scores.json"
@@ -129,49 +174,57 @@ def _score_post(html: str, post_dir: Path) -> dict:
 
 
 def generate_feedback_report(client: GSCClient, days: int = 28) -> dict:
-    """Compare blog scores against GSC performance and find correlations."""
-    print(f"Generating feedback report ({days} days)...")
+    """Compare page scores against GSC performance across the full site."""
+    print(f"Generating full-site feedback report ({days} days)...")
 
-    posts = _find_blog_posts()
-    if not posts:
-        print("  No blog posts found.")
+    pages = _find_all_pages()
+    if not pages:
+        print("  No pages found.")
         return {"report": "feedback", "posts": [], "correlations": {}}
 
-    # Get GSC performance for each blog post
-    for post in posts:
-        try:
-            perf = client.top_pages(days=days, limit=500)
-            match = next((p for p in perf if post["url"] in p["page"]), None)
-            if match:
-                post["gsc"] = match
-            else:
-                post["gsc"] = {
-                    "clicks": 0,
-                    "impressions": 0,
-                    "ctr": 0,
-                    "position": 0,
-                }
-        except Exception as e:
-            print(f"  Error fetching GSC data for {post['slug']}: {e}")
-            post["gsc"] = {"clicks": 0, "impressions": 0, "ctr": 0, "position": 0}
+    # Fetch GSC performance once for all pages
+    print(f"  Found {len(pages)} pages, fetching GSC data...")
+    try:
+        perf = client.top_pages(days=days, limit=500)
+        perf_by_url = {p["page"]: p for p in perf}
+    except Exception as e:
+        print(f"  Error fetching GSC data: {e}")
+        perf_by_url = {}
+
+    for page in pages:
+        match = perf_by_url.get(page["url"])
+        if match:
+            page["gsc"] = match
+        else:
+            page["gsc"] = {"clicks": 0, "impressions": 0, "ctr": 0, "position": 0}
 
     # Calculate correlations between score categories and GSC metrics
-    correlations = _calculate_correlations(posts)
-    recommendations = _generate_recommendations(correlations, posts)
+    correlations = _calculate_correlations(pages)
+    recommendations = _generate_recommendations(correlations, pages)
+
+    # Group pages by category for the report
+    by_category = {}
+    for p in pages:
+        cat = p.get("category", "other")
+        by_category.setdefault(cat, []).append(p)
+
+    pages_with_data = [p for p in pages if p["gsc"]["impressions"] > 0]
 
     data = {
         "report": "feedback",
         "generated": datetime.utcnow().isoformat(),
         "days": days,
-        "post_count": len(posts),
-        "posts": [
+        "page_count": len(pages),
+        "pages_with_impressions": len(pages_with_data),
+        "pages": [
             {
                 "slug": p["slug"],
                 "url": p["url"],
+                "category": p.get("category", "other"),
                 "scores": p["scores"],
                 "gsc": p["gsc"],
             }
-            for p in posts
+            for p in pages
         ],
         "correlations": correlations,
         "recommendations": recommendations,
@@ -179,17 +232,23 @@ def generate_feedback_report(client: GSCClient, days: int = 28) -> dict:
 
     # Build markdown
     md = [f"# GSC Feedback Report — {date.today().isoformat()}"]
-    md.append(f"\n**Period:** {days} days | **Posts analyzed:** {len(posts)}\n")
+    md.append(f"\n**Period:** {days} days | **Pages analyzed:** {len(pages)} "
+              f"| **With impressions:** {len(pages_with_data)}\n")
 
-    md.append("## Post Performance\n")
-    md.append("| Post | Clicks | Impressions | CTR | Position |")
-    md.append("|------|--------|-------------|-----|----------|")
-    for p in sorted(posts, key=lambda x: x["gsc"]["clicks"], reverse=True):
-        gsc = p["gsc"]
-        md.append(
-            f"| {p['slug']} | {gsc['clicks']} | {gsc['impressions']} "
-            f"| {gsc['ctr']:.2%} | {gsc['position'] or '—'} |"
-        )
+    # Performance by category
+    for cat in ["homepage", "core", "area", "blog", "compare"]:
+        cat_pages = by_category.get(cat, [])
+        if not cat_pages:
+            continue
+        md.append(f"## {cat.title()} Pages ({len(cat_pages)})\n")
+        md.append("| Page | Clicks | Impressions | CTR | Position |")
+        md.append("|------|--------|-------------|-----|----------|")
+        for p in sorted(cat_pages, key=lambda x: x["gsc"]["clicks"], reverse=True):
+            gsc = p["gsc"]
+            md.append(
+                f"| {p['path']} | {gsc['clicks']} | {gsc['impressions']} "
+                f"| {gsc['ctr']:.2%} | {gsc['position'] or '—'} |"
+            )
 
     md.append("\n## Score vs Performance Correlations\n")
     md.append(

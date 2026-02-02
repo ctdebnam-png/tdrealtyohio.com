@@ -51,12 +51,26 @@ def get_sitemap_urls() -> list[str]:
 
 # ── Performance Report ────────────────────────────────────────────────
 
-def generate_performance_report(client: GSCClient, days: int) -> dict:
-    """Generate full performance report."""
-    print(f"Generating performance report ({days} days)...")
+def _categorize_page(path: str) -> str:
+    """Assign a page to a category based on its URL path."""
+    if path in ("/", ""):
+        return "homepage"
+    if path.startswith("/blog/") and path != "/blog/":
+        return "blog"
+    if path.startswith("/areas/") and path != "/areas/":
+        return "area"
+    if path.startswith("/compare/") and path != "/compare/":
+        return "compare"
+    return "core"
 
-    top_pages = client.top_pages(days=days, limit=25)
-    top_queries = client.top_queries(days=days, limit=25)
+
+def generate_performance_report(client: GSCClient, days: int) -> dict:
+    """Generate full-site performance report with per-page query breakdowns."""
+    print(f"Generating full-site performance report ({days} days)...")
+
+    sitemap_urls = get_sitemap_urls()
+    all_pages = client.top_pages(days=days, limit=500)
+    all_queries = client.top_queries(days=days, limit=100)
     daily = client.performance_by_date(days=days)
 
     totals = {
@@ -74,43 +88,126 @@ def generate_performance_report(client: GSCClient, days: int) -> dict:
     else:
         totals["avg_position"] = 0
 
+    # Build a lookup of GSC data by URL
+    gsc_by_url = {p["page"]: p for p in all_pages}
+
+    # Per-page query breakdowns for every page that has impressions
+    page_breakdowns = {}
+    pages_with_data = [p for p in all_pages if p["impressions"] > 0]
+    for i, p in enumerate(pages_with_data):
+        print(f"  Fetching queries for [{i + 1}/{len(pages_with_data)}] {p['page']}")
+        try:
+            queries = client.page_query_breakdown(p["page"], days=days)
+            page_breakdowns[p["page"]] = queries
+        except Exception as e:
+            print(f"    Error: {e}")
+            page_breakdowns[p["page"]] = []
+
+    # Categorize pages
+    categories = {}
+    for url in sitemap_urls:
+        path = url.replace("https://tdrealtyohio.com", "")
+        cat = _categorize_page(path)
+        if cat not in categories:
+            categories[cat] = []
+        gsc_data = gsc_by_url.get(url, {
+            "page": url, "clicks": 0, "impressions": 0, "ctr": 0, "position": 0,
+        })
+        categories[cat].append({**gsc_data, "path": path})
+
+    # Pages in GSC but not in sitemap
+    sitemap_set = set(sitemap_urls)
+    unsitemaped = [p for p in all_pages if p["page"] not in sitemap_set]
+
+    # Zero-impression pages (on sitemap but invisible to Google)
+    zero_impression_pages = [
+        url for url in sitemap_urls if url not in gsc_by_url or gsc_by_url[url]["impressions"] == 0
+    ]
+
     data = {
         "report": "performance",
         "generated": datetime.utcnow().isoformat(),
         "days": days,
         "totals": totals,
-        "top_pages": top_pages,
-        "top_queries": top_queries,
+        "sitemap_url_count": len(sitemap_urls),
+        "pages_with_impressions": len(pages_with_data),
+        "zero_impression_pages": zero_impression_pages,
+        "all_pages": all_pages,
+        "all_queries": all_queries,
         "daily": daily,
+        "categories": {cat: sorted(pages, key=lambda x: x["clicks"], reverse=True)
+                       for cat, pages in categories.items()},
+        "page_breakdowns": page_breakdowns,
+        "unsitemaped_pages": unsitemaped,
     }
 
     # Build markdown
     md = [f"# GSC Performance Report — {date.today().isoformat()}"]
-    md.append(f"\n**Period:** {days} days\n")
+    md.append(f"\n**Period:** {days} days | **Sitemap URLs:** {len(sitemap_urls)} "
+              f"| **With impressions:** {len(pages_with_data)}\n")
+
     md.append("## Summary\n")
-    md.append(f"| Metric | Value |")
-    md.append(f"|--------|-------|")
+    md.append("| Metric | Value |")
+    md.append("|--------|-------|")
     md.append(f"| Total clicks | {totals['clicks']:,} |")
     md.append(f"| Total impressions | {totals['impressions']:,} |")
     md.append(f"| Avg CTR | {totals['avg_ctr']:.2%} |")
     md.append(f"| Avg position | {totals['avg_position']} |")
+    md.append(f"| Pages with data | {len(pages_with_data)}/{len(sitemap_urls)} |")
 
-    md.append("\n## Top Pages\n")
-    md.append("| Page | Clicks | Impressions | CTR | Pos |")
-    md.append("|------|--------|-------------|-----|-----|")
-    for p in top_pages[:15]:
-        path = p["page"].replace("https://tdrealtyohio.com", "")
-        md.append(
-            f"| {path} | {p['clicks']} | {p['impressions']} | {p['ctr']:.2%} | {p['position']} |"
-        )
+    # Performance by category
+    md.append("\n## Performance by Category\n")
+    for cat in ["homepage", "core", "area", "blog", "compare"]:
+        pages = categories.get(cat, [])
+        if not pages:
+            continue
+        cat_clicks = sum(p["clicks"] for p in pages)
+        cat_impr = sum(p["impressions"] for p in pages)
+        md.append(f"### {cat.title()} ({len(pages)} pages — {cat_clicks} clicks, {cat_impr:,} impressions)\n")
+        md.append("| Page | Clicks | Impressions | CTR | Pos |")
+        md.append("|------|--------|-------------|-----|-----|")
+        for p in sorted(pages, key=lambda x: x["clicks"], reverse=True):
+            md.append(
+                f"| {p['path']} | {p['clicks']} | {p['impressions']} "
+                f"| {p['ctr']:.2%} | {p['position']} |"
+            )
+        md.append("")
 
-    md.append("\n## Top Queries\n")
+    # Top queries site-wide
+    md.append("## Top Queries (Site-wide)\n")
     md.append("| Query | Clicks | Impressions | CTR | Pos |")
     md.append("|-------|--------|-------------|-----|-----|")
-    for q in top_queries[:15]:
+    for q in all_queries[:50]:
         md.append(
             f"| {q['query']} | {q['clicks']} | {q['impressions']} | {q['ctr']:.2%} | {q['position']} |"
         )
+
+    # Per-page query breakdowns
+    if page_breakdowns:
+        md.append("\n## Per-Page Query Breakdowns\n")
+        for page_url in sorted(page_breakdowns.keys()):
+            queries = page_breakdowns[page_url]
+            if not queries:
+                continue
+            path = page_url.replace("https://tdrealtyohio.com", "")
+            md.append(f"### {path}\n")
+            md.append("| Query | Clicks | Impressions | CTR | Pos |")
+            md.append("|-------|--------|-------------|-----|-----|")
+            for q in queries[:10]:
+                md.append(
+                    f"| {q['query']} | {q['clicks']} | {q['impressions']} "
+                    f"| {q['ctr']:.2%} | {q['position']} |"
+                )
+            md.append("")
+
+    # Zero-impression pages
+    if zero_impression_pages:
+        md.append("## Zero-Impression Pages\n")
+        md.append("These pages are in sitemap.xml but have zero search impressions:\n")
+        for url in zero_impression_pages:
+            path = url.replace("https://tdrealtyohio.com", "")
+            md.append(f"- {path}")
+        md.append("")
 
     _write_outputs("performance", data, "\n".join(md) + "\n")
     return data
