@@ -34,11 +34,11 @@ SCORING_CATEGORIES = [
 ]
 
 # Directories that contain page index.html files
-PAGE_DIRS = ["blog", "areas", "compare", "sellers", "buyers", "about",
+PAGE_DIRS = ["blog", "areas", "compare", "lp", "sellers", "buyers", "about",
              "contact", "agents", "testimonials", "faq", "referrals",
              "1-percent-commission", "pre-listing-inspection", "home-value",
              "affordability", "sell-and-buy", "sell-only-2-percent",
-             "privacy", "terms", "fair-housing"]
+             "privacy", "terms", "fair-housing", "sitemap-page"]
 
 
 def _find_all_pages() -> list[dict]:
@@ -98,6 +98,8 @@ def _categorize(page_dir: str) -> str:
         return "area"
     if page_dir == "compare":
         return "compare"
+    if page_dir == "lp":
+        return "landing"
     return "core"
 
 
