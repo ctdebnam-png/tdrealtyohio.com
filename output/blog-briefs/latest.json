@@ -1,0 +1,425 @@
+{
+  "generatedAt": "2026-02-02T13:42:39.359Z",
+  "rubricWeights": {
+    "searchVolume": 0.25,
+    "currentPosition": 0.2,
+    "competitorPresence": 0.15,
+    "contentFreshness": 0.15,
+    "conversionPotential": 0.25
+  },
+  "totalBriefs": 10,
+  "briefs": [
+    {
+      "suggestedTitle": "First Time Home Buyer Ohio Programs | TD Realty Ohio",
+      "targetKeyword": "first time home buyer Ohio programs",
+      "suggestedH2Headings": [
+        "Overview of the Home Buying Process in Ohio",
+        "Programs and Incentives Available to Buyers",
+        "What to Expect at Closing",
+        "Neighborhood Guides for Columbus Area"
+      ],
+      "wordCountTarget": 2000,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/listings",
+          "label": "Current Listings"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "BlogPosting",
+      "priorityScore": 0.76,
+      "scoreBreakdown": {
+        "searchVolume": 0.5,
+        "currentPosition": 0.8,
+        "competitorPresence": 0.9,
+        "contentFreshness": 0.6,
+        "conversionPotential": 1
+      },
+      "sourceMetrics": {
+        "position": 14,
+        "impressions": 250,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "How Much Commission Real Estate Agent Ohio: A Complete Guide",
+      "targetKeyword": "how much commission real estate agent Ohio",
+      "suggestedH2Headings": [
+        "Breaking Down the Numbers",
+        "What Ohio Law Requires",
+        "How to Minimize Your Out-of-Pocket Expenses",
+        "Comparing Options in the Columbus Market"
+      ],
+      "wordCountTarget": 2000,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "HowTo",
+      "priorityScore": 0.76,
+      "scoreBreakdown": {
+        "searchVolume": 0.6,
+        "currentPosition": 0.6666666666666667,
+        "competitorPresence": 0.9,
+        "contentFreshness": 0.6,
+        "conversionPotential": 1
+      },
+      "sourceMetrics": {
+        "position": 6,
+        "impressions": 300,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "Best Time To Sell House Columbus — Expert Tips",
+      "targetKeyword": "best time to sell house Columbus",
+      "suggestedH2Headings": [
+        "Understanding the Columbus Ohio Real Estate Market",
+        "Step-by-Step Process for Sellers",
+        "Common Mistakes to Avoid",
+        "How TD Realty Can Help You Sell Faster"
+      ],
+      "wordCountTarget": 2000,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/services",
+          "label": "Our Services"
+        },
+        {
+          "url": "/communities/columbus",
+          "label": "Columbus Community Guide"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "Article",
+      "priorityScore": 0.74,
+      "scoreBreakdown": {
+        "searchVolume": 0.3,
+        "currentPosition": 0.9333333333333333,
+        "competitorPresence": 0.9,
+        "contentFreshness": 0.6,
+        "conversionPotential": 1
+      },
+      "sourceMetrics": {
+        "position": 12,
+        "impressions": 150,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "Pre-Listing Inspection Worth It | TD Realty Ohio",
+      "targetKeyword": "pre-listing inspection worth it",
+      "suggestedH2Headings": [
+        "Why This Matters for Columbus Home Sellers",
+        "Cost vs. Return on Investment",
+        "Professional Tips from Local Experts",
+        "Frequently Asked Questions"
+      ],
+      "wordCountTarget": 1500,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/services",
+          "label": "Our Services"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "FAQPage",
+      "priorityScore": 0.65,
+      "scoreBreakdown": {
+        "searchVolume": 0.16,
+        "currentPosition": 0.8,
+        "competitorPresence": 0.7,
+        "contentFreshness": 0.6,
+        "conversionPotential": 1
+      },
+      "sourceMetrics": {
+        "position": 8,
+        "impressions": 80,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "How To Sell Home Without Realtor Columbus Ohio: A Complete Guide",
+      "targetKeyword": "how to sell home without realtor Columbus Ohio",
+      "suggestedH2Headings": [
+        "Understanding the Columbus Ohio Real Estate Market",
+        "Step-by-Step Process for Sellers",
+        "Common Mistakes to Avoid",
+        "How TD Realty Can Help You Sell Faster"
+      ],
+      "wordCountTarget": 1500,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/services",
+          "label": "Our Services"
+        },
+        {
+          "url": "/communities/columbus",
+          "label": "Columbus Community Guide"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "HowTo",
+      "priorityScore": 0.64,
+      "scoreBreakdown": {
+        "searchVolume": 0,
+        "currentPosition": 0.8,
+        "competitorPresence": 0.9,
+        "contentFreshness": 0.6,
+        "conversionPotential": 1
+      },
+      "sourceMetrics": {
+        "position": null,
+        "impressions": 0,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "Sell Home As Is Columbus | TD Realty Ohio",
+      "targetKeyword": "sell home as is Columbus",
+      "suggestedH2Headings": [
+        "Understanding the Columbus Ohio Real Estate Market",
+        "Step-by-Step Process for Sellers",
+        "Common Mistakes to Avoid",
+        "How TD Realty Can Help You Sell Faster"
+      ],
+      "wordCountTarget": 1500,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/services",
+          "label": "Our Services"
+        },
+        {
+          "url": "/communities/columbus",
+          "label": "Columbus Community Guide"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "BlogPosting",
+      "priorityScore": 0.61,
+      "scoreBreakdown": {
+        "searchVolume": 0,
+        "currentPosition": 0.8,
+        "competitorPresence": 0.7,
+        "contentFreshness": 0.6,
+        "conversionPotential": 1
+      },
+      "sourceMetrics": {
+        "position": null,
+        "impressions": 0,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "Closing Costs Ohio Seller | TD Realty Ohio",
+      "targetKeyword": "closing costs Ohio seller",
+      "suggestedH2Headings": [
+        "Understanding the Columbus Ohio Real Estate Market",
+        "Step-by-Step Process for Sellers",
+        "Common Mistakes to Avoid",
+        "How TD Realty Can Help You Sell Faster"
+      ],
+      "wordCountTarget": 1500,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/services",
+          "label": "Our Services"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "FAQPage",
+      "priorityScore": 0.6,
+      "scoreBreakdown": {
+        "searchVolume": 0.2,
+        "currentPosition": 0.5333333333333333,
+        "competitorPresence": 0.7,
+        "contentFreshness": 0.6,
+        "conversionPotential": 1
+      },
+      "sourceMetrics": {
+        "position": 18,
+        "impressions": 100,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "Columbus Ohio Housing Market Forecast: What to Expect",
+      "targetKeyword": "Columbus Ohio housing market forecast",
+      "suggestedH2Headings": [
+        "Current Columbus Housing Market Trends",
+        "Price Trends and Inventory Levels",
+        "Expert Predictions for the Coming Year",
+        "What This Means for Buyers and Sellers"
+      ],
+      "wordCountTarget": 1500,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/communities/columbus",
+          "label": "Columbus Community Guide"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "Article",
+      "priorityScore": 0.59,
+      "scoreBreakdown": {
+        "searchVolume": 0.4,
+        "currentPosition": 0.7333333333333334,
+        "competitorPresence": 0.7,
+        "contentFreshness": 0.6,
+        "conversionPotential": 0.6
+      },
+      "sourceMetrics": {
+        "position": 15,
+        "impressions": 200,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "Home Staging Tips Columbus Ohio | TD Realty Ohio",
+      "targetKeyword": "home staging tips Columbus Ohio",
+      "suggestedH2Headings": [
+        "Why This Matters for Columbus Home Sellers",
+        "Cost vs. Return on Investment",
+        "Professional Tips from Local Experts",
+        "Frequently Asked Questions"
+      ],
+      "wordCountTarget": 1500,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/services",
+          "label": "Our Services"
+        },
+        {
+          "url": "/communities/columbus",
+          "label": "Columbus Community Guide"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "HowTo",
+      "priorityScore": 0.51,
+      "scoreBreakdown": {
+        "searchVolume": 0,
+        "currentPosition": 0.8,
+        "competitorPresence": 0.7,
+        "contentFreshness": 0.6,
+        "conversionPotential": 0.6
+      },
+      "sourceMetrics": {
+        "position": null,
+        "impressions": 0,
+        "clicks": null,
+        "ctr": null
+      }
+    },
+    {
+      "suggestedTitle": "Property Tax Columbus Ohio | TD Realty Ohio",
+      "targetKeyword": "property tax Columbus Ohio",
+      "suggestedH2Headings": [
+        "Breaking Down the Numbers",
+        "What Ohio Law Requires",
+        "How to Minimize Your Out-of-Pocket Expenses",
+        "Comparing Options in the Columbus Market"
+      ],
+      "wordCountTarget": 1200,
+      "internalLinks": [
+        {
+          "url": "/blog",
+          "label": "Blog"
+        },
+        {
+          "url": "/communities/columbus",
+          "label": "Columbus Community Guide"
+        },
+        {
+          "url": "/contact",
+          "label": "Contact Us"
+        }
+      ],
+      "schemaType": "BlogPosting",
+      "priorityScore": 0.47,
+      "scoreBreakdown": {
+        "searchVolume": 0.18,
+        "currentPosition": 0.4,
+        "competitorPresence": 0.7,
+        "contentFreshness": 0.6,
+        "conversionPotential": 0.6
+      },
+      "sourceMetrics": {
+        "position": 20,
+        "impressions": 90,
+        "clicks": null,
+        "ctr": null
+      }
+    }
+  ]
+}
