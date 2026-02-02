@@ -658,11 +658,36 @@ function generateCityPage(city) {
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "${city.name}",
+      "streetAddress": "3600 Tremont Rd Ste 250",
+      "addressLocality": "Columbus",
       "addressRegion": "OH",
-      "postalCode": "${city.postalCode}",
+      "postalCode": "43221",
       "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.0417,
+      "longitude": -83.0804
     }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "1-2% Commission Real Estate in ${city.name}",
+    "description": "Full-service home listing in ${city.name}, Ohio at 1% commission (sell + buy) or 2% (sell only). Includes MLS, pro photos, pre-listing inspection.",
+    "provider": {
+      "@type": "RealEstateAgent",
+      "name": "TD Realty Ohio, LLC",
+      "url": "https://tdrealtyohio.com"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "${city.name}",
+      "containedInPlace": { "@type": "State", "name": "Ohio" }
+    },
+    "serviceType": "Real Estate Listing"
   }
   </script>
 ${city.faqs ? `  <script type="application/ld+json">
