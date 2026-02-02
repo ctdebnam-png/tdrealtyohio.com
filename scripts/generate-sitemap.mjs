@@ -103,7 +103,11 @@ async function findHtmlFiles(dir, files = []) {
           entry.name === 'scripts' ||
           entry.name === 'tools' ||
           entry.name === 'audit-output' ||
-          entry.name === 'audit-artifacts') {
+          entry.name === 'audit-artifacts' ||
+          entry.name === 'output' ||
+          entry.name === 'reports' ||
+          entry.name === 'assets' ||
+          entry.name === 'media') {
         continue;
       }
       await findHtmlFiles(fullPath, files);
