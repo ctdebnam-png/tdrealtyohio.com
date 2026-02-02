@@ -1,0 +1,87 @@
+name: GSC Reports
+
+on:
+  schedule:
+    # Weekdays at 7am EST (12:00 UTC) — indexing check only
+    - cron: "0 12 * * 1-5"
+    # Sundays at 8am EST (13:00 UTC) — full reports + feedback
+    - cron: "0 13 * * 0"
+  workflow_dispatch:
+    inputs:
+      report:
+        description: "Report type"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - performance
+          - indexing
+          - sitemap
+          - feedback
+
+permissions:
+  contents: write
+
+jobs:
+  generate-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install "google-api-python-client>=2.100.0" "google-auth>=2.23.0"
+
+      - name: Determine report type
+        id: report-type
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "report=${{ inputs.report }}" >> "$GITHUB_OUTPUT"
+          elif [ "$(date +%u)" = "7" ]; then
+            # Sunday — full reports
+            echo "report=all" >> "$GITHUB_OUTPUT"
+          else
+            # Weekday — indexing only
+            echo "report=indexing" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run GSC reports
+        if: steps.report-type.outputs.report != 'feedback'
+        env:
+          GSC_SERVICE_ACCOUNT: ${{ secrets.GSC_SERVICE_ACCOUNT }}
+          GSC_PROPERTY_URL: ${{ secrets.GSC_PROPERTY_URL }}
+        run: python -m gsc.reports --report "${{ steps.report-type.outputs.report }}" --days 28
+
+      - name: Run feedback report
+        if: steps.report-type.outputs.report == 'all' || steps.report-type.outputs.report == 'feedback'
+        env:
+          GSC_SERVICE_ACCOUNT: ${{ secrets.GSC_SERVICE_ACCOUNT }}
+          GSC_PROPERTY_URL: ${{ secrets.GSC_PROPERTY_URL }}
+        run: python -m gsc.feedback --days 28
+
+      - name: Upload report artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gsc-reports-${{ github.run_id }}
+          path: output/gsc-reports/
+          retention-days: 90
+
+      - name: Commit reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/gsc-reports/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update GSC reports ($(date +%Y-%m-%d))"
+            git push
+          fi
