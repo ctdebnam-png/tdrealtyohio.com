@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-25T15:01:06.062Z",
+  "timestamp": "2026-02-03T13:05:59.703Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,9 +7,9 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 1827,
-        "internalLinks": 1356,
-        "externalLinks": 306,
+        "totalLinks": 3050,
+        "internalLinks": 2373,
+        "externalLinks": 418,
         "brokenInternal": 0,
         "skippedExternal": 0
       }
@@ -17,9 +17,26 @@
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "index.html",
+          "message": "Title tag may be too long (64 chars): \"1% Commission Real Estate Brokerage Columbus OH | ...\""
+        },
+        {
+          "file": "1-percent-commission/index.html",
+          "message": "Title tag may be too long (64 chars): \"1% Commission Real Estate Listing Columbus Ohio | ...\""
+        },
+        {
+          "file": "blog/home-staging-tips-columbus/index.html",
+          "message": "Title tag may be too long (66 chars): \"Home Staging Tips That Sell Columbus Homes Faster ...\""
+        },
+        {
+          "file": "blog/fsbo-vs-realtor-columbus/index.html",
+          "message": "Title tag may be too long (67 chars): \"FSBO vs Realtor in Columbus Ohio: Which Saves You ...\""
+        }
+      ],
       "stats": {
-        "filesChecked": 43,
+        "filesChecked": 63,
         "missingTags": 0
       }
     },
@@ -28,7 +45,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "filesChecked": 43,
+        "filesChecked": 63,
         "missingPhone": 0,
         "missingEmail": 0,
         "missingLicense": 0
@@ -37,12 +54,76 @@
     "sitemap": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /terms"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /sitemap-page"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /privacy"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /fair-housing"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /lp/buy-home-columbus"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /blog/home-staging-tips-columbus"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /blog/fsbo-vs-realtor-columbus"
+        },
+        {
+          "file": "sitemap.xml",
+          "message": "HTML file not in sitemap: /blog/closing-costs-columbus-ohio"
+        }
+      ],
       "stats": {
-        "sitemapUrls": 42,
-        "htmlFiles": 43,
-        "missingFromSitemap": 0,
+        "sitemapUrls": 52,
+        "htmlFiles": 63,
+        "missingFromSitemap": 10,
         "orphanedInSitemap": 0
+      }
+    },
+    "schema": {
+      "passed": true,
+      "errors": [],
+      "warnings": [
+        {
+          "file": "sitemap-page/index.html",
+          "message": "Missing BreadcrumbList schema (recommended for all pages except homepage)"
+        },
+        {
+          "file": "pre-listing-inspection/index.html",
+          "message": "Missing BreadcrumbList schema (recommended for all pages except homepage)"
+        },
+        {
+          "file": "blog/index.html",
+          "message": "Missing BreadcrumbList schema (recommended for all pages except homepage)"
+        }
+      ],
+      "stats": {
+        "filesChecked": 63,
+        "schemasFound": 214,
+        "invalidSchemas": 0
       }
     }
   }
