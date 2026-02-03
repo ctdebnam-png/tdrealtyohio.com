@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-03T14:07:24.561Z",
+  "timestamp": "2026-02-03T16:48:26.299Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,7 +7,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 3050,
+        "totalLinks": 3049,
         "internalLinks": 2373,
         "externalLinks": 418,
         "brokenInternal": 0,
@@ -27,12 +27,12 @@
           "message": "Title tag may be too long (64 chars): \"1% Commission Real Estate Listing Columbus Ohio | ...\""
         },
         {
-          "file": "blog/home-staging-tips-columbus/index.html",
-          "message": "Title tag may be too long (66 chars): \"Home Staging Tips That Sell Columbus Homes Faster ...\""
-        },
-        {
           "file": "blog/fsbo-vs-realtor-columbus/index.html",
           "message": "Title tag may be too long (67 chars): \"FSBO vs Realtor in Columbus Ohio: Which Saves You ...\""
+        },
+        {
+          "file": "blog/home-staging-tips-columbus/index.html",
+          "message": "Title tag may be too long (66 chars): \"Home Staging Tips That Sell Columbus Homes Faster ...\""
         }
       ],
       "stats": {
@@ -73,11 +73,11 @@
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
+          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
+          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
         },
         {
           "file": "sitemap.xml",
