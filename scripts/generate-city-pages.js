@@ -778,18 +778,6 @@ ${city.faqs.map(faq => `      {
       </div>
     </section>
 
-    <div class="social-proof-bar">
-      <div class="container">
-        <div class="proof-items">
-          <span class="proof-item"><strong>4.9/5</strong> stars from clients</span>
-          <span class="proof-divider" aria-hidden="true">|</span>
-          <span class="proof-item"><strong>$850K+</strong> saved for Central Ohio families</span>
-          <span class="proof-divider" aria-hidden="true">|</span>
-          <span class="proof-item"><strong>Free</strong> pre-listing inspection included</span>
-        </div>
-      </div>
-    </div>
-
     <section class="section">
       <div class="container" style="max-width: 900px;">
 
