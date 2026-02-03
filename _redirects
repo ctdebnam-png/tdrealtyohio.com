@@ -3,10 +3,35 @@
 # ========================================
 
 # Canonical URL strategy:
-# - Clean routes (e.g., /sellers/) are canonical
+# - Clean routes with trailing slashes (e.g., /sellers/) are canonical
 # - .html URLs redirect to clean routes (301)
-# - Clean routes rewrite to serve .html files (200)
+# - Non-trailing-slash URLs redirect to trailing-slash canonical (301)
 # - Directories use trailing slash (e.g., /areas/, /blog/)
+
+# ----------------------------------------
+# Redirect non-trailing-slash to trailing-slash canonical
+# ----------------------------------------
+/sellers                /sellers/               301
+/buyers                 /buyers/                301
+/contact                /contact/               301
+/about                  /about/                 301
+/privacy                /privacy/               301
+/terms                  /terms/                 301
+/fair-housing           /fair-housing/          301
+/agents                 /agents/                301
+/referrals              /referrals/             301
+/home-value             /home-value/            301
+/affordability          /affordability/         301
+/sitemap-page           /sitemap-page/          301
+/pre-listing-inspection /pre-listing-inspection/ 301
+/1-percent-commission   /1-percent-commission/  301
+/areas                  /areas/                 301
+/blog                   /blog/                  301
+/testimonials           /testimonials/          301
+/compare                /compare/               301
+/faq                    /faq/                   301
+/sell-and-buy           /sell-and-buy/          301
+/sell-only-2-percent    /sell-only-2-percent/   301
 
 # ----------------------------------------
 # Redirect .html URLs to clean routes (SEO)
@@ -16,7 +41,6 @@
 /buyers.html            /buyers/                301
 /contact.html           /contact/               301
 /about.html             /about/                 301
-# privacy, terms, fair-housing, agents use directory structure - redirect old .html URLs
 /privacy.html           /privacy/               301
 /terms.html             /terms/                 301
 /fair-housing.html      /fair-housing/          301
@@ -27,10 +51,9 @@
 /sitemap-page.html      /sitemap-page/          301
 /pre-listing-inspection.html /pre-listing-inspection/ 301
 /1-percent-commission.html /1-percent-commission/ 301
-
-# ----------------------------------------
-# All pages now use directory structure (index.html) - no rewrites needed
-# ----------------------------------------
+/testimonials.html      /testimonials/          301
+/compare.html           /compare/               301
+/faq.html               /faq/                   301
 
 # ----------------------------------------
 # Legacy route redirects
