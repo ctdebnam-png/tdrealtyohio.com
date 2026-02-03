@@ -108,6 +108,38 @@
           "@type": "Answer",
           "text": "No hidden fees. The 1% or 2% is the full listing commission. Buyer agent commission is separate and negotiated based on your market and situation."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "How does buyer agent commission work with 1% listing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The 1% or 2% covers only the listing side. Buyer agent compensation is negotiated separately based on current market conditions in your area."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will my home get less marketing exposure at 1%?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Your home gets the same MLS listing, syndication to Zillow, Realtor.com, and Redfin, and professional photography as any 3% listing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I still negotiate the sale price effectively with a 1% agent?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. Commission rate has no bearing on negotiation skill. Our broker has the same market knowledge and negotiation training as any traditional agent."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does 1% commission compare to FSBO or flat-fee MLS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "FSBO and flat-fee MLS services save on commission but you handle everything yourself. Studies show FSBO homes sell for less. Our 1% gives you professional representation at a fraction of the traditional cost."
+        }
       }
     ]
   }
@@ -222,6 +254,25 @@
       color: var(--gray-600);
       line-height: 1.7;
     }
+    .faq-answer a { color: var(--gold); }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 0.875rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .comparison-table th {
+      background: var(--navy);
+      color: white;
+      font-weight: 600;
+    }
+    .comparison-table tr:nth-child(even) td {
+      background: var(--gray-50);
+    }
   </style>
 
   <!-- Organization Schema -->
@@ -296,19 +347,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Social Proof Bar -->
-    <div class="social-proof-bar">
-      <div class="container">
-        <div class="proof-items">
-          <span class="proof-item"><strong>4.9/5</strong> stars from clients</span>
-          <span class="proof-divider" aria-hidden="true">|</span>
-          <span class="proof-item"><strong>$850K+</strong> saved for Central Ohio families</span>
-          <span class="proof-divider" aria-hidden="true">|</span>
-          <span class="proof-item"><strong>Full service</strong> included at 1%</span>
-        </div>
-      </div>
-    </div>
 
     <!-- Savings Calculator -->
     <section class="section">
@@ -423,34 +461,150 @@
       </div>
     </section>
 
-    <!-- FAQ -->
+    <!-- Savings at Every Price Point -->
     <section class="section" style="background: var(--gray-50);">
       <div class="container" style="max-width: 800px;">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Frequently Asked Questions</h2>
+        <h2 style="text-align: center; margin-bottom: 1rem;">Your Savings at Every Price Point</h2>
+        <p style="text-align: center; color: var(--gray-600); margin-bottom: 2rem;">The higher your home's value, the more you save with 1% commission. Here's what Central Ohio sellers keep at common price points.</p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Sale Price</th>
+              <th>Traditional 3%</th>
+              <th>TD Realty 1%</th>
+              <th>You Save</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$250,000</td><td>$7,500</td><td>$2,500</td><td style="color: var(--green-600, #16a34a); font-weight: 600;">$5,000</td></tr>
+            <tr><td>$350,000</td><td>$10,500</td><td>$3,500</td><td style="color: var(--green-600, #16a34a); font-weight: 600;">$7,000</td></tr>
+            <tr><td>$450,000</td><td>$13,500</td><td>$4,500</td><td style="color: var(--green-600, #16a34a); font-weight: 600;">$9,000</td></tr>
+            <tr><td>$550,000</td><td>$16,500</td><td>$5,500</td><td style="color: var(--green-600, #16a34a); font-weight: 600;">$11,000</td></tr>
+            <tr><td>$700,000</td><td>$21,000</td><td>$7,000</td><td style="color: var(--green-600, #16a34a); font-weight: 600;">$14,000</td></tr>
+          </tbody>
+        </table>
+
+        <p style="text-align: center; color: var(--gray-600); font-size: 0.875rem; margin-top: 1rem;">Savings shown compare 1% listing commission (sell + buy) vs. traditional 3%. Sell-only clients pay 2%, still saving 1% vs. traditional agents.</p>
+      </div>
+    </section>
+
+    <!-- Columbus Market Context -->
+    <section class="section">
+      <div class="container" style="max-width: 800px;">
+        <h2>Why 1% Commission Makes Sense in Central Ohio's Market</h2>
+        <p style="line-height: 1.8; color: var(--gray-700);">The Columbus metro area has been one of Ohio's strongest real estate markets, with median home prices rising steadily over the past several years. Communities like <a href="/areas/dublin/">Dublin</a>, <a href="/areas/powell/">Powell</a>, and <a href="/areas/upper-arlington/">Upper Arlington</a> now have medians above $500,000, meaning traditional 3% commissions cost sellers $15,000 or more on the listing side alone.</p>
+
+        <p style="line-height: 1.8; color: var(--gray-700);">At those prices, the difference between 1% and 3% is significant. A seller in <a href="/areas/westerville/">Westerville</a> with a $400,000 home saves $8,000. In <a href="/areas/new-albany/">New Albany</a>, where the median is $650,000, the savings jumps to $13,000. That money can go toward your next home's down payment, moving costs, or simply staying in your pocket.</p>
+
+        <p style="line-height: 1.8; color: var(--gray-700);">Meanwhile, the services you receive are identical. Your home gets the same MLS exposure, the same syndication to Zillow, Realtor.com, and Redfin, the same professional photography, and the same expert negotiation. The only difference is the fee structure—and where the savings end up.</p>
+
+        <h3 style="margin-top: 2rem;">How Low Commission Differs from Discount or Flat-Fee Services</h3>
+        <p style="line-height: 1.8; color: var(--gray-700);">It's important to understand the difference between a 1% full-service listing and flat-fee MLS services or "discount" brokerages that cut corners. With flat-fee MLS, you typically pay $300-$500 to get your home listed, but you handle everything else yourself: photography, showings, negotiations, and paperwork. If something goes wrong during the contract-to-close phase, you're on your own.</p>
+
+        <p style="line-height: 1.8; color: var(--gray-700);">TD Realty Ohio's 1% model is fundamentally different. You get a dedicated, licensed agent managing every aspect of your sale. The lower commission comes from operational efficiency—lower overhead, technology-driven workflows, and a lean business model—not from reducing your level of service. To learn more, see our <a href="/compare/">detailed comparison of real estate options</a>.</p>
+
+        <h3 style="margin-top: 2rem;">The Pre-Listing Inspection Advantage</h3>
+        <p style="line-height: 1.8; color: var(--gray-700);">One thing that sets TD Realty Ohio apart from both traditional and discount agents is the <a href="/pre-listing-inspection/">free pre-listing home inspection</a> included with every listing. Valued at $400-$500, this inspection identifies issues before your home hits the market. In Central Ohio's competitive market, where buyers often waive inspections to win bidding wars, having a seller-provided inspection report builds trust and can reduce fall-through rates.</p>
+
+        <p style="line-height: 1.8; color: var(--gray-700);">Knowing your home's condition upfront also helps with <a href="/home-value/">accurate pricing</a>. Overpriced homes sit on the market, while accurately priced homes attract competitive offers quickly. The pre-listing inspection gives you the data to price right from day one.</p>
+      </div>
+    </section>
+
+    <!-- Areas Served -->
+    <section class="section" style="background: var(--gray-50);">
+      <div class="container" style="max-width: 800px;">
+        <h2 style="text-align: center; margin-bottom: 1rem;">1% Commission Available Across Central Ohio</h2>
+        <p style="text-align: center; color: var(--gray-600); margin-bottom: 2rem;">We serve sellers throughout the Columbus metro area. Click your community to see local market data and savings estimates.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
+          <a href="/areas/columbus/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Columbus</a>
+          <a href="/areas/westerville/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Westerville</a>
+          <a href="/areas/dublin/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Dublin</a>
+          <a href="/areas/powell/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Powell</a>
+          <a href="/areas/new-albany/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">New Albany</a>
+          <a href="/areas/upper-arlington/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Upper Arlington</a>
+          <a href="/areas/gahanna/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Gahanna</a>
+          <a href="/areas/hilliard/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Hilliard</a>
+          <a href="/areas/worthington/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Worthington</a>
+          <a href="/areas/grove-city/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Grove City</a>
+          <a href="/areas/delaware/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Delaware</a>
+          <a href="/areas/pickerington/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Pickerington</a>
+          <a href="/areas/bexley/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Bexley</a>
+          <a href="/areas/grandview-heights/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Grandview Heights</a>
+          <a href="/areas/" style="padding: 0.5rem 1rem; border: 1px solid var(--gold); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 600; background: var(--gold-light, #fff9e6);">View All Areas &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container" style="max-width: 800px;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Frequently Asked Questions About 1% Commission</h2>
 
         <div class="faq-item">
           <div class="faq-question">How can you offer 1% commission when other agents charge 3%?</div>
-          <div class="faq-answer">We've built an efficient brokerage with lower overhead. No fancy office, no bloated staff. We pass those savings directly to sellers while providing full-service representation.</div>
+          <div class="faq-answer">We've built an efficient brokerage with lower overhead. No fancy office, no bloated staff. We use technology to streamline workflows and pass those savings directly to sellers while providing full-service representation. Many traditional brokerages spend heavily on office space, administrative staff, and brand fees that get passed to sellers through higher commissions.</div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question">What's included with the 1% listing fee?</div>
-          <div class="faq-answer">Everything a traditional agent provides: MLS listing, professional photography, marketing, showing coordination, contract negotiation, and support through closing. Plus a free pre-listing home inspection.</div>
+          <div class="faq-answer">Everything a traditional agent provides: MLS listing, professional photography, marketing and syndication to Zillow/Realtor.com/Redfin, showing coordination, contract negotiation, and support through closing. Plus a <a href="/pre-listing-inspection/">free pre-listing home inspection</a> valued at $400-$500 that most traditional agents don't include.</div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question">Who qualifies for the 1% rate?</div>
-          <div class="faq-answer">Sellers who are also buying their next home with TD Realty Ohio qualify for 1% listing commission. Sell-only clients pay 2%, which is still significantly less than the traditional 3%.</div>
+          <div class="faq-answer">Sellers who are also buying their next home with TD Realty Ohio qualify for 1% listing commission. Sell-only clients pay 2%, which is still significantly less than the traditional 3%. Both rates include the same full-service representation.</div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question">Is there a catch or hidden fees?</div>
-          <div class="faq-answer">No hidden fees. The 1% or 2% is the full listing commission. Buyer agent commission is separate and negotiated based on your market and situation.</div>
+          <div class="faq-answer">No hidden fees. The 1% or 2% is the full listing commission. Buyer agent commission is separate and negotiated based on your market and situation. There are no transaction fees, administrative fees, or surprise charges at closing.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">How does buyer agent commission work with 1% listing?</div>
+          <div class="faq-answer">The 1% (or 2%) covers only the listing side. Buyer agent compensation is negotiated separately. We'll discuss competitive buyer agent commission options based on current market conditions in your area. This structure is standard across all real estate transactions regardless of the listing commission rate.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Will my home get less marketing exposure at 1%?</div>
+          <div class="faq-answer">No. Your home gets the same MLS listing that every other agent's listing receives. MLS automatically syndicates to Zillow, Realtor.com, Redfin, Trulia, and hundreds of other sites. Professional photos are included. The marketing reach is identical to any 3% listing.</div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question">What areas do you serve?</div>
-          <div class="faq-answer">We serve all of Central Ohio including Columbus, Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, Grove City, Pickerington, Reynoldsburg, Upper Arlington, Worthington, and surrounding communities.</div>
+          <div class="faq-answer">We serve all of Central Ohio including <a href="/areas/columbus/">Columbus</a>, <a href="/areas/westerville/">Westerville</a>, <a href="/areas/dublin/">Dublin</a>, <a href="/areas/powell/">Powell</a>, <a href="/areas/delaware/">Delaware</a>, <a href="/areas/gahanna/">Gahanna</a>, <a href="/areas/new-albany/">New Albany</a>, <a href="/areas/hilliard/">Hilliard</a>, <a href="/areas/grove-city/">Grove City</a>, <a href="/areas/pickerington/">Pickerington</a>, <a href="/areas/reynoldsburg/">Reynoldsburg</a>, <a href="/areas/upper-arlington/">Upper Arlington</a>, <a href="/areas/worthington/">Worthington</a>, and surrounding communities.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Can I still negotiate the sale price effectively with a 1% agent?</div>
+          <div class="faq-answer">Absolutely. Commission rate has no bearing on negotiation skill. Our broker has the same market knowledge, comparable sales data, and negotiation training as any traditional agent. In fact, the pre-listing inspection we provide often strengthens your negotiating position by eliminating surprises that could derail deals or lead to last-minute price reductions.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">How does 1% commission compare to FSBO or flat-fee MLS?</div>
+          <div class="faq-answer">FSBO (For Sale By Owner) and flat-fee MLS services can save on listing commission, but you handle everything yourself: pricing, photography, showings, negotiations, contracts, and closing coordination. Studies consistently show that FSBO homes sell for less than agent-listed homes. Our 1% commission gives you professional representation at a fraction of the traditional cost. Learn more in our <a href="/compare/">comparison of real estate options</a>.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Resources -->
+    <section class="section" style="background: var(--gray-50);">
+      <div class="container" style="max-width: 800px;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Related Resources</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+          <a href="/blog/1-percent-vs-3-percent-commission-comparison/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
+            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">1% vs 3% Commission: Full Comparison</h3>
+            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Side-by-side breakdown of what you get at each rate.</p>
+          </a>
+          <a href="/blog/how-much-save-selling-columbus-home-1-percent/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
+            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">How Much Can You Save Selling at 1%?</h3>
+            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Real savings examples from Central Ohio home sales.</p>
+          </a>
+          <a href="/blog/pre-listing-inspection-benefits/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
+            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">Why Pre-Listing Inspections Help Sellers</h3>
+            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">How knowing your home's condition leads to faster, stronger sales.</p>
+          </a>
         </div>
       </div>
     </section>

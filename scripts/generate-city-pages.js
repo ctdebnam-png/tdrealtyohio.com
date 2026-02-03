@@ -778,18 +778,6 @@ ${city.faqs.map(faq => `      {
       </div>
     </section>
 
-    <div class="social-proof-bar">
-      <div class="container">
-        <div class="proof-items">
-          <span class="proof-item"><strong>4.9/5</strong> stars from clients</span>
-          <span class="proof-divider" aria-hidden="true">|</span>
-          <span class="proof-item"><strong>$850K+</strong> saved for Central Ohio families</span>
-          <span class="proof-divider" aria-hidden="true">|</span>
-          <span class="proof-item"><strong>Free</strong> pre-listing inspection included</span>
-        </div>
-      </div>
-    </div>
-
     <section class="section">
       <div class="container" style="max-width: 900px;">
 
@@ -852,9 +840,17 @@ ${city.faqs.map(faq => `      {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             Free Home Value
           </a>
+          <a href="/1-percent-commission/" class="internal-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            1% Commission Details
+          </a>
           <a href="/pre-listing-inspection/" class="internal-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             Pre-Listing Inspection
+          </a>
+          <a href="/affordability/" class="internal-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Affordability Calculator
           </a>
         </div>
 ${generateNeighborLinks(city)}
