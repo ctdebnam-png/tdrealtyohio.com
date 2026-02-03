@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-03T13:44:14.693Z",
+  "timestamp": "2026-02-03T14:07:24.561Z",
   "passed": true,
   "checks": {
     "links": {
@@ -73,11 +73,11 @@
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
+          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
+          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
         },
         {
           "file": "sitemap.xml",
@@ -85,11 +85,11 @@
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /blog/home-staging-tips-columbus"
+          "message": "HTML file not in sitemap: /blog/fsbo-vs-realtor-columbus"
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /blog/fsbo-vs-realtor-columbus"
+          "message": "HTML file not in sitemap: /blog/home-staging-tips-columbus"
         },
         {
           "file": "sitemap.xml",
