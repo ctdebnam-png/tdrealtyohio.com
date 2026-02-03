@@ -90,7 +90,7 @@ function generatePostHtml(brief) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="/assets/css/styles.css" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17866418952"></script>

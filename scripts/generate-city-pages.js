@@ -617,7 +617,7 @@ function generateCityPage(city) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="/assets/css/styles.css" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css">
 
   <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
@@ -718,14 +718,14 @@ ${city.faqs.map(faq => `      {
   <style>
     .city-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
     .city-stat { background: var(--white); border: 1px solid var(--gray-200); padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; }
-    .city-stat-value { font-size: 2rem; font-weight: 700; color: var(--navy); font-family: 'Libre Baskerville', serif; }
+    .city-stat-value { font-size: 2rem; font-weight: 700; color: var(--navy); font-family: 'DM Serif Display', serif; }
     .city-stat-label { font-size: 0.875rem; color: var(--gray-600); margin-top: 0.5rem; }
     .resource-links { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
     .resource-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); color: var(--gray-700); text-decoration: none; font-weight: 500; transition: all 0.2s; }
     .resource-link:hover { border-color: var(--navy); color: var(--navy); background: var(--gray-50); }
     .resource-link svg { width: 18px; height: 18px; }
     .savings-card { background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%); color: var(--white); padding: 2.5rem; border-radius: var(--radius-lg); text-align: center; margin: 2rem 0; }
-    .savings-amount { font-size: 3rem; font-weight: 700; color: var(--gold); margin: 1rem 0; font-family: 'Libre Baskerville', serif; }
+    .savings-amount { font-size: 3rem; font-weight: 700; color: var(--gold); margin: 1rem 0; font-family: 'DM Serif Display', serif; }
     .city-description { font-size: 1.125rem; line-height: 1.8; color: var(--gray-700); margin: 2rem 0; }
     .internal-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
     .internal-link { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: var(--gray-50); border-radius: var(--radius-md); color: var(--navy); text-decoration: none; font-weight: 500; transition: all 0.2s; }
