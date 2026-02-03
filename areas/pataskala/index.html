@@ -163,12 +163,45 @@
     .internal-link { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: var(--gray-50); border-radius: var(--radius-md); color: var(--navy); text-decoration: none; font-weight: 500; transition: all 0.2s; }
     .internal-link:hover { background: var(--gray-100); }
     .internal-link svg { width: 20px; height: 20px; color: var(--gold); }
+  
     .faq-list { margin: 2rem 0; }
     .faq-item { border: 1px solid var(--gray-200); border-radius: var(--radius-md); margin-bottom: 1rem; overflow: hidden; }
     .faq-question { font-weight: 600; padding: 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: var(--gray-50); }
     .faq-question:hover { background: var(--gray-100); }
     .faq-answer { padding: 0 1.25rem 1.25rem; line-height: 1.7; color: var(--gray-700); }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why are homebuyers increasingly looking at Pataskala?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pataskala offers some of the most affordable new construction in the Columbus metro, with homes starting in the mid-$200Ks. The city maintains a semi-rural feel with larger lots."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What school districts serve Pataskala families?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pataskala is served by multiple districts including Licking Valley, Southwest Licking, and Licking Heights. Southwest Licking has seen the most growth and offers newer facilities."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the cost of living in Pataskala compare to western Columbus suburbs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pataskala's cost of living is significantly lower than western suburbs like Dublin or Hilliard. Licking County property tax rates are generally below Franklin County."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -302,6 +335,8 @@
           </a>
         </div>
 
+        
+        <!-- faq-section -->
         <h2>Frequently Asked Questions About Pataskala Real Estate</h2>
         <div class="faq-list">
           <div class="faq-item">
@@ -315,6 +350,15 @@
           <div class="faq-item">
             <div class="faq-question">How does the cost of living in Pataskala compare to western Columbus suburbs?</div>
             <div class="faq-answer">Pataskala's cost of living is significantly lower than western suburbs like Dublin or Hilliard. Licking County property tax rates are generally below Franklin County, and the $325K median home price buys considerably more square footage. The trade-off is a longer commute to western employment centers, though eastside employers along I-70 are easily accessible.</div>
+            <div class="faq-answer">Pataskala offers some of the most affordable new construction in the Columbus metro, with homes starting in the mid-$200Ks. The city maintains a semi-rural feel with larger lots.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">What school districts serve Pataskala families?</div>
+            <div class="faq-answer">Pataskala is served by multiple districts including Licking Valley, Southwest Licking, and Licking Heights. Southwest Licking has seen the most growth and offers newer facilities.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">How does the cost of living in Pataskala compare to western Columbus suburbs?</div>
+            <div class="faq-answer">Pataskala's cost of living is significantly lower than western suburbs like Dublin or Hilliard. Licking County property tax rates are generally below Franklin County.</div>
           </div>
         </div>
 

@@ -1,0 +1,130 @@
+{
+  "total_fixes": 24,
+  "by_type": {
+    "area_faqs": 24
+  },
+  "details": [
+    {
+      "file": "areas/columbus/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/westerville/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/dublin/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/powell/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/new-albany/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/gahanna/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/hilliard/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/upper-arlington/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/worthington/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/grove-city/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/delaware/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/pickerington/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/pataskala/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/sunbury/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/granville/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/johnstown/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/blacklick/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/canal-winchester/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/bexley/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/clintonville/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/german-village/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/grandview-heights/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/lewis-center/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    },
+    {
+      "file": "areas/reynoldsburg/index.html",
+      "type": "area_faqs",
+      "description": "Added: FAQPage schema, 3 FAQ items, FAQ CSS"
+    }
+  ],
+  "dry_run": false,
+  "date": "2026-02-03"
+}

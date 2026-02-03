@@ -163,12 +163,45 @@
     .internal-link { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: var(--gray-50); border-radius: var(--radius-md); color: var(--navy); text-decoration: none; font-weight: 500; transition: all 0.2s; }
     .internal-link:hover { background: var(--gray-100); }
     .internal-link svg { width: 20px; height: 20px; color: var(--gold); }
+  
     .faq-list { margin: 2rem 0; }
     .faq-item { border: 1px solid var(--gray-200); border-radius: var(--radius-md); margin-bottom: 1rem; overflow: hidden; }
     .faq-question { font-weight: 600; padding: 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: var(--gray-50); }
     .faq-question:hover { background: var(--gray-100); }
     .faq-answer { padding: 0 1.25rem 1.25rem; line-height: 1.7; color: var(--gray-700); }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why do Upper Arlington homes sell so quickly?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Upper Arlington averages just 10 days on market—among the fastest in Central Ohio. The combination of a walkable layout, proximity to Ohio State University, top-rated schools, and limited new construction creates persistent demand."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What makes Upper Arlington Schools stand out for families?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Upper Arlington City Schools is perennially ranked in Ohio's top 10 districts. The single high school model means all students attend UA High School, fostering strong community bonds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are there affordable options in Upper Arlington's housing market?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While UA's median price is around $600K, condos and townhomes near Lane Avenue and Kingsdale start in the $250K-$350K range. Smaller ranch homes in the southern neighborhoods occasionally list under $450K."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -302,6 +335,8 @@
           </a>
         </div>
 
+        
+        <!-- faq-section -->
         <h2>Frequently Asked Questions About Upper Arlington Real Estate</h2>
         <div class="faq-list">
           <div class="faq-item">
@@ -315,6 +350,15 @@
           <div class="faq-item">
             <div class="faq-question">Are there affordable options in Upper Arlington's housing market?</div>
             <div class="faq-answer">While UA's median price is around $600K, condos and townhomes near Lane Avenue and Kingsdale start in the $250K-$350K range. Smaller ranch homes in the southern neighborhoods occasionally list under $450K, though they attract multiple offers quickly.</div>
+            <div class="faq-answer">Upper Arlington averages just 10 days on market—among the fastest in Central Ohio. The combination of a walkable layout, proximity to Ohio State University, top-rated schools, and limited new construction creates persistent demand.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">What makes Upper Arlington Schools stand out for families?</div>
+            <div class="faq-answer">Upper Arlington City Schools is perennially ranked in Ohio's top 10 districts. The single high school model means all students attend UA High School, fostering strong community bonds.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Are there affordable options in Upper Arlington's housing market?</div>
+            <div class="faq-answer">While UA's median price is around $600K, condos and townhomes near Lane Avenue and Kingsdale start in the $250K-$350K range. Smaller ranch homes in the southern neighborhoods occasionally list under $450K.</div>
           </div>
         </div>
 

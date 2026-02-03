@@ -163,12 +163,45 @@
     .internal-link { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; background: var(--gray-50); border-radius: var(--radius-md); color: var(--navy); text-decoration: none; font-weight: 500; transition: all 0.2s; }
     .internal-link:hover { background: var(--gray-100); }
     .internal-link svg { width: 20px; height: 20px; color: var(--gold); }
+  
     .faq-list { margin: 2rem 0; }
     .faq-item { border: 1px solid var(--gray-200); border-radius: var(--radius-md); margin-bottom: 1rem; overflow: hidden; }
     .faq-question { font-weight: 600; padding: 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: var(--gray-50); }
     .faq-question:hover { background: var(--gray-100); }
     .faq-answer { padding: 0 1.25rem 1.25rem; line-height: 1.7; color: var(--gray-700); }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is driving the housing boom in Sunbury, Ohio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sunbury sits in Delaware County's growth corridor with Big Walnut Local Schools drawing families from across the region. New subdivisions are adding hundreds of homes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Big Walnut Local Schools compare to nearby districts?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Big Walnut earns an A from Niche and is known for its strong community support and manageable school sizes. The district operates a single high school, which fosters tight-knit student culture."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Sunbury a practical location for commuting to Columbus?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sunbury to downtown Columbus is approximately 30-35 minutes via I-71 or Route 3. Many residents commute to the Polaris or Westerville employment corridors in about 20 minutes."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -302,6 +335,8 @@
           </a>
         </div>
 
+        
+        <!-- faq-section -->
         <h2>Frequently Asked Questions About Sunbury Real Estate</h2>
         <div class="faq-list">
           <div class="faq-item">
@@ -315,6 +350,15 @@
           <div class="faq-item">
             <div class="faq-question">Is Sunbury a practical location for commuting to Columbus?</div>
             <div class="faq-answer">Sunbury to downtown Columbus is approximately 30-35 minutes via I-71 or Route 3. Many residents commute to the Polaris or Westerville employment corridors in about 20 minutes. Delaware County's ongoing road infrastructure investments are improving commute reliability for northern suburb residents.</div>
+            <div class="faq-answer">Sunbury sits in Delaware County's growth corridor with Big Walnut Local Schools drawing families from across the region. New subdivisions are adding hundreds of homes.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">How does Big Walnut Local Schools compare to nearby districts?</div>
+            <div class="faq-answer">Big Walnut earns an A from Niche and is known for its strong community support and manageable school sizes. The district operates a single high school, which fosters tight-knit student culture.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Is Sunbury a practical location for commuting to Columbus?</div>
+            <div class="faq-answer">Sunbury to downtown Columbus is approximately 30-35 minutes via I-71 or Route 3. Many residents commute to the Polaris or Westerville employment corridors in about 20 minutes.</div>
           </div>
         </div>
 
