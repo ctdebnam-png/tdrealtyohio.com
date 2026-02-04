@@ -610,6 +610,54 @@ function setActiveNavLink() {
   });
 }
 
+// ===== EVENT TRACKING =====
+function trackEvent(eventName, props) {
+  var data = Object.assign({ event: eventName, path: window.location.pathname, ts: Date.now() }, props || {});
+  // Fire GA event if available
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, { event_category: props && props.category || 'engagement', event_label: props && props.label || '' });
+  }
+  // Send to /api/events for daily aggregates (fire-and-forget)
+  try {
+    navigator.sendBeacon('/api/events', JSON.stringify(data));
+  } catch (e) { /* tracking failure is non-critical */ }
+}
+
+function initEventTracking() {
+  // Track CTA clicks
+  document.querySelectorAll('.btn-primary, .btn-outline-white, .btn-outline').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var label = (btn.textContent || '').trim().substring(0, 60);
+      var href = btn.getAttribute('href') || '';
+      trackEvent('cta_click', { category: 'cta', label: label, href: href });
+    });
+  });
+
+  // Track calculator interactions (slider move, tab toggle)
+  document.querySelectorAll('[data-price-slider]').forEach(function(slider) {
+    var tracked = false;
+    slider.addEventListener('input', function() {
+      if (!tracked) { trackEvent('calculator_interact', { category: 'calculator', label: 'slider_move' }); tracked = true; }
+    });
+  });
+  document.querySelectorAll('[data-toggle-btn]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      trackEvent('calculator_interact', { category: 'calculator', label: 'toggle_' + (btn.dataset.rate || '') });
+    });
+  });
+
+  // Track form starts (first field focus)
+  document.querySelectorAll('form').forEach(function(form) {
+    var started = false;
+    form.addEventListener('focusin', function(e) {
+      if (!started && e.target.matches('input, select, textarea')) {
+        started = true;
+        trackEvent('form_start', { category: 'form', label: form.id || 'unknown' });
+      }
+    });
+  });
+}
+
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
   populateContactInfo();
@@ -626,6 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
   setActiveNavLink();
   initCookieConsent();
+  initEventTracking();
 });
 
 // ── Cookie Consent ──────────────────────────────────────

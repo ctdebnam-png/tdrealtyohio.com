@@ -4,3 +4,7 @@ compatibility_date = "2026-01-17"
 [[kv_namespaces]]
 binding = "LEADS"
 id = "c8e9bae3939540e7a0d2ba30740fa670"
+
+[[kv_namespaces]]
+binding = "EVENTS"
+id = ""  # Create via: wrangler kv:namespace create EVENTS

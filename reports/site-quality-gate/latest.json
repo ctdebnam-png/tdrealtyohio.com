@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-04T16:20:27.162Z",
+  "timestamp": "2026-02-04T17:31:35.269Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,7 +7,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 3143,
+        "totalLinks": 3145,
         "internalLinks": 2467,
         "externalLinks": 418,
         "brokenInternal": 0,
@@ -17,7 +17,12 @@
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "about/index.html",
+          "message": "Meta description may be too long (163 chars)"
+        }
+      ],
       "stats": {
         "filesChecked": 63,
         "missingTags": 0
@@ -40,11 +45,11 @@
       "warnings": [
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
+          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
+          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
         },
         {
           "file": "sitemap.xml",
@@ -52,7 +57,7 @@
         }
       ],
       "stats": {
-        "sitemapUrls": 59,
+        "sitemapUrls": 60,
         "htmlFiles": 63,
         "missingFromSitemap": 3,
         "orphanedInSitemap": 0
