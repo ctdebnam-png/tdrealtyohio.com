@@ -1,11 +1,16 @@
 {
-  "timestamp": "2026-02-04T17:31:35.269Z",
+  "timestamp": "2026-02-04T17:38:03.336Z",
   "passed": true,
   "checks": {
     "links": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "N/A",
+          "message": "82 external URLs found. Use --check-external to validate them."
+        }
+      ],
       "stats": {
         "totalLinks": 3145,
         "internalLinks": 2467,
@@ -17,12 +22,7 @@
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "about/index.html",
-          "message": "Meta description may be too long (163 chars)"
-        }
-      ],
+      "warnings": [],
       "stats": {
         "filesChecked": 63,
         "missingTags": 0
@@ -42,24 +42,11 @@
     "sitemap": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
-        },
-        {
-          "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
-        },
-        {
-          "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/buy-home-columbus"
-        }
-      ],
+      "warnings": [],
       "stats": {
         "sitemapUrls": 60,
         "htmlFiles": 63,
-        "missingFromSitemap": 3,
+        "missingFromSitemap": 0,
         "orphanedInSitemap": 0
       }
     },

@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
-const { getHtmlFiles } = require('./utils');
+const { getHtmlFiles, readHtmlFile } = require('./utils');
 
 async function checkSitemap(config, verbose) {
   const result = {
@@ -67,10 +67,27 @@ async function checkSitemap(config, verbose) {
     expectedUrls.add(url);
   }
 
+  // Build set of noindex pages (should not be in sitemap)
+  const noindexUrls = new Set();
+  for (const file of files) {
+    const html = readHtmlFile(file.absolute);
+    if (/meta\s[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html)) {
+      let url = '/' + file.relative;
+      url = url.replace(/\/index\.html$/, '/').replace(/index\.html$/, '/');
+      url = url.replace(/\/$/, '') || '/';
+      noindexUrls.add(url);
+    }
+  }
+
   // Find HTML files missing from sitemap
   for (const url of expectedUrls) {
     // Skip certain files that shouldn't be in sitemap
     if (url.includes('404') || url.includes('error')) {
+      continue;
+    }
+
+    // Skip noindex pages — they should NOT be in sitemap
+    if (noindexUrls.has(url)) {
       continue;
     }
 
