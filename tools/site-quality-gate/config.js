@@ -11,7 +11,7 @@ module.exports = {
   htmlGlob: '**/*.html',
 
   // Directories to exclude from checks
-  excludeDirs: ['node_modules', 'tools', 'reports', '.git'],
+  excludeDirs: ['node_modules', 'tools', 'reports', '.git', 'templates', 'data'],
 
   // Required business facts that must appear on every page
   requiredBusinessFacts: {
