@@ -122,6 +122,7 @@ function generateCityPage(city) {
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
+    "sameAs": ["https://www.zillow.com/profile/travisdrealtor"],
     "name": "TD Realty Ohio, LLC",
     "description": "Full-service real estate agent serving ${city.name}, Ohio with 1% listing commission.",
     "url": "https://tdrealtyohio.com/areas/${city.slug}/",

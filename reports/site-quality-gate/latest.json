@@ -1,10 +1,19 @@
 {
-  "timestamp": "2026-02-04T17:38:03.336Z",
-  "passed": true,
+  "timestamp": "2026-02-04T18:12:27.258Z",
+  "passed": false,
   "checks": {
     "links": {
-      "passed": true,
-      "errors": [],
+      "passed": false,
+      "errors": [
+        {
+          "file": "blog/index.html",
+          "message": "Broken internal link: /blog/sell-and-buy-same-time-timing-contingencies/"
+        },
+        {
+          "file": "blog/index.html",
+          "message": "Broken internal link: /blog/sell-and-buy-same-time-timing-contingencies/"
+        }
+      ],
       "warnings": [
         {
           "file": "N/A",
@@ -12,19 +21,32 @@
         }
       ],
       "stats": {
-        "totalLinks": 3145,
-        "internalLinks": 2467,
-        "externalLinks": 418,
-        "brokenInternal": 0,
+        "totalLinks": 3443,
+        "internalLinks": 2715,
+        "externalLinks": 441,
+        "brokenInternal": 2,
         "skippedExternal": 0
       }
     },
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "blog/pre-listing-inspection-checklist/index.html",
+          "message": "Title tag may be too long (74 chars): \"Pre-Listing Inspection Checklist for Central Ohio ...\""
+        },
+        {
+          "file": "blog/ohio-seller-disclosures-after-inspection/index.html",
+          "message": "Title tag may be too long (78 chars): \"Ohio Seller Disclosures: What to Know After a Home...\""
+        },
+        {
+          "file": "blog/inspection-findings-price-repairs-credits/index.html",
+          "message": "Title tag may be too long (75 chars): \"How Inspection Findings Affect Price, Repairs, and...\""
+        }
+      ],
       "stats": {
-        "filesChecked": 63,
+        "filesChecked": 68,
         "missingTags": 0
       }
     },
@@ -33,21 +55,26 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "filesChecked": 63,
+        "filesChecked": 68,
         "missingPhone": 0,
         "missingEmail": 0,
         "missingLicense": 0
       }
     },
     "sitemap": {
-      "passed": true,
-      "errors": [],
+      "passed": false,
+      "errors": [
+        {
+          "file": "sitemap.xml",
+          "message": "Sitemap URL has no matching file: /blog/sell-and-buy-same-time-timing-contingencies"
+        }
+      ],
       "warnings": [],
       "stats": {
-        "sitemapUrls": 60,
-        "htmlFiles": 63,
+        "sitemapUrls": 64,
+        "htmlFiles": 68,
         "missingFromSitemap": 0,
-        "orphanedInSitemap": 0
+        "orphanedInSitemap": 1
       }
     },
     "schema": {
@@ -55,9 +82,23 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "filesChecked": 63,
-        "schemasFound": 196,
+        "filesChecked": 68,
+        "schemasFound": 210,
         "invalidSchemas": 0
+      }
+    },
+    "prgate": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "stats": {
+        "filesChecked": 68,
+        "multipleH1": 0,
+        "missingTitle": 0,
+        "missingMeta": 0,
+        "canonicalDrift": 0,
+        "napDrift": 0,
+        "missingPricing": 0
       }
     }
   }

@@ -115,7 +115,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/agents/</loc>
+    <loc>https://tdrealtyohio.com/brokerage-details/</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/how-we-get-paid/</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -331,10 +337,28 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/templates/blocks/pricing-summary/</loc>
+    <loc>https://tdrealtyohio.com/blog/pre-listing-inspection-checklist/</loc>
     <lastmod>2026-02-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/blog/inspection-findings-price-repairs-credits/</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/blog/ohio-seller-disclosures-after-inspection/</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/blog/sell-and-buy-same-time-timing-contingencies/</loc>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/sitemap-page/</loc>
