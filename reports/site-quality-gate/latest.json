@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-04T11:17:47.369Z",
+  "timestamp": "2026-02-04T11:38:28.677Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,8 +7,8 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 3049,
-        "internalLinks": 2373,
+        "totalLinks": 3114,
+        "internalLinks": 2438,
         "externalLinks": 418,
         "brokenInternal": 0,
         "skippedExternal": 0
@@ -17,24 +17,7 @@
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "index.html",
-          "message": "Title tag may be too long (64 chars): \"1% Commission Real Estate Brokerage Columbus OH | ...\""
-        },
-        {
-          "file": "1-percent-commission/index.html",
-          "message": "Title tag may be too long (64 chars): \"1% Commission Real Estate Listing Columbus Ohio | ...\""
-        },
-        {
-          "file": "blog/home-staging-tips-columbus/index.html",
-          "message": "Title tag may be too long (66 chars): \"Home Staging Tips That Sell Columbus Homes Faster ...\""
-        },
-        {
-          "file": "blog/fsbo-vs-realtor-columbus/index.html",
-          "message": "Title tag may be too long (67 chars): \"FSBO vs Realtor in Columbus Ohio: Which Saves You ...\""
-        }
-      ],
+      "warnings": [],
       "stats": {
         "filesChecked": 63,
         "missingTags": 0
@@ -106,23 +89,10 @@
     "schema": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "sitemap-page/index.html",
-          "message": "Missing BreadcrumbList schema (recommended for all pages except homepage)"
-        },
-        {
-          "file": "pre-listing-inspection/index.html",
-          "message": "Missing BreadcrumbList schema (recommended for all pages except homepage)"
-        },
-        {
-          "file": "blog/index.html",
-          "message": "Missing BreadcrumbList schema (recommended for all pages except homepage)"
-        }
-      ],
+      "warnings": [],
       "stats": {
         "filesChecked": 63,
-        "schemasFound": 190,
+        "schemasFound": 193,
         "invalidSchemas": 0
       }
     }
