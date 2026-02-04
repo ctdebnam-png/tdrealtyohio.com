@@ -1,42 +1,10 @@
 {
-  "total_actions": 24,
+  "total_actions": 10,
   "by_strategy": {
-    "thin_content": 4,
-    "structured_data": 9,
-    "canonical_audit": 4,
-    "internal_linking": 7
+    "structured_data": 6,
+    "canonical_audit": 4
   },
   "details": [
-    {
-      "page": "/home-value/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "275 words (minimum: 300). Impressions: 0"
-    },
-    {
-      "page": "/contact/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "267 words (minimum: 300). Impressions: 0"
-    },
-    {
-      "page": "/testimonials/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "184 words (minimum: 300). Impressions: 0"
-    },
-    {
-      "page": "/fair-housing/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "299 words (minimum: 300). Impressions: 0"
-    },
-    {
-      "page": "/pre-listing-inspection/",
-      "strategy": "structured_data",
-      "action": "missing_schema",
-      "detail": "missing BreadcrumbList schema"
-    },
     {
       "page": "/privacy/",
       "strategy": "structured_data",
@@ -56,12 +24,6 @@
       "detail": "missing RealEstateAgent/Organization schema"
     },
     {
-      "page": "/blog/",
-      "strategy": "structured_data",
-      "action": "missing_schema",
-      "detail": "missing BreadcrumbList schema"
-    },
-    {
       "page": "/lp/buy-home-columbus/",
       "strategy": "structured_data",
       "action": "missing_schema",
@@ -75,12 +37,6 @@
     },
     {
       "page": "/lp/sell-home-westerville/",
-      "strategy": "structured_data",
-      "action": "missing_schema",
-      "detail": "missing BreadcrumbList schema"
-    },
-    {
-      "page": "/sitemap-page/",
       "strategy": "structured_data",
       "action": "missing_schema",
       "detail": "missing BreadcrumbList schema"
@@ -108,50 +64,8 @@
       "strategy": "canonical_audit",
       "action": "meta_issue",
       "detail": "has noindex directive!; missing article:modified_time"
-    },
-    {
-      "page": "/sell-only-2-percent/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 2 inbound links, 25 outbound. Impressions: 0"
-    },
-    {
-      "page": "/faq/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 1 inbound links, 24 outbound. Impressions: 0"
-    },
-    {
-      "page": "/areas/clintonville/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 2 inbound links, 27 outbound. Impressions: 0"
-    },
-    {
-      "page": "/areas/german-village/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 2 inbound links, 26 outbound. Impressions: 0"
-    },
-    {
-      "page": "/compare/1-percent-vs-3-percent/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 2 inbound links, 24 outbound. Impressions: 0"
-    },
-    {
-      "page": "/compare/discount-broker-vs-full-service/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 2 inbound links, 24 outbound. Impressions: 0"
-    },
-    {
-      "page": "/compare/flat-fee-mls-vs-full-service/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 2 inbound links, 24 outbound. Impressions: 0"
     }
   ],
   "dry_run": false,
-  "generated": "2026-02-03T16:51:48.367891"
+  "generated": "2026-02-04T11:46:57.962740"
 }
