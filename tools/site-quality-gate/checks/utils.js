@@ -11,10 +11,11 @@ const { glob } = require('glob');
  */
 async function getHtmlFiles(config) {
   const siteRoot = path.resolve(__dirname, '..', config.siteRoot);
-  const pattern = path.join(siteRoot, config.htmlGlob);
 
-  const files = await glob(pattern, {
-    ignore: config.excludeDirs.map(d => `**/${d}/**`)
+  const files = await glob(config.htmlGlob, {
+    cwd: siteRoot,
+    absolute: true,
+    ignore: config.excludeDirs.map(d => `${d}/**`)
   });
 
   return files.map(f => ({

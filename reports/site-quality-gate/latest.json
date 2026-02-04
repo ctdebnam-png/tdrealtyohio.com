@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-04T17:14:18.269Z",
+  "timestamp": "2026-02-04T17:31:35.269Z",
   "passed": true,
   "checks": {
     "links": {
@@ -45,11 +45,11 @@
       "warnings": [
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
+          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
         },
         {
           "file": "sitemap.xml",
-          "message": "HTML file not in sitemap: /lp/sell-home-columbus"
+          "message": "HTML file not in sitemap: /lp/sell-home-westerville"
         },
         {
           "file": "sitemap.xml",
