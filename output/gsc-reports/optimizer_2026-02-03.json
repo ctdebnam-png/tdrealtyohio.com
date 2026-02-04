@@ -1,9 +1,9 @@
 {
-  "total_actions": 43,
+  "total_actions": 24,
   "by_strategy": {
-    "thin_content": 17,
-    "structured_data": 12,
-    "canonical_audit": 7,
+    "thin_content": 4,
+    "structured_data": 9,
+    "canonical_audit": 4,
     "internal_linking": 7
   },
   "details": [
@@ -17,7 +17,13 @@
       "page": "/contact/",
       "strategy": "thin_content",
       "action": "needs_content",
-      "detail": "266 words (minimum: 300). Impressions: 0"
+      "detail": "267 words (minimum: 300). Impressions: 0"
+    },
+    {
+      "page": "/testimonials/",
+      "strategy": "thin_content",
+      "action": "needs_content",
+      "detail": "184 words (minimum: 300). Impressions: 0"
     },
     {
       "page": "/fair-housing/",
@@ -26,112 +32,10 @@
       "detail": "299 words (minimum: 300). Impressions: 0"
     },
     {
-      "page": "/areas/blacklick/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "378 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/canal-winchester/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "396 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/columbus/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "391 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/delaware/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "388 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/gahanna/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "382 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/granville/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "381 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/grove-city/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "389 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/hilliard/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "371 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/johnstown/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "368 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/pataskala/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "380 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/pickerington/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "386 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/sunbury/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "383 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/westerville/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "395 words (minimum: 400). Impressions: 0"
-    },
-    {
-      "page": "/areas/worthington/",
-      "strategy": "thin_content",
-      "action": "needs_content",
-      "detail": "390 words (minimum: 400). Impressions: 0"
-    },
-    {
       "page": "/pre-listing-inspection/",
       "strategy": "structured_data",
       "action": "missing_schema",
       "detail": "missing BreadcrumbList schema"
-    },
-    {
-      "page": "/affordability/",
-      "strategy": "structured_data",
-      "action": "missing_schema",
-      "detail": "missing RealEstateAgent/Organization schema"
-    },
-    {
-      "page": "/faq/",
-      "strategy": "structured_data",
-      "action": "missing_schema",
-      "detail": "missing RealEstateAgent/Organization schema"
-    },
-    {
-      "page": "/referrals/",
-      "strategy": "structured_data",
-      "action": "missing_schema",
-      "detail": "missing RealEstateAgent/Organization schema"
     },
     {
       "page": "/privacy/",
@@ -182,24 +86,6 @@
       "detail": "missing BreadcrumbList schema"
     },
     {
-      "page": "/privacy/",
-      "strategy": "canonical_audit",
-      "action": "meta_issue",
-      "detail": "has noindex directive!"
-    },
-    {
-      "page": "/terms/",
-      "strategy": "canonical_audit",
-      "action": "meta_issue",
-      "detail": "has noindex directive!"
-    },
-    {
-      "page": "/fair-housing/",
-      "strategy": "canonical_audit",
-      "action": "meta_issue",
-      "detail": "has noindex directive!"
-    },
-    {
       "page": "/lp/buy-home-columbus/",
       "strategy": "canonical_audit",
       "action": "meta_issue",
@@ -224,48 +110,48 @@
       "detail": "has noindex directive!; missing article:modified_time"
     },
     {
-      "page": "/sell-and-buy/",
-      "strategy": "internal_linking",
-      "action": "underlinked",
-      "detail": "Only 2 inbound links, 24 outbound. Impressions: 0"
-    },
-    {
       "page": "/sell-only-2-percent/",
       "strategy": "internal_linking",
       "action": "underlinked",
-      "detail": "Only 1 inbound links, 25 outbound. Impressions: 0"
+      "detail": "Only 2 inbound links, 25 outbound. Impressions: 0"
     },
     {
       "page": "/faq/",
       "strategy": "internal_linking",
       "action": "underlinked",
-      "detail": "Only 0 inbound links, 24 outbound. Impressions: 0"
+      "detail": "Only 1 inbound links, 24 outbound. Impressions: 0"
     },
     {
-      "page": "/areas/worthington/",
+      "page": "/areas/clintonville/",
       "strategy": "internal_linking",
       "action": "underlinked",
-      "detail": "Only 2 inbound links, 28 outbound. Impressions: 0"
+      "detail": "Only 2 inbound links, 27 outbound. Impressions: 0"
+    },
+    {
+      "page": "/areas/german-village/",
+      "strategy": "internal_linking",
+      "action": "underlinked",
+      "detail": "Only 2 inbound links, 26 outbound. Impressions: 0"
     },
     {
       "page": "/compare/1-percent-vs-3-percent/",
       "strategy": "internal_linking",
       "action": "underlinked",
-      "detail": "Only 1 inbound links, 24 outbound. Impressions: 0"
+      "detail": "Only 2 inbound links, 24 outbound. Impressions: 0"
     },
     {
       "page": "/compare/discount-broker-vs-full-service/",
       "strategy": "internal_linking",
       "action": "underlinked",
-      "detail": "Only 1 inbound links, 24 outbound. Impressions: 0"
+      "detail": "Only 2 inbound links, 24 outbound. Impressions: 0"
     },
     {
       "page": "/compare/flat-fee-mls-vs-full-service/",
       "strategy": "internal_linking",
       "action": "underlinked",
-      "detail": "Only 1 inbound links, 24 outbound. Impressions: 0"
+      "detail": "Only 2 inbound links, 24 outbound. Impressions: 0"
     }
   ],
-  "dry_run": true,
-  "generated": "2026-02-03T12:36:22.765395"
+  "dry_run": false,
+  "generated": "2026-02-03T16:51:48.367891"
 }
