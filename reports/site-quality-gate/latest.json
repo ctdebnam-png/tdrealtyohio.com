@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-04T11:46:29.613Z",
+  "timestamp": "2026-02-04T12:12:06.734Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,8 +7,8 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 3137,
-        "internalLinks": 2461,
+        "totalLinks": 3142,
+        "internalLinks": 2466,
         "externalLinks": 418,
         "brokenInternal": 0,
         "skippedExternal": 0
@@ -64,7 +64,7 @@
       "warnings": [],
       "stats": {
         "filesChecked": 63,
-        "schemasFound": 193,
+        "schemasFound": 196,
         "invalidSchemas": 0
       }
     }

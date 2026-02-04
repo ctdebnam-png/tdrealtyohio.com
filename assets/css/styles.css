@@ -2995,6 +2995,10 @@ main {
 .feature-card-icon {
   width: 48px;
   height: 48px;
+  min-width: 48px;
+  max-width: 48px;
+  min-height: 48px;
+  max-height: 48px;
   background: var(--navy);
   border-radius: var(--radius-md);
   display: flex;
@@ -3002,11 +3006,18 @@ main {
   justify-content: center;
   color: var(--gold);
   margin-bottom: 1rem;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .feature-card-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 24px !important;
+  height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  min-width: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
 }
 
 .feature-card-title {
