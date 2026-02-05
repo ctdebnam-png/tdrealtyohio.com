@@ -58,7 +58,6 @@ const TD_CONFIG = {
     }
   },
   memberships: {
-    line: 'Member of Columbus REALTORS, Ohio REALTORS, and the National Association of REALTORS'
   },
   calculator: {
     minPrice: 200000,

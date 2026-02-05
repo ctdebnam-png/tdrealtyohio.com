@@ -216,8 +216,8 @@ ${internalLinks.map(l => `        <!-- ${l} -->`).join('\n')}
             <li><a href="/buyers/">For Buyers</a></li>
             <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
             <li><a href="/areas/">Service Areas</a></li>
-            <li><a href="/home-value/">Free Home Value</a></li>
-            <li><a href="/affordability/">Affordability Calculator</a></li>
+            <li><a href="/home-value/">Home Value</a></li>
+            <li><a href="/affordability/">Affordability</a></li>
             <li><a href="/referrals/">Referral Credit</a></li>
             <li><a href="/compare/">Compare Options</a></li>
           </ul>
@@ -228,8 +228,8 @@ ${internalLinks.map(l => `        <!-- ${l} -->`).join('\n')}
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li><a href="/blog/">Blog</a></li>
-            <li><a href="/testimonials/">Testimonials</a></li>
             <li><a href="/agents/">Agent Opportunities</a></li>
+            <li><a href="/faq/">FAQ</a></li>
           </ul>
         </div>
         <div>
@@ -271,8 +271,7 @@ ${internalLinks.map(l => `        <!-- ${l} -->`).join('\n')}
         </div>
       </div>
       <div class="footer-license">
-        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602<br>
-        Member of Columbus REALTORS, Ohio REALTORS, and the National Association of REALTORS
+        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602
       </div>
     </div>
   </footer>

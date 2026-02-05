@@ -16,8 +16,8 @@ const NAV_REGISTRY = {
         { label: 'For Buyers', href: '/buyers/', showInHeader: true, headerLabel: 'Buyers' },
         { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/', showInHeader: false },
         { label: 'Service Areas', href: '/areas/', showInHeader: true, headerLabel: 'Areas' },
-        { label: 'Free Home Value', href: '/home-value/', showInHeader: false },
-        { label: 'Affordability Calculator', href: '/affordability/', showInHeader: false },
+        { label: 'Home Value', href: '/home-value/', showInHeader: false },
+        { label: 'Affordability', href: '/affordability/', showInHeader: false },
         { label: 'Referral Credit', href: '/referrals/', showInHeader: false },
         { label: 'Compare Options', href: '/compare/', showInHeader: false }
       ]
