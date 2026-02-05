@@ -1,0 +1,128 @@
+1-percent-commission/index.html:597 [my + noun] <div class="faq-question">Will my home get less marketing exposure at 1%?</div>
+blog/1-percent-vs-3-percent-commission-comparison/index.html:357 [I + verb] <li><strong>Can I see reviews from recent clients?</strong> Past performance predicts future service
+blog/1-percent-vs-3-percent-commission-comparison/index.html:358 [my + noun] <li><strong>How will you price my home?</strong> Look for data-driven analysis, not just optimistic 
+blog/1-percent-vs-3-percent-commission-comparison/index.html:361 [my + noun] <li><strong>What happens if my home doesn't sell?</strong> Understand the listing agreement terms.</
+blog/closing-costs-columbus-ohio/index.html:189 [I + verb] <p>As a broker who handles transactions across Franklin, Delaware, Licking, and Fairfield counties, 
+blog/closing-costs-columbus-ohio/index.html:201 [I + verb] <p>Here is a detailed look at each cost you can expect when selling a home in Central Ohio. I have o
+blog/closing-costs-columbus-ohio/index.html:329 [I'm] <p>For this example, I'm assuming the seller is responsible for the listing agent commission only, w
+blog/closing-costs-columbus-ohio/index.html:498 [I + verb] <p>If you are considering selling a home in <a href="/areas/columbus/">Columbus</a> or anywhere in C
+blog/fsbo-vs-realtor-columbus/index.html:189 [I + verb] <p class="lead">Every Columbus homeowner selling their property faces the same tempting thought: "Wh
+blog/fsbo-vs-realtor-columbus/index.html:193 [I + verb] <p>I am writing this as a broker who offers <a href="/1-percent-commission/">1-2% listing commission
+blog/fsbo-vs-realtor-columbus/index.html:510 [I + verb] <p>If you are considering selling your Columbus-area home, I would encourage you to at least get a <
+blog/home-staging-tips-columbus/index.html:190 [I'll] <p>After helping sellers across Central Ohio list and sell their homes, I've seen the difference tha
+blog/home-staging-tips-columbus/index.html:190 [I've] <p>After helping sellers across Central Ohio list and sell their homes, I've seen the difference tha
+blog/home-staging-tips-columbus/index.html:219 [I + verb] <p>Kitchens sell houses. Every real estate agent knows this, and the data backs it up. Buyers spend 
+blog/home-staging-tips-columbus/index.html:365 [my + noun] <p>In my experience working with Columbus sellers, professional staging makes the most financial sen
+blog/home-staging-tips-columbus/index.html:375 [I've] <p>I've seen these mistakes repeatedly in my years of listing homes across Central Ohio. Avoiding th
+blog/home-staging-tips-columbus/index.html:498 [I'm] <p>If you're thinking about selling your Columbus-area home and want a realistic assessment of how s
+blog/how-much-save-selling-columbus-home-1-percent/index.html:198 [I'll] <p>At <a href="/sellers/">TD Realty Ohio</a>, we offer full-service listing representation for just 
+blog/how-much-save-selling-columbus-home-1-percent/index.html:319 [I'm] <p>Unlike large brokerages with expensive office space, administrative staff, and franchise fees, TD
+blog/how-much-save-selling-columbus-home-1-percent/index.html:337 [I'll] <p>As your listing agent, I'll explain all your options and help you make competitive decisions for 
+blog/how-much-save-selling-columbus-home-1-percent/index.html:391 [I'm] <p>If you're thinking about selling your Columbus home and want to learn more about how the 1-2% com
+blog/pre-listing-inspection-benefits/index.html:389 [I'd] <p>Combined with our low 1-2% commission, you get more value while keeping more of your equity. If y
+blog/selling-home-westerville-ohio-2025/index.html:190 [I'll] <p>As a Westerville-based realtor, I work in this market every day. In this guide, I'll share what I
+blog/selling-home-westerville-ohio-2025/index.html:190 [I'm] <p>As a Westerville-based realtor, I work in this market every day. In this guide, I'll share what I
+blog/selling-home-westerville-ohio-2025/index.html:202 [I'm] <p>Understanding buyer preferences helps you position your home effectively. Here's what I'm seeing 
+blog/selling-home-westerville-ohio-2025/index.html:276 [I + verb] <p>Avoid these pitfalls I see regularly:</p>
+blog/selling-home-westerville-ohio-2025/index.html:319 [I + verb] <p>Selling a home in Westerville in 2026 rewards those who prepare properly, price realistically, an
+blog/selling-home-westerville-ohio-2025/index.html:321 [I'm] <p>If you're considering selling your Westerville home and want to discuss your specific situation, 
+home-value/index.html:277 [my + noun] <span> by TD Realty Ohio regarding my home valuation request. See our <a href="/privacy/" style="col
+tools/buyer-closing-costs/columbus/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/delaware/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/dublin/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/gahanna/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/hilliard/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/index.html:153 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/new-albany/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/powell/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/upper-arlington/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/westerville/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-closing-costs/worthington/index.html:156 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/columbus/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/delaware/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/dublin/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/gahanna/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/hilliard/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/index.html:165 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/new-albany/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/powell/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/upper-arlington/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/westerville/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/buyer-offer-readiness/worthington/index.html:168 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/columbus/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/delaware/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/dublin/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/gahanna/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/hilliard/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/index.html:171 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/new-albany/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/powell/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/upper-arlington/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/westerville/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/move-up-plan/worthington/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/columbus/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/delaware/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/dublin/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/gahanna/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/hilliard/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/new-albany/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/powell/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/upper-arlington/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/westerville/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/pre-listing-checklist/worthington/index.html:167 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/columbus/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/delaware/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/dublin/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/gahanna/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/hilliard/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/index.html:171 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/new-albany/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/powell/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/upper-arlington/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/westerville/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/repair-vs-credit/worthington/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/columbus/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/delaware/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/dublin/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/gahanna/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/hilliard/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/index.html:173 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/new-albany/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/powell/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/upper-arlington/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/westerville/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-buy-timing/worthington/index.html:176 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/columbus/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/delaware/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/dublin/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/gahanna/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/hilliard/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/index.html:171 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/new-albany/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/powell/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/upper-arlington/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/westerville/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/sell-now-vs-wait/worthington/index.html:174 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/columbus/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/delaware/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/dublin/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/gahanna/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/hilliard/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/index.html:161 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/new-albany/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/powell/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/upper-arlington/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/westerville/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-documents/worthington/index.html:164 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/columbus/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/delaware/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/dublin/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/gahanna/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/hilliard/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/index.html:172 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/new-albany/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/powell/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/upper-arlington/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/westerville/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
+tools/seller-net-proceeds/worthington/index.html:175 [email me] <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
