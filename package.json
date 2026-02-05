@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.50.0",
+    "cheerio": "^1.2.0",
+    "glob": "^13.0.1",
     "wrangler": "^4.0.0"
   }
 }

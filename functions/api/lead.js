@@ -86,9 +86,13 @@ export async function onRequestPost(context) {
     });
   }
 
-  // Validate required fields
-  if (!body.email || !EMAIL_RE.test(body.email)) {
-    return new Response(JSON.stringify({ error: 'Valid email is required' }), {
+  // Validate required fields — require email OR phone (phone-only for tool text actions)
+  const PHONE_RE = /^\+?[\d\s().-]{10,}$/;
+  const hasEmail = body.email && EMAIL_RE.test(body.email);
+  const hasPhone = body.phone && PHONE_RE.test(body.phone);
+
+  if (!hasEmail && !hasPhone) {
+    return new Response(JSON.stringify({ error: 'Valid email or phone is required' }), {
       status: 400,
       headers,
     });
@@ -127,7 +131,7 @@ export async function onRequestPost(context) {
 
     // Contact info
     name: body.name || '',
-    email: body.email,
+    email: body.email || '',
     phone: body.phone || '',
     preferred_contact_method: body.preferred_contact_method || '',
 
