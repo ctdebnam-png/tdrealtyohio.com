@@ -1693,6 +1693,23 @@ main {
   .mobile-menu-btn {
     display: block;
   }
+
+  /* Mobile nav section headers for grouped navigation */
+  .nav .nav-section-header {
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-500);
+    padding: 1.25rem 0 0.5rem 0;
+    border-bottom: none;
+    margin-top: 0.5rem;
+  }
+
+  .nav .nav-section-header:first-child {
+    margin-top: 0;
+    padding-top: 0;
+  }
 }
 
 @media (max-width: 768px) {
@@ -3192,23 +3209,69 @@ main {
   }
 }
 
-/* iOS device widths 375-430px - specific fixes for CTA overlap */
+/* iPhone 12/13/14 and similar devices (375-430px) - prevent CTA overlap */
 @media (min-width: 375px) and (max-width: 430px) {
+  /* Full hero (homepage) - ensure buttons don't overlap content */
+  .hero {
+    min-height: auto;
+    padding: 3rem 0 calc(3rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero .hero-content {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hero .hero-title {
+    font-size: 1.75rem;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero .hero-subtitle {
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero .hero-proof {
+    font-size: 0.8125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero .hero-buttons {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .hero .hero-buttons .btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    justify-content: center;
+    transform: none;
+    margin: 0;
+  }
+
+  /* Hero-sm (subpages) - similar treatment */
   .hero.hero-sm {
-    /* Adequate padding for shorter hero with CTAs */
     min-height: auto;
     padding: 2rem 0 calc(2.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   .hero.hero-sm .hero-content {
-    /* Normal flow, no positioning hacks */
     position: static;
     display: flex;
     flex-direction: column;
   }
 
   .hero.hero-sm .hero-buttons {
-    /* Normal flow stack with proper spacing */
     position: static;
     display: flex;
     flex-direction: column;
@@ -3218,11 +3281,9 @@ main {
   }
 
   .hero.hero-sm .hero-buttons .btn {
-    /* Full-width buttons in normal flow */
     width: 100%;
     min-height: 48px;
     justify-content: center;
-    /* No transforms or negative margins */
     transform: none;
     margin: 0;
   }
