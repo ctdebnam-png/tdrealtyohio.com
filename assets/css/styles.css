@@ -1150,6 +1150,66 @@ main {
   line-height: 1.7;
 }
 
+/* ===== CALLOUT STYLES (Tips, Notes, Warnings) ===== */
+.callout {
+  padding: 1.25rem 1.5rem;
+  margin: var(--space-6) 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-left: 4px solid var(--navy);
+  background-color: var(--gray-50);
+}
+
+.callout p {
+  margin-bottom: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.callout-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.callout-tip {
+  border-color: var(--gold);
+  background-color: rgba(201, 162, 39, 0.08);
+}
+
+.callout-tip .callout-label {
+  color: var(--gold-dark);
+}
+
+.callout-note {
+  border-color: var(--navy);
+  background-color: rgba(26, 46, 68, 0.05);
+}
+
+.callout-note .callout-label {
+  color: var(--navy);
+}
+
+.callout-warning {
+  border-color: var(--error);
+  background-color: var(--error-bg);
+}
+
+.callout-warning .callout-label {
+  color: var(--error);
+}
+
+.callout-success {
+  border-color: var(--success);
+  background-color: var(--success-bg);
+}
+
+.callout-success .callout-label {
+  color: var(--success);
+}
+
 /* ===== CONTACT FORM ===== */
 .contact-form {
   max-width: 600px;
@@ -1205,11 +1265,25 @@ main {
   border-color: var(--error);
 }
 
+/* Reserve space for error messages to prevent layout shift */
+.form-group {
+  position: relative;
+}
+
 .form-error {
-  display: none;
+  display: block;
+  visibility: hidden;
   font-size: 0.8125rem;
   color: var(--error);
   margin-top: 0.25rem;
+  min-height: 1.25rem;
+}
+
+.form-error[style*="display: block"],
+.form-input.error + .form-error,
+.form-select.error + .form-error,
+.form-textarea.error + .form-error {
+  visibility: visible;
 }
 
 .form-status {
@@ -1768,10 +1842,21 @@ main {
   appearance: none;
   width: 100%;
   height: 8px;
-  background: transparent;
+  background: var(--gray-200);
   border-radius: 4px;
   outline: none;
   cursor: pointer;
+  /* Fallback for older Safari iOS */
+  background-image: linear-gradient(to right, var(--gold) 0%, var(--gold) var(--value, 50%), var(--gray-200) var(--value, 50%), var(--gray-200) 100%);
+}
+
+/* Safari iOS fix: ensure touch targets are accessible */
+@supports (-webkit-touch-callout: none) {
+  .calculator-range {
+    min-height: 44px;
+    padding: 18px 0;
+    background-clip: content-box;
+  }
 }
 
 .calculator-range::-webkit-slider-thumb {
@@ -1785,6 +1870,8 @@ main {
   border: 3px solid var(--white);
   box-shadow: var(--shadow-md);
   transition: transform 0.2s ease;
+  /* Safari iOS needs explicit margin for thumb positioning */
+  margin-top: -10px;
 }
 
 .calculator-range::-webkit-slider-thumb:hover {
