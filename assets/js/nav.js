@@ -1,6 +1,7 @@
 /**
  * TD Realty Ohio - Navigation Configuration
- * Single source of truth for nav items across header hamburger and footer
+ * Single source of truth for nav items - used to sync footer with header nav
+ * Header nav is in HTML for immediate rendering; footer syncs via JS
  */
 
 const TD_NAV = {
@@ -30,61 +31,12 @@ const TD_NAV = {
 };
 
 /**
- * Renders the mobile hamburger menu from TD_NAV configuration
- * Call this after DOMContentLoaded to populate the mobile nav
+ * No-op function for backwards compatibility
+ * Mobile nav is now rendered in HTML for immediate display
  */
 function renderMobileNav() {
-  const nav = document.getElementById('main-nav');
-  if (!nav) return;
-
-  // Clear existing nav links except the contact CTA
-  const existingLinks = nav.querySelectorAll('.nav-link:not(.nav-cta)');
-  existingLinks.forEach(link => link.remove());
-
-  // Build mobile nav with grouped sections
-  const mobileNavContent = document.createDocumentFragment();
-
-  // Services section
-  const servicesHeader = document.createElement('div');
-  servicesHeader.className = 'nav-section-header';
-  servicesHeader.textContent = TD_NAV.services.title;
-  mobileNavContent.appendChild(servicesHeader);
-
-  TD_NAV.services.items.forEach(item => {
-    const link = document.createElement('a');
-    link.href = item.href;
-    link.className = 'nav-link';
-    link.textContent = item.label;
-    if (window.location.pathname === item.href) {
-      link.classList.add('active');
-    }
-    mobileNavContent.appendChild(link);
-  });
-
-  // Company section
-  const companyHeader = document.createElement('div');
-  companyHeader.className = 'nav-section-header';
-  companyHeader.textContent = TD_NAV.company.title;
-  mobileNavContent.appendChild(companyHeader);
-
-  TD_NAV.company.items.forEach(item => {
-    const link = document.createElement('a');
-    link.href = item.href;
-    link.className = 'nav-link';
-    link.textContent = item.label;
-    if (window.location.pathname === item.href) {
-      link.classList.add('active');
-    }
-    mobileNavContent.appendChild(link);
-  });
-
-  // Insert before the contact CTA button
-  const contactCta = nav.querySelector('.nav-cta');
-  if (contactCta) {
-    nav.insertBefore(mobileNavContent, contactCta);
-  } else {
-    nav.appendChild(mobileNavContent);
-  }
+  // Nav links are now in HTML - no dynamic rendering needed
+  return;
 }
 
 /**
