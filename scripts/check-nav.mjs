@@ -11,15 +11,15 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
-// Expected nav structure from src/config/nav.ts
+// Expected nav structure matching assets/js/nav.js TD_NAV
 const EXPECTED_NAV = {
   services: [
     { label: 'For Sellers', href: '/sellers/' },
     { label: 'For Buyers', href: '/buyers/' },
     { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
     { label: 'Service Areas', href: '/areas/' },
-    { label: 'Home Value', href: '/home-value/' },
-    { label: 'Affordability', href: '/affordability/' },
+    { label: 'Free Home Value', href: '/home-value/' },
+    { label: 'Affordability Calculator', href: '/affordability/' },
     { label: 'Referral Credit', href: '/referrals/' },
     { label: 'Compare Options', href: '/compare/' },
   ],
@@ -36,6 +36,32 @@ const expectedServiceHrefs = new Set(EXPECTED_NAV.services.map(i => i.href));
 const expectedCompanyHrefs = new Set(EXPECTED_NAV.company.map(i => i.href));
 
 let errors = [];
+
+/**
+ * Extract hrefs from the hamburger menu (mobile nav)
+ */
+function extractHamburgerLinks(html) {
+  // Find the nav element with id="main-nav"
+  const navRegex = /<nav[^>]*id="main-nav"[^>]*>([\s\S]*?)<\/nav>/i;
+  const match = html.match(navRegex);
+  if (!match) return null;
+
+  const navHtml = match[1];
+  const hrefRegex = /<a[^>]*href="([^"]+)"[^>]*class="nav-link"[^>]*>/gi;
+  const hrefs = [];
+  let hrefMatch;
+  while ((hrefMatch = hrefRegex.exec(navHtml)) !== null) {
+    hrefs.push(hrefMatch[1]);
+  }
+  // Also check for class="nav-link" before href
+  const hrefRegex2 = /<a[^>]*class="nav-link"[^>]*href="([^"]+)"[^>]*>/gi;
+  while ((hrefMatch = hrefRegex2.exec(navHtml)) !== null) {
+    if (!hrefs.includes(hrefMatch[1])) {
+      hrefs.push(hrefMatch[1]);
+    }
+  }
+  return hrefs;
+}
 
 /**
  * Extract hrefs from a footer section
@@ -67,6 +93,33 @@ async function checkNav() {
 
   const indexPath = join(ROOT, 'index.html');
   const content = await readFile(indexPath, 'utf-8');
+
+  // All expected hrefs combined
+  const allExpectedHrefs = new Set([...expectedServiceHrefs, ...expectedCompanyHrefs]);
+
+  // Extract hamburger menu links
+  const hamburgerLinks = extractHamburgerLinks(content);
+  if (!hamburgerLinks) {
+    errors.push('Could not find hamburger menu (nav#main-nav) in index.html');
+  } else {
+    const hamburgerSet = new Set(hamburgerLinks);
+
+    // Check hamburger has all expected links
+    for (const href of allExpectedHrefs) {
+      if (!hamburgerSet.has(href)) {
+        errors.push(`Hamburger menu missing: ${href}`);
+      }
+    }
+
+    // Check for unexpected links in hamburger (except /contact/ CTA)
+    for (const href of hamburgerLinks) {
+      if (!allExpectedHrefs.has(href) && href !== '/contact/') {
+        errors.push(`Hamburger menu has unexpected link: ${href}`);
+      }
+    }
+
+    console.log(`  Hamburger menu: ${hamburgerLinks.length} links found`);
+  }
 
   // Extract footer Services links
   const footerServices = extractFooterLinks(content, 'Services');
