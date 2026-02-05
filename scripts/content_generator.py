@@ -557,7 +557,6 @@ def _wrap_in_page(
 
       <div class="footer-license">
         {BROKERAGE['name']} | Broker: {BROKERAGE['broker']} | Broker License #{BROKERAGE['license_broker']} | Brokerage License #{BROKERAGE['license_brokerage']}<br>
-        Member of Columbus REALTORS, Ohio REALTORS, and the National Association of REALTORS
       </div>
     </div>
   </footer>
