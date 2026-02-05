@@ -638,8 +638,8 @@
       function calculateMonthlyPI(principal, annualRate) {
         if (principal <= 0 || annualRate <= 0) return 0;
         const monthlyRate = annualRate / 100 / 12;
-        const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, CALC_DEFAULTS.CALC_DEFAULTS.LOAN_TERM_MONTHS)) /
-                       (Math.pow(1 + monthlyRate, CALC_DEFAULTS.CALC_DEFAULTS.LOAN_TERM_MONTHS) - 1);
+        const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, CALC_DEFAULTS.LOAN_TERM_MONTHS)) /
+                       (Math.pow(1 + monthlyRate, CALC_DEFAULTS.LOAN_TERM_MONTHS) - 1);
         return payment;
       }
 
