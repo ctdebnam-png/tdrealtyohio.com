@@ -475,6 +475,7 @@ main {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
 .hero-sm {
@@ -3188,6 +3189,42 @@ main {
     justify-content: center;
     /* Ensure minimum touch target for accessibility */
     min-height: 48px;
+  }
+}
+
+/* iOS device widths 375-430px - specific fixes for CTA overlap */
+@media (min-width: 375px) and (max-width: 430px) {
+  .hero.hero-sm {
+    /* Adequate padding for shorter hero with CTAs */
+    min-height: auto;
+    padding: 2rem 0 calc(2.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero.hero-sm .hero-content {
+    /* Normal flow, no positioning hacks */
+    position: static;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero.hero-sm .hero-buttons {
+    /* Normal flow stack with proper spacing */
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    width: 100%;
+  }
+
+  .hero.hero-sm .hero-buttons .btn {
+    /* Full-width buttons in normal flow */
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+    /* No transforms or negative margins */
+    transform: none;
+    margin: 0;
   }
 }
 

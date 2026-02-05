@@ -370,14 +370,15 @@
               </div>
 
               <div class="form-group">
-                <label for="experience" class="form-label">Experience Level</label>
-                <select id="experience" name="experience" class="form-select">
+                <label for="experience" class="form-label">Experience Level <span style="font-weight: 400; color: var(--gray-500);">(optional)</span></label>
+                <select id="experience" name="experience" class="form-select" aria-describedby="experience-hint">
                   <option value="">Select one</option>
                   <option value="new">New / Getting Licensed</option>
                   <option value="1-3">1-3 Years</option>
                   <option value="3-5">3-5 Years</option>
                   <option value="5+">5+ Years</option>
                 </select>
+                <small id="experience-hint" style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.25rem; display: block;">Helps us tailor the conversation to your situation.</small>
               </div>
 
               <div class="form-group" style="margin-bottom: 1rem;">

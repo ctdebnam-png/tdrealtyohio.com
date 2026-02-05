@@ -388,42 +388,55 @@
                 <label for="include-taxes">Include Property Taxes & Insurance</label>
               </div>
 
-              <div id="tax-insurance-inputs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1rem; background: var(--gray-50); border-radius: var(--radius-md); margin-top: 0.5rem;">
-                <div class="calc-input-group" style="margin-bottom: 0;">
-                  <label for="property-tax-rate" style="font-size: 0.875rem;">Property Tax Rate (%)</label>
-                  <span class="input-hint">Franklin County default: 1.5%</span>
-                  <input type="number" id="property-tax-rate" value="1.5" min="0" max="5" step="0.1" style="padding: 0.5rem 0.75rem;">
+              <div id="tax-insurance-inputs" style="padding: 1rem; background: var(--gray-50); border-radius: var(--radius-md); margin-top: 0.5rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div class="calc-input-group" style="margin-bottom: 0;">
+                    <label for="property-tax-rate" style="font-size: 0.875rem;">Property tax rate (total effective rate) %</label>
+                    <span class="input-hint">Totals vary by school district and municipality.</span>
+                    <input type="number" id="property-tax-rate" value="1.5" min="0" max="5" step="0.1" style="padding: 0.5rem 0.75rem;">
+                  </div>
+                  <div class="calc-input-group" style="margin-bottom: 0;">
+                    <label for="insurance-rate" style="font-size: 0.875rem;">Insurance Rate (%)</label>
+                    <span class="input-hint">Typical range: 0.3-0.8%</span>
+                    <input type="number" id="insurance-rate" value="0.5" min="0" max="2" step="0.1" style="padding: 0.5rem 0.75rem;">
+                  </div>
                 </div>
-                <div class="calc-input-group" style="margin-bottom: 0;">
-                  <label for="insurance-rate" style="font-size: 0.875rem;">Insurance Rate (%)</label>
-                  <span class="input-hint">Typical range: 0.3-0.8%</span>
-                  <input type="number" id="insurance-rate" value="0.5" min="0" max="2" step="0.1" style="padding: 0.5rem 0.75rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                  <div class="calc-input-group" style="margin-bottom: 0;">
+                    <label for="school-district" style="font-size: 0.875rem;">School District <span style="font-weight: 400; color: var(--gray-500);">(optional)</span></label>
+                    <input type="text" id="school-district" placeholder="e.g., Dublin City Schools" style="padding: 0.5rem 0.75rem;">
+                  </div>
+                  <div class="calc-input-group" style="margin-bottom: 0;">
+                    <label for="municipality" style="font-size: 0.875rem;">Municipality <span style="font-weight: 400; color: var(--gray-500);">(optional)</span></label>
+                    <input type="text" id="municipality" placeholder="e.g., City of Dublin" style="padding: 0.5rem 0.75rem;">
+                  </div>
                 </div>
+                <p style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.75rem; margin-bottom: 0;">Use your known rate if you have the exact rate for your target area.</p>
               </div>
             </div>
 
             <div class="calc-results" aria-live="polite" aria-atomic="true" role="status">
               <div class="primary-result">
                 <div class="primary-result-label">Estimated Home Price You Can Afford</div>
-                <div class="primary-result-value" id="result-home-price">Enter income</div>
+                <div class="primary-result-value" id="result-home-price">Enter income to calculate</div>
               </div>
 
               <div class="secondary-results">
                 <div class="result-card">
                   <div class="result-card-label">Monthly Payment</div>
-                  <div class="result-card-value" id="result-monthly-total">—</div>
+                  <div class="result-card-value" id="result-monthly-total">$0</div>
                 </div>
                 <div class="result-card">
                   <div class="result-card-label">Principal & Interest</div>
-                  <div class="result-card-value" id="result-pi">—</div>
+                  <div class="result-card-value" id="result-pi">$0</div>
                 </div>
                 <div class="result-card">
-                  <div class="result-card-label">Property Taxes</div>
-                  <div class="result-card-value" id="result-taxes">—</div>
+                  <div class="result-card-label">Property Taxes <span id="result-tax-rate-label" style="font-weight: 400; font-size: 0.75rem;"></span></div>
+                  <div class="result-card-value" id="result-taxes">$0</div>
                 </div>
                 <div class="result-card">
                   <div class="result-card-label">Insurance</div>
-                  <div class="result-card-value" id="result-insurance">—</div>
+                  <div class="result-card-value" id="result-insurance">$0</div>
                 </div>
               </div>
 
@@ -452,7 +465,7 @@
             </div>
 
             <div class="calc-note">
-              <strong>Note:</strong> 30-year fixed mortgage. Property tax and insurance rates above are editable defaults based on Franklin County averages. Rates vary by county and school district in Central Ohio—adjust for your target area.
+              <strong>Note:</strong> 30-year fixed mortgage. Default property tax rate is <span id="default-rate-note">1.5%</span>. Actual rates vary significantly by school district and municipality in Central Ohio. Enter your target area's school district and municipality above, or use your known rate if available.
             </div>
           </div>
         </div>
@@ -570,6 +583,17 @@
   <script>
     // Affordability Calculator Logic
     (function() {
+      // ═══════════════════════════════════════════════════════════════════════
+      // CENTRALIZED CONSTANTS - Single source of truth for default rates
+      // ═══════════════════════════════════════════════════════════════════════
+      const CALC_DEFAULTS = {
+        TAX_RATE: 1.5,           // Default property tax rate (%)
+        INSURANCE_RATE: 0.5,     // Default insurance rate (%)
+        INTEREST_RATE: 7.0,      // Default mortgage interest rate (%)
+        LOAN_TERM_MONTHS: 360,   // 30-year fixed mortgage
+        TAX_RATE_NOTE: 'Totals vary by school district and municipality in Central Ohio.'
+      };
+
       const inputs = {
         income: document.getElementById('annual-income'),
         debts: document.getElementById('monthly-debts'),
@@ -586,17 +610,23 @@
         pi: document.getElementById('result-pi'),
         taxes: document.getElementById('result-taxes'),
         insurance: document.getElementById('result-insurance'),
+        taxRateLabel: document.getElementById('result-tax-rate-label'),
+        defaultRateNote: document.getElementById('default-rate-note'),
         barPi: document.getElementById('bar-pi'),
         barTax: document.getElementById('bar-tax'),
         barIns: document.getElementById('bar-ins')
       };
 
       const taxInsuranceInputs = document.getElementById('tax-insurance-inputs');
-      const LOAN_TERM_MONTHS = 360; // 30 years
+
+      // Initialize default values from constants
+      if (outputs.defaultRateNote) {
+        outputs.defaultRateNote.textContent = CALC_DEFAULTS.TAX_RATE + '%';
+      }
 
       // Toggle tax/insurance inputs visibility
       function updateTaxInsuranceVisibility() {
-        taxInsuranceInputs.style.display = inputs.includeTaxes.checked ? 'grid' : 'none';
+        taxInsuranceInputs.style.display = inputs.includeTaxes.checked ? 'block' : 'none';
       }
       inputs.includeTaxes.addEventListener('change', updateTaxInsuranceVisibility);
       updateTaxInsuranceVisibility();
@@ -608,8 +638,8 @@
       function calculateMonthlyPI(principal, annualRate) {
         if (principal <= 0 || annualRate <= 0) return 0;
         const monthlyRate = annualRate / 100 / 12;
-        const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS)) /
-                       (Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS) - 1);
+        const payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, CALC_DEFAULTS.CALC_DEFAULTS.LOAN_TERM_MONTHS)) /
+                       (Math.pow(1 + monthlyRate, CALC_DEFAULTS.CALC_DEFAULTS.LOAN_TERM_MONTHS) - 1);
         return payment;
       }
 
@@ -617,13 +647,19 @@
         const annualIncome = parseFloat(inputs.income.value) || 0;
         const monthlyDebts = parseFloat(inputs.debts.value) || 0;
         const downPayment = parseFloat(inputs.downPayment.value) || 0;
-        const interestRate = parseFloat(inputs.rate.value) || 7.0;
+        const interestRate = parseFloat(inputs.rate.value) || CALC_DEFAULTS.INTEREST_RATE;
         const includeTaxes = inputs.includeTaxes.checked;
-        const TAX_RATE = (parseFloat(inputs.taxRate.value) || 1.5) / 100;
-        const INSURANCE_RATE = (parseFloat(inputs.insuranceRate.value) || 0.5) / 100;
+        const taxRatePercent = parseFloat(inputs.taxRate.value) || CALC_DEFAULTS.TAX_RATE;
+        const TAX_RATE = taxRatePercent / 100;
+        const INSURANCE_RATE = (parseFloat(inputs.insuranceRate.value) || CALC_DEFAULTS.INSURANCE_RATE) / 100;
+
+        // Update tax rate label in results
+        if (outputs.taxRateLabel) {
+          outputs.taxRateLabel.textContent = includeTaxes ? '@ ' + taxRatePercent + '%' : '';
+        }
 
         if (annualIncome <= 0) {
-          outputs.homePrice.textContent = 'Enter income above';
+          outputs.homePrice.textContent = 'Enter income to calculate';
           outputs.monthlyTotal.textContent = '$0';
           outputs.pi.textContent = '$0';
           outputs.taxes.textContent = '$0';
@@ -662,8 +698,8 @@
           // price * (loanFactor + (tax+ins)/12) = maxPayment + down * loanFactor
 
           if (interestRate > 0) {
-            const loanFactor = (monthlyRate * Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS)) /
-                              (Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS) - 1);
+            const loanFactor = (monthlyRate * Math.pow(1 + monthlyRate, CALC_DEFAULTS.LOAN_TERM_MONTHS)) /
+                              (Math.pow(1 + monthlyRate, CALC_DEFAULTS.LOAN_TERM_MONTHS) - 1);
             const tiMonthly = (TAX_RATE + INSURANCE_RATE) / 12;
 
             maxHomePrice = (maxHousingPayment + downPayment * loanFactor) / (loanFactor + tiMonthly);
@@ -685,8 +721,8 @@
           let loanAmount;
 
           if (interestRate > 0) {
-            const loanFactor = (monthlyRate * Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS)) /
-                              (Math.pow(1 + monthlyRate, LOAN_TERM_MONTHS) - 1);
+            const loanFactor = (monthlyRate * Math.pow(1 + monthlyRate, CALC_DEFAULTS.LOAN_TERM_MONTHS)) /
+                              (Math.pow(1 + monthlyRate, CALC_DEFAULTS.LOAN_TERM_MONTHS) - 1);
             loanAmount = maxHousingPayment / loanFactor;
           } else {
             loanAmount = maxHousingPayment * LOAN_TERM_MONTHS;
