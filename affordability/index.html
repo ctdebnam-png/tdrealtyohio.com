@@ -144,6 +144,7 @@
       font-weight: 700;
       color: var(--navy);
       font-family: var(--font-display);
+      min-height: 3.5rem;
     }
     .secondary-results {
       display: grid;
@@ -166,6 +167,7 @@
       font-size: 1.5rem;
       font-weight: 600;
       color: var(--gray-800);
+      min-height: 1.75rem;
     }
     .payment-breakdown {
       margin-top: 1.5rem;
@@ -621,11 +623,15 @@
         const INSURANCE_RATE = (parseFloat(inputs.insuranceRate.value) || 0.5) / 100;
 
         if (annualIncome <= 0) {
-          outputs.homePrice.textContent = 'Enter income';
-          outputs.monthlyTotal.textContent = '—';
-          outputs.pi.textContent = '—';
-          outputs.taxes.textContent = '—';
-          outputs.insurance.textContent = '—';
+          outputs.homePrice.textContent = 'Enter income above';
+          outputs.monthlyTotal.textContent = '$0';
+          outputs.pi.textContent = '$0';
+          outputs.taxes.textContent = '$0';
+          outputs.insurance.textContent = '$0';
+          // Reset breakdown bar to default state
+          outputs.barPi.style.width = '70%';
+          outputs.barTax.style.width = '20%';
+          outputs.barIns.style.width = '10%';
           return;
         }
 

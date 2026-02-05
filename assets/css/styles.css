@@ -2684,6 +2684,134 @@ main {
   border-color: var(--success);
 }
 
+/* ===== BLOG FILTERS AND TAGS ===== */
+.blog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-filter-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--gray-700);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.blog-filter-btn:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.blog-filter-btn.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+
+.blog-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.blog-tag-seller {
+  background: rgba(26, 46, 68, 0.1);
+  color: var(--navy);
+}
+
+.blog-tag-buyer {
+  background: rgba(201, 162, 39, 0.15);
+  color: var(--gold-dark);
+}
+
+.blog-tag-agent {
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+}
+
+.blog-read-time {
+  font-size: 0.8125rem;
+  color: var(--gray-500);
+}
+
+@media (max-width: 480px) {
+  .blog-filters {
+    gap: 0.375rem;
+  }
+
+  .blog-filter-btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ===== EXPECT STEPS (Contact page) ===== */
+.expect-steps {
+  list-style: none;
+  counter-reset: step;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.expect-step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  counter-increment: step;
+}
+
+.expect-step:last-child {
+  margin-bottom: 0;
+}
+
+.expect-step::before {
+  content: counter(step);
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--navy);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.expect-step-title {
+  display: block;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.expect-step-text {
+  margin: 0.25rem 0 0;
+  color: var(--gray-600);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
 /* ===== LOADING STATES ===== */
 .btn.loading {
   position: relative;
@@ -3023,7 +3151,13 @@ main {
 @media (max-width: 480px) {
   .hero {
     min-height: auto;
-    padding: 2.5rem 0 2rem;
+    /* Ensure proper bottom padding with iOS safe-area support */
+    padding: 2.5rem 0 calc(2rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero-content {
+    /* Ensure content has room for CTAs without overflow */
+    padding-bottom: 0.5rem;
   }
 
   .hero-title {
@@ -3042,13 +3176,18 @@ main {
   }
 
   .hero-buttons {
+    /* Flex column with explicit gap, no collapsing margins */
+    display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    margin-top: 1rem;
   }
 
   .hero-buttons .btn {
     width: 100%;
     justify-content: center;
+    /* Ensure minimum touch target for accessibility */
+    min-height: 48px;
   }
 }
 
