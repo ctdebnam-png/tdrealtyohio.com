@@ -11,6 +11,7 @@
 }
 
 :root {
+  /* Colors */
   --navy: #1a2e44;
   --navy-light: #2a4156;
   --navy-dark: #0f1c2a;
@@ -35,15 +36,42 @@
   --error: #dc2626;
   --error-bg: #fef2f2;
   --error-border: #fecaca;
+
+  /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
   --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+  --shadow-focus: 0 0 0 3px rgba(201, 162, 39, 0.4);
+
+  /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
+
+  /* Transitions */
   --transition: 0.3s ease;
+  --transition-fast: 0.15s ease;
+
+  /* Layout */
   --max-width: 1200px;
   --header-height: 80px;
+  --header-height-mobile: 64px;
+
+  /* Spacing Scale (consistent across site) */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+
+  /* Section Padding */
+  --section-padding-sm: var(--space-8);
+  --section-padding: var(--space-16);
+  --section-padding-lg: var(--space-20);
 }
 
 /* Prevent inline SVGs from ever exceeding their container */
@@ -151,15 +179,24 @@ li { margin-bottom: 0.5rem; }
 }
 
 .section {
-  padding: 4rem 0;
+  padding: var(--section-padding) 0;
 }
 
 .section-sm {
-  padding: 2rem 0;
+  padding: var(--section-padding-sm) 0;
 }
 
 .section-lg {
-  padding: 6rem 0;
+  padding: var(--section-padding-lg) 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-12) 0;
+  }
+  .section-lg {
+    padding: var(--section-padding) 0;
+  }
 }
 
 .text-center { text-align: center; }
@@ -686,6 +723,8 @@ main {
   background-color: var(--off-white);
   border-radius: var(--radius-md);
   padding: 1.5rem;
+  min-height: 180px; /* Prevent layout shift when results load */
+  contain: layout; /* CSS containment for better performance */
 }
 
 .result-row {
@@ -1145,6 +1184,7 @@ main {
 .form-textarea:focus {
   outline: none;
   border-color: var(--navy);
+  box-shadow: var(--shadow-focus);
 }
 
 .form-textarea {
@@ -1751,6 +1791,18 @@ main {
   transform: scale(1.1);
 }
 
+.calculator-range:focus {
+  outline: none;
+}
+
+.calculator-range:focus::-webkit-slider-thumb {
+  box-shadow: var(--shadow-md), var(--shadow-focus);
+}
+
+.calculator-range:focus::-moz-range-thumb {
+  box-shadow: var(--shadow-md), var(--shadow-focus);
+}
+
 .calculator-range::-moz-range-thumb {
   width: 28px;
   height: 28px;
@@ -1759,6 +1811,11 @@ main {
   cursor: pointer;
   border: 3px solid var(--white);
   box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease;
+}
+
+.calculator-range::-moz-range-thumb:hover {
+  transform: scale(1.1);
 }
 
 .calculator-range::-webkit-slider-runnable-track {
