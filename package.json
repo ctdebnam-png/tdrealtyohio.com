@@ -15,7 +15,9 @@
     "validate": "node scripts/indexing-guard.mjs",
     "check:nav": "node scripts/check-nav.mjs",
     "check:copy": "node scripts/check-copy.mjs",
-    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs"
+    "check:templates": "node scripts/check-templates.js",
+    "check:nav-and-copy": "node scripts/check-nav-and-copy.js",
+    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.50.0",

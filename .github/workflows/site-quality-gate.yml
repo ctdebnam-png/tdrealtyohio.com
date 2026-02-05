@@ -43,6 +43,12 @@ jobs:
       - name: Run copy quality check
         run: node scripts/check-copy.mjs
 
+      - name: Run header template consistency check
+        run: node scripts/check-templates.js
+
+      - name: Run nav and copy consistency check
+        run: node scripts/check-nav-and-copy.js
+
       - name: Upload quality report
         uses: actions/upload-artifact@v4
         if: always()

@@ -105,7 +105,9 @@ async function checkNav() {
     const hamburgerSet = new Set(hamburgerLinks);
 
     // Check hamburger has all expected links
+    // /contact/ is rendered as a CTA button (not nav-link) so skip it here
     for (const href of allExpectedHrefs) {
+      if (href === '/contact/') continue;
       if (!hamburgerSet.has(href)) {
         errors.push(`Hamburger menu missing: ${href}`);
       }

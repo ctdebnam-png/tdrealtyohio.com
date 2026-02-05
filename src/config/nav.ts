@@ -26,8 +26,8 @@ export const nav: NavConfig = {
     { label: 'For Buyers', href: '/buyers/' },
     { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
     { label: 'Service Areas', href: '/areas/' },
-    { label: 'Home Value', href: '/home-value/' },
-    { label: 'Affordability', href: '/affordability/' },
+    { label: 'Free Home Value', href: '/home-value/' },
+    { label: 'Affordability Calculator', href: '/affordability/' },
     { label: 'Referral Credit', href: '/referrals/' },
     { label: 'Compare Options', href: '/compare/' },
   ],
@@ -53,10 +53,7 @@ export const footerLegal: NavItem[] = [
 /**
  * Header-only items (not in footer groups)
  */
-export const headerExtras: NavItem[] = [
-  { label: '1% Listing', href: '/1-percent-commission/' },
-  { label: 'Tools', href: '/tools/' },
-];
+export const headerExtras: NavItem[] = [];
 
 /**
  * Get all service hrefs for validation
