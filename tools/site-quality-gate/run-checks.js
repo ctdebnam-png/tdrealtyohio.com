@@ -16,6 +16,7 @@ const checkBusiness = require('./checks/business');
 const checkSitemap = require('./checks/sitemap');
 const checkSchema = require('./checks/schema');
 const checkCanonicalHost = require('./checks/canonical-host');
+const checkContentVoice = require('./checks/content-voice');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -41,7 +42,8 @@ async function main() {
     { name: 'business', fn: checkBusiness, label: 'Business Facts' },
     { name: 'sitemap', fn: checkSitemap, label: 'Sitemap Consistency' },
     { name: 'schema', fn: checkSchema, label: 'Schema.org Structured Data' },
-    { name: 'canonical-host', fn: checkCanonicalHost, label: 'Canonical Host (no-www)' }
+    { name: 'canonical-host', fn: checkCanonicalHost, label: 'Canonical Host (no-www)' },
+    { name: 'content-voice', fn: checkContentVoice, label: 'Content Voice (no first-person)' }
   ];
 
   for (const check of checks) {
