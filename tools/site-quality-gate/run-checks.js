@@ -15,6 +15,7 @@ const checkSeo = require('./checks/seo');
 const checkBusiness = require('./checks/business');
 const checkSitemap = require('./checks/sitemap');
 const checkSchema = require('./checks/schema');
+const checkCanonicalHost = require('./checks/canonical-host');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -39,7 +40,8 @@ async function main() {
     { name: 'seo', fn: checkSeo, label: 'SEO Tags' },
     { name: 'business', fn: checkBusiness, label: 'Business Facts' },
     { name: 'sitemap', fn: checkSitemap, label: 'Sitemap Consistency' },
-    { name: 'schema', fn: checkSchema, label: 'Schema.org Structured Data' }
+    { name: 'schema', fn: checkSchema, label: 'Schema.org Structured Data' },
+    { name: 'canonical-host', fn: checkCanonicalHost, label: 'Canonical Host (no-www)' }
   ];
 
   for (const check of checks) {
