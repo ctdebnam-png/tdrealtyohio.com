@@ -16,8 +16,8 @@ const NAV_REGISTRY = {
         { label: 'For Buyers', href: '/buyers/', showInHeader: true, headerLabel: 'Buyers' },
         { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/', showInHeader: false },
         { label: 'Service Areas', href: '/areas/', showInHeader: true, headerLabel: 'Areas' },
-        { label: 'Home Value', href: '/home-value/', showInHeader: false },
-        { label: 'Affordability', href: '/affordability/', showInHeader: false },
+        { label: 'Free Home Value', href: '/home-value/', showInHeader: false },
+        { label: 'Affordability Calculator', href: '/affordability/', showInHeader: false },
         { label: 'Referral Credit', href: '/referrals/', showInHeader: false },
         { label: 'Compare Options', href: '/compare/', showInHeader: false }
       ]
@@ -34,11 +34,8 @@ const NAV_REGISTRY = {
     }
   },
 
-  // Additional header-only items (not in footer groups)
-  headerExtras: [
-    { label: '1% Listing', href: '/1-percent-commission/' },
-    { label: 'Tools', href: '/tools/' }
-  ],
+  // Additional items not in the main nav groups
+  headerExtras: [],
 
   // Footer legal links (separate from main nav)
   footerLegal: [

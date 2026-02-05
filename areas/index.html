@@ -104,31 +104,16 @@
   </script>
 
   <style>
-    .community-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
-    .community-tab { padding: 0.75rem 1.25rem; min-height: 44px; border: 2px solid var(--gray-200); border-radius: var(--radius-md); background: var(--white); color: var(--gray-700); font-weight: 500; cursor: pointer; transition: all 0.2s; }
-    .community-tab:hover { border-color: var(--navy); color: var(--navy); }
-    .community-tab.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
-    .community-content { display: none; }
-    .community-content.active { display: block; }
-    .resource-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0; }
-    .resource-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); background: var(--white); color: var(--gray-700); font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: all 0.2s; }
-    .resource-btn:hover { border-color: var(--navy); color: var(--navy); background: var(--gray-50); }
-    .resource-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
-    /* Fixed 4-column grid at desktop, 2-column at tablet, single column on mobile */
-    .market-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
-    .market-stat { background: var(--gray-50); padding: 1rem; border-radius: var(--radius-md); text-align: center; min-height: 80px; display: flex; flex-direction: column; justify-content: center; }
-    .market-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--navy); font-family: 'DM Serif Display', serif; line-height: 1.2; }
-    .market-stat-label { font-size: 0.8125rem; color: var(--gray-600); margin-top: 0.25rem; line-height: 1.3; }
-    .community-description { line-height: 1.7; color: var(--gray-700); }
-    .community-calculator { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.5rem; margin-top: 2rem; }
-    /* Responsive grid adjustments for areas page */
-    @media (max-width: 1024px) {
-      .market-stats { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 480px) {
-      .market-stats { grid-template-columns: 1fr; }
-      .market-stat { min-height: auto; padding: 0.875rem; }
-    }
+    .community-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .community-card { border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.5rem; background: var(--white); transition: box-shadow 0.2s, border-color 0.2s; display: flex; flex-direction: column; }
+    .community-card:hover { box-shadow: var(--shadow-md); border-color: var(--gold); }
+    .community-card h3 { margin-bottom: 0.5rem; font-size: 1.25rem; }
+    .community-card-meta { display: flex; gap: 1rem; margin-bottom: 0.75rem; font-size: 0.8125rem; color: var(--gray-500); }
+    .community-card-meta span { white-space: nowrap; }
+    .community-card p { font-size: 0.9375rem; color: var(--gray-700); line-height: 1.6; margin-bottom: 1rem; flex: 1; }
+    .community-card .btn { align-self: flex-start; font-size: 0.875rem; padding: 0.5rem 1rem; }
+    @media (max-width: 1024px) { .community-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .community-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -148,7 +133,6 @@
         <a href="/compare/" class="nav-link">Compare Options</a>
         <div class="nav-section-header">Company</div>
         <a href="/about/" class="nav-link">About</a>
-        <a href="/contact/" class="nav-link">Contact</a>
         <a href="/blog/" class="nav-link">Blog</a>
         <a href="/agents/" class="nav-link">Agent Opportunities</a>
         <a href="/faq/" class="nav-link">FAQ</a>
@@ -170,543 +154,186 @@
       </div>
     </section>
 
+
     <section class="section">
       <div class="container">
         <p class="text-muted" style="text-align: center; font-size: 0.8125rem; margin-bottom: 1.5rem; color: var(--gray-500);">
           Market data approximate. Median prices and days on market based on MLS data and public records. Last updated: <span data-market-updated>January 2026</span>.
           <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" style="color: var(--gold);">Source: Columbus REALTORS</a>
         </p>
-        <nav aria-label="Community selection" class="community-tabs" id="community-tabs">
-          <button type="button" class="community-tab active" data-community="columbus">Columbus</button>
-          <button type="button" class="community-tab" data-community="westerville">Westerville</button>
-          <button type="button" class="community-tab" data-community="dublin">Dublin</button>
-          <button type="button" class="community-tab" data-community="powell">Powell</button>
-          <button type="button" class="community-tab" data-community="new-albany">New Albany</button>
-          <button type="button" class="community-tab" data-community="gahanna">Gahanna</button>
-          <button type="button" class="community-tab" data-community="hilliard">Hilliard</button>
-          <button type="button" class="community-tab" data-community="upper-arlington">Upper Arlington</button>
-          <button type="button" class="community-tab" data-community="worthington">Worthington</button>
-          <button type="button" class="community-tab" data-community="grove-city">Grove City</button>
-          <button type="button" class="community-tab" data-community="delaware">Delaware</button>
-          <button type="button" class="community-tab" data-community="pickerington">Pickerington</button>
-          <button type="button" class="community-tab" data-community="pataskala">Pataskala</button>
-          <button type="button" class="community-tab" data-community="sunbury">Sunbury</button>
-          <button type="button" class="community-tab" data-community="granville">Granville</button>
-          <button type="button" class="community-tab" data-community="johnstown">Johnstown</button>
-          <button type="button" class="community-tab" data-community="blacklick">Blacklick</button>
-          <button type="button" class="community-tab" data-community="canal-winchester">Canal Winchester</button>
-          <button type="button" class="community-tab" data-community="bexley">Bexley</button>
-          <button type="button" class="community-tab" data-community="clintonville">Clintonville</button>
-          <button type="button" class="community-tab" data-community="german-village">German Village</button>
-          <button type="button" class="community-tab" data-community="grandview-heights">Grandview Heights</button>
-          <button type="button" class="community-tab" data-community="lewis-center">Lewis Center</button>
-          <button type="button" class="community-tab" data-community="reynoldsburg">Reynoldsburg</button>
-        </nav>
+        <div class="community-grid">
 
-        <!-- Columbus -->
-        <div class="community-content active" id="columbus">
-          <h2>Columbus, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.columbus.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.ccsoh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Columbus City Schools</a>
-            <a href="https://www.niche.com/places-to-live/columbus-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$275K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">906K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">18</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$2,750</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Columbus is Ohio's capital and largest city, offering diverse neighborhoods from historic German Village to the trendy Short North Arts District. The market provides options at every price point. Columbus City Schools is the state's largest district, while many Columbus addresses also feed into suburban districts like Westerville, Dublin, and Hilliard.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/columbus/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Columbus Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Columbus</h3>
+            <div class="community-card-meta"><span>Median: $275K</span><span>18 days on market</span></div>
+            <p>Ohio's capital and largest city, offering diverse neighborhoods from historic German Village to the trendy Short North Arts District.</p>
+            <a href="/areas/columbus/" class="btn btn-outline">View Columbus</a>
+          </article>
 
-        <!-- Westerville -->
-        <div class="community-content" id="westerville">
-          <h2>Westerville, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.westerville.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.westerville.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Westerville City Schools</a>
-            <a href="https://www.niche.com/places-to-live/westerville-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$400K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">42K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">12</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,000</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Westerville combines small-town charm with suburban convenience. The historic Uptown district offers local shops and restaurants, while newer developments provide modern housing options. Westerville City Schools consistently ranks among Ohio's top districts. The city is home to Otterbein University and offers extensive parks and recreation programs.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/westerville/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Westerville Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Westerville</h3>
+            <div class="community-card-meta"><span>Median: $400K</span><span>12 days on market</span></div>
+            <p>Small-town charm with suburban convenience. Historic Uptown district, top-ranked Westerville City Schools, and extensive parks.</p>
+            <a href="/areas/westerville/" class="btn btn-outline">View Westerville</a>
+          </article>
 
-        <!-- Dublin -->
-        <div class="community-content" id="dublin">
-          <h2>Dublin, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://dublinohiousa.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.dublinschools.net/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Dublin City Schools</a>
-            <a href="https://www.niche.com/places-to-live/dublin-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$550K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">51K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$5,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Dublin is one of Central Ohio's premier communities, known for excellent schools, corporate headquarters, and the annual Dublin Irish Festival. The Bridge Street District offers urban-style living, while established neighborhoods feature larger lots and mature landscaping. Dublin City Schools is consistently ranked among Ohio's best.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/dublin/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Dublin Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Dublin</h3>
+            <div class="community-card-meta"><span>Median: $550K</span><span>14 days on market</span></div>
+            <p>Premier community known for excellent Dublin City Schools, corporate headquarters, and the Bridge Street District.</p>
+            <a href="/areas/dublin/" class="btn btn-outline">View Dublin</a>
+          </article>
 
-        <!-- Powell -->
-        <div class="community-content" id="powell">
-          <h2>Powell, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://cityofpowell.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.olentangy.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Olentangy Local Schools</a>
-            <a href="https://www.niche.com/places-to-live/powell-delaware-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$550K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">14K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">11</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$5,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Powell offers small-town charm with easy access to Columbus. The historic downtown features local shops and restaurants. Olentangy Local Schools—one of Ohio's highest-rated districts—is the primary draw for families, with multiple elementary, middle, and high school options.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/powell/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Powell Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Powell</h3>
+            <div class="community-card-meta"><span>Median: $550K</span><span>11 days on market</span></div>
+            <p>Small-town charm with easy access to Columbus. Olentangy Local Schools is the primary draw for families.</p>
+            <a href="/areas/powell/" class="btn btn-outline">View Powell</a>
+          </article>
 
-        <!-- New Albany -->
-        <div class="community-content" id="new-albany">
-          <h2>New Albany, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://newalbanyohio.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.napls.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>New Albany-Plain Local Schools</a>
-            <a href="https://www.niche.com/places-to-live/new-albany-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$650K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">12K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">15</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$6,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">New Albany is a master-planned community known for its Georgian architecture, extensive trail system, and top-ranked schools. New Albany-Plain Local Schools consistently ranks among Ohio's elite districts, drawing families from across the region.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/new-albany/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full New Albany Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>New Albany</h3>
+            <div class="community-card-meta"><span>Median: $650K</span><span>15 days on market</span></div>
+            <p>Master-planned community known for Georgian architecture, extensive trails, and top-ranked New Albany-Plain Local Schools.</p>
+            <a href="/areas/new-albany/" class="btn btn-outline">View New Albany</a>
+          </article>
 
-        <!-- Gahanna -->
-        <div class="community-content" id="gahanna">
-          <h2>Gahanna, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.gahanna.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.gahanna.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Gahanna-Jefferson Schools</a>
-            <a href="https://www.niche.com/places-to-live/gahanna-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$375K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">36K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">13</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,750</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Gahanna—the "Herb Capital of Ohio"—offers a balance of suburban living and community character. Creekside, the city's entertainment district along Big Walnut Creek, hosts events and festivals year-round. Gahanna-Jefferson City Schools provides quality education.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/gahanna/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Gahanna Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Gahanna</h3>
+            <div class="community-card-meta"><span>Median: $375K</span><span>13 days on market</span></div>
+            <p>The "Herb Capital of Ohio" offers suburban living and community character with the Creekside entertainment district.</p>
+            <a href="/areas/gahanna/" class="btn btn-outline">View Gahanna</a>
+          </article>
 
-        <!-- Hilliard -->
-        <div class="community-content" id="hilliard">
-          <h2>Hilliard, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://hilliardohio.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.hilliardschools.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Hilliard City Schools</a>
-            <a href="https://www.niche.com/places-to-live/hilliard-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$425K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">37K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">12</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,250</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Hilliard is one of Central Ohio's fastest-growing communities, with a revitalized Old Hilliard downtown and extensive new development. Hilliard City Schools serves over 16,000 students across three high schools.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/hilliard/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Hilliard Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Hilliard</h3>
+            <div class="community-card-meta"><span>Median: $425K</span><span>12 days on market</span></div>
+            <p>Fast-growing community with a revitalized Old Hilliard downtown. Hilliard City Schools serves over 16,000 students.</p>
+            <a href="/areas/hilliard/" class="btn btn-outline">View Hilliard</a>
+          </article>
 
-        <!-- Upper Arlington -->
-        <div class="community-content" id="upper-arlington">
-          <h2>Upper Arlington, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://upperarlingtonoh.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.uaschools.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Upper Arlington Schools</a>
-            <a href="https://www.niche.com/places-to-live/upper-arlington-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$600K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">36K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">10</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$6,000</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Upper Arlington is an established, tree-lined community adjacent to Ohio State University. Known for excellent schools and strong property values, UA features a mix of classic mid-century homes and newer construction. Upper Arlington City Schools is highly regarded.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/upper-arlington/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Upper Arlington Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Upper Arlington</h3>
+            <div class="community-card-meta"><span>Median: $600K</span><span>10 days on market</span></div>
+            <p>Established, tree-lined community adjacent to Ohio State. Strong property values and highly regarded schools.</p>
+            <a href="/areas/upper-arlington/" class="btn btn-outline">View Upper Arlington</a>
+          </article>
 
-        <!-- Worthington -->
-        <div class="community-content" id="worthington">
-          <h2>Worthington, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://worthington.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.worthington.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Worthington Schools</a>
-            <a href="https://www.niche.com/places-to-live/worthington-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$425K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">15K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">11</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,250</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Worthington is one of Ohio's oldest communities, with a charming downtown on the National Register of Historic Places. The village green hosts farmers markets and community events. Worthington City Schools ranks highly statewide.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/worthington/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Worthington Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Worthington</h3>
+            <div class="community-card-meta"><span>Median: $425K</span><span>11 days on market</span></div>
+            <p>One of Ohio's oldest communities with a charming downtown on the National Register of Historic Places.</p>
+            <a href="/areas/worthington/" class="btn btn-outline">View Worthington</a>
+          </article>
 
-        <!-- Grove City -->
-        <div class="community-content" id="grove-city">
-          <h2>Grove City, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.grovecityohio.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.swcsd.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>South-Western City Schools</a>
-            <a href="https://www.niche.com/places-to-live/grove-city-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A-</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$300K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">42K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,000</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Grove City offers affordable suburban living with a revitalized Town Center and strong community identity. The city hosts popular events like Arts in the Alley and provides extensive parks and recreation programs.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/grove-city/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Grove City Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Grove City</h3>
+            <div class="community-card-meta"><span>Median: $300K</span><span>14 days on market</span></div>
+            <p>Affordable suburban living with a revitalized Town Center. Popular events like Arts in the Alley and extensive parks.</p>
+            <a href="/areas/grove-city/" class="btn btn-outline">View Grove City</a>
+          </article>
 
-        <!-- Delaware -->
-        <div class="community-content" id="delaware">
-          <h2>Delaware, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.delawareohio.net/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.dcs.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Delaware City Schools</a>
-            <a href="https://www.niche.com/places-to-live/delaware-delaware-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A-</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$350K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">42K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">16</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Delaware is the county seat of Delaware County, Ohio's fastest-growing county. The city combines historic charm around its downtown square with new development. Home to Ohio Wesleyan University, Delaware offers cultural amenities alongside small-town living.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/delaware/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Delaware Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Delaware</h3>
+            <div class="community-card-meta"><span>Median: $350K</span><span>16 days on market</span></div>
+            <p>County seat of Ohio's fastest-growing county. Historic charm around the downtown square, home to Ohio Wesleyan University.</p>
+            <a href="/areas/delaware/" class="btn btn-outline">View Delaware</a>
+          </article>
 
-        <!-- Pickerington -->
-        <div class="community-content" id="pickerington">
-          <h2>Pickerington, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.pickerington.net/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.pickerington.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Pickerington Local Schools</a>
-            <a href="https://www.niche.com/places-to-live/pickerington-fairfield-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$375K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">23K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,750</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Pickerington is a growing community in Fairfield County known for its excellent schools and family-friendly atmosphere. Pickerington Local Schools serves two high schools and consistently earns high marks. The city offers a mix of established neighborhoods and new construction.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/pickerington/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Pickerington Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Pickerington</h3>
+            <div class="community-card-meta"><span>Median: $375K</span><span>14 days on market</span></div>
+            <p>Growing community in Fairfield County with excellent Pickerington Local Schools and a family-friendly atmosphere.</p>
+            <a href="/areas/pickerington/" class="btn btn-outline">View Pickerington</a>
+          </article>
 
-        <!-- Pataskala -->
-        <div class="community-content" id="pataskala">
-          <h2>Pataskala, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.cityofpataskala.com/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.lickingvalley.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Licking Valley Schools</a>
-            <a href="https://www.niche.com/places-to-live/pataskala-licking-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: B+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$325K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">18K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">18</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,250</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Pataskala offers affordable housing options on the eastern edge of the Columbus metro area. The city has seen significant growth with new residential developments while maintaining its rural character. Multiple school districts serve the area including Licking Valley and Southwest Licking.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/pataskala/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Pataskala Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Pataskala</h3>
+            <div class="community-card-meta"><span>Median: $325K</span><span>18 days on market</span></div>
+            <p>Affordable housing on the eastern edge of the metro area with significant growth and new residential developments.</p>
+            <a href="/areas/pataskala/" class="btn btn-outline">View Pataskala</a>
+          </article>
 
-        <!-- Sunbury -->
-        <div class="community-content" id="sunbury">
-          <h2>Sunbury, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://sunburyoh.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Village Website</a>
-            <a href="https://www.bfrsd.net/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Big Walnut Local Schools</a>
-            <a href="https://www.niche.com/places-to-live/sunbury-delaware-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$400K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">7K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">15</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,000</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Sunbury is a charming village in Delaware County experiencing rapid growth. Big Walnut Local Schools is highly regarded and draws families to the area. The historic downtown square hosts community events and local businesses.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/sunbury/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Sunbury Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Sunbury</h3>
+            <div class="community-card-meta"><span>Median: $400K</span><span>15 days on market</span></div>
+            <p>Charming village in Delaware County with highly regarded Big Walnut Local Schools and a historic downtown square.</p>
+            <a href="/areas/sunbury/" class="btn btn-outline">View Sunbury</a>
+          </article>
 
-        <!-- Granville -->
-        <div class="community-content" id="granville">
-          <h2>Granville, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.granville.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Village Website</a>
-            <a href="https://www.granvilleschools.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Granville Exempted Schools</a>
-            <a href="https://www.niche.com/places-to-live/granville-licking-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$425K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">6K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">20</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,250</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Granville is a picturesque New England-style village home to Denison University. Known for its historic architecture, tree-lined streets, and excellent schools, Granville offers a unique small-town atmosphere with easy access to Columbus. Granville Exempted Village Schools is highly rated.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/granville/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Granville Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Granville</h3>
+            <div class="community-card-meta"><span>Median: $425K</span><span>20 days on market</span></div>
+            <p>Picturesque New England-style village home to Denison University, with tree-lined streets and historic architecture.</p>
+            <a href="/areas/granville/" class="btn btn-outline">View Granville</a>
+          </article>
 
-        <!-- Johnstown -->
-        <div class="community-content" id="johnstown">
-          <h2>Johnstown, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://johnstownohio.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Village Website</a>
-            <a href="https://www.johnstown.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Johnstown-Monroe Schools</a>
-            <a href="https://www.niche.com/places-to-live/johnstown-licking-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A-</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$350K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">5K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">16</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Johnstown is a growing village in Licking County with a small-town feel and strong community identity. New development surrounds the historic village center. Johnstown-Monroe Local Schools serves the area with solid academic programs.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/johnstown/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Johnstown Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Johnstown</h3>
+            <div class="community-card-meta"><span>Median: $350K</span><span>16 days on market</span></div>
+            <p>Growing village in Licking County with a small-town feel. Johnstown-Monroe Local Schools serves the community.</p>
+            <a href="/areas/johnstown/" class="btn btn-outline">View Johnstown</a>
+          </article>
 
-        <!-- Blacklick -->
-        <div class="community-content" id="blacklick">
-          <h2>Blacklick, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.gahanna.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Gahanna (Primary City)</a>
-            <a href="https://www.gahanna.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Gahanna-Jefferson Schools</a>
-            <a href="https://www.niche.com/places-to-live/blacklick-estates-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: B+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$350K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">10K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Blacklick is an unincorporated community primarily within the Gahanna and Columbus areas. It offers a mix of established neighborhoods and newer developments with convenient access to I-270 and Easton. Most Blacklick addresses feed into Gahanna-Jefferson or Columbus City Schools.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/blacklick/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Blacklick Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Blacklick</h3>
+            <div class="community-card-meta"><span>Median: $350K</span><span>14 days on market</span></div>
+            <p>Unincorporated community with a mix of established and newer neighborhoods, convenient I-270 and Easton access.</p>
+            <a href="/areas/blacklick/" class="btn btn-outline">View Blacklick</a>
+          </article>
 
-        <!-- Canal Winchester -->
-        <div class="community-content" id="canal-winchester">
-          <h2>Canal Winchester, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.canalwinchesterohio.gov/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.cwls.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Canal Winchester Schools</a>
-            <a href="https://www.niche.com/places-to-live/canal-winchester-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A-</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$350K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">10K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Canal Winchester is a charming city in southeastern Franklin County with a historic downtown and strong community identity. The city hosts popular events like the Labor Day Festival and Blues & Ribfest. Canal Winchester Local Schools serves the community with quality education and a small-town feel.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/canal-winchester/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Canal Winchester Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Canal Winchester</h3>
+            <div class="community-card-meta"><span>Median: $350K</span><span>14 days on market</span></div>
+            <p>Charming city with a historic downtown and strong community identity. Home to the Labor Day Festival and Blues &amp; Ribfest.</p>
+            <a href="/areas/canal-winchester/" class="btn btn-outline">View Canal Winchester</a>
+          </article>
 
-        <!-- Bexley -->
-        <div class="community-content" id="bexley">
-          <h2>Bexley, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.bexley.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.bexleyschools.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Bexley City Schools</a>
-            <a href="https://www.niche.com/places-to-live/bexley-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$550K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">14K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">14</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$5,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Bexley is one of Central Ohio's most prestigious communities, known for its historic homes, tree-lined streets, and excellent schools. This compact city is completely surrounded by Columbus but maintains its own distinct identity with a walkable downtown, independent shops, and strong community spirit. Bexley City Schools consistently ranks among Ohio's top districts.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/bexley/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Bexley Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Bexley</h3>
+            <div class="community-card-meta"><span>Median: $550K</span><span>14 days on market</span></div>
+            <p>Prestigious community with historic homes, tree-lined streets, and top-ranked Bexley City Schools.</p>
+            <a href="/areas/bexley/" class="btn btn-outline">View Bexley</a>
+          </article>
 
-        <!-- Clintonville -->
-        <div class="community-content" id="clintonville">
-          <h2>Clintonville, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.clintonvilleareacommission.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Area Commission</a>
-            <a href="https://www.ccsoh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Columbus City Schools</a>
-            <a href="https://www.niche.com/places-to-live/n/clintonville-columbus-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$350K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">35K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">10</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$3,500</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Clintonville is one of Columbus's most beloved neighborhoods, known for its walkable streets, diverse architecture, and strong sense of community. Located just north of Ohio State University, this urban neighborhood features everything from charming 1920s bungalows to mid-century ranches. The Whetstone Park of Roses, Olentangy Trail, and vibrant High Street corridor make it attractive to young professionals and families alike.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/clintonville/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Clintonville Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Clintonville</h3>
+            <div class="community-card-meta"><span>Median: $350K</span><span>10 days on market</span></div>
+            <p>Beloved Columbus neighborhood with walkable streets, diverse architecture, and the Whetstone Park of Roses.</p>
+            <a href="/areas/clintonville/" class="btn btn-outline">View Clintonville</a>
+          </article>
 
-        <!-- German Village -->
-        <div class="community-content" id="german-village">
-          <h2>German Village, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.germanvillage.com/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>German Village Society</a>
-            <a href="https://www.ccsoh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Columbus City Schools</a>
-            <a href="https://www.niche.com/places-to-live/n/german-village-columbus-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Historic District: A+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$475K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">5K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">16</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,750</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">German Village is Columbus's crown jewel of historic preservation—a 233-acre neighborhood just south of downtown featuring beautifully restored 19th-century brick homes, brick-lined streets, and gas lamp-style lighting. Originally settled by German immigrants in the mid-1800s, it's one of the largest privately-funded historic districts in the United States.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/german-village/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full German Village Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>German Village</h3>
+            <div class="community-card-meta"><span>Median: $475K</span><span>16 days on market</span></div>
+            <p>Columbus's crown jewel of historic preservation with beautifully restored 19th-century brick homes and brick-lined streets.</p>
+            <a href="/areas/german-village/" class="btn btn-outline">View German Village</a>
+          </article>
 
-        <!-- Grandview Heights -->
-        <div class="community-content" id="grandview-heights">
-          <h2>Grandview Heights, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.grandviewheights.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.grandviewschools.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Grandview Heights Schools</a>
-            <a href="https://www.niche.com/places-to-live/grandview-heights-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$425K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">8K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">11</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,250</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Grandview Heights is a compact, walkable suburb just west of downtown Columbus that punches well above its weight in terms of dining, entertainment, and community character. Grandview Avenue serves as the main commercial strip, lined with locally-owned restaurants, breweries, and shops. The annual Grandview Hop art and music festival exemplifies the community's creative energy.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/grandview-heights/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Grandview Heights Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Grandview Heights</h3>
+            <div class="community-card-meta"><span>Median: $425K</span><span>11 days on market</span></div>
+            <p>Compact, walkable suburb west of downtown with locally-owned restaurants, breweries, and creative energy.</p>
+            <a href="/areas/grandview-heights/" class="btn btn-outline">View Grandview Heights</a>
+          </article>
 
-        <!-- Lewis Center -->
-        <div class="community-content" id="lewis-center">
-          <h2>Lewis Center, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.co.delaware.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Delaware County</a>
-            <a href="https://www.olentangy.k12.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Olentangy Local Schools</a>
-            <a href="https://www.niche.com/places-to-live/lewis-center-delaware-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: A</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$475K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">35K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">18</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$4,750</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Lewis Center is one of Central Ohio's fastest-growing communities, located in southern Delaware County along the US-23 corridor. This unincorporated area offers newer construction, excellent Olentangy Schools, and convenient access to both Delaware and Columbus. The Polaris area's retail and entertainment options are nearby.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/lewis-center/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Lewis Center Page</a>
-          </div>
-        </div>
+          <article class="community-card">
+            <h3>Lewis Center</h3>
+            <div class="community-card-meta"><span>Median: $475K</span><span>18 days on market</span></div>
+            <p>Fast-growing community in southern Delaware County with newer construction and top-ranked Olentangy Schools.</p>
+            <a href="/areas/lewis-center/" class="btn btn-outline">View Lewis Center</a>
+          </article>
 
-        <!-- Reynoldsburg -->
-        <div class="community-content" id="reynoldsburg">
-          <h2>Reynoldsburg, Ohio</h2>
-          <div class="resource-buttons">
-            <a href="https://www.ci.reynoldsburg.oh.us/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>City Website</a>
-            <a href="https://www.reyn.org/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Reynoldsburg Schools</a>
-            <a href="https://www.niche.com/places-to-live/reynoldsburg-franklin-oh/" target="_blank" rel="noopener noreferrer" class="resource-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Niche Rating: B+</a>
-          </div>
-          <div class="market-stats">
-            <div class="market-stat"><div class="market-stat-value">$285K</div><div class="market-stat-label">Median Home Price</div></div>
-            <div class="market-stat"><div class="market-stat-value">40K</div><div class="market-stat-label">Population</div></div>
-            <div class="market-stat"><div class="market-stat-value">15</div><div class="market-stat-label">Avg Days on Market</div></div>
-            <div class="market-stat"><div class="market-stat-value">$2,850</div><div class="market-stat-label">Savings at 2% vs 3%</div></div>
-          </div>
-          <p class="community-description">Reynoldsburg, known as the "Birthplace of the Tomato," offers affordable housing and convenient access to downtown Columbus via I-70. This east-side suburb has experienced steady growth and revitalization, with new retail and dining options along Main Street. For buyers priced out of closer-in suburbs, Reynoldsburg offers excellent value with a reasonable commute.</p>
-          <div class="community-calculator text-center">
-            <a href="/sellers/" class="btn btn-primary">Calculate Your Savings</a>
-            <a href="/areas/reynoldsburg/" class="btn btn-outline" style="margin-left: 0.5rem;">View Full Reynoldsburg Page</a>
-          </div>
+          <article class="community-card">
+            <h3>Reynoldsburg</h3>
+            <div class="community-card-meta"><span>Median: $285K</span><span>15 days on market</span></div>
+            <p>The "Birthplace of the Tomato" offers affordable housing and convenient downtown Columbus access via I-70.</p>
+            <a href="/areas/reynoldsburg/" class="btn btn-outline">View Reynoldsburg</a>
+          </article>
+
         </div>
       </div>
+    </section>
     </section>
 
     <section class="section cta-section">
@@ -815,16 +442,6 @@
   <script src="/assets/js/nav.js"></script>
   <script src="/assets/js/main.js"></script>
   <script>
-    // Community tab switching
-    document.querySelectorAll('.community-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.community-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.community-content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.community).classList.add('active');
-      });
-    });
-
     // Populate market data last-updated date from config
     const marketUpdatedSpan = document.querySelector('[data-market-updated]');
     if (marketUpdatedSpan && typeof TD_CONFIG !== 'undefined' && TD_CONFIG.marketDataLastUpdated) {
