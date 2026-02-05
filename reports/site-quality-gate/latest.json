@@ -1,19 +1,14 @@
 {
-  "timestamp": "2026-02-04T17:38:03.336Z",
+  "timestamp": "2026-02-05T11:38:36.188Z",
   "passed": true,
   "checks": {
     "links": {
       "passed": true,
       "errors": [],
-      "warnings": [
-        {
-          "file": "N/A",
-          "message": "82 external URLs found. Use --check-external to validate them."
-        }
-      ],
+      "warnings": [],
       "stats": {
-        "totalLinks": 3145,
-        "internalLinks": 2467,
+        "totalLinks": 3159,
+        "internalLinks": 2481,
         "externalLinks": 418,
         "brokenInternal": 0,
         "skippedExternal": 0
@@ -44,7 +39,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "sitemapUrls": 60,
+        "sitemapUrls": 160,
         "htmlFiles": 63,
         "missingFromSitemap": 0,
         "orphanedInSitemap": 0
