@@ -5,11 +5,11 @@
     "pages_with_canonical": 162,
     "pages_with_og_tags": 162,
     "pages_with_twitter_tags": 159,
-    "pages_with_tools_nav": 103,
-    "pages_missing_tools_nav": 59,
-    "crawled_at": "2026-02-05T12:00:11.768Z"
+    "pages_with_tools_nav": 159,
+    "pages_missing_tools_nav": 3,
+    "crawled_at": "2026-02-05T12:01:43.524Z"
   },
-  "nav_variations": 4,
+  "nav_variations": 3,
   "pages": [
     {
       "url": "https://tdrealtyohio.com/",
@@ -106,7 +106,7 @@
         "twitter:title": "1% Commission Real Estate Listing Columbus Ohio",
         "twitter:description": "Sell your Columbus home for just 1% listing commission."
       },
-      "internal_links_found_count": 47,
+      "internal_links_found_count": 48,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -119,6 +119,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -149,7 +153,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/about/",
@@ -174,7 +178,7 @@
         "twitter:description": "Central Ohio brokerage offering lower listing fees for sellers, cash back for first-time buyers, and free pre-listing inspections.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 28,
+      "internal_links_found_count": 29,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -187,6 +191,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -217,7 +225,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/affordability/",
@@ -242,7 +250,7 @@
         "twitter:description": "Get a realistic estimate based on your income and debts.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -255,6 +263,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -285,7 +297,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/agents/",
@@ -310,7 +322,7 @@
         "twitter:description": "Keep 100% on listings. 90% on buyer sides. No desk fees. No franchise fees.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -323,6 +335,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -353,7 +369,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/",
@@ -377,7 +393,7 @@
         "twitter:description": "Discover Central Ohio neighborhoods: Columbus, Westerville, Dublin, Powell & more. Market data, schools, and local insights for homebuyers.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 49,
+      "internal_links_found_count": 50,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -390,6 +406,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -420,7 +440,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/bexley/",
@@ -444,7 +464,7 @@
         "twitter:description": "Full-service real estate in Bexley at 1% listing commission. Save $11,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 29,
+      "internal_links_found_count": 30,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -457,6 +477,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -487,7 +511,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/blacklick/",
@@ -511,7 +535,7 @@
         "twitter:description": "Full-service real estate in Blacklick at 1% listing commission. Save $7,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -524,6 +548,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -554,7 +582,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/canal-winchester/",
@@ -578,7 +606,7 @@
         "twitter:description": "Full-service real estate in Canal Winchester at 1% listing commission. Save $7,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -591,6 +619,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -621,7 +653,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/clintonville/",
@@ -645,7 +677,7 @@
         "twitter:description": "Full-service real estate in Clintonville at 1% listing commission. Save $7,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -658,6 +690,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -688,7 +724,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/columbus/",
@@ -712,7 +748,7 @@
         "twitter:description": "Full-service real estate in Columbus at 1% listing commission. Save $5,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 32,
+      "internal_links_found_count": 33,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -725,6 +761,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -755,7 +795,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/delaware/",
@@ -779,7 +819,7 @@
         "twitter:description": "Full-service real estate in Delaware at 1% listing commission. Save $7,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -792,6 +832,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -822,7 +866,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/dublin/",
@@ -846,7 +890,7 @@
         "twitter:description": "Full-service real estate in Dublin at 1% listing commission. Save $11,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 31,
+      "internal_links_found_count": 32,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -859,6 +903,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -889,7 +937,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/gahanna/",
@@ -913,7 +961,7 @@
         "twitter:description": "Full-service real estate in Gahanna at 1% listing commission. Save $7,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 31,
+      "internal_links_found_count": 32,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -926,6 +974,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -956,7 +1008,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/german-village/",
@@ -980,7 +1032,7 @@
         "twitter:description": "Full-service real estate in German Village at 1% listing commission. Save $9,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 29,
+      "internal_links_found_count": 30,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -993,6 +1045,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1023,7 +1079,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/grandview-heights/",
@@ -1047,7 +1103,7 @@
         "twitter:description": "Full-service real estate in Grandview Heights at 1% listing commission. Save $8,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1060,6 +1116,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1090,7 +1150,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/granville/",
@@ -1114,7 +1174,7 @@
         "twitter:description": "Full-service real estate in Granville at 1% listing commission. Save $8,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1127,6 +1187,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1157,7 +1221,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/grove-city/",
@@ -1181,7 +1245,7 @@
         "twitter:description": "Full-service real estate in Grove City at 1% listing commission. Save $6,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1194,6 +1258,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1224,7 +1292,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/hilliard/",
@@ -1248,7 +1316,7 @@
         "twitter:description": "Full-service real estate in Hilliard at 1% listing commission. Save $8,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1261,6 +1329,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1291,7 +1363,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/johnstown/",
@@ -1315,7 +1387,7 @@
         "twitter:description": "Full-service real estate in Johnstown at 1% listing commission. Save $7,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1328,6 +1400,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1358,7 +1434,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/lewis-center/",
@@ -1382,7 +1458,7 @@
         "twitter:description": "Full-service real estate in Lewis Center at 1% listing commission. Save $9,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1395,6 +1471,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1425,7 +1505,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/new-albany/",
@@ -1449,7 +1529,7 @@
         "twitter:description": "Full-service real estate in New Albany at 1% listing commission. Save $13,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1462,6 +1542,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1492,7 +1576,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/pataskala/",
@@ -1516,7 +1600,7 @@
         "twitter:description": "Full-service real estate in Pataskala at 1% listing commission. Save $6,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1529,6 +1613,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1559,7 +1647,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/pickerington/",
@@ -1583,7 +1671,7 @@
         "twitter:description": "Full-service real estate in Pickerington at 1% listing commission. Save $7,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1596,6 +1684,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1626,7 +1718,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/powell/",
@@ -1650,7 +1742,7 @@
         "twitter:description": "Full-service real estate in Powell at 1% listing commission. Save $11,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1663,6 +1755,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1693,7 +1789,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/reynoldsburg/",
@@ -1717,7 +1813,7 @@
         "twitter:description": "Full-service real estate in Reynoldsburg at 1% listing commission. Save $5,700 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 31,
+      "internal_links_found_count": 32,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1730,6 +1826,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1760,7 +1860,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/sunbury/",
@@ -1784,7 +1884,7 @@
         "twitter:description": "Full-service real estate in Sunbury at 1% listing commission. Save $8,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1797,6 +1897,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1827,7 +1931,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/upper-arlington/",
@@ -1851,7 +1955,7 @@
         "twitter:description": "Full-service real estate in Upper Arlington at 1% listing commission. Save $12,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1864,6 +1968,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1894,7 +2002,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/westerville/",
@@ -1918,7 +2026,7 @@
         "twitter:description": "Full-service real estate in Westerville at 1% listing commission. Save $8,000 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 31,
+      "internal_links_found_count": 32,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1931,6 +2039,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -1961,7 +2073,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/areas/worthington/",
@@ -1985,7 +2097,7 @@
         "twitter:description": "Full-service real estate in Worthington at 1% listing commission. Save $8,500 on the median home.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -1998,6 +2110,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2028,7 +2144,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/",
@@ -2053,7 +2169,7 @@
         "twitter:description": "Expert real estate advice for Columbus, Ohio homebuyers and sellers.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 35,
+      "internal_links_found_count": 36,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2066,6 +2182,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2096,7 +2216,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/1-percent-vs-3-percent-commission-comparison/",
@@ -2121,7 +2241,7 @@
         "twitter:description": "Comparing services at different commission levels and debunking myths.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 28,
+      "internal_links_found_count": 29,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2134,6 +2254,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2164,7 +2288,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/central-ohio-housing-market-2026/",
@@ -2189,7 +2313,7 @@
         "twitter:description": "Current trends and insights for buyers and sellers in the Columbus-area market.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 32,
+      "internal_links_found_count": 33,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2202,6 +2326,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2232,7 +2360,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/closing-costs-columbus-ohio/",
@@ -2257,7 +2385,7 @@
         "twitter:description": "Complete guide to seller closing costs in Columbus and Central Ohio. Learn about title fees, transfer taxes, commissions, and how to estimate your net proceeds.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2270,6 +2398,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2300,7 +2432,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/first-time-homebuyer-cash-back/",
@@ -2325,7 +2457,7 @@
         "twitter:description": "First-time buyers in Columbus can get 1% of the purchase price back at closing.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 28,
+      "internal_links_found_count": 29,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2338,6 +2470,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2368,7 +2504,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/fsbo-vs-realtor-columbus/",
@@ -2393,7 +2529,7 @@
         "twitter:description": "Compare FSBO vs realtor costs, sale prices, and risks for Columbus sellers.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2406,6 +2542,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2436,7 +2576,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/home-staging-tips-columbus/",
@@ -2461,7 +2601,7 @@
         "twitter:description": "Practical home staging tips for Central Ohio sellers. Learn what rooms to focus on, DIY staging vs professional, and staging mistakes that cost you money.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2474,6 +2614,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2504,7 +2648,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/how-much-save-selling-columbus-home-1-percent/",
@@ -2529,7 +2673,7 @@
         "twitter:description": "See exactly how much you save with a 1% commission realtor in Columbus.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 28,
+      "internal_links_found_count": 29,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2542,6 +2686,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2572,7 +2720,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/pre-listing-inspection-benefits/",
@@ -2597,7 +2745,7 @@
         "twitter:description": "Learn why Columbus home sellers should get a pre-listing inspection.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 27,
+      "internal_links_found_count": 28,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2610,6 +2758,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2640,7 +2792,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/selling-home-westerville-ohio-2025/",
@@ -2665,7 +2817,7 @@
         "twitter:description": "Guide to selling your Westerville home. Market conditions and pricing strategies.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 29,
+      "internal_links_found_count": 30,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2678,6 +2830,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2708,7 +2864,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/blog/why-agents-leaving-traditional-brokerages-100-commission/",
@@ -2733,7 +2889,7 @@
         "twitter:description": "Why more agents are switching to 100% commission models.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 28,
+      "internal_links_found_count": 29,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2746,6 +2902,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2776,7 +2936,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/buyers/",
@@ -2872,7 +3032,7 @@
         "twitter:title": "Compare Real Estate Options | TD Realty Ohio",
         "twitter:description": "Compare commission rates, discount brokers, and flat fee MLS options."
       },
-      "internal_links_found_count": 28,
+      "internal_links_found_count": 29,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2885,6 +3045,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2915,7 +3079,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/compare/1-percent-vs-3-percent/",
@@ -2939,7 +3103,7 @@
         "twitter:title": "1% vs 3% Listing Commission Comparison",
         "twitter:description": "Compare 1% and 3% listing commissions side by side."
       },
-      "internal_links_found_count": 26,
+      "internal_links_found_count": 27,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -2952,6 +3116,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -2982,7 +3150,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/compare/discount-broker-vs-full-service/",
@@ -3006,7 +3174,7 @@
         "twitter:title": "Discount Broker vs Full Service Agent",
         "twitter:description": "Compare discount brokers and full-service agents."
       },
-      "internal_links_found_count": 26,
+      "internal_links_found_count": 27,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3019,6 +3187,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3049,7 +3221,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/compare/flat-fee-mls-vs-full-service/",
@@ -3073,7 +3245,7 @@
         "twitter:title": "Flat Fee MLS vs Full Service Agent",
         "twitter:description": "Compare flat fee MLS with full-service agents."
       },
-      "internal_links_found_count": 26,
+      "internal_links_found_count": 27,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3086,6 +3258,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3116,7 +3292,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/contact/",
@@ -3141,7 +3317,7 @@
         "twitter:description": "Schedule a free consultation with TD Realty Ohio. No pressure, just honest advice on buying or selling in Central Ohio.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3154,6 +3330,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3184,7 +3364,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/fair-housing/",
@@ -3209,7 +3389,7 @@
         "twitter:description": "TD Realty Ohio",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3222,6 +3402,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3252,7 +3436,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/faq/",
@@ -3276,7 +3460,7 @@
         "twitter:description": "Get answers about 1% commission listings, buyer cash back, and full-service real estate in Columbus.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3289,6 +3473,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3319,7 +3507,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/home-value/",
@@ -3344,7 +3532,7 @@
         "twitter:description": "Get a free, no-obligation market analysis from a local expert.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3357,6 +3545,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3387,7 +3579,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/lp/buy-home-columbus/",
@@ -3475,7 +3667,7 @@
         "twitter:description": "Know your home",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 26,
+      "internal_links_found_count": 27,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3488,6 +3680,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3518,7 +3714,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/privacy/",
@@ -3543,7 +3739,7 @@
         "twitter:description": "Privacy policy for TD Realty Ohio. Learn how we collect, use, and protect your personal information.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3556,6 +3752,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3586,7 +3786,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/referrals/",
@@ -3611,7 +3811,7 @@
         "twitter:description": "Get a $250 credit at closing when you",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3624,6 +3824,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3654,7 +3858,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/sell-and-buy/",
@@ -3678,7 +3882,7 @@
         "twitter:title": "Sell and Buy at the Same Time for 1%",
         "twitter:description": "Selling and buying? List for just 1% commission with coordinated closings."
       },
-      "internal_links_found_count": 27,
+      "internal_links_found_count": 28,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3691,6 +3895,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3721,7 +3929,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/sell-only-2-percent/",
@@ -3745,7 +3953,7 @@
         "twitter:title": "Sell Your Home for 2% Commission",
         "twitter:description": "Selling without buying? List for just 2% commission with full service."
       },
-      "internal_links_found_count": 28,
+      "internal_links_found_count": 29,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3758,6 +3966,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3788,7 +4000,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/sellers/",
@@ -3885,7 +4097,7 @@
         "twitter:description": "Complete site map for TD Realty Ohio. Find all pages including services for sellers, buyers, agents, and community information.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 64,
+      "internal_links_found_count": 65,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3898,6 +4110,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3928,7 +4144,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/terms/",
@@ -3953,7 +4169,7 @@
         "twitter:description": "Terms of service for TD Realty Ohio website and services.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 25,
+      "internal_links_found_count": 26,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -3966,6 +4182,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -3996,7 +4216,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/testimonials/",
@@ -4020,7 +4240,7 @@
         "twitter:description": "Share your experience with TD Realty Ohio.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
-      "internal_links_found_count": 30,
+      "internal_links_found_count": 31,
       "nav_links": [
         {
           "href": "/sellers/",
@@ -4033,6 +4253,10 @@
         {
           "href": "/buyers/",
           "text": "Buyers"
+        },
+        {
+          "href": "/tools/",
+          "text": "Tools"
         },
         {
           "href": "/pre-listing-inspection/",
@@ -4063,7 +4287,7 @@
           "text": "Contact"
         }
       ],
-      "has_tools_nav": false
+      "has_tools_nav": true
     },
     {
       "url": "https://tdrealtyohio.com/tools/",
