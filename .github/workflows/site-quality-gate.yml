@@ -37,6 +37,12 @@ jobs:
       - name: Run indexing guard
         run: node scripts/indexing-guard.mjs
 
+      - name: Run navigation check
+        run: node scripts/check-nav.mjs
+
+      - name: Run copy quality check
+        run: node scripts/check-copy.mjs
+
       - name: Upload quality report
         uses: actions/upload-artifact@v4
         if: always()

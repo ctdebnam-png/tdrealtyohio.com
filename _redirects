@@ -27,7 +27,8 @@
 /1-percent-commission   /1-percent-commission/  301
 /areas                  /areas/                 301
 /blog                   /blog/                  301
-/testimonials           /testimonials/          301
+/testimonials           /                       301
+/testimonials/          /                       301
 /compare                /compare/               301
 /faq                    /faq/                   301
 /sell-and-buy           /sell-and-buy/          301
@@ -51,7 +52,7 @@
 /sitemap-page.html      /sitemap-page/          301
 /pre-listing-inspection.html /pre-listing-inspection/ 301
 /1-percent-commission.html /1-percent-commission/ 301
-/testimonials.html      /testimonials/          301
+/testimonials.html      /                       301
 /compare.html           /compare/               301
 /faq.html               /faq/                   301
 
