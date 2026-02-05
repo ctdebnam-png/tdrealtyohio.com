@@ -660,6 +660,13 @@ function initEventTracking() {
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
   populateContactInfo();
+  // Render dynamic navigation from nav.js if functions exist
+  if (typeof renderMobileNav === 'function') {
+    renderMobileNav();
+  }
+  if (typeof renderFooterNav === 'function') {
+    renderFooterNav();
+  }
   initMobileNav();
   initSellerCalculator();
   initBuyerCalculator();

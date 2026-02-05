@@ -2,6 +2,10 @@
 # TD Realty Ohio - URL Canonicalization
 # ========================================
 
+# Host canonicalization: www to non-www
+# (Cloudflare Pages handles this at the edge)
+https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
+
 # Canonical URL strategy:
 # - Clean routes with trailing slashes (e.g., /sellers/) are canonical
 # - .html URLs redirect to clean routes (301)
