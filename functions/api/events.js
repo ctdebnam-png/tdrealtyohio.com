@@ -51,7 +51,7 @@ export async function onRequestPost(context) {
   const label = body.label || '';
 
   // Validate event name against known events
-  const VALID_EVENTS = ['cta_click', 'calculator_interact', 'form_start', 'form_submit'];
+  const VALID_EVENTS = ['cta_click', 'calculator_interact', 'form_start', 'form_submit', 'phone_tap'];
   if (!VALID_EVENTS.includes(eventName)) {
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
   }

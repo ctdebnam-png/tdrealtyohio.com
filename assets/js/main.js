@@ -169,6 +169,14 @@ function initMobileNav() {
   });
 }
 
+// ===== CALCULATOR UTILITY: CLAMP & VALIDATE =====
+function clampPrice(value, min, max, fallback) {
+  var n = parseInt(value, 10);
+  if (isNaN(n) || n < min) return min;
+  if (n > max) return max;
+  return n;
+}
+
 // ===== SELLER CALCULATOR (SLIDER VERSION) =====
 function initSellerCalculator() {
   const calculator = document.getElementById('seller-calculator');
@@ -185,10 +193,12 @@ function initSellerCalculator() {
   let currentRate = TD_CONFIG.rates.buyAndSell;
 
   function calculate() {
-    const price = priceSlider ? (parseInt(priceSlider.value) || TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
-    const traditional = price * TD_CONFIG.rates.traditional;
-    const tdRealty = price * currentRate;
-    const savings = traditional - tdRealty;
+    var min = TD_CONFIG.calculator.minPrice;
+    var max = TD_CONFIG.calculator.maxPrice;
+    var price = priceSlider ? clampPrice(priceSlider.value, min, max, TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
+    var traditional = Math.round(price * TD_CONFIG.rates.traditional);
+    var tdRealty = Math.round(price * currentRate);
+    var savings = Math.max(traditional - tdRealty, 0);
 
     if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
     if (traditionalEl) traditionalEl.textContent = formatCurrency(traditional);
@@ -235,10 +245,12 @@ function initBuyerCalculator() {
   const agentKeepsEl = calculator.querySelector('[data-agent-keeps]');
 
   function calculate() {
-    const price = priceSlider ? (parseInt(priceSlider.value) || TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
-    const commission = price * TD_CONFIG.rates.buyerCommission;
-    const cashBack = price * TD_CONFIG.rates.buyerCashBack;
-    const agentKeeps = commission - cashBack;
+    var min = TD_CONFIG.calculator.minPrice;
+    var max = TD_CONFIG.calculator.maxPrice;
+    var price = priceSlider ? clampPrice(priceSlider.value, min, max, TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
+    var commission = Math.round(price * TD_CONFIG.rates.buyerCommission);
+    var cashBack = Math.round(price * TD_CONFIG.rates.buyerCashBack);
+    var agentKeeps = Math.max(commission - cashBack, 0);
 
     if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
     if (commissionEl) commissionEl.textContent = formatCurrency(commission);
@@ -255,6 +267,195 @@ function initBuyerCalculator() {
   }
 
   calculate();
+}
+
+// ===== LEAD FORM MODAL =====
+function initLeadModal() {
+  // Build modal HTML once
+  var overlay = document.createElement('div');
+  overlay.className = 'lead-modal-overlay';
+  overlay.id = 'lead-modal-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Get your savings estimate');
+  overlay.innerHTML =
+    '<div class="lead-modal">' +
+      '<button type="button" class="lead-modal-close" aria-label="Close">&times;</button>' +
+      '<h3 id="lead-modal-title">Get Your Savings Estimate</h3>' +
+      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">See your personalized savings. We\'ll follow up within one business day.</p>' +
+      '<div class="lead-modal-savings" id="lead-modal-savings" hidden></div>' +
+      '<form id="lead-modal-form" novalidate>' +
+        '<input type="hidden" name="homePrice" id="lm-homePrice">' +
+        '<input type="hidden" name="mode" id="lm-mode">' +
+        '<input type="hidden" name="computedSavings" id="lm-computedSavings">' +
+        '<input type="hidden" name="purchasePrice" id="lm-purchasePrice">' +
+        '<input type="hidden" name="computedCashBack" id="lm-computedCashBack">' +
+        '<input type="hidden" name="pagePath" id="lm-pagePath">' +
+        '<div class="form-row">' +
+          '<div class="form-group">' +
+            '<label for="lm-firstName">First Name</label>' +
+            '<input type="text" id="lm-firstName" name="firstName" required autocomplete="given-name">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label for="lm-lastName">Last Name</label>' +
+            '<input type="text" id="lm-lastName" name="lastName" required autocomplete="family-name">' +
+          '</div>' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label for="lm-email">Email</label>' +
+          '<input type="email" id="lm-email" name="email" required autocomplete="email">' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label for="lm-phone">Phone <span style="font-weight:400;color:var(--gray-500);">(optional)</span></label>' +
+          '<input type="tel" id="lm-phone" name="phone" autocomplete="tel">' +
+        '</div>' +
+        '<button type="submit" class="btn btn-primary btn-lg">Get My Estimate</button>' +
+        '<p class="lead-modal-consent">By submitting, you agree to be contacted by TD Realty Ohio about your real estate needs. <a href="/privacy/">Privacy Policy</a></p>' +
+        '<div class="form-status" id="lead-modal-status"></div>' +
+      '</form>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  var closeBtn = overlay.querySelector('.lead-modal-close');
+  var form = document.getElementById('lead-modal-form');
+  var statusEl = document.getElementById('lead-modal-status');
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    // Reset form when closing
+    if (form) form.reset();
+    if (statusEl) { statusEl.textContent = ''; statusEl.className = 'form-status'; }
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  // Open function — accepts data to prefill
+  window.openLeadModal = function(data) {
+    data = data || {};
+    document.getElementById('lm-homePrice').value = data.homePrice || '';
+    document.getElementById('lm-mode').value = data.mode || '';
+    document.getElementById('lm-computedSavings').value = data.computedSavings || '';
+    document.getElementById('lm-purchasePrice').value = data.purchasePrice || '';
+    document.getElementById('lm-computedCashBack').value = data.computedCashBack || '';
+    document.getElementById('lm-pagePath').value = window.location.pathname;
+
+    // Show savings summary
+    var savingsEl = document.getElementById('lead-modal-savings');
+    if (data.computedSavings && parseInt(data.computedSavings) > 0) {
+      savingsEl.textContent = 'Your estimated savings: ' + formatCurrency(parseInt(data.computedSavings));
+      savingsEl.hidden = false;
+    } else if (data.computedCashBack && parseInt(data.computedCashBack) > 0) {
+      savingsEl.textContent = 'Your estimated cash back: ' + formatCurrency(parseInt(data.computedCashBack));
+      savingsEl.hidden = false;
+    } else {
+      savingsEl.hidden = true;
+    }
+
+    // Update title based on mode
+    var titleEl = document.getElementById('lead-modal-title');
+    if (data.mode === 'buy') {
+      titleEl.textContent = 'Claim Your Cash Back';
+    } else {
+      titleEl.textContent = 'Get Your Savings Estimate';
+    }
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Focus first field
+    setTimeout(function() { document.getElementById('lm-firstName').focus(); }, 100);
+  };
+
+  // Form submit
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Basic validation
+    var firstName = document.getElementById('lm-firstName').value.trim();
+    var lastName = document.getElementById('lm-lastName').value.trim();
+    var email = document.getElementById('lm-email').value.trim();
+    if (!firstName || !lastName || !email) {
+      statusEl.textContent = 'Please fill in all required fields.';
+      statusEl.className = 'form-status error';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      statusEl.textContent = 'Please enter a valid email address.';
+      statusEl.className = 'form-status error';
+      return;
+    }
+
+    var submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    statusEl.textContent = '';
+    statusEl.className = 'form-status';
+
+    var utm = getUTMData();
+    var mode = document.getElementById('lm-mode').value;
+    var intentType = mode === 'buy' ? 'buyer' : (mode === 'sell+buy' ? 'both' : 'seller');
+
+    var payload = {
+      name: firstName + ' ' + lastName,
+      email: email,
+      phone: document.getElementById('lm-phone').value.trim(),
+      consent_to_contact: true,
+      consent_text_version: '2025-01-28',
+      privacy_ack: true,
+      page_path: document.getElementById('lm-pagePath').value,
+      page_title: document.title,
+      referrer: document.referrer,
+      intent_type: intentType,
+      intent_strength: 'high',
+      event_name: 'calculator_lead',
+      utm_source: utm.utm_source || '',
+      utm_medium: utm.utm_medium || '',
+      utm_campaign: utm.utm_campaign || '',
+      utm_content: utm.utm_content || '',
+      utm_term: utm.utm_term || '',
+      gclid: utm.gclid || '',
+      msclkid: utm.msclkid || '',
+      extra: {
+        homePrice: document.getElementById('lm-homePrice').value,
+        mode: mode,
+        computedSavings: document.getElementById('lm-computedSavings').value,
+        purchasePrice: document.getElementById('lm-purchasePrice').value,
+        computedCashBack: document.getElementById('lm-computedCashBack').value
+      }
+    };
+
+    var success = false;
+    try {
+      var resp = await fetch('/api/lead', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      success = resp.ok;
+    } catch (err) {
+      success = false;
+    }
+
+    if (success) {
+      trackEvent('form_submit', { category: 'lead', label: 'calculator_lead_modal' });
+      statusEl.textContent = 'Thank you! We\'ll be in touch shortly.';
+      statusEl.className = 'form-status success';
+      submitBtn.textContent = 'Sent!';
+      form.reset();
+      setTimeout(closeModal, 2500);
+    } else {
+      statusEl.textContent = 'Something went wrong. Please call (614) 392-8858.';
+      statusEl.className = 'form-status error';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get My Estimate';
+    }
+  });
 }
 
 // ===== FAQ ACCORDION =====
@@ -632,8 +833,15 @@ function initEventTracking() {
     });
   });
 
+  // Track phone link taps
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      trackEvent('phone_tap', { category: 'contact', label: link.getAttribute('href') });
+    });
+  });
+
   // Track calculator interactions (slider move, tab toggle)
-  document.querySelectorAll('[data-price-slider]').forEach(function(slider) {
+  document.querySelectorAll('[data-price-slider], [data-buyer-price-slider]').forEach(function(slider) {
     var tracked = false;
     slider.addEventListener('input', function() {
       if (!tracked) { trackEvent('calculator_interact', { category: 'calculator', label: 'slider_move' }); tracked = true; }
@@ -679,6 +887,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initHeaderScroll();
   setActiveNavLink();
+  initLeadModal();
   initCookieConsent();
   initEventTracking();
 });
