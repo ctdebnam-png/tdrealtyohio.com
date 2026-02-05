@@ -252,12 +252,13 @@
       <div class="container">
         <div class="hero-content">
           <h1 class="hero-title">Sell for 1%. Keep more at closing.</h1>
-          <p class="hero-subtitle" style="max-width: 600px; color: #fff;">List for 1% with a free pre-listing inspection. Full MLS exposure, pro photos, offer strategy and negotiation, contract-to-close coordination. <a href="/sell-only-2-percent/" style="color: var(--gold);">Sell-only? 2%.</a></p>
-          <p class="hero-proof" style="color: rgba(255,255,255,0.8);">Serving Columbus, Westerville, Dublin, Powell &amp; all of Central Ohio</p>
+          <p class="hero-subtitle" style="max-width: 600px; color: #fff;">List for 1% with a free pre-listing inspection. Full MLS exposure, pro photos, offer strategy and negotiation, contract-to-close coordination.</p>
+          <p class="hero-proof" style="max-width: 480px; color: rgba(255,255,255,0.8);">Serving Columbus, Westerville, Dublin, Powell &amp; all of Central Ohio</p>
           <div class="hero-buttons">
             <a href="/sellers/" class="btn btn-primary btn-lg">Sell a Home</a>
             <a href="/buyers/" class="btn btn-outline-white btn-lg">Buy a Home</a>
           </div>
+          <a href="/sell-only-2-percent/" class="hero-secondary-cta" style="display:inline-block; margin-top:1rem; padding:0.5rem 1.25rem; border:1px solid var(--gold); border-radius:var(--radius-md); color:var(--gold); font-weight:600; font-size:0.9375rem; text-decoration:none; transition:background 0.2s, color 0.2s;">Sell-only? 2% listing fee →</a>
         </div>
       </div>
     </section>
@@ -460,7 +461,7 @@
     <!-- CTA Section -->
     <section class="section cta-section">
       <div class="container">
-        <h2>See How Much You'll Save</h2>
+        <h2>Ready to List for Less?</h2>
         <p>Free consultation. Use the calculator above to see exact listing fee savings at 1% vs 3%.</p>
         <div class="hero-buttons flex-center">
           <a href="/contact/" class="btn btn-primary btn-lg">Get Your Savings Estimate</a>
@@ -634,6 +635,17 @@
       updateSliderTrack(buyerSlider);
     }
 
+    // Helper: persist calculator values as URL params (no page reload)
+    function persistCalcParams(params) {
+      try {
+        var u = new URL(window.location);
+        Object.keys(params).forEach(function(k) {
+          if (params[k] !== undefined && params[k] !== '') u.searchParams.set(k, params[k]);
+        });
+        history.replaceState(null, '', u);
+      } catch (e) { /* ignore */ }
+    }
+
     // Wire seller calculator CTA to lead modal
     const sellerCta = document.getElementById('seller-calc-cta');
     if (sellerCta) {
@@ -643,9 +655,13 @@
         const activeToggle = document.querySelector('[data-toggle-btn].active');
         const rate = activeToggle && activeToggle.dataset.rate === 'sell-only' ? 0.02 : 0.01;
         const mode = rate === 0.01 ? 'sell+buy' : 'sell-only';
-        const savings = Math.round(price * 0.03) - Math.round(price * rate);
+        const traditional = Math.round(price * 0.03);
+        const tdFee = Math.round(price * rate);
+        const savings = traditional - tdFee;
+        var data = { homePrice: price, mode: mode, computedSavings: savings };
+        persistCalcParams({ homeSalePrice: price, mode: mode, traditional: traditional, tdFee: tdFee, savings: savings });
         if (typeof openLeadModal === 'function') {
-          openLeadModal({ homePrice: price, mode: mode, computedSavings: savings });
+          openLeadModal(data);
         }
       });
     }
@@ -657,8 +673,10 @@
         const slider = document.getElementById('buyer-price-slider');
         const price = slider ? parseInt(slider.value) : 400000;
         const cashBack = Math.round(price * 0.01);
+        var data = { purchasePrice: price, mode: 'buy', computedCashBack: cashBack };
+        persistCalcParams({ purchasePrice: price, mode: 'buy', cashBack: cashBack });
         if (typeof openLeadModal === 'function') {
-          openLeadModal({ purchasePrice: price, mode: 'buy', computedCashBack: cashBack });
+          openLeadModal(data);
         }
       });
     }

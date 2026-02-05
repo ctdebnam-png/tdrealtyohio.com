@@ -1908,6 +1908,12 @@ main {
   outline: none;
 }
 
+.calculator-range:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 .calculator-range:focus::-webkit-slider-thumb {
   box-shadow: var(--shadow-md), var(--shadow-focus);
 }
