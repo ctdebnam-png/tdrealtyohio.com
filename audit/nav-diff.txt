@@ -1,0 +1,517 @@
+Navigation Drift Report
+Generated: 2026-02-05T14:18:03.503Z
+
+sitemap-page/index.html:
+  Footer Company missing: /faq/
+
+tools/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+lp/buy-home-columbus/index.html:
+  Footer Services missing: /sellers/, /buyers/, /pre-listing-inspection/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
+  Footer Company missing: /about/, /contact/, /blog/, /testimonials/, /agents/, /faq/
+
+lp/sell-home-columbus/index.html:
+  Footer Services missing: /sellers/, /buyers/, /pre-listing-inspection/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
+  Footer Company missing: /about/, /contact/, /blog/, /testimonials/, /agents/, /faq/
+
+lp/sell-home-westerville/index.html:
+  Footer Services missing: /sellers/, /buyers/, /pre-listing-inspection/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
+  Footer Company missing: /about/, /contact/, /blog/, /testimonials/, /agents/, /faq/
+
+tools/buyer-closing-costs/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-closing-costs/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/buyer-offer-readiness/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/move-up-plan/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/pre-listing-checklist/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/repair-vs-credit/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-buy-timing/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/sell-now-vs-wait/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-documents/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/columbus/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/delaware/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/dublin/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/gahanna/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/hilliard/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/new-albany/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/powell/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/upper-arlington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/westerville/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
+
+tools/seller-net-proceeds/worthington/index.html:
+  Footer Services missing: /referrals/, /compare/
+  Footer Services extra (not in registry): /tools/
+  Footer Company missing: /faq/
