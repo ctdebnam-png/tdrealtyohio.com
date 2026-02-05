@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-05T11:38:36.188Z",
+  "timestamp": "2026-02-05T14:20:33.877Z",
   "passed": true,
   "checks": {
     "links": {
@@ -7,8 +7,8 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "totalLinks": 3159,
-        "internalLinks": 2481,
+        "totalLinks": 3216,
+        "internalLinks": 2538,
         "externalLinks": 418,
         "brokenInternal": 0,
         "skippedExternal": 0
@@ -53,6 +53,24 @@
         "filesChecked": 63,
         "schemasFound": 196,
         "invalidSchemas": 0
+      }
+    },
+    "canonical-host": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "stats": {
+        "filesChecked": 76,
+        "wwwReferences": 0
+      }
+    },
+    "content-voice": {
+      "passed": true,
+      "errors": [],
+      "warnings": [],
+      "stats": {
+        "filesChecked": 63,
+        "violations": 0
       }
     }
   }
