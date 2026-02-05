@@ -12,7 +12,10 @@
     "test:ui": "npx playwright test --ui",
     "test:screenshots": "npx playwright test --project=mobile-375x812 --project=desktop-1280x800 visual-regression",
     "sitemap": "node scripts/generate-sitemap.mjs",
-    "validate": "node scripts/indexing-guard.mjs"
+    "validate": "node scripts/indexing-guard.mjs",
+    "check:nav": "node scripts/check-nav.mjs",
+    "check:copy": "node scripts/check-copy.mjs",
+    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.50.0",

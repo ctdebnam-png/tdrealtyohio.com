@@ -28,7 +28,6 @@ const NAV_REGISTRY = {
         { label: 'About', href: '/about/', showInHeader: true },
         { label: 'Contact', href: '/contact/', showInHeader: true, isHeaderCta: true },
         { label: 'Blog', href: '/blog/', showInHeader: true },
-        { label: 'Testimonials', href: '/testimonials/', showInHeader: true },
         { label: 'Agent Opportunities', href: '/agents/', showInHeader: false },
         { label: 'FAQ', href: '/faq/', showInHeader: true }
       ]
