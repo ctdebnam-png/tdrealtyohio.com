@@ -6,6 +6,9 @@
  *  1. Any header or footer renders duplicate hrefs in the same menu
  *  2. /terms/ footer contains "Testimonials"
  *  3. /sitemap-page/ contains labels not present in the canonical nav registry
+ *  4. Footer Company section is missing canonical links
+ *  5. /terms/ contains "REALTOR Code of Ethics"
+ *  6. /areas/ or /areas/{city}/ has market metrics without "Updated:" adjacent
  */
 
 import { readFile } from 'fs/promises';
@@ -203,12 +206,45 @@ async function checkFooterCompanyCompleteness() {
   }
 }
 
+// Check 5: /terms/ must not contain "REALTOR Code of Ethics"
+async function checkTermsRealtorCode() {
+  const html = await readFile(join(ROOT, 'terms/index.html'), 'utf-8');
+  if (html.includes('REALTOR Code of Ethics')) {
+    fail('/terms/index.html contains "REALTOR Code of Ethics" — remove unless intentional');
+  }
+}
+
+// Check 6: Area pages with market metrics must have "Updated:" adjacent
+async function checkAreasFreshness() {
+  // Check the hub page /areas/
+  const hubHtml = await readFile(join(ROOT, 'areas/index.html'), 'utf-8');
+  if (/Median.*days on market/i.test(hubHtml) && !/[Uu]pdated:/.test(hubHtml)) {
+    fail('areas/index.html has market metrics but no "Updated:" line');
+  }
+
+  // Check each city detail page
+  const cityFiles = await glob('areas/*/index.html', {
+    cwd: ROOT,
+    ignore: ['node_modules/**'],
+  });
+
+  for (const file of cityFiles) {
+    const html = await readFile(join(ROOT, file), 'utf-8');
+    // City pages have .city-stats with Median Home Price, Days on Market, etc.
+    if (/city-stat|Median Home Price|Days on Market/i.test(html) && !/[Uu]pdated:/.test(html)) {
+      fail(`${file}: has market metrics but no "Updated:" line`);
+    }
+  }
+}
+
 async function main() {
   console.log('check-nav-footer-sitemap: running...');
   await checkDuplicateHrefs();
   await checkTermsFooter();
   await checkSitemapPage();
   await checkFooterCompanyCompleteness();
+  await checkTermsRealtorCode();
+  await checkAreasFreshness();
 
   if (errors > 0) {
     console.error(`\ncheck-nav-footer-sitemap: ${errors} error(s) found`);
