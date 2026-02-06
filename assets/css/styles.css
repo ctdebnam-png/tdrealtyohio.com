@@ -486,6 +486,16 @@ main {
   font-size: 2.5rem;
 }
 
+/* Stronger overlay for area-page heroes with breadcrumbs */
+.hero-sm::before {
+  background: linear-gradient(180deg, rgba(26, 46, 68, 0.97) 0%, rgba(26, 46, 68, 0.85) 60%, rgba(45, 74, 124, 0.8) 100%);
+}
+
+.hero-sm .hero-subtitle {
+  max-width: 560px;
+  line-height: 1.8;
+}
+
 /* ===== STATS BAR ===== */
 .stats-bar {
   background-color: var(--off-white);
@@ -1741,6 +1751,11 @@ main {
     font-size: 1.125rem;
   }
 
+  .hero-sm .hero-subtitle {
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
@@ -2247,6 +2262,31 @@ main {
 
 .breadcrumb-list a:hover {
   color: var(--gold);
+}
+
+/* Breadcrumb inside hero: override for contrast on dark backgrounds */
+.hero .breadcrumb {
+  background: none;
+  border-bottom: none;
+  padding: 0 0 1rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.hero .breadcrumb-list a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero .breadcrumb-list a:hover {
+  color: var(--gold);
+}
+
+.hero .breadcrumb-list li:not(:last-child)::after {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.hero .breadcrumb-list .current {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 /* ===== NEIGHBORHOOD OTHER AREAS ===== */

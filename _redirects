@@ -35,7 +35,8 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /testimonials/          /                       301
 /compare                /compare/               301
 /faq                    /faq/                   301
-/sell-and-buy           /sell-and-buy/          301
+/sell-and-buy           /1-percent-commission/  301
+/sell-and-buy/          /1-percent-commission/  301
 /sell-only-2-percent    /sell-only-2-percent/   301
 
 # ----------------------------------------

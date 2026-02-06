@@ -19,7 +19,8 @@
     "check:nav-and-copy": "node scripts/check-nav-and-copy.js",
     "check:a11y-links": "node scripts/check-a11y-links.mjs",
     "check:calculators": "node scripts/check-calculators.mjs",
-    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js && node scripts/check-a11y-links.mjs && node scripts/check-calculators.mjs"
+    "check:nav-footer-sitemap": "node scripts/check-nav-footer-sitemap.mjs",
+    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js && node scripts/check-a11y-links.mjs && node scripts/check-calculators.mjs && node scripts/check-nav-footer-sitemap.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.50.0",
