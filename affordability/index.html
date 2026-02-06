@@ -428,19 +428,19 @@
               <div class="secondary-results">
                 <div class="result-card">
                   <div class="result-card-label">Monthly Payment</div>
-                  <div class="result-card-value" id="result-monthly-total">$0</div>
+                  <div class="result-card-value" id="result-monthly-total">&ndash;</div>
                 </div>
                 <div class="result-card">
-                  <div class="result-card-label">Principal & Interest</div>
-                  <div class="result-card-value" id="result-pi">$0</div>
+                  <div class="result-card-label">Principal &amp; Interest</div>
+                  <div class="result-card-value" id="result-pi">&ndash;</div>
                 </div>
                 <div class="result-card">
                   <div class="result-card-label">Property Taxes <span id="result-tax-rate-label" style="font-weight: 400; font-size: 0.75rem;"></span></div>
-                  <div class="result-card-value" id="result-taxes">$0</div>
+                  <div class="result-card-value" id="result-taxes">&ndash;</div>
                 </div>
                 <div class="result-card">
                   <div class="result-card-label">Insurance</div>
-                  <div class="result-card-value" id="result-insurance">$0</div>
+                  <div class="result-card-value" id="result-insurance">&ndash;</div>
                 </div>
               </div>
 
@@ -674,10 +674,10 @@
 
         if (annualIncome <= 0) {
           outputs.homePrice.textContent = 'Enter income to calculate';
-          outputs.monthlyTotal.textContent = '$0';
-          outputs.pi.textContent = '$0';
-          outputs.taxes.textContent = '$0';
-          outputs.insurance.textContent = '$0';
+          outputs.monthlyTotal.textContent = '\u2013';
+          outputs.pi.textContent = '\u2013';
+          outputs.taxes.textContent = '\u2013';
+          outputs.insurance.textContent = '\u2013';
           // Reset breakdown bar to default state
           outputs.barPi.style.width = '70%';
           outputs.barTax.style.width = '20%';

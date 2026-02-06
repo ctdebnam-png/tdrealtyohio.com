@@ -350,7 +350,7 @@
                   <span class="result-value highlight" data-savings>$8,000</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary btn-lg" id="seller-calc-cta" style="width:100%; margin-top:1rem;">Get Your Savings Estimate</button>
+              <a href="/contact/" class="btn btn-primary btn-lg" id="seller-calc-cta" style="width:100%; margin-top:1rem; text-align:center;">Get Your Savings Estimate</a>
               <p style="font-size: 0.8125rem; color: var(--gray-600); margin-top: 1rem; margin-bottom: 0;">
                 Disclosure: The 1% and 2% rates refer to the listing fee charged by TD Realty Ohio for listing services. Buyer agent commission, if offered in a transaction, is separate and negotiated as part of each deal.
               </p>
@@ -376,9 +376,9 @@
                   <span class="result-value highlight" data-cash-back>$4,000</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary btn-lg" id="buyer-calc-cta" style="width:100%; margin-top:1rem;">Claim Your Cash Back</button>
+              <a href="/contact/?mode=buy" class="btn btn-primary btn-lg" id="buyer-calc-cta" style="width:100%; margin-top:1rem; text-align:center;">Claim Your Cash Back</a>
               <p style="font-size: 0.8125rem; color: var(--gray-600); margin-top: 1rem; margin-bottom: 0;">
-                *For first-time homebuyers. <a href="/buyers/" style="color: var(--gold);">Learn more →</a>
+                Disclosure: The 1% cash back is available to qualifying first-time homebuyers and is subject to lender approval. Credit is applied toward closing costs or prepaid items. <a href="/buyers/" style="color: var(--gold);">Learn more →</a>
               </p>
             </div>
           </div>
@@ -658,40 +658,75 @@
       } catch (e) { /* ignore */ }
     }
 
-    // Wire seller calculator CTA to lead modal
+    // Build contact URL with seller calculator params
+    function sellerContactUrl() {
+      const slider = document.getElementById('seller-price-slider');
+      const price = slider ? parseInt(slider.value) : 400000;
+      const activeToggle = document.querySelector('[data-toggle-btn].active');
+      const rate = activeToggle && activeToggle.dataset.rate === 'sell-only' ? 0.02 : 0.01;
+      const mode = rate === 0.01 ? 'sell+buy' : 'sell-only';
+      const traditional = Math.round(price * 0.03);
+      const tdFee = Math.round(price * rate);
+      const savings = traditional - tdFee;
+      return {
+        url: '/contact/?homeSalePrice=' + price + '&mode=' + mode + '&traditional=' + traditional + '&tdFee=' + tdFee + '&savings=' + savings,
+        data: { homePrice: price, mode: mode, computedSavings: savings },
+        params: { homeSalePrice: price, mode: mode, traditional: traditional, tdFee: tdFee, savings: savings }
+      };
+    }
+
+    // Build contact URL with buyer calculator params
+    function buyerContactUrl() {
+      const slider = document.getElementById('buyer-price-slider');
+      const price = slider ? parseInt(slider.value) : 400000;
+      const cashBack = Math.round(price * 0.01);
+      return {
+        url: '/contact/?purchasePrice=' + price + '&mode=buy&cashBack=' + cashBack,
+        data: { purchasePrice: price, mode: 'buy', computedCashBack: cashBack },
+        params: { purchasePrice: price, mode: 'buy', cashBack: cashBack }
+      };
+    }
+
+    // Keep CTA href in sync with calculator values
+    function syncCalcCtaLinks() {
+      var sellerCta = document.getElementById('seller-calc-cta');
+      var buyerCta = document.getElementById('buyer-calc-cta');
+      if (sellerCta) sellerCta.href = sellerContactUrl().url;
+      if (buyerCta) buyerCta.href = buyerContactUrl().url;
+    }
+
+    // Wire seller calculator CTA
     const sellerCta = document.getElementById('seller-calc-cta');
     if (sellerCta) {
-      sellerCta.addEventListener('click', () => {
-        const slider = document.getElementById('seller-price-slider');
-        const price = slider ? parseInt(slider.value) : 400000;
-        const activeToggle = document.querySelector('[data-toggle-btn].active');
-        const rate = activeToggle && activeToggle.dataset.rate === 'sell-only' ? 0.02 : 0.01;
-        const mode = rate === 0.01 ? 'sell+buy' : 'sell-only';
-        const traditional = Math.round(price * 0.03);
-        const tdFee = Math.round(price * rate);
-        const savings = traditional - tdFee;
-        var data = { homePrice: price, mode: mode, computedSavings: savings };
-        persistCalcParams({ homeSalePrice: price, mode: mode, traditional: traditional, tdFee: tdFee, savings: savings });
+      sellerCta.addEventListener('click', (e) => {
+        var info = sellerContactUrl();
+        persistCalcParams(info.params);
         if (typeof openLeadModal === 'function') {
-          openLeadModal(data);
+          e.preventDefault();
+          openLeadModal(info.data);
         }
       });
     }
 
-    // Wire buyer calculator CTA to lead modal
+    // Wire buyer calculator CTA
     const buyerCta = document.getElementById('buyer-calc-cta');
     if (buyerCta) {
-      buyerCta.addEventListener('click', () => {
-        const slider = document.getElementById('buyer-price-slider');
-        const price = slider ? parseInt(slider.value) : 400000;
-        const cashBack = Math.round(price * 0.01);
-        var data = { purchasePrice: price, mode: 'buy', computedCashBack: cashBack };
-        persistCalcParams({ purchasePrice: price, mode: 'buy', cashBack: cashBack });
+      buyerCta.addEventListener('click', (e) => {
+        var info = buyerContactUrl();
+        persistCalcParams(info.params);
         if (typeof openLeadModal === 'function') {
-          openLeadModal(data);
+          e.preventDefault();
+          openLeadModal(info.data);
         }
       });
     }
+
+    // Sync CTA hrefs on slider/toggle changes
+    var sellerSliderSync = document.getElementById('seller-price-slider');
+    if (sellerSliderSync) sellerSliderSync.addEventListener('input', syncCalcCtaLinks);
+    document.querySelectorAll('[data-toggle-btn]').forEach(function(b) { b.addEventListener('click', function() { setTimeout(syncCalcCtaLinks, 0); }); });
+    if (buyerSlider) buyerSlider.addEventListener('input', syncCalcCtaLinks);
+    syncCalcCtaLinks();
     // Keep bottom CTA link in sync with calculator params
     function syncContactLink() {
       var link = document.getElementById('cta-contact-link');

@@ -191,12 +191,12 @@
         <h2 class="sr-only">Latest Articles</h2>
 
         <!-- Topic Filter -->
-        <div class="blog-filters" role="group" aria-label="Filter by topic">
-          <button type="button" class="blog-filter-btn active" data-filter="all">All</button>
-          <button type="button" class="blog-filter-btn" data-filter="seller">Sellers</button>
-          <button type="button" class="blog-filter-btn" data-filter="buyer">Buyers</button>
-          <button type="button" class="blog-filter-btn" data-filter="agent">Agents</button>
-        </div>
+        <nav class="blog-filters" aria-label="Filter by topic">
+          <a href="/blog/" class="blog-filter-btn active" data-filter="all">All</a>
+          <a href="/blog/?category=seller" class="blog-filter-btn" data-filter="seller">Sellers</a>
+          <a href="/blog/?category=buyer" class="blog-filter-btn" data-filter="buyer">Buyers</a>
+          <a href="/blog/?category=agent" class="blog-filter-btn" data-filter="agent">Agents</a>
+        </nav>
 
         <div class="blog-list">
           <article class="blog-card" data-topic="seller">
@@ -419,28 +419,33 @@
   <script src="/assets/js/nav.js"></script>
   <script src="/assets/js/main.js"></script>
   <script>
-    // Blog filter functionality
+    // Blog filter functionality (progressive enhancement over real links)
     (function() {
-      const filterBtns = document.querySelectorAll('.blog-filter-btn');
-      const blogCards = document.querySelectorAll('.blog-card');
+      var filterBtns = document.querySelectorAll('.blog-filter-btn');
+      var blogCards = document.querySelectorAll('.blog-card');
 
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const filter = btn.dataset.filter;
+      function applyFilter(filter) {
+        filterBtns.forEach(function(b) {
+          b.classList.toggle('active', b.dataset.filter === filter);
+        });
+        blogCards.forEach(function(card) {
+          var topics = card.dataset.topic || '';
+          card.style.display = (filter === 'all' || topics.indexOf(filter) !== -1) ? '' : 'none';
+        });
+      }
 
-          // Update active state
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+      // Read category from URL param on load
+      var urlCategory = new URLSearchParams(window.location.search).get('category');
+      if (urlCategory) applyFilter(urlCategory);
 
-          // Filter cards
-          blogCards.forEach(card => {
-            const topics = card.dataset.topic || '';
-            if (filter === 'all' || topics.includes(filter)) {
-              card.style.display = '';
-            } else {
-              card.style.display = 'none';
-            }
-          });
+      // Intercept clicks for instant filtering (no page reload)
+      filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var filter = btn.dataset.filter;
+          applyFilter(filter);
+          var url = filter === 'all' ? '/blog/' : '/blog/?category=' + filter;
+          history.replaceState(null, '', url);
         });
       });
     })();
