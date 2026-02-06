@@ -18,7 +18,6 @@ const PRIORITY_MAP = {
   '/sellers/': '0.9',
   '/buyers/': '0.9',
   '/1-percent-commission/': '0.9',
-  '/sell-and-buy/': '0.9',
   '/sell-only-2-percent/': '0.9',
   '/pre-listing-inspection/': '0.8',
   '/contact/': '0.8',
@@ -43,7 +42,7 @@ const PRIORITY_MAP = {
 
 // Pages to exclude from sitemap
 // Note: /lp/ pages are ad landing pages with noindex meta tags
-const EXCLUDE = ['/404.html', '/404/', '/lp/'];
+const EXCLUDE = ['/404.html', '/404/', '/lp/', '/sell-and-buy/'];
 
 /**
  * Get canonical URL from HTML file
