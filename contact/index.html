@@ -185,6 +185,13 @@
                 <label for="hp-contact-company">Company</label>
                 <input type="text" id="hp-contact-company" name="_gotcha" tabindex="-1" autocomplete="off">
               </div>
+              <input type="hidden" name="calcSalePrice" id="calc-sale-price">
+              <input type="hidden" name="calcMode" id="calc-mode">
+              <input type="hidden" name="calcTypicalFee" id="calc-typical-fee">
+              <input type="hidden" name="calcTdFee" id="calc-td-fee">
+              <input type="hidden" name="calcSavings" id="calc-savings">
+              <input type="hidden" name="calcPurchasePrice" id="calc-purchase-price">
+              <input type="hidden" name="calcCashBack" id="calc-cash-back">
               <div class="form-row">
                 <div class="form-group">
                   <label for="first-name" class="form-label required">First Name</label>
@@ -314,7 +321,7 @@
           </li>
           <li class="expect-step">
             <strong class="expect-step-title">Personalized Plan</strong>
-            <p class="expect-step-text">You'll receive a tailored recommendation based on your situation—whether that's a market analysis, a showing schedule, or a listing strategy.</p>
+            <p class="expect-step-text">You'll receive a tailored recommendation based on your situation, whether that's a market analysis, a showing schedule, or a listing strategy.</p>
           </li>
         </ol>
       </div>
@@ -415,5 +422,35 @@
 
   <script src="/assets/js/nav.js"></script>
   <script src="/assets/js/main.js"></script>
+  <script>
+    // Populate hidden calculator fields from URL params
+    (function() {
+      var p = new URLSearchParams(window.location.search);
+      var map = {
+        homeSalePrice: 'calc-sale-price',
+        mode: 'calc-mode',
+        traditional: 'calc-typical-fee',
+        tdFee: 'calc-td-fee',
+        savings: 'calc-savings',
+        purchasePrice: 'calc-purchase-price',
+        cashBack: 'calc-cash-back'
+      };
+      Object.keys(map).forEach(function(k) {
+        var v = p.get(k);
+        if (v) {
+          var el = document.getElementById(map[k]);
+          if (el) el.value = v;
+        }
+      });
+      // Auto-select interest based on mode
+      var mode = p.get('mode');
+      var interest = document.getElementById('interest');
+      if (mode && interest) {
+        if (mode === 'buy') interest.value = 'buying';
+        else if (mode === 'sell+buy') interest.value = 'both';
+        else if (mode === 'sell-only') interest.value = 'selling';
+      }
+    })();
+  </script>
 </body>
 </html>

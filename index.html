@@ -258,7 +258,7 @@
             <a href="/sellers/" class="btn btn-primary btn-lg">Sell a Home</a>
             <a href="/buyers/" class="btn btn-outline-white btn-lg">Buy a Home</a>
           </div>
-          <a href="/sell-only-2-percent/" class="hero-secondary-cta" style="display:inline-block; margin-top:1rem; padding:0.5rem 1.25rem; border:1px solid var(--gold); border-radius:var(--radius-md); color:var(--gold); font-weight:600; font-size:0.9375rem; text-decoration:none; transition:background 0.2s, color 0.2s;">Sell-only? 2% listing fee →</a>
+          <a href="/sell-only-2-percent/" class="hero-tertiary-link">Selling only? See the 2% option <span aria-hidden="true">›</span></a>
         </div>
       </div>
     </section>
@@ -391,7 +391,7 @@
       <div class="container">
         <div class="section-header">
           <h2>Why TD Realty Ohio</h2>
-          <p>A licensed brokerage that charges less because of lower overhead and standardized workflows — not because we do less work.</p>
+          <p>A licensed brokerage that charges less because of lower overhead and standardized workflows, not because we do less work.</p>
         </div>
 
         <div class="feature-grid">
@@ -439,7 +439,7 @@
               </svg>
             </div>
             <h3 class="feature-card-title">Local, Direct Communication</h3>
-            <p class="feature-card-text">Based in Westerville and licensed in Ohio. You work directly with your agent from listing to closing — no call centers, no hand-offs, no out-of-state teams.</p>
+            <p class="feature-card-text">Based in Westerville and licensed in Ohio. You work directly with your agent from listing to closing. No call centers, no hand-offs, no out-of-state teams.</p>
           </div>
         </div>
       </div>
@@ -464,12 +464,24 @@
         <h2>Ready to List for Less?</h2>
         <p>Free consultation. Use the calculator above to see exact listing fee savings at 1% vs 3%.</p>
         <div class="hero-buttons flex-center">
-          <a href="/contact/" class="btn btn-primary btn-lg">Get Your Savings Estimate</a>
+          <a href="/contact/" class="btn btn-primary btn-lg" id="cta-contact-link">Get Your Savings Estimate</a>
           <a href="tel:6143928858" class="btn btn-outline-white btn-lg">Call (614) 392-8858</a>
         </div>
         <p style="margin-top: 1.5rem; font-size: 0.9375rem; opacity: 0.85;">
           <a href="/compare/" style="color: var(--gold);">Compare your options</a> · <a href="/faq/" style="color: var(--gold);">Frequently asked questions</a>
         </p>
+      </div>
+    </section>
+
+    <section class="site-disclosures">
+      <div class="container">
+        <h2>Disclosures</h2>
+        <ul>
+          <li><strong>Listing fee:</strong> The 1% and 2% rates are the listing fee charged by TD Realty Ohio. Buyer agent compensation is a separate, negotiated term in each transaction.</li>
+          <li><strong>Buyer credit:</strong> The 1% cash back program is available to qualifying first-time homebuyers and is subject to lender approval. Credit is applied toward closing costs or prepaid items.</li>
+          <li><strong>Pre-listing inspection:</strong> Included at no additional cost with every listing. Scope may vary. This inspection does not replace the buyer's inspection or the seller's obligation to disclose known material defects.</li>
+          <li><strong>Market data:</strong> Median prices, days on market, and other market figures are approximate and based on publicly available MLS data. Last updated: January 2026. Source: Columbus REALTORS MLS.</li>
+        </ul>
       </div>
     </section>
 
@@ -680,6 +692,22 @@
         }
       });
     }
+    // Keep bottom CTA link in sync with calculator params
+    function syncContactLink() {
+      var link = document.getElementById('cta-contact-link');
+      if (!link) return;
+      var u = new URL(window.location);
+      var p = u.searchParams;
+      if (p.toString()) {
+        link.href = '/contact/?' + p.toString();
+      }
+    }
+    // Update link whenever calculator changes
+    var sellerSlider = document.getElementById('seller-price-slider');
+    if (sellerSlider) sellerSlider.addEventListener('input', function() { setTimeout(syncContactLink, 0); });
+    document.querySelectorAll('[data-toggle-btn]').forEach(function(b) { b.addEventListener('click', function() { setTimeout(syncContactLink, 0); }); });
+    if (buyerSlider) buyerSlider.addEventListener('input', function() { setTimeout(syncContactLink, 0); });
+    syncContactLink();
   </script>
 </body>
 </html>

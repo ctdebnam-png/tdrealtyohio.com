@@ -112,59 +112,81 @@ function updateSliderTrack(slider) {
   slider.style.setProperty('--value', percentage + '%');
 }
 
-// ===== MOBILE NAVIGATION =====
+// ===== MOBILE NAVIGATION (off-canvas panel) =====
 function initMobileNav() {
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const nav = document.getElementById('main-nav');
-
   if (!mobileMenuBtn || !nav) return;
 
-  function closeMobileNav() {
-    nav.classList.remove('mobile-open');
-    mobileMenuBtn.setAttribute('aria-expanded', 'false');
-    const icon = mobileMenuBtn.querySelector('svg');
-    if (icon) {
-      icon.innerHTML = '<path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>';
-    }
-  }
+  // Inject overlay
+  var overlay = document.createElement('div');
+  overlay.className = 'nav-overlay';
+  overlay.id = 'nav-overlay';
+  nav.parentNode.insertBefore(overlay, nav);
 
-  function openMobileNav() {
+  // Inject close button at the top of the nav
+  var closeWrap = document.createElement('div');
+  closeWrap.className = 'nav-close-btn';
+  closeWrap.innerHTML = '<button type="button" aria-label="Close menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/></svg></button>';
+  nav.insertBefore(closeWrap, nav.firstChild);
+
+  // Wrap existing nav links in a scrollable body
+  var body = document.createElement('div');
+  body.className = 'nav-menu-body';
+  while (nav.children.length > 1) {
+    body.appendChild(nav.children[1]);
+  }
+  nav.appendChild(body);
+
+  var closeBtn = closeWrap.querySelector('button');
+
+  function openNav() {
     nav.classList.add('mobile-open');
+    overlay.classList.add('active');
+    document.body.classList.add('nav-open');
     mobileMenuBtn.setAttribute('aria-expanded', 'true');
-    const icon = mobileMenuBtn.querySelector('svg');
-    if (icon) {
-      icon.innerHTML = '<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/>';
-    }
+    closeBtn.focus();
   }
 
-  function toggleMobileNav(e) {
+  function closeNav() {
+    nav.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+    document.body.classList.remove('nav-open');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    mobileMenuBtn.focus();
+  }
+
+  mobileMenuBtn.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-    if (nav.classList.contains('mobile-open')) {
-      closeMobileNav();
-    } else {
-      openMobileNav();
-    }
-  }
-
-  mobileMenuBtn.addEventListener('click', toggleMobileNav);
-
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMobileNav);
+    if (nav.classList.contains('mobile-open')) { closeNav(); } else { openNav(); }
   });
 
-  document.addEventListener('click', (e) => {
-    if (nav.classList.contains('mobile-open') &&
-        !nav.contains(e.target) &&
-        !mobileMenuBtn.contains(e.target)) {
-      closeMobileNav();
-    }
+  closeBtn.addEventListener('click', closeNav);
+  overlay.addEventListener('click', closeNav);
+
+  nav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', closeNav);
   });
 
-  document.addEventListener('keydown', (e) => {
+  // ESC key
+  document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && nav.classList.contains('mobile-open')) {
-      closeMobileNav();
-      mobileMenuBtn.focus();
+      closeNav();
+    }
+  });
+
+  // Focus trap
+  nav.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !nav.classList.contains('mobile-open')) return;
+    var focusable = nav.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
     }
   });
 }
