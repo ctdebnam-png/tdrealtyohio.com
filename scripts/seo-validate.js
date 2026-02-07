@@ -304,12 +304,6 @@ async function validateHeadersAndRedirects() {
       }
     }
 
-    // Also check wildcard blocks that would affect these files
-    // A broad /* block is normal for security headers - only flag if it contains noindex
-    if (currentPath) {
-      // Already checked inline above
-    }
-
     console.log('  PASS  _headers does not block /robots.txt or /sitemap.xml');
   }
 
