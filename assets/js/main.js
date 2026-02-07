@@ -29,7 +29,6 @@ const TD_CONFIG = {
     nar: 'https://www.nar.realtor/'
   },
   stats: {
-    zillowRating: 5.0,
     licensedSince: 2017
   },
   rates: {
@@ -332,7 +331,7 @@ function initLeadModal() {
           '<label for="lm-phone">Phone <span style="font-weight:400;color:var(--gray-500);">(optional)</span></label>' +
           '<input type="tel" id="lm-phone" name="phone" autocomplete="tel">' +
         '</div>' +
-        '<button type="submit" class="btn btn-primary btn-lg">Get My Estimate</button>' +
+        '<button type="submit" class="btn btn-primary btn-lg">Get Your Estimate</button>' +
         '<p class="lead-modal-consent">By submitting, you agree to be contacted by TD Realty Ohio about your real estate needs. <a href="/privacy/">Privacy Policy</a></p>' +
         '<div class="form-status" id="lead-modal-status"></div>' +
       '</form>' +
@@ -476,7 +475,7 @@ function initLeadModal() {
       statusEl.textContent = 'Something went wrong. Please call (614) 392-8858.';
       statusEl.className = 'form-status error';
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Get My Estimate';
+      submitBtn.textContent = 'Get Your Estimate';
     }
   });
 }
