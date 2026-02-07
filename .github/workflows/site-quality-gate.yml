@@ -2,17 +2,13 @@ name: Site Quality Gate
 
 on:
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
 
 jobs:
   quality-check:
-    name: Run Quality Checks
+    name: Quality & Regression Gates
     runs-on: ubuntu-latest
 
     steps:
@@ -22,75 +18,81 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
-          cache-dependency-path: tools/site-quality-gate/package-lock.json
 
       - name: Install dependencies
-        working-directory: tools/site-quality-gate
-        run: npm ci || npm install
+        run: npm ci
 
-      - name: Run quality checks
-        working-directory: tools/site-quality-gate
-        run: npm run check -- --ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
 
-      - name: Run indexing guard
+      # ── Static checks (no server needed) ──
+      - name: Indexing guard
         run: node scripts/indexing-guard.mjs
 
-      - name: Run navigation check
+      - name: Navigation check
         run: node scripts/check-nav.mjs
 
-      - name: Run copy quality check
+      - name: Nav registry consistency
+        run: node scripts/check-nav-registry.mjs
+
+      - name: Copy quality check
         run: node scripts/check-copy.mjs
 
-      - name: Run header template consistency check
+      - name: Template consistency
         run: node scripts/check-templates.js
 
-      - name: Run nav and copy consistency check
+      - name: Nav and copy consistency
         run: node scripts/check-nav-and-copy.js
 
-      - name: Upload quality report
+      - name: Nav/footer/sitemap consistency
+        run: node scripts/check-nav-footer-sitemap.mjs
+
+      - name: Content scan (first-person, vague language)
+        run: node scripts/content-scan.js
+
+      - name: SEO validate (robots.txt, sitemap.xml)
+        run: node scripts/seo-validate.js
+
+      # ── Server-dependent checks ──
+      - name: Start local server
+        run: npx wrangler pages dev . --port 8788 &
+        env:
+          NODE_ENV: test
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:8788 --timeout 30000 || sleep 10
+
+      - name: Route smoke test
+        run: node scripts/route-smoke.js
+        env:
+          SMOKE_BASE_URL: http://localhost:8788
+
+      - name: Playwright tests
+        run: npx playwright test
+        env:
+          CI: true
+
+      - name: Upload test artifacts
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: quality-report
-          path: reports/site-quality-gate/latest.json
-          retention-days: 30
+          name: test-results
+          path: |
+            test-results/
+            playwright-report/
+            screenshots/
+          retention-days: 14
 
-      - name: Comment on PR
+      - name: Comment on failed PR
         if: failure() && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-            const reportPath = 'reports/site-quality-gate/latest.json';
-
-            let comment = '## Site Quality Gate Failed\n\n';
-
-            if (fs.existsSync(reportPath)) {
-              const report = JSON.parse(fs.readFileSync(reportPath, 'utf-8'));
-
-              for (const [checkName, checkResult] of Object.entries(report.checks)) {
-                if (!checkResult.passed && checkResult.errors) {
-                  comment += `### ${checkName.charAt(0).toUpperCase() + checkName.slice(1)} Errors\n\n`;
-                  for (const error of checkResult.errors.slice(0, 10)) {
-                    comment += `- \`${error.file}\`: ${error.message}\n`;
-                  }
-                  if (checkResult.errors.length > 10) {
-                    comment += `- ... and ${checkResult.errors.length - 10} more errors\n`;
-                  }
-                  comment += '\n';
-                }
-              }
-            } else {
-              comment += 'Quality check failed but no report was generated.\n';
-            }
-
-            comment += '\n---\n_Please fix the issues above and push again._';
-
-            github.rest.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: comment
+              body: '## Site Quality Gate Failed ❌\n\nOne or more quality checks failed. Please review the Actions log and fix the issues.\n\n---\n_Checks run: indexing guard, nav registry, copy quality, template consistency, content scan, SEO validate, route smoke, Playwright tests._'
             });

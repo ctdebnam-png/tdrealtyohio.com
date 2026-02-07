@@ -42,11 +42,15 @@ async function findFiles(dir, extensions, files = []) {
     if (entry.isDirectory()) {
       if (entry.name.startsWith('.') ||
           entry.name === 'node_modules' ||
+          entry.name === 'src' ||
           entry.name === 'templates' ||
           entry.name === 'data' ||
           entry.name === 'tools' ||
           entry.name === 'reports' ||
           entry.name === 'output' ||
+          entry.name === 'admin' ||
+          entry.name === 'audit' ||
+          entry.name === 'scripts' ||
           entry.name.startsWith('audit-')) {
         continue;
       }

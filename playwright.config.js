@@ -50,6 +50,31 @@ module.exports = defineConfig({
         viewport: { width: 1536, height: 864 },
       },
     },
+
+    // -------------------------------------------------------------------
+    // Snapshot Regression projects — run only snapshot-regression.spec.js
+    // -------------------------------------------------------------------
+    {
+      name: 'snapshot-mobile',
+      testMatch: /snapshot-regression/,
+      use: {
+        viewport: { width: 390, height: 844 },
+      },
+    },
+    {
+      name: 'snapshot-tablet',
+      testMatch: /snapshot-regression/,
+      use: {
+        viewport: { width: 768, height: 1024 },
+      },
+    },
+    {
+      name: 'snapshot-desktop',
+      testMatch: /snapshot-regression/,
+      use: {
+        viewport: { width: 1440, height: 900 },
+      },
+    },
   ],
 
   webServer: {
