@@ -15,6 +15,7 @@ const checkSeo = require('./checks/seo');
 const checkBusiness = require('./checks/business');
 const checkSitemap = require('./checks/sitemap');
 const checkSchema = require('./checks/schema');
+const { check: checkSchemaConsistency } = require('./checks/schema-consistency');
 const checkCanonicalHost = require('./checks/canonical-host');
 const checkContentVoice = require('./checks/content-voice');
 
@@ -42,6 +43,7 @@ async function main() {
     { name: 'business', fn: checkBusiness, label: 'Business Facts' },
     { name: 'sitemap', fn: checkSitemap, label: 'Sitemap Consistency' },
     { name: 'schema', fn: checkSchema, label: 'Schema.org Structured Data' },
+    { name: 'schema-consistency', fn: checkSchemaConsistency, label: 'Schema Consistency' },
     { name: 'canonical-host', fn: checkCanonicalHost, label: 'Canonical Host (no-www)' },
     { name: 'content-voice', fn: checkContentVoice, label: 'Content Voice (no first-person)' }
   ];

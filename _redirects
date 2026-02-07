@@ -71,5 +71,7 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 # City landing pages
 # ----------------------------------------
 # Redirect cities without dedicated pages to main areas page
+/blog/selling-home-westerville-ohio-2025/*  /blog/selling-home-westerville-ohio-2026/:splat  301
+
 /areas/galena/          /areas/                 301
 /areas/galena/*         /areas/                 301
