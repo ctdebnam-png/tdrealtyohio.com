@@ -1,0 +1,16 @@
+{
+  "allowlist": [
+    { "file": "faq/index.html", "pattern": "\\bI\\b" },
+    { "file": "blog/fsbo-vs-realtor-columbus/index.html", "pattern": "\\bI\\b" },
+    { "file": "sellers/index.html", "pattern": "\\bI\\b" },
+    { "file": "buyers/index.html", "pattern": "\\bI\\b" },
+    { "file": "contact/index.html", "pattern": "\\bI\\b" },
+    { "file": "pre-listing-inspection/index.html", "pattern": "\\bI\\b" },
+    { "file": "sell-and-buy/index.html", "pattern": "\\bI\\b" },
+    { "file": "1-percent-commission/index.html", "pattern": "\\bI\\b" },
+    { "file": "home-value/index.html", "pattern": "\\bI\\b" },
+    { "file": "affordability/index.html", "pattern": "\\bI\\b" },
+    { "file": "blog/home-staging-tips-columbus/index.html", "pattern": "\\bI\\b" },
+    { "file": "blog/pre-listing-inspection-benefits/index.html", "pattern": "\\bI\\b" }
+  ]
+}

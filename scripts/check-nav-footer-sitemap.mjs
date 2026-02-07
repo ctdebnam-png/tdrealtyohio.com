@@ -12,6 +12,7 @@
  *  7. Blog post post-meta does not match "TD Realty Ohio | Month Year"
  */
 
+import { createRequire } from 'module';
 import { readFile } from 'fs/promises';
 import { glob } from 'glob';
 import { dirname, join } from 'path';
@@ -20,25 +21,13 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
-// Canonical nav registry — single source of truth for labels used in header/footer/sitemap
+const require = createRequire(import.meta.url);
+const { NAV_REGISTRY } = require('../src/config/nav.js');
+
+// Derive canonical nav from the single source of truth
 const CANONICAL_NAV = {
-  services: [
-    { href: '/sellers/', label: 'For Sellers' },
-    { href: '/buyers/', label: 'For Buyers' },
-    { href: '/pre-listing-inspection/', label: 'Pre-Listing Inspection' },
-    { href: '/areas/', label: 'Service Areas' },
-    { href: '/home-value/', label: 'Free Home Value' },
-    { href: '/affordability/', label: 'Affordability Calculator' },
-    { href: '/referrals/', label: 'Referral Credit' },
-    { href: '/compare/', label: 'Compare Options' },
-  ],
-  company: [
-    { href: '/about/', label: 'About' },
-    { href: '/contact/', label: 'Contact' },
-    { href: '/blog/', label: 'Blog' },
-    { href: '/agents/', label: 'Agent Opportunities' },
-    { href: '/faq/', label: 'FAQ' },
-  ],
+  services: NAV_REGISTRY.groups.services.items.map(i => ({ href: i.href, label: i.label })),
+  company: NAV_REGISTRY.groups.company.items.map(i => ({ href: i.href, label: i.label })),
 };
 
 // Allowed labels on the sitemap page that are NOT in the nav registry
