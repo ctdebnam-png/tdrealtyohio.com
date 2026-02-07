@@ -10,7 +10,7 @@
     "dev": "npx wrangler pages dev . --port 8788",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
-    "test:screenshots": "npx playwright test --project=mobile-375x812 --project=desktop-1280x800 visual-regression",
+    "test:screenshots": "npx playwright test --project=snapshot-mobile --project=snapshot-tablet --project=snapshot-desktop",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "validate": "node scripts/indexing-guard.mjs",
     "check:nav": "node scripts/check-nav.mjs",
@@ -27,9 +27,11 @@
     "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js && node scripts/check-a11y-links.mjs && node scripts/check-calculators.mjs && node scripts/check-nav-footer-sitemap.mjs && node scripts/check-nav-registry.mjs && node scripts/content-scan.js && node scripts/seo-validate.js"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.14.0",
     "@playwright/test": "^1.50.0",
     "cheerio": "^1.2.0",
     "glob": "^13.0.1",
+    "wait-on": "^8.0.0",
     "wrangler": "^4.0.0"
   }
 }

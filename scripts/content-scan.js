@@ -53,9 +53,11 @@ for (const verb of I_VERBS) {
 
 // Contractions
 for (const contraction of ["I'm", "I'll", "I've"]) {
+  // Match both straight apostrophe (') and curly apostrophe (')
+  const escaped = contraction.replace(/['']/g, "[''']");
   BANNED.push({
     label: 'First-person: ' + contraction,
-    regex: new RegExp('\\b' + contraction.replace("'", "'") + '\\b', 'gi'),
+    regex: new RegExp('\\b' + escaped + '\\b', 'gi'),
     raw: contraction,
   });
 }
