@@ -2,11 +2,12 @@
 /**
  * Navigation Consistency Check for TD Realty Ohio
  *
- * Now that header nav and footer nav are rendered dynamically from TD_NAV
- * (assets/js/nav.js), this script validates:
- *   1. Every page has the expected placeholder containers
+ * Header nav links are static HTML in every page (for SEO crawlability).
+ * Footer links are rendered dynamically from TD_NAV (assets/js/nav.js).
+ * This script validates:
+ *   1. Every page has <nav id="main-nav"> with static links matching NAV_REGISTRY
  *   2. assets/js/nav.js TD_NAV matches src/config/nav.js NAV_REGISTRY
- *   3. No hardcoded nav-link or footer <li> items remain in nav/footer placeholders
+ *   3. No hardcoded footer <li> items remain in footer placeholders
  */
 
 import { createRequire } from 'module';
@@ -38,9 +39,20 @@ async function checkFile(filePath) {
     return;
   }
 
-  const navInner = navMatch[1].trim();
-  if (navInner.includes('class="nav-link"') || navInner.includes('nav-section-header')) {
-    errors.push(`${rel}: nav#main-nav still contains hardcoded nav links (should be rendered by JS)`);
+  // Validate static nav contains all required links from NAV_REGISTRY
+  const navInner = navMatch[1];
+  const hrefRe = /href="([^"]+)"/g;
+  const foundHrefs = new Set();
+  let hm;
+  while ((hm = hrefRe.exec(navInner)) !== null) {
+    foundHrefs.add(hm[1]);
+  }
+  for (const group of Object.values(NAV_REGISTRY.groups)) {
+    for (const item of group.items) {
+      if (!foundHrefs.has(item.href)) {
+        errors.push(`${rel}: nav#main-nav missing link to ${item.href}`);
+      }
+    }
   }
 
   // 2. Check for data-footer-nav="services" container

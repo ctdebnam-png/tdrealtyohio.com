@@ -2,11 +2,12 @@
 /**
  * Nav Registry CI Check
  *
- * Now that header nav and footer nav are rendered dynamically from TD_NAV
- * (assets/js/nav.js), this script validates:
- *   1. Every page has the dynamic-render placeholder containers
+ * Header nav links are static HTML in every page (for SEO crawlability).
+ * Footer links are rendered dynamically from TD_NAV (assets/js/nav.js).
+ * This script validates:
+ *   1. Every page has <nav id="main-nav"> with static links matching NAV_REGISTRY
  *   2. assets/js/nav.js TD_NAV matches src/config/nav.js NAV_REGISTRY
- *   3. No testimonials links or hardcoded nav/footer link leftovers
+ *   3. No testimonials links or hardcoded footer <li> leftovers
  *
  * Exit code 1 on any mismatch.
  */
@@ -65,14 +66,27 @@ async function checkHtmlFiles() {
 
     const rp = rel(file);
 
-    // 1. Check nav placeholder exists and has no hardcoded links
+    // 1. Check nav exists and static links match NAV_REGISTRY
     const navMatch = html.match(/<nav[^>]*id="main-nav"[^>]*>([\s\S]*?)<\/nav>/i);
     if (!navMatch) {
       errors.push(`${rp}: missing <nav id="main-nav">`);
     } else {
-      const navInner = navMatch[1].trim();
-      if (navInner.includes('class="nav-link"') || navInner.includes('nav-section-header')) {
-        errors.push(`${rp}: nav still contains hardcoded links (should be rendered by JS)`);
+      const navInner = navMatch[1];
+      const hrefRe = /href="([^"]+)"/g;
+      const foundHrefs = new Set();
+      let hm;
+      while ((hm = hrefRe.exec(navInner)) !== null) {
+        foundHrefs.add(hm[1]);
+      }
+      for (const href of registryServicesHrefs) {
+        if (!foundHrefs.has(href)) {
+          errors.push(`${rp}: nav#main-nav missing link to ${href}`);
+        }
+      }
+      for (const href of registryCompanyHrefs) {
+        if (!foundHrefs.has(href)) {
+          errors.push(`${rp}: nav#main-nav missing link to ${href}`);
+        }
       }
     }
 
