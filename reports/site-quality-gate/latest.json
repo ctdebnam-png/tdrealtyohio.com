@@ -1,15 +1,20 @@
 {
-  "timestamp": "2026-02-05T14:20:33.877Z",
+  "timestamp": "2026-02-07T14:37:19.569Z",
   "passed": true,
   "checks": {
     "links": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "N/A",
+          "message": "81 external URLs found. Use --check-external to validate them."
+        }
+      ],
       "stats": {
-        "totalLinks": 3216,
-        "internalLinks": 2538,
-        "externalLinks": 418,
+        "totalLinks": 2410,
+        "internalLinks": 1809,
+        "externalLinks": 342,
         "brokenInternal": 0,
         "skippedExternal": 0
       }
@@ -17,7 +22,12 @@
     "seo": {
       "passed": true,
       "errors": [],
-      "warnings": [],
+      "warnings": [
+        {
+          "file": "1-percent-commission/index.html",
+          "message": "Meta description may be too long (179 chars)"
+        }
+      ],
       "stats": {
         "filesChecked": 63,
         "missingTags": 0
@@ -39,7 +49,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "sitemapUrls": 160,
+        "sitemapUrls": 58,
         "htmlFiles": 63,
         "missingFromSitemap": 0,
         "orphanedInSitemap": 0
@@ -48,11 +58,28 @@
     "schema": {
       "passed": true,
       "errors": [],
+      "warnings": [
+        {
+          "file": "admin/profiles/index.html",
+          "message": "Missing BreadcrumbList schema (recommended for all pages except homepage)"
+        }
+      ],
+      "stats": {
+        "filesChecked": 63,
+        "schemasFound": 194,
+        "invalidSchemas": 0
+      }
+    },
+    "schema-consistency": {
+      "passed": true,
+      "errors": [],
       "warnings": [],
       "stats": {
         "filesChecked": 63,
-        "schemasFound": 196,
-        "invalidSchemas": 0
+        "localityMismatches": 0,
+        "telephoneMismatches": 0,
+        "emailMismatches": 0,
+        "streetAddressViolations": 0
       }
     },
     "canonical-host": {
@@ -60,7 +87,7 @@
       "errors": [],
       "warnings": [],
       "stats": {
-        "filesChecked": 76,
+        "filesChecked": 85,
         "wwwReferences": 0
       }
     },
@@ -70,7 +97,9 @@
       "warnings": [],
       "stats": {
         "filesChecked": 63,
-        "violations": 0
+        "violations": 0,
+        "bannedPhrases": 0,
+        "ctaViolations": 0
       }
     }
   }
