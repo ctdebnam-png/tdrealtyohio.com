@@ -4,6 +4,7 @@
  * Fails if first-person tokens appear in editorial content
  */
 
+const cheerio = require('cheerio');
 const { getHtmlFiles, readHtmlFile } = require('./utils');
 
 // First-person patterns to flag (word boundaries required)
@@ -33,6 +34,19 @@ const ALLOWED_CONTEXTS = [
   /I agree to be contacted/gi  // Consent checkbox text
 ];
 
+// Banned phrases - terms that must never appear in rendered content
+// "reviews" excludes legitimate real estate contexts like "offer review"
+const BANNED_PHRASES = [
+  { pattern: /\btestimonials?\b/gi, label: 'testimonial(s)' },
+  { pattern: /\breviews\b/gi, label: 'reviews', exclude: /\boffer\s+reviews?\b|\breview\s+and\s+counteroffer\b/gi },
+  { pattern: /zillowRating/g, label: 'zillowRating' },
+  { pattern: /\bstar\s+rating\b/gi, label: 'star rating' },
+  { pattern: /\u2605{5}/g, label: '\u2605\u2605\u2605\u2605\u2605 (five stars)' }
+];
+
+// First-person tokens banned inside CTA elements (buttons and .btn links)
+const CTA_FIRST_PERSON = /\b(I|I'm|I've|I'll|my|me)\b/gi;
+
 // Files to skip
 const SKIP_FILES = [
   /node_modules\//,
@@ -55,7 +69,9 @@ async function checkContentVoice(config, verbose) {
     warnings: [],
     stats: {
       filesChecked: 0,
-      violations: 0
+      violations: 0,
+      bannedPhrases: 0,
+      ctaViolations: 0
     }
   };
 
@@ -90,6 +106,69 @@ async function checkContentVoice(config, verbose) {
         message: `Found first-person language: ${unique.slice(0, 5).join(', ')}${unique.length > 5 ? '...' : ''}`
       });
       result.stats.violations += violations.length;
+      result.passed = false;
+    }
+
+    // --- Banned phrase enforcement ---
+    const $ = cheerio.load(html);
+    const bodyText = $('body').text();
+
+    for (const { pattern, label, exclude } of BANNED_PHRASES) {
+      // Reset regex state
+      pattern.lastIndex = 0;
+      const matches = bodyText.match(pattern);
+      if (matches && matches.length > 0) {
+        if (exclude) {
+          // Remove legitimate uses before counting
+          exclude.lastIndex = 0;
+          const cleaned = bodyText.replace(exclude, '');
+          pattern.lastIndex = 0;
+          const remaining = cleaned.match(pattern);
+          if (remaining && remaining.length > 0) {
+            result.errors.push({
+              file: file.relative,
+              message: `Banned phrase found: "${label}" (${remaining.length} occurrence${remaining.length > 1 ? 's' : ''})`
+            });
+            result.stats.bannedPhrases += remaining.length;
+            result.passed = false;
+          }
+        } else {
+          result.errors.push({
+            file: file.relative,
+            message: `Banned phrase found: "${label}" (${matches.length} occurrence${matches.length > 1 ? 's' : ''})`
+          });
+          result.stats.bannedPhrases += matches.length;
+          result.passed = false;
+        }
+      }
+    }
+
+    // --- First-person in CTA labels ---
+    const ctaViolations = [];
+
+    $('button, a[class*="btn"]').each((i, el) => {
+      const $el = $(el);
+
+      // Skip FAQ question buttons and form consent elements
+      if ($el.hasClass('faq-question') || $el.closest('.faq-question').length > 0) return;
+      if ($el.closest('label').length > 0) return;
+
+      const text = $el.text().trim();
+      if (!text) return;
+
+      CTA_FIRST_PERSON.lastIndex = 0;
+      const matches = text.match(CTA_FIRST_PERSON);
+      if (matches && matches.length > 0) {
+        ctaViolations.push(`"${text.substring(0, 40)}" contains: ${[...new Set(matches)].join(', ')}`);
+      }
+    });
+
+    if (ctaViolations.length > 0) {
+      result.errors.push({
+        file: file.relative,
+        message: `First-person language in CTA: ${ctaViolations.slice(0, 3).join('; ')}${ctaViolations.length > 3 ? '...' : ''}`
+      });
+      result.stats.ctaViolations += ctaViolations.length;
       result.passed = false;
     }
   }

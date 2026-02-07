@@ -98,6 +98,33 @@ async function checkSeo(config, verbose) {
             message: `Canonical should use https: ${href}`
           });
         }
+
+        // Canonical URL must not contain query strings or fragments
+        if (href && (href.includes('?') || href.includes('#'))) {
+          result.errors.push({
+            file: file.relative,
+            message: `Canonical URL must not contain query string or fragment: ${href}`
+          });
+          result.passed = false;
+        }
+
+        // Canonical URL must start with site origin
+        if (href && !href.startsWith('https://tdrealtyohio.com/')) {
+          result.errors.push({
+            file: file.relative,
+            message: `Canonical URL must start with "https://tdrealtyohio.com/": ${href}`
+          });
+          result.passed = false;
+        }
+
+        // Canonical URL must end with trailing slash
+        if (href && !href.endsWith('/')) {
+          result.errors.push({
+            file: file.relative,
+            message: `Canonical URL must end with trailing slash: ${href}`
+          });
+          result.passed = false;
+        }
       } else if (selector.includes('meta[property="og:')) {
         const content = element.attr('content');
         if (!content) {
@@ -110,6 +137,21 @@ async function checkSeo(config, verbose) {
       }
     }
 
+    // Check that og:url matches canonical URL exactly
+    const canonicalEl = $('link[rel="canonical"]');
+    const ogUrlEl = $('meta[property="og:url"]');
+    if (canonicalEl.length > 0 && ogUrlEl.length > 0) {
+      const canonicalHref = canonicalEl.attr('href');
+      const ogUrlContent = ogUrlEl.attr('content');
+      if (canonicalHref && ogUrlContent && canonicalHref !== ogUrlContent) {
+        result.errors.push({
+          file: file.relative,
+          message: `og:url ("${ogUrlContent}") does not match canonical URL ("${canonicalHref}")`
+        });
+        result.passed = false;
+      }
+    }
+
     // Check for duplicate title tags
     if ($('title').length > 1) {
       result.errors.push({
@@ -119,18 +161,20 @@ async function checkSeo(config, verbose) {
       result.passed = false;
     }
 
-    // Check for h1 tag
+    // Check for h1 tag — exactly one H1 is required
     const h1Count = $('h1').length;
     if (h1Count === 0) {
-      result.warnings.push({
+      result.errors.push({
         file: file.relative,
         message: 'No H1 tag found'
       });
+      result.passed = false;
     } else if (h1Count > 1) {
-      result.warnings.push({
+      result.errors.push({
         file: file.relative,
         message: `Multiple H1 tags found (${h1Count})`
       });
+      result.passed = false;
     }
 
     // Check for lang attribute on html tag
