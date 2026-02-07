@@ -142,15 +142,20 @@ function generatePostHtml(brief) {
     <div class="header-inner">
       <a href="/" class="logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></a>
       <nav class="nav" id="main-nav" aria-label="Main navigation">
-        <a href="/sellers/" class="nav-link">Sellers</a>
-        <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
-        <a href="/buyers/" class="nav-link">Buyers</a>
+        <div class="nav-section-header">Services</div>
+        <a href="/sellers/" class="nav-link">For Sellers</a>
+        <a href="/buyers/" class="nav-link">For Buyers</a>
         <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
-        <a href="/home-value/" class="nav-link">Home Value</a>
-        <a href="/affordability/" class="nav-link">Affordability</a>
-        <a href="/areas/" class="nav-link">Areas</a>
-        <a href="/blog/" class="nav-link active">Blog</a>
+        <a href="/areas/" class="nav-link">Service Areas</a>
+        <a href="/home-value/" class="nav-link">Free Home Value</a>
+        <a href="/affordability/" class="nav-link">Affordability Calculator</a>
+        <a href="/referrals/" class="nav-link">Referral Credit</a>
+        <a href="/compare/" class="nav-link">Compare Options</a>
+        <div class="nav-section-header">Company</div>
         <a href="/about/" class="nav-link">About</a>
+        <a href="/blog/" class="nav-link">Blog</a>
+        <a href="/agents/" class="nav-link">Agent Opportunities</a>
+        <a href="/faq/" class="nav-link">FAQ</a>
         <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
       </nav>
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
@@ -170,12 +175,9 @@ function generatePostHtml(brief) {
           </ol>
         </nav>
 
-        <header class="post-header">
+        <header class="article-header">
           <h1>${brief.title}</h1>
-          <div class="post-meta">
-            <time datetime="${date}">${new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-            <span class="post-author">By Travis Debnam</span>
-          </div>
+          <p class="post-meta">TD Realty Ohio | ${new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
         </header>
 
         <!-- Target: ~${wordTarget} words | Primary keyword: ${brief.keyword} -->
@@ -275,6 +277,7 @@ ${internalLinks.map(l => `        <!-- ${l} -->`).join('\n')}
       </div>
     </div>
   </footer>
+  <script src="/assets/js/nav.js"></script>
   <script src="/assets/js/main.js"></script>
 </body>
 </html>`;
