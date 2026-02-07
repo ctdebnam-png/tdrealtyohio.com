@@ -35,7 +35,7 @@ SCORING_CATEGORIES = [
 
 # Directories that contain page index.html files
 PAGE_DIRS = ["blog", "areas", "compare", "lp", "sellers", "buyers", "about",
-             "contact", "agents", "testimonials", "faq", "referrals",
+             "contact", "agents", "faq", "referrals",
              "1-percent-commission", "pre-listing-inspection", "home-value",
              "affordability", "sell-and-buy", "sell-only-2-percent",
              "privacy", "terms", "fair-housing", "sitemap-page"]

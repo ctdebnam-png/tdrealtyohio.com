@@ -28,7 +28,6 @@ const KEY_ROUTES = [
   { path: '/affordability/', name: 'affordability' },
   { path: '/areas/', name: 'areas' },
   { path: '/blog/', name: 'blog' },
-  { path: '/testimonials/', name: 'testimonials' },
   { path: '/compare/', name: 'compare' },
   { path: '/about/', name: 'about' },
   { path: '/contact/', name: 'contact' },

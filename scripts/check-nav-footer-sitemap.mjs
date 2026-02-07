@@ -9,6 +9,7 @@
  *  4. Footer Company section is missing canonical links
  *  5. /terms/ contains "REALTOR Code of Ethics"
  *  6. /areas/ or /areas/{city}/ has market metrics without "Updated:" adjacent
+ *  7. Blog post post-meta does not match "TD Realty Ohio | Month Year"
  */
 
 import { readFile } from 'fs/promises';
@@ -237,6 +238,27 @@ async function checkAreasFreshness() {
   }
 }
 
+// Check 7: Blog post meta format must be "TD Realty Ohio | Month Year"
+async function checkBlogPostMeta() {
+  const blogFiles = await glob('blog/*/index.html', {
+    cwd: ROOT,
+    ignore: ['node_modules/**'],
+  });
+
+  const validPattern = /^TD Realty Ohio \| (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$/;
+
+  for (const file of blogFiles) {
+    const html = await readFile(join(ROOT, file), 'utf-8');
+    const metaMatch = html.match(/<p class="post-meta">([^<]+)<\/p>/);
+    if (metaMatch) {
+      const metaText = metaMatch[1].trim();
+      if (!validPattern.test(metaText)) {
+        fail(`${file}: post-meta "${metaText}" does not match "TD Realty Ohio | Month Year"`);
+      }
+    }
+  }
+}
+
 async function main() {
   console.log('check-nav-footer-sitemap: running...');
   await checkDuplicateHrefs();
@@ -245,6 +267,7 @@ async function main() {
   await checkFooterCompanyCompleteness();
   await checkTermsRealtorCode();
   await checkAreasFreshness();
+  await checkBlogPostMeta();
 
   if (errors > 0) {
     console.error(`\ncheck-nav-footer-sitemap: ${errors} error(s) found`);

@@ -227,7 +227,7 @@ function generateRecommendations(gaps, matrix) {
 
     if (city && city.toLowerCase() !== 'columbus') {
       const slug = city.toLowerCase().replace(/\s+/g, '-');
-      suggestion = `Create or enhance city page at /cities/${slug} targeting "${kw}". Include local market stats, testimonials, and neighbourhood-specific FAQ schema.`;
+      suggestion = `Create or enhance city page at /cities/${slug} targeting "${kw}". Include local market stats and neighbourhood-specific FAQ schema.`;
       action = 'create_city_page';
       targetPage = `/cities/${slug}`;
     } else if (targetPage) {

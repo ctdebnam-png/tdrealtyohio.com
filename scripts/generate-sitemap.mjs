@@ -29,7 +29,6 @@ const PRIORITY_MAP = {
   '/referrals/': '0.5',
   '/blog/': '0.7',
   '/faq/': '0.7',
-  '/testimonials/': '0.7',
   '/compare/': '0.7',
   '/compare/1-percent-vs-3-percent/': '0.7',
   '/compare/discount-broker-vs-full-service/': '0.7',

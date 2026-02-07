@@ -28,7 +28,7 @@ SITE_SECTIONS = {
     "core": [
         "sellers", "buyers", "1-percent-commission", "pre-listing-inspection",
         "home-value", "affordability", "sell-and-buy", "sell-only-2-percent",
-        "about", "contact", "agents", "testimonials", "faq", "referrals",
+        "about", "contact", "agents", "faq", "referrals",
         "privacy", "terms", "fair-housing",
     ],
     "areas": [],   # populated dynamically from filesystem

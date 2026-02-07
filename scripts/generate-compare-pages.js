@@ -209,7 +209,7 @@ const SEO_IMPROVEMENTS = {
     },
     {
       area: 'Social proof',
-      suggestion: 'Include a brief case study or testimonial from a seller who switched from flat-fee to full-service.',
+      suggestion: 'Include a brief case study from a seller who switched from flat-fee to full-service.',
     },
     {
       area: 'Keyword expansion',
@@ -326,7 +326,7 @@ const CONTENT_GAPS = {
       'Interactive savings calculator',
       'Downloadable comparison PDF / checklist',
       'Video walkthrough of commission math',
-      'Testimonial or case study with real savings numbers',
+      'Case study with real savings numbers',
     ],
     keywordGaps: [
       'real estate commission rates Ohio 2025',
