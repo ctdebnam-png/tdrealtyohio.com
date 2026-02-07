@@ -45,12 +45,6 @@
         "group": null
       },
       {
-        "href": "/testimonials/",
-        "label": "Testimonials",
-        "surface": "desktopHeader",
-        "group": null
-      },
-      {
         "href": "/faq/",
         "label": "FAQ",
         "surface": "desktopHeader",
@@ -103,12 +97,6 @@
       {
         "href": "/about/",
         "label": "About",
-        "surface": "mobileHamburger",
-        "group": null
-      },
-      {
-        "href": "/testimonials/",
-        "label": "Testimonials",
         "surface": "mobileHamburger",
         "group": null
       },
@@ -193,12 +181,6 @@
         "group": "Company"
       },
       {
-        "href": "/testimonials/",
-        "label": "Testimonials",
-        "surface": "footer",
-        "group": "Company"
-      },
-      {
         "href": "/agents/",
         "label": "Agent Opportunities",
         "surface": "footer",
@@ -251,12 +233,6 @@
       {
         "href": "/contact/",
         "label": "Contact",
-        "surface": "htmlSitemap",
-        "group": "Main Pages"
-      },
-      {
-        "href": "/testimonials/",
-        "label": "Testimonials",
         "surface": "htmlSitemap",
         "group": "Main Pages"
       },
@@ -690,12 +666,6 @@
       },
       {
         "href": "/home-value/",
-        "label": null,
-        "surface": "xmlSitemap",
-        "group": null
-      },
-      {
-        "href": "/testimonials/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null

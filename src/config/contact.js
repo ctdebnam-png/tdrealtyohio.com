@@ -13,11 +13,12 @@
  */
 
 const CONTACT = {
-  phone: '(614) 392-8858',
-  phoneRaw: '6143928858',
-  phoneHref: 'tel:6143928858',
+  phone_display: '(614) 392-8858',
+  phone_raw: '6143928858',
+  phone_e164: '+16143928858',
+  phone_href: 'tel:+16143928858',
   email: 'info@tdrealtyohio.com',
-  emailHref: 'mailto:info@tdrealtyohio.com',
+  email_href: 'mailto:info@tdrealtyohio.com',
   location: 'Westerville, Ohio',
   address: {
     street: '3600 Tremont Rd Ste 250',
@@ -31,15 +32,15 @@ const CONTACT = {
 const LICENSES = {
   broker: '2023006467',
   brokerage: '2023006602',
-  brokerName: 'Travis Debnam',
-  companyName: 'TD Realty Ohio, LLC',
+  broker_name: 'Travis Debnam',
+  company_name: 'TD Realty Ohio, LLC',
 };
 
 // Values that must NEVER appear in public site output
 const BANNED_CONTACT = {
-  oldPhone: '614-956-8656',
-  oldPhoneVariants: ['(614) 956-8656', '6149568656', '614.956.8656'],
-  personalEmail: 'travisdrealtor@gmail.com',
+  old_phone: '614-956-8656',
+  old_phone_variants: ['(614) 956-8656', '6149568656', '614.956.8656'],
+  personal_email: 'travisdrealtor@gmail.com',
 };
 
 if (typeof module !== 'undefined' && module.exports) {

@@ -4,6 +4,7 @@
  * Validates that hamburger menu and footer navigation match src/config/nav.ts
  */
 
+import { createRequire } from 'module';
 import { readFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -11,25 +12,13 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
-// Expected nav structure matching assets/js/nav.js TD_NAV
+const require = createRequire(import.meta.url);
+const { NAV_REGISTRY } = require('../src/config/nav.js');
+
+// Derive expected nav from the canonical registry
 const EXPECTED_NAV = {
-  services: [
-    { label: 'For Sellers', href: '/sellers/' },
-    { label: 'For Buyers', href: '/buyers/' },
-    { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
-    { label: 'Service Areas', href: '/areas/' },
-    { label: 'Free Home Value', href: '/home-value/' },
-    { label: 'Affordability Calculator', href: '/affordability/' },
-    { label: 'Referral Credit', href: '/referrals/' },
-    { label: 'Compare Options', href: '/compare/' },
-  ],
-  company: [
-    { label: 'About', href: '/about/' },
-    { label: 'Contact', href: '/contact/' },
-    { label: 'Blog', href: '/blog/' },
-    { label: 'Agent Opportunities', href: '/agents/' },
-    { label: 'FAQ', href: '/faq/' },
-  ],
+  services: NAV_REGISTRY.groups.services.items.map(i => ({ label: i.label, href: i.href })),
+  company: NAV_REGISTRY.groups.company.items.map(i => ({ label: i.label, href: i.href })),
 };
 
 const expectedServiceHrefs = new Set(EXPECTED_NAV.services.map(i => i.href));
