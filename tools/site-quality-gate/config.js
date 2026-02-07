@@ -38,7 +38,7 @@ module.exports = {
   ],
 
   // Files to exclude from SEO tag checks (error pages, etc.)
-  excludeFromSeoCheck: ['404.html'],
+  excludeFromSeoCheck: ['404.html', 'admin/profiles/index.html'],
 
   // Files to exclude from schema validation checks
   excludeFromSchemaCheck: ['/404.html', '/404/', '/lp/'],
