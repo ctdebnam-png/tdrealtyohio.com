@@ -665,13 +665,13 @@
       const activeToggle = document.querySelector('[data-toggle-btn].active');
       const rate = activeToggle && activeToggle.dataset.rate === 'sell-only' ? 0.02 : 0.01;
       const mode = rate === 0.01 ? 'sell+buy' : 'sell-only';
-      const traditional = Math.round(price * 0.03);
+      const typicalFee = Math.round(price * 0.03);
       const tdFee = Math.round(price * rate);
-      const savings = traditional - tdFee;
+      const savings = typicalFee - tdFee;
       return {
-        url: '/contact/?homeSalePrice=' + price + '&mode=' + mode + '&traditional=' + traditional + '&tdFee=' + tdFee + '&savings=' + savings,
+        url: '/contact/?salePrice=' + price + '&mode=' + mode + '&typicalFee=' + typicalFee + '&tdFee=' + tdFee + '&savings=' + savings,
         data: { homePrice: price, mode: mode, computedSavings: savings },
-        params: { homeSalePrice: price, mode: mode, traditional: traditional, tdFee: tdFee, savings: savings }
+        params: { salePrice: price, mode: mode, typicalFee: typicalFee, tdFee: tdFee, savings: savings }
       };
     }
 
