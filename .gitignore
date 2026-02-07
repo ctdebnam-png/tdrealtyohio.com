@@ -21,6 +21,9 @@ Thumbs.db
 # Generated output artifacts
 output/
 
+# Wrangler dev artifacts
+.wrangler/
+
 # Python
 __pycache__/
 *.pyc
