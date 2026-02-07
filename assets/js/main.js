@@ -643,6 +643,13 @@ function initFormHandler(formId, successMessage) {
     if (formData.get('experience')) extra.experience = formData.get('experience');
     if (formData.get('interest')) extra.interest = formData.get('interest');
     if (formData.get('transaction_type')) extra.transaction_type = formData.get('transaction_type');
+    if (formData.get('calcSalePrice')) extra.salePrice = formData.get('calcSalePrice');
+    if (formData.get('calcMode')) extra.calcMode = formData.get('calcMode');
+    if (formData.get('calcTypicalFee')) extra.typicalFee = formData.get('calcTypicalFee');
+    if (formData.get('calcTdFee')) extra.tdFee = formData.get('calcTdFee');
+    if (formData.get('calcSavings')) extra.savings = formData.get('calcSavings');
+    if (formData.get('calcPurchasePrice')) extra.purchasePrice = formData.get('calcPurchasePrice');
+    if (formData.get('calcCashBack')) extra.cashBack = formData.get('calcCashBack');
 
     const payload = {
       name: fullName,
