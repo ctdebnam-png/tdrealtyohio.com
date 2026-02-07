@@ -145,14 +145,18 @@ function checkFirstPerson(html, relativePath) {
 
 /**
  * Check 3: Header and footer link sets match
- * The nav should contain all the same destinations as the footer
- * (footer may have Contact in Company list; nav has it as CTA button)
+ * The nav should contain all the same destinations as the footer.
+ * Footer links are JS-rendered from TD_NAV, so if the footer containers
+ * are empty in source HTML we skip this check (nav-registry checks
+ * already validate both header and footer against NAV_REGISTRY).
  */
 function checkHeaderFooterMatch(html, relativePath) {
   const navHrefs = extractNavHrefs(html);
   const footerHrefs = extractFooterHrefs(html);
 
   if (!navHrefs || !footerHrefs) return;
+  // Footer links are JS-rendered; if empty in source, skip comparison
+  if (footerHrefs.size === 0) return;
 
   // Footer links that should all be in the nav
   for (const href of footerHrefs) {
