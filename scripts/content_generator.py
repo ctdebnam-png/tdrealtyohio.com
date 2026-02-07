@@ -502,8 +502,8 @@ def _wrap_in_page(
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
             <li><a href="/blog/">Blog</a></li>
-            <li><a href="/testimonials/">Testimonials</a></li>
             <li><a href="/agents/">Agent Opportunities</a></li>
+            <li><a href="/faq/">FAQ</a></li>
           </ul>
         </div>
 

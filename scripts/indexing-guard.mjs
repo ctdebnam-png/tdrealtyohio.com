@@ -13,6 +13,7 @@ const ROOT = join(__dirname, '..');
 const SITE_URL = 'https://tdrealtyohio.com';
 const OLD_PHONE = '614-956-8656';
 const OLD_PHONE_VARIANTS = ['614-956-8656', '614.956.8656', '(614) 956-8656', '6149568656'];
+const BANNED_EMAIL = 'travisdrealtor@gmail.com';
 
 let errors = [];
 let warnings = [];
@@ -175,6 +176,10 @@ async function checkOldPhoneNumber() {
       if (content.includes(variant)) {
         errors.push(`Old phone number found in ${relativePath}: ${variant}`);
       }
+    }
+
+    if (content.includes(BANNED_EMAIL)) {
+      errors.push(`Banned personal email found in ${relativePath}: ${BANNED_EMAIL}`);
     }
   }
 

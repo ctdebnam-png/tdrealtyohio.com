@@ -685,7 +685,7 @@ def _all_page_paths() -> list[Path]:
                      "compare/*/index.html", "lp/*/index.html",
                      "sellers/index.html", "buyers/index.html",
                      "about/index.html", "contact/index.html",
-                     "agents/index.html", "testimonials/index.html",
+                     "agents/index.html",
                      "faq/index.html", "referrals/index.html",
                      "1-percent-commission/index.html",
                      "pre-listing-inspection/index.html",

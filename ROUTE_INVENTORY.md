@@ -23,7 +23,7 @@ Generated: 2026-02-03
 | `/affordability/` | 200 | https://tdrealtyohio.com/affordability/ | Affordability Calculator \| TD Realty Ohio | How Much Home Can You Afford? | Calculate, Contact | Header, Footer |
 | `/areas/` | 200 | https://tdrealtyohio.com/areas/ | Central Ohio Communities \| TD Realty Ohio | Central Ohio Communities | Calculate Your Savings, View Full Page | Header, Footer |
 | `/blog/` | 200 | https://tdrealtyohio.com/blog/ | Blog \| TD Realty Ohio | Real Estate Insights | Read More | Header, Footer |
-| `/testimonials/` | 200 | https://tdrealtyohio.com/testimonials/ | Client Reviews \| TD Realty Ohio | Client Reviews | Review on Google, Review on Zillow, Contact Us | Header, Footer |
+| `/testimonials/` | 301 → `/` | — | — | — | — | Removed; redirects to homepage |
 | `/compare/` | 200 | https://tdrealtyohio.com/compare/ | Compare Real Estate Options \| TD Realty Ohio | Compare Your Options | Learn More | Header, Footer |
 | `/about/` | 200 | https://tdrealtyohio.com/about/ | About Travis Debnam \| TD Realty Ohio | About TD Realty Ohio | Contact, Call (614) 392-8858 | Header, Footer |
 | `/contact/` | 200 | https://tdrealtyohio.com/contact/ | Contact TD Realty Ohio \| Columbus Area Real Estate | Get in Touch | Send Message | Header, Footer |

@@ -22,7 +22,6 @@ const SECTIONS = {
     { path: '/', label: 'Home' },
     { path: '/about/', label: 'About' },
     { path: '/contact/', label: 'Contact' },
-    { path: '/testimonials/', label: 'Testimonials' },
     { path: '/faq/', label: 'FAQ' },
   ],
   'Services': [

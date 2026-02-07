@@ -11,6 +11,7 @@ const TD_CONFIG = {
     broker: 'Travis Debnam',
     title: 'Broker/Owner'
   },
+  // Canonical source: src/config/contact.js — keep in sync
   contact: {
     phone: '(614) 392-8858',
     phoneRaw: '6143928858',
