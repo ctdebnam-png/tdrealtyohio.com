@@ -29,6 +29,13 @@ const TD_CONFIG = {
     nar: 'https://www.nar.realtor/'
   },
   stats: {
+    zillowRating: 5.0,
+    zillowReviews: 3,
+    totalTransactions: 48,
+    salesLast12Months: 6,
+    avgPrice: 331000,
+    priceRangeLow: 170000,
+    priceRangeHigh: 514000,
     licensedSince: 2017
   },
   rates: {
@@ -71,7 +78,7 @@ const TD_CONFIG = {
     'Pickerington', 'Grove City', 'Blacklick', 'Clintonville',
     'Pataskala', 'Sunbury'
   ],
-  marketDataLastUpdated: 'January 2026'
+  marketDataLastUpdated: 'February 2026'
 };
 
 // ===== UTM & TRACKING =====

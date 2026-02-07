@@ -33,26 +33,12 @@ const TD_NAV = {
 };
 
 /**
- * Renders header navigation links from TD_NAV into <nav id="main-nav">.
- * Contact is rendered as a CTA button rather than a plain link.
+ * Navigation links are now static HTML in every page for SEO.
+ * This function is retained for backwards compatibility.
  */
 function renderHeaderNav() {
-  var nav = document.getElementById('main-nav');
-  if (!nav) return;
-
-  var html = '';
-  html += '<div class="nav-section-header">' + TD_NAV.services.title + '</div>';
-  TD_NAV.services.items.forEach(function(item) {
-    html += '<a href="' + item.href + '" class="nav-link">' + item.label + '</a>';
-  });
-  html += '<div class="nav-section-header">' + TD_NAV.company.title + '</div>';
-  TD_NAV.company.items.forEach(function(item) {
-    if (item.href === '/contact/') return; // rendered as CTA below
-    html += '<a href="' + item.href + '" class="nav-link">' + item.label + '</a>';
-  });
-  html += '<a href="/contact/" class="btn btn-primary nav-cta">Contact</a>';
-
-  nav.innerHTML = html;
+  // Navigation links are now static HTML for SEO.
+  // This function is retained for backwards compatibility.
 }
 
 /**
