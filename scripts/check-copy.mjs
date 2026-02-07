@@ -30,12 +30,18 @@ const FIRST_PERSON_PATTERNS = [
 // Banned vague marketing phrases
 const BANNED_PHRASES = [
   { pattern: /\bkeep thousands more\b/gi, replacement: 'keep more at closing' },
+  { pattern: /\bsave thousands\b/gi, replacement: '(use specific dollar amount or "keep more at closing")' },
+  { pattern: /\bkeep thousands\b/gi, replacement: '(use specific dollar amount or "keep more at closing")' },
+  { pattern: /\bsave you thousands\b/gi, replacement: '(use specific dollar amount or "keep more at closing")' },
   { pattern: /\bwe operate efficiently\b/gi, replacement: 'lower overhead and standardized workflows' },
   { pattern: /\bexpert negotiation\b/gi, replacement: 'offer review, counteroffer drafting, and negotiation support' },
   { pattern: /\bbest price\b/gi, replacement: 'pricing guidance based on a CMA and current competition' },
   { pattern: /\bstrongest (real estate )?market\b/gi, replacement: '(remove unsupported market claim)' },
   { pattern: /\brising steadily\b/gi, replacement: '(remove unsupported market claim)' },
   { pattern: /\bhealthy appreciation\b/gi, replacement: '(remove unsupported market claim)' },
+  { pattern: /\bguaranteed\b/gi, replacement: '(remove guarantee language)' },
+  { pattern: /\bget started today\b/gi, replacement: '(replace with specific next step)' },
+  { pattern: /\bstudies consistently show\b/gi, replacement: '(cite specific data or remove)' },
 ];
 
 /**

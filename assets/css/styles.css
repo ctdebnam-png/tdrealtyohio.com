@@ -466,7 +466,7 @@ main {
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: var(--gray-300);
+  color: var(--gray-200);
   margin-bottom: 2rem;
   line-height: 1.7;
 }
@@ -841,9 +841,19 @@ main {
 }
 
 .cta-section p {
-  color: var(--gray-300);
+  color: var(--gray-200);
   max-width: 600px;
   margin: 0 auto 2rem;
+}
+
+.cta-section-links {
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  opacity: 0.9;
+}
+
+.cta-section-links a {
+  color: var(--gold);
 }
 
 /* ===== PROCESS STEPS ===== */
@@ -3129,7 +3139,7 @@ main {
 /* ── Hero Proof Line ──────────────────────────────────── */
 .hero-proof {
   font-size: 0.9375rem;
-  opacity: 0.85;
+  color: rgba(255,255,255,0.92);
   margin-top: 0.75rem;
   letter-spacing: 0.02em;
 }
@@ -3597,6 +3607,66 @@ main {
 .feature-card:hover {
   border-color: var(--gold);
   box-shadow: var(--shadow-md);
+}
+
+/* ===== PRICING CARDS (homepage How Pricing Works) ===== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.pricing-grid + .pricing-grid {
+  margin-top: 1.5rem;
+}
+
+.pricing-card {
+  background: var(--off-white);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+}
+
+.pricing-card-sm {
+  padding: 1.25rem;
+}
+
+.pricing-card--link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.pricing-card-rate {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'DM Serif Display', serif;
+}
+
+.pricing-card-rate-sm {
+  font-size: 1.5rem;
+}
+
+.pricing-card-label {
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+
+.pricing-card-desc {
+  color: var(--gray-600);
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.pricing-disclaimer {
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 0.8125rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0;
 }
 
 .feature-card-icon {

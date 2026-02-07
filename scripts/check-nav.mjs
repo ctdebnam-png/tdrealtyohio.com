@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 /**
  * Navigation Consistency Check for TD Realty Ohio
- * Validates that hamburger menu and footer navigation match src/config/nav.ts
+ *
+ * Now that header nav and footer nav are rendered dynamically from TD_NAV
+ * (assets/js/nav.js), this script validates:
+ *   1. Every page has the expected placeholder containers
+ *   2. assets/js/nav.js TD_NAV matches src/config/nav.js NAV_REGISTRY
+ *   3. No hardcoded nav-link or footer <li> items remain in nav/footer placeholders
  */
 
 import { createRequire } from 'module';
 import { readFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { globSync } from 'glob';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -15,164 +21,112 @@ const ROOT = join(__dirname, '..');
 const require = createRequire(import.meta.url);
 const { NAV_REGISTRY } = require('../src/config/nav.js');
 
-// Derive expected nav from the canonical registry
-const EXPECTED_NAV = {
-  services: NAV_REGISTRY.groups.services.items.map(i => ({ label: i.label, href: i.href })),
-  company: NAV_REGISTRY.groups.company.items.map(i => ({ label: i.label, href: i.href })),
-};
-
-const expectedServiceHrefs = new Set(EXPECTED_NAV.services.map(i => i.href));
-const expectedCompanyHrefs = new Set(EXPECTED_NAV.company.map(i => i.href));
-
-let errors = [];
+const errors = [];
 
 /**
- * Extract hrefs from the hamburger menu (mobile nav)
+ * Validate that a single HTML file has the expected placeholder containers
+ * and no remaining hardcoded nav/footer links.
  */
-function extractHamburgerLinks(html) {
-  // Find the nav element with id="main-nav"
-  const navRegex = /<nav[^>]*id="main-nav"[^>]*>([\s\S]*?)<\/nav>/i;
-  const match = html.match(navRegex);
-  if (!match) return null;
+async function checkFile(filePath) {
+  const content = await readFile(filePath, 'utf-8');
+  const rel = filePath.replace(ROOT + '/', '');
 
-  const navHtml = match[1];
-  const hrefRegex = /<a[^>]*href="([^"]+)"[^>]*class="nav-link"[^>]*>/gi;
-  const hrefs = [];
-  let hrefMatch;
-  while ((hrefMatch = hrefRegex.exec(navHtml)) !== null) {
-    hrefs.push(hrefMatch[1]);
-  }
-  // Also check for class="nav-link" before href
-  const hrefRegex2 = /<a[^>]*class="nav-link"[^>]*href="([^"]+)"[^>]*>/gi;
-  while ((hrefMatch = hrefRegex2.exec(navHtml)) !== null) {
-    if (!hrefs.includes(hrefMatch[1])) {
-      hrefs.push(hrefMatch[1]);
-    }
-  }
-  return hrefs;
-}
-
-/**
- * Extract hrefs from a footer section
- */
-function extractFooterLinks(html, sectionTitle) {
-  // Find the section by title
-  const sectionRegex = new RegExp(
-    `<h3[^>]*class="footer-title"[^>]*>${sectionTitle}</h3>\\s*<ul[^>]*class="footer-links"[^>]*>([\\s\\S]*?)</ul>`,
-    'i'
-  );
-  const match = html.match(sectionRegex);
-  if (!match) return null;
-
-  const linksHtml = match[1];
-  const hrefRegex = /<a[^>]*href="([^"]+)"[^>]*>/gi;
-  const hrefs = [];
-  let hrefMatch;
-  while ((hrefMatch = hrefRegex.exec(linksHtml)) !== null) {
-    hrefs.push(hrefMatch[1]);
-  }
-  return hrefs;
-}
-
-/**
- * Check navigation consistency in index.html
- */
-async function checkNav() {
-  console.log('Checking navigation consistency...\n');
-
-  const indexPath = join(ROOT, 'index.html');
-  const content = await readFile(indexPath, 'utf-8');
-
-  // All expected hrefs combined
-  const allExpectedHrefs = new Set([...expectedServiceHrefs, ...expectedCompanyHrefs]);
-
-  // Extract hamburger menu links
-  const hamburgerLinks = extractHamburgerLinks(content);
-  if (!hamburgerLinks) {
-    errors.push('Could not find hamburger menu (nav#main-nav) in index.html');
-  } else {
-    const hamburgerSet = new Set(hamburgerLinks);
-
-    // Check hamburger has all expected links
-    // /contact/ is rendered as a CTA button (not nav-link) so skip it here
-    for (const href of allExpectedHrefs) {
-      if (href === '/contact/') continue;
-      if (!hamburgerSet.has(href)) {
-        errors.push(`Hamburger menu missing: ${href}`);
-      }
-    }
-
-    // Check for unexpected links in hamburger (except /contact/ CTA)
-    for (const href of hamburgerLinks) {
-      if (!allExpectedHrefs.has(href) && href !== '/contact/') {
-        errors.push(`Hamburger menu has unexpected link: ${href}`);
-      }
-    }
-
-    console.log(`  Hamburger menu: ${hamburgerLinks.length} links found`);
+  // 1. Check for nav#main-nav placeholder
+  const navMatch = content.match(/<nav[^>]*id="main-nav"[^>]*>([\s\S]*?)<\/nav>/i);
+  if (!navMatch) {
+    errors.push(`${rel}: missing <nav id="main-nav">`);
+    return;
   }
 
-  // Extract footer Services links
-  const footerServices = extractFooterLinks(content, 'Services');
-  if (!footerServices) {
-    errors.push('Could not find footer Services section in index.html');
-  } else {
-    const footerServicesSet = new Set(footerServices);
-
-    // Check for missing links
-    for (const href of expectedServiceHrefs) {
-      if (!footerServicesSet.has(href)) {
-        errors.push(`Footer Services missing: ${href}`);
-      }
-    }
-
-    // Check for extra links
-    for (const href of footerServices) {
-      if (!expectedServiceHrefs.has(href)) {
-        errors.push(`Footer Services has unexpected link: ${href}`);
-      }
-    }
-
-    console.log(`  Footer Services: ${footerServices.length} links found`);
+  const navInner = navMatch[1].trim();
+  if (navInner.includes('class="nav-link"') || navInner.includes('nav-section-header')) {
+    errors.push(`${rel}: nav#main-nav still contains hardcoded nav links (should be rendered by JS)`);
   }
 
-  // Extract footer Company links
-  const footerCompany = extractFooterLinks(content, 'Company');
-  if (!footerCompany) {
-    errors.push('Could not find footer Company section in index.html');
-  } else {
-    const footerCompanySet = new Set(footerCompany);
-
-    // Check for missing links
-    for (const href of expectedCompanyHrefs) {
-      if (!footerCompanySet.has(href)) {
-        errors.push(`Footer Company missing: ${href}`);
-      }
-    }
-
-    // Check for extra links (including testimonials which should be removed)
-    for (const href of footerCompany) {
-      if (!expectedCompanyHrefs.has(href)) {
-        errors.push(`Footer Company has unexpected link: ${href}`);
-      }
-    }
-
-    console.log(`  Footer Company: ${footerCompany.length} links found`);
+  // 2. Check for data-footer-nav="services" container
+  if (!content.includes('data-footer-nav="services"')) {
+    errors.push(`${rel}: missing data-footer-nav="services" container`);
+  }
+  if (!content.includes('data-footer-nav="company"')) {
+    errors.push(`${rel}: missing data-footer-nav="company" container`);
   }
 
-  // Check that testimonials is not present anywhere in nav
+  // 3. Check that footer containers don't have hardcoded <li> items
+  const svcMatch = content.match(/data-footer-nav="services">([\s\S]*?)<\/ul>/i);
+  if (svcMatch && /<li\b/i.test(svcMatch[1])) {
+    errors.push(`${rel}: data-footer-nav="services" still contains hardcoded <li> items`);
+  }
+
+  const cmpMatch = content.match(/data-footer-nav="company">([\s\S]*?)<\/ul>/i);
+  if (cmpMatch && /<li\b/i.test(cmpMatch[1])) {
+    errors.push(`${rel}: data-footer-nav="company" still contains hardcoded <li> items`);
+  }
+
+  // 4. No testimonials links anywhere
   if (content.includes('href="/testimonials/"')) {
-    errors.push('Testimonials link found in index.html (should be removed)');
+    errors.push(`${rel}: testimonials link found (should be removed)`);
   }
 }
 
 /**
- * Main validation function
+ * Validate that assets/js/nav.js TD_NAV is in sync with src/config/nav.js NAV_REGISTRY
  */
+async function checkNavSync() {
+  const navJsContent = await readFile(join(ROOT, 'assets/js/nav.js'), 'utf-8');
+
+  // Extract TD_NAV hrefs from nav.js
+  const hrefRegex = /href:\s*['"]([^'"]+)['"]/g;
+  const navJsHrefs = new Set();
+  let m;
+  while ((m = hrefRegex.exec(navJsContent)) !== null) {
+    navJsHrefs.add(m[1]);
+  }
+
+  // Get all hrefs from NAV_REGISTRY
+  const registryHrefs = new Set();
+  for (const group of Object.values(NAV_REGISTRY.groups)) {
+    for (const item of group.items) {
+      registryHrefs.add(item.href);
+    }
+  }
+
+  // Check every registry href is in nav.js
+  for (const href of registryHrefs) {
+    if (!navJsHrefs.has(href)) {
+      errors.push(`assets/js/nav.js TD_NAV is missing: ${href} (present in src/config/nav.js)`);
+    }
+  }
+
+  // Check for extra hrefs in nav.js not in registry
+  for (const href of navJsHrefs) {
+    if (!registryHrefs.has(href)) {
+      errors.push(`assets/js/nav.js TD_NAV has extra link: ${href} (not in src/config/nav.js)`);
+    }
+  }
+
+  console.log(`  NAV_REGISTRY has ${registryHrefs.size} destinations`);
+  console.log(`  assets/js/nav.js TD_NAV has ${navJsHrefs.size} destinations`);
+}
+
 async function validate() {
   console.log('\n=== TD Realty Ohio Navigation Check ===\n');
 
-  await checkNav();
+  // Find all public HTML files
+  const skipDirs = ['node_modules', 'templates', 'tools', 'data', 'reports', 'audit', 'scripts', 'lp', 'admin'];
+  const htmlFiles = globSync('**/*.html', {
+    cwd: ROOT,
+    ignore: skipDirs.map(d => `${d}/**`),
+    absolute: true,
+  });
+
+  console.log(`Checking ${htmlFiles.length} HTML files for nav/footer placeholders...\n`);
+
+  for (const filePath of htmlFiles) {
+    await checkFile(filePath);
+  }
+
+  console.log('  Checking TD_NAV ↔ NAV_REGISTRY sync...');
+  await checkNavSync();
 
   console.log('\n=== Results ===\n');
 
