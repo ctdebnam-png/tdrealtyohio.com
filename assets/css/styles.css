@@ -400,6 +400,10 @@ li { margin-bottom: 0.5rem; }
   color: var(--navy);
 }
 
+.nav-section-header {
+  display: none;
+}
+
 .nav-cta {
   margin-left: 1rem;
 }
@@ -2163,6 +2167,7 @@ main {
 
   /* Mobile nav section headers for grouped navigation */
   .nav .nav-section-header {
+    display: block;
     font-weight: 600;
     font-size: 0.6875rem;
     text-transform: uppercase;
@@ -6789,16 +6794,6 @@ html[data-reveal] .reveal-stagger.visible > * {
   }
 }
 
-/* ===== PARALLAX HERO DEPTH ===== */
-.hero {
-  position: relative;
-  overflow: hidden;
-}
-
-.hero[style*="background-image"] {
-  background-attachment: scroll;
-}
-
 /* ===== STAGGERED ENTRANCE ANIMATIONS ===== */
 [data-reveal] .reveal {
   opacity: 0;
@@ -6859,26 +6854,6 @@ html[data-reveal] .reveal-stagger.visible > * {
   background-color: rgba(201, 162, 39, 0.04);
 }
 
-.compare-table td,
-.compare-table th {
-  padding: 0.875rem 1rem;
-  text-align: center;
-  border-bottom: 1px solid var(--gray-100);
-}
-
-.compare-table td:first-child,
-.compare-table th:first-child {
-  text-align: left;
-  font-weight: 500;
-}
-
-.compare-table thead th {
-  background: var(--gray-50);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  padding: 1rem;
-}
-
 /* ===== HERO STATS COUNTER BAR ===== */
 .hero-stats-bar {
   display: flex;
@@ -6904,24 +6879,6 @@ html[data-reveal] .reveal-stagger.visible > * {
   color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-}
-
-/* ===== GLOW ACCENT FOR CTA SECTIONS ===== */
-.cta-section {
-  position: relative;
-  overflow: hidden;
-}
-
-.cta-section::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(201, 162, 39, 0.12) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
 }
 
 /* ===== NUMBER HIGHLIGHT PILL ===== */
