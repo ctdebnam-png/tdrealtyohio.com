@@ -929,13 +929,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyMobileCTA();
   initSavingsBars();
   initScrollProgress();
-  initFloatingShapes();
   initTestimonialCarousel();
-  initSocialProofToast();
   initMicroForm();
-  initHeroWordRotator();
-  initMouseSpotlight();
-  initDesktopStickySidebar();
   initCountUp();
   initTextReveal();
   initFillUnderlines();
