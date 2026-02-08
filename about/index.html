@@ -187,12 +187,17 @@
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%); min-height: auto; padding: 4rem 0;">
+    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title" style="font-size: 2.5rem;">About TD Realty Ohio</h1>
-          <p class="hero-subtitle">Full-service brokerage. Based in Westerville.</p>
+          <p class="hero-tagline">Our Story</p>
+          <h1 class="hero-title">About TD Realty Ohio</h1>
+          <p class="hero-subtitle">Full-service brokerage. Based in Westerville. Built to save you money.</p>
         </div>
+      </div>
+      <div class="section-wave section-wave--white" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z" fill="currentColor"/></svg>
       </div>
     </section>
 
@@ -228,14 +233,31 @@
           </div>
 
           <div>
-            <div style="background-color: var(--off-white); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem;">
-              <h3 style="margin-bottom: 1.5rem;">Service Areas</h3>
+            <div class="about-sidebar-card">
+              <h3 class="about-sidebar-title">Service Areas</h3>
               <p style="margin-bottom: 1rem;">TD Realty Ohio serves the Columbus metropolitan area:</p>
-              <p style="color: var(--gray-600); line-height: 1.8;">Columbus, Westerville, Dublin, Powell, Delaware, Gahanna, New Albany, Hilliard, Upper Arlington, Worthington, Lewis Center, Pickerington, Grove City, Blacklick, Clintonville, Grandview Heights, Reynoldsburg</p>
+              <div class="about-area-tags">
+                <span class="about-area-tag">Columbus</span>
+                <span class="about-area-tag">Westerville</span>
+                <span class="about-area-tag">Dublin</span>
+                <span class="about-area-tag">Powell</span>
+                <span class="about-area-tag">Delaware</span>
+                <span class="about-area-tag">Gahanna</span>
+                <span class="about-area-tag">New Albany</span>
+                <span class="about-area-tag">Hilliard</span>
+                <span class="about-area-tag">Upper Arlington</span>
+                <span class="about-area-tag">Worthington</span>
+                <span class="about-area-tag">Lewis Center</span>
+                <span class="about-area-tag">Pickerington</span>
+                <span class="about-area-tag">Grove City</span>
+                <span class="about-area-tag">Clintonville</span>
+                <span class="about-area-tag">Grandview Heights</span>
+                <span class="about-area-tag">Reynoldsburg</span>
+              </div>
             </div>
 
-            <div style="background-color: var(--off-white); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem;">
-              <h3 style="margin-bottom: 1.5rem;">Credentials</h3>
+            <div class="about-sidebar-card about-credentials-card">
+              <h3 class="about-sidebar-title">Credentials</h3>
               <ul class="credential-list">
                 <li>
                   <span class="credential-label">Founded</span>
@@ -257,28 +279,28 @@
                   <span class="credential-label">Location</span>
                   <span class="credential-value">Westerville, Ohio</span>
                 </li>
-                <li>
-                  <span class="credential-label">Transactions Closed</span>
+                <li class="credential-highlight">
+                  <span class="credential-label">Transactions</span>
                   <span class="credential-value">48</span>
                 </li>
-                <li>
+                <li class="credential-highlight">
                   <span class="credential-label">Zillow Rating</span>
-                  <span class="credential-value">5.0 (3 reviews)</span>
+                  <span class="credential-value">5.0 <span class="credential-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
                 </li>
               </ul>
             </div>
 
-            <div style="background-color: var(--navy); border-radius: var(--radius-lg); padding: 2rem; color: var(--white);">
-              <h4 style="color: var(--white); margin-bottom: 1rem;">Professional Affiliations</h4>
-              <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                  <a href="https://columbusrealtors.com/" target="_blank" rel="noopener noreferrer" aria-label="Columbus REALTORS - opens in new tab" style="color: var(--gray-300);">Columbus REALTORS</a>
+            <div class="about-affiliations-card">
+              <h4>Professional Affiliations</h4>
+              <ul class="affiliations-list">
+                <li>
+                  <a href="https://columbusrealtors.com/" target="_blank" rel="noopener noreferrer" aria-label="Columbus REALTORS - opens in new tab">Columbus REALTORS</a>
                 </li>
-                <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                  <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" aria-label="Ohio REALTORS - opens in new tab" style="color: var(--gray-300);">Ohio REALTORS</a>
+                <li>
+                  <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" aria-label="Ohio REALTORS - opens in new tab">Ohio REALTORS</a>
                 </li>
-                <li style="padding: 0.75rem 0;">
-                  <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" aria-label="National Association of REALTORS - opens in new tab" style="color: var(--gray-300);">National Association of REALTORS</a>
+                <li>
+                  <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" aria-label="National Association of REALTORS - opens in new tab">National Association of REALTORS</a>
                 </li>
               </ul>
             </div>
@@ -309,40 +331,46 @@
           <p>A common question: how can TD Realty Ohio offer 1-2% commissions while others charge 3%?</p>
         </div>
 
-        <div class="grid-3" style="max-width: 900px; margin: 0 auto;">
-          <div class="card" style="padding: 2rem; text-align: center;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" style="margin: 0 auto 1rem;" aria-hidden="true">
-              <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
-              <rect x="9" y="9" width="6" height="6"/>
-              <line x1="9" y1="1" x2="9" y2="4"/>
-              <line x1="15" y1="1" x2="15" y2="4"/>
-              <line x1="9" y1="20" x2="9" y2="23"/>
-              <line x1="15" y1="20" x2="15" y2="23"/>
-              <line x1="20" y1="9" x2="23" y2="9"/>
-              <line x1="20" y1="14" x2="23" y2="14"/>
-              <line x1="1" y1="9" x2="4" y2="9"/>
-              <line x1="1" y1="14" x2="4" y2="14"/>
-            </svg>
+        <div class="grid-3 about-pillars" style="max-width: 900px; margin: 0 auto;">
+          <div class="about-pillar-card">
+            <div class="about-pillar-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+                <rect x="9" y="9" width="6" height="6"/>
+                <line x1="9" y1="1" x2="9" y2="4"/>
+                <line x1="15" y1="1" x2="15" y2="4"/>
+                <line x1="9" y1="20" x2="9" y2="23"/>
+                <line x1="15" y1="20" x2="15" y2="23"/>
+                <line x1="20" y1="9" x2="23" y2="9"/>
+                <line x1="20" y1="14" x2="23" y2="14"/>
+                <line x1="1" y1="9" x2="4" y2="9"/>
+                <line x1="1" y1="14" x2="4" y2="14"/>
+              </svg>
+            </div>
             <h4>Technology</h4>
             <p class="text-muted" style="margin-bottom: 0;">Modern tools and systems streamline paperwork, communication, and marketing, reducing overhead without reducing service quality.</p>
           </div>
 
-          <div class="card" style="padding: 2rem; text-align: center;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" style="margin: 0 auto 1rem;" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
+          <div class="about-pillar-card">
+            <div class="about-pillar-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
             <h4>Efficiency</h4>
             <p class="text-muted" style="margin-bottom: 0;">Focused operations and direct broker involvement on every transaction mean less overhead and more value passed to clients.</p>
           </div>
 
-          <div class="card" style="padding: 2rem; text-align: center;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" style="margin: 0 auto 1rem;" aria-hidden="true">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
+          <div class="about-pillar-card">
+            <div class="about-pillar-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
             <h4>Volume</h4>
             <p class="text-muted" style="margin-bottom: 0;">Lower rates attract more clients. More transactions at lower margins can be more sustainable than fewer transactions at higher margins.</p>
           </div>

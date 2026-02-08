@@ -270,35 +270,45 @@
   <main id="main-content">
     <!-- Hero Section -->
     <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
+          <p class="hero-tagline">For Home Sellers</p>
           <h1 class="hero-title">Sell Your Home for a <span class="highlight">1% or 2% Listing Fee</span></h1>
           <p class="hero-subtitle">Pay 1% when you sell and buy with us. Selling only? 2%. Full service either way, including MLS, photos, negotiation, and a free pre-listing inspection included.</p>
           <div class="hero-buttons">
             <a href="/contact/?interest=selling" class="btn btn-primary btn-lg">Get a Savings Estimate</a>
             <a href="tel:6143928858" class="btn btn-outline-white btn-lg">Call (614) 392-8858</a>
           </div>
+          <div class="hero-savings-callout" aria-label="Average savings">
+            <span class="hero-savings-amount">$3K–$12K</span>
+            <span class="hero-savings-label">typical savings vs. 3% listing fee</span>
+          </div>
         </div>
+      </div>
+      <div class="section-wave section-wave--white" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z" fill="currentColor"/></svg>
       </div>
     </section>
 
     <!-- SHARED:pricing-summary:START -->
-    <section class="section-compact" style="background: var(--off-white); padding: 2.5rem 0;">
+    <section class="pricing-summary-section">
       <div class="container">
-        <h2 style="text-align: center; margin-bottom: 1.5rem;">How Pricing Works</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; max-width: 700px; margin: 0 auto;">
-          <div style="background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; border: 1px solid var(--gray-200);">
-            <div style="font-size: 2.5rem; font-weight: 700; color: var(--navy); font-family: 'DM Serif Display', serif;">1%</div>
-            <div style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Listing Fee</div>
-            <p style="color: var(--gray-600); margin: 0; font-size: 0.9375rem;">When you sell and buy with TD Realty Ohio. Includes a free pre-listing inspection.</p>
+        <h2 class="text-center" style="margin-bottom: 1.5rem;">How Pricing Works</h2>
+        <div class="pricing-summary-grid">
+          <div class="pricing-summary-card pricing-summary-card--featured">
+            <span class="path-badge">Best Value</span>
+            <div class="pricing-summary-rate">1<span>%</span></div>
+            <div class="pricing-summary-label">Listing Fee</div>
+            <p class="pricing-summary-desc">When you sell and buy with TD Realty Ohio. Includes a free pre-listing inspection.</p>
           </div>
-          <div style="background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; border: 1px solid var(--gray-200);">
-            <div style="font-size: 2.5rem; font-weight: 700; color: var(--navy); font-family: 'DM Serif Display', serif;">2%</div>
-            <div style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Listing Fee</div>
-            <p style="color: var(--gray-600); margin: 0; font-size: 0.9375rem;">When you are only selling. Same full service, same free inspection.</p>
+          <div class="pricing-summary-card">
+            <div class="pricing-summary-rate">2<span>%</span></div>
+            <div class="pricing-summary-label">Listing Fee</div>
+            <p class="pricing-summary-desc">When you are only selling. Same full service, same free inspection.</p>
           </div>
         </div>
-        <p style="text-align: center; color: var(--gray-500); font-size: 0.8125rem; margin-top: 1.25rem; margin-bottom: 0;">
+        <p class="text-center text-muted" style="font-size: 0.8125rem; margin-top: 1.25rem; margin-bottom: 0;">
           These rates cover your listing fee only. Buyer agent compensation is separate and negotiated with each transaction.
         </p>
       </div>
@@ -723,35 +733,37 @@
     <!-- Related Guides -->
     <section class="section" style="background: var(--gray-50);">
       <div class="container" style="max-width: 900px;">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Seller Guides &amp; Resources</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-          <a href="/blog/closing-costs-columbus-ohio/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
-            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">Closing Costs in Central Ohio</h3>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Understand every fee before you sell.</p>
+        <div class="section-header">
+          <h2>Seller Guides &amp; Resources</h2>
+        </div>
+        <div class="guide-card-grid">
+          <a href="/blog/closing-costs-columbus-ohio/" class="guide-card">
+            <h3>Closing Costs in Central Ohio</h3>
+            <p>Understand every fee before you sell.</p>
           </a>
-          <a href="/blog/home-staging-tips-columbus/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
-            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">Home Staging Tips</h3>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Sell faster with these staging strategies.</p>
+          <a href="/blog/home-staging-tips-columbus/" class="guide-card">
+            <h3>Home Staging Tips</h3>
+            <p>Sell faster with these staging strategies.</p>
           </a>
-          <a href="/blog/fsbo-vs-realtor-columbus/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
-            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">FSBO vs. Using an Agent</h3>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Compare options and net proceeds.</p>
+          <a href="/blog/fsbo-vs-realtor-columbus/" class="guide-card">
+            <h3>FSBO vs. Using an Agent</h3>
+            <p>Compare options and net proceeds.</p>
           </a>
-          <a href="/compare/1-percent-vs-3-percent/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
-            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">1% vs 3% Commission</h3>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">See what you save with a lower listing fee.</p>
+          <a href="/compare/1-percent-vs-3-percent/" class="guide-card">
+            <h3>1% vs 3% Commission</h3>
+            <p>See what you save with a lower listing fee.</p>
           </a>
-          <a href="/compare/flat-fee-mls-vs-full-service/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
-            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">Flat Fee MLS vs Full Service</h3>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Why full service at 1% beats flat fee.</p>
+          <a href="/compare/flat-fee-mls-vs-full-service/" class="guide-card">
+            <h3>Flat Fee MLS vs Full Service</h3>
+            <p>Why full service at 1% beats flat fee.</p>
           </a>
-          <a href="/compare/discount-broker-vs-full-service/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
-            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">Discount vs Full Service</h3>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Why discount brokers fall short.</p>
+          <a href="/compare/discount-broker-vs-full-service/" class="guide-card">
+            <h3>Discount vs Full Service</h3>
+            <p>Why discount brokers fall short.</p>
           </a>
-          <a href="/sell-only-2-percent/" style="padding: 1.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md); text-decoration: none; color: inherit; background: var(--white);">
-            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem;">Sell Only at 2%</h3>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin: 0;">Not buying? List for 2% with full service.</p>
+          <a href="/sell-only-2-percent/" class="guide-card">
+            <h3>Sell Only at 2%</h3>
+            <p>Not buying? List for 2% with full service.</p>
           </a>
         </div>
       </div>
