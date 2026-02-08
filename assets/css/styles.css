@@ -617,6 +617,12 @@ main {
   .hero {
     min-height: auto;
     padding: 4rem 0 5rem;
+    background-attachment: scroll;
+  }
+  .hero::after {
+    animation: none;
+    inset: 0;
+    background-attachment: scroll;
   }
   .hero-title {
     font-size: 2.5rem;
@@ -1088,7 +1094,8 @@ main {
 @media (max-width: 768px) {
   .trust-bar-wrapper {
     margin-top: -2.5rem;
-    padding: 0 0.5rem 0.5rem;
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
   }
   .trust-bar-card {
     border-radius: var(--radius-md);
@@ -2183,10 +2190,6 @@ main {
   h1 { font-size: 2rem; }
   h2 { font-size: 1.75rem; }
   h3 { font-size: 1.25rem; }
-
-  .hero {
-    min-height: 60vh;
-  }
 
   .hero-title {
     font-size: 2.25rem;
