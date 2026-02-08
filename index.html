@@ -768,13 +768,11 @@
     syncContactLink();
   </script>
   <script>
-    // Scroll reveal animation
+    // Scroll reveal — only if IntersectionObserver supported; no-JS = sections visible
     (function() {
       var targets = document.querySelectorAll('.reveal, .reveal-stagger');
-      if (!targets.length || !('IntersectionObserver' in window)) {
-        targets.forEach(function(el) { el.classList.add('visible'); });
-        return;
-      }
+      if (!targets.length || !('IntersectionObserver' in window)) return;
+      document.documentElement.setAttribute('data-reveal', '');
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
@@ -782,7 +780,7 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
       targets.forEach(function(el) { observer.observe(el); });
     })();
   </script>
