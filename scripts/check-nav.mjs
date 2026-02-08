@@ -3,11 +3,11 @@
  * Navigation Consistency Check for TD Realty Ohio
  *
  * Header nav links are static HTML in every page (for SEO crawlability).
- * Footer links are rendered dynamically from TD_NAV (assets/js/nav.js).
+ * Footer links are also static HTML in every page (for SEO and reliability).
  * This script validates:
  *   1. Every page has <nav id="main-nav"> with static links matching NAV_REGISTRY
  *   2. assets/js/nav.js TD_NAV matches src/config/nav.js NAV_REGISTRY
- *   3. No hardcoded footer <li> items remain in footer placeholders
+ *   3. Footer static links match NAV_REGISTRY
  */
 
 import { createRequire } from 'module';
@@ -63,15 +63,35 @@ async function checkFile(filePath) {
     errors.push(`${rel}: missing data-footer-nav="company" container`);
   }
 
-  // 3. Check that footer containers don't have hardcoded <li> items
+  // 3. Check footer static links match NAV_REGISTRY
   const svcMatch = content.match(/data-footer-nav="services">([\s\S]*?)<\/ul>/i);
-  if (svcMatch && /<li\b/i.test(svcMatch[1])) {
-    errors.push(`${rel}: data-footer-nav="services" still contains hardcoded <li> items`);
+  if (svcMatch) {
+    const footerHrefRe = /href="([^"]+)"/g;
+    const footerSvcHrefs = new Set();
+    let fm;
+    while ((fm = footerHrefRe.exec(svcMatch[1])) !== null) {
+      footerSvcHrefs.add(fm[1]);
+    }
+    for (const item of NAV_REGISTRY.groups.services.items) {
+      if (!footerSvcHrefs.has(item.href)) {
+        errors.push(`${rel}: footer services missing link to ${item.href}`);
+      }
+    }
   }
 
   const cmpMatch = content.match(/data-footer-nav="company">([\s\S]*?)<\/ul>/i);
-  if (cmpMatch && /<li\b/i.test(cmpMatch[1])) {
-    errors.push(`${rel}: data-footer-nav="company" still contains hardcoded <li> items`);
+  if (cmpMatch) {
+    const footerHrefRe2 = /href="([^"]+)"/g;
+    const footerCmpHrefs = new Set();
+    let fm2;
+    while ((fm2 = footerHrefRe2.exec(cmpMatch[1])) !== null) {
+      footerCmpHrefs.add(fm2[1]);
+    }
+    for (const item of NAV_REGISTRY.groups.company.items) {
+      if (!footerCmpHrefs.has(item.href)) {
+        errors.push(`${rel}: footer company missing link to ${item.href}`);
+      }
+    }
   }
 
   // 4. No testimonials links anywhere

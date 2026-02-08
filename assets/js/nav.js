@@ -49,29 +49,12 @@ function renderMobileNav() {
 }
 
 /**
- * Renders footer navigation links from TD_NAV configuration.
- * Targets containers via data-footer-nav="services" and data-footer-nav="company"
- * so it does not depend on the order or count of .footer-links lists.
+ * Footer navigation links are now static HTML in every page for SEO and
+ * reliability. This function is retained for backwards compatibility.
  */
 function renderFooterNav() {
-  var servicesFooter = document.querySelector('[data-footer-nav="services"]');
-  var companyFooter = document.querySelector('[data-footer-nav="company"]');
-
-  function populateList(container, items) {
-    if (!container) return;
-    container.innerHTML = '';
-    items.forEach(function(item) {
-      var li = document.createElement('li');
-      var a = document.createElement('a');
-      a.href = item.href;
-      a.textContent = item.label;
-      li.appendChild(a);
-      container.appendChild(li);
-    });
-  }
-
-  populateList(servicesFooter, TD_NAV.services.items);
-  populateList(companyFooter, TD_NAV.company.items);
+  // Footer links are now static HTML for SEO and reliability.
+  // This function is retained for backwards compatibility.
 }
 
 // Export for use in other scripts
