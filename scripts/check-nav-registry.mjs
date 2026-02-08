@@ -3,11 +3,12 @@
  * Nav Registry CI Check
  *
  * Header nav links are static HTML in every page (for SEO crawlability).
- * Footer links are rendered dynamically from TD_NAV (assets/js/nav.js).
+ * Footer links are also static HTML in every page (for SEO and reliability).
  * This script validates:
  *   1. Every page has <nav id="main-nav"> with static links matching NAV_REGISTRY
  *   2. assets/js/nav.js TD_NAV matches src/config/nav.js NAV_REGISTRY
- *   3. No testimonials links or hardcoded footer <li> leftovers
+ *   3. Footer data-footer-nav containers have static links matching NAV_REGISTRY
+ *   4. No testimonials links
  *
  * Exit code 1 on any mismatch.
  */
@@ -98,15 +99,35 @@ async function checkHtmlFiles() {
       errors.push(`${rp}: missing data-footer-nav="company" container`);
     }
 
-    // 3. Check no hardcoded <li> items remain in footer placeholders
+    // 3. Check footer static links match NAV_REGISTRY
     const svcMatch = html.match(/data-footer-nav="services">([\s\S]*?)<\/ul>/i);
-    if (svcMatch && /<li\b/i.test(svcMatch[1])) {
-      errors.push(`${rp}: data-footer-nav="services" still has hardcoded <li> items`);
+    if (svcMatch) {
+      const hrefRe2 = /href="([^"]+)"/g;
+      const footerSvcHrefs = new Set();
+      let hm2;
+      while ((hm2 = hrefRe2.exec(svcMatch[1])) !== null) {
+        footerSvcHrefs.add(hm2[1]);
+      }
+      for (const href of registryServicesHrefs) {
+        if (!footerSvcHrefs.has(href)) {
+          errors.push(`${rp}: footer services missing link to ${href}`);
+        }
+      }
     }
 
     const cmpMatch = html.match(/data-footer-nav="company">([\s\S]*?)<\/ul>/i);
-    if (cmpMatch && /<li\b/i.test(cmpMatch[1])) {
-      errors.push(`${rp}: data-footer-nav="company" still has hardcoded <li> items`);
+    if (cmpMatch) {
+      const hrefRe3 = /href="([^"]+)"/g;
+      const footerCmpHrefs = new Set();
+      let hm3;
+      while ((hm3 = hrefRe3.exec(cmpMatch[1])) !== null) {
+        footerCmpHrefs.add(hm3[1]);
+      }
+      for (const href of registryCompanyHrefs) {
+        if (!footerCmpHrefs.has(href)) {
+          errors.push(`${rp}: footer company missing link to ${href}`);
+        }
+      }
     }
 
     // 4. No testimonials links
