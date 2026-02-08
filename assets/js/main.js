@@ -933,6 +933,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initTestimonialCarousel();
   initSocialProofToast();
   initMicroForm();
+  initHeroWordRotator();
+  initMouseSpotlight();
+  initDesktopStickySidebar();
+  initCountUp();
+  initTextReveal();
+  initFillUnderlines();
+  initAnimatedChecks();
 });
 
 // ── Sticky Mobile CTA Bar ───────────────────────────────
@@ -1187,6 +1194,168 @@ function initMicroForm() {
       btn.disabled = false;
     });
   });
+}
+
+// ── Hero Word Rotator ───────────────────────────────────
+function initHeroWordRotator() {
+  var rotator = document.querySelector('.hero-word-rotator');
+  if (!rotator) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var words = rotator.querySelectorAll('.hero-word');
+  if (words.length < 2) return;
+
+  var current = 0;
+  words[0].classList.add('active');
+
+  setInterval(function() {
+    var prev = current;
+    current = (current + 1) % words.length;
+    words[prev].classList.remove('active');
+    words[prev].classList.add('exit');
+    words[current].classList.add('active');
+    setTimeout(function() { words[prev].classList.remove('exit'); }, 500);
+  }, 3000);
+}
+
+// ── Mouse Spotlight in Hero ─────────────────────────────
+function initMouseSpotlight() {
+  var hero = document.querySelector('.hero');
+  if (!hero || window.innerWidth < 769) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var spotlight = document.createElement('div');
+  spotlight.className = 'hero-spotlight';
+  spotlight.setAttribute('aria-hidden', 'true');
+  hero.appendChild(spotlight);
+
+  hero.addEventListener('mousemove', function(e) {
+    var rect = hero.getBoundingClientRect();
+    spotlight.style.left = (e.clientX - rect.left) + 'px';
+    spotlight.style.top = (e.clientY - rect.top) + 'px';
+  }, { passive: true });
+}
+
+// ── Desktop Sticky Sidebar CTA ──────────────────────────
+function initDesktopStickySidebar() {
+  if (window.innerWidth < 1025) return;
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  var sidebar = document.createElement('div');
+  sidebar.className = 'sticky-sidebar-cta';
+  sidebar.innerHTML =
+    '<a href="/contact/" class="sticky-sidebar-cta-inner">' +
+    '<span class="sticky-sidebar-cta-pulse"></span>' +
+    'Free Consult' +
+    '</a>';
+  document.body.appendChild(sidebar);
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      sidebar.classList.toggle('visible', !entry.isIntersecting);
+    });
+  }, { threshold: 0 });
+  observer.observe(hero);
+}
+
+// ── Counter Up Animation ────────────────────────────────
+function initCountUp() {
+  var counters = document.querySelectorAll('.count-up');
+  if (!counters.length) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      if (el.dataset.counted) return;
+      el.dataset.counted = 'true';
+
+      var target = parseFloat(el.dataset.target || el.textContent);
+      var prefix = el.dataset.prefix || '';
+      var suffix = el.dataset.suffix || '';
+      var decimals = (el.dataset.decimals || '0') | 0;
+      var duration = 1500;
+      var start = 0;
+      var startTime = null;
+
+      function animate(time) {
+        if (!startTime) startTime = time;
+        var progress = Math.min((time - startTime) / duration, 1);
+        // Ease out cubic
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = start + (target - start) * eased;
+
+        if (decimals > 0) {
+          el.textContent = prefix + current.toFixed(decimals) + suffix;
+        } else {
+          el.textContent = prefix + Math.round(current).toLocaleString() + suffix;
+        }
+
+        if (progress < 1) requestAnimationFrame(animate);
+      }
+
+      requestAnimationFrame(animate);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.3 });
+
+  counters.forEach(function(c) { observer.observe(c); });
+}
+
+// ── Text Reveal on Scroll ───────────────────────────────
+function initTextReveal() {
+  var reveals = document.querySelectorAll('.text-reveal');
+  if (!reveals.length) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  reveals.forEach(function(r) { observer.observe(r); });
+}
+
+// ── Fill Underlines on Scroll ───────────────────────────
+function initFillUnderlines() {
+  var underlines = document.querySelectorAll('.fill-underline');
+  if (!underlines.length) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  underlines.forEach(function(u) { observer.observe(u); });
+}
+
+// ── Animated SVG Checkmarks ──────────────────────────────
+function initAnimatedChecks() {
+  var checks = document.querySelectorAll('.animated-check');
+  if (!checks.length) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        // Add small stagger based on index
+        var idx = Array.prototype.indexOf.call(checks, entry.target);
+        setTimeout(function() {
+          entry.target.classList.add('drawn');
+        }, idx * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  checks.forEach(function(c) { observer.observe(c); });
 }
 
 // ── Cookie Consent ──────────────────────────────────────
