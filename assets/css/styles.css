@@ -5410,6 +5410,44 @@ html[data-reveal] .reveal-stagger.visible > * {
   }
 }
 
+/* ===== AREA PAGE LINK SECTIONS ===== */
+.resource-links,
+.internal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.resource-link,
+.internal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  color: var(--navy);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all var(--transition);
+}
+
+.resource-link:hover,
+.internal-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.12);
+}
+
+.resource-link svg,
+.internal-link svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
 /* ===== HERO SAVINGS CALLOUT ===== */
 .hero-savings-callout {
   display: inline-flex;
