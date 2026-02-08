@@ -926,7 +926,64 @@ document.addEventListener('DOMContentLoaded', () => {
   initLeadModal();
   initCookieConsent();
   initEventTracking();
+  initStickyMobileCTA();
+  initSavingsBars();
 });
+
+// ── Sticky Mobile CTA Bar ───────────────────────────────
+function initStickyMobileCTA() {
+  if (window.innerWidth > 768) return;
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  var bar = document.createElement('div');
+  bar.className = 'sticky-cta';
+  bar.setAttribute('aria-label', 'Quick actions');
+
+  // Determine page context for CTA text
+  var path = window.location.pathname;
+  var ctaHref = '/contact/';
+  var ctaText = 'Free Consultation';
+  if (path.indexOf('/buyers') === 0) {
+    ctaHref = '/contact/?interest=buying';
+    ctaText = 'Start Home Search';
+  } else if (path.indexOf('/seller') === 0 || path.indexOf('/sell') === 0) {
+    ctaHref = '/contact/?interest=selling';
+    ctaText = 'Get Savings Estimate';
+  }
+
+  bar.innerHTML =
+    '<a href="' + ctaHref + '" class="btn btn-primary">' + ctaText + '</a>' +
+    '<a href="tel:6143928858" class="btn btn-outline" aria-label="Call us">' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+    '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>' +
+    '</svg></a>';
+
+  document.body.appendChild(bar);
+
+  // Show after scrolling past hero
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      bar.classList.toggle('visible', !entry.isIntersecting);
+    });
+  }, { threshold: 0 });
+  observer.observe(hero);
+}
+
+// ── Animated Savings Bars ────────────────────────────────
+function initSavingsBars() {
+  var bars = document.querySelectorAll('.savings-bar-fill');
+  if (!bars.length) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(function(bar) { observer.observe(bar); });
+}
 
 // ── Cookie Consent ──────────────────────────────────────
 function initCookieConsent() {
