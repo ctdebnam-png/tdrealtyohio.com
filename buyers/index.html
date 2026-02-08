@@ -169,15 +169,24 @@
   <main id="main-content">
     <!-- Hero Section -->
     <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
+          <p class="hero-tagline">For Home Buyers</p>
           <h1 class="hero-title">First-Time Buyer? Get <span class="highlight">1% Back</span> at Closing</h1>
           <p class="hero-subtitle">Full buyer representation with cash back. On a $300,000 home, that's $3,000 returned to you at closing.</p>
-          <div class="hero-buttons" style="margin-top: 1.5rem;">
+          <div class="hero-buttons">
             <a href="/contact/?interest=buying" class="btn btn-primary btn-lg">Start Your Home Search</a>
             <a href="tel:6143928858" class="btn btn-outline-white btn-lg">Call (614) 392-8858</a>
           </div>
+          <div class="hero-savings-callout" aria-label="Cash back example">
+            <span class="hero-savings-amount">$3,000</span>
+            <span class="hero-savings-label">back at closing on a $300K home</span>
+          </div>
         </div>
+      </div>
+      <div class="section-wave section-wave--white" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z" fill="currentColor"/></svg>
       </div>
     </section>
 
@@ -254,14 +263,14 @@
     </section>
 
     <!-- Buyer Representation -->
-    <section class="section">
+    <section class="section reveal">
       <div class="container">
         <div class="section-header">
           <h2>Full Buyer Representation</h2>
           <p>The cash back program includes the same comprehensive buyer services you'd receive from any agent.</p>
         </div>
 
-        <div class="grid-3">
+        <div class="grid-3 reveal-stagger">
           <div class="card service-card">
             <div class="service-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
