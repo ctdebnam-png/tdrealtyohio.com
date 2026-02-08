@@ -295,12 +295,12 @@
     </section>
 
     <!-- How Pricing Works -->
-    <section class="section bg-white">
+    <section class="section bg-white reveal">
       <div class="container">
         <div class="section-header">
           <h2>How Pricing Works</h2>
         </div>
-        <div class="pricing-grid">
+        <div class="pricing-grid reveal-stagger">
           <div class="pricing-card">
             <div class="pricing-card-rate">1%</div>
             <div class="pricing-card-label">Listing Fee</div>
@@ -329,7 +329,7 @@
     </section>
 
     <!-- Calculator Section -->
-    <section class="section bg-off-white">
+    <section class="section bg-off-white reveal">
       <div class="container">
         <div class="two-col">
           <div>
@@ -418,14 +418,14 @@
     </section>
 
     <!-- Why TD Realty Section -->
-    <section class="section-standard">
+    <section class="section-standard reveal">
       <div class="container">
         <div class="section-header">
           <h2>Why TD Realty Ohio</h2>
           <p>A licensed brokerage that charges less because of lower overhead and standardized workflows, not because we do less work.</p>
         </div>
 
-        <div class="feature-grid">
+        <div class="feature-grid reveal-stagger">
           <div class="feature-card">
             <div class="feature-card-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -477,7 +477,7 @@
     </section>
 
     <!-- Areas Section -->
-    <section class="section">
+    <section class="section reveal">
       <div class="container">
         <div class="section-header">
           <h2>Serving Central Ohio</h2>
@@ -766,6 +766,25 @@
     document.querySelectorAll('[data-toggle-btn]').forEach(function(b) { b.addEventListener('click', function() { setTimeout(syncContactLink, 0); }); });
     if (buyerSlider) buyerSlider.addEventListener('input', function() { setTimeout(syncContactLink, 0); });
     syncContactLink();
+  </script>
+  <script>
+    // Scroll reveal animation
+    (function() {
+      var targets = document.querySelectorAll('.reveal, .reveal-stagger');
+      if (!targets.length || !('IntersectionObserver' in window)) {
+        targets.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      targets.forEach(function(el) { observer.observe(el); });
+    })();
   </script>
 </body>
 </html>
