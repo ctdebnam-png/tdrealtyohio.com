@@ -928,6 +928,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initEventTracking();
   initStickyMobileCTA();
   initSavingsBars();
+  initScrollProgress();
+  initFloatingShapes();
+  initTestimonialCarousel();
+  initSocialProofToast();
+  initMicroForm();
 });
 
 // ── Sticky Mobile CTA Bar ───────────────────────────────
@@ -983,6 +988,205 @@ function initSavingsBars() {
     });
   }, { threshold: 0.3 });
   bars.forEach(function(bar) { observer.observe(bar); });
+}
+
+// ── Scroll Progress Bar ─────────────────────────────────
+function initScrollProgress() {
+  var bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  bar.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(bar);
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = progress + '%';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
+// ── Floating Background Shapes ──────────────────────────
+function initFloatingShapes() {
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var shapes = document.createElement('div');
+  shapes.className = 'floating-shapes';
+  shapes.setAttribute('aria-hidden', 'true');
+  shapes.innerHTML =
+    '<div class="floating-shape floating-shape--1"></div>' +
+    '<div class="floating-shape floating-shape--2"></div>' +
+    '<div class="floating-shape floating-shape--3"></div>';
+  hero.appendChild(shapes);
+}
+
+// ── Testimonial Carousel ────────────────────────────────
+function initTestimonialCarousel() {
+  var container = document.querySelector('.testimonial-carousel');
+  if (!container) return;
+
+  var track = container.querySelector('.testimonial-track');
+  var slides = container.querySelectorAll('.testimonial-slide');
+  var dots = container.querySelectorAll('.testimonial-dot');
+  var prevBtn = container.querySelector('.testimonial-nav--prev');
+  var nextBtn = container.querySelector('.testimonial-nav--next');
+  if (!track || slides.length < 2) return;
+
+  var current = 0;
+  var total = slides.length;
+  var autoplayInterval;
+
+  function goTo(index) {
+    if (index < 0) index = total - 1;
+    if (index >= total) index = 0;
+    current = index;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function startAutoplay() {
+    autoplayInterval = setInterval(function() { goTo(current + 1); }, 5000);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() { stopAutoplay(); goTo(current - 1); startAutoplay(); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { stopAutoplay(); goTo(current + 1); startAutoplay(); });
+  dots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() { stopAutoplay(); goTo(i); startAutoplay(); });
+  });
+
+  // Touch/swipe support
+  var startX = 0;
+  var diff = 0;
+  track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; stopAutoplay(); }, { passive: true });
+  track.addEventListener('touchmove', function(e) { diff = e.touches[0].clientX - startX; }, { passive: true });
+  track.addEventListener('touchend', function() {
+    if (Math.abs(diff) > 50) { goTo(diff > 0 ? current - 1 : current + 1); }
+    diff = 0;
+    startAutoplay();
+  });
+
+  goTo(0);
+  startAutoplay();
+}
+
+// ── Social Proof Toast Notifications ────────────────────
+function initSocialProofToast() {
+  // Only show on homepage or key landing pages
+  var path = window.location.pathname;
+  if (path !== '/' && path.indexOf('/sellers') !== 0 && path.indexOf('/buyers') !== 0) return;
+
+  var messages = [
+    { text: 'A family in <strong>Westerville</strong> saved <strong>$6,200</strong> on their listing fee', icon: '&#127968;' },
+    { text: '<strong>48 homes</strong> sold across Central Ohio', icon: '&#127942;' },
+    { text: 'Rated <strong>5.0 stars</strong> on Zillow', icon: '&#11088;' },
+    { text: 'A buyer in <strong>Dublin</strong> got <strong>$3,500</strong> cash back at closing', icon: '&#128176;' }
+  ];
+
+  var toast = document.createElement('div');
+  toast.className = 'social-proof-toast';
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+  toast.innerHTML =
+    '<div class="social-proof-toast-icon" id="sp-toast-icon"></div>' +
+    '<div class="social-proof-toast-text" id="sp-toast-text"></div>' +
+    '<button class="social-proof-toast-close" aria-label="Dismiss">&times;</button>';
+  document.body.appendChild(toast);
+
+  var closeBtn = toast.querySelector('.social-proof-toast-close');
+  var dismissed = false;
+  closeBtn.addEventListener('click', function() {
+    toast.classList.remove('visible');
+    dismissed = true;
+  });
+
+  var msgIndex = 0;
+
+  function showToast() {
+    if (dismissed) return;
+    var msg = messages[msgIndex];
+    document.getElementById('sp-toast-icon').innerHTML = msg.icon;
+    document.getElementById('sp-toast-text').innerHTML = msg.text;
+    toast.classList.add('visible');
+
+    setTimeout(function() {
+      toast.classList.remove('visible');
+      msgIndex = (msgIndex + 1) % messages.length;
+      if (!dismissed) {
+        setTimeout(showToast, 15000 + Math.random() * 10000);
+      }
+    }, 5000);
+  }
+
+  // Start after 8 seconds
+  setTimeout(showToast, 8000);
+}
+
+// ── Inline Lead Capture Micro-Form ──────────────────────
+function initMicroForm() {
+  var form = document.querySelector('.micro-form form');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var emailInput = form.querySelector('input[type="email"]');
+    var email = emailInput ? emailInput.value.trim() : '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput.style.borderColor = 'var(--error)';
+      return;
+    }
+    emailInput.style.borderColor = '';
+
+    var btn = form.querySelector('button[type="submit"]');
+    var origText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    var utm = getUTMData();
+    var payload = {
+      email: email,
+      consent_to_contact: true,
+      consent_text_version: '2025-01-28',
+      privacy_ack: true,
+      page_path: window.location.pathname,
+      page_title: document.title,
+      referrer: document.referrer,
+      intent_type: 'seller',
+      intent_strength: 'low',
+      event_name: 'micro_form_submit',
+      utm_source: utm.utm_source || '',
+      utm_medium: utm.utm_medium || '',
+      utm_campaign: utm.utm_campaign || '',
+      extra: { source: 'micro_form' }
+    };
+
+    fetch('/api/lead', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    }).then(function() {
+      btn.textContent = 'Sent!';
+      emailInput.value = '';
+      trackEvent('form_submit', { category: 'lead', label: 'micro_form' });
+      setTimeout(function() { btn.disabled = false; btn.textContent = origText; }, 3000);
+    }).catch(function() {
+      btn.textContent = origText;
+      btn.disabled = false;
+    });
+  });
 }
 
 // ── Cookie Consent ──────────────────────────────────────
