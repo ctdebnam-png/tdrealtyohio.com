@@ -1121,19 +1121,8 @@ main {
   counter-reset: step;
 }
 
-.process-step {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 2.5rem;
-  border-bottom: 1px solid var(--gray-200);
-}
-
-.process-step:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
+/* Legacy .process-step flex layout removed — cards now use
+   .process-steps-grid (grid) + block display defined later. */
 
 .step-number {
   counter-increment: step;
@@ -1158,10 +1147,11 @@ main {
 
 .process-step-expandable {
   margin-bottom: 1rem;
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--gray-300);
   border-radius: var(--radius-md);
   overflow: hidden;
   transition: box-shadow var(--transition);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .process-step-expandable:hover {
@@ -1384,15 +1374,18 @@ main {
 
 .path-card {
   background-color: var(--white);
-  border: 2px solid var(--gray-200);
+  border: 2px solid var(--gray-300);
   border-radius: var(--radius-lg);
   padding: 2rem;
   text-align: center;
   transition: all var(--transition);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 .path-card:hover {
   border-color: var(--gold);
+  box-shadow: 0 8px 24px rgba(201, 162, 39, 0.12);
+  transform: translateY(-3px);
 }
 
 .path-card.featured {
@@ -2228,11 +2221,6 @@ main {
     grid-template-columns: 1fr;
     gap: 2rem;
     direction: ltr;
-  }
-
-  .process-step {
-    flex-direction: column;
-    gap: 1rem;
   }
 
   .footer-main {
@@ -5105,8 +5093,14 @@ html[data-reveal] .reveal-stagger.visible > * {
   position: relative;
   background: var(--white);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--gray-200);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--gray-300);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.process-step:hover {
+  box-shadow: 0 8px 24px rgba(26, 46, 68, 0.10);
+  transform: translateY(-3px);
 }
 
 .process-step-number {
@@ -6035,6 +6029,7 @@ html[data-reveal] .reveal-stagger.visible > * {
   box-shadow: 0 8px 28px rgba(201, 162, 39, 0.18);
   background: linear-gradient(180deg, var(--white) 0%, #fdfaf0 100%);
   position: relative;
+  z-index: 1;
 }
 
 .pricing-summary-card--featured::after {
@@ -6080,7 +6075,7 @@ html[data-reveal] .reveal-stagger.visible > * {
 
 .guide-card {
   padding: 1.5rem;
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--gray-300);
   border-radius: var(--radius-lg);
   text-decoration: none;
   color: inherit;
@@ -6088,6 +6083,7 @@ html[data-reveal] .reveal-stagger.visible > * {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .guide-card::before {
@@ -6293,9 +6289,9 @@ html[data-reveal] .reveal-stagger.visible > * {
   padding: 1rem;
   background: var(--white);
   border-radius: var(--radius-md);
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--gray-300);
   transition: all 0.25s ease;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .included-item:hover {
@@ -6969,13 +6965,6 @@ html[data-reveal] .reveal-stagger.visible > * {
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
-  stroke-dasharray: 20;
-  stroke-dashoffset: 20;
-  transition: stroke-dashoffset 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.animated-check.drawn path {
-  stroke-dashoffset: 0;
 }
 
 /* ===== MOUSE SPOTLIGHT (disabled) ===== */
@@ -7132,20 +7121,6 @@ html[data-reveal] .reveal-stagger.visible > * {
 .pricing-summary-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-.pricing-summary-card--featured {
-  position: relative;
-  z-index: 1;
-}
-
-.pricing-summary-card--featured::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark), var(--gold-light));
-  z-index: -1;
 }
 
 /* ===== GLOWING STAT NUMBERS ===== */
