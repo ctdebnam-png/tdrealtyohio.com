@@ -858,8 +858,10 @@ main {
   border: none;
   background: var(--white);
   color: var(--navy);
+  font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
+  min-height: 44px;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -6298,22 +6300,6 @@ html[data-reveal] .reveal-stagger.visible > * {
   z-index: 1001;
 }
 
-.market-banner-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: var(--success);
-  border-radius: 50%;
-  margin-right: 0.5rem;
-  vertical-align: middle;
-  animation: livePulse 2s ease-in-out infinite;
-}
-
-@keyframes livePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
 .market-banner a {
   color: var(--gold-light);
   text-decoration: underline;
@@ -7040,12 +7026,6 @@ html[data-reveal] .reveal-stagger.visible > * {
   animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
 }
 
-.hero-content .hero-savings-callout {
-  opacity: 0;
-  transform: translateY(15px);
-  animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.85s forwards;
-}
-
 @keyframes heroEntrance {
   to {
     opacity: 1;
@@ -7181,8 +7161,7 @@ html[data-reveal] .reveal-stagger.visible > * {
   .hero-content .hero-subtitle,
   .hero-content .hero-buttons,
   .hero-content .hero-tertiary-link,
-  .hero-content .trust-badges-inline,
-  .hero-content .hero-savings-callout {
+  .hero-content .trust-badges-inline {
     opacity: 1;
     transform: none;
   }
