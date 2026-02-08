@@ -80,7 +80,7 @@ module.exports = defineConfig({
   webServer: {
     command: 'npx wrangler pages dev . --port 8788',
     url: 'http://localhost:8788',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120 * 1000,
   },
 });

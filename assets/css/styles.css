@@ -5122,6 +5122,10 @@ html[data-reveal] .reveal-stagger.visible > * {
 .process-step-icon {
   width: 64px;
   height: 64px;
+  min-width: 64px;
+  max-width: 64px;
+  min-height: 64px;
+  max-height: 64px;
   margin: 0 auto 1.25rem;
   background: linear-gradient(135deg, var(--navy), var(--navy-light));
   border-radius: 50%;
@@ -6952,6 +6956,10 @@ html[data-reveal] .reveal-stagger.visible > * {
 .animated-check {
   width: 24px;
   height: 24px;
+  min-width: 24px;
+  max-width: 24px;
+  min-height: 24px;
+  max-height: 24px;
   flex-shrink: 0;
 }
 
