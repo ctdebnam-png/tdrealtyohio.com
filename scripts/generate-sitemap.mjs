@@ -4,7 +4,7 @@
  * Generates sitemap.xml from HTML files using canonical URLs
  */
 
-import { readdir, readFile, writeFile, stat } from 'fs/promises';
+import { readdir, readFile, writeFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -120,9 +120,8 @@ async function findHtmlFiles(dir, files = []) {
 /**
  * Get last modified date for a file
  */
-async function getLastMod(filePath) {
-  const stats = await stat(filePath);
-  return stats.mtime.toISOString().split('T')[0];
+async function getLastMod() {
+  return new Date().toISOString().split('T')[0];
 }
 
 /**
