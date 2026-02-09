@@ -119,29 +119,51 @@ function updateSliderTrack(slider) {
   slider.style.setProperty('--value', percentage + '%');
 }
 
-// ===== MOBILE NAVIGATION (off-canvas panel) =====
-// Builds mobile nav content from TD_NAV config to guarantee parity with footer.
-function initMobileNav() {
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const nav = document.getElementById('main-nav');
-  if (!mobileMenuBtn || !nav) return;
+// ===== UNIFIED HEADER UI CONTROLLER =====
+// Single controller so dropdowns and mobile menu cannot fight each other.
+var _headerUI = {
+  mobileOpen: false,
+  dropdownOpen: false,
+  closeMobile: null,
+  closeDropdown: null
+};
 
-  // Inject overlay
+// ===== MOBILE NAVIGATION (off-canvas panel) =====
+// Builds mobile nav from TD_NAV config to guarantee parity with footer.
+// Panel is injected as a direct child of <body> to avoid header stacking-context issues.
+function initMobileNav() {
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  if (!mobileMenuBtn) return;
+
+  // Build panel outside header to avoid stacking-context tap interception
+  var panel = document.createElement('nav');
+  panel.id = 'mobile-nav-panel';
+  panel.className = 'mobile-nav-panel';
+  panel.setAttribute('aria-label', 'Mobile navigation');
+
+  // Overlay at body level
   var overlay = document.createElement('div');
   overlay.className = 'nav-overlay';
   overlay.id = 'nav-overlay';
-  nav.parentNode.insertBefore(overlay, nav);
+  document.body.appendChild(overlay);
+  document.body.appendChild(panel);
 
-  // Inject close button at the top of the nav
+  // Wire up aria-controls on the button
+  mobileMenuBtn.setAttribute('aria-controls', 'mobile-nav-panel');
+  mobileMenuBtn.setAttribute('aria-expanded', 'false');
+
+  // Close button
   var closeWrap = document.createElement('div');
   closeWrap.className = 'nav-close-btn';
-  closeWrap.innerHTML = '<button type="button" aria-label="Close menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/></svg></button>';
+  closeWrap.innerHTML = '<button type="button" aria-label="Close menu" id="mobile-nav-close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/></svg></button>';
+  panel.appendChild(closeWrap);
 
   // Build mobile nav body from TD_NAV config for parity with footer
   var body = document.createElement('div');
   body.className = 'nav-menu-body';
 
-  var currentPath = window.location.pathname;
+  var currentPath = window.location.pathname.replace(/\/$/, '') + '/';
+  if (currentPath === '//') currentPath = '/';
   var navConfig = typeof TD_NAV !== 'undefined' ? TD_NAV : null;
 
   if (navConfig) {
@@ -150,25 +172,24 @@ function initMobileNav() {
       if (!group) return;
       var header = document.createElement('div');
       header.className = 'nav-section-header';
+      header.id = 'mobile-nav-group-' + groupKey;
       header.textContent = group.title;
       body.appendChild(header);
 
       group.items.forEach(function (item) {
+        var href = item.href.replace(/\/$/, '') + '/';
+        if (href === '//') href = '/';
         var a = document.createElement('a');
         a.href = item.href;
         a.className = 'nav-link';
         a.textContent = item.label;
-        if (item.href === currentPath || (currentPath.indexOf(item.href) === 0 && item.href !== '/')) {
+        if (href === currentPath) {
           a.classList.add('active');
+          a.setAttribute('aria-current', 'page');
         }
         body.appendChild(a);
       });
     });
-  } else {
-    // Fallback: move existing nav children into body
-    while (nav.children.length > 0) {
-      body.appendChild(nav.children[0]);
-    }
   }
 
   // Add CTA
@@ -178,53 +199,58 @@ function initMobileNav() {
   cta.textContent = 'Contact';
   body.appendChild(cta);
 
-  // Clear nav and rebuild with close + body
-  nav.innerHTML = '';
-  nav.appendChild(closeWrap);
-  nav.appendChild(body);
+  panel.appendChild(body);
 
   var closeBtn = closeWrap.querySelector('button');
 
   function openNav() {
-    nav.classList.add('mobile-open');
+    // Close desktop dropdown if open (unified controller)
+    if (_headerUI.closeDropdown) _headerUI.closeDropdown();
+
+    panel.classList.add('mobile-open');
     overlay.classList.add('active');
     document.body.classList.add('nav-open');
     mobileMenuBtn.setAttribute('aria-expanded', 'true');
+    _headerUI.mobileOpen = true;
     closeBtn.focus();
   }
 
   function closeNav() {
-    nav.classList.remove('mobile-open');
+    panel.classList.remove('mobile-open');
     overlay.classList.remove('active');
     document.body.classList.remove('nav-open');
     mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    _headerUI.mobileOpen = false;
     mobileMenuBtn.focus();
   }
 
-  mobileMenuBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (nav.classList.contains('mobile-open')) { closeNav(); } else { openNav(); }
+  // Register with unified controller
+  _headerUI.closeMobile = closeNav;
+
+  // Direct click on the button — no e.preventDefault() since it's a <button>
+  mobileMenuBtn.addEventListener('click', function () {
+    if (panel.classList.contains('mobile-open')) { closeNav(); } else { openNav(); }
   });
 
   closeBtn.addEventListener('click', closeNav);
   overlay.addEventListener('click', closeNav);
 
-  nav.querySelectorAll('a').forEach(function (link) {
+  // Close on link click (navigation)
+  panel.querySelectorAll('a').forEach(function (link) {
     link.addEventListener('click', closeNav);
   });
 
   // ESC key
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && nav.classList.contains('mobile-open')) {
+    if (e.key === 'Escape' && panel.classList.contains('mobile-open')) {
       closeNav();
     }
   });
 
-  // Focus trap
-  nav.addEventListener('keydown', function (e) {
-    if (e.key !== 'Tab' || !nav.classList.contains('mobile-open')) return;
-    var focusable = nav.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+  // Focus trap inside panel
+  panel.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !panel.classList.contains('mobile-open')) return;
+    var focusable = panel.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
     if (!focusable.length) return;
     var first = focusable[0];
     var last = focusable[focusable.length - 1];
@@ -242,56 +268,75 @@ function initNavMore() {
   var more = document.querySelector('.nav-more');
   if (!toggle || !more) return;
 
+  function closeDropdown() {
+    more.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    _headerUI.dropdownOpen = false;
+  }
+
+  // Register with unified controller
+  _headerUI.closeDropdown = closeDropdown;
+
   toggle.addEventListener('click', function (e) {
     e.stopPropagation();
+    // Close mobile nav if open (unified controller)
+    if (_headerUI.closeMobile) _headerUI.closeMobile();
+
     var expanded = more.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(expanded));
+    _headerUI.dropdownOpen = expanded;
   });
 
   // Close on outside click
   document.addEventListener('click', function (e) {
     if (!more.contains(e.target) && more.classList.contains('open')) {
-      more.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+      closeDropdown();
     }
   });
 
   // Close on ESC
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && more.classList.contains('open')) {
-      more.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+      closeDropdown();
       toggle.focus();
     }
   });
 }
 
-// ===== MARKET BANNER (dismissible, sitewide) =====
+// ===== MARKET BANNER (dismissible, sitewide, CLS-safe) =====
 function initMarketBanner() {
-  // Check if previously dismissed
-  if (localStorage.getItem('market-banner-dismissed')) {
-    var existing = document.querySelector('.market-banner');
-    if (existing) existing.hidden = true;
-    return;
-  }
+  var dismissed = false;
+  try { dismissed = !!localStorage.getItem('market-banner-dismissed'); } catch (e) {}
 
   var banner = document.querySelector('.market-banner');
 
   // If no banner in HTML, inject one (sitewide via JS)
-  if (!banner) {
+  if (!banner && !dismissed) {
     banner = document.createElement('div');
     banner.className = 'market-banner';
     banner.setAttribute('role', 'status');
     banner.innerHTML =
       '<span class="market-banner-text">Central Ohio Market Update: Median days on market <strong>10\u201320 days</strong> for well-priced homes. ' +
       '<a href="/home-value/">Get your free valuation \u2192</a></span>';
-    var header = document.querySelector('.header');
-    if (header) {
-      header.parentNode.insertBefore(banner, header);
+    var skipLink = document.querySelector('.skip-link');
+    if (skipLink && skipLink.nextSibling) {
+      skipLink.parentNode.insertBefore(banner, skipLink.nextSibling);
     } else {
-      document.body.insertBefore(banner, document.body.firstChild);
+      var header = document.querySelector('.header');
+      if (header) {
+        header.parentNode.insertBefore(banner, header);
+      } else {
+        document.body.insertBefore(banner, document.body.firstChild);
+      }
     }
   }
+
+  if (dismissed && banner) {
+    banner.hidden = true;
+    return;
+  }
+
+  if (!banner) return;
 
   // Add dismiss button if not present
   if (!banner.querySelector('.market-banner-dismiss')) {
@@ -304,7 +349,7 @@ function initMarketBanner() {
 
   banner.querySelector('.market-banner-dismiss').addEventListener('click', function () {
     banner.hidden = true;
-    localStorage.setItem('market-banner-dismissed', '1');
+    try { localStorage.setItem('market-banner-dismissed', '1'); } catch (e) {}
   });
 }
 
@@ -685,6 +730,11 @@ function initFormHandler(formId, successMessage) {
   if (!form) return;
 
   const statusEl = document.getElementById(formId + '-status');
+  // Ensure aria-live for screen reader announcements
+  if (statusEl) {
+    statusEl.setAttribute('aria-live', 'polite');
+    statusEl.setAttribute('role', 'status');
+  }
 
   function showStatus(message, isError) {
     if (statusEl) {
@@ -1083,6 +1133,55 @@ function initEventTracking() {
   });
 }
 
+// ===== BACK TO TOP BUTTON =====
+function initBackToTop() {
+  var btn = document.createElement('button');
+  btn.className = 'back-to-top';
+  btn.setAttribute('aria-label', 'Back to top');
+  btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>';
+  document.body.appendChild(btn);
+
+  var visible = false;
+  window.addEventListener('scroll', function () {
+    var shouldShow = window.pageYOffset > window.innerHeight;
+    if (shouldShow !== visible) {
+      visible = shouldShow;
+      btn.classList.toggle('visible', visible);
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ===== STICKY UI: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP =====
+function initStickyScrollBehavior() {
+  var lastY = 0;
+  var ticking = false;
+  var stickyEls = document.querySelectorAll('.sticky-cta, .sticky-contact-bar');
+  if (!stickyEls.length) return;
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      requestAnimationFrame(function () {
+        var y = window.pageYOffset;
+        var delta = y - lastY;
+        stickyEls.forEach(function (el) {
+          if (delta > 10 && y > 200) {
+            el.classList.add('scroll-hidden');
+          } else if (delta < -5) {
+            el.classList.remove('scroll-hidden');
+          }
+        });
+        lastY = y;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
   populateContactInfo();
@@ -1120,6 +1219,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTextReveal();
   initFillUnderlines();
   initAnimatedChecks();
+  initBackToTop();
+  initStickyScrollBehavior();
 });
 
 // ── Sticky Mobile CTA Bar ───────────────────────────────
@@ -1327,20 +1428,50 @@ function initMicroForm() {
   var form = document.querySelector('.micro-form form');
   if (!form) return;
 
+  // Add honeypot if not present
+  if (!form.querySelector('.form-hp')) {
+    var hp = document.createElement('div');
+    hp.className = 'form-hp';
+    hp.setAttribute('aria-hidden', 'true');
+    hp.innerHTML = '<label for="micro-website">Website</label><input type="text" id="micro-website" name="website" tabindex="-1" autocomplete="off">';
+    form.insertBefore(hp, form.firstChild);
+  }
+
+  // Add aria-live region for status announcements
+  var statusEl = form.querySelector('.micro-form-status');
+  if (!statusEl) {
+    statusEl = document.createElement('div');
+    statusEl.className = 'micro-form-status sr-only';
+    statusEl.setAttribute('aria-live', 'polite');
+    statusEl.setAttribute('role', 'status');
+    form.appendChild(statusEl);
+  }
+
+  var submitting = false;
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    if (submitting) return; // Prevent double-submit
+
+    // Honeypot check
+    var hpInput = form.querySelector('[name="website"]');
+    if (hpInput && hpInput.value) return;
+
     var emailInput = form.querySelector('input[type="email"]');
     var email = emailInput ? emailInput.value.trim() : '';
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       emailInput.style.borderColor = 'var(--error)';
+      statusEl.textContent = 'Please enter a valid email address.';
       return;
     }
     emailInput.style.borderColor = '';
 
     var btn = form.querySelector('button[type="submit"]');
     var origText = btn.textContent;
+    submitting = true;
     btn.disabled = true;
-    btn.textContent = 'Sending...';
+    btn.classList.add('btn-loading');
+    statusEl.textContent = 'Sending...';
 
     var utm = getUTMData();
     var payload = {
@@ -1365,13 +1496,18 @@ function initMicroForm() {
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' }
     }).then(function() {
+      btn.classList.remove('btn-loading');
       btn.textContent = 'Sent!';
       emailInput.value = '';
+      statusEl.textContent = 'Your estimate request has been sent successfully.';
       trackEvent('form_submit', { category: 'lead', label: 'micro_form' });
-      setTimeout(function() { btn.disabled = false; btn.textContent = origText; }, 3000);
+      setTimeout(function() { submitting = false; btn.disabled = false; btn.textContent = origText; }, 3000);
     }).catch(function() {
+      btn.classList.remove('btn-loading');
       btn.textContent = origText;
       btn.disabled = false;
+      submitting = false;
+      statusEl.textContent = 'Something went wrong. Please try again.';
     });
   });
 }
