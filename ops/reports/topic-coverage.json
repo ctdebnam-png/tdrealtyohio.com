@@ -1,0 +1,960 @@
+{
+  "generated": "2026-02-09T12:43:03.684Z",
+  "summary": {
+    "totalLocalities": 35,
+    "requiredIntentsPerLocality": 6,
+    "totalRequiredIntents": 210,
+    "coveredIntents": 175,
+    "coveragePct": "83.3%",
+    "gapCount": 35
+  },
+  "gaps": [
+    {
+      "keyword": "first-time westerville",
+      "intent": "first-time",
+      "locality": "westerville",
+      "localityName": "Westerville",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/westerville/"
+    },
+    {
+      "keyword": "first-time new albany",
+      "intent": "first-time",
+      "locality": "new-albany",
+      "localityName": "New Albany",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/new-albany/"
+    },
+    {
+      "keyword": "first-time gahanna",
+      "intent": "first-time",
+      "locality": "gahanna",
+      "localityName": "Gahanna",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/gahanna/"
+    },
+    {
+      "keyword": "first-time worthington",
+      "intent": "first-time",
+      "locality": "worthington",
+      "localityName": "Worthington",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/worthington/"
+    },
+    {
+      "keyword": "first-time lewis center",
+      "intent": "first-time",
+      "locality": "lewis-center",
+      "localityName": "Lewis Center",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/lewis-center/"
+    },
+    {
+      "keyword": "first-time hilliard",
+      "intent": "first-time",
+      "locality": "hilliard",
+      "localityName": "Hilliard",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/hilliard/"
+    },
+    {
+      "keyword": "first-time dublin",
+      "intent": "first-time",
+      "locality": "dublin",
+      "localityName": "Dublin",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/dublin/"
+    },
+    {
+      "keyword": "first-time powell",
+      "intent": "first-time",
+      "locality": "powell",
+      "localityName": "Powell",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/powell/"
+    },
+    {
+      "keyword": "first-time sunbury",
+      "intent": "first-time",
+      "locality": "sunbury",
+      "localityName": "Sunbury",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/sunbury/"
+    },
+    {
+      "keyword": "first-time galena",
+      "intent": "first-time",
+      "locality": "galena",
+      "localityName": "Galena",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/galena/"
+    },
+    {
+      "keyword": "first-time columbus",
+      "intent": "first-time",
+      "locality": "columbus",
+      "localityName": "Columbus",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/columbus/"
+    },
+    {
+      "keyword": "first-time delaware",
+      "intent": "first-time",
+      "locality": "delaware",
+      "localityName": "Delaware",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/delaware/"
+    },
+    {
+      "keyword": "first-time upper arlington",
+      "intent": "first-time",
+      "locality": "upper-arlington",
+      "localityName": "Upper Arlington",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/upper-arlington/"
+    },
+    {
+      "keyword": "first-time pickerington",
+      "intent": "first-time",
+      "locality": "pickerington",
+      "localityName": "Pickerington",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/pickerington/"
+    },
+    {
+      "keyword": "first-time grove city",
+      "intent": "first-time",
+      "locality": "grove-city",
+      "localityName": "Grove City",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/grove-city/"
+    },
+    {
+      "keyword": "first-time blacklick",
+      "intent": "first-time",
+      "locality": "blacklick",
+      "localityName": "Blacklick",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/blacklick/"
+    },
+    {
+      "keyword": "first-time clintonville",
+      "intent": "first-time",
+      "locality": "clintonville",
+      "localityName": "Clintonville",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/clintonville/"
+    },
+    {
+      "keyword": "first-time pataskala",
+      "intent": "first-time",
+      "locality": "pataskala",
+      "localityName": "Pataskala",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/pataskala/"
+    },
+    {
+      "keyword": "first-time bexley",
+      "intent": "first-time",
+      "locality": "bexley",
+      "localityName": "Bexley",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/bexley/"
+    },
+    {
+      "keyword": "first-time canal winchester",
+      "intent": "first-time",
+      "locality": "canal-winchester",
+      "localityName": "Canal Winchester",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/canal-winchester/"
+    },
+    {
+      "keyword": "first-time german village",
+      "intent": "first-time",
+      "locality": "german-village",
+      "localityName": "German Village",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/german-village/"
+    },
+    {
+      "keyword": "first-time grandview heights",
+      "intent": "first-time",
+      "locality": "grandview-heights",
+      "localityName": "Grandview Heights",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/grandview-heights/"
+    },
+    {
+      "keyword": "first-time granville",
+      "intent": "first-time",
+      "locality": "granville",
+      "localityName": "Granville",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/granville/"
+    },
+    {
+      "keyword": "first-time johnstown",
+      "intent": "first-time",
+      "locality": "johnstown",
+      "localityName": "Johnstown",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/johnstown/"
+    },
+    {
+      "keyword": "first-time reynoldsburg",
+      "intent": "first-time",
+      "locality": "reynoldsburg",
+      "localityName": "Reynoldsburg",
+      "locationType": "city",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": "/areas/reynoldsburg/"
+    },
+    {
+      "keyword": "first-time zip 43081 (westerville)",
+      "intent": "first-time",
+      "locality": "zip-43081",
+      "localityName": "ZIP 43081 (Westerville)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43082 (westerville)",
+      "intent": "first-time",
+      "locality": "zip-43082",
+      "localityName": "ZIP 43082 (Westerville)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43035 (lewis center)",
+      "intent": "first-time",
+      "locality": "zip-43035",
+      "localityName": "ZIP 43035 (Lewis Center)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43054 (new albany)",
+      "intent": "first-time",
+      "locality": "zip-43054",
+      "localityName": "ZIP 43054 (New Albany)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43021 (galena)",
+      "intent": "first-time",
+      "locality": "zip-43021",
+      "localityName": "ZIP 43021 (Galena)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43065 (powell)",
+      "intent": "first-time",
+      "locality": "zip-43065",
+      "localityName": "ZIP 43065 (Powell)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43016 (dublin)",
+      "intent": "first-time",
+      "locality": "zip-43016",
+      "localityName": "ZIP 43016 (Dublin)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43017 (dublin)",
+      "intent": "first-time",
+      "locality": "zip-43017",
+      "localityName": "ZIP 43017 (Dublin)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43004 (blacklick)",
+      "intent": "first-time",
+      "locality": "zip-43004",
+      "localityName": "ZIP 43004 (Blacklick)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    },
+    {
+      "keyword": "first-time zip 43240 (westerville/columbus)",
+      "intent": "first-time",
+      "locality": "zip-43240",
+      "localityName": "ZIP 43240 (Westerville/Columbus)",
+      "locationType": "zip",
+      "impressions": 0,
+      "position": null,
+      "targetUrl": null,
+      "hubLink": "/buyers/",
+      "cityLink": null
+    }
+  ],
+  "coverage": {
+    "westerville": {
+      "name": "Westerville",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "new-albany": {
+      "name": "New Albany",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "gahanna": {
+      "name": "Gahanna",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "worthington": {
+      "name": "Worthington",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "lewis-center": {
+      "name": "Lewis Center",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "hilliard": {
+      "name": "Hilliard",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "dublin": {
+      "name": "Dublin",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "powell": {
+      "name": "Powell",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "sunbury": {
+      "name": "Sunbury",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "galena": {
+      "name": "Galena",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "columbus": {
+      "name": "Columbus",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "delaware": {
+      "name": "Delaware",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "upper-arlington": {
+      "name": "Upper Arlington",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "pickerington": {
+      "name": "Pickerington",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "grove-city": {
+      "name": "Grove City",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "blacklick": {
+      "name": "Blacklick",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "clintonville": {
+      "name": "Clintonville",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "pataskala": {
+      "name": "Pataskala",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "bexley": {
+      "name": "Bexley",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "canal-winchester": {
+      "name": "Canal Winchester",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "german-village": {
+      "name": "German Village",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "grandview-heights": {
+      "name": "Grandview Heights",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "granville": {
+      "name": "Granville",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "johnstown": {
+      "name": "Johnstown",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "reynoldsburg": {
+      "name": "Reynoldsburg",
+      "type": "city",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43081": {
+      "name": "ZIP 43081 (Westerville)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43082": {
+      "name": "ZIP 43082 (Westerville)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43035": {
+      "name": "ZIP 43035 (Lewis Center)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43054": {
+      "name": "ZIP 43054 (New Albany)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43021": {
+      "name": "ZIP 43021 (Galena)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43065": {
+      "name": "ZIP 43065 (Powell)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43016": {
+      "name": "ZIP 43016 (Dublin)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43017": {
+      "name": "ZIP 43017 (Dublin)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43004": {
+      "name": "ZIP 43004 (Blacklick)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    },
+    "zip-43240": {
+      "name": "ZIP 43240 (Westerville/Columbus)",
+      "type": "zip",
+      "coveredIntents": [
+        "seller",
+        "buyer",
+        "inspection",
+        "comparison",
+        "closing-costs"
+      ],
+      "missingIntents": [
+        "first-time"
+      ],
+      "pageCount": 1
+    }
+  }
+}

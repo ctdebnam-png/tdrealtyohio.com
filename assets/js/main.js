@@ -1085,10 +1085,27 @@ function initEventTracking() {
     });
   });
 
-  // Track phone link taps
+  // ── Conversion events: call_click (tel links) ──
   document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
+    var callTracked = false;
     link.addEventListener('click', function() {
-      trackEvent('phone_tap', { category: 'contact', label: link.getAttribute('href') });
+      if (!callTracked) {
+        callTracked = true;
+        trackEvent('call_click', { category: 'contact', label: link.getAttribute('href') });
+        // Also fire legacy event for backwards compat
+        trackEvent('phone_tap', { category: 'contact', label: link.getAttribute('href') });
+      }
+    });
+  });
+
+  // ── Conversion events: email_click (mailto links) ──
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
+    var emailTracked = false;
+    link.addEventListener('click', function() {
+      if (!emailTracked) {
+        emailTracked = true;
+        trackEvent('email_click', { category: 'contact', label: link.getAttribute('href') });
+      }
     });
   });
 
@@ -1105,6 +1122,14 @@ function initEventTracking() {
     });
   });
 
+  // ── Conversion events: calculator_submit ──
+  document.querySelectorAll('[data-calculator-submit]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var calcName = btn.dataset.calculatorSubmit || 'unknown';
+      trackEvent('calculator_submit', { category: 'calculator', label: calcName });
+    });
+  });
+
   // Track form starts (first field focus)
   document.querySelectorAll('form').forEach(function(form) {
     var started = false;
@@ -1112,6 +1137,24 @@ function initEventTracking() {
       if (!started && e.target.matches('input, select, textarea')) {
         started = true;
         trackEvent('form_start', { category: 'form', label: form.id || 'unknown' });
+      }
+    });
+  });
+
+  // ── Conversion events: form_submit (all forms, fires once per form) ──
+  document.querySelectorAll('form').forEach(function(form) {
+    var submitted = false;
+    form.addEventListener('submit', function() {
+      if (!submitted) {
+        submitted = true;
+        var formId = form.id || form.dataset.formType || 'unknown';
+        var leadType = form.dataset.leadType || '';
+        trackEvent('form_submit', {
+          category: 'lead',
+          label: formId,
+          lead_type: leadType,
+          page_path: window.location.pathname
+        });
       }
     });
   });

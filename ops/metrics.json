@@ -1,0 +1,85 @@
+{
+  "_comment": "Single source of truth for objective metrics, targets, and guardrails. Used by /ads-bot/ analyzer and plan generator.",
+  "targets": {
+    "organic": {
+      "gscClicksWeekly": 200,
+      "gscImpressionsWeekly": 5000,
+      "avgCTR": 0.04,
+      "avgPosition": 10,
+      "targetQueries": [
+        "1 percent commission ohio",
+        "1% commission real estate columbus",
+        "low commission realtor columbus",
+        "sell home westerville ohio",
+        "sell home columbus ohio",
+        "discount real estate broker ohio",
+        "flat fee mls ohio",
+        "first time homebuyer cash back columbus",
+        "pre-listing inspection ohio",
+        "1 percent listing agent"
+      ],
+      "targetPages": [
+        "/",
+        "/sellers/",
+        "/buyers/",
+        "/1-percent-commission/",
+        "/areas/westerville/",
+        "/areas/columbus/",
+        "/compare/1-percent-vs-3-percent/"
+      ]
+    },
+    "ads": {
+      "maxCPA": 50,
+      "targetConversionRate": 0.05,
+      "maxCPC": 8,
+      "minSearchTermQuality": 0.3
+    },
+    "onsite": {
+      "formSubmitWeekly": 5,
+      "callClickWeekly": 10,
+      "emailClickWeekly": 3,
+      "maxBounceRate": 0.65,
+      "minEngagementRate": 0.4,
+      "minAvgSessionDuration": 60
+    }
+  },
+  "guardrails": {
+    "maxDailyBudgetChangePct": 10,
+    "maxBounceRate": 0.7,
+    "minClicksBeforePause": 20,
+    "minSpendForNegative": 5,
+    "minDaysBeforeSEOWin": 14,
+    "seasonalityControlDays": 28,
+    "maxRSAEditsPerAdGroupPerWeek": 3,
+    "maxLandingPageMetadataEditsPerDay": 5,
+    "maxStructuralNavChangesPerWeek": 1,
+    "brokenLinksFailThreshold": 0,
+    "duplicateCanonicalsFail": true,
+    "noindexOnMoneyPagesFail": true,
+    "cwvRegressionFail": true,
+    "minClicksForStatisticalSignificance": 30,
+    "minImpressionsForSignificance": 500
+  },
+  "churnLimiters": {
+    "rsaEditsPerAdGroupPerWeek": 3,
+    "landingPageMetadataEditsPerDay": 5,
+    "structuralNavChangesPerWeek": 1,
+    "keywordPausesPerDay": 5,
+    "negativesAddedPerDay": 20,
+    "newPagesPerWeek": 3,
+    "newBlogPostsPerWeek": 2
+  },
+  "significanceChecks": {
+    "ads": {
+      "minClicksBeforePause": 20,
+      "minClicksBeforeExpand": 50,
+      "stableTrendWindowDays": 7,
+      "confidenceLevel": 0.9
+    },
+    "seo": {
+      "minDaysBeforeWin": 14,
+      "minImpressionsForTrend": 200,
+      "controlPeriodDays": 28
+    }
+  }
+}
