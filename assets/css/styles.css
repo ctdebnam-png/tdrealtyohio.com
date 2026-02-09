@@ -605,6 +605,7 @@ main {
   inset: 0;
   background: linear-gradient(180deg, rgba(15, 28, 42, 0.82) 0%, rgba(26, 46, 68, 0.75) 50%, rgba(15, 28, 42, 0.85) 100%);
   z-index: 1;
+  pointer-events: none;
 }
 
 /* Animated gold radial glow behind hero content */
@@ -755,7 +756,7 @@ main {
 @media (max-width: 768px) {
   .hero {
     min-height: auto;
-    max-height: 85vh;
+    max-height: none;
     padding: 5rem 0 4rem;
     background-attachment: scroll;
   }
@@ -763,6 +764,10 @@ main {
     animation: none;
     inset: 0;
     background-attachment: scroll;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 3;
   }
   .hero-title {
     font-size: 2.5rem;
@@ -1189,7 +1194,7 @@ main {
 }
 .trust-bar-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 0;
 }
 .trust-bar-item {
@@ -1256,8 +1261,12 @@ main {
   .trust-bar-item:nth-child(2n) {
     border-right: none;
   }
-  .trust-bar-item:nth-child(n+3) {
+  .trust-bar-item:nth-child(n+5) {
     border-bottom: none;
+  }
+  .trust-bar-item:nth-child(5) {
+    grid-column: 1 / -1;
+    border-right: none;
   }
   .trust-bar-value {
     font-size: 1.375rem;
@@ -5363,6 +5372,21 @@ html[data-reveal] .reveal-stagger.visible > * {
   margin: 0;
 }
 
+.process-step--link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
+.process-step--link:hover {
+  border-color: var(--gold);
+}
+
+.process-step--link:hover .process-step-title {
+  color: var(--gold-dark);
+}
+
 .process-step-connector {
   width: 60px;
   height: 2px;
@@ -7268,6 +7292,21 @@ html[data-reveal] .reveal-stagger.visible > * {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Fallback: ensure hero content is always visible on mobile even if animation fails */
+@media (max-width: 768px) {
+  .hero-content .hero-tagline,
+  .hero-content .hero-title,
+  .hero-content .hero-subtitle,
+  .hero-content .hero-buttons,
+  .hero-content .hero-tertiary-link,
+  .hero-content .trust-badges-inline {
+    opacity: 1;
+    transform: none;
+    animation-delay: 0s;
+    animation-duration: 0.4s;
   }
 }
 
