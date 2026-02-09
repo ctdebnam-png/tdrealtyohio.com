@@ -1,0 +1,13 @@
+[
+  {
+    "_comment": "Template entry. Each experiment tracks a change, its hypothesis, and outcome.",
+    "date": "2026-02-09",
+    "change_type": "initial_setup",
+    "scope": "ops_infrastructure",
+    "hypothesis": "Setting up self-improvement loop will enable data-driven optimization",
+    "metric_target": "system_readiness",
+    "result": "pending",
+    "rollback": false,
+    "notes": "Initial setup of /ops/ directory, metrics.json, and experiment tracking"
+  }
+]

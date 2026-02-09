@@ -667,9 +667,8 @@ function generateCityPage(city) {
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "3600 Tremont Rd Ste 250",
-      "addressLocality": "Columbus",
+      "addressLocality": "Westerville",
       "addressRegion": "OH",
-      "postalCode": "43221",
       "addressCountry": "US"
     },
     "geo": {

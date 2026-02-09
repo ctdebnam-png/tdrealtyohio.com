@@ -1,0 +1,115 @@
+name: Apply Ads Changes (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date of the plan to apply (YYYY-MM-DD)'
+        required: true
+        type: string
+      approval_token:
+        description: 'Approval token (must match APPROVAL_TOKEN secret)'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run mode (log but do not apply)'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  apply:
+    name: Apply Ads Changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Validate approval
+        run: |
+          if [ "${{ inputs.approval_token }}" != "${{ secrets.ADS_APPROVAL_TOKEN }}" ]; then
+            echo "Invalid approval token"
+            exit 1
+          fi
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install ads-bot dependencies
+        run: cd ads-bot && npm ci
+
+      - name: Load plan
+        id: plan
+        run: |
+          PLAN="ops/reports/daily-${{ inputs.date }}.plan.json"
+          if [ ! -f "$PLAN" ]; then
+            echo "Plan file not found: $PLAN"
+            echo "Check that the daily report ran for this date."
+            exit 1
+          fi
+          echo "plan_path=$PLAN" >> $GITHUB_OUTPUT
+
+      - name: Apply ads changes
+        run: |
+          echo "=== Ads Changes Plan for ${{ inputs.date }} ==="
+          cat "${{ steps.plan.outputs.plan_path }}" | node -e "
+            const fs = require('fs');
+            const plan = JSON.parse(fs.readFileSync('/dev/stdin', 'utf-8'));
+
+            console.log('Negatives to add:', plan.ads.negatives_add.length);
+            plan.ads.negatives_add.forEach(n => console.log('  -', n.term, '|', n.reason));
+
+            console.log('Keywords to pause:', plan.ads.keywords_pause.length);
+            plan.ads.keywords_pause.forEach(k => console.log('  -', k.keyword, k.matchType, '|', k.reason));
+
+            console.log('Budget changes:', plan.ads.budgets_delta.length);
+            plan.ads.budgets_delta.forEach(b => console.log('  -', b.campaign, b.direction, 'max', b.maxDeltaPct + '%', '|', b.reason));
+
+            console.log('RSA swaps:', plan.ads.rsa_assets_swap.length);
+          "
+
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo ""
+            echo "=== DRY RUN MODE — No changes applied ==="
+          else
+            echo ""
+            echo "=== APPLYING CHANGES ==="
+            echo "Google Ads API changes would be applied here."
+            echo "This requires the Google Ads API integration to be fully configured."
+          fi
+        env:
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+          GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+          GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+
+      - name: Log to experiment tracker
+        if: inputs.dry_run == 'false'
+        run: |
+          echo "Logging applied changes to experiment log..."
+          node -e "
+            const fs = require('fs');
+            const logPath = 'ops/experiments/experiment-log.json';
+            const log = JSON.parse(fs.readFileSync(logPath, 'utf-8'));
+            const plan = JSON.parse(fs.readFileSync('${{ steps.plan.outputs.plan_path }}', 'utf-8'));
+
+            const entry = {
+              date: '${{ inputs.date }}',
+              change_type: 'ads_apply',
+              scope: 'google_ads',
+              hypothesis: 'Daily plan actions improve ad performance',
+              metric_target: 'conversions,cpa',
+              result: 'pending',
+              rollback: false,
+              negatives_added: plan.ads.negatives_add.length,
+              keywords_paused: plan.ads.keywords_pause.length,
+              budget_changes: plan.ads.budgets_delta.length,
+            };
+            log.push(entry);
+            fs.writeFileSync(logPath, JSON.stringify(log, null, 2));
+          "

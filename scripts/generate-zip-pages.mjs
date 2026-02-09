@@ -1,0 +1,339 @@
+#!/usr/bin/env node
+/**
+ * ZIP Intent Landing Page Generator
+ * Generates /areas/zip/{ZIP}/index.html for each ZIP in the route registry.
+ */
+
+import { writeFile, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, '..');
+const { ZIPS, CITIES } = require('../src/config/routes.js');
+
+const TODAY = new Date().toISOString().split('T')[0];
+
+function findCitySlug(cityName) {
+  const city = CITIES.find(c => c.name === cityName);
+  return city ? city.slug : cityName.toLowerCase().replace(/\s+/g, '-');
+}
+
+function generateZipPage(z) {
+  const citySlug = findCitySlug(z.city);
+  const canonical = `https://tdrealtyohio.com/areas/zip/${z.zip}/`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${z.zip} Real Estate | ${z.city}, OH | TD Realty Ohio</title>
+  <meta name="description" content="Buying or selling in ZIP code ${z.zip} (${z.city}, Ohio)? ${z.typicalPrice} price range. 1% listing commission saves you thousands.">
+  <meta name="keywords" content="${z.zip} real estate, ${z.zip} homes for sale, sell home ${z.zip}, ${z.city} Ohio real estate, ${z.schoolDistrict}">
+
+  <link rel="canonical" href="${canonical}">
+  <meta property="article:modified_time" content="${TODAY}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${z.zip} Real Estate | ${z.city}, OH | 1% Commission">
+  <meta property="og:description" content="Buying or selling in ${z.zip}? ${z.typicalPrice} homes. Save thousands with 1% listing commission.">
+  <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${z.zip} Real Estate | ${z.city}, OH | TD Realty Ohio">
+  <meta name="twitter:description" content="${z.typicalPrice} homes in ${z.zip}. 1% listing commission. Full-service real estate.">
+  <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <meta name="theme-color" content="#1a2e44">
+
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="/assets/css/styles.css?v=20260208" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    if (localStorage.getItem('cookie-consent') !== 'declined') {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', 'AW-17866418952');
+    }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tdrealtyohio.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Areas", "item": "https://tdrealtyohio.com/areas/" },
+      { "@type": "ListItem", "position": 3, "name": "${z.zip} — ${z.city}", "item": "${canonical}" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "TD Realty Ohio, LLC",
+    "description": "Full-service real estate agent serving ZIP code ${z.zip} (${z.city}, Ohio) with 1% listing commission.",
+    "url": "${canonical}",
+    "telephone": "(614) 392-8858",
+    "email": "info@tdrealtyohio.com",
+    "areaServed": {
+      "@type": "PostalAddress",
+      "postalCode": "${z.zip}",
+      "addressLocality": "${z.city}",
+      "addressRegion": "OH",
+      "addressCountry": "US"
+    },
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Westerville",
+      "addressRegion": "OH",
+      "addressCountry": "US"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "TD Realty Ohio, LLC",
+    "telephone": "(614) 392-8858",
+    "email": "info@tdrealtyohio.com",
+    "url": "https://tdrealtyohio.com/",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Westerville",
+      "addressRegion": "OH",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.0417,
+      "longitude": -83.0804
+    },
+    "hasCredential": [
+      { "@type": "EducationalOccupationalCredential", "credentialCategory": "Broker License", "recognizedBy": { "@type": "Organization", "name": "Ohio Division of Real Estate" }, "name": "Broker License #2023006467" },
+      { "@type": "EducationalOccupationalCredential", "credentialCategory": "Brokerage License", "recognizedBy": { "@type": "Organization", "name": "Ohio Division of Real Estate" }, "name": "Brokerage License #2023006602" }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="TD Realty Ohio - Home">
+        <span class="logo-text">TD Realty Ohio</span>
+      </a>
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <a href="/sellers/" class="nav-link">Sellers</a>
+        <a href="/buyers/" class="nav-link">Buyers</a>
+        <a href="/areas/" class="nav-link active">Areas</a>
+        <a href="/about/" class="nav-link">About</a>
+        <a href="/blog/" class="nav-link">Blog</a>
+        <a href="/faq/" class="nav-link">FAQ</a>
+        <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
+      </nav>
+      <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero hero-area">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a> <span aria-hidden="true">/</span>
+          <a href="/areas/">Areas</a> <span aria-hidden="true">/</span>
+          <span aria-current="page">${z.zip} — ${z.city}</span>
+        </nav>
+        <h1>Real Estate in ZIP Code ${z.zip}</h1>
+        <p class="hero-subtitle">${z.focus}</p>
+        <p class="hero-meta">Typical prices: <strong>${z.typicalPrice}</strong> | School district: <strong>${z.schoolDistrict}</strong></p>
+        <div class="hero-cta-group">
+          <a href="/contact/?interest=selling&zip=${z.zip}" class="btn btn-primary">Sell in ${z.zip}</a>
+          <a href="/contact/?interest=buying&zip=${z.zip}" class="btn btn-outline-white">Buy in ${z.zip}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>About ZIP Code ${z.zip}</h2>
+        <p>${z.focus}. This area is served by the ${z.schoolDistrict}, one of the key factors that drives buyer interest in this ZIP code.</p>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Housing Stock</h3>
+            <p>${z.housingStock}</p>
+          </div>
+          <div class="info-card">
+            <h3>Typical Price Range</h3>
+            <p>${z.typicalPrice}</p>
+          </div>
+          <div class="info-card">
+            <h3>School District</h3>
+            <p>${z.schoolDistrict}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Selling in ${z.zip}</h2>
+        <p>${z.sellerNote}</p>
+        <p>TD Realty Ohio lists homes in ${z.zip} for <strong>1-2% commission</strong> instead of the traditional 3%. On a home in the ${z.typicalPrice} range, that saves you thousands at closing.</p>
+        <ul class="check-list">
+          <li>Full MLS listing with professional photography</li>
+          <li>Complimentary pre-listing inspection</li>
+          <li>Expert pricing strategy for the ${z.city} market</li>
+          <li>Experienced negotiation from listing to close</li>
+        </ul>
+        <a href="/sellers/" class="btn btn-primary">Learn About Selling</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Buying in ${z.zip}</h2>
+        <p>${z.buyerNote}</p>
+        <p>First-time homebuyers working with TD Realty Ohio receive <strong>1% of the purchase price back</strong> at closing, which can be applied toward closing costs or other expenses.</p>
+        <ul class="check-list">
+          <li>Full buyer representation from search to closing</li>
+          <li>1% cash back for first-time buyers</li>
+          <li>Local expertise in ${z.city} neighborhoods</li>
+          <li>Help navigating inspections, appraisals, and negotiations</li>
+        </ul>
+        <a href="/buyers/" class="btn btn-primary">Learn About Buying</a>
+      </div>
+    </section>
+
+    <!-- Service Area Section -->
+    <section class="section section-alt">
+      <div class="container">
+        <h2>Service Areas Near ${z.zip}</h2>
+        <p>TD Realty Ohio serves ${z.city} and the surrounding Central Ohio communities:</p>
+        <div class="service-area-links">
+          <a href="/areas/westerville/">Westerville</a>
+          <a href="/areas/new-albany/">New Albany</a>
+          <a href="/areas/gahanna/">Gahanna</a>
+          <a href="/areas/worthington/">Worthington</a>
+          <a href="/areas/lewis-center/">Lewis Center</a>
+          <a href="/areas/hilliard/">Hilliard</a>
+          <a href="/areas/dublin/">Dublin</a>
+          <a href="/areas/powell/">Powell</a>
+          <a href="/areas/sunbury/">Sunbury</a>
+          <a href="/areas/columbus/">Columbus</a>
+        </div>
+        <p class="section-note">See all: <a href="/areas/">Full service area list</a></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Get Started</h2>
+        <p>Whether you are buying or selling in ${z.zip}, TD Realty Ohio provides full-service representation at a fraction of the traditional cost.</p>
+        <div class="cta-group">
+          <a href="/contact/" class="btn btn-primary">Schedule a Free Consultation</a>
+          <a href="tel:6143928858" class="btn btn-outline">Call (614) 392-8858</a>
+        </div>
+        <p class="disclaimer">TD Realty Ohio, LLC | Broker License #2023006467 | Brokerage License #2023006602</p>
+      </div>
+    </section>
+
+    <p class="page-timestamp">Last updated: <time datetime="${TODAY}">${TODAY}</time></p>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Services</h3>
+          <nav aria-label="Footer services">
+            <a href="/sellers/">For Sellers</a>
+            <a href="/buyers/">For Buyers</a>
+            <a href="/1-percent-commission/">1% Commission</a>
+            <a href="/pre-listing-inspection/">Pre-Listing Inspection</a>
+            <a href="/home-value/">Free Home Value</a>
+            <a href="/affordability/">Affordability Calculator</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h3>Company</h3>
+          <nav aria-label="Footer company">
+            <a href="/about/">About</a>
+            <a href="/contact/">Contact</a>
+            <a href="/blog/">Blog</a>
+            <a href="/reviews/">Reviews</a>
+            <a href="/credentials/">Credentials</a>
+            <a href="/faq/">FAQ</a>
+          </nav>
+        </div>
+        <div class="footer-col">
+          <h3>Contact</h3>
+          <p><a href="tel:6143928858" data-phone>(614) 392-8858</a></p>
+          <p><a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a></p>
+          <p data-location>Westerville, Ohio</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; ${new Date().getFullYear()} TD Realty Ohio, LLC. All rights reserved.</p>
+        <p>Broker: Travis Debnam | License #2023006467 | Brokerage #2023006602</p>
+        <nav aria-label="Legal">
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/fair-housing/">Fair Housing</a>
+          <a href="/credentials/">Credentials</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/schema.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>`;
+}
+
+async function generate() {
+  console.log('[zip-pages] Generating ZIP intent landing pages...');
+  let count = 0;
+
+  for (const z of ZIPS) {
+    const dir = join(ROOT, 'areas', 'zip', z.zip);
+    await mkdir(dir, { recursive: true });
+    const html = generateZipPage(z);
+    await writeFile(join(dir, 'index.html'), html);
+    count++;
+    console.log(`  [zip-pages] Generated /areas/zip/${z.zip}/`);
+  }
+
+  console.log(`[zip-pages] Generated ${count} ZIP intent pages`);
+}
+
+generate();

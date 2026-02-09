@@ -1,0 +1,122 @@
+{
+  "_comment": "Maps Google Ads ad groups to their intended landing pages. The ads-bot flags any mismatches.",
+  "adGroups": {
+    "sellers-westerville-exact": {
+      "campaign": "Sellers Westerville",
+      "matchType": "exact",
+      "landingPage": "https://tdrealtyohio.com/areas/westerville/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "sellers-westerville-phrase": {
+      "campaign": "Sellers Westerville",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/areas/westerville/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "sellers-columbus-metro-phrase": {
+      "campaign": "Sellers Columbus Metro",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/sellers/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "sellers-1-percent": {
+      "campaign": "Sellers Columbus Metro",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/1-percent-commission/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "buyers-first-time-phrase": {
+      "campaign": "Buyers First-Time",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/buyers/",
+      "intent": "buyer",
+      "expectedIntent": "buyer"
+    },
+    "buyers-cash-back": {
+      "campaign": "Buyers First-Time",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/buyers/",
+      "intent": "buyer",
+      "expectedIntent": "buyer"
+    },
+    "brand-exact": {
+      "campaign": "Brand",
+      "matchType": "exact",
+      "landingPage": "https://tdrealtyohio.com/",
+      "intent": "brand",
+      "expectedIntent": "brand"
+    },
+    "brand-td-realty": {
+      "campaign": "Brand",
+      "matchType": "exact",
+      "landingPage": "https://tdrealtyohio.com/",
+      "intent": "brand",
+      "expectedIntent": "brand"
+    },
+    "compare-1-vs-3": {
+      "campaign": "Sellers Columbus Metro",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/compare/1-percent-vs-3-percent/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "compare-flat-fee": {
+      "campaign": "Sellers Columbus Metro",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/compare/flat-fee-mls-vs-full-service/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "sellers-dublin": {
+      "campaign": "Sellers Columbus Metro",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/areas/dublin/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "sellers-powell": {
+      "campaign": "Sellers Columbus Metro",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/areas/powell/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    },
+    "sellers-new-albany": {
+      "campaign": "Sellers Columbus Metro",
+      "matchType": "phrase",
+      "landingPage": "https://tdrealtyohio.com/areas/new-albany/",
+      "intent": "seller",
+      "expectedIntent": "seller"
+    }
+  },
+  "campaigns": {
+    "Sellers Westerville": {
+      "type": "search",
+      "intent": "seller",
+      "locality": "westerville",
+      "matchTypes": ["exact", "phrase"]
+    },
+    "Sellers Columbus Metro": {
+      "type": "search",
+      "intent": "seller",
+      "locality": "columbus-metro",
+      "matchTypes": ["phrase"]
+    },
+    "Buyers First-Time": {
+      "type": "search",
+      "intent": "buyer",
+      "locality": "columbus-metro",
+      "matchTypes": ["phrase"]
+    },
+    "Brand": {
+      "type": "search",
+      "intent": "brand",
+      "locality": "all",
+      "matchTypes": ["exact"]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # TD Realty Ohio - robots.txt
 # https://tdrealtyohio.com
-# Updated: 2026-01-27
+# Generated: 2026-02-09T12:40:27.579Z
 
 # ==============================================
 # DEFAULT: Allow all standard search engines
@@ -9,59 +9,49 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /lp/
+Disallow: /ops/
+Disallow: /ads-bot/
 
 # ==============================================
 # BLOCK AI TRAINING CRAWLERS
-# These bots scrape content for AI model training
 # ==============================================
 
-# Amazon AI crawler
 User-agent: Amazonbot
 Disallow: /
 
-# ByteDance AI crawler (TikTok parent company)
 User-agent: Bytespider
 Disallow: /
 
-# Common Crawl (used for AI training datasets)
 User-agent: CCBot
 Disallow: /
 
-# Anthropic Claude crawler
 User-agent: ClaudeBot
 Disallow: /
 User-agent: anthropic-ai
 Disallow: /
 
-# OpenAI ChatGPT crawler
 User-agent: ChatGPT-User
 Disallow: /
 User-agent: GPTBot
 Disallow: /
 
-# Google AI training (separate from search)
 User-agent: Google-Extended
 Disallow: /
 
-# Meta/Facebook AI crawler
 User-agent: FacebookBot
 Disallow: /
 User-agent: Meta-ExternalAgent
 Disallow: /
 
-# Apple AI crawler
 User-agent: Applebot-Extended
 Disallow: /
 
-# Cohere AI crawler
 User-agent: cohere-ai
 Disallow: /
 
-# Perplexity AI crawler
 User-agent: PerplexityBot
 Disallow: /
 
-# Other AI/scraper bots
 User-agent: omgili
 Disallow: /
 User-agent: omgilibot
@@ -77,4 +67,3 @@ Disallow: /
 # SITEMAP
 # ==============================================
 Sitemap: https://tdrealtyohio.com/sitemap.xml
-# 2026-01-29T13:07:48Z

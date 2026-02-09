@@ -8365,6 +8365,426 @@ h3[id] {
   display: none;
 }
 
+/* ==============================================================
+   UX FIXES: CTA hierarchy, overflow, spacing, accessibility
+   Items 12–26 from the quality audit
+   ============================================================== */
+
+/* ── 12. CTA Duplication: One primary CTA per viewport slice ── */
+/* Hide sticky CTA when hero is visible (prevents hero + sticky overlap on mobile) */
+@media (max-width: 768px) {
+  .sticky-cta:not(.visible) { display: none; }
+}
+
+/* Secondary CTAs in hero: text-link style, not btn */
+.hero .btn + .btn {
+  margin-top: var(--space-3);
+}
+.hero .btn-outline-white {
+  background: transparent;
+  font-weight: 500;
+}
+
+/* ── 13. Non-interactive cards: remove hover/pointer from static tiles ── */
+.trust-item:not(a):not([onclick]),
+.stat-card:not(a):not([onclick]),
+.info-card:not(a):not([onclick]) {
+  cursor: default;
+  pointer-events: none;
+}
+.trust-item:not(a):not([onclick]):hover,
+.stat-card:not(a):not([onclick]):hover,
+.info-card:not(a):not([onclick]):hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+/* Re-enable pointer for tiles that ARE links */
+a.trust-item, a.stat-card, a.info-card,
+.trust-item a, .stat-card a, .info-card a {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* ── 14. Normalized Section Spacing (mobile-first) ── */
+.section {
+  padding: var(--section-padding-sm) 0;
+}
+@media (min-width: 768px) {
+  .section {
+    padding: var(--section-padding) 0;
+  }
+}
+@media (min-width: 1024px) {
+  .section {
+    padding: var(--section-padding-lg) 0;
+  }
+}
+/* Heading-to-body gap */
+.section h2 { margin-bottom: var(--space-6); }
+.section h3 { margin-bottom: var(--space-4); }
+/* Card gap */
+.info-grid, .feature-grid, .compare-grid, .service-grid {
+  gap: var(--space-6);
+}
+
+/* ── 15. Mobile Overflow Guard ── */
+html {
+  overflow-x: hidden;
+}
+body {
+  overflow-x: hidden;
+}
+/* Constrain known overflow offenders */
+.section-wave,
+.hero-glow,
+.wave-divider {
+  max-width: 100vw;
+  overflow: hidden;
+}
+img, video, iframe, svg:not(.logo svg) {
+  max-width: 100%;
+  height: auto;
+}
+/* Prevent absolute-positioned badges from causing overflow */
+.badge, .ribbon, [class*="badge"] {
+  max-width: calc(100vw - 2rem);
+}
+
+/* ── 16. Hero Rendering Hardening ── */
+.hero {
+  min-height: 280px;
+  position: relative;
+}
+.hero .container {
+  position: relative;
+  z-index: 2;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* Ensure hero background images crop intentionally on mobile */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 260px;
+  }
+  .hero::before {
+    object-position: center 30%;
+    background-position: center 30%;
+  }
+}
+/* Hero overlay must never be fully opaque */
+.hero::before {
+  opacity: 0.7;
+}
+
+/* ── 17. Accordion Accessibility ── */
+.faq-question,
+.process-step-header,
+[role="button"][aria-expanded] {
+  cursor: pointer;
+  user-select: none;
+}
+.faq-question::after,
+.process-step-header::after {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--transition-fast);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.faq-item.active .faq-question::after,
+.process-step-expandable.active .process-step-header::after {
+  transform: rotate(-135deg);
+}
+
+/* ── 18. Remove hardcoded inline styles — class-based toggles only ── */
+.mode-btn,
+.toggle-btn,
+[data-toggle-btn] {
+  /* Base state */
+  background: var(--white);
+  color: var(--navy);
+  border: 1px solid var(--gray-300);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+.mode-btn.active,
+.toggle-btn.active,
+[data-toggle-btn].active {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+
+/* ── 19. Slider/Calculator Stability ── */
+input[type="range"] {
+  --value: 50%;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    var(--gold) 0%,
+    var(--gold) var(--value),
+    var(--gray-200) var(--value),
+    var(--gray-200) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 3px solid var(--white);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--navy);
+  border: 3px solid var(--white);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+/* Calculator output stability */
+.calculator-result,
+[data-traditional], [data-td-realty], [data-savings],
+[data-commission], [data-cash-back], [data-agent-keeps] {
+  min-width: 4em;
+  min-height: 1.5em;
+  display: inline-block;
+}
+
+/* ── 20. Minimum Tap Targets ── */
+button, a, input, select, textarea, [role="button"], [tabindex="0"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+/* Exceptions for inline text links */
+p a, li a, .breadcrumb a, .footer-bottom a, td a, .disclaimer a {
+  min-height: auto;
+  min-width: auto;
+}
+/* Card-as-link: focus-visible outline */
+a.info-card:focus-visible,
+a.stat-card:focus-visible,
+a.trust-item:focus-visible,
+.card-link:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* ── 21. Service Area Links Section ── */
+.service-area-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+.service-area-links a {
+  padding: var(--space-2) var(--space-4);
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  color: var(--navy);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+.service-area-links a:hover,
+.service-area-links a:focus {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+
+/* ── 24. Image-only section guard ── */
+.section[style*="background-image"]:not(:has(h1)):not(:has(h2)):not(:has(h3)) {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+/* ── 25. Last-updated timestamp ── */
+.page-timestamp {
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 0.85rem;
+  padding: var(--space-4) 0;
+}
+
+/* ── 26. Z-index Map (updated and enforced) ──
+   Layer                      z-index
+   ─────────────────────────  ───────
+   Base content               0
+   Card overlays              1-2
+   Section waves              -1 to 1
+   Back-to-top button         100
+   Scroll progress            100
+   Sticky contact bar         400
+   Market banner              500
+   Cookie consent             900
+   Sticky CTA                 996
+   Header                     1050
+   Nav overlay                1055
+   Mobile nav panel           1060
+   Lead modal overlay         9999
+   Skip link                  10000
+*/
+
+/* Funnel form pages */
+.funnel-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.funnel-form .form-group {
+  margin-bottom: var(--space-4);
+}
+.funnel-form label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: 500;
+  color: var(--navy);
+}
+.funnel-form input,
+.funnel-form select,
+.funnel-form textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color var(--transition-fast);
+}
+.funnel-form input:focus,
+.funnel-form select:focus,
+.funnel-form textarea:focus {
+  border-color: var(--gold);
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+.funnel-form .radio-group,
+.funnel-form .checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.funnel-form .radio-group label,
+.funnel-form .checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 400;
+  cursor: pointer;
+}
+.funnel-form .radio-group input,
+.funnel-form .checkbox-group input {
+  width: auto;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+/* Thank-you page */
+.thank-you-section {
+  text-align: center;
+  padding: var(--space-16) 0;
+}
+.thank-you-section h1 {
+  color: var(--success);
+}
+.thank-you-section .next-steps {
+  text-align: left;
+  max-width: 500px;
+  margin: var(--space-8) auto;
+}
+.thank-you-section .next-steps li {
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-2);
+}
+
+/* ── Credentials page ── */
+.credentials-section dt {
+  font-weight: 600;
+  color: var(--navy);
+  margin-top: var(--space-4);
+}
+.credentials-section dd {
+  margin-left: 0;
+  margin-bottom: var(--space-3);
+}
+
+/* ── Reviews page ── */
+.review-profiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin: var(--space-6) 0;
+}
+.review-profile-card {
+  padding: var(--space-6);
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+.review-profile-card .rating {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* ── Calculator result pages ── */
+.calculator-page {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.calc-results {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin: var(--space-6) 0;
+}
+.calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+.calc-row:last-child {
+  border-bottom: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.calc-row.highlight {
+  color: var(--success);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.calc-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+
 @media print {
   .header, .sticky-cta, .sticky-contact-bar, .persistent-contact,
   .back-to-top, .scroll-progress, .cookie-consent, .market-banner,

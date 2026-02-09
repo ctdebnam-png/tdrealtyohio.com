@@ -56,6 +56,22 @@ jobs:
       - name: SEO validate (robots.txt, sitemap.xml)
         run: node scripts/seo-validate.js
 
+      - name: Build (sitemap + robots from registry)
+        run: node scripts/build.mjs
+
+      - name: Duplicate canonical check
+        run: node scripts/check-duplicate-canonicals.mjs
+
+      - name: Accessibility button lint
+        run: node scripts/check-a11y-buttons.mjs
+
+      - name: Broken link check
+        run: node scripts/check-broken-links.mjs
+
+      - name: Topic coverage report
+        run: node scripts/topic-coverage.mjs
+        continue-on-error: true
+
       # ── Server-dependent checks ──
       # Playwright owns the dev server via its webServer config.
       # Do NOT start wrangler separately — it causes port conflicts and hangs.
