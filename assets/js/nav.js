@@ -1,63 +1,50 @@
 /**
  * TD Realty Ohio - Navigation Configuration
  * Single source of truth for header nav, footer nav, and hamburger menu.
- * Header + footer are rendered from TD_NAV on DOMContentLoaded to guarantee
- * every page stays in sync. HTML keeps a minimal placeholder so layout
- * does not shift while JS loads.
+ *
+ * Ordering within each group is canonical — hamburger, footer, and desktop
+ * header all render from this config to guarantee parity.
  */
 
 const TD_NAV = {
   services: {
     title: 'Services',
     items: [
-      { label: 'For Sellers', href: '/sellers/' },
-      { label: 'For Buyers', href: '/buyers/' },
+      { label: 'For Sellers',            href: '/sellers/',              headerTopLevel: true },
+      { label: 'For Buyers',             href: '/buyers/',               headerTopLevel: true },
       { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
-      { label: 'Service Areas', href: '/areas/' },
-      { label: 'Free Home Value', href: '/home-value/' },
-      { label: 'Affordability Calculator', href: '/affordability/' },
-      { label: 'Referral Credit', href: '/referrals/' },
-      { label: 'Compare Options', href: '/compare/' }
+      { label: 'Service Areas',          href: '/areas/',                headerTopLevel: true },
+      { label: 'Free Home Value',        href: '/home-value/' },
+      { label: 'Affordability Calculator',href: '/affordability/' },
+      { label: 'Referral Credit',        href: '/referrals/' },
+      { label: 'Compare Options',        href: '/compare/' }
     ]
   },
   company: {
     title: 'Company',
     items: [
-      { label: 'About', href: '/about/' },
-      { label: 'Contact', href: '/contact/' },
-      { label: 'Blog', href: '/blog/' },
+      { label: 'About',               href: '/about/',   headerTopLevel: true },
+      { label: 'Contact',             href: '/contact/' },
+      { label: 'Blog',                href: '/blog/' },
       { label: 'Agent Opportunities', href: '/agents/' },
-      { label: 'FAQ', href: '/faq/' }
+      { label: 'FAQ',                 href: '/faq/' }
     ]
-  }
+  },
+  // Legal links are in src/config/nav.js NAV_REGISTRY.footerLegal
+  // and rendered statically in footer HTML — not part of the nav config.
 };
 
 /**
- * Navigation links are now static HTML in every page for SEO.
- * This function is retained for backwards compatibility.
+ * Navigation rendering functions are intentionally no-ops.
+ * Header and footer links are static HTML for SEO and zero-JS reliability.
+ * Mobile hamburger is rebuilt from TD_NAV by initMobileNav() in main.js
+ * to guarantee parity with the footer.
  */
-function renderHeaderNav() {
-  // Navigation links are now static HTML for SEO.
-  // This function is retained for backwards compatibility.
-}
+function renderHeaderNav() {}
+function renderMobileNav() { renderHeaderNav(); }
+function renderFooterNav() {}
 
-/**
- * Backwards-compatible alias — header nav is now rendered dynamically.
- */
-function renderMobileNav() {
-  renderHeaderNav();
-}
-
-/**
- * Footer navigation links are now static HTML in every page for SEO and
- * reliability. This function is retained for backwards compatibility.
- */
-function renderFooterNav() {
-  // Footer links are now static HTML for SEO and reliability.
-  // This function is retained for backwards compatibility.
-}
-
-// Export for use in other scripts
+// Export for use in build/validation scripts
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { TD_NAV, renderHeaderNav, renderMobileNav, renderFooterNav };
 }

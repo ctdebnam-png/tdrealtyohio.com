@@ -120,6 +120,7 @@ function updateSliderTrack(slider) {
 }
 
 // ===== MOBILE NAVIGATION (off-canvas panel) =====
+// Builds mobile nav content from TD_NAV config to guarantee parity with footer.
 function initMobileNav() {
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const nav = document.getElementById('main-nav');
@@ -135,14 +136,51 @@ function initMobileNav() {
   var closeWrap = document.createElement('div');
   closeWrap.className = 'nav-close-btn';
   closeWrap.innerHTML = '<button type="button" aria-label="Close menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/></svg></button>';
-  nav.insertBefore(closeWrap, nav.firstChild);
 
-  // Wrap existing nav links in a scrollable body
+  // Build mobile nav body from TD_NAV config for parity with footer
   var body = document.createElement('div');
   body.className = 'nav-menu-body';
-  while (nav.children.length > 1) {
-    body.appendChild(nav.children[1]);
+
+  var currentPath = window.location.pathname;
+  var navConfig = typeof TD_NAV !== 'undefined' ? TD_NAV : null;
+
+  if (navConfig) {
+    ['services', 'company'].forEach(function (groupKey) {
+      var group = navConfig[groupKey];
+      if (!group) return;
+      var header = document.createElement('div');
+      header.className = 'nav-section-header';
+      header.textContent = group.title;
+      body.appendChild(header);
+
+      group.items.forEach(function (item) {
+        var a = document.createElement('a');
+        a.href = item.href;
+        a.className = 'nav-link';
+        a.textContent = item.label;
+        if (item.href === currentPath || (currentPath.indexOf(item.href) === 0 && item.href !== '/')) {
+          a.classList.add('active');
+        }
+        body.appendChild(a);
+      });
+    });
+  } else {
+    // Fallback: move existing nav children into body
+    while (nav.children.length > 0) {
+      body.appendChild(nav.children[0]);
+    }
   }
+
+  // Add CTA
+  var cta = document.createElement('a');
+  cta.href = '/contact/';
+  cta.className = 'btn btn-primary nav-cta';
+  cta.textContent = 'Contact';
+  body.appendChild(cta);
+
+  // Clear nav and rebuild with close + body
+  nav.innerHTML = '';
+  nav.appendChild(closeWrap);
   nav.appendChild(body);
 
   var closeBtn = closeWrap.querySelector('button');
@@ -194,6 +232,113 @@ function initMobileNav() {
       e.preventDefault(); last.focus();
     } else if (!e.shiftKey && document.activeElement === last) {
       e.preventDefault(); first.focus();
+    }
+  });
+}
+
+// ===== DESKTOP "MORE" DROPDOWN =====
+function initNavMore() {
+  var toggle = document.querySelector('.nav-more-toggle');
+  var more = document.querySelector('.nav-more');
+  if (!toggle || !more) return;
+
+  toggle.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var expanded = more.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(expanded));
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function (e) {
+    if (!more.contains(e.target) && more.classList.contains('open')) {
+      more.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close on ESC
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && more.classList.contains('open')) {
+      more.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.focus();
+    }
+  });
+}
+
+// ===== MARKET BANNER (dismissible, sitewide) =====
+function initMarketBanner() {
+  // Check if previously dismissed
+  if (localStorage.getItem('market-banner-dismissed')) {
+    var existing = document.querySelector('.market-banner');
+    if (existing) existing.hidden = true;
+    return;
+  }
+
+  var banner = document.querySelector('.market-banner');
+
+  // If no banner in HTML, inject one (sitewide via JS)
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.className = 'market-banner';
+    banner.setAttribute('role', 'status');
+    banner.innerHTML =
+      '<span class="market-banner-text">Central Ohio Market Update: Median days on market <strong>10\u201320 days</strong> for well-priced homes. ' +
+      '<a href="/home-value/">Get your free valuation \u2192</a></span>';
+    var header = document.querySelector('.header');
+    if (header) {
+      header.parentNode.insertBefore(banner, header);
+    } else {
+      document.body.insertBefore(banner, document.body.firstChild);
+    }
+  }
+
+  // Add dismiss button if not present
+  if (!banner.querySelector('.market-banner-dismiss')) {
+    var dismiss = document.createElement('button');
+    dismiss.className = 'market-banner-dismiss';
+    dismiss.setAttribute('aria-label', 'Dismiss banner');
+    dismiss.innerHTML = '&times;';
+    banner.appendChild(dismiss);
+  }
+
+  banner.querySelector('.market-banner-dismiss').addEventListener('click', function () {
+    banner.hidden = true;
+    localStorage.setItem('market-banner-dismissed', '1');
+  });
+}
+
+// ===== MOBILE STICKY CONTACT BAR =====
+function initStickyContactBar() {
+  if (window.innerWidth > 768) return;
+
+  // Don't add if already present
+  if (document.querySelector('.sticky-contact-bar')) return;
+
+  var bar = document.createElement('div');
+  bar.className = 'sticky-contact-bar';
+  bar.innerHTML =
+    '<div class="sticky-contact-bar-inner">' +
+      '<a href="tel:6143928858" class="btn btn-primary">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
+        ' Call' +
+      '</a>' +
+      '<a href="mailto:info@tdrealtyohio.com" class="btn btn-outline">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' +
+        ' Email' +
+      '</a>' +
+    '</div>';
+  document.body.appendChild(bar);
+
+  // Hide when form inputs are focused
+  document.addEventListener('focusin', function (e) {
+    if (e.target.matches('input, textarea, select')) {
+      document.body.classList.add('form-focused');
+    }
+  });
+  document.addEventListener('focusout', function (e) {
+    if (e.target.matches('input, textarea, select')) {
+      document.body.classList.remove('form-focused');
     }
   });
 }
@@ -588,9 +733,36 @@ function initFormHandler(formId, successMessage) {
     });
   });
 
+  // Inject honeypot field for spam prevention
+  if (!form.querySelector('.form-hp')) {
+    var hp = document.createElement('div');
+    hp.className = 'form-hp';
+    hp.setAttribute('aria-hidden', 'true');
+    hp.innerHTML = '<label for="' + formId + '-website">Website</label><input type="text" id="' + formId + '-website" name="website" tabindex="-1" autocomplete="off">';
+    form.appendChild(hp);
+  }
+
+  // Client-side throttle: prevent rapid resubmissions
+  var lastSubmitTime = 0;
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     hideStatus();
+
+    // Honeypot check: if filled, silently reject
+    var hpField = form.querySelector('input[name="website"]');
+    if (hpField && hpField.value) {
+      showStatus('Thank you! We\'ll be in touch shortly.', false);
+      return;
+    }
+
+    // Throttle: min 3 seconds between submissions
+    var now = Date.now();
+    if (now - lastSubmitTime < 3000) {
+      showStatus('Please wait a moment before resubmitting.', true);
+      return;
+    }
+    lastSubmitTime = now;
 
     if (!validateForm()) {
       return;
@@ -607,6 +779,7 @@ function initFormHandler(formId, successMessage) {
     const originalText = submitBtn.textContent;
 
     submitBtn.disabled = true;
+    submitBtn.classList.add('btn-loading');
     submitBtn.textContent = 'Sending...';
 
     const formData = new FormData(form);
@@ -698,6 +871,8 @@ function initFormHandler(formId, successMessage) {
 
     const [kvOk, formspreeOk] = await Promise.all([kvPromise, formspreePromise]);
     success = kvOk || formspreeOk;
+
+    submitBtn.classList.remove('btn-loading');
 
     if (success) {
       // Fire gtag event if available
@@ -834,7 +1009,7 @@ function initHeaderScroll() {
 // ===== ACTIVE NAV LINK =====
 function setActiveNavLink() {
   const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('.nav-link, .nav-more-dropdown .nav-link');
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
@@ -844,6 +1019,13 @@ function setActiveNavLink() {
       link.classList.add('active');
     }
   });
+
+  // If active link is inside "More" dropdown, also mark the toggle
+  var moreDropdown = document.querySelector('.nav-more-dropdown');
+  if (moreDropdown && moreDropdown.querySelector('.nav-link.active')) {
+    var toggle = document.querySelector('.nav-more-toggle');
+    if (toggle) toggle.classList.add('active');
+  }
 }
 
 // ===== EVENT TRACKING =====
@@ -912,6 +1094,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFooterNav();
   }
   initMobileNav();
+  initNavMore();
+  initMarketBanner();
   initSellerCalculator();
   initBuyerCalculator();
   initFaqAccordion();
@@ -927,6 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCookieConsent();
   initEventTracking();
   initStickyMobileCTA();
+  initStickyContactBar();
   initSavingsBars();
   initScrollProgress();
   initTestimonialCarousel();
