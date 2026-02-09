@@ -17,6 +17,7 @@ const PRIORITY_MAP = {
   '/': '1.0',
   '/sellers/': '0.9',
   '/buyers/': '0.9',
+  '/tools/': '0.7',
   '/1-percent-commission/': '0.9',
   '/sell-only-2-percent/': '0.9',
   '/pre-listing-inspection/': '0.8',
@@ -90,6 +91,18 @@ function filePathToCanonicalUrl(filePath) {
  */
 async function findHtmlFiles(dir, files = []) {
   const entries = await readdir(dir, { withFileTypes: true });
+  const skipDirs = new Set([
+    'node_modules',
+    'scripts',
+    'audit-output',
+    'audit-artifacts',
+    'output',
+    'reports',
+    'assets',
+    'media',
+    'site-quality-gate',
+    'site-audit'
+  ]);
 
   for (const entry of entries) {
     const fullPath = join(dir, entry.name);
@@ -97,15 +110,7 @@ async function findHtmlFiles(dir, files = []) {
     // Skip node_modules, hidden dirs, and other non-content dirs
     if (entry.isDirectory()) {
       if (entry.name.startsWith('.') ||
-          entry.name === 'node_modules' ||
-          entry.name === 'scripts' ||
-          entry.name === 'tools' ||
-          entry.name === 'audit-output' ||
-          entry.name === 'audit-artifacts' ||
-          entry.name === 'output' ||
-          entry.name === 'reports' ||
-          entry.name === 'assets' ||
-          entry.name === 'media') {
+          skipDirs.has(entry.name)) {
         continue;
       }
       await findHtmlFiles(fullPath, files);
