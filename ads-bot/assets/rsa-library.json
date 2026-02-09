@@ -39,7 +39,7 @@
     "seller": [
       { "text": "List your home for 1-2% commission. Full MLS, pro photos, free inspection included. Call today.", "chars": 90, "status": "active", "pinPosition": 1 },
       { "text": "Save $8,000+ vs traditional 3% commission. Same full-service representation for less.", "chars": 85, "status": "active", "pinPosition": null },
-      { "text": "Licensed Ohio broker since 2017. Serving Westerville, Columbus, and Central Ohio.", "chars": 81, "status": "active", "pinPosition": null },
+      { "text": "Selling homes since 2017. Licensed Ohio brokerage since 2023. Serving Central Ohio.", "chars": 84, "status": "active", "pinPosition": null },
       { "text": "Sell and buy together for just 1% listing fee. Full negotiation and closing support.", "chars": 83, "status": "testing", "pinPosition": null }
     ],
     "buyer": [
@@ -49,7 +49,7 @@
     ],
     "brand": [
       { "text": "Central Ohio real estate with 1-2% listing commission. First-time buyers get 1% cash back.", "chars": 90, "status": "active", "pinPosition": 1 },
-      { "text": "Full-service brokerage, not discount service. Licensed broker Travis Debnam since 2017.", "chars": 87, "status": "active", "pinPosition": null }
+      { "text": "Full-service brokerage, not discount service. Selling homes since 2017, brokerage est. 2023.", "chars": 93, "status": "active", "pinPosition": null }
     ]
   }
 }
