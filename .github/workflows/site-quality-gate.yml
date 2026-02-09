@@ -68,6 +68,14 @@ jobs:
       - name: Broken link check
         run: node scripts/check-broken-links.mjs
 
+      - name: SEO audit (title/meta/canonical/H1/JSON-LD)
+        run: node scripts/check-seo-audit.mjs
+        continue-on-error: true
+
+      - name: Orphan page & sitemap drift check
+        run: node scripts/check-orphan-sitemap.mjs
+        continue-on-error: true
+
       - name: Topic coverage report
         run: node scripts/topic-coverage.mjs
         continue-on-error: true
@@ -110,5 +118,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## Site Quality Gate Failed\n\nOne or more quality checks failed. Please review the Actions log and fix the issues.\n\n---\n_Checks run: indexing guard, nav check, nav registry, copy quality, template consistency, nav+copy, nav/footer/sitemap, content scan, SEO validate, route smoke, Playwright tests._'
+              body: '## Site Quality Gate Failed\n\nOne or more quality checks failed. Please review the Actions log and fix the issues.\n\n---\n_Checks run: indexing guard, nav check, nav registry, copy quality, template consistency, nav+copy, nav/footer/sitemap, content scan, SEO validate, SEO audit, orphan/sitemap drift, route smoke, Playwright tests._'
             });
