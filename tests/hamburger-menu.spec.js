@@ -186,6 +186,7 @@ test.describe('Hamburger Menu', () => {
   });
 
   test('screenshots: homepage hamburger closed/open', async ({ page }) => {
+    test.setTimeout(15_000);
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     // Screenshot: closed
@@ -206,6 +207,7 @@ test.describe('Hamburger Menu', () => {
   });
 
   test('screenshots: internal page hamburger open', async ({ page }) => {
+    test.setTimeout(15_000);
     await page.goto('/sellers/', { waitUntil: 'domcontentloaded' });
 
     await page.locator('#mobile-menu-btn').click();
@@ -218,11 +220,12 @@ test.describe('Hamburger Menu', () => {
   });
 
   test('screenshots: footer nav', async ({ page }) => {
+    test.setTimeout(15_000);
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     // Scroll to footer
     await page.locator('.footer').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(300);
+    await expect(page.locator('.footer')).toBeVisible();
 
     await page.screenshot({
       path: 'test-results/screenshots/mobile-footer.png',

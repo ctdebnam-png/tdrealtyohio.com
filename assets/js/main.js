@@ -203,9 +203,21 @@ function initMobileNav() {
 
   var closeBtn = closeWrap.querySelector('button');
 
+  // iOS scroll-lock state
+  var _savedBodyPosition = '';
+  var _savedBodyTop = '';
+
   function openNav() {
     // Close desktop dropdown if open (unified controller)
     if (_headerUI.closeDropdown) _headerUI.closeDropdown();
+
+    // iOS scroll lock: freeze background
+    _savedBodyPosition = document.body.style.position;
+    _savedBodyTop = document.body.style.top;
+    var scrollY = window.scrollY || window.pageYOffset;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + scrollY + 'px';
+    document.body.style.width = '100%';
 
     panel.classList.add('mobile-open');
     overlay.classList.add('active');
@@ -216,6 +228,13 @@ function initMobileNav() {
   }
 
   function closeNav() {
+    // iOS scroll lock: restore scroll position
+    var scrollY = parseInt(document.body.style.top || '0', 10) * -1;
+    document.body.style.position = _savedBodyPosition;
+    document.body.style.top = _savedBodyTop;
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
+
     panel.classList.remove('mobile-open');
     overlay.classList.remove('active');
     document.body.classList.remove('nav-open');
@@ -350,41 +369,6 @@ function initMarketBanner() {
   banner.querySelector('.market-banner-dismiss').addEventListener('click', function () {
     banner.hidden = true;
     try { localStorage.setItem('market-banner-dismissed', '1'); } catch (e) {}
-  });
-}
-
-// ===== MOBILE STICKY CONTACT BAR =====
-function initStickyContactBar() {
-  if (window.innerWidth > 768) return;
-
-  // Don't add if already present
-  if (document.querySelector('.sticky-contact-bar')) return;
-
-  var bar = document.createElement('div');
-  bar.className = 'sticky-contact-bar';
-  bar.innerHTML =
-    '<div class="sticky-contact-bar-inner">' +
-      '<a href="tel:6143928858" class="btn btn-primary">' +
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
-        ' Call' +
-      '</a>' +
-      '<a href="mailto:info@tdrealtyohio.com" class="btn btn-outline">' +
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' +
-        ' Email' +
-      '</a>' +
-    '</div>';
-  document.body.appendChild(bar);
-
-  // Hide when form inputs are focused
-  document.addEventListener('focusin', function (e) {
-    if (e.target.matches('input, textarea, select')) {
-      document.body.classList.add('form-focused');
-    }
-  });
-  document.addEventListener('focusout', function (e) {
-    if (e.target.matches('input, textarea, select')) {
-      document.body.classList.remove('form-focused');
-    }
   });
 }
 
@@ -1183,44 +1167,49 @@ function initStickyScrollBehavior() {
 }
 
 // ===== INITIALIZE =====
-document.addEventListener('DOMContentLoaded', () => {
-  populateContactInfo();
-  // Render dynamic navigation from nav.js if functions exist
-  if (typeof renderMobileNav === 'function') {
-    renderMobileNav();
-  }
-  if (typeof renderFooterNav === 'function') {
-    renderFooterNav();
-  }
-  initMobileNav();
-  initNavMore();
-  initMarketBanner();
-  initSellerCalculator();
-  initBuyerCalculator();
-  initFaqAccordion();
-  initProcessAccordion();
-  initContactForm();
-  initHomeValueForm();
-  initAgentForm();
-  initReferralForm();
-  initSmoothScroll();
-  initHeaderScroll();
-  setActiveNavLink();
-  initLeadModal();
-  initCookieConsent();
-  initEventTracking();
-  initStickyMobileCTA();
-  initStickyContactBar();
-  initSavingsBars();
-  initScrollProgress();
-  initTestimonialCarousel();
-  initMicroForm();
-  initCountUp();
-  initTextReveal();
-  initFillUnderlines();
-  initAnimatedChecks();
-  initBackToTop();
-  initStickyScrollBehavior();
+document.addEventListener('DOMContentLoaded', function () {
+  // Each init is wrapped in try/catch so a single failure cannot
+  // prevent the remaining initialisers (e.g. mobile nav) from running.
+  var inits = [
+    populateContactInfo,
+    typeof renderMobileNav === 'function' ? renderMobileNav : null,
+    typeof renderFooterNav === 'function' ? renderFooterNav : null,
+    initMobileNav,
+    initNavMore,
+    initMarketBanner,
+    initSellerCalculator,
+    initBuyerCalculator,
+    initFaqAccordion,
+    initProcessAccordion,
+    initContactForm,
+    initHomeValueForm,
+    initAgentForm,
+    initReferralForm,
+    initSmoothScroll,
+    initHeaderScroll,
+    setActiveNavLink,
+    initLeadModal,
+    initCookieConsent,
+    initEventTracking,
+    initStickyMobileCTA,
+    initSavingsBars,
+    initScrollProgress,
+    initTestimonialCarousel,
+    initMicroForm,
+    initCountUp,
+    initTextReveal,
+    initFillUnderlines,
+    initAnimatedChecks,
+    initBackToTop,
+    initStickyScrollBehavior
+  ];
+
+  inits.forEach(function (fn) {
+    if (fn) {
+      try { fn(); }
+      catch (err) { console.error('[TD] ' + (fn.name || 'anonymous') + ' failed:', err); }
+    }
+  });
 });
 
 // ── Sticky Mobile CTA Bar ───────────────────────────────
@@ -1300,22 +1289,6 @@ function initScrollProgress() {
   }, { passive: true });
 }
 
-// ── Floating Background Shapes ──────────────────────────
-function initFloatingShapes() {
-  var hero = document.querySelector('.hero');
-  if (!hero) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var shapes = document.createElement('div');
-  shapes.className = 'floating-shapes';
-  shapes.setAttribute('aria-hidden', 'true');
-  shapes.innerHTML =
-    '<div class="floating-shape floating-shape--1"></div>' +
-    '<div class="floating-shape floating-shape--2"></div>' +
-    '<div class="floating-shape floating-shape--3"></div>';
-  hero.appendChild(shapes);
-}
-
 // ── Testimonial Carousel ────────────────────────────────
 function initTestimonialCarousel() {
   var container = document.querySelector('.testimonial-carousel');
@@ -1369,58 +1342,6 @@ function initTestimonialCarousel() {
 
   goTo(0);
   startAutoplay();
-}
-
-// ── Social Proof Toast Notifications ────────────────────
-function initSocialProofToast() {
-  // Only show on homepage or key landing pages
-  var path = window.location.pathname;
-  if (path !== '/' && path.indexOf('/sellers') !== 0 && path.indexOf('/buyers') !== 0) return;
-
-  var messages = [
-    { text: 'A family in <strong>Westerville</strong> saved <strong>$6,200</strong> on their listing fee', icon: '&#127968;' },
-    { text: '<strong>48 homes</strong> sold across Central Ohio', icon: '&#127942;' },
-    { text: 'Rated <strong>5.0 stars</strong> on Zillow', icon: '&#11088;' },
-    { text: 'A buyer in <strong>Dublin</strong> got <strong>$3,500</strong> cash back at closing', icon: '&#128176;' }
-  ];
-
-  var toast = document.createElement('div');
-  toast.className = 'social-proof-toast';
-  toast.setAttribute('role', 'status');
-  toast.setAttribute('aria-live', 'polite');
-  toast.innerHTML =
-    '<div class="social-proof-toast-icon" id="sp-toast-icon"></div>' +
-    '<div class="social-proof-toast-text" id="sp-toast-text"></div>' +
-    '<button class="social-proof-toast-close" aria-label="Dismiss">&times;</button>';
-  document.body.appendChild(toast);
-
-  var closeBtn = toast.querySelector('.social-proof-toast-close');
-  var dismissed = false;
-  closeBtn.addEventListener('click', function() {
-    toast.classList.remove('visible');
-    dismissed = true;
-  });
-
-  var msgIndex = 0;
-
-  function showToast() {
-    if (dismissed) return;
-    var msg = messages[msgIndex];
-    document.getElementById('sp-toast-icon').innerHTML = msg.icon;
-    document.getElementById('sp-toast-text').innerHTML = msg.text;
-    toast.classList.add('visible');
-
-    setTimeout(function() {
-      toast.classList.remove('visible');
-      msgIndex = (msgIndex + 1) % messages.length;
-      if (!dismissed) {
-        setTimeout(showToast, 15000 + Math.random() * 10000);
-      }
-    }, 5000);
-  }
-
-  // Start after 8 seconds
-  setTimeout(showToast, 8000);
 }
 
 // ── Inline Lead Capture Micro-Form ──────────────────────
@@ -1512,69 +1433,6 @@ function initMicroForm() {
   });
 }
 
-// ── Hero Word Rotator ───────────────────────────────────
-function initHeroWordRotator() {
-  var rotator = document.querySelector('.hero-word-rotator');
-  if (!rotator) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var words = rotator.querySelectorAll('.hero-word');
-  if (words.length < 2) return;
-
-  var current = 0;
-  words[0].classList.add('active');
-
-  setInterval(function() {
-    var prev = current;
-    current = (current + 1) % words.length;
-    words[prev].classList.remove('active');
-    words[prev].classList.add('exit');
-    words[current].classList.add('active');
-    setTimeout(function() { words[prev].classList.remove('exit'); }, 500);
-  }, 3000);
-}
-
-// ── Mouse Spotlight in Hero ─────────────────────────────
-function initMouseSpotlight() {
-  var hero = document.querySelector('.hero');
-  if (!hero || window.innerWidth < 769) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var spotlight = document.createElement('div');
-  spotlight.className = 'hero-spotlight';
-  spotlight.setAttribute('aria-hidden', 'true');
-  hero.appendChild(spotlight);
-
-  hero.addEventListener('mousemove', function(e) {
-    var rect = hero.getBoundingClientRect();
-    spotlight.style.left = (e.clientX - rect.left) + 'px';
-    spotlight.style.top = (e.clientY - rect.top) + 'px';
-  }, { passive: true });
-}
-
-// ── Desktop Sticky Sidebar CTA ──────────────────────────
-function initDesktopStickySidebar() {
-  if (window.innerWidth < 1025) return;
-  var hero = document.querySelector('.hero');
-  if (!hero) return;
-
-  var sidebar = document.createElement('div');
-  sidebar.className = 'sticky-sidebar-cta';
-  sidebar.innerHTML =
-    '<a href="/contact/" class="sticky-sidebar-cta-inner">' +
-    '<span class="sticky-sidebar-cta-pulse"></span>' +
-    'Free Consult' +
-    '</a>';
-  document.body.appendChild(sidebar);
-
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      sidebar.classList.toggle('visible', !entry.isIntersecting);
-    });
-  }, { threshold: 0 });
-  observer.observe(hero);
-}
-
 // ── Counter Up Animation ────────────────────────────────
 function initCountUp() {
   var counters = document.querySelectorAll('.count-up');
@@ -1608,7 +1466,16 @@ function initCountUp() {
           el.textContent = prefix + Math.round(current).toLocaleString() + suffix;
         }
 
-        if (progress < 1) requestAnimationFrame(animate);
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          // Ensure final value is exact (avoid floating-point drift)
+          if (decimals > 0) {
+            el.textContent = prefix + target.toFixed(decimals) + suffix;
+          } else {
+            el.textContent = prefix + Math.round(target).toLocaleString() + suffix;
+          }
+        }
       }
 
       requestAnimationFrame(animate);
