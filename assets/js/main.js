@@ -119,6 +119,42 @@ function updateSliderTrack(slider) {
   slider.style.setProperty('--value', percentage + '%');
 }
 
+// ===== PATH NORMALIZATION (shared by setActiveNavLink + initMobileNav) =====
+function normalizePath(path) {
+  if (!path) return '/';
+  path = path.split('?')[0].split('#')[0];
+  path = path.replace(/\/index\.html$/, '/');
+  path = path.replace(/\/+/g, '/');
+  if (path.charAt(0) !== '/') path = '/' + path;
+  if (path !== '/' && !path.endsWith('/')) path += '/';
+  return path;
+}
+
+// ===== SCROLL-LOCK UTILITY (shared by mobileNav + leadModal) =====
+var _scrollLocks = {};
+var _savedScrollY = 0;
+
+function lockScroll(source) {
+  var wasLocked = Object.keys(_scrollLocks).length > 0;
+  _scrollLocks[source] = true;
+  if (!wasLocked) {
+    _savedScrollY = window.scrollY || window.pageYOffset;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + _savedScrollY + 'px';
+    document.body.style.width = '100%';
+  }
+}
+
+function unlockScroll(source) {
+  delete _scrollLocks[source];
+  if (Object.keys(_scrollLocks).length === 0) {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, _savedScrollY);
+  }
+}
+
 // ===== UNIFIED HEADER UI CONTROLLER =====
 // Single controller so dropdowns and mobile menu cannot fight each other.
 var _headerUI = {
@@ -134,19 +170,31 @@ var _headerUI = {
 function initMobileNav() {
   var mobileMenuBtn = document.getElementById('mobile-menu-btn');
   if (!mobileMenuBtn) return;
+  if (mobileMenuBtn.dataset.bound === '1') return;
+  mobileMenuBtn.dataset.bound = '1';
 
-  // Build panel outside header to avoid stacking-context tap interception
-  var panel = document.createElement('nav');
-  panel.id = 'mobile-nav-panel';
-  panel.className = 'mobile-nav-panel';
-  panel.setAttribute('aria-label', 'Mobile navigation');
+  // Reuse existing panel/overlay or create new ones
+  var panel = document.getElementById('mobile-nav-panel');
+  var overlay = document.getElementById('nav-overlay');
+  var panelCreated = !panel;
 
-  // Overlay at body level
-  var overlay = document.createElement('div');
-  overlay.className = 'nav-overlay';
-  overlay.id = 'nav-overlay';
-  document.body.appendChild(overlay);
-  document.body.appendChild(panel);
+  if (!panel) {
+    panel = document.createElement('nav');
+    panel.id = 'mobile-nav-panel';
+    panel.className = 'mobile-nav-panel';
+    panel.setAttribute('aria-label', 'Mobile navigation');
+  }
+
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    overlay.id = 'nav-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  if (panelCreated) {
+    document.body.appendChild(panel);
+  }
 
   // Wire up aria-controls on the button
   mobileMenuBtn.setAttribute('aria-controls', 'mobile-nav-panel');
@@ -162,9 +210,28 @@ function initMobileNav() {
   var body = document.createElement('div');
   body.className = 'nav-menu-body';
 
-  var currentPath = window.location.pathname.replace(/\/$/, '') + '/';
-  if (currentPath === '//') currentPath = '/';
-  var navConfig = typeof TD_NAV !== 'undefined' ? TD_NAV : null;
+  var currentPath = normalizePath(window.location.pathname);
+  var navConfig = typeof TD_NAV !== 'undefined' ? TD_NAV : {
+    services: {
+      title: 'Services',
+      items: [
+        { label: 'For Sellers', href: '/sellers/' },
+        { label: 'For Buyers', href: '/buyers/' },
+        { label: 'Service Areas', href: '/areas/' },
+        { label: 'Free Home Value', href: '/home-value/' },
+        { label: 'Affordability Calculator', href: '/affordability/' }
+      ]
+    },
+    company: {
+      title: 'Company',
+      items: [
+        { label: 'About', href: '/about/' },
+        { label: 'Blog', href: '/blog/' },
+        { label: 'Contact', href: '/contact/' },
+        { label: 'FAQ', href: '/faq/' }
+      ]
+    }
+  };
 
   if (navConfig) {
     ['services', 'company'].forEach(function (groupKey) {
@@ -177,8 +244,7 @@ function initMobileNav() {
       body.appendChild(header);
 
       group.items.forEach(function (item) {
-        var href = item.href.replace(/\/$/, '') + '/';
-        if (href === '//') href = '/';
+        var href = normalizePath(item.href);
         var a = document.createElement('a');
         a.href = item.href;
         a.className = 'nav-link';
@@ -203,21 +269,11 @@ function initMobileNav() {
 
   var closeBtn = closeWrap.querySelector('button');
 
-  // iOS scroll-lock state
-  var _savedBodyPosition = '';
-  var _savedBodyTop = '';
-
   function openNav() {
     // Close desktop dropdown if open (unified controller)
     if (_headerUI.closeDropdown) _headerUI.closeDropdown();
 
-    // iOS scroll lock: freeze background
-    _savedBodyPosition = document.body.style.position;
-    _savedBodyTop = document.body.style.top;
-    var scrollY = window.scrollY || window.pageYOffset;
-    document.body.style.position = 'fixed';
-    document.body.style.top = '-' + scrollY + 'px';
-    document.body.style.width = '100%';
+    lockScroll('mobileNav');
 
     panel.classList.add('mobile-open');
     overlay.classList.add('active');
@@ -228,12 +284,7 @@ function initMobileNav() {
   }
 
   function closeNav() {
-    // iOS scroll lock: restore scroll position
-    var scrollY = parseInt(document.body.style.top || '0', 10) * -1;
-    document.body.style.position = _savedBodyPosition;
-    document.body.style.top = _savedBodyTop;
-    document.body.style.width = '';
-    window.scrollTo(0, scrollY);
+    unlockScroll('mobileNav');
 
     panel.classList.remove('mobile-open');
     overlay.classList.remove('active');
@@ -410,7 +461,15 @@ function initSellerCalculator() {
   }
 
   if (priceSlider) {
+    priceSlider.min = TD_CONFIG.calculator.minPrice;
+    priceSlider.max = TD_CONFIG.calculator.maxPrice;
+    priceSlider.step = TD_CONFIG.calculator.step;
+    priceSlider.value = clampPrice(priceSlider.value, TD_CONFIG.calculator.minPrice, TD_CONFIG.calculator.maxPrice, TD_CONFIG.calculator.defaultPrice);
     priceSlider.addEventListener('input', () => {
+      updateSliderTrack(priceSlider);
+      calculate();
+    });
+    priceSlider.addEventListener('change', () => {
       updateSliderTrack(priceSlider);
       calculate();
     });
@@ -462,7 +521,15 @@ function initBuyerCalculator() {
   }
 
   if (priceSlider) {
+    priceSlider.min = TD_CONFIG.calculator.minPrice;
+    priceSlider.max = TD_CONFIG.calculator.maxPrice;
+    priceSlider.step = TD_CONFIG.calculator.step;
+    priceSlider.value = clampPrice(priceSlider.value, TD_CONFIG.calculator.minPrice, TD_CONFIG.calculator.maxPrice, TD_CONFIG.calculator.defaultPrice);
     priceSlider.addEventListener('input', () => {
+      updateSliderTrack(priceSlider);
+      calculate();
+    });
+    priceSlider.addEventListener('change', () => {
       updateSliderTrack(priceSlider);
       calculate();
     });
@@ -474,13 +541,17 @@ function initBuyerCalculator() {
 
 // ===== LEAD FORM MODAL =====
 function initLeadModal() {
+  // Prevent duplicate overlay
+  if (document.getElementById('lead-modal-overlay')) return;
+
   // Build modal HTML once
   var overlay = document.createElement('div');
   overlay.className = 'lead-modal-overlay';
   overlay.id = 'lead-modal-overlay';
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-label', 'Get your savings estimate');
+  overlay.setAttribute('aria-labelledby', 'lead-modal-title');
+  overlay.setAttribute('aria-describedby', 'lead-modal-subtitle');
   overlay.innerHTML =
     '<div class="lead-modal">' +
       '<button type="button" class="lead-modal-close" aria-label="Close">&times;</button>' +
@@ -525,7 +596,7 @@ function initLeadModal() {
 
   function closeModal() {
     overlay.classList.remove('open');
-    document.body.style.overflow = '';
+    unlockScroll('leadModal');
     // Reset form when closing
     if (form) form.reset();
     if (statusEl) { statusEl.textContent = ''; statusEl.className = 'form-status'; }
@@ -542,37 +613,39 @@ function initLeadModal() {
   // Open function — accepts data to prefill
   window.openLeadModal = function(data) {
     data = data || {};
-    document.getElementById('lm-homePrice').value = data.homePrice || '';
-    document.getElementById('lm-mode').value = data.mode || '';
-    document.getElementById('lm-computedSavings').value = data.computedSavings || '';
-    document.getElementById('lm-purchasePrice').value = data.purchasePrice || '';
-    document.getElementById('lm-computedCashBack').value = data.computedCashBack || '';
-    document.getElementById('lm-pagePath').value = window.location.pathname;
+    var el;
+    el = document.getElementById('lm-homePrice'); if (el) el.value = data.homePrice || '';
+    el = document.getElementById('lm-mode'); if (el) el.value = data.mode || '';
+    el = document.getElementById('lm-computedSavings'); if (el) el.value = data.computedSavings || '';
+    el = document.getElementById('lm-purchasePrice'); if (el) el.value = data.purchasePrice || '';
+    el = document.getElementById('lm-computedCashBack'); if (el) el.value = data.computedCashBack || '';
+    el = document.getElementById('lm-pagePath'); if (el) el.value = window.location.pathname;
 
     // Show savings summary
     var savingsEl = document.getElementById('lead-modal-savings');
-    if (data.computedSavings && parseInt(data.computedSavings) > 0) {
-      savingsEl.textContent = 'Your estimated savings: ' + formatCurrency(parseInt(data.computedSavings));
-      savingsEl.hidden = false;
-    } else if (data.computedCashBack && parseInt(data.computedCashBack) > 0) {
-      savingsEl.textContent = 'Your estimated cash back: ' + formatCurrency(parseInt(data.computedCashBack));
-      savingsEl.hidden = false;
-    } else {
-      savingsEl.hidden = true;
+    if (savingsEl) {
+      if (data.computedSavings && parseInt(data.computedSavings) > 0) {
+        savingsEl.textContent = 'Your estimated savings: ' + formatCurrency(parseInt(data.computedSavings));
+        savingsEl.hidden = false;
+      } else if (data.computedCashBack && parseInt(data.computedCashBack) > 0) {
+        savingsEl.textContent = 'Your estimated cash back: ' + formatCurrency(parseInt(data.computedCashBack));
+        savingsEl.hidden = false;
+      } else {
+        savingsEl.hidden = true;
+      }
     }
 
     // Update title based on mode
     var titleEl = document.getElementById('lead-modal-title');
-    if (data.mode === 'buy') {
-      titleEl.textContent = 'Claim Your Cash Back';
-    } else {
-      titleEl.textContent = 'Get Your Savings Estimate';
+    if (titleEl) {
+      titleEl.textContent = data.mode === 'buy' ? 'Claim Your Cash Back' : 'Get Your Savings Estimate';
     }
 
     overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    lockScroll('leadModal');
     // Focus first field
-    setTimeout(function() { document.getElementById('lm-firstName').focus(); }, 100);
+    var firstField = document.getElementById('lm-firstName');
+    if (firstField) setTimeout(function() { firstField.focus(); }, 100);
   };
 
   // Form submit
@@ -1042,23 +1115,28 @@ function initHeaderScroll() {
 
 // ===== ACTIVE NAV LINK =====
 function setActiveNavLink() {
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav-link, .nav-more-dropdown .nav-link');
+  var currentPath = normalizePath(window.location.pathname);
+  var navLinks = document.querySelectorAll('.nav-link, .nav-more-dropdown .nav-link');
+  var foundDropdown = false;
 
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPath || (currentPath.endsWith('/') && href === currentPath + 'index.html')) {
+  navLinks.forEach(function(link) {
+    link.classList.remove('active');
+    link.removeAttribute('aria-current');
+
+    var href = normalizePath(link.getAttribute('href'));
+    if (href === currentPath) {
       link.classList.add('active');
-    } else if (currentPath.includes(href) && href !== '/' && href !== '/index.html') {
-      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+      if (link.closest('.nav-more-dropdown')) {
+        foundDropdown = true;
+      }
     }
   });
 
-  // If active link is inside "More" dropdown, also mark the toggle
-  var moreDropdown = document.querySelector('.nav-more-dropdown');
-  if (moreDropdown && moreDropdown.querySelector('.nav-link.active')) {
-    var toggle = document.querySelector('.nav-more-toggle');
-    if (toggle) toggle.classList.add('active');
+  // If a More dropdown child is active, mark the toggle visually
+  var toggle = document.querySelector('.nav-more-toggle');
+  if (toggle) {
+    toggle.classList.toggle('active', foundDropdown);
   }
 }
 
@@ -1459,7 +1537,8 @@ function initMicroForm() {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' }
-    }).then(function() {
+    }).then(function(resp) {
+      if (!resp.ok) throw new Error('Server error');
       btn.classList.remove('btn-loading');
       btn.textContent = 'Sent!';
       emailInput.value = '';
@@ -1471,7 +1550,7 @@ function initMicroForm() {
       btn.textContent = origText;
       btn.disabled = false;
       submitting = false;
-      statusEl.textContent = 'Something went wrong. Please try again.';
+      statusEl.textContent = 'Something went wrong. Please try again or call (614) 392-8858.';
     });
   });
 }
@@ -1586,8 +1665,9 @@ function initAnimatedChecks() {
 
 // ── Cookie Consent ──────────────────────────────────────
 function initCookieConsent() {
-  if (localStorage.getItem('cookie-consent')) return;
-  const banner = document.createElement('div');
+  try { if (localStorage.getItem('cookie-consent')) return; } catch (e) { return; }
+
+  var banner = document.createElement('div');
   banner.id = 'cookie-consent';
   banner.setAttribute('role', 'dialog');
   banner.setAttribute('aria-label', 'Cookie consent');
@@ -1597,23 +1677,32 @@ function initCookieConsent() {
     '<div><button id="cookie-accept" class="btn btn-primary btn-sm">Accept</button>' +
     '<button id="cookie-decline" class="btn btn-outline btn-sm">Decline</button></div>';
   document.body.appendChild(banner);
+
   document.getElementById('cookie-accept').addEventListener('click', function () {
-    localStorage.setItem('cookie-consent', 'accepted');
-    // Load GA now if it wasn't loaded yet (first visit acceptance)
+    try { localStorage.setItem('cookie-consent', 'accepted'); } catch (e) {}
+    // Bootstrap gtag if not present
+    window.dataLayer = window.dataLayer || [];
+    if (typeof window.gtag !== 'function') {
+      window.gtag = function() { window.dataLayer.push(arguments); };
+    }
+    // Load GA now if it wasn't loaded yet
     if (!document.querySelector('script[src*="googletagmanager"]')) {
       var s = document.createElement('script');
       s.async = true;
       s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
       document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
     }
+    window.gtag('js', new Date());
+    window.gtag('config', 'AW-17866418952');
     banner.remove();
   });
+
   document.getElementById('cookie-decline').addEventListener('click', function () {
-    localStorage.setItem('cookie-consent', 'declined');
-    // Disable GA by setting opt-out window property
+    try { localStorage.setItem('cookie-consent', 'declined'); } catch (e) {}
     window['ga-disable-AW-17866418952'] = true;
+    // Remove GA script if already present
+    var gaScript = document.querySelector('script[src*="googletagmanager"]');
+    if (gaScript) gaScript.remove();
     banner.remove();
   });
 }
