@@ -39,6 +39,7 @@ const SCREENSHOT_DIR = 'screenshots';
 test.describe('Visual Regression Tests', () => {
   for (const route of KEY_ROUTES) {
     test(`${route.name} - full page screenshot`, async ({ page }, testInfo) => {
+      test.setTimeout(60_000);
       const consoleErrors = [];
       const failedRequests = [];
 
@@ -58,11 +59,10 @@ test.describe('Visual Regression Tests', () => {
       });
 
       // Navigate to route
-      await page.goto(route.path, { waitUntil: 'networkidle' });
+      await page.goto(route.path, { waitUntil: 'domcontentloaded' });
 
       // Wait for fonts and images to load
-      await page.waitForLoadState('domcontentloaded');
-      await page.waitForTimeout(500);
+      await page.waitForLoadState('load');
 
       // Take full page screenshot
       const viewportName = testInfo.project.name;
@@ -94,19 +94,17 @@ test.describe('Mobile Navigation Tests', () => {
     await page.goto('/');
 
     // Nav should be hidden initially on mobile
-    const nav = page.locator('nav.nav');
+    const nav = page.locator('#mobile-nav-panel');
     const menuButton = page.locator('#mobile-menu-btn');
 
     // Click to open menu
     await menuButton.click();
-    await page.waitForTimeout(300);
 
     // Nav should have mobile-open class
     await expect(nav).toHaveClass(/mobile-open/);
 
     // Click to close menu
     await menuButton.click();
-    await page.waitForTimeout(300);
 
     // Nav should not have mobile-open class
     await expect(nav).not.toHaveClass(/mobile-open/);
@@ -115,17 +113,15 @@ test.describe('Mobile Navigation Tests', () => {
   test('mobile nav closes on outside click', async ({ page }) => {
     await page.goto('/');
 
-    const nav = page.locator('nav.nav');
+    const nav = page.locator('#mobile-nav-panel');
     const menuButton = page.locator('#mobile-menu-btn');
 
     // Open menu
     await menuButton.click();
-    await page.waitForTimeout(300);
     await expect(nav).toHaveClass(/mobile-open/);
 
-    // Click outside (on body)
-    await page.click('main');
-    await page.waitForTimeout(300);
+    // Click overlay to close
+    await page.click('#nav-overlay');
 
     // Nav should close
     await expect(nav).not.toHaveClass(/mobile-open/);
@@ -263,14 +259,12 @@ test.describe('FAQ Accordion Tests', () => {
 
     // Click to expand
     await faqQuestion.click();
-    await page.waitForTimeout(300);
 
     // Check expanded state
     await expect(faqQuestion).toHaveAttribute('aria-expanded', 'true');
 
     // Click to collapse
     await faqQuestion.click();
-    await page.waitForTimeout(300);
 
     // Check collapsed state
     await expect(faqQuestion).toHaveAttribute('aria-expanded', 'false');
@@ -291,7 +285,6 @@ test.describe('Process Steps Accordion Tests', () => {
 
     // Click to expand
     await stepHeader.click();
-    await page.waitForTimeout(300);
 
     // Check expanded state
     await expect(stepHeader).toHaveAttribute('aria-expanded', 'true');

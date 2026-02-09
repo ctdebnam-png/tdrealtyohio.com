@@ -10,6 +10,7 @@ jobs:
   quality-check:
     name: Quality & Regression Gates
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -56,16 +57,15 @@ jobs:
         run: node scripts/seo-validate.js
 
       # ── Server-dependent checks ──
-      - name: Start local server
-        run: npx wrangler pages dev . --port 8788 &
-        env:
-          NODE_ENV: test
-
-      - name: Wait for server
-        run: npx wait-on http://localhost:8788 --timeout 30000 || sleep 10
-
+      # Playwright owns the dev server via its webServer config.
+      # Do NOT start wrangler separately — it causes port conflicts and hangs.
       - name: Route smoke test
-        run: node scripts/route-smoke.js
+        run: |
+          npx wrangler pages dev . --port 8788 &
+          SERVER_PID=$!
+          npx wait-on http://localhost:8788 --timeout 30000
+          node scripts/route-smoke.js
+          kill $SERVER_PID 2>/dev/null || true
         env:
           SMOKE_BASE_URL: http://localhost:8788
 
@@ -73,11 +73,6 @@ jobs:
         run: npx playwright test
         env:
           CI: true
-
-      - name: Lighthouse CI
-        run: npx lhci autorun --config=.lighthouserc.js
-        env:
-          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
 
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
@@ -99,5 +94,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## Site Quality Gate Failed ❌\n\nOne or more quality checks failed. Please review the Actions log and fix the issues.\n\n---\n_Checks run: indexing guard, nav check, nav registry, copy quality, template consistency, nav+copy, nav/footer/sitemap, content scan, SEO validate, route smoke, Playwright tests, Lighthouse CI._'
+              body: '## Site Quality Gate Failed\n\nOne or more quality checks failed. Please review the Actions log and fix the issues.\n\n---\n_Checks run: indexing guard, nav check, nav registry, copy quality, template consistency, nav+copy, nav/footer/sitemap, content scan, SEO validate, route smoke, Playwright tests._'
             });

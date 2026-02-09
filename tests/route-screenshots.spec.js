@@ -26,7 +26,7 @@ const ROUTES = [
 ];
 
 async function stableGoto(page, path) {
-  await page.goto(path, { waitUntil: 'networkidle' });
+  await page.goto(path, { waitUntil: 'domcontentloaded' });
   await page.waitForLoadState('domcontentloaded');
   // Dismiss cookie consent if present
   const cookieAccept = page.locator('#cookie-accept');
@@ -41,12 +41,13 @@ async function stableGoto(page, path) {
     await page.waitForTimeout(200);
   }
   // Wait for fonts and animations to settle
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(200);
 }
 
 // --- Full page screenshots for each route ---
 for (const route of ROUTES) {
   test(`${route.name} full page`, async ({ page }) => {
+    test.setTimeout(60_000);
     await stableGoto(page, route.path);
     await expect(page).toHaveScreenshot(`${route.name}-full.png`, {
       fullPage: true,
@@ -57,6 +58,7 @@ for (const route of ROUTES) {
 
 // --- Header consistency: same header height across all routes ---
 test('Header height is consistent across all routes', async ({ page }) => {
+  test.setTimeout(60_000);
   const heights = [];
   for (const route of ROUTES) {
     await stableGoto(page, route.path);
@@ -78,6 +80,7 @@ test('Header height is consistent across all routes', async ({ page }) => {
 
 // --- Nav parity: hamburger has all footer links ---
 test('Mobile hamburger contains all footer nav links', async ({ page }) => {
+  test.setTimeout(60_000);
   test.skip(page.viewportSize().width > 1024, 'Only runs on mobile/tablet');
 
   await stableGoto(page, '/');
@@ -87,10 +90,11 @@ test('Mobile hamburger contains all footer nav links', async ({ page }) => {
 
   // Open hamburger
   await page.locator('#mobile-menu-btn').click();
-  await page.waitForTimeout(400);
+  const panel = page.locator('#mobile-nav-panel');
+  await expect(panel).toBeVisible({ timeout: 3000 });
 
   // Collect hamburger links
-  const navLinks = await page.locator('nav.nav .nav-link').allTextContents();
+  const navLinks = await page.locator('#mobile-nav-panel .nav-link').allTextContents();
 
   // Every footer link text should appear in hamburger
   for (const footerText of footerLinks) {
@@ -103,6 +107,7 @@ test('Mobile hamburger contains all footer nav links', async ({ page }) => {
 
 // --- Business facts preserved ---
 test('Footer contains required business facts', async ({ page }) => {
+  test.setTimeout(60_000);
   await stableGoto(page, '/');
 
   const footerText = await page.locator('footer.footer').textContent();

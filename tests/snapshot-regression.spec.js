@@ -25,10 +25,10 @@ const { test, expect } = require('@playwright/test');
  * screenshots so that fonts, images and animations have settled.
  */
 async function stableGoto(page, path) {
-  await page.goto(path, { waitUntil: 'networkidle' });
+  await page.goto(path, { waitUntil: 'domcontentloaded' });
   await page.waitForLoadState('domcontentloaded');
   // Extra settling time for web-font swap / lazy images / CSS transitions
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(200);
 }
 
 // ---------------------------------------------------------------------------
@@ -98,7 +98,8 @@ test.describe('Snapshot Regression - Mobile (390x844)', () => {
     const menuButton = page.locator('#mobile-menu-btn');
     await menuButton.click();
     // Wait for open animation to finish
-    await page.waitForTimeout(400);
+    const mobilePanel = page.locator('#mobile-nav-panel');
+    await expect(mobilePanel).toHaveClass(/mobile-open/);
 
     // Screenshot the header together with the nav
     const header = page.locator('.header');
