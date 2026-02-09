@@ -41,7 +41,7 @@ const PRIORITY_MAP = {
 
 // Pages to exclude from sitemap
 // Note: /lp/ pages are ad landing pages with noindex meta tags
-const EXCLUDE = ['/404.html', '/404/', '/lp/', '/sell-and-buy/'];
+const EXCLUDE = ['/404.html', '/404/', '/lp/', '/sell-and-buy/', '/admin/'];
 
 /**
  * Get canonical URL from HTML file
