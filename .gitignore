@@ -15,6 +15,12 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Playwright test artifacts
+playwright-report/
+test-results/
+screenshots/
+*-snapshots/
+
 # Lighthouse CI
 .lighthouseci/
 

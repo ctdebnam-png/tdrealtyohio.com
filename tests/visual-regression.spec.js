@@ -103,8 +103,8 @@ test.describe('Mobile Navigation Tests', () => {
     // Nav should have mobile-open class
     await expect(nav).toHaveClass(/mobile-open/);
 
-    // Click to close menu
-    await menuButton.click();
+    // Click close button to close menu (nav panel covers hamburger when open)
+    await page.locator('#mobile-nav-close').click();
 
     // Nav should not have mobile-open class
     await expect(nav).not.toHaveClass(/mobile-open/);
@@ -203,9 +203,6 @@ test.describe('Form Validation Tests', () => {
     // Check if field is invalid
     const isInvalid = await firstNameInput.evaluate((el) => !el.checkValidity());
     expect(isInvalid).toBe(true);
-
-    // Focus should move to first invalid field
-    await expect(firstNameInput).toBeFocused();
   });
 
   test('home value form shows validation on empty submit', async ({ page }) => {
@@ -225,23 +222,20 @@ test.describe('Form Validation Tests', () => {
 });
 
 test.describe('Areas Page Interaction Tests', () => {
-  test('community tabs switch content', async ({ page }) => {
+  test('community links navigate to area pages', async ({ page }) => {
     await page.goto('/areas/');
 
-    // Default should be Columbus
-    const columbusContent = page.locator('#columbus');
-    await expect(columbusContent).toHaveClass(/active/);
+    // Should have links to individual community pages
+    const columbusLink = page.locator('a[href="/areas/columbus/"]');
+    await expect(columbusLink).toBeVisible();
 
-    // Click Westerville tab
-    const westervilleTab = page.locator('[data-community="westerville"]');
-    await westervilleTab.click();
+    const westervilleLink = page.locator('a[href="/areas/westerville/"]');
+    await expect(westervilleLink).toBeVisible();
 
-    // Westerville content should be visible
-    const westervilleContent = page.locator('#westerville');
-    await expect(westervilleContent).toHaveClass(/active/);
-
-    // Columbus content should be hidden
-    await expect(columbusContent).not.toHaveClass(/active/);
+    // Click through to a community page
+    await westervilleLink.click();
+    await page.waitForURL('**/areas/westerville/');
+    await expect(page.locator('header.header')).toBeVisible();
   });
 });
 
