@@ -11,6 +11,8 @@
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
     "test:screenshots": "npx playwright test --project=snapshot-mobile --project=snapshot-tablet --project=snapshot-desktop",
+    "test:route-screenshots": "npx playwright test tests/route-screenshots.spec.js --project=snapshot-mobile --project=snapshot-tablet --project=snapshot-desktop",
+    "test:route-screenshots:update": "npx playwright test tests/route-screenshots.spec.js --update-snapshots --project=snapshot-mobile --project=snapshot-tablet --project=snapshot-desktop",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "validate": "node scripts/indexing-guard.mjs",
     "check:nav": "node scripts/check-nav.mjs",
