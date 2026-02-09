@@ -65,6 +65,9 @@ jobs:
       - name: Accessibility button lint
         run: node scripts/check-a11y-buttons.mjs
 
+      - name: Site audit
+        run: npm run check:site-audit
+
       - name: Broken link check
         run: node scripts/check-broken-links.mjs
 

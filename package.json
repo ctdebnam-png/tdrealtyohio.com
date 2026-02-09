@@ -31,6 +31,7 @@
     "check:nav-footer-sitemap": "node scripts/check-nav-footer-sitemap.mjs",
     "check:regressions": "node scripts/check-regressions.mjs",
     "check:nav-registry": "node scripts/check-nav-registry.mjs",
+    "check:site-audit": "node tools/site-audit/audit.js",
     "check:content": "node scripts/content-scan.js",
     "seo:validate": "node scripts/seo-validate.js",
     "smoke": "node scripts/route-smoke.js",
