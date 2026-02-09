@@ -133,6 +133,48 @@ function buildRoutes() {
     { path: '/tools/buyer-credit-estimator/', title: 'First-Time Buyer Credit Estimator | TD Realty Ohio', description: 'Estimate your 1% cash back credit as a first-time buyer with TD Realty Ohio. See how much you could receive at closing.', pageType: PAGE_TYPES.CALCULATOR, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
   );
 
+  // Tools hub page
+  routes.push(
+    { path: '/tools/', title: 'Free Real Estate Tools | TD Realty Ohio', description: 'Free interactive tools for Central Ohio home sellers and buyers. Estimate net proceeds, closing costs, and more. No sign-up required.', pageType: PAGE_TYPES.HUB, priority: '0.7', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
+  );
+
+  // Additional tool pages
+  routes.push(
+    { path: '/tools/buyer-offer-readiness/', title: 'Buyer Offer Readiness Pack | TD Realty Ohio', description: 'Are you ready to make an offer on a home? Check your readiness with our free tool. Includes lender questions and tour-to-offer timeline.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/tools/' },
+    { path: '/tools/move-up-plan/', title: 'Move-Up Plan Generator | TD Realty Ohio', description: 'Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/tools/' },
+    { path: '/tools/pre-listing-checklist/', title: 'Pre-Listing Inspection Readiness Checklist | TD Realty Ohio', description: 'Get a personalized pre-listing preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/tools/' },
+    { path: '/tools/repair-vs-credit/', title: 'Repair vs Credit Decision Helper | TD Realty Ohio', description: 'Should you repair before selling or offer a buyer credit? Get a balanced decision framework for common repair situations.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/tools/' },
+    { path: '/tools/sell-buy-timing/', title: 'Sell & Buy Timing Planner | TD Realty Ohio', description: 'Should you sell first or buy first? Compare three sequencing strategies with personalized pros and cons for your situation.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/tools/' },
+    { path: '/tools/sell-now-vs-wait/', title: 'Sell Now vs Wait Planner | TD Realty Ohio', description: 'Should you sell your home now or wait? Get personalized scenario analysis based on your timeline, flexibility, and goals.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/tools/' },
+    { path: '/tools/seller-documents/', title: 'Seller Document Organizer | TD Realty Ohio', description: 'Get a customized list of documents you need to sell your Ohio home. Organized by category with timeline guidance.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/tools/' },
+  );
+
+  // Tool city sub-routes
+  const TOOL_CITY_SLUGS = ['columbus', 'delaware', 'dublin', 'gahanna', 'hilliard', 'new-albany', 'powell', 'upper-arlington', 'westerville', 'worthington'];
+  const CITY_TOOLS = [
+    { slug: 'buyer-offer-readiness', title: 'Buyer Offer Readiness Pack', parent: '/tools/buyer-offer-readiness/' },
+    { slug: 'move-up-plan', title: 'Move-Up Plan Generator', parent: '/tools/move-up-plan/' },
+    { slug: 'repair-vs-credit', title: 'Repair vs Credit Decision Helper', parent: '/tools/repair-vs-credit/' },
+    { slug: 'sell-buy-timing', title: 'Sell & Buy Timing Planner', parent: '/tools/sell-buy-timing/' },
+    { slug: 'seller-documents', title: 'Seller Document Organizer', parent: '/tools/seller-documents/' },
+  ];
+  CITY_TOOLS.forEach(tool => {
+    TOOL_CITY_SLUGS.forEach(citySlug => {
+      const city = CITIES.find(c => c.slug === citySlug);
+      if (!city) return;
+      routes.push({
+        path: `/tools/${tool.slug}/${citySlug}/`,
+        title: `${tool.title} for ${city.name}, OH | TD Realty Ohio`,
+        description: `${tool.title} customized for ${city.name}, Ohio home sellers and buyers.`,
+        pageType: PAGE_TYPES.TOOL,
+        priority: '0.5',
+        changefreq: 'monthly',
+        schema: ['LocalBusiness', 'BreadcrumbList'],
+        parent: tool.parent,
+      });
+    });
+  });
+
   // City/area pages
   CITIES.forEach(city => {
     routes.push({
@@ -241,6 +283,11 @@ function buildRoutes() {
     { path: '/lp/sell-home-columbus/', noindex: true, pageType: PAGE_TYPES.LANDING, priority: '0.0', schema: [] },
     { path: '/lp/sell-home-westerville/', noindex: true, pageType: PAGE_TYPES.LANDING, priority: '0.0', schema: [] },
     { path: '/lp/buy-home-columbus/', noindex: true, pageType: PAGE_TYPES.LANDING, priority: '0.0', schema: [] },
+  );
+
+  // Admin pages (noindex)
+  routes.push(
+    { path: '/admin/profiles/', noindex: true, pageType: PAGE_TYPES.LANDING, priority: '0.0', schema: [] },
   );
 
   return routes;
