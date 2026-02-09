@@ -199,6 +199,33 @@ function buildRoutes() {
     { path: '/buy/consult/', title: 'Free Buyer Consultation | TD Realty Ohio', description: 'Schedule a free buyer consultation to discuss your home search, budget, and neighborhoods.', pageType: PAGE_TYPES.SERVICE, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
   );
 
+  // First-time buyer locality guides
+  CITIES.forEach(city => {
+    routes.push({
+      path: `/buyers/first-time/${city.slug}/`,
+      title: `First-Time Homebuyer Guide for ${city.name}, OH | TD Realty Ohio`,
+      description: `First-time buyers in ${city.name}, Ohio can receive 1% cash back at closing with TD Realty Ohio. Local guidance on neighborhoods, pricing, and next steps.`,
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['LocalBusiness', 'BreadcrumbList'],
+      parent: '/buyers/',
+    });
+  });
+
+  ZIPS.forEach(z => {
+    routes.push({
+      path: `/buyers/first-time/zip-${z.zip}/`,
+      title: `First-Time Homebuyer Guide for ZIP ${z.zip} (${z.city}) | TD Realty Ohio`,
+      description: `First-time buyers in ZIP ${z.zip} (${z.city}) can receive 1% cash back at closing with TD Realty Ohio. Local guidance for ${z.focus}.`,
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['LocalBusiness', 'BreadcrumbList'],
+      parent: '/buyers/',
+    });
+  });
+
   // Thank-you pages (noindex)
   routes.push(
     { path: '/thank-you/seller_net_sheet/', noindex: true, pageType: PAGE_TYPES.LANDING, priority: '0.0', schema: [] },
