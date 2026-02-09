@@ -747,10 +747,12 @@ function initFaqAccordion() {
       faqItems.forEach(otherItem => {
         if (otherItem !== item) {
           otherItem.classList.remove('active');
+          otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
         }
       });
 
       item.classList.toggle('active');
+      question.setAttribute('aria-expanded', String(!isActive));
     });
   });
 }

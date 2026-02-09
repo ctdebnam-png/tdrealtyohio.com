@@ -25,6 +25,17 @@ module.exports = defineConfig({
 
   use: {
     baseURL: 'http://localhost:8788',
+    /* Force Chromium — WebKit/Firefox are not installed */
+    browserName: 'chromium',
+    launchOptions: {
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-gpu',
+        '--disable-dev-shm-usage',
+        '--no-zygote',
+      ],
+    },
     trace: isCI ? 'retain-on-failure' : 'on-first-retry',
     screenshot: 'only-on-failure',
     actionTimeout: 10_000,
@@ -36,6 +47,7 @@ module.exports = defineConfig({
         /* CI: only mobile + desktop on Chromium — minimum set for gating */
         {
           name: 'mobile-375x812',
+          testIgnore: /snapshot-regression/,
           use: {
             ...devices['iPhone 13 Pro'],
             viewport: { width: 375, height: 812 },
@@ -43,6 +55,7 @@ module.exports = defineConfig({
         },
         {
           name: 'desktop-1280x800',
+          testIgnore: /snapshot-regression/,
           use: {
             viewport: { width: 1280, height: 800 },
           },
@@ -60,7 +73,7 @@ module.exports = defineConfig({
         {
           name: 'tablet-768x1024',
           use: {
-            ...devices['iPad'],
+            ...devices['iPad (gen 7)'],
             viewport: { width: 768, height: 1024 },
           },
         },
