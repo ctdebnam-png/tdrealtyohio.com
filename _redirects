@@ -38,6 +38,17 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /sell-and-buy           /1-percent-commission/  301
 /sell-and-buy/          /1-percent-commission/  301
 /sell-only-2-percent    /sell-only-2-percent/   301
+/reviews                /reviews/               301
+/credentials            /credentials/           301
+/tools/seller-net-proceeds /tools/seller-net-proceeds/ 301
+/tools/buyer-closing-costs /tools/buyer-closing-costs/ 301
+/tools/buyer-credit-estimator /tools/buyer-credit-estimator/ 301
+/sell/net-sheet         /sell/net-sheet/         301
+/sell/pricing-call      /sell/pricing-call/      301
+/sell/timeline          /sell/timeline/          301
+/buy/cash-back          /buy/cash-back/          301
+/buy/pre-approval       /buy/pre-approval/       301
+/buy/consult            /buy/consult/            301
 
 # ----------------------------------------
 # Redirect .html URLs to clean routes (SEO)
@@ -60,6 +71,9 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /testimonials.html      /                       301
 /compare.html           /compare/               301
 /faq.html               /faq/                   301
+/sell-only-2-percent.html /sell-only-2-percent/  301
+/reviews.html           /reviews/               301
+/credentials.html       /credentials/           301
 
 # ----------------------------------------
 # Legacy route redirects

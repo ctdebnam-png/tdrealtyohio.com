@@ -33,8 +33,10 @@
     "check:nav-registry": "node scripts/check-nav-registry.mjs",
     "check:content": "node scripts/content-scan.js",
     "seo:validate": "node scripts/seo-validate.js",
+    "check:seo-audit": "node scripts/check-seo-audit.mjs",
+    "check:orphan-sitemap": "node scripts/check-orphan-sitemap.mjs",
     "smoke": "node scripts/route-smoke.js",
-    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js && node scripts/check-a11y-links.mjs && node scripts/check-calculators.mjs && node scripts/check-nav-footer-sitemap.mjs && node scripts/check-regressions.mjs && node scripts/check-nav-registry.mjs && node scripts/content-scan.js && node scripts/seo-validate.js"
+    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js && node scripts/check-a11y-links.mjs && node scripts/check-calculators.mjs && node scripts/check-nav-footer-sitemap.mjs && node scripts/check-regressions.mjs && node scripts/check-nav-registry.mjs && node scripts/content-scan.js && node scripts/seo-validate.js && node scripts/check-seo-audit.mjs && node scripts/check-orphan-sitemap.mjs"
   },
   "devDependencies": {
     "@lhci/cli": "^0.14.0",
