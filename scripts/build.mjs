@@ -5,7 +5,7 @@
  * Also validates canonical URL normalization.
  */
 
-import { readFile, writeFile, stat } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
@@ -16,16 +16,11 @@ const ROOT = join(__dirname, '..');
 
 const { SITE_URL, getIndexableRoutes, normalizeCanonical } = require('../src/config/routes.js');
 
-const TODAY = new Date().toISOString().split('T')[0];
+const currentDate = () => new Date().toISOString().split('T')[0];
 
 // ── Sitemap Generator ──────────────────────────────────────
-async function getLastMod(filePath) {
-  try {
-    const stats = await stat(filePath);
-    return stats.mtime.toISOString().split('T')[0];
-  } catch {
-    return TODAY;
-  }
+async function getLastMod() {
+  return currentDate();
 }
 
 function pathToFile(routePath) {
