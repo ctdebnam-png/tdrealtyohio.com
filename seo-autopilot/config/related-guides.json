@@ -11,12 +11,32 @@
     {
       "href": "/reviews/",
       "text": "reviews"
+    },
+    {
+      "href": "/compare/1-percent-vs-3-percent/",
+      "text": "compare/1 percent vs 3 percent"
+    },
+    {
+      "href": "/compare/flat-fee-mls-vs-full-service/",
+      "text": "compare/flat fee mls vs full service"
+    },
+    {
+      "href": "/compare/discount-broker-vs-full-service/",
+      "text": "compare/discount broker vs full service"
     }
   ],
   "/buyers/": [
     {
       "href": "/sell-only-2-percent/",
       "text": "sell only 2 percent"
+    },
+    {
+      "href": "/sell-and-buy/",
+      "text": "sell and buy"
+    },
+    {
+      "href": "/compare/fsbo-vs-1-percent-listing/",
+      "text": "compare/fsbo vs 1 percent listing"
     }
   ],
   "/": [
@@ -27,6 +47,12 @@
     {
       "href": "/compare/fsbo-vs-1-percent-listing/",
       "text": "compare/fsbo vs 1 percent listing"
+    }
+  ],
+  "/compare/": [
+    {
+      "href": "/sell-and-buy/",
+      "text": "sell and buy"
     }
   ]
 }

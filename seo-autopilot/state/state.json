@@ -35,6 +35,42 @@
       "to": "/reviews/",
       "anchor": "reviews",
       "date": "2026-02-10"
+    },
+    {
+      "from": "/buyers/",
+      "to": "/sell-and-buy/",
+      "anchor": "sell and buy",
+      "date": "2026-02-10"
+    },
+    {
+      "from": "/blog/",
+      "to": "/compare/1-percent-vs-3-percent/",
+      "anchor": "compare/1 percent vs 3 percent",
+      "date": "2026-02-10"
+    },
+    {
+      "from": "/blog/",
+      "to": "/compare/flat-fee-mls-vs-full-service/",
+      "anchor": "compare/flat fee mls vs full service",
+      "date": "2026-02-10"
+    },
+    {
+      "from": "/compare/",
+      "to": "/sell-and-buy/",
+      "anchor": "sell and buy",
+      "date": "2026-02-10"
+    },
+    {
+      "from": "/buyers/",
+      "to": "/compare/fsbo-vs-1-percent-listing/",
+      "anchor": "compare/fsbo vs 1 percent listing",
+      "date": "2026-02-10"
+    },
+    {
+      "from": "/blog/",
+      "to": "/compare/discount-broker-vs-full-service/",
+      "anchor": "compare/discount broker vs full service",
+      "date": "2026-02-10"
     }
   ],
   "lastRunDate": "2026-02-10"

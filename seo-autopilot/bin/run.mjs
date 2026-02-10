@@ -26,6 +26,8 @@ import { buildLinkGraph, printLinkGraphSummary } from '../auditors/link-graph.mj
 import { fixMetadata } from '../fixers/metadata-fixer.mjs';
 import { generateLinkPlan } from '../planners/link-plan.mjs';
 import { applyInternalLinks } from '../fixers/internal-links.mjs';
+import { pullGscData } from '../collectors/gsc.mjs';
+import { computeOpportunities, buildPageSnapshots } from '../analyzers/gsc-opportunities.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -203,7 +205,72 @@ async function main() {
       }
     }
 
-    // Step 5: After-audit + link graph
+    // Step 5: GSC data collection + opportunity analysis
+    try {
+      console.log('\n=== GSC DATA COLLECTION ===');
+      const gscResult = await pullGscData();
+
+      if (gscResult.ok) {
+        console.log(`[gsc] Pulled at: ${gscResult.pulledAt}`);
+        console.log(`[gsc] 28d: ${gscResult.totals28.clicks} clicks, ${gscResult.totals28.impressions} impressions, CTR ${(gscResult.totals28.ctr * 100).toFixed(2)}%, pos ${gscResult.totals28.position.toFixed(1)}`);
+        console.log(`[gsc]  7d: ${gscResult.totals7.clicks} clicks, ${gscResult.totals7.impressions} impressions, CTR ${(gscResult.totals7.ctr * 100).toFixed(2)}%, pos ${gscResult.totals7.position.toFixed(1)}`);
+
+        // Compute opportunities
+        const opportunities = computeOpportunities(gscResult);
+        console.log(`[gsc] High impressions / low CTR pages: ${opportunities.highImpressionsLowCtrPages.length}`);
+        console.log(`[gsc] Striking distance queries: ${opportunities.strikingDistanceQueries.length}`);
+        console.log(`[gsc] Declining pages: ${opportunities.decliningPages.length}`);
+
+        // Top 5 CTR opportunities
+        if (opportunities.highImpressionsLowCtrPages.length > 0) {
+          console.log('\n[gsc] Top CTR opportunities:');
+          for (const p of opportunities.highImpressionsLowCtrPages.slice(0, 5)) {
+            console.log(`  ${p.path} — ${p.impressions28} imp, CTR ${(p.ctr28 * 100).toFixed(2)}%`);
+          }
+        }
+
+        // Build page snapshots and update state
+        const snapshots = buildPageSnapshots(gscResult, config.baseUrl, config.canonicalStrategy);
+        const statePath = join(__dirname, '..', 'state', 'state.json');
+        let state = {};
+        try { state = JSON.parse(readFileSync(statePath, 'utf-8')); } catch { /* new state */ }
+        state.gsc = {
+          lastPulledAt: gscResult.pulledAt,
+          totals28: gscResult.totals28,
+          totals7: gscResult.totals7,
+          pageSnapshots: snapshots,
+          opportunities: {
+            highImpressionsLowCtrPages: opportunities.highImpressionsLowCtrPages,
+            strikingDistanceQueries: opportunities.strikingDistanceQueries,
+            decliningPages: opportunities.decliningPages,
+          },
+        };
+        await writeFile(statePath, JSON.stringify(state, null, 2) + '\n');
+
+        report.gsc = {
+          ok: true,
+          skipped: false,
+          pulledAt: gscResult.pulledAt,
+          totals28: gscResult.totals28,
+          totals7: gscResult.totals7,
+          opportunityCounts: {
+            ctrPages: opportunities.highImpressionsLowCtrPages.length,
+            strikingQueries: opportunities.strikingDistanceQueries.length,
+            decliningPages: opportunities.decliningPages.length,
+          },
+        };
+      } else {
+        const reason = gscResult.reason || 'unknown';
+        console.log(`[gsc] Skipped: ${reason}`);
+        report.gsc = { ok: false, skipped: gscResult.skipped, reason };
+      }
+    } catch (err) {
+      report.errors.push(`gsc: ${err.message}`);
+      report.gsc = { ok: false, skipped: false, reason: err.message };
+      console.error('[seo-autopilot] GSC error (non-fatal):', err.message);
+    }
+
+    // Step 6: After-audit + link graph
     if (pages) {
       try {
         const afterPages = listHtmlPages(buildOutput.outputDir, {

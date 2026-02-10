@@ -50,6 +50,11 @@ jobs:
       # ── Run autopilot ─────────────────────────────────────
       - name: Run SEO autopilot
         run: node seo-autopilot/bin/run.mjs
+        env:
+          GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
+          GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
+          GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+          GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
 
       # ── Deploy-safe guard ─────────────────────────────────
       - name: Check for changes
