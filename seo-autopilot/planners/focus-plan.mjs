@@ -8,9 +8,10 @@
  * 1) tech — critical tech issues exceed threshold
  * 2) links — broken internal links or orphan pages above threshold
  * 3) ctr — GSC shows high-impression/low-CTR pages
- * 4) refresh — striking distance queries with existing page matches
- * 5) publish — backlog has pending topics and enough time since last publish
- * 6) none — nothing to do
+ * 4) money — on-page enhancement for money pages (after CTR experiments exist)
+ * 5) refresh — striking distance queries with existing page matches
+ * 6) publish — backlog has pending topics and enough time since last publish
+ * 7) none — nothing to do
  */
 
 import { readFileSync } from 'fs';
@@ -56,6 +57,9 @@ export function computeFocusPlan({
   state = {},
   moduleOutcomes = {},
   indexingSignals = {},
+  moneyRoutes = [],
+  liveIssueCounts = {},
+  nearDuplicateRoutes = [],
 }) {
   const config = loadScoringConfig();
   const thresholds = config.thresholds || {};
@@ -131,7 +135,30 @@ export function computeFocusPlan({
     }
   }
 
-  // 4) Refresh opportunities
+  // 4) Money page enhancements (after at least one CTR experiment cycle)
+  const hasActiveCtrExperiments = (moduleOutcomes.ctr?.pagesEdited || 0) > 0;
+  const moneyPageCtrTargets = highImpLowCtr.filter(p => moneyRoutes.includes(p.page || p.path));
+  const liveCritical = (liveIssueCounts.LIVE_NOINDEX || 0) + (liveIssueCounts.LIVE_ROBOTS_TXT_BLOCKING || 0);
+  const nearDupSet = new Set(nearDuplicateRoutes);
+  const moneyNotNearDup = moneyRoutes.filter(r => !nearDupSet.has(r));
+
+  if (hasActiveCtrExperiments && moneyNotNearDup.length > 0 && liveCritical === 0) {
+    // Check if any money page has low CTR or striking distance queries
+    const moneyStriking = strikingQueries.filter(q => moneyRoutes.includes(q.page || q.path));
+    if (moneyPageCtrTargets.length > 0 || moneyStriking.length > 0) {
+      if (lastFocus === 'money' && daysSinceLastRun < minDaysBetweenSame) {
+        // Skip due to recency
+      } else {
+        return {
+          focus: 'money',
+          reason: `${moneyPageCtrTargets.length} money page(s) low CTR, ${moneyStriking.length} striking`,
+          budgets,
+        };
+      }
+    }
+  }
+
+  // 5) Refresh opportunities
   if (strikingQueries.length > 0) {
     if (lastFocus === 'refresh' && daysSinceLastRun < minDaysBetweenSame) {
       // Skip
@@ -144,7 +171,7 @@ export function computeFocusPlan({
     }
   }
 
-  // 5) Publish from backlog
+  // 6) Publish from backlog
   const pendingTopics = countPendingTopics(backlog);
   const lastPublish = state.content?.lastPublishAt;
   const daysSincePublish = lastPublish
@@ -163,7 +190,7 @@ export function computeFocusPlan({
     }
   }
 
-  // 6) Nothing to do
+  // 7) Nothing to do
   return {
     focus: 'none',
     reason: 'all metrics within acceptable ranges',

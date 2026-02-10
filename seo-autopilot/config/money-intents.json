@@ -1,0 +1,27 @@
+{
+  "/sellers/": {
+    "intentBuckets": [
+      { "bucketId": "cost", "hintQueries": ["commission", "fee", "percent", "cost to sell"] },
+      { "bucketId": "timeline", "hintQueries": ["how long", "days", "process", "steps"] },
+      { "bucketId": "prep", "hintQueries": ["inspection", "repairs", "staging"] }
+    ]
+  },
+  "/buyers/": {
+    "intentBuckets": [
+      { "bucketId": "first-time", "hintQueries": ["first time", "closing costs", "down payment"] },
+      { "bucketId": "process", "hintQueries": ["steps", "timeline", "offer", "inspection"] }
+    ]
+  },
+  "/1-percent-commission/": {
+    "intentBuckets": [
+      { "bucketId": "how-it-works", "hintQueries": ["how does", "commission", "listing fee"] },
+      { "bucketId": "comparison", "hintQueries": ["vs", "traditional", "3 percent"] }
+    ]
+  },
+  "/home-value/": {
+    "intentBuckets": [
+      { "bucketId": "estimate", "hintQueries": ["home value", "estimate", "what is my house worth"] },
+      { "bucketId": "accuracy", "hintQueries": ["accurate", "zestimate", "online estimate"] }
+    ]
+  }
+}

@@ -46,5 +46,13 @@
     "/lp/google-buyer/",
     "/lp/google-sell-and-buy/",
     "/admin/dashboard/"
+  ],
+  "moneyRoutes": [
+    "/sellers/",
+    "/buyers/",
+    "/1-percent-commission/",
+    "/home-value/",
+    "/contact/",
+    "/about/"
   ]
 }

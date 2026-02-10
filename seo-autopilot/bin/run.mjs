@@ -59,6 +59,8 @@ import { getHeadSha, saveSnapshot, revertToSha } from '../lib/snapshot.mjs';
 import { getSchedule } from '../lib/schedule.mjs';
 import { writeJsonStable } from '../lib/write-json.mjs';
 import { runHousekeeping } from '../lib/housekeeping.mjs';
+import { extractMoneyPageIntents } from '../analyzers/money-page-intents.mjs';
+import { enhanceMoneyPage, revertMoneyEnhancement } from '../generators/money-page-enhance.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -142,6 +144,7 @@ async function main() {
     content: { action: 'none', target: null, reason: '', filesEdited: [], wordsAdded: 0 },
     quality: { thinRankIntentCount: 0, nearDuplicatePairsCount: 0, thinRankIntent: [], nearDuplicatePairs: [] },
     areas: { selected: null, wordsBefore: 0, wordsAfter: 0, linksAdded: [], reason: '' },
+    moneyEnhancements: [],
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -278,6 +281,35 @@ async function main() {
     console.error('[seo-autopilot] GSC error (non-fatal):', err.message);
   }
 
+  // Extract money page intents from GSC data (Chunk 16)
+  let moneyIntents = {};
+  try {
+    if (gscOk && state.gsc) {
+      const gscLatest = loadJson(join(STATE_DIR, 'gsc-latest.json'), {});
+      moneyIntents = extractMoneyPageIntents({
+        rows28: gscLatest.rows28 || [],
+        baseUrl: config.baseUrl || '',
+      });
+      if (Object.keys(moneyIntents).length > 0) {
+        // Persist compact version in state (cap to 3 queries per bucket)
+        const compact = {};
+        for (const [route, data] of Object.entries(moneyIntents)) {
+          compact[route] = {
+            buckets: (data.buckets || []).map(b => ({
+              bucketId: b.bucketId,
+              impressions: b.impressions,
+              clicks: b.clicks,
+              topQueries: (b.topQueries || []).slice(0, 3),
+            })),
+          };
+        }
+        state.moneyIntents = compact;
+      }
+    }
+  } catch (err) {
+    report.errors.push(`moneyIntents: ${err.message}`);
+  }
+
   // ─────────────────────────── PHASE 2: SCORE + FOCUS ──────────────────────
 
   // Blog discovery (needed for thin page count and content planning)
@@ -406,6 +438,11 @@ async function main() {
 
   // Compute focus plan
   const moduleOutcomes = loadModuleOutcomes();
+  // Collect near-duplicate route set for focus gating
+  const nearDuplicateRoutes = (qualitySignals.nearDuplicatePairs || [])
+    .flatMap(p => [p.routeA || p.pathA, p.routeB || p.pathB])
+    .filter(Boolean);
+
   const focusPlan = computeFocusPlan({
     scoreResult,
     scoreHistory: scoreHistory.runs,
@@ -414,6 +451,9 @@ async function main() {
     state,
     moduleOutcomes,
     indexingSignals,
+    moneyRoutes: config.moneyRoutes || [],
+    liveIssueCounts: report.live?.issueCounts || {},
+    nearDuplicateRoutes,
   });
 
   // Override focus if repeated reverts (Step 7)
@@ -828,6 +868,65 @@ async function main() {
     } catch (err) {
       report.errors.push(`areaExpansion: ${err.message}`);
       console.error('[seo-autopilot] Area expansion error (non-fatal):', err.message);
+    }
+  }
+
+  // Money page enhancement (Chunk 16)
+  if (focus === 'money') {
+    try {
+      console.log('\n=== MONEY PAGE ENHANCEMENT ===');
+      const moneyRoutes = config.moneyRoutes || [];
+      // Pick the first money route that has enhancement config and isn't complete
+      let enhanced = false;
+      for (const route of moneyRoutes) {
+        if (enhanced) break;
+        const result = enhanceMoneyPage({ routePath: route, intents: moneyIntents });
+        if (result.success) {
+          console.log(`[money] Enhanced ${route}: ${result.reason} (${result.sectionsAdded} sections, ${result.faqAdded} FAQ, schema: ${result.schemaAdded})`);
+          report.moneyEnhancements.push({
+            route,
+            blockUpdated: true,
+            sectionsAdded: result.sectionsAdded,
+            faqAdded: result.faqAdded,
+            schemaAdded: result.schemaAdded,
+          });
+
+          // Post-enhancement quality check: re-run build audit
+          try {
+            const afterPages = listHtmlPages(buildOutput.outputDir, { canonicalStrategy: config.canonicalStrategy });
+            const afterCheck = runBuildAudit(afterPages, config);
+            const afterClass = classifyIssues(afterCheck, config.rankIntentRoutes || []);
+            if (afterClass.criticalCount > techClassification.criticalCount) {
+              console.log(`[money] Critical issues increased — reverting ${route}`);
+              revertMoneyEnhancement(result.filePath, result.originalContent);
+              report.moneyEnhancements[report.moneyEnhancements.length - 1].blockUpdated = false;
+              report.moneyEnhancements[report.moneyEnhancements.length - 1].reason = 'reverted_critical_increase';
+            }
+          } catch (err) {
+            console.warn(`[money] Post-check error (non-fatal): ${err.message}`);
+          }
+
+          // Track state
+          state.money = state.money || { enhancementsHistory: [] };
+          state.money.lastEnhancedAt = new Date().toISOString();
+          state.money.lastEnhancedRoute = route;
+          state.money.enhancementsHistory.push({ route, at: new Date().toISOString() });
+          if (state.money.enhancementsHistory.length > 50) {
+            state.money.enhancementsHistory = state.money.enhancementsHistory.slice(-50);
+          }
+
+          moduleOutcomes.money = { lastRunAt: new Date().toISOString(), route, action: result.reason };
+          enhanced = true;
+        } else if (result.reason !== 'block_already_complete' && result.reason !== 'empty_block_config') {
+          console.log(`[money] Skipped ${route}: ${result.reason}`);
+        }
+      }
+      if (!enhanced) {
+        console.log('[money] All money pages already enhanced or no eligible pages');
+      }
+    } catch (err) {
+      report.errors.push(`moneyEnhance: ${err.message}`);
+      console.error('[seo-autopilot] Money page enhancement error (non-fatal):', err.message);
     }
   }
 
