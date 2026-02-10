@@ -139,7 +139,6 @@ function generatePostHtml({
   const title = generateTitle(topic);
   const metaDescription = generateMetaDescription(topic);
   const today = new Date().toISOString().slice(0, 10);
-  const monthYear = formatMonthYear(new Date());
   const baseUrl = seoDefaults.baseUrl || 'https://tdrealtyohio.com';
   const canonicalUrl = `${baseUrl}${routePath}`;
   const ogImage = `${baseUrl}/assets/images/og-default.jpg`;
@@ -182,6 +181,8 @@ function generatePostHtml({
   <meta name="keywords" content="${escAttr(keywords)}">
 
   <link rel="canonical" href="${canonicalUrl}">
+  <meta property="article:author" content="Travis Debnam">
+  <meta property="article:published_time" content="${today}">
   <meta property="article:modified_time" content="${today}">
 
   <meta property="og:type" content="article">
@@ -337,11 +338,17 @@ ${faqSchemaEntries}
       <div class="container" style="max-width: 800px;">
         <header class="article-header">
           <h1>${escHtml(title)}</h1>
-          <p class="post-meta">TD Realty Ohio | ${monthYear}</p>
+          <p class="post-meta">TD Realty Ohio | Published ${today} | Last reviewed ${today}</p>
+          ${buildAuthorCard()}
         </header>
 
         <div class="article-content">
+${buildMethodologyDataNote(today)}
 ${articleSections}
+
+${buildLocalProofSection()}
+
+${buildBrokerageTrustBox()}
 
           <h2>Frequently Asked Questions</h2>
           <div class="faq-list" style="margin-top: 1.5rem;">
@@ -696,9 +703,40 @@ function generateMetaDescription(topic) {
   return desc;
 }
 
-function formatMonthYear(date) {
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return `${months[date.getMonth()]} ${date.getFullYear()}`;
+function buildAuthorCard() {
+  return `
+          <aside class="author-card" style="margin-top:1rem;padding:1rem 1.25rem;background:#f7f9fc;border:1px solid #d9e2ee;border-radius:10px;">
+            <p style="margin:0 0 .35rem 0;font-weight:700;">Author: <a href="/about/" style="text-decoration:underline;">Travis Debnam, Broker</a></p>
+            <p style="margin:0;font-size:.95rem;">Local market guidance for Central Ohio buyers and sellers from TD Realty Ohio.</p>
+          </aside>`;
+}
+
+function buildMethodologyDataNote(dateIso) {
+  return `          <section class="methodology-data-note" style="margin:1.5rem 0;padding:1.1rem 1.25rem;background:#f8fafc;border-left:4px solid #1a2e44;border-radius:6px;">
+            <h2 style="margin-top:0;">Last Reviewed, Methodology, and Data Note</h2>
+            <p><strong>Last reviewed:</strong> ${dateIso}. This article is reviewed periodically for accuracy and clarity.</p>
+            <p><strong>Methodology:</strong> Guidance is based on Central Ohio transaction workflows, local brokerage practice, and documented closing processes.</p>
+            <p><strong>Data note:</strong> Market examples are directional and can vary by neighborhood, price band, and timing. Validate current figures with active local comps and MLS data.</p>
+          </section>`;
+}
+
+function buildLocalProofSection() {
+  return `          <section class="local-proof">
+            <h2>Local Proof: Service Area and Process Specifics</h2>
+            <p><strong>Service area evidence:</strong> TD Realty Ohio supports clients across Franklin, Delaware, Licking, and Fairfield counties, including Columbus, Westerville, Dublin, Worthington, Gahanna, and surrounding communities.</p>
+            <p><strong>Process specifics:</strong> Typical engagements include pricing review, listing preparation, showing/offer management, contract-to-close coordination, and Ohio disclosure/inspection milestones.</p>
+            <p><strong>Claim standard:</strong> We avoid guaranteed outcomes. Timelines, sale prices, and savings vary by property condition, buyer demand, financing, and negotiation terms.</p>
+          </section>`;
+}
+
+function buildBrokerageTrustBox() {
+  return `          <aside class="brokerage-trust-box" style="margin:1.5rem 0;padding:1.1rem 1.25rem;background:#eef3f9;border:1px solid #ccd8e8;border-radius:8px;">
+            <h2 style="margin-top:0;">Brokerage &amp; License Verification</h2>
+            <p style="margin-bottom:.4rem;"><strong>Brokerage:</strong> TD Realty Ohio, LLC</p>
+            <p style="margin-bottom:.4rem;"><strong>Broker:</strong> Travis Debnam</p>
+            <p style="margin-bottom:.4rem;"><strong>Broker License #:</strong> 2023006467</p>
+            <p style="margin:0;"><strong>Brokerage License #:</strong> 2023006602</p>
+          </aside>`;
 }
 
 function escHtml(s) {
