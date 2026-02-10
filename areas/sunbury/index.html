@@ -50,34 +50,46 @@
   </script>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "TD Realty Ohio, LLC",
-    "description": "Full-service real estate agent serving Sunbury, Ohio with 1% listing commission.",
-    "url": "https://tdrealtyohio.com/areas/sunbury/",
-    "telephone": "(614) 392-8858",
-    "email": "info@tdrealtyohio.com",
-    "areaServed": {
-      "@type": "City",
-      "name": "Sunbury",
-      "containedInPlace": {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "@id": "https://tdrealtyohio.com/#realestateagent",
+  "name": "TD Realty Ohio, LLC",
+  "description": "Full-service real estate agent serving Sunbury, Ohio with 1% listing commission.",
+  "url": "https://tdrealtyohio.com/areas/sunbury/",
+  "telephone": "(614) 392-8858",
+  "email": "info@tdrealtyohio.com",
+  "areaServed": {
+    "@type": "City",
+    "name": "Sunbury",
+    "containedInPlace": [
+      {
+        "@type": "AdministrativeArea",
+        "name": "Delaware County"
+      },
+      {
         "@type": "State",
         "name": "Ohio"
       }
-    },
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Westerville",
-      "addressRegion": "OH",
-      "addressCountry": "US"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 40.0417,
-      "longitude": -83.0804
-    }
-  }
+    ]
+  },
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Westerville",
+    "addressRegion": "OH",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 40.0417,
+    "longitude": -83.0804
+  },
+  "serviceArea": {
+    "@type": "AdministrativeArea",
+    "name": "Central Ohio"
+  },
+  "availableLanguage": "en-US"
+}
   </script>
   <script type="application/ld+json">
   {
@@ -87,7 +99,8 @@
     "description": "Full-service home listing in Sunbury, Ohio at 1% commission (sell + buy) or 2% (sell only). Includes MLS, pro photos, pre-listing inspection.",
     "provider": {
       "@type": "RealEstateAgent",
-      "name": "TD Realty Ohio, LLC",
+      "@id": "https://tdrealtyohio.com/#realestateagent",
+"name": "TD Realty Ohio, LLC",
       "url": "https://tdrealtyohio.com"
     },
     "areaServed": {
@@ -100,35 +113,35 @@
   </script>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is driving the housing boom in Sunbury, Ohio?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Sunbury sits in Delaware County's growth corridor with Big Walnut Local Schools drawing families from across the region. New subdivisions like Meadows at Sunbury and Northstar are adding hundreds of homes. The village's charming downtown square and proximity to Alum Creek State Park add lifestyle appeal beyond just the schools."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How does Big Walnut Local Schools compare to nearby districts?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Big Walnut earns an A from Niche and is known for its strong community support and manageable school sizes. The district operates a single high school, which fosters tight-knit student culture. Academic performance is competitive with Olentangy and Delaware City Schools, particularly in math and science."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is Sunbury a practical location for commuting to Columbus?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Sunbury to downtown Columbus is approximately 30-35 minutes via I-71 or Route 3. Many residents commute to the Polaris or Westerville employment corridors in about 20 minutes. Delaware County's ongoing road infrastructure investments are improving commute reliability for northern suburb residents."
-        }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is driving the housing boom in Sunbury, Ohio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sunbury sits in Delaware County's growth corridor with Big Walnut Local Schools drawing families from across the region. New subdivisions like Meadows at Sunbury and Northstar are adding hundreds of homes. The village's charming downtown square and proximity to Alum Creek State Park add lifestyle appeal beyond just the schools."
       }
-    ]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "In Sunbury, how does Big Walnut Local Schools compare to nearby districts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Big Walnut earns an A from Niche and is known for its strong community support and manageable school sizes. The district operates a single high school, which fosters tight-knit student culture. Academic performance is competitive with Olentangy and Delaware City Schools, particularly in math and science."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Sunbury a practical location for commuting to Columbus?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sunbury to downtown Columbus is approximately 30-35 minutes via I-71 or Route 3. Many residents commute to the Polaris or Westerville employment corridors in about 20 minutes. Delaware County's ongoing road infrastructure investments are improving commute reliability for northern suburb residents."
+      }
+    }
+  ]
+}
   </script>
 
   <style>

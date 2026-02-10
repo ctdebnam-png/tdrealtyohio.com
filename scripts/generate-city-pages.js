@@ -650,6 +650,7 @@ function generateCityPage(city) {
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
+    "@id": "https://tdrealtyohio.com/#realestateagent",
     "name": "TD Realty Ohio, LLC",
     "description": "Full-service real estate agent serving ${city.name}, Ohio with 1% listing commission.",
     "url": "https://tdrealtyohio.com/areas/${city.slug}/",
@@ -658,11 +659,13 @@ function generateCityPage(city) {
     "areaServed": {
       "@type": "City",
       "name": "${city.name}",
-      "containedInPlace": {
-        "@type": "State",
-        "name": "Ohio"
-      }
+      "containedInPlace": [
+        { "@type": "AdministrativeArea", "name": "${city.county} County" },
+        { "@type": "State", "name": "Ohio" }
+      ]
     },
+    "serviceArea": { "@type": "AdministrativeArea", "name": "Central Ohio" },
+    "availableLanguage": "en-US",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
@@ -686,6 +689,7 @@ function generateCityPage(city) {
     "description": "Full-service home listing in ${city.name}, Ohio at 1% commission (sell + buy) or 2% (sell only). Includes MLS, pro photos, pre-listing inspection.",
     "provider": {
       "@type": "RealEstateAgent",
+      "@id": "https://tdrealtyohio.com/#realestateagent",
       "name": "TD Realty Ohio, LLC",
       "url": "https://tdrealtyohio.com"
     },
@@ -704,7 +708,7 @@ ${city.faqs ? `  <script type="application/ld+json">
     "mainEntity": [
 ${city.faqs.map(faq => `      {
         "@type": "Question",
-        "name": "${faq.q}",
+        "name": "${faq.q.toLowerCase().includes(city.name.toLowerCase()) ? faq.q : `In ${city.name}, ${faq.q.charAt(0).toLowerCase()}${faq.q.slice(1)}`}",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "${faq.a}"
