@@ -159,5 +159,54 @@ export async function auditLiveRobotsSitemap() {
     issueCounts[issue.code] = (issueCounts[issue.code] || 0) + 1;
   }
 
-  return { checkedAt: new Date().toISOString(), issues, issueCounts, robotsDisallowed };
+  // Extract live sitemap URLs for agreement check (Chunk 12)
+  let liveSitemapUrls = [];
+  if (sitemapResult.ok && sitemapResult.final?.status === 200) {
+    const sitemapText = sitemapResult.final.bodySnippet || '';
+    const locRegex = /<loc>\s*(.*?)\s*<\/loc>/gi;
+    let match;
+    while ((match = locRegex.exec(sitemapText)) !== null) {
+      liveSitemapUrls.push(match[1].trim());
+    }
+  }
+
+  return { checkedAt: new Date().toISOString(), issues, issueCounts, robotsDisallowed, liveSitemapUrls };
+}
+
+/**
+ * Compare live sitemap URLs against source-of-truth sitemap URLs.
+ *
+ * @param {string[]} sourceUrls - URLs from source sitemap.xml in the repo
+ * @param {string[]} liveUrls - URLs from live fetched sitemap.xml
+ * @param {number} sampleSize - Max URLs to compare (default 50)
+ * @returns {{ matches: boolean, missingInLive: string[], extraInLive: string[], issues: Array<{ code: string, detail: string }> }}
+ */
+export function compareSitemapAgreement(sourceUrls = [], liveUrls = [], sampleSize = 50) {
+  if (liveUrls.length === 0) {
+    return { matches: true, missingInLive: [], extraInLive: [], issues: [] };
+  }
+
+  const sourceSample = sourceUrls.slice(0, sampleSize);
+  const liveSet = new Set(liveUrls);
+  const sourceSet = new Set(sourceSample);
+
+  const missingInLive = sourceSample.filter(u => !liveSet.has(u));
+  const extraInLive = liveUrls.slice(0, sampleSize).filter(u => !sourceSet.has(u));
+
+  const issues = [];
+  // Material difference: >10% of sampled URLs differ
+  const threshold = Math.max(1, Math.floor(sourceSample.length * 0.1));
+  if (missingInLive.length >= threshold || extraInLive.length >= threshold) {
+    issues.push({
+      code: 'LIVE_SITEMAP_MISMATCH',
+      detail: `${missingInLive.length} missing, ${extraInLive.length} extra (of ${sourceSample.length} sampled)`,
+    });
+  }
+
+  return {
+    matches: issues.length === 0,
+    missingInLive: missingInLive.slice(0, 10),
+    extraInLive: extraInLive.slice(0, 10),
+    issues,
+  };
 }

@@ -48,6 +48,11 @@ import { detectNearDuplicates } from '../auditors/near-duplicates.mjs';
 import { discoverAreas } from '../lib/area-discovery.mjs';
 import { planAreaExpansion } from '../planners/area-plan.mjs';
 import { expandAreaPage, revertAreaExpansion } from '../generators/area-expand.mjs';
+import { buildCanonicalUrlSet } from '../lib/canonical-url-set.mjs';
+import { auditSitemapCoverage } from '../auditors/sitemap-coverage.mjs';
+import { compareSitemapAgreement } from '../auditors/live-robots-sitemap.mjs';
+import { auditCanonicalAgreement } from '../auditors/canonical-agreement.mjs';
+import { pullGscSitemapStatus } from '../collectors/gsc-sitemaps.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -302,6 +307,62 @@ async function main() {
     console.log('  GSC deltas: insufficient baseline');
   }
 
+  // Sitemap coverage and canonical agreement (Chunk 12)
+  let indexingSignals = {};
+  try {
+    const areaDiscovery = discoverAreas(pages || []);
+    const canonicalSet = buildCanonicalUrlSet({ blogPosts: blogResult.posts, areaRoutes: areaDiscovery.areaRoutes });
+    const sitemapCoverage = auditSitemapCoverage({ canonicalUrls: canonicalSet.canonicalUrls });
+    const canonicalAgreement = auditCanonicalAgreement({
+      auditResult: beforeAudit,
+      canonicalUrls: canonicalSet.canonicalUrls,
+      liveResults: report.live?.results || [],
+      rankIntentRoutes: config.rankIntentRoutes || [],
+    });
+
+    indexingSignals = {
+      sitemapMissingRankIntent: sitemapCoverage.issueCounts.SITEMAP_MISSING_RANK_INTENT || 0,
+      sitemapExtraUrls: sitemapCoverage.issueCounts.SITEMAP_HAS_EXTRA_URLS || 0,
+      canonicalBuildMismatchCount: canonicalAgreement.issueCounts.CANONICAL_BUILD_MISMATCH || 0,
+      canonicalLiveMismatchCount: canonicalAgreement.issueCounts.CANONICAL_LIVE_MISMATCH || 0,
+    };
+
+    report.sitemapCoverage = {
+      missingCount: sitemapCoverage.missingInSitemap.length,
+      extraCount: sitemapCoverage.extraInSitemap.length,
+      missingSamples: sitemapCoverage.missingInSitemap.slice(0, 25),
+      extraSamples: sitemapCoverage.extraInSitemap.slice(0, 25),
+    };
+    report.canonicalAgreement = {
+      buildMismatchCount: canonicalAgreement.buildMismatches.length,
+      liveMismatchCount: canonicalAgreement.liveMismatches.length,
+      samples: [...canonicalAgreement.buildMismatches.slice(0, 10), ...canonicalAgreement.liveMismatches.slice(0, 10)],
+    };
+
+    if (sitemapCoverage.missingInSitemap.length > 0 || sitemapCoverage.extraInSitemap.length > 0) {
+      console.log(`\n[indexing] Sitemap coverage: ${sitemapCoverage.missingInSitemap.length} missing, ${sitemapCoverage.extraInSitemap.length} extra`);
+    }
+    if (canonicalAgreement.buildMismatches.length > 0 || canonicalAgreement.liveMismatches.length > 0) {
+      console.log(`[indexing] Canonical agreement: ${canonicalAgreement.buildMismatches.length} build, ${canonicalAgreement.liveMismatches.length} live mismatches`);
+    }
+  } catch (err) {
+    report.errors.push(`indexingSignals: ${err.message}`);
+    console.error('[seo-autopilot] Indexing signals error (non-fatal):', err.message);
+  }
+
+  // GSC sitemap status (observation only)
+  try {
+    const gscSitemapResult = await pullGscSitemapStatus();
+    if (gscSitemapResult.ok) {
+      report.gscSitemaps = { ok: true, sitemaps: gscSitemapResult.sitemaps };
+      state.indexing = { ...(state.indexing || {}), gscSitemaps: gscSitemapResult.sitemaps, lastCheckedAt: new Date().toISOString() };
+    } else if (!gscSitemapResult.skipped) {
+      report.gscSitemaps = { ok: false, reason: gscSitemapResult.reason };
+    }
+  } catch (err) {
+    // Non-fatal
+  }
+
   // Compute focus plan
   const moduleOutcomes = loadModuleOutcomes();
   const focusPlan = computeFocusPlan({
@@ -311,6 +372,7 @@ async function main() {
     backlog: loadBacklog(),
     state,
     moduleOutcomes,
+    indexingSignals,
   });
 
   console.log(`\n=== FOCUS: ${focusPlan.focus} ===`);
@@ -406,6 +468,21 @@ async function main() {
           .map(r => ({ route: r.route, codes: r.issues.map(i => i.code) })),
       };
 
+      // Live sitemap agreement check (Chunk 12)
+      if (robotsSitemapResult.liveSitemapUrls && robotsSitemapResult.liveSitemapUrls.length > 0) {
+        try {
+          const sitemapCoverageResult = auditSitemapCoverage({ canonicalUrls: [] });
+          const sourceUrls = sitemapCoverageResult.sitemapUrls || [];
+          const agreement = compareSitemapAgreement(sourceUrls, robotsSitemapResult.liveSitemapUrls, 50);
+          if (!agreement.matches) {
+            console.log(`[live] Sitemap mismatch: ${agreement.issues[0]?.detail || 'differs'}`);
+            for (const issue of agreement.issues) {
+              mergedIssueCounts[issue.code] = (mergedIssueCounts[issue.code] || 0) + 1;
+            }
+          }
+        } catch { /* non-fatal */ }
+      }
+
       // Hard gate: if LIVE_NOINDEX or LIVE_ROBOTS_TXT_BLOCKING on any route, override focus for next run
       const criticalLiveIssues = (mergedIssueCounts.LIVE_NOINDEX || 0) + (mergedIssueCounts.LIVE_ROBOTS_TXT_BLOCKING || 0);
       if (criticalLiveIssues > 0) {
@@ -425,6 +502,16 @@ async function main() {
     lastCheckedAt: new Date().toISOString(),
     thinRankIntentCount: qualitySignals.thinRankIntentCount,
     nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount,
+  };
+
+  // Persist indexing signals in state (Chunk 12)
+  state.indexing = {
+    ...(state.indexing || {}),
+    lastCheckedAt: new Date().toISOString(),
+    sitemapMissingCount: indexingSignals.sitemapMissingRankIntent || 0,
+    sitemapExtraCount: indexingSignals.sitemapExtraUrls || 0,
+    canonicalBuildMismatchCount: indexingSignals.canonicalBuildMismatchCount || 0,
+    canonicalLiveMismatchCount: indexingSignals.canonicalLiveMismatchCount || 0,
   };
 
   // Links focus: run link planner

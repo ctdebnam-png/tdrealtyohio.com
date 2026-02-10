@@ -33,7 +33,7 @@ export function discoverAreas(pages = []) {
   const excludeSet = new Set(config.exclude || []);
 
   // Build set of routes from pages list if available
-  const pageRoutes = new Set(pages.map(p => p.path));
+  const pageRoutes = new Set(pages.map(p => p.path).filter(Boolean));
 
   // Also scan the filesystem directly for robustness
   const areasDir = join(ROOT, 'areas');

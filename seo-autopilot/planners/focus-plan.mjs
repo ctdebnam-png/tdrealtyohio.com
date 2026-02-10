@@ -55,6 +55,7 @@ export function computeFocusPlan({
   backlog = null,
   state = {},
   moduleOutcomes = {},
+  indexingSignals = {},
 }) {
   const config = loadScoringConfig();
   const thresholds = config.thresholds || {};
@@ -88,6 +89,18 @@ export function computeFocusPlan({
     return {
       focus: 'tech',
       reason: `${criticalCount} critical tech issue(s) exceed threshold`,
+      budgets: { ...budgets, contentActionAllowed: false },
+    };
+  }
+
+  // 1b) Indexing consistency gate (Chunk 12): sitemap or canonical mismatches
+  const sitemapMissing = indexingSignals.sitemapMissingRankIntent || 0;
+  const canonicalBuildMismatch = indexingSignals.canonicalBuildMismatchCount || 0;
+  const canonicalLiveMismatch = indexingSignals.canonicalLiveMismatchCount || 0;
+  if (sitemapMissing > 0 || canonicalBuildMismatch > 0 || canonicalLiveMismatch > 0) {
+    return {
+      focus: 'tech',
+      reason: `Indexing issues: ${sitemapMissing} missing in sitemap, ${canonicalBuildMismatch} build canonical mismatches, ${canonicalLiveMismatch} live canonical mismatches`,
       budgets: { ...budgets, contentActionAllowed: false },
     };
   }
