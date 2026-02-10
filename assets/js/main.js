@@ -100,6 +100,38 @@ function getUTMData() {
   catch (e) { return {}; }
 }
 
+// ===== DEFERRED CSS BUNDLES =====
+function loadDeferredStylesheet(href) {
+  if (!href || document.querySelector('link[data-deferred-css="' + href + '"]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.media = 'print';
+  link.dataset.deferredCss = href;
+  link.onload = function () { link.media = 'all'; };
+  document.head.appendChild(link);
+}
+
+(function loadOptionalPageFamilyBundles() {
+  const path = normalizePath(window.location.pathname);
+  const bundles = ['/assets/css/bundles/extended.css?v=20260210'];
+
+  // Landing pages already load /assets/css/lp.css directly in-page.
+  if (path.startsWith('/lp/')) {
+    bundles.length = 0;
+  }
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(function () {
+      bundles.forEach(loadDeferredStylesheet);
+    }, { timeout: 1500 });
+  } else {
+    window.addEventListener('load', function () {
+      bundles.forEach(loadDeferredStylesheet);
+    }, { once: true });
+  }
+})();
+
 // ===== UTILITY FUNCTIONS =====
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-US', {

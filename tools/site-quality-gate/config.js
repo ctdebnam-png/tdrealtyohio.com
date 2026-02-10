@@ -63,6 +63,25 @@ module.exports = {
     timeout: 10000
   },
 
+  // CSS usage audit by page-template family
+  cssUsage: {
+    families: {
+      core: ['assets/css/styles.css'],
+      areas: ['assets/css/styles.css', 'assets/css/bundles/extended.css'],
+      blog: ['assets/css/styles.css', 'assets/css/bundles/extended.css'],
+      tools: ['assets/css/styles.css', 'assets/css/bundles/extended.css'],
+      'landing-pages': ['assets/css/styles.css', 'assets/css/lp.css']
+    }
+  },
+
+  // CI asset budgets to catch regressions in critical payloads
+  assetBudget: {
+    cssFiles: ['assets/css/styles.css', 'assets/css/bundles/extended.css', 'assets/css/lp.css'],
+    jsFiles: ['assets/js/main.js'],
+    maxCssBytes: 330000,
+    maxJsBytes: 140000
+  },
+
   // Reports output directory
   reportsDir: '../../reports/site-quality-gate'
 };
