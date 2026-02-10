@@ -50,7 +50,7 @@ async function main() {
     { name: 'canonical-host', fn: checkCanonicalHost, label: 'Canonical Host (no-www)' },
     { name: 'content-voice', fn: checkContentVoice, label: 'Content Voice (no first-person)' },
     { name: 'css-usage', fn: checkCssUsage, label: 'CSS Usage Audit (template families)' },
-    { name: 'asset-budget', fn: checkAssetBudget, label: 'Asset Budget (CSS/JS bytes)' }
+    { name: 'asset-budget', fn: checkAssetBudget, label: 'Asset Budget (CSS/JS bytes)' },
     { name: 'centralized-inline-scripts', fn: checkCentralizedInlineScripts, label: 'Centralized Inline Scripts' }
   ];
 
