@@ -12,7 +12,7 @@ const SKIP_DIRS = new Set([
   'node_modules', '.git', '.github', '.wrangler', '.lighthouseci',
   'seo-autopilot', 'playwright-report', 'test-results', 'screenshots',
   'ads-bot', 'ops', 'admin', 'audit', 'docs', 'media', 'output',
-  'functions', 'scripts', 'src', 'tests',
+  'functions', 'scripts', 'src', 'tests', 'templates',
 ]);
 
 const UTILITY_FILES = new Set(['404.html', '500.html']);

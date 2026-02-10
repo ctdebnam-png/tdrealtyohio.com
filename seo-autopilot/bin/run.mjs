@@ -7,8 +7,10 @@
  *
  * Pipeline:
  * 1. Detect build output directory
- * 2. If static-html: enumerate pages, run build audit, write report
- * 3. If not static-html: write report noting scan was skipped
+ * 2. Run before-audit on existing HTML
+ * 3. Apply metadata fixer (OG/Twitter tags)
+ * 4. Run after-audit and compute diff
+ * 5. Write report with before/after comparison
  */
 
 import { readFileSync } from 'fs';
@@ -19,6 +21,7 @@ import { fileURLToPath } from 'url';
 import { detectBuildOutput } from '../lib/detect-build-output.mjs';
 import { listHtmlPages } from '../lib/list-html-pages.mjs';
 import { runBuildAudit, printAuditSummary } from '../auditors/build-audit.mjs';
+import { fixMetadata } from '../fixers/metadata-fixer.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -34,6 +37,25 @@ function loadConfig() {
   }
 }
 
+/**
+ * Compute the diff between before and after issue counts.
+ */
+function computeDiff(before, after) {
+  const diff = {};
+  const allCodes = new Set([
+    ...Object.keys(before || {}),
+    ...Object.keys(after || {}),
+  ]);
+  for (const code of allCodes) {
+    const b = (before || {})[code] || 0;
+    const a = (after || {})[code] || 0;
+    if (b !== a) {
+      diff[code] = { before: b, after: a, delta: a - b };
+    }
+  }
+  return diff;
+}
+
 async function main() {
   const start = Date.now();
   console.log('[seo-autopilot] Starting run…');
@@ -47,9 +69,10 @@ async function main() {
     timestamp: new Date().toISOString(),
     durationMs: 0,
     buildOutput: null,
-    totals: null,
-    pages: [],
-    samples: null,
+    beforeAudit: null,
+    afterAudit: null,
+    diff: null,
+    fixerResults: null,
     notes: '',
     errors: [],
   };
@@ -65,25 +88,88 @@ async function main() {
   report.buildOutput = buildOutput;
   console.log(`[seo-autopilot] Build output: ${buildOutput.mode} — ${buildOutput.reason}`);
 
-  // Step 2: Run audit if static HTML is available
   if (buildOutput.mode === 'static-html') {
+    // Step 2: Before-audit
+    let pages;
     try {
-      const pages = listHtmlPages(buildOutput.outputDir, {
+      pages = listHtmlPages(buildOutput.outputDir, {
         canonicalStrategy: config.canonicalStrategy,
       });
       console.log(`[seo-autopilot] Found ${pages.length} HTML page(s)`);
 
-      const audit = runBuildAudit(pages, config);
-      report.totals = audit.totals;
-      report.pages = audit.pages;
-      report.samples = audit.samples;
-      report.notes = `Scanned ${audit.totals.pagesScanned} pages, found ${audit.totals.issuesTotal} issue(s).`;
+      const beforeAudit = runBuildAudit(pages, config);
+      report.beforeAudit = {
+        pagesScanned: beforeAudit.totals.pagesScanned,
+        issuesTotal: beforeAudit.totals.issuesTotal,
+        issueCounts: beforeAudit.totals.issueCounts,
+      };
 
-      printAuditSummary(audit);
+      console.log('\n=== BEFORE FIXES ===');
+      printAuditSummary(beforeAudit);
     } catch (err) {
-      report.errors.push(`buildAudit: ${err.message}`);
-      report.notes = `Build audit failed: ${err.message}`;
-      console.error('[seo-autopilot] Build audit error (non-fatal):', err.message);
+      report.errors.push(`beforeAudit: ${err.message}`);
+      console.error('[seo-autopilot] Before-audit error (non-fatal):', err.message);
+    }
+
+    // Step 3: Apply metadata fixer
+    if (pages) {
+      try {
+        const fixResult = fixMetadata(pages);
+        report.fixerResults = {
+          filesChanged: fixResult.filesChanged,
+          tagsAdded: fixResult.tagsAdded,
+          details: fixResult.details,
+        };
+        console.log(`[seo-autopilot] Metadata fixer: ${fixResult.filesChanged} file(s) changed, ${fixResult.tagsAdded} tag(s) added`);
+      } catch (err) {
+        report.errors.push(`metadataFixer: ${err.message}`);
+        console.error('[seo-autopilot] Metadata fixer error (non-fatal):', err.message);
+      }
+    }
+
+    // Step 4: After-audit
+    if (pages) {
+      try {
+        // Re-enumerate to pick up any changes
+        const afterPages = listHtmlPages(buildOutput.outputDir, {
+          canonicalStrategy: config.canonicalStrategy,
+        });
+        const afterAudit = runBuildAudit(afterPages, config);
+        report.afterAudit = {
+          pagesScanned: afterAudit.totals.pagesScanned,
+          issuesTotal: afterAudit.totals.issuesTotal,
+          issueCounts: afterAudit.totals.issueCounts,
+          samples: afterAudit.samples,
+          pages: afterAudit.pages,
+        };
+
+        console.log('\n=== AFTER FIXES ===');
+        printAuditSummary(afterAudit);
+
+        // Step 5: Compute diff
+        if (report.beforeAudit) {
+          report.diff = computeDiff(
+            report.beforeAudit.issueCounts,
+            report.afterAudit.issueCounts,
+          );
+
+          // Print diff summary
+          const diffEntries = Object.entries(report.diff);
+          if (diffEntries.length > 0) {
+            console.log('=== DIFF (before -> after) ===');
+            for (const [code, { before, after, delta }] of diffEntries) {
+              const sign = delta > 0 ? '+' : '';
+              console.log(`  ${code}: ${before} -> ${after} (${sign}${delta})`);
+            }
+            console.log('');
+          }
+        }
+
+        report.notes = `Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues.`;
+      } catch (err) {
+        report.errors.push(`afterAudit: ${err.message}`);
+        console.error('[seo-autopilot] After-audit error (non-fatal):', err.message);
+      }
     }
   } else if (buildOutput.mode === 'ssr-unknown') {
     report.notes = 'SSR output not available; skipping html scan.';
