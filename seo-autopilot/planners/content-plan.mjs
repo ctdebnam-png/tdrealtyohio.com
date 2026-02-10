@@ -17,6 +17,50 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+
+const REFRESH_RUN_CAP = 3;
+const POSITION_BANDS = [
+  { min: 4, max: 10, score: 1.0 },
+  { min: 11, max: 20, score: 0.8 },
+  { min: 21, max: 35, score: 0.4 },
+];
+
+const ROUTE_INTENT_WEIGHTS = {
+  money: 1.0,
+  informational: 0.45,
+};
+
+const CONVERSION_ASSIST_WEIGHTS = [
+  ['/contact/', 1.0],
+  ['/home-value/', 0.95],
+  ['/1-percent-commission/', 0.9],
+  ['/sellers/', 0.85],
+  ['/buyers/', 0.85],
+  ['/pre-listing-inspection/', 0.8],
+  ['/areas/', 0.7],
+  ['/blog/', 0.35],
+];
+
+function getPositionBandScore(position) {
+  for (const band of POSITION_BANDS) {
+    if (position >= band.min && position <= band.max) return band.score;
+  }
+  return 0;
+}
+
+function getRouteIntentWeight(routePath, rankSet) {
+  const isMoneyPage = rankSet.has(routePath) && !routePath.startsWith('/blog/');
+  return isMoneyPage ? ROUTE_INTENT_WEIGHTS.money : ROUTE_INTENT_WEIGHTS.informational;
+}
+
+function getConversionAssistValue(routePath) {
+  for (const [prefix, weight] of CONVERSION_ASSIST_WEIGHTS) {
+    if (routePath.startsWith(prefix)) return weight;
+  }
+  return 0.4;
+}
+
+
 function loadJson(path) {
   try {
     return JSON.parse(readFileSync(path, 'utf-8'));
@@ -139,23 +183,56 @@ export function planContent({
       const isMoneyPage = rankSet.has(routePath) && !routePath.startsWith('/blog/');
 
       if (isBlogPost || isMoneyPage) {
+        const impressions = sq.impressions28 || sq.impressions || 0;
+        const ctr = sq.ctr28 ?? sq.ctr ?? 0;
+        const position = sq.position28 || sq.position || 0;
+        const ctrGap = Math.max(0, 0.03 - ctr) / 0.03;
+        const impressionCtr = Math.min(1, impressions / 1000) * ctrGap;
+        const positionBand = getPositionBandScore(position);
+        if (impressionCtr <= 0 || positionBand <= 0) continue;
+
+        const routeIntent = getRouteIntentWeight(routePath, rankSet);
+        const conversionAssist = getConversionAssistValue(routePath);
+        const score =
+          impressionCtr * 0.45 +
+          positionBand * 0.2 +
+          routeIntent * 0.2 +
+          conversionAssist * 0.15;
+
         refreshCandidates.push({
           routePath,
           query: sq.query,
-          impressions: sq.impressions28 || sq.impressions || 0,
-          position: sq.position28 || sq.position || 0,
+          impressions,
+          ctr,
+          position,
           isBlogPost,
           isMoneyPage,
+          score,
+          components: {
+            impressionCtr,
+            positionBand,
+            routeIntent,
+            conversionAssist,
+          },
         });
       }
     }
   }
 
-  // Sort by impressions desc, pick the single best refresh
-  refreshCandidates.sort((a, b) => b.impressions - a.impressions);
+  // Deterministic sorting and capped run selection
+  refreshCandidates.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return a.routePath.localeCompare(b.routePath);
+  });
 
+  const refreshQueue = refreshCandidates.slice(0, REFRESH_RUN_CAP);
   if (refreshCandidates.length > 0) {
-    const best = refreshCandidates[0];
+    console.log(`[content-plan] Refresh scoring: ${refreshCandidates.length} candidates, selected ${refreshQueue.length} (cap=${REFRESH_RUN_CAP})`);
+    for (const c of refreshQueue) {
+      console.log(`[content-plan][audit] ${c.routePath} score=${c.score.toFixed(4)} impCtr=${c.components.impressionCtr.toFixed(4)} posBand=${c.components.positionBand.toFixed(2)} intent=${c.components.routeIntent.toFixed(2)} assist=${c.components.conversionAssist.toFixed(2)}`);
+    }
+
+    const best = refreshQueue[0];
     const action = best.isBlogPost ? 'refresh-post' : 'refresh-page';
 
     // Find matching topic from backlog for context
@@ -186,9 +263,18 @@ export function planContent({
         query: best.query,
         impressions: best.impressions,
         position: best.position,
+        score: Number(best.score.toFixed(4)),
+        components: {
+          impressionCtr: Number(best.components.impressionCtr.toFixed(4)),
+          positionBand: Number(best.components.positionBand.toFixed(4)),
+          routeIntent: Number(best.components.routeIntent.toFixed(4)),
+          conversionAssist: Number(best.components.conversionAssist.toFixed(4)),
+        },
+        refreshQueue: refreshQueue.map(c => c.routePath),
+        refreshCap: REFRESH_RUN_CAP,
         internalLinksTo: matchedTopic?.internalLinksTo || [],
       },
-      reason: `refresh_striking_distance: ${best.query} (${best.impressions} imp, pos ${best.position.toFixed(1)})`,
+      reason: `refresh_scored: ${best.query} (${best.impressions} imp, pos ${best.position.toFixed(1)}, score ${best.score.toFixed(3)})`,
     };
   }
 
