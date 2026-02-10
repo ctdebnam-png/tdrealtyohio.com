@@ -1,21 +1,12 @@
 /**
  * Canonical Host Check
- * Validates that all URLs use the canonical host (non-www)
- * Fails if www.tdrealtyohio.com is found in HTML files or sitemap
+ * Validates canonical host + trailing slash rules from centralized indexing policy.
  */
 
 const path = require('path');
 const fs = require('fs');
 const { getHtmlFiles, readHtmlFile } = require('./utils');
-
-// Pattern to match www.tdrealtyohio.com
-const WWW_PATTERN = /www\.tdrealtyohio\.com/gi;
-
-// Files/patterns to exclude from www check (e.g., CORS origin lists are OK)
-const EXCLUDE_PATTERNS = [
-  /functions\/api\//,  // API CORS origins need both www and non-www
-  /node_modules\//
-];
+const { loadPolicy, normalizeRoute, canonicalBase } = require('./indexing-policy');
 
 async function checkCanonicalHost(config, verbose) {
   const result = {
@@ -24,88 +15,73 @@ async function checkCanonicalHost(config, verbose) {
     warnings: [],
     stats: {
       filesChecked: 0,
-      wwwReferences: 0
+      hostViolations: 0,
+      trailingSlashViolations: 0
     }
   };
 
-  // Check HTML files
+  const policy = loadPolicy();
+  const trailing = policy.canonical?.trailingSlash || 'always';
+  const baseUrl = canonicalBase(policy);
+  const hostPattern = new RegExp(`${policy.canonical?.host || 'tdrealtyohio.com'}`.replace('.', '\\.'), 'i');
+  const disallowWww = policy.canonical?.disallowWww !== false;
+
   const files = await getHtmlFiles(config);
   result.stats.filesChecked = files.length;
 
   for (const file of files) {
-    // Skip excluded files
-    if (EXCLUDE_PATTERNS.some(pattern => pattern.test(file.relative))) {
+    const html = readHtmlFile(file.absolute);
+    const canonicalMatch = html.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
+
+    if (!canonicalMatch) continue;
+
+    const canonical = canonicalMatch[1].trim();
+    if (!canonical.startsWith(baseUrl)) {
+      result.errors.push({ file: file.relative, message: `Canonical uses non-policy base URL: ${canonical}` });
+      result.stats.hostViolations++;
+      result.passed = false;
       continue;
     }
 
-    const html = readHtmlFile(file.absolute);
-    const matches = html.match(WWW_PATTERN);
+    if (disallowWww && canonical.includes('://www.')) {
+      result.errors.push({ file: file.relative, message: `Canonical includes disallowed www host: ${canonical}` });
+      result.stats.hostViolations++;
+      result.passed = false;
+    }
 
-    if (matches && matches.length > 0) {
-      result.errors.push({
-        file: file.relative,
-        message: `Found ${matches.length} www.tdrealtyohio.com reference(s) - use tdrealtyohio.com instead`
-      });
-      result.stats.wwwReferences += matches.length;
+    if (!hostPattern.test(canonical)) {
+      result.errors.push({ file: file.relative, message: `Canonical host does not match policy host: ${canonical}` });
+      result.stats.hostViolations++;
+      result.passed = false;
+    }
+
+    const routeFromFile = normalizeRoute('/' + file.relative, trailing);
+    const canonicalRoute = normalizeRoute(canonical.replace(baseUrl, '') || '/', trailing);
+
+    if (routeFromFile !== canonicalRoute) {
+      result.errors.push({ file: file.relative, message: `Canonical route mismatch. Expected ${baseUrl}${routeFromFile}, found ${canonical}` });
+      result.stats.trailingSlashViolations++;
       result.passed = false;
     }
   }
 
-  // Check sitemap.xml
   const siteRoot = path.resolve(__dirname, '..', config.siteRoot);
-  const sitemapPath = path.join(siteRoot, config.sitemapFile || 'sitemap.xml');
-
-  if (fs.existsSync(sitemapPath)) {
-    const sitemapContent = fs.readFileSync(sitemapPath, 'utf-8');
-    const sitemapMatches = sitemapContent.match(WWW_PATTERN);
-
-    if (sitemapMatches && sitemapMatches.length > 0) {
-      result.errors.push({
-        file: 'sitemap.xml',
-        message: `Found ${sitemapMatches.length} www.tdrealtyohio.com reference(s) in sitemap`
-      });
-      result.stats.wwwReferences += sitemapMatches.length;
+  for (const artifactFile of [config.sitemapFile || 'sitemap.xml', 'robots.txt']) {
+    const artifactPath = path.join(siteRoot, artifactFile);
+    if (!fs.existsSync(artifactPath)) continue;
+    const content = fs.readFileSync(artifactPath, 'utf-8');
+    if (disallowWww && content.includes('www.tdrealtyohio.com')) {
+      result.errors.push({ file: artifactFile, message: 'Found disallowed www host reference' });
+      result.stats.hostViolations++;
       result.passed = false;
     }
-    result.stats.filesChecked++;
-  }
-
-  // Check robots.txt
-  const robotsPath = path.join(siteRoot, 'robots.txt');
-
-  if (fs.existsSync(robotsPath)) {
-    const robotsContent = fs.readFileSync(robotsPath, 'utf-8');
-    const robotsMatches = robotsContent.match(WWW_PATTERN);
-
-    if (robotsMatches && robotsMatches.length > 0) {
-      result.errors.push({
-        file: 'robots.txt',
-        message: `Found ${robotsMatches.length} www.tdrealtyohio.com reference(s) in robots.txt`
-      });
-      result.stats.wwwReferences += robotsMatches.length;
-      result.passed = false;
-    }
-    result.stats.filesChecked++;
-  }
-
-  // Check JavaScript files for hardcoded www URLs (excluding API CORS)
-  const jsGlob = require('glob').sync('**/*.js', {
-    cwd: siteRoot,
-    ignore: ['node_modules/**', 'tools/**', 'functions/api/**']
-  });
-
-  for (const jsFile of jsGlob) {
-    const jsPath = path.join(siteRoot, jsFile);
-    const jsContent = fs.readFileSync(jsPath, 'utf-8');
-    const jsMatches = jsContent.match(WWW_PATTERN);
-
-    if (jsMatches && jsMatches.length > 0) {
-      result.errors.push({
-        file: jsFile,
-        message: `Found ${jsMatches.length} www.tdrealtyohio.com reference(s) - use tdrealtyohio.com instead`
-      });
-      result.stats.wwwReferences += jsMatches.length;
-      result.passed = false;
+    if (artifactFile === (config.sitemapFile || 'sitemap.xml')) {
+      const badLoc = content.match(/<loc>([^<]+)<\/loc>/g)?.find((entry) => !entry.includes(baseUrl));
+      if (badLoc) {
+        result.errors.push({ file: artifactFile, message: `Sitemap contains URL outside policy host: ${badLoc}` });
+        result.stats.hostViolations++;
+        result.passed = false;
+      }
     }
     result.stats.filesChecked++;
   }

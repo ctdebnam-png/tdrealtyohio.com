@@ -1,0 +1,63 @@
+{
+  "canonical": {
+    "scheme": "https",
+    "host": "tdrealtyohio.com",
+    "trailingSlash": "always",
+    "disallowWww": true
+  },
+  "indexing": {
+    "defaultDirective": "index",
+    "indexPrefixes": [
+      "/",
+      "/about/",
+      "/affordability/",
+      "/agents/",
+      "/areas/",
+      "/blog/",
+      "/buy/",
+      "/buyers/",
+      "/compare/",
+      "/contact/",
+      "/faq/",
+      "/fair-housing/",
+      "/home-value/",
+      "/pre-listing-inspection/",
+      "/referrals/",
+      "/reviews/",
+      "/sell/",
+      "/sell-and-buy/",
+      "/sell-only-2-percent/",
+      "/sellers/",
+      "/sitemap-page/",
+      "/terms/",
+      "/tools/"
+    ],
+    "noindexPrefixes": [
+      "/thank-you/",
+      "/lp/",
+      "/admin/"
+    ],
+    "noindexExact": [
+      "/404/",
+      "/500/"
+    ]
+  },
+  "sitemap": {
+    "includeByDefault": true,
+    "excludePrefixes": [
+      "/thank-you/",
+      "/lp/",
+      "/admin/",
+      "/templates/"
+    ],
+    "excludeExact": [
+      "/404/",
+      "/500/",
+      "/sell-and-buy/"
+    ],
+    "excludePatterns": [
+      "^/.*error.*$"
+    ],
+    "excludeNoindex": true
+  }
+}
