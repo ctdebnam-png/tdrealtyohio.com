@@ -40,6 +40,9 @@ import { publishPost } from '../generators/publish-post.mjs';
 import { computeGscDeltas } from '../scoring/gsc-deltas.mjs';
 import { computeScore, classifyIssues, countThinPages, countUnderlinkedPillars } from '../scoring/score.mjs';
 import { computeFocusPlan } from '../planners/focus-plan.mjs';
+import { auditLiveRobotsSitemap } from '../auditors/live-robots-sitemap.mjs';
+import { auditLiveIndexing } from '../auditors/live-indexing.mjs';
+import { fixIndexingHygiene } from '../fixers/indexing-hygiene.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -285,12 +288,20 @@ async function main() {
 
   const focus = focusPlan.focus;
 
-  // Tech focus: run metadata fixer
+  // Tech focus: run metadata fixer + indexing hygiene
   if (focus === 'tech' && pages) {
     try {
       const fixResult = fixMetadata(pages);
       report.fixerResults = { filesChanged: fixResult.filesChanged, tagsAdded: fixResult.tagsAdded, details: fixResult.details };
       console.log(`\n[tech] Metadata fixer: ${fixResult.filesChanged} file(s) changed, ${fixResult.tagsAdded} tag(s) added`);
+
+      // Run indexing hygiene fixer (robots.txt, canonical normalization)
+      const hygieneResult = fixIndexingHygiene();
+      if (hygieneResult.filesChanged > 0) {
+        console.log(`[tech] Indexing hygiene: ${hygieneResult.filesChanged} file(s) fixed`);
+        for (const f of hygieneResult.fixes) console.log(`  ${f.file}: ${f.action}`);
+      }
+      report.indexingHygiene = hygieneResult;
 
       moduleOutcomes.tech = {
         lastRunAt: new Date().toISOString(),
@@ -301,6 +312,77 @@ async function main() {
       report.errors.push(`metadataFixer: ${err.message}`);
       console.error('[seo-autopilot] Metadata fixer error (non-fatal):', err.message);
     }
+  }
+
+  // Live URL verification (runs on any focus, but only if baseUrl is configured)
+  report.live = { checked: false, issueCounts: {}, results: [] };
+  try {
+    const siteBaseUrl = config.baseUrl || '';
+    if (siteBaseUrl) {
+      console.log('\n=== LIVE INDEXING CHECKS ===');
+
+      // Robots.txt and sitemap checks
+      const robotsSitemapResult = await auditLiveRobotsSitemap();
+      if (robotsSitemapResult.issues.length > 0) {
+        console.log(`[live] Robots/sitemap issues: ${robotsSitemapResult.issues.length}`);
+        for (const issue of robotsSitemapResult.issues.slice(0, 5)) {
+          console.log(`  ${issue.code}: ${issue.detail}`);
+        }
+      } else {
+        console.log('[live] Robots/sitemap: OK');
+      }
+
+      // Live URL indexing checks
+      const liveResult = await auditLiveIndexing({ robotsDisallowed: robotsSitemapResult.robotsDisallowed });
+      const totalLiveIssues = Object.values(liveResult.issueCounts).reduce((a, b) => a + b, 0);
+      if (totalLiveIssues > 0) {
+        console.log(`[live] Indexing issues: ${totalLiveIssues}`);
+        for (const [code, count] of Object.entries(liveResult.issueCounts)) {
+          console.log(`  ${code}: ${count}`);
+        }
+      } else {
+        console.log('[live] All live routes OK');
+      }
+
+      // Merge issue counts
+      const mergedIssueCounts = { ...robotsSitemapResult.issueCounts };
+      for (const [code, count] of Object.entries(liveResult.issueCounts)) {
+        mergedIssueCounts[code] = (mergedIssueCounts[code] || 0) + count;
+      }
+
+      report.live = {
+        checked: true,
+        checkedAt: liveResult.checkedAt,
+        issueCounts: mergedIssueCounts,
+        results: liveResult.results.slice(0, 10),
+        robotsSitemap: {
+          issues: robotsSitemapResult.issues,
+          issueCounts: robotsSitemapResult.issueCounts,
+        },
+      };
+
+      // Persist live state
+      state.live = {
+        lastCheckedAt: liveResult.checkedAt,
+        issueCounts: mergedIssueCounts,
+        worstRoutes: liveResult.results
+          .filter(r => r.issues && r.issues.length > 0)
+          .slice(0, 10)
+          .map(r => ({ route: r.route, codes: r.issues.map(i => i.code) })),
+      };
+
+      // Hard gate: if LIVE_NOINDEX or LIVE_ROBOTS_TXT_BLOCKING on any route, override focus for next run
+      const criticalLiveIssues = (mergedIssueCounts.LIVE_NOINDEX || 0) + (mergedIssueCounts.LIVE_ROBOTS_TXT_BLOCKING || 0);
+      if (criticalLiveIssues > 0) {
+        console.log(`[live] WARNING: ${criticalLiveIssues} critical live indexing issue(s) — tech focus will be forced on next run`);
+        state.liveGateForced = true;
+      }
+    } else {
+      console.log('\n[live] No baseUrl configured — skipping live checks');
+    }
+  } catch (err) {
+    report.errors.push(`liveChecks: ${err.message}`);
+    console.error('[seo-autopilot] Live checks error (non-fatal):', err.message);
   }
 
   // Links focus: run link planner
