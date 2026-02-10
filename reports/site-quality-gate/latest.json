@@ -1,76 +1,204 @@
 {
-  "timestamp": "2026-02-05T14:20:33.877Z",
-  "passed": true,
+  "timestamp": "2026-02-10T15:02:55.239Z",
+  "passed": false,
   "checks": {
-    "links": {
-      "passed": true,
-      "errors": [],
-      "warnings": [],
-      "stats": {
-        "totalLinks": 3216,
-        "internalLinks": 2538,
-        "externalLinks": 418,
-        "brokenInternal": 0,
-        "skippedExternal": 0
-      }
-    },
     "seo": {
-      "passed": true,
-      "errors": [],
-      "warnings": [],
+      "passed": false,
+      "errors": [
+        {
+          "file": "thank-you/seller_timeline/index.html",
+          "message": "Missing SEO tag: meta[name=\"description\"]"
+        },
+        {
+          "file": "thank-you/seller_net_sheet/index.html",
+          "message": "Missing SEO tag: meta[name=\"description\"]"
+        },
+        {
+          "file": "thank-you/seller_pricing_call/index.html",
+          "message": "Missing SEO tag: meta[name=\"description\"]"
+        },
+        {
+          "file": "thank-you/buyer_pre_approval/index.html",
+          "message": "Missing SEO tag: meta[name=\"description\"]"
+        },
+        {
+          "file": "thank-you/buyer_consult/index.html",
+          "message": "Missing SEO tag: meta[name=\"description\"]"
+        },
+        {
+          "file": "thank-you/buyer_cash_back/index.html",
+          "message": "Missing SEO tag: meta[name=\"description\"]"
+        },
+        {
+          "file": "admin/profiles/index.html",
+          "message": "Missing SEO tag: meta[name=\"description\"]"
+        },
+        {
+          "file": "admin/profiles/index.html",
+          "message": "Missing SEO tag: meta[property=\"og:title\"]"
+        },
+        {
+          "file": "admin/profiles/index.html",
+          "message": "Missing SEO tag: meta[property=\"og:description\"]"
+        },
+        {
+          "file": "admin/profiles/index.html",
+          "message": "Missing SEO tag: meta[property=\"og:url\"]"
+        },
+        {
+          "file": "admin/profiles/index.html",
+          "message": "Missing SEO tag: meta[property=\"og:type\"]"
+        }
+      ],
+      "warnings": [
+        {
+          "file": "1-percent-commission/index.html",
+          "message": "Meta description may be too long (179 chars)"
+        },
+        {
+          "file": "sell/pricing-call/index.html",
+          "message": "Meta description may be too long (168 chars)"
+        },
+        {
+          "file": "compare/fsbo-vs-1-percent-listing/index.html",
+          "message": "Meta description may be too long (171 chars)"
+        },
+        {
+          "file": "blog/best-time-sell-house-columbus-ohio/index.html",
+          "message": "Title tag may be too long (72 chars): \"Best Time to Sell a House in Columbus, Ohio (2026 ...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43240/index.html",
+          "message": "Title tag may be too long (80 chars): \"First-Time Homebuyer Guide for ZIP 43240 (Westervi...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43240/index.html",
+          "message": "Meta description may be too long (165 chars)"
+        },
+        {
+          "file": "buyers/first-time/zip-43082/index.html",
+          "message": "Title tag may be too long (71 chars): \"First-Time Homebuyer Guide for ZIP 43082 (Westervi...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43082/index.html",
+          "message": "Meta description may be too long (175 chars)"
+        },
+        {
+          "file": "buyers/first-time/zip-43081/index.html",
+          "message": "Title tag may be too long (71 chars): \"First-Time Homebuyer Guide for ZIP 43081 (Westervi...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43081/index.html",
+          "message": "Meta description may be too long (181 chars)"
+        },
+        {
+          "file": "buyers/first-time/zip-43065/index.html",
+          "message": "Title tag may be too long (66 chars): \"First-Time Homebuyer Guide for ZIP 43065 (Powell) ...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43054/index.html",
+          "message": "Title tag may be too long (70 chars): \"First-Time Homebuyer Guide for ZIP 43054 (New Alba...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43054/index.html",
+          "message": "Meta description may be too long (172 chars)"
+        },
+        {
+          "file": "buyers/first-time/zip-43035/index.html",
+          "message": "Title tag may be too long (72 chars): \"First-Time Homebuyer Guide for ZIP 43035 (Lewis Ce...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43035/index.html",
+          "message": "Meta description may be too long (164 chars)"
+        },
+        {
+          "file": "buyers/first-time/zip-43021/index.html",
+          "message": "Title tag may be too long (66 chars): \"First-Time Homebuyer Guide for ZIP 43021 (Galena) ...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43017/index.html",
+          "message": "Title tag may be too long (66 chars): \"First-Time Homebuyer Guide for ZIP 43017 (Dublin) ...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43016/index.html",
+          "message": "Title tag may be too long (66 chars): \"First-Time Homebuyer Guide for ZIP 43016 (Dublin) ...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43004/index.html",
+          "message": "Title tag may be too long (69 chars): \"First-Time Homebuyer Guide for ZIP 43004 (Blacklic...\""
+        },
+        {
+          "file": "buyers/first-time/worthington/index.html",
+          "message": "Title tag may be too long (63 chars): \"First-Time Homebuyer Guide for Worthington, OH | T...\""
+        },
+        {
+          "file": "buyers/first-time/westerville/index.html",
+          "message": "Title tag may be too long (63 chars): \"First-Time Homebuyer Guide for Westerville, OH | T...\""
+        },
+        {
+          "file": "buyers/first-time/upper-arlington/index.html",
+          "message": "Title tag may be too long (67 chars): \"First-Time Homebuyer Guide for Upper Arlington, OH...\""
+        },
+        {
+          "file": "buyers/first-time/reynoldsburg/index.html",
+          "message": "Title tag may be too long (64 chars): \"First-Time Homebuyer Guide for Reynoldsburg, OH | ...\""
+        },
+        {
+          "file": "buyers/first-time/pickerington/index.html",
+          "message": "Title tag may be too long (64 chars): \"First-Time Homebuyer Guide for Pickerington, OH | ...\""
+        },
+        {
+          "file": "buyers/first-time/pataskala/index.html",
+          "message": "Title tag may be too long (61 chars): \"First-Time Homebuyer Guide for Pataskala, OH | TD ...\""
+        },
+        {
+          "file": "buyers/first-time/new-albany/index.html",
+          "message": "Title tag may be too long (62 chars): \"First-Time Homebuyer Guide for New Albany, OH | TD...\""
+        },
+        {
+          "file": "buyers/first-time/lewis-center/index.html",
+          "message": "Title tag may be too long (64 chars): \"First-Time Homebuyer Guide for Lewis Center, OH | ...\""
+        },
+        {
+          "file": "buyers/first-time/johnstown/index.html",
+          "message": "Title tag may be too long (61 chars): \"First-Time Homebuyer Guide for Johnstown, OH | TD ...\""
+        },
+        {
+          "file": "buyers/first-time/grove-city/index.html",
+          "message": "Title tag may be too long (62 chars): \"First-Time Homebuyer Guide for Grove City, OH | TD...\""
+        },
+        {
+          "file": "buyers/first-time/granville/index.html",
+          "message": "Title tag may be too long (61 chars): \"First-Time Homebuyer Guide for Granville, OH | TD ...\""
+        },
+        {
+          "file": "buyers/first-time/grandview-heights/index.html",
+          "message": "Title tag may be too long (69 chars): \"First-Time Homebuyer Guide for Grandview Heights, ...\""
+        },
+        {
+          "file": "buyers/first-time/german-village/index.html",
+          "message": "Title tag may be too long (66 chars): \"First-Time Homebuyer Guide for German Village, OH ...\""
+        },
+        {
+          "file": "buyers/first-time/clintonville/index.html",
+          "message": "Title tag may be too long (64 chars): \"First-Time Homebuyer Guide for Clintonville, OH | ...\""
+        },
+        {
+          "file": "buyers/first-time/canal-winchester/index.html",
+          "message": "Title tag may be too long (68 chars): \"First-Time Homebuyer Guide for Canal Winchester, O...\""
+        },
+        {
+          "file": "buyers/first-time/blacklick/index.html",
+          "message": "Title tag may be too long (61 chars): \"First-Time Homebuyer Guide for Blacklick, OH | TD ...\""
+        },
+        {
+          "file": "areas/zip/43240/index.html",
+          "message": "Title tag may be too long (61 chars): \"43240 Real Estate | Westerville/Columbus, OH | TD ...\""
+        }
+      ],
       "stats": {
-        "filesChecked": 63,
-        "missingTags": 0
-      }
-    },
-    "business": {
-      "passed": true,
-      "errors": [],
-      "warnings": [],
-      "stats": {
-        "filesChecked": 63,
-        "missingPhone": 0,
-        "missingEmail": 0,
-        "missingLicense": 0
-      }
-    },
-    "sitemap": {
-      "passed": true,
-      "errors": [],
-      "warnings": [],
-      "stats": {
-        "sitemapUrls": 160,
-        "htmlFiles": 63,
-        "missingFromSitemap": 0,
-        "orphanedInSitemap": 0
-      }
-    },
-    "schema": {
-      "passed": true,
-      "errors": [],
-      "warnings": [],
-      "stats": {
-        "filesChecked": 63,
-        "schemasFound": 196,
-        "invalidSchemas": 0
-      }
-    },
-    "canonical-host": {
-      "passed": true,
-      "errors": [],
-      "warnings": [],
-      "stats": {
-        "filesChecked": 76,
-        "wwwReferences": 0
-      }
-    },
-    "content-voice": {
-      "passed": true,
-      "errors": [],
-      "warnings": [],
-      "stats": {
-        "filesChecked": 63,
-        "violations": 0
+        "filesChecked": 125,
+        "missingTags": 11
       }
     }
   }
