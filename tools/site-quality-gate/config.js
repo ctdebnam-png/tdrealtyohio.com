@@ -43,6 +43,12 @@ module.exports = {
   // Files to exclude from schema validation checks
   excludeFromSchemaCheck: ['/404.html', '/404/', '/lp/'],
 
+
+  // Centralized inline script policy check
+  centralizedInlineScriptCheck: {
+    includeGlobs: ['tools/**/*.html']
+  },
+
   // Sitemap file location
   sitemapFile: 'sitemap.xml',
 

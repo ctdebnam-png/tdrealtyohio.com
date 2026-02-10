@@ -6,6 +6,13 @@
 
 const fs = require('fs');
 const path = require('path');
+const { renderCanonicalHead } = require('./lib/page-partials');
+const {
+  organizationAndAgentGraph,
+  breadcrumbSchema,
+  webApplicationSchema,
+  collectionPageSchema
+} = require('./lib/schema-partials');
 
 const citiesData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'cities.json'), 'utf8'));
 const allCities = citiesData.cities;
@@ -113,50 +120,13 @@ const TOOLS = [
 /* ===== SHARED HTML FRAGMENTS ===== */
 
 function htmlHead(title, description, canonicalPath, extra) {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
-  <meta name="description" content="${description}">
-  <link rel="canonical" href="https://tdrealtyohio.com${canonicalPath}">
-  <meta property="article:modified_time" content="${TODAY}">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${description}">
-  <meta property="og:url" content="https://tdrealtyohio.com${canonicalPath}">
-  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${title}">
-  <meta name="twitter:description" content="${description}">
-  <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
-  <meta name="theme-color" content="#1a2e44">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" href="/assets/css/styles.css" as="style">
-  <link rel="preload" href="/assets/js/main.js" as="script">
-  <link rel="stylesheet" href="/assets/css/styles.css">
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
-${extra || ''}
-</head>`;
+  return renderCanonicalHead({
+    title,
+    description,
+    canonicalPath,
+    modifiedDate: TODAY,
+    extraHead: extra || ''
+  });
 }
 
 function htmlNav(activeLink) {
@@ -884,31 +854,19 @@ ${actionButtons()}${pdfExport}
 
 function generateToolPage(tool) {
   var isSeller = tool.intent === 'seller';
-  var breadcrumb = `
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tdrealtyohio.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://tdrealtyohio.com/tools/" },
-      { "@type": "ListItem", "position": 3, "name": "${tool.name}", "item": "https://tdrealtyohio.com/tools/${tool.slug}/" }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "${tool.name}",
-    "description": "${tool.metaDescription}",
-    "url": "https://tdrealtyohio.com/tools/${tool.slug}/",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Web",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "provider": { "@type": "RealEstateAgent", "name": "TD Realty Ohio, LLC" }
-  }
-  </script>`;
+  var breadcrumb = [
+    organizationAndAgentGraph(),
+    breadcrumbSchema([
+      { name: 'Home', item: 'https://tdrealtyohio.com/' },
+      { name: 'Tools', item: 'https://tdrealtyohio.com/tools/' },
+      { name: tool.name, item: `https://tdrealtyohio.com/tools/${tool.slug}/` }
+    ]),
+    webApplicationSchema({
+      name: tool.name,
+      description: tool.metaDescription,
+      url: `https://tdrealtyohio.com/tools/${tool.slug}/`
+    })
+  ].join('\n');
 
   return htmlHead(
     tool.name + ' | TD Realty Ohio',
@@ -988,33 +946,25 @@ function generateCityToolWrapper(tool, city) {
     ? `Use this free ${tool.name.toLowerCase()} for ${city.name}, Ohio. With a median home price of ${formatPrice(city.medianPrice)} in ${city.county} County, understanding your costs and options is the first step to a successful sale.`
     : `Planning to buy a home in ${city.name}, Ohio? Use this free tool to get personalized results based on the ${city.name} market, where the median home price is ${formatPrice(city.medianPrice)}.`;
 
-  var schema = `
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tdrealtyohio.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://tdrealtyohio.com/tools/" },
-      { "@type": "ListItem", "position": 3, "name": "${tool.shortName}", "item": "https://tdrealtyohio.com/tools/${tool.slug}/" },
-      { "@type": "ListItem", "position": 4, "name": "${city.name}", "item": "https://tdrealtyohio.com/tools/${tool.slug}/${city.slug}/" }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "${tool.name} for ${city.name}, Ohio",
-    "description": "${tool.metaDescription.replace('Central Ohio', city.name + ', Ohio')}",
-    "url": "https://tdrealtyohio.com/tools/${tool.slug}/${city.slug}/",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Web",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "provider": { "@type": "RealEstateAgent", "name": "TD Realty Ohio, LLC" },
-    "areaServed": { "@type": "City", "name": "${city.name}", "containedInPlace": { "@type": "State", "name": "Ohio" } }
-  }
-  </script>`;
+  var schema = [
+    organizationAndAgentGraph(),
+    breadcrumbSchema([
+      { name: 'Home', item: 'https://tdrealtyohio.com/' },
+      { name: 'Tools', item: 'https://tdrealtyohio.com/tools/' },
+      { name: tool.shortName, item: `https://tdrealtyohio.com/tools/${tool.slug}/` },
+      { name: city.name, item: `https://tdrealtyohio.com/tools/${tool.slug}/${city.slug}/` }
+    ]),
+    webApplicationSchema({
+      name: `${tool.name} for ${city.name}, Ohio`,
+      description: tool.metaDescription.replace('Central Ohio', city.name + ', Ohio'),
+      url: `https://tdrealtyohio.com/tools/${tool.slug}/${city.slug}/`,
+      areaServed: {
+        '@type': 'City',
+        name: city.name,
+        containedInPlace: { '@type': 'State', name: 'Ohio' }
+      }
+    })
+  ].join('\n');
 
   return htmlHead(
     tool.name + ' for ' + city.name + ', Ohio | TD Realty Ohio',
@@ -1117,17 +1067,18 @@ function generateToolsIndex() {
           </a>`;
   }).join('\n');
 
-  var schema = `
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tdrealtyohio.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Free Tools", "item": "https://tdrealtyohio.com/tools/" }
-    ]
-  }
-  </script>`;
+  var schema = [
+    organizationAndAgentGraph(),
+    breadcrumbSchema([
+      { name: 'Home', item: 'https://tdrealtyohio.com/' },
+      { name: 'Free Tools', item: 'https://tdrealtyohio.com/tools/' }
+    ]),
+    collectionPageSchema({
+      name: 'Free Real Estate Tools',
+      description: 'Interactive calculators and planning tools for Central Ohio home sellers and buyers.',
+      url: 'https://tdrealtyohio.com/tools/'
+    })
+  ].join('\n');
 
   return htmlHead(
     'Free Real Estate Tools | TD Realty Ohio',
