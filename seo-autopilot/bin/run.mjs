@@ -68,6 +68,9 @@ import { applyPillarNav, removeAllPillarNavBlocks } from '../fixers/pillar-nav.m
 import { auditNavConsistency } from '../auditors/nav-consistency.mjs';
 import { pullConversions, loadConversions } from '../collectors/conversions.mjs';
 import { computeConversionAttribution } from '../analyzers/conversion-attribution.mjs';
+import { injectLocalBusinessSchema } from '../generators/localbusiness-schema.mjs';
+import { auditNapDrift } from '../auditors/nap-drift.mjs';
+import { generateCitationsPlan } from '../generators/citations-plan.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -156,6 +159,7 @@ async function main() {
     pillarNav: { filesChanged: 0, details: [] },
     navConsistency: { totalChecked: 0, issues: [], pillarInDegree: {} },
     conversions: { lastDay: null, last7: null, deltas: null },
+    localSeo: { napDrift: { phoneMismatchCount: 0, emailMismatchCount: 0, sampleRoutes: [] }, schema: { injected: false, pages: [] } },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -435,6 +439,26 @@ async function main() {
     report.errors.push(`navConsistency: ${err.message}`);
   }
 
+  // NAP drift audit (Chunk 20) — read-only check
+  let napDriftResult = { phoneMismatchCount: 0, emailMismatchCount: 0, nameMismatchCount: 0 };
+  try {
+    napDriftResult = auditNapDrift(pages || []);
+    report.localSeo.napDrift = {
+      phoneMismatchCount: napDriftResult.phoneMismatchCount,
+      emailMismatchCount: napDriftResult.emailMismatchCount,
+      sampleRoutes: [
+        ...napDriftResult.phoneMismatches.slice(0, 5).map(m => ({ route: m.routePath, type: 'phone', snippet: m.snippet })),
+        ...napDriftResult.emailMismatches.slice(0, 5).map(m => ({ route: m.routePath, type: 'email', snippet: m.snippet })),
+      ],
+    };
+    const totalDrift = napDriftResult.phoneMismatchCount + napDriftResult.emailMismatchCount;
+    if (totalDrift > 0) {
+      console.log(`[nap] ${totalDrift} NAP drift issue(s): ${napDriftResult.phoneMismatchCount} phone, ${napDriftResult.emailMismatchCount} email`);
+    }
+  } catch (err) {
+    report.errors.push(`napDrift: ${err.message}`);
+  }
+
   // Classify audit issues
   const techClassification = beforeAudit
     ? classifyIssues(beforeAudit, config.rankIntentRoutes || [])
@@ -596,6 +620,24 @@ async function main() {
         for (const f of hygieneResult.fixes) console.log(`  ${f.file}: ${f.action}`);
       }
       report.indexingHygiene = hygieneResult;
+
+      // LocalBusiness schema injection (Chunk 20)
+      try {
+        const schemaResult = injectLocalBusinessSchema();
+        report.localSeo.schema = { injected: schemaResult.injected, pages: schemaResult.pagesUpdated };
+        if (schemaResult.injected) {
+          console.log(`[tech] LocalBusiness schema: injected on ${schemaResult.pagesUpdated.join(', ')}`);
+        }
+      } catch (err) {
+        report.errors.push(`localBusinessSchema: ${err.message}`);
+      }
+
+      // Citations plan generation (Chunk 20)
+      try {
+        await generateCitationsPlan();
+      } catch (err) {
+        report.errors.push(`citationsPlan: ${err.message}`);
+      }
 
       moduleOutcomes.tech = {
         lastRunAt: new Date().toISOString(),
