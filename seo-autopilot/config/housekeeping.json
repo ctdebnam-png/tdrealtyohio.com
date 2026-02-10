@@ -1,0 +1,16 @@
+{
+  "report": {
+    "keepLatestOnly": true
+  },
+  "state": {
+    "maxScoreRuns": 120,
+    "maxRecentEdits": 50,
+    "maxOpportunityCtrPages": 50,
+    "maxOpportunityDeclines": 50,
+    "maxOpportunityStriking": 200,
+    "maxWorstRoutes": 10
+  },
+  "snapshots": {
+    "keepMetadata": 14
+  }
+}

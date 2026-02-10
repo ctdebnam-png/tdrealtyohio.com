@@ -1,0 +1,10 @@
+{
+  "routes": [
+    "/", "/sellers/", "/buyers/", "/1-percent-commission/", "/home-value/",
+    "/areas/", "/blog/", "/about/", "/contact/"
+  ],
+  "maxRedirectHops": 5,
+  "timeoutMs": 15000,
+  "userAgent": "tdrealtyohio-seo-autopilot/1.0",
+  "requireHttps": true
+}

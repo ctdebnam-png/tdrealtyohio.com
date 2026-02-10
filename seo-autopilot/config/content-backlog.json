@@ -1,0 +1,93 @@
+{
+  "clusters": [
+    {
+      "clusterId": "seller-process",
+      "pillarPath": "/sellers/",
+      "clusterTitle": "Selling process and cost control",
+      "topics": [
+        {
+          "topicId": "seller-commission-how-it-works-ohio",
+          "status": "pending",
+          "primaryIntent": "explain",
+          "targetQueryHints": [
+            "how real estate commission works",
+            "seller commission ohio"
+          ],
+          "requiredSections": [
+            "Overview",
+            "How commission is paid",
+            "Options that reduce cost",
+            "Timeline",
+            "FAQ"
+          ],
+          "internalLinksTo": [
+            "/sellers/",
+            "/1-percent-commission/",
+            "/contact/"
+          ]
+        }
+      ]
+    },
+    {
+      "clusterId": "buyer-process",
+      "pillarPath": "/buyers/",
+      "clusterTitle": "Buying process and closing costs",
+      "topics": [
+        {
+          "topicId": "buyer-closing-costs-ohio",
+          "status": "pending",
+          "primaryIntent": "explain",
+          "targetQueryHints": [
+            "closing costs ohio",
+            "what are closing costs"
+          ],
+          "requiredSections": [
+            "Overview",
+            "Cost categories",
+            "Ways to reduce costs",
+            "Timeline",
+            "FAQ"
+          ],
+          "internalLinksTo": [
+            "/buyers/",
+            "/contact/"
+          ]
+        }
+      ]
+    },
+    {
+      "clusterId": "areas-guides",
+      "pillarPath": "/areas/",
+      "clusterTitle": "Neighborhood and area guides",
+      "topics": [
+        {
+          "topicId": "westerville-neighborhood-guide-basics",
+          "status": "pending",
+          "primaryIntent": "guide",
+          "targetQueryHints": [
+            "westerville neighborhoods",
+            "living in westerville ohio"
+          ],
+          "requiredSections": [
+            "Overview",
+            "Housing types",
+            "Commute patterns",
+            "School selection factors",
+            "FAQ"
+          ],
+          "internalLinksTo": [
+            "/areas/",
+            "/contact/"
+          ]
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "maxPublishesPerRun": 1,
+    "maxRefreshesPerRun": 1,
+    "minWordCountNewPost": 900,
+    "minWordCountRefreshAdd": 250,
+    "maxFilesChangedPerRun": 20
+  }
+}

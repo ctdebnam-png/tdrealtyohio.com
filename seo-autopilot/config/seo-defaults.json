@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://tdrealtyohio.com",
+  "siteName": "TD Realty Ohio",
+  "defaultTitle": "TD Realty Ohio",
+  "titleTemplate": "%s | TD Realty Ohio",
+  "defaultDescription": "Central Ohio real estate brokerage offering 1–2% listing commissions. Full-service selling and buying with TD Realty Ohio in Columbus, Westerville, and surrounding areas.",
+  "canonicalStrategy": "slash",
+  "defaultOgImagePath": "/assets/images/og-default.jpg",
+  "twitterCard": "summary_large_image"
+}

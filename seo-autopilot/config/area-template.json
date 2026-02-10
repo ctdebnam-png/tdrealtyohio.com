@@ -1,0 +1,22 @@
+{
+  "requiredBlocks": [
+    "Snapshot",
+    "Housing patterns",
+    "Commute and access",
+    "What affects price",
+    "Buying and selling considerations",
+    "FAQ"
+  ],
+  "blockRules": {
+    "noClaimsNeedingCitations": true,
+    "noRankingsOrStats": true,
+    "noGuarantees": true
+  },
+  "internalLinks": {
+    "alwaysInclude": ["/areas/", "/contact/"],
+    "conditional": [
+      { "when": "sellerIntent", "include": ["/sellers/", "/1-percent-commission/"] },
+      { "when": "buyerIntent", "include": ["/buyers/"] }
+    ]
+  }
+}

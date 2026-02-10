@@ -1,0 +1,12 @@
+{
+  "lookbackDaysPrimary": 28,
+  "lookbackDaysShort": 7,
+  "minImpressionsForCtrWork": 200,
+  "maxCtrForCtrWork": 0.015,
+  "minImpressionsForStrikingDistance": 100,
+  "strikingDistanceMinPos": 8.0,
+  "strikingDistanceMaxPos": 20.0,
+  "minClicksForDeclineCheck": 5,
+  "declineClickRatioThreshold": 0.7,
+  "maxRowsPerQuery": 25000
+}

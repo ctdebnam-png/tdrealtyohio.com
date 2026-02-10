@@ -1,0 +1,20 @@
+{
+  "thin": {
+    "minWordsIndexablePage": 250,
+    "minWordsNewBlogPost": 900,
+    "minWordsRefreshAdd": 250
+  },
+  "duplication": {
+    "maxJaccardSimilarity": 0.55,
+    "maxNearDuplicateCount": 3
+  },
+  "linking": {
+    "maxExactAnchorRepeatsPerRun": 2,
+    "maxPillarLinksPerPost": 3,
+    "maxTotalInternalLinksAddedPerRun": 5
+  },
+  "cluster": {
+    "requireClusterForPublish": true,
+    "requirePillarLink": true
+  }
+}
