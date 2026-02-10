@@ -22,6 +22,7 @@ const checkCssUsage = require('./checks/css-usage');
 const checkAssetBudget = require('./checks/asset-budget');
 const checkCentralizedInlineScripts = require('./checks/centralized-inline-scripts');
 const checkDuplicateIntent = require('./checks/duplicate-intent');
+const checkBlogContentQuality = require('./checks/blog-content-quality');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -53,7 +54,8 @@ async function main() {
     { name: 'css-usage', fn: checkCssUsage, label: 'CSS Usage Audit (template families)' },
     { name: 'asset-budget', fn: checkAssetBudget, label: 'Asset Budget (CSS/JS bytes)' },
     { name: 'centralized-inline-scripts', fn: checkCentralizedInlineScripts, label: 'Centralized Inline Scripts' },
-    { name: 'duplicate-intent', fn: checkDuplicateIntent, label: 'Duplicate Intent (areas/compare overlap)' }
+    { name: 'duplicate-intent', fn: checkDuplicateIntent, label: 'Duplicate Intent (areas/compare overlap)' },
+    { name: 'blog-content-quality', fn: checkBlogContentQuality, label: 'Blog Content Quality (author/date/source)' }
   ];
 
   for (const check of checks) {

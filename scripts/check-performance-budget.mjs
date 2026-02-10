@@ -34,6 +34,20 @@ const BUDGETS = {
   maxJsFiles: 10,
 };
 
+// Route-level budgets for top conversion and discovery pages.
+// Limits are in KB and validate route payload referenced from HTML.
+const ROUTE_BUDGETS = [
+  { route: '/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/sellers/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/buyers/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/areas/columbus/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/areas/westerville/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/areas/dublin/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/compare/1-percent-vs-3-percent/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/compare/discount-broker-vs-full-service/', maxJsKB: 90, maxCssKB: 220 },
+  { route: '/compare/flat-fee-mls-vs-full-service/', maxJsKB: 90, maxCssKB: 220 },
+];
+
 async function getFileSize(filePath) {
   const s = await stat(filePath);
   return s.size;
@@ -41,6 +55,36 @@ async function getFileSize(filePath) {
 
 function formatKB(bytes) {
   return (bytes / 1024).toFixed(1);
+}
+
+function routeToHtmlPath(route) {
+  if (route === '/') return join(ROOT, 'index.html');
+  return join(ROOT, route.replace(/^\//, ''), 'index.html');
+}
+
+function getLocalAssetsByType(html, type) {
+  const regex = type === 'js'
+    ? /<script[^>]*src=["']([^"']+)["'][^>]*><\/script>/gi
+    : /<link[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']+)["'][^>]*>/gi;
+
+  const assets = new Set();
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    const rawHref = match[1];
+    if (!rawHref.startsWith('/')) continue;
+    const cleanHref = rawHref.split('?')[0].split('#')[0];
+    assets.add(cleanHref);
+  }
+  return [...assets];
+}
+
+async function sumLocalAssetBytes(assetPaths) {
+  let total = 0;
+  for (const assetPath of assetPaths) {
+    const diskPath = join(ROOT, assetPath.replace(/^\//, ''));
+    total += await getFileSize(diskPath);
+  }
+  return total;
 }
 
 async function findFiles(dir, extensions, files = [], skipDirs = new Set()) {
@@ -64,7 +108,7 @@ async function main() {
   const violations = [];
 
   // Check CSS files
-  const cssFiles = await findFiles(join(ROOT, 'assets', 'css'), ['.css']);
+  const cssFiles = await findFiles(join(ROOT, 'assets', 'css'), ['.css'], [], new Set(['src']));
   let totalCssBytes = 0;
 
   console.log('\n  CSS Files:');
@@ -148,6 +192,30 @@ async function main() {
     console.log(`    Oversized pages (>${BUDGETS.maxHtmlFileKB} KB):`);
     for (const { file, sizeKB } of oversizedHtml) {
       console.log(`      ${file}: ${sizeKB.toFixed(1)} KB`);
+    }
+  }
+
+  // Check route-level JS/CSS payload budgets
+  console.log(`\n  Route Payload Budgets:`);
+  for (const budget of ROUTE_BUDGETS) {
+    const routeFile = routeToHtmlPath(budget.route);
+    const html = await readFile(routeFile, 'utf8');
+    const jsAssets = getLocalAssetsByType(html, 'js');
+    const cssAssets = getLocalAssetsByType(html, 'css');
+    const jsBytes = await sumLocalAssetBytes(jsAssets);
+    const cssBytes = await sumLocalAssetBytes(cssAssets);
+    const jsKB = jsBytes / 1024;
+    const cssKB = cssBytes / 1024;
+
+    const jsState = jsKB > budget.maxJsKB ? 'X' : '✓';
+    const cssState = cssKB > budget.maxCssKB ? 'X' : '✓';
+    console.log(`    ${budget.route.padEnd(42)} JS ${jsState} ${formatKB(jsBytes)} KB (limit ${budget.maxJsKB} KB) | CSS ${cssState} ${formatKB(cssBytes)} KB (limit ${budget.maxCssKB} KB)`);
+
+    if (jsKB > budget.maxJsKB) {
+      violations.push(`Route ${budget.route} JS is ${formatKB(jsBytes)} KB (limit: ${budget.maxJsKB} KB)`);
+    }
+    if (cssKB > budget.maxCssKB) {
+      violations.push(`Route ${budget.route} CSS is ${formatKB(cssBytes)} KB (limit: ${budget.maxCssKB} KB)`);
     }
   }
 

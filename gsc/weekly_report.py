@@ -31,6 +31,14 @@ LOCKED_FACTS = {
 
 # Maximum pages to recommend per run
 MAX_RECOMMENDATIONS = 5
+MAX_WEEKLY_EXPERIMENT_BATCH = 3
+EXPERIMENT_RUNTIME_DAYS = 14
+EXPERIMENT_MIN_IMPRESSIONS = 120
+HOLDOUT_WIN_MARGIN = 0.05
+HOLDOUT_LOSS_MARGIN = 0.05
+
+EXPERIMENT_STORE_PATH = Path("ops/experiments/metadata-experiments.json")
+DEFAULT_METADATA_RULES_PATH = Path("ops/experiments/default-metadata-rules.json")
 
 # CTR threshold: pages below this with meaningful impressions are flagged
 LOW_CTR_THRESHOLD = 0.03
@@ -346,6 +354,188 @@ def _suggest_internal_links(page_url: str) -> list[dict]:
     return suggestions[:5]
 
 
+def _load_experiment_store() -> dict:
+    """Load persisted metadata experiments."""
+    if not EXPERIMENT_STORE_PATH.exists():
+        return {"experiments": []}
+    try:
+        data = json.loads(EXPERIMENT_STORE_PATH.read_text())
+        if isinstance(data, dict) and isinstance(data.get("experiments"), list):
+            return data
+    except json.JSONDecodeError:
+        pass
+    return {"experiments": []}
+
+
+def _save_experiment_store(store: dict):
+    EXPERIMENT_STORE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    EXPERIMENT_STORE_PATH.write_text(json.dumps(store, indent=2, default=str) + "\n")
+
+
+def _load_default_metadata_rules() -> dict:
+    """Load promoted metadata defaults."""
+    if not DEFAULT_METADATA_RULES_PATH.exists():
+        return {"rules": {}}
+    try:
+        data = json.loads(DEFAULT_METADATA_RULES_PATH.read_text())
+        if isinstance(data, dict) and isinstance(data.get("rules"), dict):
+            return data
+    except json.JSONDecodeError:
+        pass
+    return {"rules": {}}
+
+
+def _save_default_metadata_rules(rules: dict):
+    DEFAULT_METADATA_RULES_PATH.parent.mkdir(parents=True, exist_ok=True)
+    DEFAULT_METADATA_RULES_PATH.write_text(json.dumps(rules, indent=2, default=str) + "\n")
+
+
+def _build_candidate_variant(current_title: str | None, current_meta: str | None, queries: list[dict]) -> dict:
+    """Build variant metadata for experiment scheduling."""
+    top_query = queries[0]["query"] if queries else "central ohio real estate"
+
+    variant_title = None
+    if current_title:
+        if "|" in current_title:
+            left, right = current_title.rsplit("|", 1)
+            variant_title = f"{left.strip()} - Get Local Options | {right.strip()}"
+        else:
+            variant_title = f"{current_title.strip()} - Get Local Options"
+        if len(variant_title) > 60:
+            variant_title = variant_title[:57].rsplit(" ", 1)[0] + "..."
+
+    variant_meta = None
+    if current_meta:
+        variant_meta = current_meta
+    else:
+        variant_meta = f"Explore {top_query} with full-service support and lower commissions in Central Ohio."
+
+    if top_query.lower() not in variant_meta.lower():
+        appended = f" Learn about {top_query} and next steps today."
+        if len(variant_meta) + len(appended) <= 155:
+            variant_meta = variant_meta.rstrip(".") + "." + appended
+    if len(variant_meta) > 155:
+        variant_meta = variant_meta[:152].rsplit(" ", 1)[0] + "..."
+
+    return {
+        "title": variant_title,
+        "meta_description": variant_meta,
+        "top_query": top_query,
+    }
+
+
+def _run_weekly_experiment_scheduler(
+    recommendations: list[dict],
+    recent_pages: list[dict],
+    site_avg_ctr: float,
+) -> dict:
+    """Schedule, evaluate, and promote metadata experiments in bounded batches."""
+    today = date.today()
+    recent_map = {p["page"]: p for p in recent_pages}
+    store = _load_experiment_store()
+    rules = _load_default_metadata_rules()
+    experiments = store.get("experiments", [])
+
+    evaluated = []
+    for exp in experiments:
+        if exp.get("status") != "active":
+            continue
+
+        url = exp.get("url")
+        recency = recent_map.get(url, {})
+        current_ctr = float(recency.get("ctr", 0.0) or 0.0)
+        current_impressions = int(recency.get("impressions", 0) or 0)
+        holdout_ctr = float(exp.get("holdout_ctr", exp.get("baseline_ctr", site_avg_ctr)) or 0.0)
+        min_impressions = int(exp.get("min_impressions_for_decision", EXPERIMENT_MIN_IMPRESSIONS))
+        end_window = exp.get("end_window")
+
+        if end_window and today < date.fromisoformat(end_window):
+            continue
+        if current_impressions < min_impressions:
+            exp["notes"] = (
+                f"Awaiting minimum impressions ({current_impressions}/{min_impressions}) "
+                f"before decision."
+            )
+            continue
+
+        if current_ctr >= holdout_ctr * (1 + HOLDOUT_WIN_MARGIN):
+            exp["status"] = "promoted"
+            exp["decision"] = "promote"
+            exp["decision_date"] = today.isoformat()
+            rules["rules"][exp["path"]] = {
+                "title": exp.get("variant", {}).get("title"),
+                "meta_description": exp.get("variant", {}).get("meta_description"),
+                "source_experiment": exp.get("id"),
+                "promoted_on": today.isoformat(),
+            }
+            evaluated.append({"path": exp["path"], "decision": "promote", "ctr": current_ctr, "holdout_ctr": holdout_ctr})
+        elif current_ctr <= holdout_ctr * (1 - HOLDOUT_LOSS_MARGIN):
+            exp["status"] = "reverted"
+            exp["decision"] = "revert"
+            exp["decision_date"] = today.isoformat()
+            evaluated.append({"path": exp["path"], "decision": "revert", "ctr": current_ctr, "holdout_ctr": holdout_ctr})
+        else:
+            exp["status"] = "complete"
+            exp["decision"] = "hold"
+            exp["decision_date"] = today.isoformat()
+            evaluated.append({"path": exp["path"], "decision": "hold", "ctr": current_ctr, "holdout_ctr": holdout_ctr})
+
+    active_or_recent = {
+        e.get("url") for e in experiments
+        if e.get("status") in {"active", "promoted", "complete", "reverted"}
+    }
+    scheduled = []
+    for rec in recommendations:
+        if len(scheduled) >= MAX_WEEKLY_EXPERIMENT_BATCH:
+            break
+        if rec["url"] in active_or_recent:
+            continue
+
+        variant = _build_candidate_variant(
+            _extract_current_title(rec["url"]),
+            _extract_current_meta_desc(rec["url"]),
+            rec.get("top_queries", []),
+        )
+        exp_id = f"meta-{today.isoformat()}-{len(experiments) + len(scheduled) + 1}"
+        start_window = today.isoformat()
+        end_window = (today + timedelta(days=EXPERIMENT_RUNTIME_DAYS)).isoformat()
+        baseline_ctr = float(rec.get("ctr", 0.0) or 0.0)
+        holdout_ctr = max(site_avg_ctr, baseline_ctr)
+
+        exp = {
+            "id": exp_id,
+            "status": "active",
+            "url": rec["url"],
+            "path": rec["path"],
+            "baseline_ctr": round(baseline_ctr, 4),
+            "holdout_ctr": round(holdout_ctr, 4),
+            "variant": variant,
+            "start_window": start_window,
+            "end_window": end_window,
+            "min_impressions_for_decision": EXPERIMENT_MIN_IMPRESSIONS,
+            "created_at": today.isoformat(),
+        }
+        experiments.append(exp)
+        scheduled.append(exp)
+
+    store["updated"] = today.isoformat()
+    store["experiments"] = experiments
+    _save_experiment_store(store)
+
+    rules["updated"] = today.isoformat()
+    _save_default_metadata_rules(rules)
+
+    return {
+        "scheduled_count": len(scheduled),
+        "evaluated_count": len(evaluated),
+        "batch_cap": MAX_WEEKLY_EXPERIMENT_BATCH,
+        "scheduled": scheduled,
+        "evaluated": evaluated,
+        "experiment_store": str(EXPERIMENT_STORE_PATH),
+        "default_rules_store": str(DEFAULT_METADATA_RULES_PATH),
+    }
+
+
 # ── Report generation ────────────────────────────────────────────────
 
 def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
@@ -494,6 +684,12 @@ def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
         "locked_facts": LOCKED_FACTS,
     }
 
+    report_data["experiment_scheduler"] = _run_weekly_experiment_scheduler(
+        recommendations,
+        recent,
+        report_data["site_summary"]["avg_ctr"],
+    )
+
     # 8. Has actionable suggestions?
     has_actionable = any(
         r["title_suggestion"] or r["meta_suggestion"] or r["internal_link_suggestions"]
@@ -629,6 +825,25 @@ def _build_markdown(data: dict, low_ctr: list[dict], declining: list[dict]) -> s
             lines.append("")
 
     # Locked facts reminder
+    scheduler = data.get("experiment_scheduler", {})
+    if scheduler:
+        lines.append("\n## Metadata Experiment Scheduler\n")
+        lines.append(
+            f"Scheduled this run: **{scheduler.get('scheduled_count', 0)}** "
+            f"(batch cap: {scheduler.get('batch_cap', MAX_WEEKLY_EXPERIMENT_BATCH)})."
+        )
+        lines.append(
+            f"Decisions this run: **{scheduler.get('evaluated_count', 0)}** "
+            "(auto-revert underperformers vs holdout benchmark, promote winners)."
+        )
+        if scheduler.get("evaluated"):
+            lines.append("\n**Evaluated experiments:**")
+            for row in scheduler["evaluated"]:
+                lines.append(
+                    f"- {row['path']}: {row['decision']} "
+                    f"(variant CTR {row['ctr']:.2%} vs holdout {row['holdout_ctr']:.2%})"
+                )
+
     lines.append("\n---")
     lines.append("**Locked Business Facts** (do not alter):")
     lines.append(f"- Phone: {LOCKED_FACTS['phone']}")

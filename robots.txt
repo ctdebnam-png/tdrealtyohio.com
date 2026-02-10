@@ -9,6 +9,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /lp/
+Disallow: /admin/
 Disallow: /ops/
 Disallow: /ads-bot/
 
