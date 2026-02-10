@@ -110,13 +110,13 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </a>
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width:24px;height:24px;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="u-6386b3e5"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </header>
 
   <main id="main-content">
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <ol class="breadcrumb-list">
@@ -134,8 +134,8 @@
     </section>
 
     <section class="section">
-      <div class="container" style="max-width: 800px;">
-        <div class="two-col" style="grid-template-columns: 1fr;">
+      <div class="container u-7d701bf7">
+        <div class="two-col u-eb0595be">
 
           <div class="calculator" id="tool-calculator">
             <div class="calculator-slider-group">
@@ -143,15 +143,15 @@
                 <label class="calculator-label" for="bor-price">Target Purchase Price</label>
                 <span class="calculator-slider-value" id="bor-price-display">$400,000</span>
               </div>
-              <input type="range" class="calculator-range" id="bor-price" min="150000" max="800000" step="10000" value="400000" style="--value:38.46%">
+              <input type="range" class="calculator-range u-d13fceab" id="bor-price" min="150000" max="800000" step="10000" value="400000">
               <div class="slider-labels"><span>$150K</span><span>$800K</span></div>
             </div>
             <div class="form-group">
-              <label for="bor-down-pct" style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Down Payment (%)</label>
+              <label for="bor-down-pct" class="u-87e03b91">Down Payment (%)</label>
               <input type="number" id="bor-down-pct" class="form-input" value="20" min="0" max="100" step="1">
             </div>
             <div class="form-group">
-              <label for="bor-lender" style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Lender Status</label>
+              <label for="bor-lender" class="u-87e03b91">Lender Status</label>
               <select id="bor-lender" class="form-input">
                 <option value="pre-approved">Pre-approved</option>
                 <option value="pre-qualified">Pre-qualified</option>
@@ -159,7 +159,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="bor-closing" style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Preferred Closing Window</label>
+              <label for="bor-closing" class="u-87e03b91">Preferred Closing Window</label>
               <select id="bor-closing" class="form-input">
                 <option value="30">30 days</option>
                 <option value="45">45 days</option>
@@ -167,22 +167,22 @@
               </select>
             </div>
             <div class="form-group">
-              <label style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Must-Haves</label>
-              <div style="display:grid;gap:0.5rem;">
-                <label style="cursor:pointer;"><input type="checkbox" name="bor-must-haves" value="garage"> Garage</label>
-                <label style="cursor:pointer;"><input type="checkbox" name="bor-must-haves" value="yard"> Yard / Outdoor space</label>
-                <label style="cursor:pointer;"><input type="checkbox" name="bor-must-haves" value="schools"> Specific school district</label>
-                <label style="cursor:pointer;"><input type="checkbox" name="bor-must-haves" value="commute"> Short commute</label>
-                <label style="cursor:pointer;"><input type="checkbox" name="bor-must-haves" value="updated"> Move-in ready / updated</label>
+              <label class="u-87e03b91">Must-Haves</label>
+              <div class="u-68ee009e">
+                <label class="u-58aba575"><input type="checkbox" name="bor-must-haves" value="garage"> Garage</label>
+                <label class="u-58aba575"><input type="checkbox" name="bor-must-haves" value="yard"> Yard / Outdoor space</label>
+                <label class="u-58aba575"><input type="checkbox" name="bor-must-haves" value="schools"> Specific school district</label>
+                <label class="u-58aba575"><input type="checkbox" name="bor-must-haves" value="commute"> Short commute</label>
+                <label class="u-58aba575"><input type="checkbox" name="bor-must-haves" value="updated"> Move-in ready / updated</label>
               </div>
             </div>
-            <button type="button" id="tool-calculate-btn" class="btn btn-primary" style="width:100%;" onclick="calcBuyerOfferReadiness()">Check My Readiness</button>
+            <button type="button" id="tool-calculate-btn" class="btn btn-primary u-8588e44d" onclick="calcBuyerOfferReadiness()">Check My Readiness</button>
           </div>
 
-        <div id="tool-results" style="display:none;margin-top:2rem;">
-          <h3 style="color:var(--navy);margin-bottom:1rem;">Your Results</h3>
+        <div id="tool-results" class="u-9521bb76">
+          <h3 class="u-1e9100d0">Your Results</h3>
           <div class="calculator-results" id="bor-results-content"></div>
-        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;">
+        <div class="u-9a711322">
           <button type="button" id="action-copy" class="btn btn-outline btn-sm">Copy This</button>
           <button type="button" id="action-email" class="btn btn-outline btn-sm">Email This</button>
           <button type="button" id="action-text" class="btn btn-outline btn-sm">Text Me This</button>
@@ -192,17 +192,17 @@
         </div>
         </div>
 
-        <p style="margin-top:2rem;"><a href="/areas/upper-arlington/" style="color:var(--gold);font-weight:600;">Explore Upper Arlington real estate &rarr;</a></p>
+        <p class="u-7df01f19"><a href="/areas/upper-arlington/" class="u-6b92aefe">Explore Upper Arlington real estate &rarr;</a></p>
 
-        <div id="related-tools" style="margin-top:2rem;">
-          <h3 style="color:var(--navy);margin-bottom:1rem;">Related Tools</h3>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;"></div>
+        <div id="related-tools" class="u-7df01f19">
+          <h3 class="u-1e9100d0">Related Tools</h3>
+          <div class="u-39aca44a"></div>
         </div>
       </div>
     </section>
 
 
-    <p style="text-align:center;color:var(--gray-500);font-size:0.8125rem;max-width:700px;margin:1.5rem auto;padding:0 1rem;">
+    <p class="u-4f33a1b3">
       This tool provides estimates for educational purposes only. Actual costs and outcomes will vary based on your specific situation. Consult with a licensed real estate professional and/or attorney before making financial decisions.
     </p>
 
