@@ -1,6 +1,19 @@
 {
   "baseUrl": "https://tdrealtyohio.com",
-  "canonicalStrategy": "trailing-slash",
+  "canonicalStrategy": "slash",
   "rankIntentRoutes": [],
-  "utilityRoutesNoIndex": []
+  "utilityRoutesNoIndex": [
+    "/404/",
+    "/500/",
+    "/thank-you/buyer_cash_back/",
+    "/thank-you/buyer_consult/",
+    "/thank-you/buyer_pre_approval/",
+    "/thank-you/seller_net_sheet/",
+    "/thank-you/seller_pricing_call/",
+    "/thank-you/seller_timeline/",
+    "/lp/google-seller/",
+    "/lp/google-buyer/",
+    "/lp/google-sell-and-buy/",
+    "/admin/dashboard/"
+  ]
 }
