@@ -1,13 +1,6 @@
 /**
  * Schema Consistency Check
- * Validates stable, site-wide JSON-LD consistency.
- *
- * Fails when:
- * - Organization / RealEstateAgent IDs drift from configured constants.
- * - telephone/email/license facts drift from required business facts.
- * - Any schema includes streetAddress.
- * - Area pages have weak locality schema (missing areaServed/serviceArea hints).
- * - Area FAQs are not localized (questions should reference the page locality).
+ * Validates stable, site-wide JSON-LD consistency and template expectations.
  */
 
 const cheerio = require('cheerio');
@@ -15,6 +8,15 @@ const { getHtmlFiles, readHtmlFile } = require('./utils');
 
 const ORG_ID = 'https://tdrealtyohio.com/#organization';
 const AGENT_ID = 'https://tdrealtyohio.com/#realestateagent';
+const SERVICE_PATH_PREFIXES = [
+  'sell/',
+  'buy/',
+  'pre-listing-inspection/',
+  '1-percent-commission/',
+  'sell-and-buy/',
+  'sell-only-2-percent/'
+];
+const HOWTO_EXPECTED_PATHS = new Set(['buyers/index.html', 'sellers/index.html']);
 
 function parseJsonLdBlocks($) {
   const schemas = [];
@@ -81,6 +83,38 @@ function normalizePhone(value) {
   return digits;
 }
 
+function hasVisibleFaqSection($) {
+  const faqUi = $('.faq-item, .faq-question, .faq-answer, [data-faq], #faq, #buyer-faq').length > 0;
+  const faqHeading = $('h2, h3').toArray().some(el => /faq|frequently asked|common questions/i.test($(el).text()));
+  return faqUi || faqHeading;
+}
+
+
+function isIndexablePage($, relative) {
+  if (relative === '404.html') return false;
+  const robots = ($('meta[name="robots"]').attr('content') || '').toLowerCase();
+  return !robots.includes('noindex');
+}
+
+function isServicePage(relative) {
+  return SERVICE_PATH_PREFIXES.some(prefix => relative.startsWith(prefix));
+}
+
+function getSchemasByType(schemas, type) {
+  return schemas.filter(s => s && s['@type'] === type);
+}
+
+function isValidUrl(value) {
+  return typeof value === 'string' && /^https:\/\//.test(value);
+}
+
+function hasNestedType(obj, type) {
+  if (!obj || typeof obj !== 'object') return false;
+  if (Array.isArray(obj)) return obj.some(item => hasNestedType(item, type));
+  if (obj['@type'] === type) return true;
+  return Object.values(obj).some(value => hasNestedType(value, type));
+}
+
 async function check(config, verbose) {
   const results = {
     passed: true,
@@ -96,7 +130,14 @@ async function check(config, verbose) {
       napDrift: 0,
       licenseDrift: 0,
       areaServedIssues: 0,
-      faqLocalizationIssues: 0
+      faqLocalizationIssues: 0,
+      requiredFieldIssues: 0,
+      faqVisibilityIssues: 0,
+      howToCoverageIssues: 0,
+      webPageCoverageIssues: 0,
+      breadcrumbCoverageIssues: 0,
+      serviceCoverageIssues: 0,
+      sameAsDriftIssues: 0
     }
   };
 
@@ -106,17 +147,25 @@ async function check(config, verbose) {
   const requiredPhone = normalizePhone(config.requiredBusinessFacts.phone);
   const requiredEmail = String(config.requiredBusinessFacts.email).toLowerCase();
   const requiredLicenses = new Set((config.requiredBusinessFacts.licenses || []).map(String));
+  const sameAsMap = new Map();
 
   for (const file of files) {
     const html = readHtmlFile(file.absolute);
     const $ = cheerio.load(html);
     const rawSchemas = parseJsonLdBlocks($);
     const schemas = flattenSchemas(rawSchemas);
+    const indexable = isIndexablePage($, file.relative);
 
     if (schemas.length === 0) continue;
 
-    const orgSchemas = schemas.filter(s => s && s['@type'] === 'Organization');
-    const reaSchemas = schemas.filter(s => s && s['@type'] === 'RealEstateAgent');
+    const orgSchemas = getSchemasByType(schemas, 'Organization');
+    const reaSchemas = getSchemasByType(schemas, 'RealEstateAgent');
+    const webpageSchemas = getSchemasByType(schemas, 'WebPage');
+    const hasNestedWebPage = rawSchemas.some(schema => hasNestedType(schema, 'WebPage'));
+    const breadcrumbSchemas = getSchemasByType(schemas, 'BreadcrumbList');
+    const serviceSchemas = getSchemasByType(schemas, 'Service');
+    const faqSchemas = getSchemasByType(schemas, 'FAQPage');
+    const howToSchemas = getSchemasByType(schemas, 'HowTo');
 
     // 1) Stable IDs for organization + real estate agent
     for (const schema of orgSchemas) {
@@ -134,6 +183,14 @@ async function check(config, verbose) {
         results.errors.push({
           file: file.relative,
           message: `RealEstateAgent @id drift: expected ${AGENT_ID}, found ${schema['@id']}`
+        });
+        results.stats.schemaIdDrift++;
+        results.passed = false;
+      }
+      if (schema.parentOrganization && schema.parentOrganization['@id'] && schema.parentOrganization['@id'] !== ORG_ID) {
+        results.errors.push({
+          file: file.relative,
+          message: `RealEstateAgent parentOrganization @id drift: expected ${ORG_ID}, found ${schema.parentOrganization['@id']}`
         });
         results.stats.schemaIdDrift++;
         results.passed = false;
@@ -209,7 +266,63 @@ async function check(config, verbose) {
       }
     }
 
-    // 6) Area page specificity checks.
+    // 6) Template required field checks
+    for (const schema of webpageSchemas) {
+      if (!schema.url || !isValidUrl(schema.url) || !schema.name) {
+        results.errors.push({ file: file.relative, message: 'WebPage schema missing required fields (url/name)' });
+        results.stats.requiredFieldIssues++;
+        results.passed = false;
+      }
+    }
+    for (const schema of breadcrumbSchemas) {
+      if (!Array.isArray(schema.itemListElement) || schema.itemListElement.length < 1) {
+        results.errors.push({ file: file.relative, message: 'BreadcrumbList missing itemListElement entries' });
+        results.stats.requiredFieldIssues++;
+        results.passed = false;
+      }
+    }
+    if (isServicePage(file.relative)) {
+      for (const schema of serviceSchemas) {
+        if (!schema.name || !schema.serviceType || !schema.offers) {
+          results.errors.push({ file: file.relative, message: 'Service schema missing required offer fields (name/serviceType/offers)' });
+          results.stats.requiredFieldIssues++;
+          results.passed = false;
+        }
+      }
+    }
+
+    // 7) Coverage by page type for indexable templates
+    if (indexable) {
+      if (webpageSchemas.length === 0 && !hasNestedWebPage) {
+        results.errors.push({ file: file.relative, message: 'Indexable page missing WebPage schema' });
+        results.stats.webPageCoverageIssues++;
+        results.passed = false;
+      }
+      if (file.relative !== 'index.html' && breadcrumbSchemas.length === 0) {
+        results.errors.push({ file: file.relative, message: 'Indexable page missing BreadcrumbList schema' });
+        results.stats.breadcrumbCoverageIssues++;
+        results.passed = false;
+      }
+      if (isServicePage(file.relative) && serviceSchemas.length === 0) {
+        results.errors.push({ file: file.relative, message: 'Service-intent page missing Service schema with offer details' });
+        results.stats.serviceCoverageIssues++;
+        results.passed = false;
+      }
+
+      const visibleFaq = hasVisibleFaqSection($);
+      if (visibleFaq && faqSchemas.length === 0) {
+        results.errors.push({ file: file.relative, message: 'Visible FAQ section present but FAQPage schema missing' });
+        results.stats.faqVisibilityIssues++;
+        results.passed = false;
+      }
+      if (HOWTO_EXPECTED_PATHS.has(file.relative) && howToSchemas.length === 0) {
+        results.errors.push({ file: file.relative, message: 'Process guide page missing HowTo schema' });
+        results.stats.howToCoverageIssues++;
+        results.passed = false;
+      }
+    }
+
+    // 8) Area page specificity checks.
     const isAreaPage = file.relative.startsWith('areas/') && file.relative !== 'areas/index.html';
     if (isAreaPage) {
       const areaLabel = extractAreaName(file.relative, $);
@@ -246,6 +359,21 @@ async function check(config, verbose) {
           results.stats.faqLocalizationIssues++;
           results.passed = false;
         }
+      }
+    }
+
+    // 9) sameAs consistency by @type
+    for (const schema of [...orgSchemas, ...reaSchemas]) {
+      if (!schema.sameAs) continue;
+      const values = Array.isArray(schema.sameAs) ? schema.sameAs : [schema.sameAs];
+      const normalized = values.map(v => String(v).trim()).sort().join('|');
+      const key = schema['@type'];
+      if (!sameAsMap.has(key)) {
+        sameAsMap.set(key, normalized);
+      } else if (sameAsMap.get(key) !== normalized) {
+        results.errors.push({ file: file.relative, message: `${key} sameAs drift across templates` });
+        results.stats.sameAsDriftIssues++;
+        results.passed = false;
       }
     }
   }
