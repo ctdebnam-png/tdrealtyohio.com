@@ -10,7 +10,10 @@ The site quality gate validates:
 2. **SEO Tags** - Required meta tags are present on every page
 3. **Business Facts** - Required business information appears on every page
 4. **Sitemap Consistency** - sitemap.xml matches actual site structure
-5. **Site Audit** - Automated audit from `tools/site-audit/audit.js`
+5. **Schema Checks** - Structured data validity and consistency
+6. **Content Voice** - Flags first-person/plural language drift
+7. **CSS Usage Audit** - Per template family, reports selectors not found in production HTML
+8. **Asset Budget** - Enforces CSS/JS byte budgets to prevent regressions
 
 ## Running Locally
 
@@ -29,7 +32,8 @@ npm run check
 - `npm run check:seo` - Run only SEO tag check
 - `npm run check:business` - Run only business facts check
 - `npm run check:sitemap` - Run only sitemap consistency check
-- `npm run check:site-audit` - Run the site audit script
+- `npm run check:css-usage` - Run CSS selector usage audit
+- `npm run check:asset-budget` - Run CSS/JS byte budget check
 
 ## GitHub Actions
 
@@ -105,6 +109,8 @@ Edit `tools/site-quality-gate/config.js` to modify:
 - Required SEO tags
 - Sitemap location
 - External link settings
+- CSS usage family-to-stylesheet mapping
+- Asset budget byte thresholds
 
 ## Troubleshooting
 

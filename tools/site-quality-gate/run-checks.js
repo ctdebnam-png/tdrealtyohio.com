@@ -18,6 +18,8 @@ const checkSchema = require('./checks/schema');
 const { check: checkSchemaConsistency } = require('./checks/schema-consistency');
 const checkCanonicalHost = require('./checks/canonical-host');
 const checkContentVoice = require('./checks/content-voice');
+const checkCssUsage = require('./checks/css-usage');
+const checkAssetBudget = require('./checks/asset-budget');
 const checkCentralizedInlineScripts = require('./checks/centralized-inline-scripts');
 
 // Parse command line arguments
@@ -47,6 +49,8 @@ async function main() {
     { name: 'schema-consistency', fn: checkSchemaConsistency, label: 'Schema Consistency' },
     { name: 'canonical-host', fn: checkCanonicalHost, label: 'Canonical Host (no-www)' },
     { name: 'content-voice', fn: checkContentVoice, label: 'Content Voice (no first-person)' },
+    { name: 'css-usage', fn: checkCssUsage, label: 'CSS Usage Audit (template families)' },
+    { name: 'asset-budget', fn: checkAssetBudget, label: 'Asset Budget (CSS/JS bytes)' }
     { name: 'centralized-inline-scripts', fn: checkCentralizedInlineScripts, label: 'Centralized Inline Scripts' }
   ];
 

@@ -8,7 +8,9 @@
     "check:links": "node run-checks.js --only=links",
     "check:seo": "node run-checks.js --only=seo",
     "check:business": "node run-checks.js --only=business",
-    "check:sitemap": "node run-checks.js --only=sitemap"
+    "check:sitemap": "node run-checks.js --only=sitemap",
+    "check:css-usage": "node run-checks.js --only=css-usage",
+    "check:asset-budget": "node run-checks.js --only=asset-budget"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
