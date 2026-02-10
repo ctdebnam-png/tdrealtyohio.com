@@ -63,24 +63,6 @@
   <url>
     <loc>https://tdrealtyohio.com/blog/</loc>
     <lastmod>2026-02-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/buy/cash-back/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/buy/consult/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/buy/pre-approval/</loc>
-    <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -109,12 +91,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/compare/fsbo-vs-1-percent-listing/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://tdrealtyohio.com/faq/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -127,247 +103,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/sell-and-buy/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/sell/net-sheet/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/sell/pricing-call/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/sell/timeline/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://tdrealtyohio.com/tools/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/buyer-credit-estimator/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/buyer-offer-readiness/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/move-up-plan/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/repair-vs-credit/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/sell-buy-timing/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/seller-documents/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://tdrealtyohio.com/agents/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/bexley/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/blacklick/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/canal-winchester/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/clintonville/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/columbus/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/delaware/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/dublin/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/gahanna/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/galena/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/german-village/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/grandview-heights/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/granville/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/grove-city/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/hilliard/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/johnstown/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/lewis-center/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/new-albany/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/pataskala/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/pickerington/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/powell/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/reynoldsburg/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/sunbury/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/upper-arlington/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/westerville/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/areas/worthington/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -439,160 +181,154 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/bexley/</loc>
+    <loc>https://tdrealtyohio.com/areas/bexley/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/blacklick/</loc>
+    <loc>https://tdrealtyohio.com/areas/blacklick/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/canal-winchester/</loc>
+    <loc>https://tdrealtyohio.com/areas/canal-winchester/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/clintonville/</loc>
+    <loc>https://tdrealtyohio.com/areas/clintonville/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/columbus/</loc>
+    <loc>https://tdrealtyohio.com/areas/columbus/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/delaware/</loc>
+    <loc>https://tdrealtyohio.com/areas/delaware/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/dublin/</loc>
+    <loc>https://tdrealtyohio.com/areas/dublin/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/gahanna/</loc>
+    <loc>https://tdrealtyohio.com/areas/gahanna/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/galena/</loc>
+    <loc>https://tdrealtyohio.com/areas/galena/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/german-village/</loc>
+    <loc>https://tdrealtyohio.com/areas/german-village/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/grandview-heights/</loc>
+    <loc>https://tdrealtyohio.com/areas/grandview-heights/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/granville/</loc>
+    <loc>https://tdrealtyohio.com/areas/granville/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/grove-city/</loc>
+    <loc>https://tdrealtyohio.com/areas/grove-city/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/hilliard/</loc>
+    <loc>https://tdrealtyohio.com/areas/hilliard/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/johnstown/</loc>
+    <loc>https://tdrealtyohio.com/areas/johnstown/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/lewis-center/</loc>
+    <loc>https://tdrealtyohio.com/areas/lewis-center/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/new-albany/</loc>
+    <loc>https://tdrealtyohio.com/areas/new-albany/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/pataskala/</loc>
+    <loc>https://tdrealtyohio.com/areas/pataskala/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/pickerington/</loc>
+    <loc>https://tdrealtyohio.com/areas/pickerington/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/powell/</loc>
+    <loc>https://tdrealtyohio.com/areas/powell/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/reynoldsburg/</loc>
+    <loc>https://tdrealtyohio.com/areas/reynoldsburg/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/sunbury/</loc>
+    <loc>https://tdrealtyohio.com/areas/sunbury/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/upper-arlington/</loc>
+    <loc>https://tdrealtyohio.com/areas/upper-arlington/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/westerville/</loc>
+    <loc>https://tdrealtyohio.com/areas/westerville/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/buyers/first-time/worthington/</loc>
+    <loc>https://tdrealtyohio.com/areas/worthington/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/reviews/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/areas/zip/43004/</loc>
@@ -650,6 +386,174 @@
   </url>
   <url>
     <loc>https://tdrealtyohio.com/areas/zip/43240/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buy/cash-back/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buy/consult/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buy/pre-approval/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/bexley/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/blacklick/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/canal-winchester/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/clintonville/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/columbus/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/delaware/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/dublin/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/gahanna/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/galena/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/german-village/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/grandview-heights/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/granville/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/grove-city/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/hilliard/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/johnstown/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/lewis-center/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/new-albany/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/pataskala/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/pickerington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/powell/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/reynoldsburg/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/sunbury/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/upper-arlington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/westerville/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/buyers/first-time/worthington/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -715,13 +619,193 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://tdrealtyohio.com/compare/fsbo-vs-1-percent-listing/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://tdrealtyohio.com/credentials/</loc>
     <lastmod>2026-02-10</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/referrals/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/reviews/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/sell/net-sheet/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/sell/pricing-call/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/sell/timeline/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/templates/blocks/disclosure-buyer-full/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/templates/blocks/disclosure-listing-fee/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/templates/blocks/disclosure-seller-full/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/templates/blocks/pricing-summary/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/templates/blocks/whats-separate-sellers/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/templates/partials/canonical-head/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/thank-you/buyer_cash_back/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/thank-you/buyer_consult/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/thank-you/buyer_pre_approval/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/thank-you/seller_net_sheet/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/thank-you/seller_pricing_call/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/thank-you/seller_timeline/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/columbus/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/delaware/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/dublin/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/gahanna/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/hilliard/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/new-albany/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/powell/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/upper-arlington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/westerville/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-closing-costs/worthington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-credit-estimator/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/buyer-offer-readiness/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -787,6 +871,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://tdrealtyohio.com/tools/move-up-plan/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://tdrealtyohio.com/tools/move-up-plan/columbus/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -842,6 +932,78 @@
   </url>
   <url>
     <loc>https://tdrealtyohio.com/tools/move-up-plan/worthington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/columbus/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/delaware/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/dublin/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/gahanna/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/hilliard/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/new-albany/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/powell/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/upper-arlington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/westerville/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/pre-listing-checklist/worthington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/repair-vs-credit/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -907,6 +1069,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://tdrealtyohio.com/tools/sell-buy-timing/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://tdrealtyohio.com/tools/sell-buy-timing/columbus/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -967,6 +1135,78 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/columbus/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/delaware/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/dublin/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/gahanna/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/hilliard/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/new-albany/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/powell/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/upper-arlington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/westerville/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/sell-now-vs-wait/worthington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-documents/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://tdrealtyohio.com/tools/seller-documents/columbus/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -1022,6 +1262,72 @@
   </url>
   <url>
     <loc>https://tdrealtyohio.com/tools/seller-documents/worthington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/columbus/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/delaware/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/dublin/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/gahanna/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/hilliard/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/new-albany/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/powell/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/upper-arlington/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/westerville/</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/tools/seller-net-proceeds/worthington/</loc>
     <lastmod>2026-02-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

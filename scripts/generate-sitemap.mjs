@@ -4,13 +4,16 @@
  * Generates sitemap.xml from HTML files using canonical URLs
  */
 
-import { readdir, readFile, writeFile } from 'fs/promises';
-import { join, dirname } from 'path';
+import { readdir, readFile, stat, writeFile } from 'fs/promises';
+import { execFile } from 'child_process';
+import { join, dirname, relative } from 'path';
+import { promisify } from 'util';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const SITE_URL = 'https://tdrealtyohio.com';
+const execFileAsync = promisify(execFile);
 
 // Priority mapping based on page type
 const PRIORITY_MAP = {
@@ -125,8 +128,54 @@ async function findHtmlFiles(dir, files = []) {
 /**
  * Get last modified date for a file
  */
-async function getLastMod() {
-  return new Date().toISOString().split('T')[0];
+async function getLastMod(filePath, existingLastMod = null) {
+  const relativePath = relative(ROOT, filePath).replace(/\\/g, '/');
+
+  // Preferred source: git commit date for the file
+  try {
+    const { stdout } = await execFileAsync('git', ['log', '-1', '--format=%cs', '--', relativePath], {
+      cwd: ROOT,
+    });
+    const gitDate = stdout.trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(gitDate)) {
+      return gitDate;
+    }
+  } catch {
+    // Fall through to filesystem mtime
+  }
+
+  // Fallback source: filesystem mtime
+  try {
+    const fileStats = await stat(filePath);
+    if (!Number.isNaN(fileStats.mtimeMs)) {
+      return fileStats.mtime.toISOString().split('T')[0];
+    }
+  } catch {
+    // Guard below preserves existing value when no reliable date is available
+  }
+
+  return existingLastMod;
+}
+
+/**
+ * Parse an existing sitemap to preserve historic lastmod values when needed
+ */
+async function readExistingSitemapLastMods() {
+  const existing = new Map();
+
+  try {
+    const sitemapContent = await readFile(join(ROOT, 'sitemap.xml'), 'utf-8');
+    const urlPattern = /<url>\s*<loc>([^<]+)<\/loc>[\s\S]*?<lastmod>([^<]+)<\/lastmod>[\s\S]*?<\/url>/g;
+    let match;
+
+    while ((match = urlPattern.exec(sitemapContent)) !== null) {
+      existing.set(match[1], match[2]);
+    }
+  } catch {
+    // No existing sitemap yet
+  }
+
+  return existing;
 }
 
 /**
@@ -136,6 +185,7 @@ async function generateSitemap() {
   console.log('Generating sitemap.xml...');
 
   const htmlFiles = await findHtmlFiles(ROOT);
+  const existingLastMods = await readExistingSitemapLastMods();
   const urls = [];
 
   for (const filePath of htmlFiles) {
@@ -149,7 +199,7 @@ async function generateSitemap() {
       continue;
     }
 
-    const lastmod = await getLastMod(filePath);
+    const lastmod = await getLastMod(filePath, existingLastMods.get(canonicalUrl));
     const priority = PRIORITY_MAP[path] || (path.startsWith('/blog/') && path !== '/blog/' ? '0.6' : '0.5');
     const changefreq = path.startsWith('/blog/') ? 'monthly' :
                        path === '/' ? 'weekly' :
