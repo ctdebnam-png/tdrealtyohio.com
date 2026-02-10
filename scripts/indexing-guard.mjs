@@ -72,40 +72,68 @@ async function checkRobotsTxt() {
 
   const content = await readFile(robotsPath, 'utf-8');
 
-  if (!content.includes('Sitemap:')) {
-    errors.push('robots.txt does not contain Sitemap directive');
-  }
-
-  if (!content.includes(SITE_URL)) {
-    errors.push(`robots.txt Sitemap URL must use policy canonical host: ${SITE_URL}`);
+  if (!content.includes(`Sitemap: ${SITE_URL}/sitemap-index.xml`)) {
+    errors.push(`robots.txt must reference sitemap index at ${SITE_URL}/sitemap-index.xml`);
   }
 }
 
 async function checkSitemapXml(pageMeta) {
-  console.log('Checking sitemap.xml...');
-  const sitemapPath = join(ROOT, 'sitemap.xml');
+  console.log('Checking sitemap-index.xml...');
+  const sitemapIndexPath = join(ROOT, 'sitemap-index.xml');
 
-  if (!await fileExists(sitemapPath)) {
-    errors.push('sitemap.xml is missing from deploy root');
+  if (!await fileExists(sitemapIndexPath)) {
+    errors.push('sitemap-index.xml is missing from deploy root');
     return;
   }
 
-  const content = await readFile(sitemapPath, 'utf-8');
-  const htmlUrls = content.match(/<loc>[^<]*\.html<\/loc>/g);
-  if (htmlUrls && htmlUrls.length > 0) {
-    errors.push(`sitemap.xml contains ${htmlUrls.length} .html URLs (policy requires clean canonical URLs)`);
+  const indexContent = await readFile(sitemapIndexPath, 'utf-8');
+  const childLocMatches = indexContent.matchAll(/<loc>([^<]+)<\/loc>/g);
+  const childSitemaps = [];
+  for (const match of childLocMatches) {
+    const childLoc = match[1].trim();
+    if (!childLoc.startsWith(SITE_URL)) {
+      errors.push(`sitemap-index.xml contains URL not starting with policy canonical base ${SITE_URL}: ${childLoc}`);
+      continue;
+    }
+    const childPath = childLoc.slice(SITE_URL.length);
+    if (!childPath.endsWith('.xml')) {
+      errors.push(`sitemap-index.xml child entry is not an XML file: ${childLoc}`);
+      continue;
+    }
+    childSitemaps.push(join(ROOT, childPath.replace(/^\//, '')));
+  }
+
+  if (childSitemaps.length === 0) {
+    errors.push('sitemap-index.xml does not contain any child sitemap entries');
+    return;
   }
 
   const sitemapRoutes = new Set();
-  const locMatches = content.matchAll(/<loc>([^<]+)<\/loc>/g);
-  for (const match of locMatches) {
-    const url = match[1].trim();
-    if (!url.startsWith(SITE_URL)) {
-      errors.push(`sitemap.xml contains URL not starting with policy canonical base ${SITE_URL}: ${url}`);
+  for (const childPath of childSitemaps) {
+    if (!await fileExists(childPath)) {
+      errors.push(`Child sitemap listed in index is missing: /${relative(ROOT, childPath).replace(/\\/g, '/')}`);
       continue;
     }
-    const route = normalizeRoute(url.slice(SITE_URL.length) || '/', POLICY.canonical?.trailingSlash || 'always');
-    sitemapRoutes.add(route);
+
+    const content = await readFile(childPath, 'utf-8');
+    const htmlUrls = content.match(/<loc>[^<]*\.html<\/loc>/g);
+    if (htmlUrls && htmlUrls.length > 0) {
+      errors.push(`${relative(ROOT, childPath)} contains ${htmlUrls.length} .html URLs (policy requires clean canonical URLs)`);
+    }
+
+    const locMatches = content.matchAll(/<loc>([^<]+)<\/loc>/g);
+    for (const match of locMatches) {
+      const url = match[1].trim();
+      if (!url.startsWith(SITE_URL)) {
+        errors.push(`${relative(ROOT, childPath)} contains URL not starting with policy canonical base ${SITE_URL}: ${url}`);
+        continue;
+      }
+      const route = normalizeRoute(url.slice(SITE_URL.length) || '/', POLICY.canonical?.trailingSlash || 'always');
+      if (sitemapRoutes.has(route)) {
+        errors.push(`Duplicate sitemap route across child sitemaps: ${route}`);
+      }
+      sitemapRoutes.add(route);
+    }
   }
 
   const expectedRoutes = new Set();

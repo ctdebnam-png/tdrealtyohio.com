@@ -66,4 +66,4 @@ Disallow: /
 # ==============================================
 # SITEMAP
 # ==============================================
-Sitemap: https://tdrealtyohio.com/sitemap.xml
+Sitemap: https://tdrealtyohio.com/sitemap-index.xml
