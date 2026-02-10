@@ -36,4 +36,5 @@ __pycache__/
 
 # SEO Autopilot ephemeral artifacts
 seo-autopilot/report/latest.json
-seo-autopilot/state/*.json
+seo-autopilot/report/link-graph.json
+seo-autopilot/state/gsc-latest.json

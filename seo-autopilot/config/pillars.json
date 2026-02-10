@@ -1,0 +1,29 @@
+{
+  "pillars": [
+    {
+      "path": "/sellers/",
+      "primaryAnchors": ["sell your house", "sell in Westerville", "sell for less commission"],
+      "secondaryAnchors": ["selling process", "listing agent alternative"]
+    },
+    {
+      "path": "/buyers/",
+      "primaryAnchors": ["buy a home", "first time buyer", "buyer credit at closing"],
+      "secondaryAnchors": ["home buying process", "buyer representation"]
+    },
+    {
+      "path": "/areas/",
+      "primaryAnchors": ["Westerville real estate", "homes in Westerville", "Central Ohio neighborhoods"],
+      "secondaryAnchors": ["areas served", "neighborhood guide"]
+    },
+    {
+      "path": "/blog/",
+      "primaryAnchors": ["real estate tips", "Ohio real estate guides", "selling and buying guides"],
+      "secondaryAnchors": ["housing guides", "market education"]
+    }
+  ],
+  "rules": {
+    "maxNewLinksPerRun": 3,
+    "maxLinksAddedPerFile": 2,
+    "minAnchorLength": 4
+  }
+}

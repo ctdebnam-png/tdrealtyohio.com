@@ -7,10 +7,11 @@
  *
  * Pipeline:
  * 1. Detect build output directory
- * 2. Run before-audit on existing HTML
+ * 2. Run before-audit + link graph
  * 3. Apply metadata fixer (OG/Twitter tags)
- * 4. Run after-audit and compute diff
- * 5. Write report with before/after comparison
+ * 4. Generate link plan + apply internal link insertions
+ * 5. Run after-audit + link graph and compute diff
+ * 6. Write report with before/after comparison
  */
 
 import { readFileSync } from 'fs';
@@ -21,19 +22,32 @@ import { fileURLToPath } from 'url';
 import { detectBuildOutput } from '../lib/detect-build-output.mjs';
 import { listHtmlPages } from '../lib/list-html-pages.mjs';
 import { runBuildAudit, printAuditSummary } from '../auditors/build-audit.mjs';
+import { buildLinkGraph, printLinkGraphSummary } from '../auditors/link-graph.mjs';
 import { fixMetadata } from '../fixers/metadata-fixer.mjs';
+import { generateLinkPlan } from '../planners/link-plan.mjs';
+import { applyInternalLinks } from '../fixers/internal-links.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
 const REPORT_DIR = join(__dirname, '..', 'report');
 const CONFIG_PATH = join(__dirname, '..', 'config', 'site.json');
+const PILLARS_PATH = join(__dirname, '..', 'config', 'pillars.json');
 
 function loadConfig() {
   try {
     return JSON.parse(readFileSync(CONFIG_PATH, 'utf-8'));
   } catch {
     console.warn('[seo-autopilot] Could not load site.json — using defaults');
-    return { baseUrl: '', canonicalStrategy: 'slash', utilityRoutesNoIndex: [] };
+    return { baseUrl: '', canonicalStrategy: 'slash', rankIntentRoutes: [], utilityRoutesNoIndex: [] };
+  }
+}
+
+function loadPillars() {
+  try {
+    return JSON.parse(readFileSync(PILLARS_PATH, 'utf-8'));
+  } catch {
+    console.warn('[seo-autopilot] Could not load pillars.json — using defaults');
+    return { pillars: [], rules: { maxNewLinksPerRun: 3, maxLinksAddedPerFile: 2, minAnchorLength: 4 } };
   }
 }
 
@@ -56,14 +70,30 @@ function computeDiff(before, after) {
   return diff;
 }
 
+/**
+ * Extract summary from link graph for reporting.
+ */
+function linkGraphSummary(graph) {
+  return {
+    pagesInGraph: graph.pagesInGraph,
+    edgesInGraph: graph.edgesInGraph,
+    orphanCount: graph.orphanCount,
+    topUnderlinked: graph.topUnderlinked,
+    topLinkSources: graph.topLinkSources.slice(0, 10),
+    brokenEdgesSample: graph.brokenEdgesSample,
+  };
+}
+
 async function main() {
   const start = Date.now();
   console.log('[seo-autopilot] Starting run…');
 
-  // Ensure report directory exists
+  // Ensure directories exist
   await mkdir(REPORT_DIR, { recursive: true });
+  await mkdir(join(__dirname, '..', 'state'), { recursive: true });
 
   const config = loadConfig();
+  const pillars = loadPillars();
 
   const report = {
     timestamp: new Date().toISOString(),
@@ -73,6 +103,10 @@ async function main() {
     afterAudit: null,
     diff: null,
     fixerResults: null,
+    linkGraphBefore: null,
+    linkGraphAfter: null,
+    linkActionsApplied: [],
+    budgetUsed: { linksAdded: 0, filesEdited: 0 },
     notes: '',
     errors: [],
   };
@@ -89,8 +123,9 @@ async function main() {
   console.log(`[seo-autopilot] Build output: ${buildOutput.mode} — ${buildOutput.reason}`);
 
   if (buildOutput.mode === 'static-html') {
-    // Step 2: Before-audit
     let pages;
+
+    // Step 2: Before-audit + link graph
     try {
       pages = listHtmlPages(buildOutput.outputDir, {
         canonicalStrategy: config.canonicalStrategy,
@@ -111,6 +146,20 @@ async function main() {
       console.error('[seo-autopilot] Before-audit error (non-fatal):', err.message);
     }
 
+    // Link graph before fixes
+    let linkGraphBefore;
+    if (pages) {
+      try {
+        linkGraphBefore = buildLinkGraph(pages, config);
+        report.linkGraphBefore = linkGraphSummary(linkGraphBefore);
+        console.log('\n=== LINK GRAPH (BEFORE) ===');
+        printLinkGraphSummary(linkGraphBefore);
+      } catch (err) {
+        report.errors.push(`linkGraphBefore: ${err.message}`);
+        console.error('[seo-autopilot] Link graph error (non-fatal):', err.message);
+      }
+    }
+
     // Step 3: Apply metadata fixer
     if (pages) {
       try {
@@ -127,10 +176,36 @@ async function main() {
       }
     }
 
-    // Step 4: After-audit
+    // Step 4: Generate link plan + apply
+    if (linkGraphBefore) {
+      try {
+        const { actions } = generateLinkPlan(linkGraphBefore, config, pillars);
+
+        if (actions.length > 0) {
+          console.log(`\n[seo-autopilot] Link plan: ${actions.length} action(s)`);
+          for (const a of actions) {
+            console.log(`  ${a.fromPath} -> ${a.toPath} ("${a.anchorText}")`);
+          }
+
+          const linkResult = applyInternalLinks(actions);
+          report.linkActionsApplied = linkResult.details.filter((d) => d.status === 'added');
+          report.budgetUsed = {
+            linksAdded: linkResult.linksAdded,
+            filesEdited: linkResult.filesEdited,
+          };
+          console.log(`[seo-autopilot] Internal links: ${linkResult.linksAdded} link(s) added, ${linkResult.filesEdited} file(s) edited`);
+        } else {
+          console.log('\n[seo-autopilot] Link plan: no actions needed');
+        }
+      } catch (err) {
+        report.errors.push(`linkPlan: ${err.message}`);
+        console.error('[seo-autopilot] Link plan error (non-fatal):', err.message);
+      }
+    }
+
+    // Step 5: After-audit + link graph
     if (pages) {
       try {
-        // Re-enumerate to pick up any changes
         const afterPages = listHtmlPages(buildOutput.outputDir, {
           canonicalStrategy: config.canonicalStrategy,
         });
@@ -146,14 +221,19 @@ async function main() {
         console.log('\n=== AFTER FIXES ===');
         printAuditSummary(afterAudit);
 
-        // Step 5: Compute diff
+        // Link graph after
+        const linkGraphAfter = buildLinkGraph(afterPages, config);
+        report.linkGraphAfter = linkGraphSummary(linkGraphAfter);
+        console.log('=== LINK GRAPH (AFTER) ===');
+        printLinkGraphSummary(linkGraphAfter);
+
+        // Compute audit diff
         if (report.beforeAudit) {
           report.diff = computeDiff(
             report.beforeAudit.issueCounts,
             report.afterAudit.issueCounts,
           );
 
-          // Print diff summary
           const diffEntries = Object.entries(report.diff);
           if (diffEntries.length > 0) {
             console.log('=== DIFF (before -> after) ===');
@@ -165,7 +245,19 @@ async function main() {
           }
         }
 
-        report.notes = `Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues.`;
+        // Compute link graph diff
+        if (report.linkGraphBefore && report.linkGraphAfter) {
+          const orphanDelta = report.linkGraphAfter.orphanCount - report.linkGraphBefore.orphanCount;
+          const edgeDelta = report.linkGraphAfter.edgesInGraph - report.linkGraphBefore.edgesInGraph;
+          if (orphanDelta !== 0 || edgeDelta !== 0) {
+            console.log('=== LINK GRAPH DIFF ===');
+            if (edgeDelta !== 0) console.log(`  Edges: ${report.linkGraphBefore.edgesInGraph} -> ${report.linkGraphAfter.edgesInGraph} (${edgeDelta > 0 ? '+' : ''}${edgeDelta})`);
+            if (orphanDelta !== 0) console.log(`  Orphans: ${report.linkGraphBefore.orphanCount} -> ${report.linkGraphAfter.orphanCount} (${orphanDelta > 0 ? '+' : ''}${orphanDelta})`);
+            console.log('');
+          }
+        }
+
+        report.notes = `Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues. Links added: ${report.budgetUsed.linksAdded}.`;
       } catch (err) {
         report.errors.push(`afterAudit: ${err.message}`);
         console.error('[seo-autopilot] After-audit error (non-fatal):', err.message);
@@ -181,10 +273,19 @@ async function main() {
 
   report.durationMs = Date.now() - start;
 
+  // Write report (gitignored)
   await writeFile(
     join(REPORT_DIR, 'latest.json'),
     JSON.stringify(report, null, 2) + '\n',
   );
+
+  // Write link graph data (gitignored)
+  if (report.linkGraphAfter) {
+    await writeFile(
+      join(REPORT_DIR, 'link-graph.json'),
+      JSON.stringify(report.linkGraphAfter, null, 2) + '\n',
+    );
+  }
 
   console.log(`[seo-autopilot] Done in ${report.durationMs}ms`);
 }
