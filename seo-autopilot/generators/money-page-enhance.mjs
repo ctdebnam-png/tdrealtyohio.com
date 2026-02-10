@@ -63,6 +63,8 @@ function buildContentBlock(blockConfig, intents, routePath) {
   let sectionsAdded = 0;
   let faqAdded = 0;
 
+  parts.push(buildServiceTrustAndProofBlock());
+
   // H2 sections
   for (const h2 of (blockConfig.requiredH2 || [])) {
     // Find a relevant intent query to lightly incorporate
@@ -120,6 +122,19 @@ function buildContentBlock(blockConfig, intents, routePath) {
 
   const html = parts.join('\n');
   return { html, sectionsAdded, faqAdded };
+}
+
+
+function buildServiceTrustAndProofBlock() {
+  return [
+    '    <section class="service-template-meta" style="margin:1.25rem 0;padding:1rem 1.1rem;background:#f7f9fc;border:1px solid #d9e2ee;border-radius:8px;">',
+    '      <p><strong>Author:</strong> <a href="/about/">Travis Debnam, Broker</a></p>',
+    '      <p><strong>Last reviewed:</strong> ' + new Date().toISOString().slice(0, 10) + '</p>',
+    '      <p><strong>Methodology/Data note:</strong> Guidance reflects TD Realty Ohio workflows plus local transaction patterns; validate current prices and timing with active comps and MLS data.</p>',
+    '      <p><strong>Brokerage trust:</strong> TD Realty Ohio, LLC | Broker License #2023006467 | Brokerage License #2023006602</p>',
+    '      <p><strong>Local proof:</strong> Service support across Franklin, Delaware, Licking, and Fairfield counties with process details tailored to property condition, neighborhood, and market demand. No guaranteed outcomes are implied.</p>',
+    '    </section>'
+  ].join('\n');
 }
 
 /**
