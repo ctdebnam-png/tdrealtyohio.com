@@ -8824,6 +8824,133 @@ a.trust-item:focus-visible,
   flex-wrap: wrap;
 }
 
+/* ===== DETAILS / SUMMARY (sitewide collapsible) ===== */
+details.td-details {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+details.td-details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--navy);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+details.td-details > summary::-webkit-details-marker { display: none; }
+details.td-details > summary::after {
+  content: '';
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231a2e44' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 0.2s ease;
+}
+details.td-details[open] > summary::after {
+  transform: rotate(180deg);
+}
+details.td-details > summary:hover {
+  background-color: var(--gray-50);
+}
+details.td-details > summary:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: -2px;
+  border-radius: var(--radius-md);
+}
+details.td-details .td-details-body {
+  padding: 0 1.25rem 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+
+/* Variant: flush (no border, used inside sections like disclosures) */
+details.td-details--flush {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  margin-bottom: 0;
+}
+details.td-details--flush > summary {
+  padding: 0.75rem 0;
+}
+details.td-details--flush .td-details-body {
+  padding: 0 0 0.5rem;
+}
+
+/* Site-disclosures variant: collapsible */
+.site-disclosures details.td-details {
+  border: none;
+  background: transparent;
+  margin-bottom: 0;
+}
+.site-disclosures details.td-details > summary {
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0;
+}
+.site-disclosures details.td-details > summary:hover {
+  background: transparent;
+}
+.site-disclosures details.td-details .td-details-body {
+  padding: 1rem 0 0;
+}
+
+/* ===== PROGRESSIVE REVEAL GRID ===== */
+[data-collapsible-grid] .grid-hidden-item {
+  display: none;
+}
+[data-collapsible-grid].grid-expanded .grid-hidden-item {
+  display: block;
+}
+.grid-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.grid-toggle-btn:hover {
+  background: var(--gray-50);
+  border-color: var(--gray-400);
+}
+.grid-toggle-btn:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+.grid-toggle-btn::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231a2e44' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 0.2s ease;
+}
+[data-collapsible-grid].grid-expanded ~ .text-center .grid-toggle-btn::after,
+.grid-expanded + .text-center .grid-toggle-btn::after {
+  transform: rotate(180deg);
+}
+
 @media print {
   .header, .sticky-cta, .sticky-contact-bar, .persistent-contact,
   .back-to-top, .scroll-progress, .cookie-consent, .market-banner,

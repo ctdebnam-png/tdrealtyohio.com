@@ -644,7 +644,7 @@
         </div>
 
         <h3 style="margin-top: 1.5rem;">City Guides</h3>
-        <div class="grid-3">
+        <div class="grid-3" data-collapsible-grid="6">
           <a href="/buyers/first-time/westerville/" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -922,7 +922,7 @@
         </div>
 
         <h3 style="margin-top: 2.5rem;">ZIP Code Guides</h3>
-        <div class="grid-3">
+        <div class="grid-3" data-collapsible-grid="6">
           <a href="/buyers/first-time/zip-43081/" class="card service-card" style="text-decoration: none; color: inherit;">
             <div class="service-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -1038,12 +1038,14 @@
 
     <!-- Disclosure -->
     <section class="section">
-      <div class="container">
-        <div class="disclosure-box" style="max-width: 800px; margin: 0 auto;">
-          <h4 style="margin-bottom: 1rem;">Important Information About Buyer Representation</h4>
-          <p>Compensation for buyer representation is negotiable and not set by law or any real estate board or MLS. Before you begin working with a buyer's agent, you'll receive a clear explanation of services and any associated costs.</p>
-          <p style="margin-bottom: 0;">The cash back program is subject to lender approval and may be applied toward closing costs or prepaid items. Some loan programs have restrictions on buyer rebates. We'll discuss your specific situation during our initial consultation.</p>
-        </div>
+      <div class="container" style="max-width: 800px; margin: 0 auto;">
+        <details class="td-details">
+          <summary>Important Information About Buyer Representation</summary>
+          <div class="td-details-body">
+            <p>Compensation for buyer representation is negotiable and not set by law or any real estate board or MLS. Before you begin working with a buyer's agent, you'll receive a clear explanation of services and any associated costs.</p>
+            <p style="margin-bottom: 0;">The cash back program is subject to lender approval and may be applied toward closing costs or prepaid items. Some loan programs have restrictions on buyer rebates. We'll discuss your specific situation during our initial consultation.</p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -1184,14 +1186,19 @@
       </div>
     </section>
 
-    <section class="site-disclosures">
+    <!-- PARTIAL:disclosure-buyer-full -->
+    <section class="site-disclosures" id="disclosures">
       <div class="container">
-        <h2>Disclosures</h2>
-        <ul>
-          <li><strong>Buyer credit:</strong> The 1% cash back program is available to qualifying first-time homebuyers and is subject to lender approval. Credit is applied toward closing costs or prepaid items.</li>
-          <li><strong>Buyer representation:</strong> Compensation for buyer representation is negotiable and not set by law or any real estate board or MLS. You will receive a clear explanation of services and costs before committing.</li>
-          <li><strong>Market data:</strong> Median prices, days on market, and other market figures are approximate and based on publicly available MLS data. Last updated: February 2026. Source: Columbus REALTORS MLS.</li>
-        </ul>
+        <details class="td-details">
+          <summary>Disclosures</summary>
+          <div class="td-details-body">
+            <ul>
+              <li><strong>Buyer credit:</strong> The 1% cash back program is available to qualifying first-time homebuyers and is subject to lender approval. Credit is applied toward closing costs or prepaid items.</li>
+              <li><strong>Buyer representation:</strong> Compensation for buyer representation is negotiable and not set by law or any real estate board or MLS. You will receive a clear explanation of services and costs before committing.</li>
+              <li><strong>Market data:</strong> Median prices, days on market, and other market figures are approximate and based on publicly available MLS data. Last updated: February 2026. Source: Columbus REALTORS MLS.</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </section>
 

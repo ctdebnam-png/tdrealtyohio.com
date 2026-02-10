@@ -283,7 +283,7 @@ function pricingSummaryBlock() {
           </div>
         </div>
         <p style="text-align: center; color: var(--gray-500); font-size: 0.8125rem; margin-top: 1.25rem; margin-bottom: 0;">
-          These rates cover your listing fee only. Buyer agent compensation is separate and negotiated with each transaction.
+          These rates cover your listing fee only. <a href="/sellers/#disclosures">See disclosures</a>
         </p>
       </div>
     </section>`;

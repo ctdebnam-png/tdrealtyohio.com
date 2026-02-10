@@ -330,7 +330,7 @@
           </div>
         </div>
         <p class="text-center text-muted" style="font-size: 0.8125rem; margin-top: 1.25rem; margin-bottom: 0;">
-          These rates cover your listing fee only. Buyer agent compensation is separate and negotiated with each transaction.
+          These rates cover your listing fee only. <a href="#disclosures">See disclosures</a>
         </p>
       </div>
     </section>
@@ -364,7 +364,7 @@
         </div>
 
         <p class="text-center text-muted" style="margin-top: 2rem; font-size: 0.9375rem;">
-          Note: These rates cover the listing fee for TD Realty Ohio. Buyer agent compensation is separate and negotiated as part of each transaction.
+          Note: These rates cover the listing fee for TD Realty Ohio. <a href="#disclosures">See disclosures</a>
         </p>
       </div>
     </section>
@@ -435,15 +435,18 @@
           </div>
         </div>
 
-        <div style="margin-top: 2.5rem;">
-          <h3 style="margin-bottom: 1rem;">What's Separate</h3>
-          <p style="color: var(--gray-600); margin-bottom: 1rem;">These costs are not part of your listing fee:</p>
-          <ul class="benefits-list">
-            <li><strong>Buyer agent compensation</strong>: negotiated separately with each transaction based on your market and situation</li>
-            <li><strong>Standard closing costs</strong>: title fees, transfer taxes, and other costs that apply to every home sale regardless of your agent</li>
-            <li><strong>Repairs or staging</strong>: optional and at your discretion based on pre-listing inspection results</li>
-          </ul>
-        </div>
+        <!-- PARTIAL:whats-separate-sellers -->
+        <details class="td-details" style="margin-top: 2.5rem;">
+          <summary>What's Separate</summary>
+          <div class="td-details-body">
+            <p style="color: var(--gray-600); margin-bottom: 1rem;">These costs are not part of your listing fee:</p>
+            <ul class="benefits-list">
+              <li><strong>Buyer agent compensation</strong>: negotiated separately with each transaction based on your market and situation</li>
+              <li><strong>Standard closing costs</strong>: title fees, transfer taxes, and other costs that apply to every home sale regardless of your agent</li>
+              <li><strong>Repairs or staging</strong>: optional and at your discretion based on pre-listing inspection results</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -453,8 +456,14 @@
         <div class="two-col">
           <div>
             <h2>Calculate Your Savings</h2>
-            <p>See what the listing fee looks like at 1% or 2% versus a 3% listing fee. Enter an estimated sale price and select whether you are selling and buying or selling only. The numbers below show only your listing fee so you can see exactly what you pay for listing services.</p>
-            <p>On a $300,000 home, the 1% listing fee keeps $6,000 more in your pocket compared to a 3% listing fee. That's money that stays with you at closing.</p>
+            <p>Compare your listing fee at 1% or 2% versus the typical 3%.</p>
+            <details class="td-details">
+              <summary>How this estimate works</summary>
+              <div class="td-details-body">
+                <p>Enter an estimated sale price and select whether you are selling and buying or selling only. The numbers show only your listing fee so you can see exactly what you pay for listing services.</p>
+                <p>On a $300,000 home, the 1% listing fee keeps $6,000 more in your pocket compared to a 3% listing fee. That's money that stays with you at closing.</p>
+              </div>
+            </details>
           </div>
 
           <div class="calculator" id="seller-calculator">
@@ -489,7 +498,7 @@
               </div>
             </div>
             <p style="font-size: 0.8125rem; color: var(--gray-600); margin-top: 1rem; margin-bottom: 0;">
-              Disclosure: The 1% and 2% rates refer to the listing fee charged by TD Realty Ohio for listing services. Buyer agent commission, if offered in a transaction, is separate and negotiated as part of each deal.
+              Listing fee only. Buyer agent compensation is separate. <a href="#disclosures">See disclosures</a>
             </p>
           </div>
         </div>
@@ -804,7 +813,7 @@
         <div class="section-header">
           <h2>Seller Guides &amp; Resources</h2>
         </div>
-        <div class="guide-card-grid">
+        <div class="guide-card-grid" data-collapsible-grid="6">
           <a href="/blog/closing-costs-columbus-ohio/" class="guide-card">
             <h3>Closing Costs in Central Ohio</h3>
             <p>Understand every fee before you sell.</p>
@@ -914,14 +923,19 @@
       </div>
     </section>
 
-    <section class="site-disclosures">
+    <!-- PARTIAL:disclosure-seller-full -->
+    <section class="site-disclosures" id="disclosures">
       <div class="container">
-        <h2>Disclosures</h2>
-        <ul>
-          <li><strong>Listing fee:</strong> The 1% and 2% rates are the listing fee charged by TD Realty Ohio. Buyer agent compensation is a separate, negotiated term in each transaction.</li>
-          <li><strong>Pre-listing inspection:</strong> Included at no additional cost with every listing. Scope may vary. This inspection does not replace the buyer's inspection or the seller's obligation to disclose known material defects.</li>
-          <li><strong>Market data:</strong> Median prices, days on market, and other market figures are approximate and based on publicly available MLS data. Last updated: February 2026. Source: Columbus REALTORS MLS.</li>
-        </ul>
+        <details class="td-details">
+          <summary>Disclosures</summary>
+          <div class="td-details-body">
+            <ul>
+              <li><strong>Listing fee:</strong> The 1% and 2% rates are the listing fee charged by TD Realty Ohio. Buyer agent compensation is a separate, negotiated term in each transaction.</li>
+              <li><strong>Pre-listing inspection:</strong> Included at no additional cost with every listing. Scope may vary. This inspection does not replace the buyer's inspection or the seller's obligation to disclose known material defects.</li>
+              <li><strong>Market data:</strong> Median prices, days on market, and other market figures are approximate and based on publicly available MLS data. Last updated: February 2026. Source: Columbus REALTORS MLS.</li>
+            </ul>
+          </div>
+        </details>
       </div>
     </section>
 

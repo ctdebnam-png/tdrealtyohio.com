@@ -1750,6 +1750,56 @@ function initExitIntent() {
   });
 }
 
+// ── Progressive Reveal Grids ───────────────────────────────
+// Hides items beyond data-collapsible-grid="N" and adds a toggle button.
+// Usage: <div data-collapsible-grid="6"> … children … </div>
+function initCollapsibleGrids() {
+  var grids = document.querySelectorAll('[data-collapsible-grid]');
+  for (var i = 0; i < grids.length; i++) {
+    (function (grid) {
+      var visibleCount = parseInt(grid.getAttribute('data-collapsible-grid'), 10) || 6;
+      var children = grid.children;
+      var hiddenCount = 0;
+
+      for (var j = 0; j < children.length; j++) {
+        if (j >= visibleCount) {
+          children[j].classList.add('grid-hidden-item');
+          hiddenCount++;
+        }
+      }
+
+      if (hiddenCount === 0) return;
+
+      // Create toggle button in next .text-center sibling or after grid
+      var wrapper = grid.nextElementSibling;
+      var btn;
+      if (wrapper && wrapper.classList.contains('text-center')) {
+        btn = document.createElement('button');
+        wrapper.insertBefore(btn, wrapper.firstChild);
+      } else {
+        var btnWrap = document.createElement('div');
+        btnWrap.className = 'text-center';
+        btn = document.createElement('button');
+        btnWrap.appendChild(btn);
+        grid.parentNode.insertBefore(btnWrap, grid.nextSibling);
+      }
+
+      btn.type = 'button';
+      btn.className = 'grid-toggle-btn';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.textContent = 'Show ' + hiddenCount + ' more';
+
+      btn.addEventListener('click', function () {
+        var expanded = grid.classList.toggle('grid-expanded');
+        btn.setAttribute('aria-expanded', String(expanded));
+        btn.textContent = expanded ? 'Show less' : 'Show ' + hiddenCount + ' more';
+      });
+    })(grids[i]);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initCollapsibleGrids);
+
 // Export config for use in other scripts if needed
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { TD_CONFIG };
