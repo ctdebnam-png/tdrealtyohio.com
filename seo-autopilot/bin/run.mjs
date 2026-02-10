@@ -56,6 +56,9 @@ import { pullGscSitemapStatus } from '../collectors/gsc-sitemaps.mjs';
 import { checkDiffBudget } from '../lib/diff-budget.mjs';
 import { computeAuditDelta } from '../lib/audit-delta.mjs';
 import { getHeadSha, saveSnapshot, revertToSha } from '../lib/snapshot.mjs';
+import { getSchedule } from '../lib/schedule.mjs';
+import { writeJsonStable } from '../lib/write-json.mjs';
+import { runHousekeeping } from '../lib/housekeeping.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -86,9 +89,9 @@ function loadState() { return loadJson(STATE_PATH, {}); }
 function loadScoreHistory() { return loadJson(SCORE_HISTORY_PATH, { runs: [] }); }
 function loadModuleOutcomes() { return loadJson(MODULE_OUTCOMES_PATH, { tech: {}, links: {}, ctr: {}, content: {} }); }
 
-async function saveState(state) { await writeFile(STATE_PATH, JSON.stringify(state, null, 2) + '\n'); }
-async function saveScoreHistory(h) { await writeFile(SCORE_HISTORY_PATH, JSON.stringify(h, null, 2) + '\n'); }
-async function saveModuleOutcomes(m) { await writeFile(MODULE_OUTCOMES_PATH, JSON.stringify(m, null, 2) + '\n'); }
+async function saveState(state) { await writeJsonStable(STATE_PATH, state, 'state'); }
+async function saveScoreHistory(h) { await writeJsonStable(SCORE_HISTORY_PATH, h, 'scoreHistory'); }
+async function saveModuleOutcomes(m) { await writeJsonStable(MODULE_OUTCOMES_PATH, m, 'moduleOutcomes'); }
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -143,6 +146,11 @@ async function main() {
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
   };
+
+  // ─────────────────────────── CONFIG FLAGS ────────────────────────────────
+  const DEBUG = process.env.SEO_AUTOPILOT_DEBUG === '1';
+  const scoreHistory = loadScoreHistory();
+  const schedule = getSchedule({ runCount: scoreHistory.runs.length });
 
   // ─────────────────────────── SAFETY: BASELINE ───────────────────────────
   const baselineSha = getHeadSha();
@@ -199,7 +207,7 @@ async function main() {
       pagesScanned: beforeAudit.totals.pagesScanned,
       issuesTotal: beforeAudit.totals.issuesTotal,
       issueCounts: beforeAudit.totals.issueCounts,
-      pages: beforeAudit.pages,
+      ...(DEBUG ? { pages: beforeAudit.pages } : {}),
     };
     console.log('\n=== BEFORE AUDIT ===');
     printAuditSummary(beforeAudit);
@@ -271,11 +279,14 @@ async function main() {
   console.log(`\n[blog] Discovered ${blogResult.posts.length} post(s)`);
 
   // Quality audits: thin content + near-duplicate detection (Chunk 10)
+  // Near-duplicate runs on schedule (weekly); thin always runs (full scan weekly)
   let qualitySignals = { thinRankIntentCount: 0, thinRankIntent: [], nearDuplicatePairs: [] };
   try {
     const qualityConfig = loadJson(join(__dirname, '..', 'config', 'quality.json'), {});
-    const thinResult = auditThinContent(pages || [], qualityConfig);
-    const nearDupResult = detectNearDuplicates(pages || [], qualityConfig, blogResult.posts);
+    const thinResult = auditThinContent(pages || [], qualityConfig, { fullScan: schedule.runFullThinScan });
+    const nearDupResult = schedule.runNearDuplicateAudit
+      ? detectNearDuplicates(pages || [], qualityConfig, blogResult.posts)
+      : { pairs: [] };
     qualitySignals = {
       thinRankIntentCount: thinResult.thinRankIntent?.length || 0,
       thinRankIntent: thinResult.thinRankIntent || [],
@@ -283,7 +294,8 @@ async function main() {
       nearDuplicatePairs: nearDupResult.pairs || [],
       nearDuplicatePairsCount: nearDupResult.pairs?.length || 0,
     };
-    console.log(`[quality] Thin rank-intent: ${qualitySignals.thinRankIntentCount}, Near-duplicates: ${qualitySignals.nearDuplicatePairsCount}`);
+    const schedNote = !schedule.runNearDuplicateAudit ? ' (near-dup skipped, not scheduled)' : '';
+    console.log(`[quality] Thin rank-intent: ${qualitySignals.thinRankIntentCount}, Near-duplicates: ${qualitySignals.nearDuplicatePairsCount}${schedNote}`);
     report.quality = {
       thinRankIntentCount: qualitySignals.thinRankIntentCount,
       thinAnyCount: qualitySignals.thinAnyCount || 0,
@@ -302,7 +314,6 @@ async function main() {
     : { criticalCount: 0, otherCount: 0, brokenInternalLinks: 0 };
 
   // Compute GSC deltas
-  const scoreHistory = loadScoreHistory();
   const lastRunEntry = scoreHistory.runs.length > 0 ? scoreHistory.runs[scoreHistory.runs.length - 1] : null;
   const gscDeltas = gscOk
     ? computeGscDeltas({ totals7: state.gsc?.totals7 }, lastRunEntry?.components)
@@ -415,6 +426,21 @@ async function main() {
   // ─────────────────────────── PHASE 3: EXECUTE FOCUS ──────────────────────
 
   const focus = focusPlan.focus;
+
+  // No-op fast path: if nothing to do and score unchanged, minimize writes
+  let noOpFastPath = false;
+  if (focus === 'none' && techClassification.criticalCount === 0) {
+    const prev = lastRunEntry?.components;
+    if (prev &&
+        prev.tech?.criticalCount === techClassification.criticalCount &&
+        prev.tech?.brokenInternalLinks === techClassification.brokenInternalLinks &&
+        prev.links?.orphanCount === (linkGraphBefore?.orphanCount || 0) &&
+        !gscOk // No new GSC data to record
+    ) {
+      noOpFastPath = true;
+      console.log('\n[fast-path] No changes needed and score unchanged — minimal write');
+    }
+  }
 
   // Tech focus: run metadata fixer + indexing hygiene
   if (focus === 'tech' && pages) {
@@ -690,7 +716,7 @@ async function main() {
                 }
               }
             }
-            await writeFile(BACKLOG_PATH, JSON.stringify(backlog, null, 2) + '\n');
+            await writeJsonStable(BACKLOG_PATH, backlog);
           }
           state.content = { ...(state.content || {}), lastActionAt: new Date().toISOString(), lastPublishAt: new Date().toISOString(), lastTargets: [{ path: result.routePath, action: 'publish-post', slug: result.slug }] };
           moduleOutcomes.content = { lastRunAt: new Date().toISOString(), action: 'publish', target: result.routePath };
@@ -703,7 +729,7 @@ async function main() {
               if (!guides[pillar]) guides[pillar] = [];
               guides[pillar].push({ path: result.routePath, anchor: result.slug.replace(/-/g, ' '), addedAt: new Date().toISOString() });
               if (guides[pillar].length > 10) guides[pillar] = guides[pillar].slice(-10);
-              await writeFile(RELATED_GUIDES_PATH, JSON.stringify(guides, null, 2) + '\n');
+              await writeJsonStable(RELATED_GUIDES_PATH, guides);
               console.log(`[content] Updated related-guides for ${pillar}`);
             }
           } catch (err) { console.warn(`[content] Could not update related-guides: ${err.message}`); }
@@ -837,7 +863,7 @@ async function main() {
       const afterAudit = runBuildAudit(afterPages, config);
       report.afterAudit = {
         pagesScanned: afterAudit.totals.pagesScanned, issuesTotal: afterAudit.totals.issuesTotal,
-        issueCounts: afterAudit.totals.issueCounts, samples: afterAudit.samples, pages: afterAudit.pages,
+        issueCounts: afterAudit.totals.issueCounts, samples: afterAudit.samples, ...(DEBUG ? { pages: afterAudit.pages } : {}),
       };
       console.log('\n=== AFTER AUDIT ===');
       printAuditSummary(afterAudit);
@@ -933,25 +959,27 @@ async function main() {
 
   // ─────────────────────────── PHASE 5: PERSIST STATE ──────────────────────
 
-  // Append to score history (keep last 120 runs)
-  scoreHistory.runs.push({
-    runAt: new Date().toISOString(),
-    score: scoreResult.score,
-    components: {
-      gsc: {
-        clicks28: state.gsc?.totals28?.clicks || 0, clicks7: state.gsc?.totals7?.clicks || 0,
-        impr28: state.gsc?.totals28?.impressions || 0, impr7: state.gsc?.totals7?.impressions || 0,
-        ctr28: state.gsc?.totals28?.ctr || 0, ctr7: state.gsc?.totals7?.ctr || 0,
-        pos28: state.gsc?.totals28?.position || 0, pos7: state.gsc?.totals7?.position || 0,
+  // No-op fast path: skip score-history write if unchanged
+  if (!noOpFastPath) {
+    scoreHistory.runs.push({
+      runAt: new Date().toISOString(),
+      score: scoreResult.score,
+      components: {
+        gsc: {
+          clicks28: state.gsc?.totals28?.clicks || 0, clicks7: state.gsc?.totals7?.clicks || 0,
+          impr28: state.gsc?.totals28?.impressions || 0, impr7: state.gsc?.totals7?.impressions || 0,
+          ctr28: state.gsc?.totals28?.ctr || 0, ctr7: state.gsc?.totals7?.ctr || 0,
+          pos28: state.gsc?.totals28?.position || 0, pos7: state.gsc?.totals7?.position || 0,
+        },
+        tech: { criticalCount: techClassification.criticalCount, otherCount: techClassification.otherCount, brokenInternalLinks: techClassification.brokenInternalLinks },
+        links: { orphanCount: linkGraphBefore?.orphanCount || 0, underlinkedPillars: underlinkedPillarCount },
+        content: { thinCount, nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount || 0, lastAction: report.content.action },
       },
-      tech: { criticalCount: techClassification.criticalCount, otherCount: techClassification.otherCount, brokenInternalLinks: techClassification.brokenInternalLinks },
-      links: { orphanCount: linkGraphBefore?.orphanCount || 0, underlinkedPillars: underlinkedPillarCount },
-      content: { thinCount, nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount || 0, lastAction: report.content.action },
-    },
-    decisions: { focus, actionsPlanned: 1, actionsApplied: focus === 'none' ? 0 : 1 },
-  });
-  if (scoreHistory.runs.length > 120) {
-    scoreHistory.runs = scoreHistory.runs.slice(-120);
+      decisions: { focus, actionsPlanned: 1, actionsApplied: focus === 'none' ? 0 : 1 },
+    });
+    if (scoreHistory.runs.length > 120) {
+      scoreHistory.runs = scoreHistory.runs.slice(-120);
+    }
   }
 
   // Update safety state
@@ -979,15 +1007,26 @@ async function main() {
   }
 
   await saveState(state);
-  await saveScoreHistory(scoreHistory);
+  if (!noOpFastPath) {
+    await saveScoreHistory(scoreHistory);
+  }
   await saveModuleOutcomes(moduleOutcomes);
+
+  // Run housekeeping to trim state files
+  try {
+    const hk = await runHousekeeping();
+    if (hk.trimmed.length > 0) {
+      console.log(`[housekeeping] Trimmed: ${hk.trimmed.join(', ')}`);
+    }
+  } catch { /* non-fatal */ }
 
   report.moduleOutcomes = moduleOutcomes;
   report.durationMs = Date.now() - start;
 
-  await writeFile(join(REPORT_DIR, 'latest.json'), JSON.stringify(report, null, 2) + '\n');
+  // Write report (using stable JSON serialization)
+  await writeJsonStable(join(REPORT_DIR, 'latest.json'), report);
   if (report.linkGraphAfter) {
-    await writeFile(join(REPORT_DIR, 'link-graph.json'), JSON.stringify(report.linkGraphAfter, null, 2) + '\n');
+    await writeJsonStable(join(REPORT_DIR, 'link-graph.json'), report.linkGraphAfter);
   }
 
   console.log(`\n[seo-autopilot] Done in ${report.durationMs}ms`);

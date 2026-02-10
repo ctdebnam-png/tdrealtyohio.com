@@ -22,19 +22,29 @@ function loadQualityConfig() {
  *
  * @param {object[]} pages - From listHtmlPages (each has .filePath, .routePath)
  * @param {object} config - Site config with rankIntentRoutes and utilityRoutesNoIndex
+ * @param {object} options - { fullScan: boolean } — when false, only scan rank-intent + newest posts
  * @returns {{ pages: object[], thinRankIntent: object[], thinAny: object[] }}
  */
-export function auditThinContent(pages, config = {}) {
+export function auditThinContent(pages, config = {}, options = {}) {
   const quality = loadQualityConfig();
   const minWords = quality.thin?.minWordsIndexablePage || 250;
   const rankSet = new Set(config.rankIntentRoutes || []);
   const utilitySet = new Set(config.utilityRoutesNoIndex || []);
+  const fullScan = options.fullScan !== false; // default true for backwards compat
+
+  // When not doing full scan, only check rank-intent + blog routes
+  let scanPages = pages;
+  if (!fullScan) {
+    scanPages = pages.filter(p =>
+      rankSet.has(p.routePath) || (p.routePath && p.routePath.startsWith('/blog/'))
+    );
+  }
 
   const results = [];
   const thinRankIntent = [];
   const thinAny = [];
 
-  for (const page of pages) {
+  for (const page of scanPages) {
     // Skip utility/noindex pages
     if (utilitySet.has(page.routePath)) continue;
     if (page.pageType === 'utility') continue;
