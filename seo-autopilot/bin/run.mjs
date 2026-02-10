@@ -45,6 +45,9 @@ import { auditLiveIndexing } from '../auditors/live-indexing.mjs';
 import { fixIndexingHygiene } from '../fixers/indexing-hygiene.mjs';
 import { auditThinContent } from '../auditors/content-thin.mjs';
 import { detectNearDuplicates } from '../auditors/near-duplicates.mjs';
+import { discoverAreas } from '../lib/area-discovery.mjs';
+import { planAreaExpansion } from '../planners/area-plan.mjs';
+import { expandAreaPage, revertAreaExpansion } from '../generators/area-expand.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -55,6 +58,7 @@ const PILLARS_PATH = join(__dirname, '..', 'config', 'pillars.json');
 const BACKLOG_PATH = join(__dirname, '..', 'config', 'content-backlog.json');
 const SEO_DEFAULTS_PATH = join(__dirname, '..', 'config', 'seo-defaults.json');
 const RELATED_GUIDES_PATH = join(__dirname, '..', 'config', 'related-guides.json');
+const AREAS_CONFIG_PATH = join(__dirname, '..', 'config', 'areas.json');
 const STATE_PATH = join(STATE_DIR, 'state.json');
 const SCORE_HISTORY_PATH = join(STATE_DIR, 'score-history.json');
 const MODULE_OUTCOMES_PATH = join(STATE_DIR, 'module-outcomes.json');
@@ -125,6 +129,7 @@ async function main() {
     gsc: null, experiments: { applied: [], evaluated: [] },
     content: { action: 'none', target: null, reason: '', filesEdited: [], wordsAdded: 0 },
     quality: { thinRankIntentCount: 0, nearDuplicatePairsCount: 0, thinRankIntent: [], nearDuplicatePairs: [] },
+    areas: { selected: null, wordsBefore: 0, wordsAfter: 0, linksAdded: [], reason: '' },
     score: null, focusPlan: null, moduleOutcomes: null,
     notes: '', errors: [],
   };
@@ -591,6 +596,88 @@ async function main() {
     } catch (err) {
       report.errors.push(`content: ${err.message}`);
       console.error('[seo-autopilot] Content engine error (non-fatal):', err.message);
+    }
+  }
+
+  // Area page expansion (Chunk 11) — runs as refresh subtype when no content action was taken
+  if (focus === 'refresh' && report.content.action === 'none' && pages) {
+    try {
+      console.log('\n=== AREA EXPANSION ===');
+
+      // Check indexing gate: skip if LIVE_NOINDEX or LIVE_ROBOTS_TXT_BLOCKING exist
+      const liveCritical = (report.live?.issueCounts?.LIVE_NOINDEX || 0) + (report.live?.issueCounts?.LIVE_ROBOTS_TXT_BLOCKING || 0);
+      if (liveCritical > 0) {
+        console.log(`[areas] Skipped: ${liveCritical} critical live indexing issue(s)`);
+        report.areas.reason = 'live_indexing_gate';
+      } else {
+        const areaDiscovery = discoverAreas(pages);
+        console.log(`[areas] Discovered ${areaDiscovery.areaRoutes.length} area route(s)`);
+
+        const areaPlan = planAreaExpansion({
+          areaRoutes: areaDiscovery.areaRoutes,
+          thinRankIntent: qualitySignals.thinRankIntent || [],
+          linkGraphInDegree: linkGraphBefore?.inDegree || {},
+          areasConfig: areaDiscovery.config,
+          nearDuplicatePairs: qualitySignals.nearDuplicatePairs || [],
+          state,
+        });
+
+        if (areaPlan.selected) {
+          console.log(`[areas] Selected: ${areaPlan.selected} (${areaPlan.reason})`);
+          const expandResult = expandAreaPage({
+            routePath: areaPlan.selected,
+            maxWordsAdd: areaDiscovery.config.maxWordsAddPerRun || 600,
+            intent: 'sellerIntent',
+          });
+
+          if (expandResult.success) {
+            console.log(`[areas] Expanded: ${areaPlan.selected} — ${expandResult.wordsBefore} -> ${expandResult.wordsAfter} words`);
+
+            // Post-expansion quality check: re-run near-duplicate on bounded set
+            let revertNeeded = false;
+            try {
+              const qualityConfig = loadJson(join(__dirname, '..', 'config', 'quality.json'), {});
+              const afterPages = listHtmlPages(buildOutput.outputDir, { canonicalStrategy: config.canonicalStrategy });
+              const afterNearDup = detectNearDuplicates(afterPages, qualityConfig, blogResult.posts);
+              const newPairsCount = afterNearDup.pairs?.length || 0;
+              const oldPairsCount = qualitySignals.nearDuplicatePairsCount || 0;
+              if (newPairsCount > oldPairsCount) {
+                console.log(`[areas] Near-duplicate count increased (${oldPairsCount} -> ${newPairsCount}) — reverting`);
+                revertNeeded = true;
+              }
+            } catch (err) {
+              console.warn(`[areas] Post-expansion quality check error (non-fatal): ${err.message}`);
+            }
+
+            if (revertNeeded) {
+              revertAreaExpansion(expandResult.filePath, expandResult.originalContent);
+              report.areas = { selected: areaPlan.selected, wordsBefore: expandResult.wordsBefore, wordsAfter: expandResult.wordsBefore, linksAdded: [], reason: 'reverted_near_duplicate' };
+              console.log(`[areas] Reverted expansion of ${areaPlan.selected}`);
+            } else {
+              report.areas = { selected: areaPlan.selected, wordsBefore: expandResult.wordsBefore, wordsAfter: expandResult.wordsAfter, linksAdded: expandResult.linksAdded, reason: expandResult.reason };
+
+              // Update state
+              state.areas = state.areas || { expandedHistory: [] };
+              state.areas.lastExpandedAt = new Date().toISOString();
+              state.areas.lastExpandedRoute = areaPlan.selected;
+              state.areas.expandedHistory = state.areas.expandedHistory || [];
+              state.areas.expandedHistory.push({ route: areaPlan.selected, at: new Date().toISOString() });
+              if (state.areas.expandedHistory.length > 50) {
+                state.areas.expandedHistory = state.areas.expandedHistory.slice(-50);
+              }
+            }
+          } else {
+            console.log(`[areas] Expansion failed: ${expandResult.reason}`);
+            report.areas.reason = expandResult.reason;
+          }
+        } else {
+          console.log(`[areas] No area selected: ${areaPlan.reason}`);
+          report.areas.reason = areaPlan.reason;
+        }
+      }
+    } catch (err) {
+      report.errors.push(`areaExpansion: ${err.message}`);
+      console.error('[seo-autopilot] Area expansion error (non-fatal):', err.message);
     }
   }
 
