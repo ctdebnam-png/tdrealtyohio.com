@@ -22,5 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run business + schema consistency gate
-        run: npm run check:schema-consistency
+      - name: Run business facts guard
+        run: node tools/site-quality-gate/run-checks.js --ci --only=business
+
+      - name: Run schema template consistency validator
+        run: node tools/site-quality-gate/run-checks.js --ci --only=schema-consistency
