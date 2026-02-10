@@ -1,9 +1,6 @@
 name: Generate Market Update Posts
 
 on:
-  schedule:
-    # Run on 2nd and 16th of each month at 10am EST (15:00 UTC)
-    - cron: '0 15 2,16 * *'
   workflow_dispatch:
     inputs:
       community:

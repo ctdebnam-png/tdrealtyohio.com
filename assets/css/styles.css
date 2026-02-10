@@ -8537,6 +8537,10 @@ img, video, iframe, svg:not(.logo svg) {
   margin-left: auto;
   flex-shrink: 0;
 }
+/* Suppress CSS arrow when an inline SVG chevron is already present */
+button.faq-question::after {
+  display: none;
+}
 .faq-item.active .faq-question::after,
 .process-step-expandable.active .process-step-header::after {
   transform: rotate(-135deg);
