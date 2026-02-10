@@ -8,6 +8,7 @@ const POLICY_PATH = join(__dirname, '..', 'config', 'indexing-policy.json');
 const FALLBACK_POLICY = {
   canonical: { scheme: 'https', host: 'tdrealtyohio.com', trailingSlash: 'always', disallowWww: true },
   indexing: { defaultDirective: 'index', indexPrefixes: ['/'], noindexPrefixes: [], noindexExact: [] },
+  routePolicies: [],
   sitemap: { includeByDefault: true, excludePrefixes: [], excludeExact: [], excludePatterns: [], excludeNoindex: true },
 };
 
@@ -51,6 +52,35 @@ export function expectedDirectiveForRoute(route, policy) {
     exact: policy.indexing?.noindexExact || [],
   });
   return noindex ? 'noindex' : (policy.indexing?.defaultDirective || 'index');
+}
+
+
+
+export function resolveRoutePolicy(route, policy) {
+  const normalized = normalizeRoute(route, policy.canonical?.trailingSlash || 'always');
+  const routePolicies = Array.isArray(policy.routePolicies) ? policy.routePolicies : [];
+
+  for (const candidate of routePolicies) {
+    if (matchesRouteFamily(normalized, {
+      prefixes: candidate.prefixes || [],
+      exact: candidate.exact || [],
+      patterns: candidate.patterns || [],
+    })) {
+      return {
+        name: candidate.name || 'unnamed-policy',
+        action: candidate.action || 'index',
+        canonicalTarget: candidate.canonicalTarget || null,
+        matched: true,
+      };
+    }
+  }
+
+  return {
+    name: 'default-policy',
+    action: expectedDirectiveForRoute(normalized, policy) === 'noindex' ? 'noindex-follow' : 'index',
+    canonicalTarget: null,
+    matched: false,
+  };
 }
 
 export function shouldRouteBeInSitemap(route, policy, robotsDirective = null) {

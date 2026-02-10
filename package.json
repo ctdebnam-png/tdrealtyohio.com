@@ -40,10 +40,12 @@
     "check:images": "node scripts/check-broken-images.mjs",
     "check:freshness": "node scripts/check-content-freshness.mjs",
     "check:perf-budget": "node scripts/check-performance-budget.mjs",
-    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js && node scripts/check-a11y-links.mjs && node scripts/check-calculators.mjs && node scripts/check-nav-footer-sitemap.mjs && node scripts/check-regressions.mjs && node scripts/check-nav-registry.mjs && node scripts/content-scan.js && node scripts/seo-validate.js && node scripts/check-seo-audit.mjs && node scripts/check-orphan-sitemap.mjs && node scripts/check-broken-images.mjs && node scripts/check-performance-budget.mjs && node scripts/check-passive-scroll.mjs",
+    "check:all": "node scripts/indexing-guard.mjs && node scripts/check-nav.mjs && node scripts/check-copy.mjs && node scripts/check-templates.js && node scripts/check-nav-and-copy.js && node scripts/check-a11y-links.mjs && node scripts/check-calculators.mjs && node scripts/check-nav-footer-sitemap.mjs && node scripts/check-regressions.mjs && node scripts/check-nav-registry.mjs && node scripts/content-scan.js && node scripts/seo-validate.js && node scripts/check-seo-audit.mjs && node scripts/check-orphan-sitemap.mjs && node scripts/check-broken-images.mjs && node scripts/check-performance-budget.mjs && node scripts/check-passive-scroll.mjs && node scripts/check-index-policy.mjs",
     "check:passive-scroll": "node scripts/check-passive-scroll.mjs",
     "check:sitemap-lastmod": "node scripts/check-sitemap-lastmod-dates.mjs",
-    "check:schema-consistency": "node tools/site-quality-gate/run-checks.js --ci --only=business && node tools/site-quality-gate/run-checks.js --ci --only=schema-consistency"
+    "check:schema-consistency": "node tools/site-quality-gate/run-checks.js --ci --only=business && node tools/site-quality-gate/run-checks.js --ci --only=schema-consistency",
+    "check:index-policy": "node scripts/check-index-policy.mjs",
+    "report:index-quality": "node scripts/generate-index-quality-report.mjs"
   },
   "devDependencies": {
     "@lhci/cli": "^0.14.0",
