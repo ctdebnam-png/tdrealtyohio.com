@@ -15,6 +15,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from .client import GSCClient
+from .keyword_ownership import KeywordOwnership
 from .reports import get_sitemap_urls, _check_page_html, OUTPUT_DIR
 
 SITE_URL = "https://tdrealtyohio.com"
@@ -269,6 +270,7 @@ def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
     # 1. Fetch data for both periods
     print("  Fetching performance data (two periods)...")
     recent, prior, r_start, r_end, p_start, p_end = _fetch_two_periods(client, days)
+    ownership = KeywordOwnership.load()
 
     # 2. Identify low-CTR pages
     print("  Analyzing low-CTR pages...")
@@ -297,12 +299,30 @@ def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
         print(f"    [{i + 1}/{len(priority_pages)}] {url}")
 
         queries = _get_page_queries(client, url, days=days)
+        page_path = url.replace(SITE_URL, "") or "/"
+        allowed_queries = []
+        blocked_queries = []
+        for query_row in queries:
+            allowed, reason, cluster = ownership.query_allowed_for_page(
+                page_path,
+                query_row.get("query", ""),
+            )
+            if allowed:
+                allowed_queries.append(query_row)
+            else:
+                blocked_queries.append({
+                    "query": query_row.get("query", ""),
+                    "cluster": cluster,
+                    "reason": reason,
+                })
+
+        queries_for_suggestions = allowed_queries
         current_title = _extract_current_title(url)
         current_desc = _extract_current_meta_desc(url)
         html_checks = _check_page_html(url)
 
-        title_suggestion = _suggest_title_improvement(current_title, queries, url)
-        meta_suggestion = _suggest_meta_improvement(current_desc, queries, url)
+        title_suggestion = _suggest_title_improvement(current_title, queries_for_suggestions, url)
+        meta_suggestion = _suggest_meta_improvement(current_desc, queries_for_suggestions, url)
         link_suggestions = _suggest_internal_links(url)
 
         # Check if page is in the declining list
@@ -325,6 +345,8 @@ def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
             "ctr": page["ctr"],
             "position": page["position"],
             "top_queries": queries,
+            "suggestion_queries": queries_for_suggestions,
+            "blocked_queries": blocked_queries,
             "title_suggestion": title_suggestion,
             "meta_suggestion": meta_suggestion,
             "internal_link_suggestions": link_suggestions,
@@ -455,6 +477,13 @@ def _build_markdown(data: dict, low_ctr: list[dict], declining: list[dict]) -> s
                     lines.append(
                         f"| {q['query']} | {q['clicks']} | {q['impressions']} "
                         f"| {q['ctr']:.2%} | {q['position']} |"
+                    )
+
+            if rec.get("blocked_queries"):
+                lines.append("\n**Ownership-Blocked Queries (not used for suggestions):**")
+                for blocked in rec["blocked_queries"]:
+                    lines.append(
+                        f"- {blocked['query']} ({blocked.get('cluster') or 'unmapped'}): {blocked['reason']}"
                     )
 
             # Title suggestion

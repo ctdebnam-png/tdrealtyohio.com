@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "description": "Maintained keyword cluster ownership map used by GSC optimization tooling.",
+  "clusters": {
+    "sell_home_columbus": {
+      "terms": [
+        "sell my house columbus",
+        "sell home columbus",
+        "selling a house in columbus"
+      ]
+    },
+    "buy_home_columbus": {
+      "terms": [
+        "buy a home columbus",
+        "buy house columbus",
+        "homes for sale columbus ohio"
+      ]
+    },
+    "one_percent_commission": {
+      "terms": [
+        "1 percent commission realtor",
+        "one percent realtor",
+        "low commission realtor columbus"
+      ]
+    },
+    "listing_comparison": {
+      "terms": [
+        "flat fee mls vs full service",
+        "discount broker vs full service",
+        "1 percent vs 3 percent commission"
+      ]
+    },
+    "home_value_estimate": {
+      "terms": [
+        "home value estimate",
+        "what is my home worth",
+        "columbus home value"
+      ]
+    },
+    "area_pages": {
+      "terms": [
+        "clintonville homes for sale",
+        "dublin ohio real estate",
+        "westerville homes"
+      ]
+    }
+  },
+  "url_rules": {
+    "/sellers/": {
+      "group": "seller_core",
+      "priority": 100,
+      "primary_cluster": "sell_home_columbus",
+      "secondary_clusters": [
+        "home_value_estimate"
+      ]
+    },
+    "/home-value/": {
+      "group": "seller_core",
+      "priority": 95,
+      "primary_cluster": "home_value_estimate",
+      "secondary_clusters": [
+        "sell_home_columbus"
+      ]
+    },
+    "/buyers/": {
+      "group": "buyer_core",
+      "priority": 100,
+      "primary_cluster": "buy_home_columbus",
+      "secondary_clusters": [
+        "area_pages"
+      ]
+    },
+    "/1-percent-commission/": {
+      "group": "commission_offer",
+      "priority": 110,
+      "primary_cluster": "one_percent_commission",
+      "secondary_clusters": [
+        "sell_home_columbus"
+      ]
+    },
+    "/compare/": {
+      "group": "comparison_hub",
+      "priority": 80,
+      "primary_cluster": "listing_comparison",
+      "secondary_clusters": [
+        "one_percent_commission"
+      ]
+    },
+    "/compare/1-percent-vs-3-percent/": {
+      "group": "comparison_page",
+      "priority": 90,
+      "primary_cluster": "listing_comparison",
+      "secondary_clusters": [
+        "one_percent_commission"
+      ]
+    },
+    "/compare/discount-broker-vs-full-service/": {
+      "group": "comparison_page",
+      "priority": 90,
+      "primary_cluster": "listing_comparison",
+      "secondary_clusters": [
+        "one_percent_commission"
+      ]
+    },
+    "/compare/flat-fee-mls-vs-full-service/": {
+      "group": "comparison_page",
+      "priority": 90,
+      "primary_cluster": "listing_comparison",
+      "secondary_clusters": [
+        "one_percent_commission"
+      ]
+    },
+    "/areas/": {
+      "group": "area_hub",
+      "priority": 70,
+      "primary_cluster": "area_pages",
+      "secondary_clusters": [
+        "buy_home_columbus"
+      ]
+    }
+  },
+  "blocked_overlaps": [
+    {
+      "source_group": "comparison_page",
+      "target_group": "commission_offer",
+      "clusters": [
+        "one_percent_commission"
+      ]
+    },
+    {
+      "source_group": "comparison_hub",
+      "target_group": "commission_offer",
+      "clusters": [
+        "one_percent_commission"
+      ]
+    },
+    {
+      "source_group": "seller_core",
+      "target_group": "commission_offer",
+      "clusters": [
+        "one_percent_commission"
+      ]
+    }
+  ]
+}
