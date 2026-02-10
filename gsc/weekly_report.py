@@ -35,6 +35,35 @@ MAX_RECOMMENDATIONS = 5
 # CTR threshold: pages below this with meaningful impressions are flagged
 LOW_CTR_THRESHOLD = 0.03
 
+# Ranking position opportunity band scores (higher = better refresh target)
+POSITION_BAND_SCORES = [
+    (4, 10, 1.0),
+    (11, 20, 0.8),
+    (21, 35, 0.4),
+]
+
+# Route intent priority weights
+MONEY_PAGE_PREFIXES = (
+    "/sellers/",
+    "/buyers/",
+    "/1-percent-commission/",
+    "/home-value/",
+    "/pre-listing-inspection/",
+    "/compare/",
+    "/contact/",
+)
+
+CONVERSION_ASSIST_PREFIX_WEIGHTS = {
+    "/contact/": 1.0,
+    "/home-value/": 0.95,
+    "/1-percent-commission/": 0.9,
+    "/sellers/": 0.85,
+    "/buyers/": 0.85,
+    "/pre-listing-inspection/": 0.8,
+    "/areas/": 0.7,
+    "/blog/": 0.35,
+}
+
 # Internal link targets — the key service pages to link to contextually
 INTERNAL_LINK_TARGETS = {
     "/sellers/": "Sell Your Home",
@@ -97,6 +126,66 @@ def _low_ctr_pages(pages: list[dict], threshold: float = LOW_CTR_THRESHOLD) -> l
     ]
     # Sort by impressions descending — biggest opportunities first
     return sorted(candidates, key=lambda p: p["impressions"], reverse=True)
+
+
+def _position_band_score(position: float) -> float:
+    for min_pos, max_pos, score in POSITION_BAND_SCORES:
+        if min_pos <= position <= max_pos:
+            return score
+    return 0.0
+
+
+def _route_intent_weight(path: str) -> float:
+    return 1.0 if any(path.startswith(prefix) for prefix in MONEY_PAGE_PREFIXES) else 0.45
+
+
+def _conversion_assist_value(path: str) -> float:
+    for prefix, weight in CONVERSION_ASSIST_PREFIX_WEIGHTS.items():
+        if path.startswith(prefix):
+            return weight
+    return 0.4
+
+
+def _opportunity_score(page: dict, declining_map: dict[str, dict]) -> dict:
+    path = page["page"].replace(SITE_URL, "") or "/"
+    impressions = float(page.get("impressions", 0) or 0)
+    ctr = float(page.get("ctr", 0) or 0)
+    position = float(page.get("position", 0) or 0)
+
+    # Prioritize high impressions with low CTR.
+    ctr_gap = max(0.0, LOW_CTR_THRESHOLD - ctr)
+    ctr_gap_ratio = ctr_gap / LOW_CTR_THRESHOLD if LOW_CTR_THRESHOLD else 0.0
+    impression_ctr = min(1.0, impressions / 1000.0) * ctr_gap_ratio
+
+    position_score = _position_band_score(position)
+    route_weight = _route_intent_weight(path)
+    assist_value = _conversion_assist_value(path)
+
+    decline = declining_map.get(page["page"])
+    decline_score = 0.0
+    if decline and decline.get("prior_clicks", 0) > 0:
+        decline_score = min(1.0, abs(decline["click_delta"]) / decline["prior_clicks"])
+
+    total = (
+        impression_ctr * 0.4
+        + position_score * 0.2
+        + route_weight * 0.2
+        + assist_value * 0.15
+        + decline_score * 0.05
+    )
+
+    return {
+        "url": page["page"],
+        "path": path,
+        "score": round(total, 4),
+        "components": {
+            "impression_ctr": round(impression_ctr, 4),
+            "position_band": round(position_score, 4),
+            "route_intent": round(route_weight, 4),
+            "conversion_assist": round(assist_value, 4),
+            "decline": round(decline_score, 4),
+        },
+    }
 
 
 def _declining_pages(recent: list[dict], prior: list[dict]) -> list[dict]:
@@ -280,20 +369,30 @@ def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
     print("  Analyzing click trends...")
     declining = _declining_pages(recent, prior)
 
-    # 4. Merge into a priority list (union of low-CTR + declining, deduplicated)
-    seen_urls = set()
-    priority_pages = []
-    for page in low_ctr + declining:
-        if page["page"] not in seen_urls:
-            seen_urls.add(page["page"])
-            priority_pages.append(page)
+    # 4. Build deterministic refresh opportunities and apply capped selection
+    declining_map = {p["page"]: p for p in declining}
+    opportunity_scored = []
+    for page in recent:
+        s = _opportunity_score(page, declining_map)
+        if s["components"]["impression_ctr"] <= 0:
+            continue
+        if s["components"]["position_band"] <= 0:
+            continue
+        opportunity_scored.append({**s, "page": page})
 
-    # Limit to MAX_RECOMMENDATIONS
-    priority_pages = priority_pages[:MAX_RECOMMENDATIONS]
+    opportunity_scored.sort(key=lambda x: (-x["score"], x["path"]))
+    selected = opportunity_scored[:MAX_RECOMMENDATIONS]
+    priority_pages = [row["page"] for row in selected]
+
+    print(
+        f"  Refresh opportunity scoring: {len(opportunity_scored)} candidates, "
+        f"selected {len(priority_pages)} (cap={MAX_RECOMMENDATIONS})"
+    )
 
     # 5. For each priority page, fetch queries and generate suggestions
     print(f"  Building recommendations for {len(priority_pages)} pages...")
     recommendations = []
+    selected_score_map = {row["url"]: row for row in selected}
     for i, page in enumerate(priority_pages):
         url = page["page"]
         print(f"    [{i + 1}/{len(priority_pages)}] {url}")
@@ -352,6 +451,7 @@ def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
             "internal_link_suggestions": link_suggestions,
             "html_checks": html_checks,
             "decline": decline_info,
+            "opportunity": selected_score_map.get(url),
         }
         recommendations.append(rec)
 
@@ -377,6 +477,19 @@ def generate_weekly_report(client: GSCClient, days: int = 28) -> dict:
         },
         "low_ctr_count": len(low_ctr),
         "declining_count": len(declining),
+        "refresh_cap": MAX_RECOMMENDATIONS,
+        "refresh_audit": {
+            "scored_candidates": [
+                {
+                    "url": row["url"],
+                    "path": row["path"],
+                    "score": row["score"],
+                    **row["components"],
+                }
+                for row in opportunity_scored[:25]
+            ],
+            "selected_urls": [p["page"] for p in priority_pages],
+        },
         "recommendations": recommendations,
         "locked_facts": LOCKED_FACTS,
     }
