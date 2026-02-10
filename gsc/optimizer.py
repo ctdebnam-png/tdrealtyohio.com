@@ -18,6 +18,8 @@ import re
 from datetime import date, datetime
 from pathlib import Path
 
+from .keyword_ownership import KeywordOwnership
+
 SITE_ROOT = Path(".")
 SITE_URL = "https://tdrealtyohio.com"
 OUTPUT_DIR = Path("output/gsc-reports")
@@ -484,6 +486,7 @@ def strategy_keyword_gaps(pages: list[dict], gsc: dict,
     or queries where position could improve with on-page optimization.
     """
     print("\n=== Strategy: Keyword Gap Analysis ===")
+    ownership = KeywordOwnership.load()
 
     # Load query data from performance report
     perf_files = sorted(OUTPUT_DIR.glob("performance_*.json"), reverse=True)
@@ -508,22 +511,30 @@ def strategy_keyword_gaps(pages: list[dict], gsc: dict,
         impressions = q.get("impressions", 0)
         position = q.get("position", 0)
         clicks = q.get("clicks", 0)
+        owner_path, cluster_id = ownership.choose_owner_for_query(query_text)
+
+        # If ownership is configured and no owner exists, skip recommendation.
+        if ownership.enabled and cluster_id and not owner_path:
+            continue
+
+        rec_target = owner_path or "site-wide"
+        owner_note = f" Target page: {owner_path}." if owner_path else ""
 
         # High impressions + poor position = opportunity
         if impressions > 20 and position > 10:
             result.add(
-                "site-wide", "keyword_gaps", "opportunity_keyword",
+                rec_target, "keyword_gaps", "opportunity_keyword",
                 f'"{query_text}" — {impressions} impressions, '
                 f'position {position:.0f}, {clicks} clicks. '
-                f'Improve on-page targeting to move to page 1.'
+                f'Improve on-page targeting to move to page 1.{owner_note}'
             )
         # Page 1 but low CTR = title/description issue
         elif impressions > 30 and position <= 10 and clicks == 0:
             result.add(
-                "site-wide", "keyword_gaps", "low_ctr_keyword",
+                rec_target, "keyword_gaps", "low_ctr_keyword",
                 f'"{query_text}" — position {position:.0f} with '
                 f'{impressions} impressions but 0 clicks. '
-                f'Title/description may not match search intent.'
+                f'Title/description may not match search intent.{owner_note}'
             )
 
 
