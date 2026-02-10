@@ -1,6 +1,9 @@
 name: Daily Site Optimizer
 
 on:
+  schedule:
+    # Daily tactical SEO/data hygiene run at 11:00 UTC (06:00 ET) to catch issues early.
+    - cron: "0 11 * * *"
   workflow_dispatch:
 
 jobs:

@@ -1,6 +1,9 @@
 name: GSC Reports
 
 on:
+  schedule:
+    # Weekly strategic GSC/content optimization run every Sunday at 13:00 UTC (08:00 ET).
+    - cron: "0 13 * * 0"
   workflow_dispatch:
     inputs:
       report:
