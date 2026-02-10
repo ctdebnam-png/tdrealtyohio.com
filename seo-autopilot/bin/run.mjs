@@ -53,6 +53,9 @@ import { auditSitemapCoverage } from '../auditors/sitemap-coverage.mjs';
 import { compareSitemapAgreement } from '../auditors/live-robots-sitemap.mjs';
 import { auditCanonicalAgreement } from '../auditors/canonical-agreement.mjs';
 import { pullGscSitemapStatus } from '../collectors/gsc-sitemaps.mjs';
+import { checkDiffBudget } from '../lib/diff-budget.mjs';
+import { computeAuditDelta } from '../lib/audit-delta.mjs';
+import { getHeadSha, saveSnapshot, revertToSha } from '../lib/snapshot.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -64,6 +67,7 @@ const BACKLOG_PATH = join(__dirname, '..', 'config', 'content-backlog.json');
 const SEO_DEFAULTS_PATH = join(__dirname, '..', 'config', 'seo-defaults.json');
 const RELATED_GUIDES_PATH = join(__dirname, '..', 'config', 'related-guides.json');
 const AREAS_CONFIG_PATH = join(__dirname, '..', 'config', 'areas.json');
+const SAFETY_CONFIG_PATH = join(__dirname, '..', 'config', 'safety.json');
 const STATE_PATH = join(STATE_DIR, 'state.json');
 const SCORE_HISTORY_PATH = join(STATE_DIR, 'score-history.json');
 const MODULE_OUTCOMES_PATH = join(STATE_DIR, 'module-outcomes.json');
@@ -136,8 +140,28 @@ async function main() {
     quality: { thinRankIntentCount: 0, nearDuplicatePairsCount: 0, thinRankIntent: [], nearDuplicatePairs: [] },
     areas: { selected: null, wordsBefore: 0, wordsAfter: 0, linksAdded: [], reason: '' },
     score: null, focusPlan: null, moduleOutcomes: null,
+    safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
   };
+
+  // ─────────────────────────── SAFETY: BASELINE ───────────────────────────
+  const baselineSha = getHeadSha();
+  report.safety.baselineSha = baselineSha || '';
+  let reverted = false;
+
+  // Load safety config for repeated revert recovery (Step 7)
+  const safetyConfig = loadJson(SAFETY_CONFIG_PATH, { budgets: {}, revertIfWorse: {}, snapshots: { keepRuns: 14 } });
+  const consecutiveReverts = state.safety?.consecutiveReverts || 0;
+  if (consecutiveReverts >= 3) {
+    console.log(`[safety] ${consecutiveReverts} consecutive reverts — forcing tech focus, disabling content actions`);
+  }
+
+  // Save pre-run snapshot
+  try {
+    await saveSnapshot({ headSha: baselineSha, reason: 'pre_run', focus: '' });
+  } catch (err) {
+    report.errors.push(`snapshot: ${err.message}`);
+  }
 
   // ─────────────────────────── PHASE 1: COLLECT DATA ───────────────────────
 
@@ -374,6 +398,13 @@ async function main() {
     moduleOutcomes,
     indexingSignals,
   });
+
+  // Override focus if repeated reverts (Step 7)
+  if (consecutiveReverts >= 3 && focusPlan.focus !== 'tech' && focusPlan.focus !== 'none') {
+    focusPlan.focus = 'tech';
+    focusPlan.reason = `Forced tech: ${consecutiveReverts} consecutive reverts`;
+    focusPlan.budgets = { ...focusPlan.budgets, contentActionAllowed: false };
+  }
 
   console.log(`\n=== FOCUS: ${focusPlan.focus} ===`);
   console.log(`  Reason: ${focusPlan.reason}`);
@@ -773,6 +804,31 @@ async function main() {
     console.log('\n[focus] No actions taken this run');
   }
 
+  // ─────────────────────────── SAFETY: DIFF BUDGET CHECK ─────────────────
+  if (baselineSha && !reverted) {
+    try {
+      const budgetResult = checkDiffBudget({ baselineSha });
+      report.safety.stats = budgetResult.stats;
+      if (!budgetResult.ok) {
+        console.log(`\n[safety] Budget exceeded: ${budgetResult.reason}`);
+        console.log('[safety] Reverting to baseline...');
+        const rv = revertToSha(baselineSha);
+        if (rv.ok) {
+          reverted = true;
+          report.safety.reverted = true;
+          report.safety.reason = budgetResult.reason;
+          console.log(`[safety] Reverted to ${baselineSha}`);
+        } else {
+          console.warn(`[safety] Revert failed: ${rv.reason}`);
+          report.errors.push(`safety_revert: ${rv.reason}`);
+        }
+      }
+    } catch (err) {
+      report.errors.push(`diffBudget: ${err.message}`);
+      console.warn(`[safety] Diff budget check error (non-fatal): ${err.message}`);
+    }
+  }
+
   // ─────────────────────────── PHASE 4: AFTER-AUDIT ────────────────────────
 
   if (pages) {
@@ -824,6 +880,51 @@ async function main() {
       }
 
       report.notes = `Score: ${scoreResult.score}. Focus: ${focus}. Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues. Links added: ${report.budgetUsed.linksAdded}. Content: ${report.content?.action || 'none'}.`;
+
+      // ── SAFETY: AUDIT DELTA CHECK ──
+      if (!reverted && baselineSha && beforeAudit) {
+        try {
+          const afterClass = classifyIssues(afterAudit, config.rankIntentRoutes || []);
+          const auditDelta = computeAuditDelta({
+            before: {
+              criticalCount: techClassification.criticalCount,
+              brokenLinkCount: techClassification.brokenInternalLinks,
+              issueCounts: beforeAudit.totals.issueCounts,
+            },
+            after: {
+              criticalCount: afterClass.criticalCount,
+              brokenLinkCount: afterClass.brokenInternalLinks,
+              issueCounts: afterAudit.totals.issueCounts,
+            },
+          });
+          report.safety.auditDelta = auditDelta;
+
+          // Also check for live noindex if configured
+          const liveNoindex = (report.live?.issueCounts?.LIVE_NOINDEX || 0) > 0;
+          const safetyRevertConfig = safetyConfig.revertIfWorse || {};
+          const liveNoindexTrigger = safetyRevertConfig.liveNoindexDetected && liveNoindex;
+
+          if (auditDelta.shouldRevert || liveNoindexTrigger) {
+            const reasons = [...(auditDelta.reasons || [])];
+            if (liveNoindexTrigger) reasons.push('live noindex detected');
+            console.log(`\n[safety] Audit regression detected: ${reasons.join('; ')}`);
+            console.log('[safety] Reverting to baseline...');
+            const rv = revertToSha(baselineSha);
+            if (rv.ok) {
+              reverted = true;
+              report.safety.reverted = true;
+              report.safety.reason = reasons.join('; ');
+              console.log(`[safety] Reverted to ${baselineSha}`);
+            } else {
+              console.warn(`[safety] Revert failed: ${rv.reason}`);
+              report.errors.push(`safety_revert: ${rv.reason}`);
+            }
+          }
+        } catch (err) {
+          report.errors.push(`auditDelta: ${err.message}`);
+          console.warn(`[safety] Audit delta check error (non-fatal): ${err.message}`);
+        }
+      }
     } catch (err) {
       report.errors.push(`afterAudit: ${err.message}`);
       console.error('[seo-autopilot] After-audit error (non-fatal):', err.message);
@@ -851,6 +952,30 @@ async function main() {
   });
   if (scoreHistory.runs.length > 120) {
     scoreHistory.runs = scoreHistory.runs.slice(-120);
+  }
+
+  // Update safety state
+  if (reverted) {
+    state.safety = {
+      ...(state.safety || {}),
+      lastGoodSha: state.safety?.lastGoodSha || baselineSha,
+      consecutiveReverts: (state.safety?.consecutiveReverts || 0) + 1,
+      lastRevertAt: new Date().toISOString(),
+      lastRevertReason: report.safety.reason,
+    };
+    console.log(`[safety] Consecutive reverts: ${state.safety.consecutiveReverts}`);
+  } else {
+    const currentSha = getHeadSha();
+    state.safety = {
+      ...(state.safety || {}),
+      lastGoodSha: currentSha || baselineSha,
+      lastGoodAt: new Date().toISOString(),
+      consecutiveReverts: 0,
+    };
+    // Save post-run snapshot
+    try {
+      await saveSnapshot({ headSha: currentSha, reason: 'post_run_ok', focus });
+    } catch { /* non-fatal */ }
   }
 
   await saveState(state);
