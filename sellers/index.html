@@ -45,19 +45,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -280,7 +269,7 @@
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
@@ -318,7 +307,7 @@
     <!-- SHARED:pricing-summary:START -->
     <section class="pricing-summary-section" id="pricing">
       <div class="container">
-        <h2 class="text-center" style="margin-bottom: 1.5rem;">How Pricing Works</h2>
+        <h2 class="text-center u-d3297f95">How Pricing Works</h2>
         <div class="pricing-summary-grid">
           <div class="pricing-summary-card pricing-summary-card--featured">
             <span class="path-badge">Best Value</span>
@@ -332,7 +321,7 @@
             <p class="pricing-summary-desc">When you are only selling. Same full service, same free inspection.</p>
           </div>
         </div>
-        <p class="text-center text-muted" style="font-size: 0.8125rem; margin-top: 1.25rem; margin-bottom: 0;">
+        <p class="text-center text-muted u-3e06e627">
           These rates cover your listing fee only. <a href="#disclosures">See disclosures</a>
         </p>
       </div>
@@ -354,7 +343,7 @@
             <div class="path-subtitle">Sell + Buy</div>
             <p class="path-description">When you purchase your next home with TD Realty Ohio, list your current home for just a 1% listing fee.</p>
             <p class="path-comparison">Compared to a 3% listing fee, <strong>you keep 2% more of your sale price</strong></p>
-            <a href="/1-percent-commission/" class="btn btn-outline" style="margin-top: 1rem; display: inline-block;">Learn More</a>
+            <a href="/1-percent-commission/" class="btn btn-outline u-d3feb47d">Learn More</a>
           </div>
 
           <div class="path-card">
@@ -362,11 +351,11 @@
             <div class="path-subtitle">Sell Only</div>
             <p class="path-description">Selling without buying? List your home for a 2% listing fee with the same full-service representation.</p>
             <p class="path-comparison">Compared to a 3% listing fee, <strong>you keep 1% more of your sale price</strong></p>
-            <a href="/sell-only-2-percent/" class="btn btn-outline" style="margin-top: 1rem; display: inline-block;">Learn More</a>
+            <a href="/sell-only-2-percent/" class="btn btn-outline u-d3feb47d">Learn More</a>
           </div>
         </div>
 
-        <p class="text-center text-muted" style="margin-top: 2rem; font-size: 0.9375rem;">
+        <p class="text-center text-muted u-62bc228b">
           Note: These rates cover the listing fee for TD Realty Ohio. <a href="#disclosures">See disclosures</a>
         </p>
       </div>
@@ -374,7 +363,7 @@
 
     <!-- What's Included / What's Separate -->
     <section class="section reveal" id="whats-included">
-      <div class="container" style="max-width: 960px;">
+      <div class="container u-34bda041">
         <div class="section-header">
           <h2>Everything Included at 1–2%</h2>
           <p>Full service means full service. Here's exactly what you get.</p>
@@ -384,65 +373,65 @@
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Free Pre-Listing Inspection</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">$400–500 value. Know your home's condition before buyers do.</p>
+              <p class="u-690c8542">$400–500 value. Know your home's condition before buyers do.</p>
             </div>
           </div>
           <div class="included-item">
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Professional Photography</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">High-quality photos that make your home stand out online.</p>
+              <p class="u-690c8542">High-quality photos that make your home stand out online.</p>
             </div>
           </div>
           <div class="included-item">
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Full MLS Listing</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">Listed on Columbus REALTORS MLS, visible to all agents.</p>
+              <p class="u-690c8542">Listed on Columbus REALTORS MLS, visible to all agents.</p>
             </div>
           </div>
           <div class="included-item">
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Syndication to Major Sites</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">Zillow, Realtor.com, Redfin, Trulia, and 100+ sites.</p>
+              <p class="u-690c8542">Zillow, Realtor.com, Redfin, Trulia, and 100+ sites.</p>
             </div>
           </div>
           <div class="included-item">
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Pricing Strategy</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">Comparative market analysis to price your home accurately.</p>
+              <p class="u-690c8542">Comparative market analysis to price your home accurately.</p>
             </div>
           </div>
           <div class="included-item">
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Showing Coordination</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">We handle scheduling, lockbox access, and feedback.</p>
+              <p class="u-690c8542">We handle scheduling, lockbox access, and feedback.</p>
             </div>
           </div>
           <div class="included-item">
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Offer Review &amp; Negotiation</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">Offer review, counteroffer drafting, and negotiation support for stronger terms.</p>
+              <p class="u-690c8542">Offer review, counteroffer drafting, and negotiation support for stronger terms.</p>
             </div>
           </div>
           <div class="included-item">
             <svg class="animated-check" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#16a34a"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             <div>
               <strong>Contract-to-Close Management</strong>
-              <p style="margin:0.25rem 0 0;font-size:0.875rem;color:var(--gray-600);">Inspections, appraisal, and closing coordination handled.</p>
+              <p class="u-690c8542">Inspections, appraisal, and closing coordination handled.</p>
             </div>
           </div>
         </div>
 
         <!-- PARTIAL:whats-separate-sellers -->
-        <details class="td-details" style="margin-top: 2.5rem;">
+        <details class="td-details u-d6f41e10">
           <summary>What's Separate</summary>
           <div class="td-details-body">
-            <p style="color: var(--gray-600); margin-bottom: 1rem;">These costs are not part of your listing fee:</p>
+            <p class="u-aab2391d">These costs are not part of your listing fee:</p>
             <ul class="benefits-list">
               <li><strong>Buyer agent compensation</strong>: negotiated separately with each transaction based on your market and situation</li>
               <li><strong>Standard closing costs</strong>: title fees, transfer taxes, and other costs that apply to every home sale regardless of your agent</li>
@@ -476,7 +465,7 @@
                 <label class="calculator-label" for="seller-price-slider">Home Sale Price</label>
                 <span class="calculator-slider-value" data-price-display>$400,000</span>
               </div>
-              <input type="range" class="calculator-range" data-price-slider id="seller-price-slider" min="200000" max="800000" step="10000" value="400000" style="--value: 33.33%">
+              <input type="range" class="calculator-range u-3fe8ec80" data-price-slider id="seller-price-slider" min="200000" max="800000" step="10000" value="400000">
               <div class="slider-labels">
                 <span>$200K</span>
                 <span>$800K</span>
@@ -500,7 +489,7 @@
                 <span class="result-value highlight" data-savings>$8,000</span>
               </div>
             </div>
-            <p style="font-size: 0.8125rem; color: var(--gray-600); margin-top: 1rem; margin-bottom: 0;">
+            <p class="u-bb80b5c5">
               Listing fee only. Buyer agent compensation is separate. <a href="#disclosures">See disclosures</a>
             </p>
           </div>
@@ -522,7 +511,7 @@
               <li>Faster, smoother closings</li>
               <li>Choose to fix, adjust price, or disclose as-is</li>
             </ul>
-            <a href="/pre-listing-inspection/" class="btn btn-outline" style="margin-top: 1rem;">Learn More</a>
+            <a href="/pre-listing-inspection/" class="btn btn-outline u-988c5fa7">Learn More</a>
           </div>
         </div>
       </div>
@@ -536,7 +525,7 @@
           <p>Click each step to learn exactly what happens and what you'll need to do.</p>
         </div>
 
-        <div class="process-steps-expandable" style="max-width: 800px; margin: 0 auto;">
+        <div class="process-steps-expandable u-eb46d9df">
           <!-- Step 1: Consultation -->
           <div class="process-step-expandable">
             <button class="process-step-header" aria-expanded="false">
@@ -811,8 +800,8 @@
     </section>
 
     <!-- Related Guides -->
-    <section class="section" style="background: var(--gray-50);">
-      <div class="container" style="max-width: 900px;">
+    <section class="section u-75ff92b0">
+      <div class="container u-693f5f98">
         <div class="section-header">
           <h2>Seller Guides &amp; Resources</h2>
         </div>
@@ -876,39 +865,39 @@
           <h2>Free Seller Tools</h2>
           <p>Use these interactive tools to plan your home sale. No sign-up required.</p>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
-          <a href="/tools/seller-net-proceeds/" class="feature-card" style="text-decoration:none;display:block;">
+        <div class="u-623997d8">
+          <a href="/tools/seller-net-proceeds/" class="feature-card u-ff353aaa">
             <h3 class="feature-card-title">Seller Net Proceeds Estimate</h3>
             <p class="feature-card-text">Estimate your take-home amount after listing fees, buyer agent compensation, and closing costs.</p>
             <span class="feature-card-link">Use this tool &rarr;</span>
           </a>
-          <a href="/tools/pre-listing-checklist/" class="feature-card" style="text-decoration:none;display:block;">
+          <a href="/tools/pre-listing-checklist/" class="feature-card u-ff353aaa">
             <h3 class="feature-card-title">Pre-Listing Readiness Checklist</h3>
             <p class="feature-card-text">Get a personalized checklist of what to prepare before listing your home for sale.</p>
             <span class="feature-card-link">Use this tool &rarr;</span>
           </a>
-          <a href="/tools/sell-buy-timing/" class="feature-card" style="text-decoration:none;display:block;">
+          <a href="/tools/sell-buy-timing/" class="feature-card u-ff353aaa">
             <h3 class="feature-card-title">Sell &amp; Buy Timing Planner</h3>
             <p class="feature-card-text">Compare sell-first, buy-first, and simultaneous close strategies with personalized pros and cons.</p>
             <span class="feature-card-link">Use this tool &rarr;</span>
           </a>
-          <a href="/tools/seller-documents/" class="feature-card" style="text-decoration:none;display:block;">
+          <a href="/tools/seller-documents/" class="feature-card u-ff353aaa">
             <h3 class="feature-card-title">Seller Document Organizer</h3>
             <p class="feature-card-text">Get a customized list of documents to gather before selling your Ohio home.</p>
             <span class="feature-card-link">Use this tool &rarr;</span>
           </a>
-          <a href="/tools/repair-vs-credit/" class="feature-card" style="text-decoration:none;display:block;">
+          <a href="/tools/repair-vs-credit/" class="feature-card u-ff353aaa">
             <h3 class="feature-card-title">Repair vs Credit Decision Helper</h3>
             <p class="feature-card-text">Decide whether to make a repair or offer a buyer credit before selling.</p>
             <span class="feature-card-link">Use this tool &rarr;</span>
           </a>
-          <a href="/tools/sell-now-vs-wait/" class="feature-card" style="text-decoration:none;display:block;">
+          <a href="/tools/sell-now-vs-wait/" class="feature-card u-ff353aaa">
             <h3 class="feature-card-title">Sell Now vs Wait Planner</h3>
             <p class="feature-card-text">Evaluate whether to sell now or wait based on your personal situation and goals.</p>
             <span class="feature-card-link">Use this tool &rarr;</span>
           </a>
         </div>
-        <div class="text-center" style="margin-top:1.5rem;">
+        <div class="text-center u-c9d9eba7">
           <a href="/tools/" class="btn btn-outline">View All Free Tools</a>
         </div>
       </div>

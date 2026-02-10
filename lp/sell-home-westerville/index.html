@@ -25,20 +25,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <link rel="stylesheet" href="/assets/css/lp.css">
 
@@ -122,7 +110,7 @@
           <span>$9,000</span>
         </div>
       </div>
-      <a href="/contact/" class="btn btn-primary" style="width: 100%;">Calculate Your Savings</a>
+      <a href="/contact/" class="btn btn-primary u-199b6f0e">Calculate Your Savings</a>
     </div>
 
     <section class="lp-local">
@@ -212,7 +200,7 @@
 
   <footer class="lp-footer">
     <p>The 1% listing commission applies when you sell AND buy with TD Realty Ohio. Sell-only rate is 2%. Buyer's agent compensation negotiated separately.</p>
-    <p style="margin-top: 0.5rem;"><a href="/privacy/" style="color: var(--gray-600);">Privacy Policy</a> | <a href="/terms/" style="color: var(--gray-600);">Terms</a> | <a href="/fair-housing/" style="color: var(--gray-600);">Fair Housing</a></p>
+    <p class="u-f8a7328a"><a href="/privacy/" class="u-7855384b">Privacy Policy</a> | <a href="/terms/" class="u-7855384b">Terms</a> | <a href="/fair-housing/" class="u-7855384b">Fair Housing</a></p>
   </footer>
 
   <script src="/assets/js/nav.js?v=20260208"></script>

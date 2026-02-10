@@ -35,19 +35,8 @@
   <link rel="preload" href="/assets/js/main.js" as="script">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <script type="application/ld+json">
   {
@@ -193,7 +182,7 @@
     </nav>
 
     <article class="section blog-article">
-      <div class="container" style="max-width: 800px;">
+      <div class="container u-7d701bf7">
         <header class="article-header">
           <h1>Closing Costs When Selling a Home in Central Ohio</h1>
           <p class="post-meta">TD Realty Ohio | February 2026</p>
@@ -216,60 +205,60 @@
 
           <p>Here is a detailed look at each cost you can expect when selling a home in Central Ohio, organized from largest to smallest based on a typical Columbus transaction.</p>
 
-          <div style="overflow-x: auto; margin: 2rem 0;">
-            <table style="width: 100%; border-collapse: collapse; min-width: 540px;">
+          <div class="u-c3d16094">
+            <table class="u-702c92b0">
               <thead>
-                <tr style="background-color: var(--color-primary); color: white;">
-                  <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Closing Cost Item</th>
-                  <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Typical Amount</th>
-                  <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Notes</th>
+                <tr class="u-25a3a54c">
+                  <th class="u-86035678">Closing Cost Item</th>
+                  <th class="u-26ec1428">Typical Amount</th>
+                  <th class="u-86035678">Notes</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Real estate commissions</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">3-6% of sale price</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Listing agent + buyer's agent; TD Realty charges 1-2% listing side</td>
+                  <td class="u-c922129b">Real estate commissions</td>
+                  <td class="u-26ec1428">3-6% of sale price</td>
+                  <td class="u-c922129b">Listing agent + buyer's agent; TD Realty charges 1-2% listing side</td>
                 </tr>
-                <tr style="background-color: #f9f9f9;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Transfer tax (conveyance fee)</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$1-$4 per $1,000</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Varies by county; Franklin County is $4/$1,000</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Title insurance (owner's policy)</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">~0.5% of sale price</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Protects buyer against title defects; customarily paid by seller in Ohio</td>
-                </tr>
-                <tr style="background-color: #f9f9f9;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Prorated property taxes</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">Varies</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Your share of taxes through the closing date</td>
+                <tr class="u-e21ba234">
+                  <td class="u-c922129b">Transfer tax (conveyance fee)</td>
+                  <td class="u-26ec1428">$1-$4 per $1,000</td>
+                  <td class="u-c922129b">Varies by county; Franklin County is $4/$1,000</td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Attorney / closing fees</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$500 - $1,000</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Title company or attorney closing fee; sometimes split with buyer</td>
+                  <td class="u-c922129b">Title insurance (owner's policy)</td>
+                  <td class="u-26ec1428">~0.5% of sale price</td>
+                  <td class="u-c922129b">Protects buyer against title defects; customarily paid by seller in Ohio</td>
                 </tr>
-                <tr style="background-color: #f9f9f9;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Home warranty (if offered)</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$400 - $600</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Optional; sometimes offered as a buyer incentive</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Repair credits / concessions</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">Negotiable</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Credits agreed upon after buyer's inspection</td>
-                </tr>
-                <tr style="background-color: #f9f9f9;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Recording fees</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$50 - $150</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">County recorder fees for deed transfer</td>
+                <tr class="u-e21ba234">
+                  <td class="u-c922129b">Prorated property taxes</td>
+                  <td class="u-26ec1428">Varies</td>
+                  <td class="u-c922129b">Your share of taxes through the closing date</td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">HOA transfer / estoppel fees</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$0 - $500</td>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Only if property is in an HOA</td>
+                  <td class="u-c922129b">Attorney / closing fees</td>
+                  <td class="u-26ec1428">$500 - $1,000</td>
+                  <td class="u-c922129b">Title company or attorney closing fee; sometimes split with buyer</td>
+                </tr>
+                <tr class="u-e21ba234">
+                  <td class="u-c922129b">Home warranty (if offered)</td>
+                  <td class="u-26ec1428">$400 - $600</td>
+                  <td class="u-c922129b">Optional; sometimes offered as a buyer incentive</td>
+                </tr>
+                <tr>
+                  <td class="u-c922129b">Repair credits / concessions</td>
+                  <td class="u-26ec1428">Negotiable</td>
+                  <td class="u-c922129b">Credits agreed upon after buyer's inspection</td>
+                </tr>
+                <tr class="u-e21ba234">
+                  <td class="u-c922129b">Recording fees</td>
+                  <td class="u-26ec1428">$50 - $150</td>
+                  <td class="u-c922129b">County recorder fees for deed transfer</td>
+                </tr>
+                <tr>
+                  <td class="u-c922129b">HOA transfer / estoppel fees</td>
+                  <td class="u-26ec1428">$0 - $500</td>
+                  <td class="u-c922129b">Only if property is in an HOA</td>
                 </tr>
               </tbody>
             </table>
@@ -344,60 +333,60 @@
 
           <p>For this example, the seller is responsible for the listing agent commission only, with the buyer handling their own agent compensation, which is becoming increasingly common after recent industry changes.</p>
 
-          <div style="overflow-x: auto; margin: 2rem 0;">
-            <table style="width: 100%; border-collapse: collapse; min-width: 520px;">
+          <div class="u-c3d16094">
+            <table class="u-89501a3f">
               <thead>
-                <tr style="background-color: var(--color-primary); color: white;">
-                  <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Line Item</th>
-                  <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">Traditional 3%</th>
-                  <th style="padding: 12px; text-align: right; border: 1px solid #ddd;">TD Realty 1%</th>
+                <tr class="u-25a3a54c">
+                  <th class="u-86035678">Line Item</th>
+                  <th class="u-26ec1428">Traditional 3%</th>
+                  <th class="u-26ec1428">TD Realty 1%</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Sale Price</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$350,000</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$350,000</td>
+                  <td class="u-c922129b">Sale Price</td>
+                  <td class="u-26ec1428">$350,000</td>
+                  <td class="u-26ec1428">$350,000</td>
                 </tr>
-                <tr style="background-color: #f9f9f9;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Listing agent commission</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$10,500</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$3,500</td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Transfer tax ($4/$1,000)</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$1,400</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$1,400</td>
-                </tr>
-                <tr style="background-color: #f9f9f9;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Title insurance (owner's policy)</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$1,750</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$1,750</td>
+                <tr class="u-e21ba234">
+                  <td class="u-c922129b">Listing agent commission</td>
+                  <td class="u-0ba3f539">-$10,500</td>
+                  <td class="u-0ba3f539">-$3,500</td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Prorated property taxes</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$3,000</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$3,000</td>
+                  <td class="u-c922129b">Transfer tax ($4/$1,000)</td>
+                  <td class="u-0ba3f539">-$1,400</td>
+                  <td class="u-0ba3f539">-$1,400</td>
                 </tr>
-                <tr style="background-color: #f9f9f9;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Attorney / closing fee</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$750</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$750</td>
+                <tr class="u-e21ba234">
+                  <td class="u-c922129b">Title insurance (owner's policy)</td>
+                  <td class="u-0ba3f539">-$1,750</td>
+                  <td class="u-0ba3f539">-$1,750</td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px; border: 1px solid #ddd;">Recording fees</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$100</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$100</td>
+                  <td class="u-c922129b">Prorated property taxes</td>
+                  <td class="u-0ba3f539">-$3,000</td>
+                  <td class="u-0ba3f539">-$3,000</td>
                 </tr>
-                <tr style="background-color: #f0f7ff; font-weight: 600;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Total Closing Costs</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$17,500</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd; color: #c0392b;">-$10,500</td>
+                <tr class="u-e21ba234">
+                  <td class="u-c922129b">Attorney / closing fee</td>
+                  <td class="u-0ba3f539">-$750</td>
+                  <td class="u-0ba3f539">-$750</td>
                 </tr>
-                <tr style="background-color: var(--color-primary); color: white; font-weight: 700;">
-                  <td style="padding: 12px; border: 1px solid #ddd;">Estimated Net Proceeds</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$332,500</td>
-                  <td style="padding: 12px; text-align: right; border: 1px solid #ddd;">$339,500</td>
+                <tr>
+                  <td class="u-c922129b">Recording fees</td>
+                  <td class="u-0ba3f539">-$100</td>
+                  <td class="u-0ba3f539">-$100</td>
+                </tr>
+                <tr class="u-cb1ced47">
+                  <td class="u-c922129b">Total Closing Costs</td>
+                  <td class="u-0ba3f539">-$17,500</td>
+                  <td class="u-0ba3f539">-$10,500</td>
+                </tr>
+                <tr class="u-d319ea43">
+                  <td class="u-c922129b">Estimated Net Proceeds</td>
+                  <td class="u-26ec1428">$332,500</td>
+                  <td class="u-26ec1428">$339,500</td>
                 </tr>
               </tbody>
             </table>
@@ -480,7 +469,7 @@
 
           <h2>Frequently Asked Questions</h2>
 
-          <div class="faq-list" style="margin-top: 1.5rem;">
+          <div class="faq-list u-185d793c">
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
                 How much are closing costs for sellers in Ohio?
@@ -533,26 +522,26 @@
 
           <p>If you are considering selling a home in <a href="/areas/columbus/">Columbus</a> or anywhere in Central Ohio, TD Realty Ohio can provide a personalized net proceeds estimate based on your specific property and recent comparable sales.</p>
 
-          <div style="margin: 2rem 0; padding: 2rem; background: var(--color-primary); color: white; border-radius: 8px; text-align: center;">
-            <h3 style="color: white; margin-top: 0;">Get Your Personalized Net Proceeds Estimate</h3>
-            <p style="margin-bottom: 1.5rem; opacity: 0.9;">See exactly how much you will walk away with after closing costs based on your home price and commission choice.</p>
-            <a href="/contact/?interest=selling" class="btn btn-accent btn-lg" style="margin-right: 0.5rem;">Request Estimate</a>
+          <div class="u-3b01cf82">
+            <h3 class="u-eaf149b0">Get Your Personalized Net Proceeds Estimate</h3>
+            <p class="u-d2c79240">See exactly how much you will walk away with after closing costs based on your home price and commission choice.</p>
+            <a href="/contact/?interest=selling" class="btn btn-accent btn-lg u-1e5c8846">Request Estimate</a>
             <a href="tel:6143928858" class="btn btn-outline-white btn-lg">(614) 392-8858</a>
           </div>
         </div>
       </div>
 
       <!-- related-areas -->
-      <div style="margin:2rem 0;padding:1.5rem;background:#f8f9fa;border-radius:8px;">
+      <div class="u-47bd9f11">
         <strong>Explore Local Market Info:</strong><br>
-        <div style="margin-top:0.75rem;">
-        <a href="/areas/columbus/" style="display:inline-block;padding:0.5rem 1rem;border:1px solid #ddd;border-radius:6px;color:#1a2e44;text-decoration:none;font-weight:500;margin:0.25rem;">Columbus Real Estate</a>
+        <div class="u-001c279f">
+        <a href="/areas/columbus/" class="u-779af10c">Columbus Real Estate</a>
         </div>
       </div>
     </article>
 
-    <section class="section" style="padding-top: 0;">
-      <div class="container" style="max-width: 720px;">
+    <section class="section u-25e52174">
+      <div class="container u-1d57e605">
         <div class="blog-next-steps">
           <h3>Next Steps</h3>
           <ul>
@@ -576,7 +565,7 @@
     </section>
 
     <section class="section">
-      <div class="container" style="max-width: 800px;">
+      <div class="container u-7d701bf7">
         <h2>Related Articles</h2>
         <div class="blog-list">
           <article class="blog-card">

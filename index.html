@@ -53,20 +53,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260209">
-
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Structured Data: Organization + RealEstateAgent -->
   <script type="application/ld+json">
@@ -268,7 +256,7 @@
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero" style="background-image: url('/assets/images/maps/downtown-columbus-ohio-1331979.jpg');">
+    <section class="hero u-592ebde1">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content hero-content--center">
@@ -435,7 +423,7 @@
                   <label class="calculator-label" for="seller-price-slider">Home Sale Price</label>
                   <span class="calculator-slider-value" data-price-display>$400,000</span>
                 </div>
-                <input type="range" class="calculator-range" data-price-slider id="seller-price-slider" min="200000" max="800000" step="10000" value="400000" style="--value: 33.33%">
+                <input type="range" class="calculator-range u-3fe8ec80" data-price-slider id="seller-price-slider" min="200000" max="800000" step="10000" value="400000">
                 <div class="slider-labels">
                   <span>$200K</span>
                   <span>$800K</span>
@@ -487,7 +475,7 @@
               </div>
               <a href="/contact/?mode=buy" class="btn btn-primary btn-lg calculator-cta" id="buyer-calc-cta">Claim Your Cash Back</a>
               <p class="calculator-disclosure">
-                Disclosure: The 1% cash back is available to qualifying first-time homebuyers and is subject to lender approval. Credit is applied toward closing costs or prepaid items. <a href="/buyers/" style="color: var(--gold);">Learn more →</a>
+                Disclosure: The 1% cash back is available to qualifying first-time homebuyers and is subject to lender approval. Credit is applied toward closing costs or prepaid items. <a href="/buyers/" class="u-ed12483e">Learn more →</a>
               </p>
             </div>
           </div>
@@ -504,7 +492,7 @@
         </div>
 
         <div class="feature-grid reveal-stagger">
-          <a href="/pre-listing-inspection/" class="feature-card" style="text-decoration:none;display:block;">
+          <a href="/pre-listing-inspection/" class="feature-card u-ff353aaa">
             <div class="feature-card-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
@@ -527,7 +515,7 @@
               </svg>
             </div>
             <h3 class="feature-card-title">Lower Listing Fee</h3>
-            <p class="feature-card-text">Your listing fee is 1% if you also buy with us, or 2% if you're <a href="/sell-only-2-percent/" style="color: inherit; text-decoration: underline;">selling only</a>. On a $300,000 sale, you save $3,000–$6,000 compared to a 3% listing fee. <a href="#disclosures" style="color: inherit;">See disclosures</a></p>
+            <p class="feature-card-text">Your listing fee is 1% if you also buy with us, or 2% if you're <a href="/sell-only-2-percent/" class="u-5db2d05c">selling only</a>. On a $300,000 sale, you save $3,000–$6,000 compared to a 3% listing fee. <a href="#disclosures" class="u-c610b883">See disclosures</a></p>
           </div>
 
           <div class="feature-card">
@@ -631,11 +619,11 @@
           <h2>Client Reviews</h2>
           <p>Read verified reviews from real clients on independent platforms.</p>
         </div>
-        <div class="social-proof-card" style="text-align: center;">
-          <p style="margin-bottom: 1.5rem;">We believe in transparency. Our client reviews are hosted on independent, verified platforms rather than on our own website.</p>
+        <div class="social-proof-card u-cdd8ca06">
+          <p class="u-d3297f95">We believe in transparency. Our client reviews are hosted on independent, verified platforms rather than on our own website.</p>
           <div class="social-proof-cta">
             <a href="https://www.zillow.com/profile/travisdrealtor" target="_blank" rel="noopener noreferrer" class="btn btn-primary" aria-label="Read reviews on Zillow - opens in new tab">Read Reviews on Zillow</a>
-            <a href="/reviews/" class="btn btn-outline btn-sm" style="margin-left: 0.75rem;">All Review Platforms</a>
+            <a href="/reviews/" class="btn btn-outline btn-sm u-a7c6bfee">All Review Platforms</a>
           </div>
         </div>
       </div>
@@ -723,10 +711,10 @@
     </section>
 
     <!-- seo-autopilot:related-guides -->
-  <section class="section-compact" style="background: var(--off-white); padding: 2rem 0;">
+  <section class="section-compact u-04df6151">
     <div class="container">
-      <h3 style="margin-bottom: 1rem;">Related Guides</h3>
-      <ul style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem;">
+      <h3 class="u-4986ecf7">Related Guides</h3>
+      <ul class="u-93eeafcd">
       <li><a href="/sell-and-buy/">sell and buy</a></li>
       <li><a href="/compare/fsbo-vs-1-percent-listing/">compare/fsbo vs 1 percent listing</a></li>
       </ul>

@@ -37,19 +37,8 @@
   <link rel="preload" href="/assets/js/main.js" as="script">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
 
   <script type="application/ld+json">
@@ -203,7 +192,7 @@
     </nav>
 
     <article class="section">
-      <div class="container" style="max-width: 800px;">
+      <div class="container u-7d701bf7">
         <header class="article-header">
           <h1>First-Time Homebuyers: Get 1% Cash Back at Closing</h1>
           <p class="post-meta">TD Realty Ohio | February 2026</p>
@@ -222,38 +211,38 @@
 
           <p>The cash back amount scales with your purchase price. Here's what you could receive on homes at various price points common in the Columbus market:</p>
 
-          <div style="background: var(--gray-50); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
-            <table style="width: 100%; border-collapse: collapse;">
+          <div class="u-82f32ad0">
+            <table class="u-91f0dac5">
               <thead>
-                <tr style="border-bottom: 2px solid var(--gray-200);">
-                  <th style="text-align: left; padding: 0.75rem 0;">Purchase Price</th>
-                  <th style="text-align: right; padding: 0.75rem 0;">Your Cash Back (1%)</th>
+                <tr class="u-cd614c18">
+                  <th class="u-de57f9d1">Purchase Price</th>
+                  <th class="u-0df85157">Your Cash Back (1%)</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">$250,000</td>
-                  <td style="text-align: right; padding: 0.75rem 0; color: var(--success); font-weight: 600;">$2,500</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">$250,000</td>
+                  <td class="u-b87c2643">$2,500</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">$300,000</td>
-                  <td style="text-align: right; padding: 0.75rem 0; color: var(--success); font-weight: 600;">$3,000</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">$300,000</td>
+                  <td class="u-b87c2643">$3,000</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">$350,000</td>
-                  <td style="text-align: right; padding: 0.75rem 0; color: var(--success); font-weight: 600;">$3,500</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">$350,000</td>
+                  <td class="u-b87c2643">$3,500</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">$400,000</td>
-                  <td style="text-align: right; padding: 0.75rem 0; color: var(--success); font-weight: 600;">$4,000</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">$400,000</td>
+                  <td class="u-b87c2643">$4,000</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">$500,000</td>
-                  <td style="text-align: right; padding: 0.75rem 0; color: var(--success); font-weight: 600;">$5,000</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">$500,000</td>
+                  <td class="u-b87c2643">$5,000</td>
                 </tr>
                 <tr>
-                  <td style="padding: 0.75rem 0;">$750,000</td>
-                  <td style="text-align: right; padding: 0.75rem 0; color: var(--success); font-weight: 600;">$7,500</td>
+                  <td class="u-f10e8ae5">$750,000</td>
+                  <td class="u-b87c2643">$7,500</td>
                 </tr>
               </tbody>
             </table>
@@ -423,7 +412,7 @@
     </article>
 
     <section class="section">
-      <div class="container" style="max-width: 800px;">
+      <div class="container u-7d701bf7">
         <h2>Related Articles</h2>
         <div class="blog-list">
           <article class="blog-card">
@@ -440,8 +429,8 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top: 0;">
-      <div class="container" style="max-width: 720px;">
+    <section class="section u-25e52174">
+      <div class="container u-1d57e605">
         <div class="blog-next-steps">
           <h3>Next Steps</h3>
           <ul>

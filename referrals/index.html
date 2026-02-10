@@ -43,19 +43,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -149,7 +138,7 @@
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
@@ -166,10 +155,10 @@
     <!-- Referral Form Section -->
     <section class="section">
       <div class="container">
-        <div class="two-col" style="align-items: flex-start;">
+        <div class="two-col u-f12ec822">
           <div>
             <h2>Claim Your Referral Credit</h2>
-            <p style="font-size: 1.125rem; margin-bottom: 2rem;">If a friend, family member, or colleague sent you our way, let us know. When you close on your purchase or sale with TD Realty Ohio, you'll receive a $250 credit at closing. Just tell us who referred you.</p>
+            <p class="u-93be2127">If a friend, family member, or colleague sent you our way, let us know. When you close on your purchase or sale with TD Realty Ohio, you'll receive a $250 credit at closing. Just tell us who referred you.</p>
 
             <div class="disclosure-box">
               <p><strong>How it works:</strong> Complete the form with your information and the name of the person who referred you. Once your transaction closes, we'll apply the $250 credit to your closing costs.</p>
@@ -177,13 +166,13 @@
           </div>
 
           <div>
-            <div class="calculator" style="max-width: 100%;">
+            <div class="calculator u-c7f79b45">
               <h3 class="calculator-title">Referral Credit Form</h3>
 
               <form id="referral-form" action="https://formspree.io/f/mykkypyd" method="POST" novalidate>
                 <input type="hidden" name="form_type" value="Referral Credit">
                 <!-- Honeypot field for spam prevention -->
-                <div style="position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden;" aria-hidden="true">
+                <div class="u-75dfc578" aria-hidden="true">
                   <label for="hp-company">Company</label>
                   <input type="text" id="hp-company" name="_gotcha" tabindex="-1" autocomplete="off">
                 </div>
@@ -218,9 +207,9 @@
                   </select>
                 </div>
 
-                <div class="referral-terms" style="font-size: 0.75rem; color: var(--gray-600); margin-bottom: 1rem; padding: 1rem; background: var(--off-white); border-radius: var(--radius-md);">
+                <div class="referral-terms u-d364a7fb">
                   <strong>Referral Program Terms:</strong>
-                  <ul style="margin: 0.5rem 0 0 1rem; padding: 0;">
+                  <ul class="u-3ea11974">
                     <li>$250 credit applied at closing when referral completes a transaction</li>
                     <li>Referral must be a new client not currently working with TD Realty Ohio</li>
                     <li>Referrer must be identified before showing agreement is signed</li>
@@ -228,15 +217,15 @@
                   </ul>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 1rem;">
-                  <label style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8125rem; color: var(--gray-600); cursor: pointer;">
-                    <input type="checkbox" name="consent_to_contact" required style="margin-top: 0.15rem; flex-shrink: 0;">
-                    <span>I agree to be contacted by TD Realty Ohio regarding this referral. See our <a href="/privacy/" style="color: var(--gold);">Privacy Policy</a>.</span>
+                <div class="form-group u-4986ecf7">
+                  <label class="u-85a2e2bc">
+                    <input type="checkbox" name="consent_to_contact" required class="u-6e9c9512">
+                    <span>I agree to be contacted by TD Realty Ohio regarding this referral. See our <a href="/privacy/" class="u-ed12483e">Privacy Policy</a>.</span>
                   </label>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Claim My Referral Credit</button>
-                <div id="referral-form-status" role="status" aria-live="polite" class="form-status" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary btn-lg u-199b6f0e">Claim My Referral Credit</button>
+                <div id="referral-form-status" role="status" aria-live="polite" class="form-status u-224b51a7"></div>
               </form>
             </div>
           </div>

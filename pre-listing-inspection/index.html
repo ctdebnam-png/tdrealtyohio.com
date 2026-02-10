@@ -44,19 +44,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -171,7 +160,7 @@
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
@@ -207,9 +196,9 @@
           <p>Knowledge is power in real estate negotiations. Here's how a pre-listing inspection benefits sellers.</p>
         </div>
 
-        <div class="grid-2" style="max-width: 900px; margin: 0 auto;">
-          <div class="card" style="padding: 2rem;">
-            <h3 style="display: flex; align-items: center; gap: 0.75rem;">
+        <div class="grid-2 u-12a642d2">
+          <div class="card u-46105dcd">
+            <h3 class="u-8bbd91c2">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" aria-hidden="true">
                 <path d="M12 2L2 7l10 5 10-5-10-5z"/>
                 <path d="M2 17l10 5 10-5"/>
@@ -217,39 +206,39 @@
               </svg>
               Accurate Pricing
             </h3>
-            <p style="color: var(--gray-600); margin-bottom: 0;">Price your home based on its actual condition, not assumptions. Homes priced accurately sell faster and for better prices than overpriced listings that sit on the market.</p>
+            <p class="u-eaf591ce">Price your home based on its actual condition, not assumptions. Homes priced accurately sell faster and for better prices than overpriced listings that sit on the market.</p>
           </div>
 
-          <div class="card" style="padding: 2rem;">
-            <h3 style="display: flex; align-items: center; gap: 0.75rem;">
+          <div class="card u-46105dcd">
+            <h3 class="u-8bbd91c2">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" aria-hidden="true">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                 <polyline points="22 4 12 14.01 9 11.01"/>
               </svg>
               No Surprises
             </h3>
-            <p style="color: var(--gray-600); margin-bottom: 0;">Eliminate the stress of wondering what a buyer's inspection will reveal. You already know, and you've already decided how to handle it.</p>
+            <p class="u-eaf591ce">Eliminate the stress of wondering what a buyer's inspection will reveal. You already know, and you've already decided how to handle it.</p>
           </div>
 
-          <div class="card" style="padding: 2rem;">
-            <h3 style="display: flex; align-items: center; gap: 0.75rem;">
+          <div class="card u-46105dcd">
+            <h3 class="u-8bbd91c2">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/>
                 <polyline points="12 6 12 12 16 14"/>
               </svg>
               Faster Closings
             </h3>
-            <p style="color: var(--gray-600); margin-bottom: 0;">Deals are less likely to fall apart or be delayed when condition issues are already known and accounted for. Fewer re-negotiations mean faster closings.</p>
+            <p class="u-eaf591ce">Deals are less likely to fall apart or be delayed when condition issues are already known and accounted for. Fewer re-negotiations mean faster closings.</p>
           </div>
 
-          <div class="card" style="padding: 2rem;">
-            <h3 style="display: flex; align-items: center; gap: 0.75rem;">
+          <div class="card u-46105dcd">
+            <h3 class="u-8bbd91c2">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" aria-hidden="true">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
               Stronger Position
             </h3>
-            <p style="color: var(--gray-600); margin-bottom: 0;">Transparency builds trust with buyers. When you disclose known issues upfront, buyers are less likely to request excessive concessions later.</p>
+            <p class="u-eaf591ce">Transparency builds trust with buyers. When you disclose known issues upfront, buyers are less likely to request excessive concessions later.</p>
           </div>
         </div>
       </div>
@@ -263,16 +252,16 @@
             <h2>What Happens After the Inspection?</h2>
             <p>Once you have the inspection report, you have options. There's no requirement to fix everything (or anything). You decide based on your goals and circumstances.</p>
 
-            <h4 style="margin-top: 2rem; color: var(--navy);">Option 1: Make Repairs</h4>
+            <h4 class="u-35af6a86">Option 1: Make Repairs</h4>
             <p>Fix significant issues before listing. This can justify a higher asking price and make your home more attractive to buyers who don't want a project.</p>
 
-            <h4 style="margin-top: 1.5rem; color: var(--navy);">Option 2: Adjust Pricing</h4>
+            <h4 class="u-43d2d8cf">Option 2: Adjust Pricing</h4>
             <p>Price the home to reflect its condition. Buyers who want a discount or don't mind making repairs themselves may see this as an opportunity.</p>
 
-            <h4 style="margin-top: 1.5rem; color: var(--navy);">Option 3: Disclose As-Is</h4>
+            <h4 class="u-43d2d8cf">Option 3: Disclose As-Is</h4>
             <p>Simply disclose the inspection findings and sell the home in its current condition. Many buyers appreciate the transparency and factor known issues into their offers.</p>
 
-            <p style="margin-top: 1.5rem;">We'll discuss the pros and cons of each approach for your specific situation. The right choice depends on your timeline, budget, and local market conditions.</p>
+            <p class="u-185d793c">We'll discuss the pros and cons of each approach for your specific situation. The right choice depends on your timeline, budget, and local market conditions.</p>
           </div>
         </div>
       </div>
@@ -286,59 +275,59 @@
           <p>A comprehensive examination of your home's major systems and components.</p>
         </div>
 
-        <div class="grid-3" style="max-width: 900px; margin: 0 auto;">
-          <div style="text-align: center; padding: 1.5rem;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" style="margin-bottom: 1rem;" aria-hidden="true">
+        <div class="grid-3 u-12a642d2">
+          <div class="u-a2c4ecd2">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" class="u-4986ecf7" aria-hidden="true">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
               <polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
             <h4>Structure</h4>
-            <p class="text-muted" style="font-size: 0.9375rem; margin-bottom: 0;">Foundation, framing, roof structure, attic</p>
+            <p class="text-muted u-591b4b1d">Foundation, framing, roof structure, attic</p>
           </div>
 
-          <div style="text-align: center; padding: 1.5rem;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" style="margin-bottom: 1rem;" aria-hidden="true">
+          <div class="u-a2c4ecd2">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" class="u-4986ecf7" aria-hidden="true">
               <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
             </svg>
             <h4>Systems</h4>
-            <p class="text-muted" style="font-size: 0.9375rem; margin-bottom: 0;">HVAC, electrical, plumbing, water heater</p>
+            <p class="text-muted u-591b4b1d">HVAC, electrical, plumbing, water heater</p>
           </div>
 
-          <div style="text-align: center; padding: 1.5rem;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" style="margin-bottom: 1rem;" aria-hidden="true">
+          <div class="u-a2c4ecd2">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" class="u-4986ecf7" aria-hidden="true">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
               <line x1="3" y1="9" x2="21" y2="9"/>
               <line x1="9" y1="21" x2="9" y2="9"/>
             </svg>
             <h4>Exterior</h4>
-            <p class="text-muted" style="font-size: 0.9375rem; margin-bottom: 0;">Roof covering, siding, windows, doors, drainage</p>
+            <p class="text-muted u-591b4b1d">Roof covering, siding, windows, doors, drainage</p>
           </div>
 
-          <div style="text-align: center; padding: 1.5rem;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" style="margin-bottom: 1rem;" aria-hidden="true">
+          <div class="u-a2c4ecd2">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" class="u-4986ecf7" aria-hidden="true">
               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
               <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
               <line x1="12" y1="22.08" x2="12" y2="12"/>
             </svg>
             <h4>Interior</h4>
-            <p class="text-muted" style="font-size: 0.9375rem; margin-bottom: 0;">Walls, ceilings, floors, stairs, railings</p>
+            <p class="text-muted u-591b4b1d">Walls, ceilings, floors, stairs, railings</p>
           </div>
 
-          <div style="text-align: center; padding: 1.5rem;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" style="margin-bottom: 1rem;" aria-hidden="true">
+          <div class="u-a2c4ecd2">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" class="u-4986ecf7" aria-hidden="true">
               <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
               <polyline points="17 2 12 7 7 2"/>
             </svg>
             <h4>Appliances</h4>
-            <p class="text-muted" style="font-size: 0.9375rem; margin-bottom: 0;">Built-in appliances, garage door opener</p>
+            <p class="text-muted u-591b4b1d">Built-in appliances, garage door opener</p>
           </div>
 
-          <div style="text-align: center; padding: 1.5rem;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" style="margin-bottom: 1rem;" aria-hidden="true">
+          <div class="u-a2c4ecd2">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5" class="u-4986ecf7" aria-hidden="true">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
             <h4>Safety</h4>
-            <p class="text-muted" style="font-size: 0.9375rem; margin-bottom: 0;">Smoke detectors, carbon monoxide, GFCI outlets</p>
+            <p class="text-muted u-591b4b1d">Smoke detectors, carbon monoxide, GFCI outlets</p>
           </div>
         </div>
       </div>

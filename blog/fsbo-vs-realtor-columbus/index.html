@@ -37,19 +37,8 @@
   <link rel="preload" href="/assets/js/main.js" as="script">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
 
   <script type="application/ld+json">
@@ -195,7 +184,7 @@
     </nav>
 
     <article class="section">
-      <div class="container" style="max-width: 800px;">
+      <div class="container u-7d701bf7">
         <header class="article-header">
           <h1>FSBO vs. Realtor in Columbus: Which Option Actually Saves You More?</h1>
           <p class="post-meta">TD Realty Ohio | February 2026</p>
@@ -248,46 +237,46 @@
 
           <p>One of the biggest misconceptions about FSBO is that it is "free." It is not. Here is what you will likely spend even without a listing agent:</p>
 
-          <div style="background: var(--gray-50); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
-            <table style="width: 100%; border-collapse: collapse;">
+          <div class="u-82f32ad0">
+            <table class="u-91f0dac5">
               <thead>
-                <tr style="border-bottom: 2px solid var(--gray-200);">
-                  <th style="text-align: left; padding: 0.75rem 0;">Expense</th>
-                  <th style="text-align: right; padding: 0.75rem 0;">Typical Cost</th>
+                <tr class="u-cd614c18">
+                  <th class="u-de57f9d1">Expense</th>
+                  <th class="u-0df85157">Typical Cost</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">Flat-fee MLS listing</td>
-                  <td style="text-align: right; padding: 0.75rem 0;">$300 - $500</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">Flat-fee MLS listing</td>
+                  <td class="u-0df85157">$300 - $500</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">Professional photography</td>
-                  <td style="text-align: right; padding: 0.75rem 0;">$200 - $400</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">Professional photography</td>
+                  <td class="u-0df85157">$200 - $400</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">Real estate attorney (contract review)</td>
-                  <td style="text-align: right; padding: 0.75rem 0;">$500 - $1,000</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">Real estate attorney (contract review)</td>
+                  <td class="u-0df85157">$500 - $1,000</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">Buyer's agent commission</td>
-                  <td style="text-align: right; padding: 0.75rem 0;">2.5% - 3% of sale price</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">Buyer's agent commission</td>
+                  <td class="u-0df85157">2.5% - 3% of sale price</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">Yard sign and lockbox</td>
-                  <td style="text-align: right; padding: 0.75rem 0;">$50 - $150</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">Yard sign and lockbox</td>
+                  <td class="u-0df85157">$50 - $150</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0;">Online advertising (Zillow, Facebook, etc.)</td>
-                  <td style="text-align: right; padding: 0.75rem 0;">$100 - $500+</td>
+                <tr class="u-1bb35083">
+                  <td class="u-f10e8ae5">Online advertising (Zillow, Facebook, etc.)</td>
+                  <td class="u-0df85157">$100 - $500+</td>
                 </tr>
                 <tr>
-                  <td style="padding: 0.75rem 0;">Pre-listing inspection (recommended)</td>
-                  <td style="text-align: right; padding: 0.75rem 0;">$300 - $500</td>
+                  <td class="u-f10e8ae5">Pre-listing inspection (recommended)</td>
+                  <td class="u-0df85157">$300 - $500</td>
                 </tr>
               </tbody>
             </table>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 1rem; margin-bottom: 0;"><strong>Total out-of-pocket FSBO costs:</strong> $1,450 - $3,050 plus 2.5-3% buyer agent commission. On a $350,000 home, that is $10,200 - $13,550 all in.</p>
+            <p class="u-e370edca"><strong>Total out-of-pocket FSBO costs:</strong> $1,450 - $3,050 plus 2.5-3% buyer agent commission. On a $350,000 home, that is $10,200 - $13,550 all in.</p>
           </div>
 
           <p>Wait, $10,000 to $13,000? That does not sound like much savings compared to hiring an agent. And it gets worse when you look at the data on sale prices.</p>
@@ -300,11 +289,11 @@
 
           <p>Let us put that in Columbus terms. The median home price in the Columbus metro area is approximately $340,000-$360,000. Let us use $350,000 for our math:</p>
 
-          <div style="background: var(--gray-50); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
-            <ul style="list-style: none; padding: 0; margin: 0;">
-              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--gray-200);"><strong>If FSBO sells for 10% less:</strong> $315,000 sale price. You "saved" $7,000-$10,500 in listing commission but lost $35,000 in sale price. Net loss: $24,500 - $28,000.</li>
-              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--gray-200);"><strong>If FSBO sells for 5% less:</strong> $332,500 sale price. You "saved" $7,000-$10,500 but lost $17,500. Net loss: $7,000 - $10,500.</li>
-              <li style="padding: 0.5rem 0;"><strong>Even at just 3% less:</strong> $339,500 sale price. You lost $10,500, which is roughly what a traditional 3% commission would have cost anyway.</li>
+          <div class="u-82f32ad0">
+            <ul class="u-23c7e5e0">
+              <li class="u-0037d8b7"><strong>If FSBO sells for 10% less:</strong> $315,000 sale price. You "saved" $7,000-$10,500 in listing commission but lost $35,000 in sale price. Net loss: $24,500 - $28,000.</li>
+              <li class="u-0037d8b7"><strong>If FSBO sells for 5% less:</strong> $332,500 sale price. You "saved" $7,000-$10,500 but lost $17,500. Net loss: $7,000 - $10,500.</li>
+              <li class="u-6a9175f2"><strong>Even at just 3% less:</strong> $339,500 sale price. You lost $10,500, which is roughly what a traditional 3% commission would have cost anyway.</li>
             </ul>
           </div>
 
@@ -344,11 +333,11 @@
 
           <p>Let us revisit the math on that $350,000 home:</p>
 
-          <div style="background: var(--gray-50); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
-            <ul style="list-style: none; padding: 0; margin: 0;">
-              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--gray-200);"><strong>FSBO listing commission:</strong> $0 (but $1,500-$3,000 in out-of-pocket costs)</li>
-              <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--gray-200);"><strong>Traditional 3% agent:</strong> $10,500</li>
-              <li style="padding: 0.5rem 0;"><strong>TD Realty at 1%:</strong> $3,500</li>
+          <div class="u-82f32ad0">
+            <ul class="u-23c7e5e0">
+              <li class="u-0037d8b7"><strong>FSBO listing commission:</strong> $0 (but $1,500-$3,000 in out-of-pocket costs)</li>
+              <li class="u-0037d8b7"><strong>Traditional 3% agent:</strong> $10,500</li>
+              <li class="u-6a9175f2"><strong>TD Realty at 1%:</strong> $3,500</li>
             </ul>
           </div>
 
@@ -375,80 +364,80 @@
 
           <p>Here is how the three options stack up on a $350,000 Columbus home:</p>
 
-          <div style="background: var(--gray-50); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+          <div class="u-324b7c27">
+            <table class="u-8c6c686d">
               <thead>
-                <tr style="border-bottom: 2px solid var(--gray-200);">
-                  <th style="text-align: left; padding: 0.75rem 0.5rem;"></th>
-                  <th style="text-align: center; padding: 0.75rem 0.5rem;">FSBO</th>
-                  <th style="text-align: center; padding: 0.75rem 0.5rem;">Traditional 3% Agent</th>
-                  <th style="text-align: center; padding: 0.75rem 0.5rem;">TD Realty 1-2%</th>
+                <tr class="u-cd614c18">
+                  <th class="u-228a3af4"></th>
+                  <th class="u-3c51a2b1">FSBO</th>
+                  <th class="u-3c51a2b1">Traditional 3% Agent</th>
+                  <th class="u-3c51a2b1">TD Realty 1-2%</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Listing Commission</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$0</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$10,500</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$3,500 - $7,000</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Listing Commission</td>
+                  <td class="u-3c51a2b1">$0</td>
+                  <td class="u-3c51a2b1">$10,500</td>
+                  <td class="u-3c51a2b1">$3,500 - $7,000</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Out-of-Pocket Costs</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$1,500 - $3,000</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$0</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$0</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Out-of-Pocket Costs</td>
+                  <td class="u-3c51a2b1">$1,500 - $3,000</td>
+                  <td class="u-3c51a2b1">$0</td>
+                  <td class="u-3c51a2b1">$0</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">MLS Access</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Flat-fee only</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Full</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Full</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">MLS Access</td>
+                  <td class="u-3c51a2b1">Flat-fee only</td>
+                  <td class="u-3c51a2b1">Full</td>
+                  <td class="u-3c51a2b1">Full</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Professional Photography</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">You arrange + pay</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Included</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Included</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Professional Photography</td>
+                  <td class="u-3c51a2b1">You arrange + pay</td>
+                  <td class="u-3c51a2b1">Included</td>
+                  <td class="u-3c51a2b1">Included</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Pricing Strategy</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">DIY (Zillow, etc.)</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Full CMA</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Full CMA</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Pricing Strategy</td>
+                  <td class="u-3c51a2b1">DIY (Zillow, etc.)</td>
+                  <td class="u-3c51a2b1">Full CMA</td>
+                  <td class="u-3c51a2b1">Full CMA</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Negotiation</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">You vs. buyer's agent</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Professional</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Professional (broker)</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Negotiation</td>
+                  <td class="u-3c51a2b1">You vs. buyer's agent</td>
+                  <td class="u-3c51a2b1">Professional</td>
+                  <td class="u-3c51a2b1">Professional (broker)</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Legal Compliance</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Your responsibility</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Agent-guided</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Broker-guided</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Legal Compliance</td>
+                  <td class="u-3c51a2b1">Your responsibility</td>
+                  <td class="u-3c51a2b1">Agent-guided</td>
+                  <td class="u-3c51a2b1">Broker-guided</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Pre-Listing Inspection</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">You arrange + pay</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Sometimes included</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">Included free</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Pre-Listing Inspection</td>
+                  <td class="u-3c51a2b1">You arrange + pay</td>
+                  <td class="u-3c51a2b1">Sometimes included</td>
+                  <td class="u-3c51a2b1">Included free</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--gray-200);">
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Avg. Days on Market</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">45 - 90+</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">20 - 30</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">20 - 30</td>
+                <tr class="u-1bb35083">
+                  <td class="u-ddeab895">Avg. Days on Market</td>
+                  <td class="u-3c51a2b1">45 - 90+</td>
+                  <td class="u-3c51a2b1">20 - 30</td>
+                  <td class="u-3c51a2b1">20 - 30</td>
                 </tr>
                 <tr>
-                  <td style="padding: 0.75rem 0.5rem; font-weight: 600;">Est. Net on $350K Home*</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$304,500 - $323,500</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem;">$339,500</td>
-                  <td style="text-align: center; padding: 0.75rem 0.5rem; color: var(--success); font-weight: 600;">$343,000 - $346,500</td>
+                  <td class="u-ddeab895">Est. Net on $350K Home*</td>
+                  <td class="u-3c51a2b1">$304,500 - $323,500</td>
+                  <td class="u-3c51a2b1">$339,500</td>
+                  <td class="u-8fc22ea2">$343,000 - $346,500</td>
                 </tr>
               </tbody>
             </table>
-            <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 1rem; margin-bottom: 0;">*Net proceeds estimate accounts for listing commission, out-of-pocket costs, and estimated sale price impact (5-10% lower for FSBO). Buyer agent commission (2.5-3%) excluded from all columns as it applies equally. Actual results vary.</p>
+            <p class="u-e370edca">*Net proceeds estimate accounts for listing commission, out-of-pocket costs, and estimated sale price impact (5-10% lower for FSBO). Buyer agent commission (2.5-3%) excluded from all columns as it applies equally. Actual results vary.</p>
           </div>
 
           <p>The estimated net proceeds tell the real story. Even in the best-case FSBO scenario, you are likely netting less than you would with a <a href="/1-percent-commission/">1% listing agent</a>, and in the worst case, you are leaving $40,000+ on the table.</p>
@@ -545,10 +534,10 @@
 
           <p>If you are considering selling your Columbus-area home, at least get a <a href="/home-value/">free home value estimate</a> and compare your options before committing to FSBO. A 1% listing fee makes professional representation significantly more affordable than traditional rates.</p>
 
-          <div style="background: var(--primary); color: white; padding: 2rem; border-radius: 8px; margin: 2rem 0; text-align: center;">
-            <h2 style="color: white; margin-top: 0;">Get Full-Service Representation at 1% Commission</h2>
-            <p style="font-size: 1.125rem; margin-bottom: 1.5rem; opacity: 0.9;">Why go it alone when professional listing service costs less than FSBO out-of-pocket expenses?</p>
-            <a href="/contact/?interest=selling" class="btn btn-outline-white btn-lg" style="margin-right: 1rem;">Get a Free Consultation</a>
+          <div class="u-556eb412">
+            <h2 class="u-eaf149b0">Get Full-Service Representation at 1% Commission</h2>
+            <p class="u-ff1fe79a">Why go it alone when professional listing service costs less than FSBO out-of-pocket expenses?</p>
+            <a href="/contact/?interest=selling" class="btn btn-outline-white btn-lg u-31452c42">Get a Free Consultation</a>
             <a href="tel:6143928858" class="btn btn-outline-white btn-lg">(614) 392-8858</a>
           </div>
         </div>
@@ -556,7 +545,7 @@
     </article>
 
     <section class="section">
-      <div class="container" style="max-width: 800px;">
+      <div class="container u-7d701bf7">
         <h2>Related Articles</h2>
         <div class="blog-list">
           <article class="blog-card">
@@ -573,8 +562,8 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top: 0;">
-      <div class="container" style="max-width: 720px;">
+    <section class="section u-25e52174">
+      <div class="container u-1d57e605">
         <div class="blog-next-steps">
           <h3>Next Steps</h3>
           <ul>

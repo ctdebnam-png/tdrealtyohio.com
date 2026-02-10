@@ -43,19 +43,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -344,7 +333,7 @@
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
@@ -361,26 +350,26 @@
     <!-- Calculator Section -->
     <section class="section">
       <div class="container">
-        <div class="two-col" style="align-items: flex-start;">
+        <div class="two-col u-f12ec822">
           <div>
             <h2>Know Your Numbers Before You Shop</h2>
-            <p style="font-size: 1.125rem; margin-bottom: 1.5rem;">Before you start shopping, know your numbers. This calculator estimates your purchasing power based on standard lending guidelines.</p>
+            <p class="u-31060e4c">Before you start shopping, know your numbers. This calculator estimates your purchasing power based on standard lending guidelines.</p>
 
-            <h3 style="margin-top: 2rem;">How It Works</h3>
+            <h3 class="u-cf0f3aef">How It Works</h3>
             <p>Lenders use two key ratios to determine how much you can borrow:</p>
             <ul class="benefits-list">
               <li><strong>Front-end ratio (28%):</strong> Your monthly housing payment should not exceed 28% of your gross monthly income</li>
               <li><strong>Back-end ratio (36%):</strong> Your total monthly debts (including housing) should not exceed 36% of your gross monthly income</li>
             </ul>
-            <p style="margin-top: 1rem;">This calculator uses both ratios and gives you the more conservative estimate.</p>
+            <p class="u-988c5fa7">This calculator uses both ratios and gives you the more conservative estimate.</p>
 
-            <div class="disclosure-box" style="margin-top: 2rem;">
+            <div class="disclosure-box u-cf0f3aef">
               <p><strong>Note:</strong> These estimates are based on standard lending guidelines. Your actual purchasing power may vary based on credit score, loan type, and lender requirements. Property tax rates vary by county and school district in Central Ohio.</p>
             </div>
           </div>
 
           <div class="affordability-calculator">
-            <h3 style="margin-bottom: 1.5rem;">Affordability</h3>
+            <h3 class="u-d3297f95">Affordability</h3>
 
             <div class="calc-inputs">
               <div class="calc-input-group">
@@ -409,30 +398,30 @@
                 <label for="include-taxes">Include Property Taxes & Insurance</label>
               </div>
 
-              <div id="tax-insurance-inputs" style="padding: 1rem; background: var(--gray-50); border-radius: var(--radius-md); margin-top: 0.5rem;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                  <div class="calc-input-group" style="margin-bottom: 0;">
-                    <label for="property-tax-rate" style="font-size: 0.875rem;">Property tax rate (total effective rate) %</label>
+              <div id="tax-insurance-inputs" class="u-6aaced4e">
+                <div class="u-85f50244">
+                  <div class="calc-input-group u-c42e0ec4">
+                    <label for="property-tax-rate" class="u-a38673c4">Property tax rate (total effective rate) %</label>
                     <span class="input-hint">Estimate only. Varies by school district and municipality.</span>
-                    <input type="number" id="property-tax-rate" value="1.5" min="0" max="5" step="0.1" style="padding: 0.5rem 0.75rem;">
+                    <input type="number" id="property-tax-rate" value="1.5" min="0" max="5" step="0.1" class="u-89e418dd">
                   </div>
-                  <div class="calc-input-group" style="margin-bottom: 0;">
-                    <label for="insurance-rate" style="font-size: 0.875rem;">Insurance Rate (%)</label>
+                  <div class="calc-input-group u-c42e0ec4">
+                    <label for="insurance-rate" class="u-a38673c4">Insurance Rate (%)</label>
                     <span class="input-hint">Typical range: 0.3-0.8%</span>
-                    <input type="number" id="insurance-rate" value="0.5" min="0" max="2" step="0.1" style="padding: 0.5rem 0.75rem;">
+                    <input type="number" id="insurance-rate" value="0.5" min="0" max="2" step="0.1" class="u-89e418dd">
                   </div>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-                  <div class="calc-input-group" style="margin-bottom: 0;">
-                    <label for="school-district" style="font-size: 0.875rem;">School District <span style="font-weight: 400; color: var(--gray-500);">(optional)</span></label>
-                    <input type="text" id="school-district" placeholder="e.g., Dublin City Schools" style="padding: 0.5rem 0.75rem;">
+                <div class="u-35668d62">
+                  <div class="calc-input-group u-c42e0ec4">
+                    <label for="school-district" class="u-a38673c4">School District <span class="u-27fedea6">(optional)</span></label>
+                    <input type="text" id="school-district" placeholder="e.g., Dublin City Schools" class="u-89e418dd">
                   </div>
-                  <div class="calc-input-group" style="margin-bottom: 0;">
-                    <label for="municipality" style="font-size: 0.875rem;">Municipality <span style="font-weight: 400; color: var(--gray-500);">(optional)</span></label>
-                    <input type="text" id="municipality" placeholder="e.g., City of Dublin" style="padding: 0.5rem 0.75rem;">
+                  <div class="calc-input-group u-c42e0ec4">
+                    <label for="municipality" class="u-a38673c4">Municipality <span class="u-27fedea6">(optional)</span></label>
+                    <input type="text" id="municipality" placeholder="e.g., City of Dublin" class="u-89e418dd">
                   </div>
                 </div>
-                <p style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.75rem; margin-bottom: 0;">Use your known rate if you have the exact rate for your target area.</p>
+                <p class="u-e96e1276">Use your known rate if you have the exact rate for your target area.</p>
               </div>
             </div>
 
@@ -452,7 +441,7 @@
                   <div class="result-card-value" id="result-pi">&ndash;</div>
                 </div>
                 <div class="result-card">
-                  <div class="result-card-label">Property Taxes <span id="result-tax-rate-label" style="font-weight: 400; font-size: 0.75rem;"></span></div>
+                  <div class="result-card-label">Property Taxes <span id="result-tax-rate-label" class="u-ca6f8956"></span></div>
                   <div class="result-card-value" id="result-taxes">&ndash;</div>
                 </div>
                 <div class="result-card">
@@ -464,9 +453,9 @@
               <div class="payment-breakdown">
                 <h4>Payment Breakdown</h4>
                 <div class="breakdown-bar" id="breakdown-bar">
-                  <div class="breakdown-segment segment-pi" id="bar-pi" style="width: 70%;">P&I</div>
-                  <div class="breakdown-segment segment-tax" id="bar-tax" style="width: 20%;">Tax</div>
-                  <div class="breakdown-segment segment-insurance" id="bar-ins" style="width: 10%;">Ins</div>
+                  <div class="breakdown-segment segment-pi u-f5c46d4a" id="bar-pi">P&I</div>
+                  <div class="breakdown-segment segment-tax u-f6f6b116" id="bar-tax">Tax</div>
+                  <div class="breakdown-segment segment-insurance u-1c30ab94" id="bar-ins">Ins</div>
                 </div>
                 <div class="breakdown-legend">
                   <div class="legend-item">

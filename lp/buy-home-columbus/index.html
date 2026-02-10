@@ -25,20 +25,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <link rel="stylesheet" href="/assets/css/lp.css">
 
@@ -110,7 +98,7 @@
       <h3>Your Cash Back on a $300K Home</h3>
       <div class="lp-cashback-amount">$3,000</div>
       <p class="lp-cashback-note">1% of purchase price returned at closing</p>
-      <a href="/contact/" class="btn btn-primary" style="width: 100%;">Calculate Your Cash Back</a>
+      <a href="/contact/" class="btn btn-primary u-199b6f0e">Calculate Your Cash Back</a>
     </div>
 
     <section class="lp-how">
@@ -123,10 +111,10 @@
         </div>
         <div class="lp-how-row">
           <span>Cash back to you (1%)</span>
-          <strong style="color: var(--green-600, #16a34a);">$4,000</strong>
+          <strong class="u-a0dfb171">$4,000</strong>
         </div>
       </div>
-      <p style="text-align: center; color: var(--gray-600); margin-top: 1.5rem; font-size: 0.9375rem;">Actual compensation varies by transaction.</p>
+      <p class="u-3a41f15d">Actual compensation varies by transaction.</p>
     </section>
 
     <section class="lp-benefits">
@@ -212,7 +200,7 @@
 
   <footer class="lp-footer">
     <p>Cash back program available to first-time homebuyers. Subject to lender approval. May be applied toward closing costs. Some loan programs have restrictions.</p>
-    <p style="margin-top: 0.5rem;"><a href="/privacy/" style="color: var(--gray-600);">Privacy Policy</a> | <a href="/terms/" style="color: var(--gray-600);">Terms</a> | <a href="/fair-housing/" style="color: var(--gray-600);">Fair Housing</a></p>
+    <p class="u-f8a7328a"><a href="/privacy/" class="u-7855384b">Privacy Policy</a> | <a href="/terms/" class="u-7855384b">Terms</a> | <a href="/fair-housing/" class="u-7855384b">Fair Housing</a></p>
   </footer>
 
   <script src="/assets/js/nav.js?v=20260208"></script>

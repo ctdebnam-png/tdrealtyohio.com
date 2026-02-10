@@ -32,19 +32,8 @@
   <link rel="preload" href="/assets/js/main.js" as="script">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -157,7 +146,7 @@
   </header>
 
   <main id="main-content">
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="container">
         <div class="hero-content">
           <h1 class="hero-title">Central Ohio Communities</h1>
@@ -169,8 +158,8 @@
 
     <section class="section">
       <div class="container">
-        <p class="text-muted" style="text-align: center; font-size: 0.8125rem; margin-bottom: 1.5rem; color: var(--gray-500);">
-          Median price and days on market: <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" aria-label="Columbus REALTORS - opens in new tab" style="color: var(--gold);">MLS</a>.<br>
+        <p class="text-muted u-03e1e7f3">
+          Median price and days on market: <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" aria-label="Columbus REALTORS - opens in new tab" class="u-ed12483e">MLS</a>.<br>
           Population, schools, and resources: public sources.<br>
           Updated: <span data-market-updated>February 2026</span>.
         </p>
