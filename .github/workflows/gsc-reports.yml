@@ -2,7 +2,9 @@ name: GSC Reports
 
 on:
   schedule:
-    # Weekly strategic GSC/content optimization run every Sunday at 13:00 UTC (08:00 ET).
+    # Daily indexing integrity checks (technical hygiene) every day at 12:00 UTC (07:00 ET).
+    - cron: "0 12 * * *"
+    # Weekly strategic GSC query/page + content optimization every Sunday at 13:00 UTC (08:00 ET).
     - cron: "0 13 * * 0"
   workflow_dispatch:
     inputs:
@@ -49,11 +51,11 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "report=${{ inputs.report }}" >> "$GITHUB_OUTPUT"
-          elif [ "$(date +%u)" = "7" ]; then
-            # Sunday — full reports + autofix
+          elif [ "${{ github.event.schedule }}" = "0 13 * * 0" ]; then
+            # Weekly cadence — full reports + autofix + content improvements
             echo "report=all" >> "$GITHUB_OUTPUT"
           else
-            # Weekday — indexing only
+            # Daily cadence — indexing integrity only
             echo "report=indexing" >> "$GITHUB_OUTPUT"
           fi
 
