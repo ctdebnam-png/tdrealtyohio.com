@@ -44,21 +44,45 @@ jobs:
       # ── Critical phase: setup + build ───────────────────
       - name: Install dependencies
         id: install
+        continue-on-error: false
         run: npm ci
 
       - name: Initial build
         id: initial-build
+        continue-on-error: false
         run: npm run build
 
       # ── Critical phase: core autopilot ───────────────────
       - name: Run SEO autopilot
         id: core-autopilot
+        continue-on-error: false
         run: node seo-autopilot/bin/run.mjs
         env:
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
           GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
           GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
           GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+
+      - name: Enforce critical phase success
+        if: always()
+        env:
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          INITIAL_BUILD_OUTCOME: ${{ steps.initial-build.outcome }}
+          CORE_AUTOPILOT_OUTCOME: ${{ steps.core-autopilot.outcome }}
+        run: |
+          failed=0
+          for step in INSTALL_OUTCOME INITIAL_BUILD_OUTCOME CORE_AUTOPILOT_OUTCOME; do
+            value="${!step}"
+            if [ "$value" != "success" ]; then
+              echo "::error::[seo-autopilot] Critical step ${step} did not succeed (outcome=${value:-not-run})."
+              failed=1
+            fi
+          done
+
+          if [ "$failed" -ne 0 ]; then
+            echo "[seo-autopilot] One or more critical steps failed; stopping workflow."
+            exit 1
+          fi
 
       # ── Non-critical phase: deploy-safe guard ────────────
       - name: Check for changes
