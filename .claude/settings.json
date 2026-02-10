@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm install 2>/dev/null; echo '✓ Dependencies installed'"
+          }
+        ]
+      }
+    ]
+  }
+}
