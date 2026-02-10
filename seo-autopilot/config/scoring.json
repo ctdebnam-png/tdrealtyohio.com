@@ -9,7 +9,8 @@
     "brokenInternalLinks": -20,
     "orphanPages": -15,
     "underlinkedPillars": -10,
-    "contentThinPages": -10
+    "contentThinPages": -10,
+    "contentNearDuplicates": -10
   },
   "thresholds": {
     "minDaysBetweenSameModule": 3,

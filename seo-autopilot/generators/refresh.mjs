@@ -29,7 +29,15 @@ const MARKER_END = '<!-- SEO_AUTOPILOT_REFRESH_END -->';
  * @param {string[]} options.rankIntentRoutes - For validating link targets
  * @returns {{ success: boolean, filesEdited: string[], wordsAdded: number, reason: string }}
  */
-export function refreshBlogPost({ filePath, query, internalLinksTo = [], rankIntentRoutes = [] }) {
+export function refreshBlogPost({ filePath, query, internalLinksTo = [], rankIntentRoutes = [], pillarPath = null }) {
+  // Ensure pillar link is included (cluster discipline)
+  if (pillarPath && !internalLinksTo.includes(pillarPath)) {
+    internalLinksTo = [pillarPath, ...internalLinksTo];
+  }
+  // Ensure conversion page link
+  if (!internalLinksTo.includes('/contact/')) {
+    internalLinksTo = [...internalLinksTo, '/contact/'];
+  }
   let html;
   try {
     html = readFileSync(filePath, 'utf-8');
@@ -93,7 +101,14 @@ export function refreshBlogPost({ filePath, query, internalLinksTo = [], rankInt
  * @param {string[]} options.internalLinksTo - Paths to link to
  * @returns {{ success: boolean, filesEdited: string[], wordsAdded: number, reason: string }}
  */
-export function refreshMoneyPage({ routePath, query, internalLinksTo = [] }) {
+export function refreshMoneyPage({ routePath, query, internalLinksTo = [], pillarPath = null }) {
+  // Ensure pillar link if provided
+  if (pillarPath && !internalLinksTo.includes(pillarPath)) {
+    internalLinksTo = [pillarPath, ...internalLinksTo];
+  }
+  if (!internalLinksTo.includes('/contact/')) {
+    internalLinksTo = [...internalLinksTo, '/contact/'];
+  }
   // Convert route path to file path
   const filePath = join(ROOT, routePath.replace(/\/$/, ''), 'index.html');
 

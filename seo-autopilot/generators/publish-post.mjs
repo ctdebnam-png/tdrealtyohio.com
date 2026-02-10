@@ -41,6 +41,31 @@ export function publishPost({
     return { success: false, slug: '', filePath: '', routePath: '', filesCreated: [], wordsAdded: 0, reason: 'no_topic' };
   }
 
+  // Cluster discipline (quality.json)
+  let qualityCluster = {};
+  try {
+    const qPath = join(__dirname, '..', 'config', 'quality.json');
+    qualityCluster = JSON.parse(readFileSync(qPath, 'utf-8')).cluster || {};
+  } catch { /* defaults */ }
+
+  if (qualityCluster.requireClusterForPublish && !clusterId) {
+    return { success: false, slug: '', filePath: '', routePath: '', filesCreated: [], wordsAdded: 0, reason: 'no_cluster_id' };
+  }
+  if (qualityCluster.requirePillarLink && !pillarPath) {
+    return { success: false, slug: '', filePath: '', routePath: '', filesCreated: [], wordsAdded: 0, reason: 'no_pillar_path' };
+  }
+
+  // Ensure internalLinksTo includes pillar and a conversion page
+  const links = topic.internalLinksTo || [];
+  if (pillarPath && !links.includes(pillarPath)) {
+    links.unshift(pillarPath);
+    topic = { ...topic, internalLinksTo: links };
+  }
+  if (!links.includes('/contact/')) {
+    links.push('/contact/');
+    topic = { ...topic, internalLinksTo: links };
+  }
+
   // Derive slug from topicId
   let slug = topic.topicId.replace(/_/g, '-').replace(/[^a-z0-9-]/gi, '').toLowerCase();
 
@@ -74,11 +99,14 @@ export function publishPost({
 
   const wordCount = html.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
 
-  // Ensure minimum word count
-  const minWords = 900;
-  if (wordCount < minWords) {
-    // This shouldn't happen with our template, but guard against it
-    console.warn(`[publish-post] Generated ${wordCount} words, below minimum ${minWords}`);
+  // Ensure minimum word count from quality config
+  let minWordsNewBlogPost = 900;
+  try {
+    const qPath2 = join(__dirname, '..', 'config', 'quality.json');
+    minWordsNewBlogPost = JSON.parse(readFileSync(qPath2, 'utf-8')).thin?.minWordsNewBlogPost || 900;
+  } catch { /* default */ }
+  if (wordCount < minWordsNewBlogPost) {
+    console.warn(`[publish-post] Generated ${wordCount} words, below minimum ${minWordsNewBlogPost}`);
   }
 
   // Write the file

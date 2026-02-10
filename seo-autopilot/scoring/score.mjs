@@ -105,6 +105,7 @@ function loadScoringConfig() {
         orphanPages: -15,
         underlinkedPillars: -10,
         contentThinPages: -10,
+        contentNearDuplicates: -10,
       },
     };
   }
@@ -119,6 +120,7 @@ function loadScoringConfig() {
  * @param {object} inputs.linkGraph - Link graph result
  * @param {number} inputs.thinCount - From countThinPages()
  * @param {number} inputs.underlinkedPillarCount - From countUnderlinkedPillars()
+ * @param {number} inputs.nearDuplicatePairsCount - From near-duplicates auditor
  * @returns {{ score: number, components: object, rationale: object[] }}
  */
 export function computeScore({
@@ -127,6 +129,7 @@ export function computeScore({
   linkGraph = {},
   thinCount = 0,
   underlinkedPillarCount = 0,
+  nearDuplicatePairsCount = 0,
 }) {
   const config = loadScoringConfig();
   const w = config.weights;
@@ -216,6 +219,15 @@ export function computeScore({
   score += thinPts;
   rationale.push({ key: 'contentThinPages', value: thinCount, weightApplied: thinPts });
 
+  // Near-duplicate pages
+  const nearDupWeight = w.contentNearDuplicates || -10;
+  const nearDupPts = clamp(
+    nearDuplicatePairsCount * (nearDupWeight / 3),
+    -10, 0,
+  );
+  score += nearDupPts;
+  rationale.push({ key: 'contentNearDuplicates', value: nearDuplicatePairsCount, weightApplied: nearDupPts });
+
   // Clamp final score
   score = Math.round(clamp(score, 0, 100));
 
@@ -238,6 +250,7 @@ export function computeScore({
     },
     content: {
       thinCount: thinCount,
+      nearDuplicatePairsCount: nearDuplicatePairsCount,
     },
   };
 

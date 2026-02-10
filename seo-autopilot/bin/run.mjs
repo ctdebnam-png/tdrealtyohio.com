@@ -43,6 +43,8 @@ import { computeFocusPlan } from '../planners/focus-plan.mjs';
 import { auditLiveRobotsSitemap } from '../auditors/live-robots-sitemap.mjs';
 import { auditLiveIndexing } from '../auditors/live-indexing.mjs';
 import { fixIndexingHygiene } from '../fixers/indexing-hygiene.mjs';
+import { auditThinContent } from '../auditors/content-thin.mjs';
+import { detectNearDuplicates } from '../auditors/near-duplicates.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -122,6 +124,7 @@ async function main() {
     linkActionsApplied: [], budgetUsed: { linksAdded: 0, filesEdited: 0 },
     gsc: null, experiments: { applied: [], evaluated: [] },
     content: { action: 'none', target: null, reason: '', filesEdited: [], wordsAdded: 0 },
+    quality: { thinRankIntentCount: 0, nearDuplicatePairsCount: 0, thinRankIntent: [], nearDuplicatePairs: [] },
     score: null, focusPlan: null, moduleOutcomes: null,
     notes: '', errors: [],
   };
@@ -233,6 +236,32 @@ async function main() {
   const blogResult = discoverBlog();
   console.log(`\n[blog] Discovered ${blogResult.posts.length} post(s)`);
 
+  // Quality audits: thin content + near-duplicate detection (Chunk 10)
+  let qualitySignals = { thinRankIntentCount: 0, thinRankIntent: [], nearDuplicatePairs: [] };
+  try {
+    const qualityConfig = loadJson(join(__dirname, '..', 'config', 'quality.json'), {});
+    const thinResult = auditThinContent(pages || [], qualityConfig);
+    const nearDupResult = detectNearDuplicates(pages || [], qualityConfig, blogResult.posts);
+    qualitySignals = {
+      thinRankIntentCount: thinResult.thinRankIntent?.length || 0,
+      thinRankIntent: thinResult.thinRankIntent || [],
+      thinAnyCount: thinResult.thinAny?.length || 0,
+      nearDuplicatePairs: nearDupResult.pairs || [],
+      nearDuplicatePairsCount: nearDupResult.pairs?.length || 0,
+    };
+    console.log(`[quality] Thin rank-intent: ${qualitySignals.thinRankIntentCount}, Near-duplicates: ${qualitySignals.nearDuplicatePairsCount}`);
+    report.quality = {
+      thinRankIntentCount: qualitySignals.thinRankIntentCount,
+      thinAnyCount: qualitySignals.thinAnyCount || 0,
+      nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount,
+      thinRankIntent: (qualitySignals.thinRankIntent || []).slice(0, 10),
+      nearDuplicatePairs: (qualitySignals.nearDuplicatePairs || []).slice(0, 10),
+    };
+  } catch (err) {
+    report.errors.push(`qualityAudit: ${err.message}`);
+    console.error('[seo-autopilot] Quality audit error (non-fatal):', err.message);
+  }
+
   // Classify audit issues
   const techClassification = beforeAudit
     ? classifyIssues(beforeAudit, config.rankIntentRoutes || [])
@@ -255,12 +284,13 @@ async function main() {
     linkGraph: linkGraphBefore || {},
     thinCount,
     underlinkedPillarCount,
+    nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount || 0,
   });
 
   console.log(`\n=== SCORE: ${scoreResult.score}/100 ===`);
   console.log(`  Tech: ${techClassification.criticalCount} critical, ${techClassification.otherCount} other, ${techClassification.brokenInternalLinks} broken links`);
   console.log(`  Links: ${linkGraphBefore?.orphanCount || 0} orphans, ${underlinkedPillarCount} underlinked pillars`);
-  console.log(`  Content: ${thinCount} thin page(s)`);
+  console.log(`  Content: ${thinCount} thin page(s), ${qualitySignals.nearDuplicatePairsCount} near-duplicate pair(s)`);
   if (!gscDeltas.insufficientBaseline) {
     console.log(`  GSC deltas: clicks ${(gscDeltas.clicks7DeltaPct * 100).toFixed(1)}%, impr ${(gscDeltas.impressions7DeltaPct * 100).toFixed(1)}%, CTR ${(gscDeltas.ctr7DeltaPct * 100).toFixed(1)}%, pos ${gscDeltas.pos7Delta.toFixed(1)}`);
   } else {
@@ -385,6 +415,13 @@ async function main() {
     console.error('[seo-autopilot] Live checks error (non-fatal):', err.message);
   }
 
+  // Persist quality signals in state
+  state.quality = {
+    lastCheckedAt: new Date().toISOString(),
+    thinRankIntentCount: qualitySignals.thinRankIntentCount,
+    nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount,
+  };
+
   // Links focus: run link planner
   if (focus === 'links' && linkGraphBefore) {
     try {
@@ -486,6 +523,7 @@ async function main() {
         auditResult: beforeAudit,
         state,
         linkGraph: linkGraphBefore,
+        qualitySignals,
       });
 
       console.log(`[content] Plan: ${contentPlan.action} — ${contentPlan.reason}`);
@@ -633,7 +671,7 @@ async function main() {
       },
       tech: { criticalCount: techClassification.criticalCount, otherCount: techClassification.otherCount, brokenInternalLinks: techClassification.brokenInternalLinks },
       links: { orphanCount: linkGraphBefore?.orphanCount || 0, underlinkedPillars: underlinkedPillarCount },
-      content: { thinCount, lastAction: report.content.action },
+      content: { thinCount, nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount || 0, lastAction: report.content.action },
     },
     decisions: { focus, actionsPlanned: 1, actionsApplied: focus === 'none' ? 0 : 1 },
   });

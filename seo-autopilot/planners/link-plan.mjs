@@ -52,9 +52,21 @@ function wasAlreadyAdded(state, from, to, anchor) {
 export function generateLinkPlan(linkGraph, config, pillars) {
   const state = loadState();
   const rules = pillars.rules || {};
-  const maxLinks = rules.maxNewLinksPerRun || 3;
+
+  // Load quality caps (Chunk 10)
+  let qualityLinking = {};
+  try {
+    const qPath = join(__dirname, '..', 'config', 'quality.json');
+    qualityLinking = JSON.parse(readFileSync(qPath, 'utf-8')).linking || {};
+  } catch { /* defaults */ }
+
+  const maxLinks = Math.min(
+    rules.maxNewLinksPerRun || 3,
+    qualityLinking.maxTotalInternalLinksAddedPerRun || 5,
+  );
   const maxPerFile = rules.maxLinksAddedPerFile || 2;
   const minAnchorLen = rules.minAnchorLength || 4;
+  const maxAnchorRepeats = qualityLinking.maxExactAnchorRepeatsPerRun || 2;
 
   const { inDegree = {}, outDegree = {} } = linkGraph;
   const { rankIntentRoutes = [], utilityRoutesNoIndex = [] } = config;
@@ -128,9 +140,15 @@ export function generateLinkPlan(linkGraph, config, pillars) {
       // Check max edits per file
       if ((fileEditCounts[sourcePref] || 0) >= maxPerFile) continue;
 
-      // Pick an anchor not already used
+      // Pick an anchor not already used and not exceeding repeat cap
+      const anchorUsedThisRun = {};
+      for (const prev of actions) {
+        anchorUsedThisRun[prev.anchorText] = (anchorUsedThisRun[prev.anchorText] || 0) + 1;
+      }
       const anchor = anchors.find(
-        (a) => a.length >= minAnchorLen && !wasAlreadyAdded(state, sourcePref, target.path, a),
+        (a) => a.length >= minAnchorLen
+          && !wasAlreadyAdded(state, sourcePref, target.path, a)
+          && (anchorUsedThisRun[a] || 0) < maxAnchorRepeats,
       );
       if (!anchor) continue;
 

@@ -80,6 +80,7 @@ export function planContent({
   auditResult = null,
   state = {},
   linkGraph = null,
+  qualitySignals = null,
 }) {
   // A) Technical gate
   const gate = checkTechGate(auditResult, rankIntentRoutes);
@@ -89,6 +90,14 @@ export function planContent({
       console.log(`  ${b}`);
     }
     return { action: 'none', target: null, reason: 'tech_gate' };
+  }
+
+  // Quality gate: if thin rank-intent pages exist, block publishing (prefer refresh)
+  const thinRankIntentCount = qualitySignals?.thinRankIntentCount || 0;
+  const nearDuplicatePairs = qualitySignals?.nearDuplicatePairs || [];
+  const publishBlockedByQuality = thinRankIntentCount > 0;
+  if (publishBlockedByQuality) {
+    console.log(`[content-plan] Quality gate: ${thinRankIntentCount} thin rank-intent page(s) — publishing blocked, refresh preferred`);
   }
 
   // Check daily publish limit
@@ -184,6 +193,26 @@ export function planContent({
   }
 
   // C) No refresh candidates — try publishing a new post
+  if (publishBlockedByQuality) {
+    // If thin pages exist but no refresh candidates from GSC, try to refresh a thin page directly
+    const thinPages = qualitySignals?.thinRankIntent || [];
+    if (thinPages.length > 0) {
+      const thinTarget = thinPages[0];
+      const isBlog = thinTarget.routePath.startsWith('/blog/');
+      return {
+        action: isBlog ? 'refresh-post' : 'refresh-page',
+        target: {
+          pathOrSlug: thinTarget.routePath,
+          topicId: null,
+          clusterId: null,
+          query: 'thin page improvement',
+          internalLinksTo: ['/contact/'],
+        },
+        reason: `quality_gate_thin_refresh: ${thinTarget.routePath} (${thinTarget.wordCount} words)`,
+      };
+    }
+    return { action: 'none', target: null, reason: 'quality_gate_blocks_publish' };
+  }
   if (publishedToday) {
     return { action: 'none', target: null, reason: 'already_published_today' };
   }
