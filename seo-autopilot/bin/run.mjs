@@ -855,9 +855,27 @@ async function main() {
             const guides = loadRelatedGuides();
             const pillar = contentPlan.target.pillarPath;
             if (pillar) {
-              if (!guides[pillar]) guides[pillar] = [];
-              guides[pillar].push({ path: result.routePath, anchor: result.slug.replace(/-/g, ' '), addedAt: new Date().toISOString() });
-              if (guides[pillar].length > 10) guides[pillar] = guides[pillar].slice(-10);
+              const anchorText = result.slug.replace(/-/g, ' ');
+              const existing = guides[pillar];
+              if (Array.isArray(existing)) {
+                existing.push({ href: result.routePath, text: anchorText });
+                if (existing.length > 10) guides[pillar] = existing.slice(-10);
+              } else {
+                if (!guides[pillar] || !Array.isArray(guides[pillar].intentClusters)) {
+                  guides[pillar] = { intentClusters: [{ intent: 'related guides', links: [] }] };
+                }
+                const clusters = guides[pillar].intentClusters;
+                if (clusters.length === 0) clusters.push({ intent: 'related guides', links: [] });
+                const defaultCluster = clusters[0];
+                const exists = clusters.some((c) => (c.links || []).some((l) => l.href === result.routePath));
+                if (!exists) {
+                  defaultCluster.links = defaultCluster.links || [];
+                  defaultCluster.links.push({ href: result.routePath, text: anchorText });
+                }
+                if ((defaultCluster.links || []).length > 10) {
+                  defaultCluster.links = defaultCluster.links.slice(-10);
+                }
+              }
               await writeJsonStable(RELATED_GUIDES_PATH, guides);
               console.log(`[content] Updated related-guides for ${pillar}`);
             }
