@@ -64,6 +64,8 @@ import { enhanceMoneyPage, revertMoneyEnhancement } from '../generators/money-pa
 import { buildQueryPageMap } from '../analyzers/query-page-map.mjs';
 import { planStrikingRefresh } from '../planners/striking-refresh-plan.mjs';
 import { executeStrikingRefresh, revertStrikingRefresh } from '../generators/striking-refresh.mjs';
+import { applyPillarNav, removeAllPillarNavBlocks } from '../fixers/pillar-nav.mjs';
+import { auditNavConsistency } from '../auditors/nav-consistency.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -149,6 +151,8 @@ async function main() {
     areas: { selected: null, wordsBefore: 0, wordsAfter: 0, linksAdded: [], reason: '' },
     moneyEnhancements: [],
     strikingRefresh: { action: 'none', targetPagePath: null, queries: [], pageType: '', reason: '' },
+    pillarNav: { filesChanged: 0, details: [] },
+    navConsistency: { totalChecked: 0, issues: [], pillarInDegree: {} },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -364,6 +368,24 @@ async function main() {
   } catch (err) {
     report.errors.push(`qualityAudit: ${err.message}`);
     console.error('[seo-autopilot] Quality audit error (non-fatal):', err.message);
+  }
+
+  // Nav consistency audit (Chunk 18) — read-only check
+  try {
+    const navResult = auditNavConsistency(pages || []);
+    report.navConsistency = {
+      totalChecked: navResult.totalChecked,
+      issues: navResult.issues,
+      pillarInDegree: navResult.pillarInDegree,
+    };
+    if (navResult.issues.length > 0) {
+      console.log(`[nav] ${navResult.issues.length} consistency issue(s)`);
+      for (const issue of navResult.issues.slice(0, 3)) {
+        console.log(`  ${issue.code}: ${issue.detail}`);
+      }
+    }
+  } catch (err) {
+    report.errors.push(`navConsistency: ${err.message}`);
   }
 
   // Classify audit issues
@@ -661,6 +683,23 @@ async function main() {
     } catch (err) {
       report.errors.push(`linkPlan: ${err.message}`);
       console.error('[seo-autopilot] Link plan error (non-fatal):', err.message);
+    }
+
+    // Pillar nav: apply subnav + crosslinks to pillar root pages (Chunk 18)
+    try {
+      const pillarNavResult = applyPillarNav();
+      report.pillarNav = pillarNavResult;
+      if (pillarNavResult.filesChanged > 0) {
+        console.log(`[links] Pillar nav: ${pillarNavResult.filesChanged} file(s) updated`);
+        for (const d of pillarNavResult.details) {
+          if (d.subnavInserted || d.nextStepsInserted) {
+            console.log(`  ${d.route}: subnav=${d.subnavInserted}, nextSteps=${d.nextStepsInserted}`);
+          }
+        }
+      }
+    } catch (err) {
+      report.errors.push(`pillarNav: ${err.message}`);
+      console.error('[seo-autopilot] Pillar nav error (non-fatal):', err.message);
     }
   }
 

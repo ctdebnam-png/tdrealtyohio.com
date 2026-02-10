@@ -1,0 +1,37 @@
+{
+  "pillars": [
+    {
+      "id": "sell",
+      "root": "/sellers/",
+      "navLabel": "Sellers",
+      "supporting": ["/1-percent-commission/", "/pre-listing-inspection/", "/home-value/"],
+      "cta": { "href": "/contact/", "text": "Talk to an agent" }
+    },
+    {
+      "id": "buy",
+      "root": "/buyers/",
+      "navLabel": "Buyers",
+      "supporting": ["/affordability/"],
+      "cta": { "href": "/contact/", "text": "Talk to an agent" }
+    },
+    {
+      "id": "areas",
+      "root": "/areas/",
+      "navLabel": "Areas",
+      "supporting": [],
+      "cta": { "href": "/contact/", "text": "Talk to an agent" }
+    },
+    {
+      "id": "blog",
+      "root": "/blog/",
+      "navLabel": "Guides",
+      "supporting": [],
+      "cta": { "href": "/contact/", "text": "Talk to an agent" }
+    }
+  ],
+  "rules": {
+    "maxTopNavItems": 6,
+    "showPillarSubnav": true,
+    "subnavMaxLinks": 5
+  }
+}
