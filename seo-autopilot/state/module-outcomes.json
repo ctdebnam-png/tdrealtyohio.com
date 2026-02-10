@@ -1,0 +1,23 @@
+{
+  "tech": {
+    "lastRunAt": "2026-02-10T12:20:13.143Z",
+    "lastDeltaCritical": 0,
+    "lastDeltaBrokenLinks": 0
+  },
+  "links": {
+    "lastRunAt": null,
+    "lastDeltaOrphans": 0,
+    "lastDeltaInDegreePillars": 0
+  },
+  "ctr": {
+    "lastRunAt": null,
+    "pagesEdited": 0,
+    "kept": 0,
+    "reverted": 0
+  },
+  "content": {
+    "lastRunAt": null,
+    "action": "none",
+    "target": null
+  }
+}

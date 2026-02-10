@@ -6,12 +6,13 @@
  * It always exits 0 so the workflow never fails.
  *
  * Pipeline:
- * 1. Detect build output directory
- * 2. Run before-audit + link graph
- * 3. Apply metadata fixer (OG/Twitter tags)
- * 4. Generate link plan + apply internal link insertions
- * 5. Run after-audit + link graph and compute diff
- * 6. Write report with before/after comparison
+ * 1. Detect build output + enumerate pages
+ * 2. Run before-audit + link graph (read-only)
+ * 3. Collect GSC data + compute opportunities (read-only)
+ * 4. Compute score + focus plan (decision engine)
+ * 5. Execute focus-gated actions (tech, links, ctr, refresh, publish)
+ * 6. Run after-audit + link graph, compute diff
+ * 7. Update score history, module outcomes, and report
  */
 
 import { readFileSync } from 'fs';
@@ -36,117 +37,93 @@ import { discoverBlog } from '../lib/blog-discovery.mjs';
 import { planContent } from '../planners/content-plan.mjs';
 import { refreshBlogPost, refreshMoneyPage } from '../generators/refresh.mjs';
 import { publishPost } from '../generators/publish-post.mjs';
+import { computeGscDeltas } from '../scoring/gsc-deltas.mjs';
+import { computeScore, classifyIssues, countThinPages, countUnderlinkedPillars } from '../scoring/score.mjs';
+import { computeFocusPlan } from '../planners/focus-plan.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
 const REPORT_DIR = join(__dirname, '..', 'report');
+const STATE_DIR = join(__dirname, '..', 'state');
 const CONFIG_PATH = join(__dirname, '..', 'config', 'site.json');
 const PILLARS_PATH = join(__dirname, '..', 'config', 'pillars.json');
 const BACKLOG_PATH = join(__dirname, '..', 'config', 'content-backlog.json');
 const SEO_DEFAULTS_PATH = join(__dirname, '..', 'config', 'seo-defaults.json');
 const RELATED_GUIDES_PATH = join(__dirname, '..', 'config', 'related-guides.json');
+const STATE_PATH = join(STATE_DIR, 'state.json');
+const SCORE_HISTORY_PATH = join(STATE_DIR, 'score-history.json');
+const MODULE_OUTCOMES_PATH = join(STATE_DIR, 'module-outcomes.json');
 
-function loadConfig() {
-  try {
-    return JSON.parse(readFileSync(CONFIG_PATH, 'utf-8'));
-  } catch {
-    console.warn('[seo-autopilot] Could not load site.json — using defaults');
-    return { baseUrl: '', canonicalStrategy: 'slash', rankIntentRoutes: [], utilityRoutesNoIndex: [] };
-  }
+// ── Loaders ────────────────────────────────────────────────────────────────
+
+function loadJson(path, fallback = {}) {
+  try { return JSON.parse(readFileSync(path, 'utf-8')); } catch { return fallback; }
 }
+function loadConfig() { return loadJson(CONFIG_PATH, { baseUrl: '', canonicalStrategy: 'slash', rankIntentRoutes: [], utilityRoutesNoIndex: [] }); }
+function loadPillars() { return loadJson(PILLARS_PATH, { pillars: [], rules: { maxNewLinksPerRun: 3, maxLinksAddedPerFile: 2, minAnchorLength: 4 } }); }
+function loadBacklog() { return loadJson(BACKLOG_PATH, null); }
+function loadSeoDefaults() { return loadJson(SEO_DEFAULTS_PATH, { baseUrl: 'https://tdrealtyohio.com' }); }
+function loadRelatedGuides() { return loadJson(RELATED_GUIDES_PATH, {}); }
+function loadState() { return loadJson(STATE_PATH, {}); }
+function loadScoreHistory() { return loadJson(SCORE_HISTORY_PATH, { runs: [] }); }
+function loadModuleOutcomes() { return loadJson(MODULE_OUTCOMES_PATH, { tech: {}, links: {}, ctr: {}, content: {} }); }
 
-function loadPillars() {
-  try {
-    return JSON.parse(readFileSync(PILLARS_PATH, 'utf-8'));
-  } catch {
-    console.warn('[seo-autopilot] Could not load pillars.json — using defaults');
-    return { pillars: [], rules: { maxNewLinksPerRun: 3, maxLinksAddedPerFile: 2, minAnchorLength: 4 } };
-  }
-}
+async function saveState(state) { await writeFile(STATE_PATH, JSON.stringify(state, null, 2) + '\n'); }
+async function saveScoreHistory(h) { await writeFile(SCORE_HISTORY_PATH, JSON.stringify(h, null, 2) + '\n'); }
+async function saveModuleOutcomes(m) { await writeFile(MODULE_OUTCOMES_PATH, JSON.stringify(m, null, 2) + '\n'); }
 
-function loadBacklog() {
-  try {
-    return JSON.parse(readFileSync(BACKLOG_PATH, 'utf-8'));
-  } catch {
-    return null;
-  }
-}
+// ── Helpers ────────────────────────────────────────────────────────────────
 
-function loadSeoDefaults() {
-  try {
-    return JSON.parse(readFileSync(SEO_DEFAULTS_PATH, 'utf-8'));
-  } catch {
-    return { baseUrl: 'https://tdrealtyohio.com' };
-  }
-}
-
-function loadRelatedGuides() {
-  try {
-    return JSON.parse(readFileSync(RELATED_GUIDES_PATH, 'utf-8'));
-  } catch {
-    return {};
-  }
-}
-
-/**
- * Compute the diff between before and after issue counts.
- */
 function computeDiff(before, after) {
   const diff = {};
-  const allCodes = new Set([
-    ...Object.keys(before || {}),
-    ...Object.keys(after || {}),
-  ]);
+  const allCodes = new Set([...Object.keys(before || {}), ...Object.keys(after || {})]);
   for (const code of allCodes) {
     const b = (before || {})[code] || 0;
     const a = (after || {})[code] || 0;
-    if (b !== a) {
-      diff[code] = { before: b, after: a, delta: a - b };
-    }
+    if (b !== a) diff[code] = { before: b, after: a, delta: a - b };
   }
   return diff;
 }
 
-/**
- * Extract summary from link graph for reporting.
- */
 function linkGraphSummary(graph) {
   return {
     pagesInGraph: graph.pagesInGraph,
     edgesInGraph: graph.edgesInGraph,
     orphanCount: graph.orphanCount,
     topUnderlinked: graph.topUnderlinked,
-    topLinkSources: graph.topLinkSources.slice(0, 10),
+    topLinkSources: (graph.topLinkSources || []).slice(0, 10),
     brokenEdgesSample: graph.brokenEdgesSample,
   };
 }
+
+// ── Main pipeline ──────────────────────────────────────────────────────────
 
 async function main() {
   const start = Date.now();
   console.log('[seo-autopilot] Starting run…');
 
-  // Ensure directories exist
   await mkdir(REPORT_DIR, { recursive: true });
-  await mkdir(join(__dirname, '..', 'state'), { recursive: true });
+  await mkdir(STATE_DIR, { recursive: true });
 
   const config = loadConfig();
   const pillars = loadPillars();
+  let state = loadState();
 
   const report = {
     timestamp: new Date().toISOString(),
     durationMs: 0,
     buildOutput: null,
-    beforeAudit: null,
-    afterAudit: null,
-    diff: null,
+    beforeAudit: null, afterAudit: null, diff: null,
     fixerResults: null,
-    linkGraphBefore: null,
-    linkGraphAfter: null,
-    linkActionsApplied: [],
-    budgetUsed: { linksAdded: 0, filesEdited: 0 },
-    notes: '',
-    errors: [],
+    linkGraphBefore: null, linkGraphAfter: null,
+    linkActionsApplied: [], budgetUsed: { linksAdded: 0, filesEdited: 0 },
+    gsc: null, experiments: { applied: [], evaluated: [] },
+    content: { action: 'none', target: null, reason: '', filesEdited: [], wordsAdded: 0 },
+    score: null, focusPlan: null, moduleOutcomes: null,
+    notes: '', errors: [],
   };
+
+  // ─────────────────────────── PHASE 1: COLLECT DATA ───────────────────────
 
   // Step 1: Detect build output
   let buildOutput;
@@ -159,284 +136,273 @@ async function main() {
   report.buildOutput = buildOutput;
   console.log(`[seo-autopilot] Build output: ${buildOutput.mode} — ${buildOutput.reason}`);
 
-  if (buildOutput.mode === 'static-html') {
-    let pages;
+  if (buildOutput.mode !== 'static-html') {
+    report.notes = `Build output mode "${buildOutput.mode}" — scan skipped.`;
+    console.log(`[seo-autopilot] Mode "${buildOutput.mode}" — scan skipped`);
+    report.durationMs = Date.now() - start;
+    await writeFile(join(REPORT_DIR, 'latest.json'), JSON.stringify(report, null, 2) + '\n');
+    console.log(`[seo-autopilot] Done in ${report.durationMs}ms`);
+    return;
+  }
 
-    // Step 2: Before-audit + link graph
+  let pages;
+  let beforeAudit;
+  let linkGraphBefore;
+
+  // Step 2: Before-audit + link graph
+  try {
+    pages = listHtmlPages(buildOutput.outputDir, { canonicalStrategy: config.canonicalStrategy });
+    console.log(`[seo-autopilot] Found ${pages.length} HTML page(s)`);
+
+    beforeAudit = runBuildAudit(pages, config);
+    report.beforeAudit = {
+      pagesScanned: beforeAudit.totals.pagesScanned,
+      issuesTotal: beforeAudit.totals.issuesTotal,
+      issueCounts: beforeAudit.totals.issueCounts,
+      pages: beforeAudit.pages,
+    };
+    console.log('\n=== BEFORE AUDIT ===');
+    printAuditSummary(beforeAudit);
+  } catch (err) {
+    report.errors.push(`beforeAudit: ${err.message}`);
+    console.error('[seo-autopilot] Before-audit error (non-fatal):', err.message);
+  }
+
+  if (pages) {
     try {
-      pages = listHtmlPages(buildOutput.outputDir, {
-        canonicalStrategy: config.canonicalStrategy,
-      });
-      console.log(`[seo-autopilot] Found ${pages.length} HTML page(s)`);
-
-      const beforeAudit = runBuildAudit(pages, config);
-      report.beforeAudit = {
-        pagesScanned: beforeAudit.totals.pagesScanned,
-        issuesTotal: beforeAudit.totals.issuesTotal,
-        issueCounts: beforeAudit.totals.issueCounts,
-      };
-
-      console.log('\n=== BEFORE FIXES ===');
-      printAuditSummary(beforeAudit);
+      linkGraphBefore = buildLinkGraph(pages, config);
+      report.linkGraphBefore = linkGraphSummary(linkGraphBefore);
+      console.log('\n=== LINK GRAPH ===');
+      printLinkGraphSummary(linkGraphBefore);
     } catch (err) {
-      report.errors.push(`beforeAudit: ${err.message}`);
-      console.error('[seo-autopilot] Before-audit error (non-fatal):', err.message);
+      report.errors.push(`linkGraphBefore: ${err.message}`);
+      console.error('[seo-autopilot] Link graph error (non-fatal):', err.message);
     }
+  }
 
-    // Link graph before fixes
-    let linkGraphBefore;
-    if (pages) {
-      try {
-        linkGraphBefore = buildLinkGraph(pages, config);
-        report.linkGraphBefore = linkGraphSummary(linkGraphBefore);
-        console.log('\n=== LINK GRAPH (BEFORE) ===');
-        printLinkGraphSummary(linkGraphBefore);
-      } catch (err) {
-        report.errors.push(`linkGraphBefore: ${err.message}`);
-        console.error('[seo-autopilot] Link graph error (non-fatal):', err.message);
-      }
+  // Step 3: GSC data collection
+  let gscOk = false;
+  let opportunities = { highImpressionsLowCtrPages: [], strikingDistanceQueries: [], decliningPages: [] };
+  try {
+    console.log('\n=== GSC DATA COLLECTION ===');
+    const gscResult = await pullGscData();
+
+    if (gscResult.ok) {
+      gscOk = true;
+      console.log(`[gsc] Pulled at: ${gscResult.pulledAt}`);
+      console.log(`[gsc] 28d: ${gscResult.totals28.clicks} clicks, ${gscResult.totals28.impressions} impressions, CTR ${(gscResult.totals28.ctr * 100).toFixed(2)}%, pos ${gscResult.totals28.position.toFixed(1)}`);
+      console.log(`[gsc]  7d: ${gscResult.totals7.clicks} clicks, ${gscResult.totals7.impressions} impressions, CTR ${(gscResult.totals7.ctr * 100).toFixed(2)}%, pos ${gscResult.totals7.position.toFixed(1)}`);
+
+      opportunities = computeOpportunities(gscResult);
+      console.log(`[gsc] High imp/low CTR: ${opportunities.highImpressionsLowCtrPages.length}, Striking: ${opportunities.strikingDistanceQueries.length}, Declining: ${opportunities.decliningPages.length}`);
+
+      const snapshots = buildPageSnapshots(gscResult, config.baseUrl, config.canonicalStrategy);
+      state.gsc = {
+        lastPulledAt: gscResult.pulledAt,
+        totals28: gscResult.totals28, totals7: gscResult.totals7,
+        pageSnapshots: snapshots,
+        opportunities,
+      };
+      await saveState(state);
+
+      report.gsc = {
+        ok: true, skipped: false, pulledAt: gscResult.pulledAt,
+        totals28: gscResult.totals28, totals7: gscResult.totals7,
+        opportunityCounts: {
+          ctrPages: opportunities.highImpressionsLowCtrPages.length,
+          strikingQueries: opportunities.strikingDistanceQueries.length,
+          decliningPages: opportunities.decliningPages.length,
+        },
+      };
+    } else {
+      console.log(`[gsc] Skipped: ${gscResult.reason || 'unknown'}`);
+      report.gsc = { ok: false, skipped: gscResult.skipped, reason: gscResult.reason || 'unknown' };
     }
+  } catch (err) {
+    report.errors.push(`gsc: ${err.message}`);
+    report.gsc = { ok: false, skipped: false, reason: err.message };
+    console.error('[seo-autopilot] GSC error (non-fatal):', err.message);
+  }
 
-    // Step 3: Apply metadata fixer
-    if (pages) {
-      try {
-        const fixResult = fixMetadata(pages);
-        report.fixerResults = {
-          filesChanged: fixResult.filesChanged,
-          tagsAdded: fixResult.tagsAdded,
-          details: fixResult.details,
-        };
-        console.log(`[seo-autopilot] Metadata fixer: ${fixResult.filesChanged} file(s) changed, ${fixResult.tagsAdded} tag(s) added`);
-      } catch (err) {
-        report.errors.push(`metadataFixer: ${err.message}`);
-        console.error('[seo-autopilot] Metadata fixer error (non-fatal):', err.message);
-      }
-    }
+  // ─────────────────────────── PHASE 2: SCORE + FOCUS ──────────────────────
 
-    // Step 4: Generate link plan + apply
-    if (linkGraphBefore) {
-      try {
-        const { actions } = generateLinkPlan(linkGraphBefore, config, pillars);
+  // Blog discovery (needed for thin page count and content planning)
+  const blogResult = discoverBlog();
+  console.log(`\n[blog] Discovered ${blogResult.posts.length} post(s)`);
 
-        if (actions.length > 0) {
-          console.log(`\n[seo-autopilot] Link plan: ${actions.length} action(s)`);
-          for (const a of actions) {
-            console.log(`  ${a.fromPath} -> ${a.toPath} ("${a.anchorText}")`);
-          }
+  // Classify audit issues
+  const techClassification = beforeAudit
+    ? classifyIssues(beforeAudit, config.rankIntentRoutes || [])
+    : { criticalCount: 0, otherCount: 0, brokenInternalLinks: 0 };
 
-          const linkResult = applyInternalLinks(actions);
-          report.linkActionsApplied = linkResult.details.filter((d) => d.status === 'added');
-          report.budgetUsed = {
-            linksAdded: linkResult.linksAdded,
-            filesEdited: linkResult.filesEdited,
-          };
-          console.log(`[seo-autopilot] Internal links: ${linkResult.linksAdded} link(s) added, ${linkResult.filesEdited} file(s) edited`);
-        } else {
-          console.log('\n[seo-autopilot] Link plan: no actions needed');
-        }
-      } catch (err) {
-        report.errors.push(`linkPlan: ${err.message}`);
-        console.error('[seo-autopilot] Link plan error (non-fatal):', err.message);
-      }
-    }
+  // Compute GSC deltas
+  const scoreHistory = loadScoreHistory();
+  const lastRunEntry = scoreHistory.runs.length > 0 ? scoreHistory.runs[scoreHistory.runs.length - 1] : null;
+  const gscDeltas = gscOk
+    ? computeGscDeltas({ totals7: state.gsc?.totals7 }, lastRunEntry?.components)
+    : { clicks7DeltaPct: 0, impressions7DeltaPct: 0, ctr7DeltaPct: 0, pos7Delta: 0, insufficientBaseline: true };
 
-    // Step 5: GSC data collection + opportunity analysis
+  // Compute score
+  const thinCount = countThinPages(blogResult.posts, 300);
+  const underlinkedPillarCount = countUnderlinkedPillars(linkGraphBefore, 10);
+
+  const scoreResult = computeScore({
+    gscDeltas,
+    techClassification,
+    linkGraph: linkGraphBefore || {},
+    thinCount,
+    underlinkedPillarCount,
+  });
+
+  console.log(`\n=== SCORE: ${scoreResult.score}/100 ===`);
+  console.log(`  Tech: ${techClassification.criticalCount} critical, ${techClassification.otherCount} other, ${techClassification.brokenInternalLinks} broken links`);
+  console.log(`  Links: ${linkGraphBefore?.orphanCount || 0} orphans, ${underlinkedPillarCount} underlinked pillars`);
+  console.log(`  Content: ${thinCount} thin page(s)`);
+  if (!gscDeltas.insufficientBaseline) {
+    console.log(`  GSC deltas: clicks ${(gscDeltas.clicks7DeltaPct * 100).toFixed(1)}%, impr ${(gscDeltas.impressions7DeltaPct * 100).toFixed(1)}%, CTR ${(gscDeltas.ctr7DeltaPct * 100).toFixed(1)}%, pos ${gscDeltas.pos7Delta.toFixed(1)}`);
+  } else {
+    console.log('  GSC deltas: insufficient baseline');
+  }
+
+  // Compute focus plan
+  const moduleOutcomes = loadModuleOutcomes();
+  const focusPlan = computeFocusPlan({
+    scoreResult,
+    scoreHistory: scoreHistory.runs,
+    opportunities,
+    backlog: loadBacklog(),
+    state,
+    moduleOutcomes,
+  });
+
+  console.log(`\n=== FOCUS: ${focusPlan.focus} ===`);
+  console.log(`  Reason: ${focusPlan.reason}`);
+
+  report.score = { value: scoreResult.score, components: scoreResult.components, focus: focusPlan.focus };
+  report.focusPlan = focusPlan;
+
+  // ─────────────────────────── PHASE 3: EXECUTE FOCUS ──────────────────────
+
+  const focus = focusPlan.focus;
+
+  // Tech focus: run metadata fixer
+  if (focus === 'tech' && pages) {
     try {
-      console.log('\n=== GSC DATA COLLECTION ===');
-      const gscResult = await pullGscData();
+      const fixResult = fixMetadata(pages);
+      report.fixerResults = { filesChanged: fixResult.filesChanged, tagsAdded: fixResult.tagsAdded, details: fixResult.details };
+      console.log(`\n[tech] Metadata fixer: ${fixResult.filesChanged} file(s) changed, ${fixResult.tagsAdded} tag(s) added`);
 
-      if (gscResult.ok) {
-        console.log(`[gsc] Pulled at: ${gscResult.pulledAt}`);
-        console.log(`[gsc] 28d: ${gscResult.totals28.clicks} clicks, ${gscResult.totals28.impressions} impressions, CTR ${(gscResult.totals28.ctr * 100).toFixed(2)}%, pos ${gscResult.totals28.position.toFixed(1)}`);
-        console.log(`[gsc]  7d: ${gscResult.totals7.clicks} clicks, ${gscResult.totals7.impressions} impressions, CTR ${(gscResult.totals7.ctr * 100).toFixed(2)}%, pos ${gscResult.totals7.position.toFixed(1)}`);
+      moduleOutcomes.tech = {
+        lastRunAt: new Date().toISOString(),
+        lastDeltaCritical: 0, // Will be updated after re-audit
+        lastDeltaBrokenLinks: 0,
+      };
+    } catch (err) {
+      report.errors.push(`metadataFixer: ${err.message}`);
+      console.error('[seo-autopilot] Metadata fixer error (non-fatal):', err.message);
+    }
+  }
 
-        // Compute opportunities
-        const opportunities = computeOpportunities(gscResult);
-        console.log(`[gsc] High impressions / low CTR pages: ${opportunities.highImpressionsLowCtrPages.length}`);
-        console.log(`[gsc] Striking distance queries: ${opportunities.strikingDistanceQueries.length}`);
-        console.log(`[gsc] Declining pages: ${opportunities.decliningPages.length}`);
+  // Links focus: run link planner
+  if (focus === 'links' && linkGraphBefore) {
+    try {
+      const { actions } = generateLinkPlan(linkGraphBefore, config, pillars);
+      if (actions.length > 0) {
+        console.log(`\n[links] Link plan: ${actions.length} action(s)`);
+        for (const a of actions) console.log(`  ${a.fromPath} -> ${a.toPath} ("${a.anchorText}")`);
 
-        // Top 5 CTR opportunities
-        if (opportunities.highImpressionsLowCtrPages.length > 0) {
-          console.log('\n[gsc] Top CTR opportunities:');
-          for (const p of opportunities.highImpressionsLowCtrPages.slice(0, 5)) {
-            console.log(`  ${p.path} — ${p.impressions28} imp, CTR ${(p.ctr28 * 100).toFixed(2)}%`);
-          }
-        }
+        const linkResult = applyInternalLinks(actions);
+        report.linkActionsApplied = linkResult.details.filter(d => d.status === 'added');
+        report.budgetUsed = { linksAdded: linkResult.linksAdded, filesEdited: linkResult.filesEdited };
+        console.log(`[links] Applied: ${linkResult.linksAdded} link(s), ${linkResult.filesEdited} file(s)`);
 
-        // Build page snapshots and update state
-        const snapshots = buildPageSnapshots(gscResult, config.baseUrl, config.canonicalStrategy);
-        const statePath = join(__dirname, '..', 'state', 'state.json');
-        let state = {};
-        try { state = JSON.parse(readFileSync(statePath, 'utf-8')); } catch { /* new state */ }
-        state.gsc = {
-          lastPulledAt: gscResult.pulledAt,
-          totals28: gscResult.totals28,
-          totals7: gscResult.totals7,
-          pageSnapshots: snapshots,
-          opportunities: {
-            highImpressionsLowCtrPages: opportunities.highImpressionsLowCtrPages,
-            strikingDistanceQueries: opportunities.strikingDistanceQueries,
-            decliningPages: opportunities.decliningPages,
-          },
-        };
-        await writeFile(statePath, JSON.stringify(state, null, 2) + '\n');
-
-        report.gsc = {
-          ok: true,
-          skipped: false,
-          pulledAt: gscResult.pulledAt,
-          totals28: gscResult.totals28,
-          totals7: gscResult.totals7,
-          opportunityCounts: {
-            ctrPages: opportunities.highImpressionsLowCtrPages.length,
-            strikingQueries: opportunities.strikingDistanceQueries.length,
-            decliningPages: opportunities.decliningPages.length,
-          },
+        moduleOutcomes.links = {
+          lastRunAt: new Date().toISOString(),
+          lastDeltaOrphans: 0,
+          lastDeltaInDegreePillars: 0,
         };
       } else {
-        const reason = gscResult.reason || 'unknown';
-        console.log(`[gsc] Skipped: ${reason}`);
-        report.gsc = { ok: false, skipped: gscResult.skipped, reason };
+        console.log('\n[links] No actions needed');
       }
     } catch (err) {
-      report.errors.push(`gsc: ${err.message}`);
-      report.gsc = { ok: false, skipped: false, reason: err.message };
-      console.error('[seo-autopilot] GSC error (non-fatal):', err.message);
+      report.errors.push(`linkPlan: ${err.message}`);
+      console.error('[seo-autopilot] Link plan error (non-fatal):', err.message);
     }
+  }
 
-    // Step 6: Experiment evaluation + new experiments
-    report.experiments = { applied: [], evaluated: [] };
+  // CTR focus: run experiment evaluation + apply
+  if (focus === 'ctr') {
     try {
-      // 6a: Evaluate existing running experiments
-      const statePath = join(__dirname, '..', 'state', 'state.json');
-      let currentState = {};
-      try { currentState = JSON.parse(readFileSync(statePath, 'utf-8')); } catch { /* new state */ }
-      const pageSnapshots = currentState.gsc?.pageSnapshots || {};
+      const pageSnapshots = state.gsc?.pageSnapshots || {};
 
+      // Evaluate existing experiments
       const evalResults = evaluateExperiments(pageSnapshots);
       if (evalResults.length > 0) {
         console.log('\n=== EXPERIMENT EVALUATIONS ===');
-        for (const ev of evalResults) {
-          console.log(`  ${ev.path}: ${ev.result} — ${ev.notes}`);
-        }
+        for (const ev of evalResults) console.log(`  ${ev.path}: ${ev.result} — ${ev.notes}`);
         report.experiments.evaluated = evalResults;
       }
 
-      // 6b: Select candidates and apply new experiments (only if GSC data is available)
-      const opportunities = currentState.gsc?.opportunities?.highImpressionsLowCtrPages || [];
-      if (opportunities.length > 0) {
-        const experimentsConfigPath = join(__dirname, '..', 'config', 'experiments.json');
-        let experimentsConfig = {};
-        try { experimentsConfig = JSON.parse(readFileSync(experimentsConfigPath, 'utf-8')); } catch { /* defaults */ }
+      // Apply new experiments
+      const ctrOpportunities = state.gsc?.opportunities?.highImpressionsLowCtrPages || [];
+      if (ctrOpportunities.length > 0) {
+        const expConfig = loadJson(join(__dirname, '..', 'config', 'experiments.json'), {});
+        const expState = loadJson(join(__dirname, '..', 'state', 'experiments.json'), {});
 
-        const experimentsStatePath = join(__dirname, '..', 'state', 'experiments.json');
-        let experimentsState = {};
-        try { experimentsState = JSON.parse(readFileSync(experimentsStatePath, 'utf-8')); } catch { /* defaults */ }
-
-        const candidates = selectCandidates({
-          opportunities,
-          experimentsConfig,
-          experimentsState,
-          siteConfig: config,
-        });
-
+        const candidates = selectCandidates({ opportunities: ctrOpportunities, experimentsConfig: expConfig, experimentsState: expState, siteConfig: config });
         if (candidates.length > 0) {
-          console.log(`\n=== EXPERIMENT CANDIDATES: ${candidates.length} ===`);
+          console.log(`\n[ctr] Experiment candidates: ${candidates.length}`);
           let applied = 0;
-          const maxChanges = experimentsConfig.maxMetaChangesPerRun || 3;
+          const maxChanges = focusPlan.budgets.maxMetaEdits || 3;
 
           for (const candidate of candidates) {
             if (applied >= maxChanges) break;
-
-            const variant = generateVariant({
-              path: candidate.path,
-              existingTitle: '', // Will be looked up from route registry
-              existingDescription: '',
-              topQueries: candidate.topQueries || [],
-              ctr28: candidate.ctr28,
-            });
-
+            const variant = generateVariant({ path: candidate.path, existingTitle: '', existingDescription: '', topQueries: candidate.topQueries || [], ctr28: candidate.ctr28 });
             if (variant) {
-              const baseline = pageSnapshots[candidate.path] || {
-                impressions7: 0, clicks7: 0,
-                ctr7: candidate.ctr28, pos7: candidate.pos28,
-              };
-
+              const baseline = pageSnapshots[candidate.path] || { impressions7: 0, clicks7: 0, ctr7: candidate.ctr28, pos7: candidate.pos28 };
               applyVariant({
-                path: candidate.path,
-                title: variant.chosen.title,
-                description: variant.chosen.description,
-                existingTitle: variant.variantA.title !== variant.chosen.title ? variant.variantA.title : '',
-                existingDescription: '',
-                baseline: {
-                  impressions7: baseline.impressions7 || 0,
-                  clicks7: baseline.clicks7 || 0,
-                  ctr7: baseline.ctr7 || 0,
-                  pos7: baseline.pos7 || 0,
-                },
+                path: candidate.path, title: variant.chosen.title, description: variant.chosen.description,
+                existingTitle: variant.variantA.title !== variant.chosen.title ? variant.variantA.title : '', existingDescription: '',
+                baseline: { impressions7: baseline.impressions7 || 0, clicks7: baseline.clicks7 || 0, ctr7: baseline.ctr7 || 0, pos7: baseline.pos7 || 0 },
               });
-
-              report.experiments.applied.push({
-                path: candidate.path,
-                title: variant.chosen.title,
-                description: variant.chosen.description,
-              });
+              report.experiments.applied.push({ path: candidate.path, title: variant.chosen.title, description: variant.chosen.description });
               applied++;
               console.log(`  Applied: ${candidate.path} — "${variant.chosen.title}"`);
             }
           }
 
-          if (applied === 0) {
-            console.log('  No viable variants generated');
-          }
+          moduleOutcomes.ctr = {
+            lastRunAt: new Date().toISOString(),
+            pagesEdited: applied,
+            kept: evalResults.filter(e => e.result === 'KEEP').length,
+            reverted: evalResults.filter(e => e.result === 'REVERT').length,
+          };
         } else {
-          console.log('\n[experiments] No eligible candidates');
+          console.log('\n[ctr] No eligible candidates');
         }
       } else {
-        console.log('\n[experiments] No GSC opportunities available — skipping experiments');
+        console.log('\n[ctr] No CTR opportunities — skipping experiments');
       }
     } catch (err) {
       report.errors.push(`experiments: ${err.message}`);
       console.error('[seo-autopilot] Experiments error (non-fatal):', err.message);
     }
+  }
 
-    // Step 7: Content clusters — blog discovery, planning, and execution
-    report.content = { action: 'none', target: null, reason: '', filesEdited: [], wordsAdded: 0 };
+  // Refresh or Publish focus: run content engine
+  if ((focus === 'refresh' || focus === 'publish') && focusPlan.budgets.contentActionAllowed) {
     try {
       console.log('\n=== CONTENT ENGINE ===');
-
-      // 7a: Blog discovery
-      const blogResult = discoverBlog();
-      console.log(`[content] Blog type: ${blogResult.type}, ${blogResult.posts.length} post(s) found`);
-
-      // 7b: Content planning
       const backlog = loadBacklog();
       const seoDefaults = loadSeoDefaults();
 
-      // Load state for content tracking
-      const contentStatePath = join(__dirname, '..', 'state', 'state.json');
-      let contentState = {};
-      try { contentState = JSON.parse(readFileSync(contentStatePath, 'utf-8')); } catch { /* new */ }
-
-      // Build audit result for tech gate (need pages array with issues)
-      let auditForGate = null;
-      if (pages) {
-        try {
-          const gateAudit = runBuildAudit(pages, config);
-          auditForGate = gateAudit;
-        } catch { /* skip gate check */ }
-      }
-
-      const strikingDistanceQueries = contentState.gsc?.opportunities?.strikingDistanceQueries || [];
-
       const contentPlan = planContent({
-        strikingDistanceQueries,
+        strikingDistanceQueries: state.gsc?.opportunities?.strikingDistanceQueries || [],
         backlog,
         blogPosts: blogResult.posts,
         rankIntentRoutes: config.rankIntentRoutes || [],
-        auditResult: auditForGate,
-        state: contentState,
+        auditResult: beforeAudit,
+        state,
         linkGraph: linkGraphBefore,
       });
 
@@ -445,107 +411,59 @@ async function main() {
       report.content.target = contentPlan.target;
       report.content.reason = contentPlan.reason;
 
-      // 7c: Execute the content action
       if (contentPlan.action === 'refresh-post' && contentPlan.target) {
-        const targetPath = contentPlan.target.pathOrSlug;
-        const post = blogResult.posts.find(p => p.path === targetPath);
+        const post = blogResult.posts.find(p => p.path === contentPlan.target.pathOrSlug);
         if (post) {
-          const result = refreshBlogPost({
-            filePath: post.filePath,
-            query: contentPlan.target.query,
-            internalLinksTo: contentPlan.target.internalLinksTo || [],
-            rankIntentRoutes: config.rankIntentRoutes || [],
-          });
+          const result = refreshBlogPost({ filePath: post.filePath, query: contentPlan.target.query, internalLinksTo: contentPlan.target.internalLinksTo || [], rankIntentRoutes: config.rankIntentRoutes || [] });
           console.log(`[content] Refresh blog post: ${result.reason} (${result.wordsAdded} words)`);
           report.content.filesEdited = result.filesEdited;
           report.content.wordsAdded = result.wordsAdded;
-
-          // Update state
-          contentState.content = contentState.content || {};
-          contentState.content.lastActionAt = new Date().toISOString();
-          contentState.content.lastRefreshAt = new Date().toISOString();
-          contentState.content.lastTargets = [{ path: targetPath, action: 'refresh-post' }];
-          await writeFile(contentStatePath, JSON.stringify(contentState, null, 2) + '\n');
+          state.content = { ...(state.content || {}), lastActionAt: new Date().toISOString(), lastRefreshAt: new Date().toISOString(), lastTargets: [{ path: contentPlan.target.pathOrSlug, action: 'refresh-post' }] };
+          moduleOutcomes.content = { lastRunAt: new Date().toISOString(), action: 'refresh', target: contentPlan.target.pathOrSlug };
         }
       } else if (contentPlan.action === 'refresh-page' && contentPlan.target) {
-        const result = refreshMoneyPage({
-          routePath: contentPlan.target.pathOrSlug,
-          query: contentPlan.target.query,
-          internalLinksTo: contentPlan.target.internalLinksTo || [],
-        });
+        const result = refreshMoneyPage({ routePath: contentPlan.target.pathOrSlug, query: contentPlan.target.query, internalLinksTo: contentPlan.target.internalLinksTo || [] });
         console.log(`[content] Refresh money page: ${result.reason} (${result.wordsAdded} words)`);
         report.content.filesEdited = result.filesEdited;
         report.content.wordsAdded = result.wordsAdded;
-
-        // Update state
-        contentState.content = contentState.content || {};
-        contentState.content.lastActionAt = new Date().toISOString();
-        contentState.content.lastRefreshAt = new Date().toISOString();
-        contentState.content.lastTargets = [{ path: contentPlan.target.pathOrSlug, action: 'refresh-page' }];
-        await writeFile(contentStatePath, JSON.stringify(contentState, null, 2) + '\n');
+        state.content = { ...(state.content || {}), lastActionAt: new Date().toISOString(), lastRefreshAt: new Date().toISOString(), lastTargets: [{ path: contentPlan.target.pathOrSlug, action: 'refresh-page' }] };
+        moduleOutcomes.content = { lastRunAt: new Date().toISOString(), action: 'refresh', target: contentPlan.target.pathOrSlug };
       } else if (contentPlan.action === 'publish-post' && contentPlan.target) {
         const result = publishPost({
-          topic: {
-            topicId: contentPlan.target.topicId,
-            primaryIntent: contentPlan.target.primaryIntent,
-            targetQueryHints: contentPlan.target.targetQueryHints,
-            requiredSections: contentPlan.target.requiredSections,
-            internalLinksTo: contentPlan.target.internalLinksTo,
-          },
-          clusterId: contentPlan.target.clusterId,
-          pillarPath: contentPlan.target.pillarPath,
-          blogPosts: blogResult.posts,
-          rankIntentRoutes: config.rankIntentRoutes || [],
-          seoDefaults,
+          topic: { topicId: contentPlan.target.topicId, primaryIntent: contentPlan.target.primaryIntent, targetQueryHints: contentPlan.target.targetQueryHints, requiredSections: contentPlan.target.requiredSections, internalLinksTo: contentPlan.target.internalLinksTo },
+          clusterId: contentPlan.target.clusterId, pillarPath: contentPlan.target.pillarPath,
+          blogPosts: blogResult.posts, rankIntentRoutes: config.rankIntentRoutes || [], seoDefaults,
         });
-        console.log(`[content] Publish post: ${result.reason} — ${result.slug} (${result.wordsAdded} words)`);
+        console.log(`[content] Publish: ${result.reason} — ${result.slug} (${result.wordsAdded} words)`);
         report.content.filesEdited = result.filesCreated;
         report.content.wordsAdded = result.wordsAdded;
 
         if (result.success) {
-          // Update backlog: mark topic as done
           if (backlog) {
             for (const cluster of backlog.clusters) {
               for (const t of cluster.topics) {
                 if (t.topicId === contentPlan.target.topicId) {
-                  t.status = 'done';
-                  t.publishedAt = new Date().toISOString();
-                  t.slug = result.slug;
-                  t.routePath = result.routePath;
+                  t.status = 'done'; t.publishedAt = new Date().toISOString(); t.slug = result.slug; t.routePath = result.routePath;
                 }
               }
             }
             await writeFile(BACKLOG_PATH, JSON.stringify(backlog, null, 2) + '\n');
           }
+          state.content = { ...(state.content || {}), lastActionAt: new Date().toISOString(), lastPublishAt: new Date().toISOString(), lastTargets: [{ path: result.routePath, action: 'publish-post', slug: result.slug }] };
+          moduleOutcomes.content = { lastRunAt: new Date().toISOString(), action: 'publish', target: result.routePath };
 
-          // Update state
-          contentState.content = contentState.content || {};
-          contentState.content.lastActionAt = new Date().toISOString();
-          contentState.content.lastPublishAt = new Date().toISOString();
-          contentState.content.lastTargets = [{ path: result.routePath, action: 'publish-post', slug: result.slug }];
-          await writeFile(contentStatePath, JSON.stringify(contentState, null, 2) + '\n');
-
-          // Update related-guides for the cluster pillar (Step 7 from chunk spec)
+          // Update related-guides
           try {
             const guides = loadRelatedGuides();
             const pillar = contentPlan.target.pillarPath;
             if (pillar) {
               if (!guides[pillar]) guides[pillar] = [];
-              guides[pillar].push({
-                path: result.routePath,
-                anchor: result.slug.replace(/-/g, ' '),
-                addedAt: new Date().toISOString(),
-              });
-              // Cap at 10 per pillar, drop oldest
-              if (guides[pillar].length > 10) {
-                guides[pillar] = guides[pillar].slice(-10);
-              }
+              guides[pillar].push({ path: result.routePath, anchor: result.slug.replace(/-/g, ' '), addedAt: new Date().toISOString() });
+              if (guides[pillar].length > 10) guides[pillar] = guides[pillar].slice(-10);
               await writeFile(RELATED_GUIDES_PATH, JSON.stringify(guides, null, 2) + '\n');
               console.log(`[content] Updated related-guides for ${pillar}`);
             }
-          } catch (err) {
-            console.warn(`[content] Could not update related-guides: ${err.message}`);
-          }
+          } catch (err) { console.warn(`[content] Could not update related-guides: ${err.message}`); }
         }
       } else {
         console.log('[content] No content action taken');
@@ -554,96 +472,109 @@ async function main() {
       report.errors.push(`content: ${err.message}`);
       console.error('[seo-autopilot] Content engine error (non-fatal):', err.message);
     }
-
-    // Step 8: After-audit + link graph
-    if (pages) {
-      try {
-        const afterPages = listHtmlPages(buildOutput.outputDir, {
-          canonicalStrategy: config.canonicalStrategy,
-        });
-        const afterAudit = runBuildAudit(afterPages, config);
-        report.afterAudit = {
-          pagesScanned: afterAudit.totals.pagesScanned,
-          issuesTotal: afterAudit.totals.issuesTotal,
-          issueCounts: afterAudit.totals.issueCounts,
-          samples: afterAudit.samples,
-          pages: afterAudit.pages,
-        };
-
-        console.log('\n=== AFTER FIXES ===');
-        printAuditSummary(afterAudit);
-
-        // Link graph after
-        const linkGraphAfter = buildLinkGraph(afterPages, config);
-        report.linkGraphAfter = linkGraphSummary(linkGraphAfter);
-        console.log('=== LINK GRAPH (AFTER) ===');
-        printLinkGraphSummary(linkGraphAfter);
-
-        // Compute audit diff
-        if (report.beforeAudit) {
-          report.diff = computeDiff(
-            report.beforeAudit.issueCounts,
-            report.afterAudit.issueCounts,
-          );
-
-          const diffEntries = Object.entries(report.diff);
-          if (diffEntries.length > 0) {
-            console.log('=== DIFF (before -> after) ===');
-            for (const [code, { before, after, delta }] of diffEntries) {
-              const sign = delta > 0 ? '+' : '';
-              console.log(`  ${code}: ${before} -> ${after} (${sign}${delta})`);
-            }
-            console.log('');
-          }
-        }
-
-        // Compute link graph diff
-        if (report.linkGraphBefore && report.linkGraphAfter) {
-          const orphanDelta = report.linkGraphAfter.orphanCount - report.linkGraphBefore.orphanCount;
-          const edgeDelta = report.linkGraphAfter.edgesInGraph - report.linkGraphBefore.edgesInGraph;
-          if (orphanDelta !== 0 || edgeDelta !== 0) {
-            console.log('=== LINK GRAPH DIFF ===');
-            if (edgeDelta !== 0) console.log(`  Edges: ${report.linkGraphBefore.edgesInGraph} -> ${report.linkGraphAfter.edgesInGraph} (${edgeDelta > 0 ? '+' : ''}${edgeDelta})`);
-            if (orphanDelta !== 0) console.log(`  Orphans: ${report.linkGraphBefore.orphanCount} -> ${report.linkGraphAfter.orphanCount} (${orphanDelta > 0 ? '+' : ''}${orphanDelta})`);
-            console.log('');
-          }
-        }
-
-        report.notes = `Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues. Links added: ${report.budgetUsed.linksAdded}. Content: ${report.content?.action || 'none'}.`;
-      } catch (err) {
-        report.errors.push(`afterAudit: ${err.message}`);
-        console.error('[seo-autopilot] After-audit error (non-fatal):', err.message);
-      }
-    }
-  } else if (buildOutput.mode === 'ssr-unknown') {
-    report.notes = 'SSR output not available; skipping html scan.';
-    console.log('[seo-autopilot] SSR output not available; skipping html scan');
-  } else {
-    report.notes = `Build output mode "${buildOutput.mode}" — html scan skipped.`;
-    console.log(`[seo-autopilot] Mode "${buildOutput.mode}" — html scan skipped`);
   }
 
+  // No-focus: just log
+  if (focus === 'none') {
+    console.log('\n[focus] No actions taken this run');
+  }
+
+  // ─────────────────────────── PHASE 4: AFTER-AUDIT ────────────────────────
+
+  if (pages) {
+    try {
+      const afterPages = listHtmlPages(buildOutput.outputDir, { canonicalStrategy: config.canonicalStrategy });
+      const afterAudit = runBuildAudit(afterPages, config);
+      report.afterAudit = {
+        pagesScanned: afterAudit.totals.pagesScanned, issuesTotal: afterAudit.totals.issuesTotal,
+        issueCounts: afterAudit.totals.issueCounts, samples: afterAudit.samples, pages: afterAudit.pages,
+      };
+      console.log('\n=== AFTER AUDIT ===');
+      printAuditSummary(afterAudit);
+
+      const linkGraphAfter = buildLinkGraph(afterPages, config);
+      report.linkGraphAfter = linkGraphSummary(linkGraphAfter);
+      console.log('=== LINK GRAPH (AFTER) ===');
+      printLinkGraphSummary(linkGraphAfter);
+
+      // Diffs
+      if (report.beforeAudit) {
+        report.diff = computeDiff(report.beforeAudit.issueCounts, report.afterAudit.issueCounts);
+        const diffEntries = Object.entries(report.diff);
+        if (diffEntries.length > 0) {
+          console.log('=== DIFF ===');
+          for (const [code, { before, after, delta }] of diffEntries) {
+            console.log(`  ${code}: ${before} -> ${after} (${delta > 0 ? '+' : ''}${delta})`);
+          }
+        }
+      }
+      if (report.linkGraphBefore && report.linkGraphAfter) {
+        const eDelta = report.linkGraphAfter.edgesInGraph - report.linkGraphBefore.edgesInGraph;
+        const oDelta = report.linkGraphAfter.orphanCount - report.linkGraphBefore.orphanCount;
+        if (eDelta !== 0 || oDelta !== 0) {
+          console.log('=== LINK GRAPH DIFF ===');
+          if (eDelta !== 0) console.log(`  Edges: ${report.linkGraphBefore.edgesInGraph} -> ${report.linkGraphAfter.edgesInGraph} (${eDelta > 0 ? '+' : ''}${eDelta})`);
+          if (oDelta !== 0) console.log(`  Orphans: ${report.linkGraphBefore.orphanCount} -> ${report.linkGraphAfter.orphanCount} (${oDelta > 0 ? '+' : ''}${oDelta})`);
+        }
+      }
+
+      // Update module outcomes with after-audit deltas
+      if (focus === 'tech' && report.beforeAudit) {
+        const beforeClass = classifyIssues(beforeAudit, config.rankIntentRoutes || []);
+        const afterClass = classifyIssues(afterAudit, config.rankIntentRoutes || []);
+        moduleOutcomes.tech.lastDeltaCritical = afterClass.criticalCount - beforeClass.criticalCount;
+        moduleOutcomes.tech.lastDeltaBrokenLinks = afterClass.brokenInternalLinks - beforeClass.brokenInternalLinks;
+      }
+      if (focus === 'links' && report.linkGraphBefore && report.linkGraphAfter) {
+        moduleOutcomes.links.lastDeltaOrphans = report.linkGraphAfter.orphanCount - report.linkGraphBefore.orphanCount;
+      }
+
+      report.notes = `Score: ${scoreResult.score}. Focus: ${focus}. Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues. Links added: ${report.budgetUsed.linksAdded}. Content: ${report.content?.action || 'none'}.`;
+    } catch (err) {
+      report.errors.push(`afterAudit: ${err.message}`);
+      console.error('[seo-autopilot] After-audit error (non-fatal):', err.message);
+    }
+  }
+
+  // ─────────────────────────── PHASE 5: PERSIST STATE ──────────────────────
+
+  // Append to score history (keep last 120 runs)
+  scoreHistory.runs.push({
+    runAt: new Date().toISOString(),
+    score: scoreResult.score,
+    components: {
+      gsc: {
+        clicks28: state.gsc?.totals28?.clicks || 0, clicks7: state.gsc?.totals7?.clicks || 0,
+        impr28: state.gsc?.totals28?.impressions || 0, impr7: state.gsc?.totals7?.impressions || 0,
+        ctr28: state.gsc?.totals28?.ctr || 0, ctr7: state.gsc?.totals7?.ctr || 0,
+        pos28: state.gsc?.totals28?.position || 0, pos7: state.gsc?.totals7?.position || 0,
+      },
+      tech: { criticalCount: techClassification.criticalCount, otherCount: techClassification.otherCount, brokenInternalLinks: techClassification.brokenInternalLinks },
+      links: { orphanCount: linkGraphBefore?.orphanCount || 0, underlinkedPillars: underlinkedPillarCount },
+      content: { thinCount, lastAction: report.content.action },
+    },
+    decisions: { focus, actionsPlanned: 1, actionsApplied: focus === 'none' ? 0 : 1 },
+  });
+  if (scoreHistory.runs.length > 120) {
+    scoreHistory.runs = scoreHistory.runs.slice(-120);
+  }
+
+  await saveState(state);
+  await saveScoreHistory(scoreHistory);
+  await saveModuleOutcomes(moduleOutcomes);
+
+  report.moduleOutcomes = moduleOutcomes;
   report.durationMs = Date.now() - start;
 
-  // Write report (gitignored)
-  await writeFile(
-    join(REPORT_DIR, 'latest.json'),
-    JSON.stringify(report, null, 2) + '\n',
-  );
-
-  // Write link graph data (gitignored)
+  await writeFile(join(REPORT_DIR, 'latest.json'), JSON.stringify(report, null, 2) + '\n');
   if (report.linkGraphAfter) {
-    await writeFile(
-      join(REPORT_DIR, 'link-graph.json'),
-      JSON.stringify(report.linkGraphAfter, null, 2) + '\n',
-    );
+    await writeFile(join(REPORT_DIR, 'link-graph.json'), JSON.stringify(report.linkGraphAfter, null, 2) + '\n');
   }
 
-  console.log(`[seo-autopilot] Done in ${report.durationMs}ms`);
+  console.log(`\n[seo-autopilot] Done in ${report.durationMs}ms`);
 }
 
 main().catch((err) => {
   console.error('[seo-autopilot] Unexpected error (non-fatal):', err);
-  // Always exit 0 so the workflow never fails
   process.exit(0);
 });
