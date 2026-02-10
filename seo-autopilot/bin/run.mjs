@@ -76,6 +76,7 @@ const SAFETY_CONFIG_PATH = join(__dirname, '..', 'config', 'safety.json');
 const STATE_PATH = join(STATE_DIR, 'state.json');
 const SCORE_HISTORY_PATH = join(STATE_DIR, 'score-history.json');
 const MODULE_OUTCOMES_PATH = join(STATE_DIR, 'module-outcomes.json');
+const EXPERIMENT_LOG_PATH = join(ROOT, 'ops', 'experiments', 'experiment-log.json');
 
 // ── Loaders ────────────────────────────────────────────────────────────────
 
@@ -119,6 +120,34 @@ function linkGraphSummary(graph) {
   };
 }
 
+function computeTechnicalQualityScore(classification = {}, weights = {}) {
+  const criticalWeight = weights.criticalWeight ?? 15;
+  const otherWeight = weights.otherWeight ?? 2;
+  const brokenLinkWeight = weights.brokenLinkWeight ?? 5;
+  const penalty =
+    ((classification.criticalCount || 0) * criticalWeight) +
+    ((classification.otherCount || 0) * otherWeight) +
+    ((classification.brokenInternalLinks || 0) * brokenLinkWeight);
+  return Math.max(0, 100 - penalty);
+}
+
+
+function loadExperimentLog() {
+  const log = loadJson(EXPERIMENT_LOG_PATH, []);
+  return Array.isArray(log) ? log : [];
+}
+
+async function saveExperimentLog(entries) {
+  await writeJsonStable(EXPERIMENT_LOG_PATH, entries, 'experimentLog');
+}
+
+function mapDecision(result = '') {
+  const normalized = String(result || '').toLowerCase();
+  if (normalized === 'kept' || normalized === 'keep') return 'ship';
+  if (normalized === 'reverted' || normalized === 'revert') return 'revert';
+  return 'iterate';
+}
+
 // ── Main pipeline ──────────────────────────────────────────────────────────
 
 async function main() {
@@ -140,7 +169,7 @@ async function main() {
     fixerResults: null,
     linkGraphBefore: null, linkGraphAfter: null,
     linkActionsApplied: [], budgetUsed: { linksAdded: 0, filesEdited: 0 },
-    gsc: null, experiments: { applied: [], evaluated: [] },
+    gsc: null, experiments: { applied: [], evaluated: [], records: [] },
     content: { action: 'none', target: null, reason: '', filesEdited: [], wordsAdded: 0 },
     quality: { thinRankIntentCount: 0, nearDuplicatePairsCount: 0, thinRankIntent: [], nearDuplicatePairs: [] },
     areas: { selected: null, wordsBefore: 0, wordsAfter: 0, linksAdded: [], reason: '' },
@@ -657,6 +686,24 @@ async function main() {
         report.experiments.evaluated = evalResults;
       }
 
+      const experimentRecords = [];
+      for (const ev of evalResults) {
+        experimentRecords.push({
+          date: new Date().toISOString(),
+          change_type: 'seo_autopilot_ctr_evaluation',
+          scope: 'metadata_experiment',
+          hypothesis: 'Intent-aligned title/meta variant should improve CTR without harming technical quality.',
+          changed_urls: [ev.path],
+          observed_metrics_window: 'baseline 7-day CTR/clicks vs post-lock 7-day CTR/clicks',
+          decision: mapDecision(ev.result),
+          metrics: {
+            baselineCtr7: ev.baselineCtr7,
+            currentCtr7: ev.currentCtr7,
+            notes: ev.notes,
+          },
+        });
+      }
+
       // Apply new experiments
       const ctrOpportunities = state.gsc?.opportunities?.highImpressionsLowCtrPages || [];
       if (ctrOpportunities.length > 0) {
@@ -667,10 +714,16 @@ async function main() {
         if (candidates.length > 0) {
           console.log(`\n[ctr] Experiment candidates: ${candidates.length}`);
           let applied = 0;
-          const maxChanges = focusPlan.budgets.maxMetaEdits || 3;
+          const maxMetaEdits = Math.max(0, Math.min(
+            focusPlan.budgets.maxMetaEdits || 3,
+            expConfig.maxMetaChangesPerRun || 3,
+          ));
+          const maxFilesChanged = Math.max(0, expConfig.maxFilesChangedPerRun || maxMetaEdits);
+          const touchedPaths = new Set();
 
           for (const candidate of candidates) {
-            if (applied >= maxChanges) break;
+            if (applied >= maxMetaEdits) break;
+            if (touchedPaths.size >= maxFilesChanged) break;
             const variant = generateVariant({ path: candidate.path, existingTitle: '', existingDescription: '', topQueries: candidate.topQueries || [], ctr28: candidate.ctr28 });
             if (variant) {
               const baseline = pageSnapshots[candidate.path] || { impressions7: 0, clicks7: 0, ctr7: candidate.ctr28, pos7: candidate.pos28 };
@@ -680,9 +733,39 @@ async function main() {
                 baseline: { impressions7: baseline.impressions7 || 0, clicks7: baseline.clicks7 || 0, ctr7: baseline.ctr7 || 0, pos7: baseline.pos7 || 0 },
               });
               report.experiments.applied.push({ path: candidate.path, title: variant.chosen.title, description: variant.chosen.description });
+              experimentRecords.push({
+                date: new Date().toISOString(),
+                change_type: 'seo_autopilot_ctr_variant_applied',
+                scope: 'metadata_experiment',
+                hypothesis: `Using high-impression query intent in title/meta for ${candidate.path} will increase CTR.`,
+                changed_urls: [candidate.path],
+                observed_metrics_window: 'next 7-14 days in GSC after lock period',
+                decision: 'iterate',
+                metrics: {
+                  baselineCtr7: baseline.ctr7 || 0,
+                  baselineClicks7: baseline.clicks7 || 0,
+                  candidateCtr28: candidate.ctr28 || 0,
+                  candidateImpressions28: candidate.impressions28 || 0,
+                },
+              });
               applied++;
+              touchedPaths.add(candidate.path);
               console.log(`  Applied: ${candidate.path} — "${variant.chosen.title}"`);
             }
+          }
+
+          if (candidates.length > applied) {
+            console.log(`[ctr] Applied ${applied} experiment(s), capped by maxMetaEdits=${maxMetaEdits}, maxFilesChanged=${maxFilesChanged}`);
+          }
+
+          if (experimentRecords.length > 0) {
+            const experimentLog = loadExperimentLog();
+            experimentLog.push(...experimentRecords);
+            if (experimentLog.length > 500) {
+              experimentLog.splice(0, experimentLog.length - 500);
+            }
+            await saveExperimentLog(experimentLog);
+            report.experiments.records = experimentRecords;
           }
 
           moduleOutcomes.ctr = {
@@ -1024,6 +1107,17 @@ async function main() {
       if (!reverted && baselineSha && beforeAudit) {
         try {
           const afterClass = classifyIssues(afterAudit, config.rankIntentRoutes || []);
+          const techWeights = safetyConfig.revertIfWorse?.technicalQualityWeights || {};
+          const beforeTechScore = computeTechnicalQualityScore(techClassification, techWeights);
+          const afterTechScore = computeTechnicalQualityScore(afterClass, techWeights);
+          const techScoreDelta = afterTechScore - beforeTechScore;
+          report.safety.technicalQuality = {
+            before: beforeTechScore,
+            after: afterTechScore,
+            delta: techScoreDelta,
+            declined: techScoreDelta < 0,
+          };
+
           const auditDelta = computeAuditDelta({
             before: {
               criticalCount: techClassification.criticalCount,
@@ -1042,10 +1136,12 @@ async function main() {
           const liveNoindex = (report.live?.issueCounts?.LIVE_NOINDEX || 0) > 0;
           const safetyRevertConfig = safetyConfig.revertIfWorse || {};
           const liveNoindexTrigger = safetyRevertConfig.liveNoindexDetected && liveNoindex;
+          const technicalQualityDeclined = techScoreDelta < 0;
 
-          if (auditDelta.shouldRevert || liveNoindexTrigger) {
+          if (auditDelta.shouldRevert || liveNoindexTrigger || technicalQualityDeclined) {
             const reasons = [...(auditDelta.reasons || [])];
             if (liveNoindexTrigger) reasons.push('live noindex detected');
+            if (technicalQualityDeclined) reasons.push(`technical quality score declined (${beforeTechScore} -> ${afterTechScore})`);
             console.log(`\n[safety] Audit regression detected: ${reasons.join('; ')}`);
             console.log('[safety] Reverting to baseline...');
             const rv = revertToSha(baselineSha);

@@ -9,7 +9,12 @@
   "revertIfWorse": {
     "criticalTechIssueIncrease": 1,
     "brokenInternalLinkIncrease": 5,
-    "liveNoindexDetected": true
+    "liveNoindexDetected": true,
+    "technicalQualityWeights": {
+      "criticalWeight": 15,
+      "otherWeight": 2,
+      "brokenLinkWeight": 5
+    }
   },
   "snapshots": {
     "keepRuns": 14
