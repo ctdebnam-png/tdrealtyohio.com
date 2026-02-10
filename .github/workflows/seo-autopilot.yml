@@ -110,8 +110,19 @@ jobs:
         if: steps.rebuild.outcome == 'failure'
         run: echo "::warning::[seo-autopilot] Rebuild verification step failed; changes may not be deploy-safe."
 
+      - name: Run site quality gate
+        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok != 'false'
+        id: quality-gate
+        continue-on-error: true
+        run: node tools/site-quality-gate/run-checks.js --ci
+
+      - name: Warn if quality gate failed
+        if: steps.quality-gate.outcome == 'failure'
+        run: echo "::warning::[seo-autopilot] Quality gate failed; reverting all changes."
+
+
       - name: Revert if rebuild failed
-        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok == 'false'
+        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && (steps.rebuild.outputs.rebuild_ok == 'false' || steps.quality-gate.outcome == 'failure')
         id: revert-after-failed-rebuild
         continue-on-error: true
         run: |
@@ -123,7 +134,7 @@ jobs:
         run: echo "::warning::[seo-autopilot] Revert step failed; repository may include unsafe edits."
 
       - name: Commit and push
-        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok != 'false'
+        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok != 'false' && steps.quality-gate.outcome != 'failure'
         id: commit-and-push
         continue-on-error: true
         run: |
@@ -183,6 +194,7 @@ jobs:
           CORE_AUTOPILOT_OUTCOME: ${{ steps.core-autopilot.outcome }}
           CHANGES_OUTCOME: ${{ steps.changes.outcome }}
           REBUILD_OUTCOME: ${{ steps.rebuild.outcome }}
+          QUALITY_GATE_OUTCOME: ${{ steps.quality-gate.outcome }}
           REVERT_OUTCOME: ${{ steps.revert-after-failed-rebuild.outcome }}
           COMMIT_PUSH_OUTCOME: ${{ steps.commit-and-push.outcome }}
         run: |
@@ -197,6 +209,7 @@ jobs:
             echo "### Non-critical phase outcomes"
             echo "- Change detection: ${CHANGES_OUTCOME:-not-run}"
             echo "- Rebuild verification: ${REBUILD_OUTCOME:-not-run}"
+            echo "- Quality gate: ${QUALITY_GATE_OUTCOME:-not-run}"
             echo "- Revert on failed rebuild: ${REVERT_OUTCOME:-not-run}"
             echo "- Commit/push: ${COMMIT_PUSH_OUTCOME:-not-run}"
             echo
