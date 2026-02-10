@@ -1,11 +1,6 @@
 name: GSC Reports
 
 on:
-  schedule:
-    # Weekdays at 7am EST (12:00 UTC) — indexing check only
-    - cron: "0 12 * * 1-5"
-    # Sundays at 8am EST (13:00 UTC) — full reports + feedback + autofix
-    - cron: "0 13 * * 0"
   workflow_dispatch:
     inputs:
       report:
