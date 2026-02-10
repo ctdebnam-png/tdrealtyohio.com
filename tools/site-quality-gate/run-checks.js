@@ -21,6 +21,7 @@ const checkContentVoice = require('./checks/content-voice');
 const checkCssUsage = require('./checks/css-usage');
 const checkAssetBudget = require('./checks/asset-budget');
 const checkCentralizedInlineScripts = require('./checks/centralized-inline-scripts');
+const checkDuplicateIntent = require('./checks/duplicate-intent');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -51,7 +52,8 @@ async function main() {
     { name: 'content-voice', fn: checkContentVoice, label: 'Content Voice (no first-person)' },
     { name: 'css-usage', fn: checkCssUsage, label: 'CSS Usage Audit (template families)' },
     { name: 'asset-budget', fn: checkAssetBudget, label: 'Asset Budget (CSS/JS bytes)' },
-    { name: 'centralized-inline-scripts', fn: checkCentralizedInlineScripts, label: 'Centralized Inline Scripts' }
+    { name: 'centralized-inline-scripts', fn: checkCentralizedInlineScripts, label: 'Centralized Inline Scripts' },
+    { name: 'duplicate-intent', fn: checkDuplicateIntent, label: 'Duplicate Intent (areas/compare overlap)' }
   ];
 
   for (const check of checks) {

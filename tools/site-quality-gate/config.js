@@ -88,6 +88,20 @@ module.exports = {
     maxJsBytes: 140000
   },
 
+
+  // Duplicate intent detection for /areas and /compare pages
+  duplicateIntent: {
+    titleSimilarity: 0.75,
+    h1Similarity: 0.75,
+    metaSimilarity: 0.7,
+    bodySimilarity: 0.72,
+    primaryIntentScore: 0.76,
+    maxFaqSimilarity: 0.75,
+    minUniqueLinks: 3,
+    minUniqueSchemaAttrs: 2,
+    minDifferentiators: 2
+  },
+
   // Reports output directory
   reportsDir: '../../reports/site-quality-gate'
 };
