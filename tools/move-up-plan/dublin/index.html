@@ -8,19 +8,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Move-Up Plan Generator for Dublin, Ohio | TD Realty Ohio</title>
-  <meta name="description" content="Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline.">
+  <meta name="description" content="Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline Built for Dublin, Ohio buyers and sellers.">
   <link rel="canonical" href="https://tdrealtyohio.com/tools/move-up-plan/dublin/">
   <meta property="article:modified_time" content="2026-02-10">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Move-Up Plan Generator for Dublin, Ohio | TD Realty Ohio">
-  <meta property="og:description" content="Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline.">
+  <meta property="og:description" content="Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline Built for Dublin, Ohio buyers and sellers.">
   <meta property="og:url" content="https://tdrealtyohio.com/tools/move-up-plan/dublin/">
   <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Move-Up Plan Generator for Dublin, Ohio | TD Realty Ohio">
-  <meta name="twitter:description" content="Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline.">
+  <meta name="twitter:description" content="Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline Built for Dublin, Ohio buyers and sellers.">
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -107,7 +107,7 @@
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Move-Up Plan Generator for Dublin, Ohio",
-  "description": "Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline.",
+  "description": "Planning to sell your current home and buy a bigger one? Get a personalized sequencing plan, financial snapshot, and timeline Built for Dublin, Ohio buyers and sellers.",
   "url": "https://tdrealtyohio.com/tools/move-up-plan/dublin/",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web",
@@ -154,13 +154,13 @@
         <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
       </nav>
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="u-6386b3e5"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width:24px;height:24px;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </header>
 
   <main id="main-content">
-    <section class="hero hero-sm u-57920310">
+    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
       <div class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <ol class="breadcrumb-list">
@@ -178,8 +178,8 @@
     </section>
 
     <section class="section">
-      <div class="container u-7d701bf7">
-        <div class="two-col u-eb0595be">
+      <div class="container" style="max-width: 800px;">
+        <div class="two-col" style="grid-template-columns: 1fr;">
 
           <div class="calculator" id="tool-calculator">
             <div class="calculator-slider-group">
@@ -187,7 +187,7 @@
                 <label class="calculator-label" for="mup-current-value">Current Home Value</label>
                 <span class="calculator-slider-value" id="mup-current-value-display">$400,000</span>
               </div>
-              <input type="range" class="calculator-range u-810b7e41" id="mup-current-value" min="100000" max="800000" step="10000" value="400000">
+              <input type="range" class="calculator-range" id="mup-current-value" min="100000" max="800000" step="10000" value="400000" style="--value:42.86%">
               <div class="slider-labels"><span>$100K</span><span>$800K</span></div>
             </div>
             <div class="calculator-slider-group">
@@ -195,15 +195,15 @@
                 <label class="calculator-label" for="mup-target-price">Target Purchase Price</label>
                 <span class="calculator-slider-value" id="mup-target-price-display">$500,000</span>
               </div>
-              <input type="range" class="calculator-range u-6ce71333" id="mup-target-price" min="150000" max="1200000" step="10000" value="500000">
+              <input type="range" class="calculator-range" id="mup-target-price" min="150000" max="1200000" step="10000" value="500000" style="--value:33.33%">
               <div class="slider-labels"><span>$150K</span><span>$1.2M</span></div>
             </div>
             <div class="form-group">
-              <label for="mup-cash" class="u-87e03b91">Cash Available ($)</label>
+              <label for="mup-cash" style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Cash Available ($)</label>
               <input type="number" id="mup-cash" class="form-input" value="0" min="0" step="5000">
             </div>
             <div class="form-group">
-              <label for="mup-financing" class="u-87e03b91">Financing Status</label>
+              <label for="mup-financing" style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Financing Status</label>
               <select id="mup-financing" class="form-input">
                 <option value="not-started">Haven't started</option>
                 <option value="pre-qualified">Pre-qualified</option>
@@ -211,7 +211,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="mup-sell-first" class="u-87e03b91">Preference: Sell First?</label>
+              <label for="mup-sell-first" style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Preference: Sell First?</label>
               <select id="mup-sell-first" class="form-input">
                 <option value="yes">Yes, sell first</option>
                 <option value="no">No, buy first if possible</option>
@@ -219,20 +219,20 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="mup-contingency" class="u-87e03b91">Contingency Comfort</label>
+              <label for="mup-contingency" style="font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">Contingency Comfort</label>
               <select id="mup-contingency" class="form-input">
                 <option value="comfortable">Comfortable with contingencies</option>
                 <option value="moderate">Somewhat comfortable</option>
                 <option value="uncomfortable">Prefer to avoid</option>
               </select>
             </div>
-            <button type="button" id="tool-calculate-btn" class="btn btn-primary u-8588e44d" onclick="calcMoveUpPlan()">Generate My Plan</button>
+            <button type="button" id="tool-calculate-btn" class="btn btn-primary" style="width:100%;" onclick="calcMoveUpPlan()">Generate My Plan</button>
           </div>
 
-        <div id="tool-results" class="u-9521bb76">
-          <h3 class="u-1e9100d0">Your Results</h3>
+        <div id="tool-results" style="display:none;margin-top:2rem;">
+          <h3 style="color:var(--navy);margin-bottom:1rem;">Your Results</h3>
           <div class="calculator-results" id="mup-results-content"></div>
-        <div class="u-9a711322">
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;">
           <button type="button" id="action-copy" class="btn btn-outline btn-sm">Copy This</button>
           <button type="button" id="action-email" class="btn btn-outline btn-sm">Email Me This</button>
           <button type="button" id="action-text" class="btn btn-outline btn-sm">Text Me This</button>
@@ -242,17 +242,17 @@
         </div>
         </div>
 
-        <p class="u-7df01f19"><a href="/areas/dublin/" class="u-6b92aefe">Explore Dublin real estate &rarr;</a></p>
+        <p style="margin-top:2rem;"><a href="/areas/dublin/" style="color:var(--gold);font-weight:600;">Explore Dublin real estate &rarr;</a></p>
 
-        <div id="related-tools" class="u-7df01f19">
-          <h3 class="u-1e9100d0">Related Tools</h3>
-          <div class="u-39aca44a"></div>
+        <div id="related-tools" style="margin-top:2rem;">
+          <h3 style="color:var(--navy);margin-bottom:1rem;">Related Tools</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;"></div>
         </div>
       </div>
     </section>
 
 
-    <p class="u-4f33a1b3">
+    <p style="text-align:center;color:var(--gray-500);font-size:0.8125rem;max-width:700px;margin:1.5rem auto;padding:0 1rem;">
       This tool provides estimates for educational purposes only. Actual costs and outcomes will vary based on your specific situation. Consult with a licensed real estate professional and/or attorney before making financial decisions.
     </p>
 

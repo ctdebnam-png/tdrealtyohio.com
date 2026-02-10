@@ -28,6 +28,17 @@ const priorityCities = PRIORITY_CITY_SLUGS.map(function(slug) {
 
 const TODAY = new Date().toISOString().split('T')[0];
 
+function cityMetaDescription(tool, city) {
+  if (!tool || !tool.metaDescription) return '';
+  var base = tool.metaDescription;
+  if (base.includes('Central Ohio')) {
+    return base.replace('Central Ohio', city.name + ', Ohio');
+  }
+  base = base.replace('your home', 'your ' + city.name + ' home');
+  if (base.endsWith('.')) base = base.slice(0, -1);
+  return base + ' Built for ' + city.name + ', Ohio buyers and sellers.';
+}
+
 function formatPrice(price) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(price);
 }
@@ -956,7 +967,7 @@ function generateCityToolWrapper(tool, city) {
     ]),
     webApplicationSchema({
       name: `${tool.name} for ${city.name}, Ohio`,
-      description: tool.metaDescription.replace('Central Ohio', city.name + ', Ohio'),
+      description: cityMetaDescription(tool, city),
       url: `https://tdrealtyohio.com/tools/${tool.slug}/${city.slug}/`,
       areaServed: {
         '@type': 'City',
@@ -968,7 +979,7 @@ function generateCityToolWrapper(tool, city) {
 
   return htmlHead(
     tool.name + ' for ' + city.name + ', Ohio | TD Realty Ohio',
-    tool.metaDescription.replace('Central Ohio', city.name + ', Ohio').replace('your home', 'your ' + city.name + ' home'),
+    cityMetaDescription(tool, city),
     '/tools/' + tool.slug + '/' + city.slug + '/',
     schema + modalCSS()
   ) + `

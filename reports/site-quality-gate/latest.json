@@ -1,55 +1,10 @@
 {
-  "timestamp": "2026-02-10T15:02:55.239Z",
-  "passed": false,
+  "timestamp": "2026-02-10T15:33:48.146Z",
+  "passed": true,
   "checks": {
     "seo": {
-      "passed": false,
-      "errors": [
-        {
-          "file": "thank-you/seller_timeline/index.html",
-          "message": "Missing SEO tag: meta[name=\"description\"]"
-        },
-        {
-          "file": "thank-you/seller_net_sheet/index.html",
-          "message": "Missing SEO tag: meta[name=\"description\"]"
-        },
-        {
-          "file": "thank-you/seller_pricing_call/index.html",
-          "message": "Missing SEO tag: meta[name=\"description\"]"
-        },
-        {
-          "file": "thank-you/buyer_pre_approval/index.html",
-          "message": "Missing SEO tag: meta[name=\"description\"]"
-        },
-        {
-          "file": "thank-you/buyer_consult/index.html",
-          "message": "Missing SEO tag: meta[name=\"description\"]"
-        },
-        {
-          "file": "thank-you/buyer_cash_back/index.html",
-          "message": "Missing SEO tag: meta[name=\"description\"]"
-        },
-        {
-          "file": "admin/profiles/index.html",
-          "message": "Missing SEO tag: meta[name=\"description\"]"
-        },
-        {
-          "file": "admin/profiles/index.html",
-          "message": "Missing SEO tag: meta[property=\"og:title\"]"
-        },
-        {
-          "file": "admin/profiles/index.html",
-          "message": "Missing SEO tag: meta[property=\"og:description\"]"
-        },
-        {
-          "file": "admin/profiles/index.html",
-          "message": "Missing SEO tag: meta[property=\"og:url\"]"
-        },
-        {
-          "file": "admin/profiles/index.html",
-          "message": "Missing SEO tag: meta[property=\"og:type\"]"
-        }
-      ],
+      "passed": true,
+      "errors": [],
       "warnings": [
         {
           "file": "1-percent-commission/index.html",
@@ -76,20 +31,20 @@
           "message": "Meta description may be too long (165 chars)"
         },
         {
-          "file": "buyers/first-time/zip-43082/index.html",
-          "message": "Title tag may be too long (71 chars): \"First-Time Homebuyer Guide for ZIP 43082 (Westervi...\""
-        },
-        {
-          "file": "buyers/first-time/zip-43082/index.html",
-          "message": "Meta description may be too long (175 chars)"
-        },
-        {
           "file": "buyers/first-time/zip-43081/index.html",
           "message": "Title tag may be too long (71 chars): \"First-Time Homebuyer Guide for ZIP 43081 (Westervi...\""
         },
         {
           "file": "buyers/first-time/zip-43081/index.html",
           "message": "Meta description may be too long (181 chars)"
+        },
+        {
+          "file": "buyers/first-time/zip-43082/index.html",
+          "message": "Title tag may be too long (71 chars): \"First-Time Homebuyer Guide for ZIP 43082 (Westervi...\""
+        },
+        {
+          "file": "buyers/first-time/zip-43082/index.html",
+          "message": "Meta description may be too long (175 chars)"
         },
         {
           "file": "buyers/first-time/zip-43065/index.html",
@@ -156,12 +111,12 @@
           "message": "Title tag may be too long (62 chars): \"First-Time Homebuyer Guide for New Albany, OH | TD...\""
         },
         {
-          "file": "buyers/first-time/lewis-center/index.html",
-          "message": "Title tag may be too long (64 chars): \"First-Time Homebuyer Guide for Lewis Center, OH | ...\""
-        },
-        {
           "file": "buyers/first-time/johnstown/index.html",
           "message": "Title tag may be too long (61 chars): \"First-Time Homebuyer Guide for Johnstown, OH | TD ...\""
+        },
+        {
+          "file": "buyers/first-time/lewis-center/index.html",
+          "message": "Title tag may be too long (64 chars): \"First-Time Homebuyer Guide for Lewis Center, OH | ...\""
         },
         {
           "file": "buyers/first-time/grove-city/index.html",
@@ -198,7 +153,7 @@
       ],
       "stats": {
         "filesChecked": 125,
-        "missingTags": 11
+        "missingTags": 0
       }
     }
   }
