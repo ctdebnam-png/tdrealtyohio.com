@@ -18,6 +18,7 @@ const checkSchema = require('./checks/schema');
 const { check: checkSchemaConsistency } = require('./checks/schema-consistency');
 const checkCanonicalHost = require('./checks/canonical-host');
 const checkContentVoice = require('./checks/content-voice');
+const checkCentralizedInlineScripts = require('./checks/centralized-inline-scripts');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -45,7 +46,8 @@ async function main() {
     { name: 'schema', fn: checkSchema, label: 'Schema.org Structured Data' },
     { name: 'schema-consistency', fn: checkSchemaConsistency, label: 'Schema Consistency' },
     { name: 'canonical-host', fn: checkCanonicalHost, label: 'Canonical Host (no-www)' },
-    { name: 'content-voice', fn: checkContentVoice, label: 'Content Voice (no first-person)' }
+    { name: 'content-voice', fn: checkContentVoice, label: 'Content Voice (no first-person)' },
+    { name: 'centralized-inline-scripts', fn: checkCentralizedInlineScripts, label: 'Centralized Inline Scripts' }
   ];
 
   for (const check of checks) {
