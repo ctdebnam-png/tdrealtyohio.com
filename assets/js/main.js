@@ -1324,7 +1324,8 @@ document.addEventListener('DOMContentLoaded', function () {
     initFillUnderlines,
     initAnimatedChecks,
     initBackToTop,
-    initStickyScrollBehavior
+    initStickyScrollBehavior,
+    initExitIntent
   ];
 
   inits.forEach(function (fn) {
@@ -1706,6 +1707,46 @@ function initCookieConsent() {
     var gaScript = document.querySelector('script[src*="googletagmanager"]');
     if (gaScript) gaScript.remove();
     banner.remove();
+  });
+}
+
+// ── Exit Intent Popup ────────────────────────────────────
+// Shows a lead capture prompt when user moves cursor toward browser chrome
+// (desktop only). Fires once per session. Skips contact/thank-you pages.
+function initExitIntent() {
+  // Only on desktop (mouse-based interaction)
+  if (window.innerWidth < 900) return;
+
+  // Skip on pages where user is already engaging
+  var skip = ['/contact/', '/thank-you/'];
+  var path = window.location.pathname;
+  for (var i = 0; i < skip.length; i++) {
+    if (path.indexOf(skip[i]) === 0) return;
+  }
+
+  // Only show once per session
+  try { if (sessionStorage.getItem('td_exit_shown')) return; } catch (e) {}
+
+  var triggered = false;
+  var minTimeOnPage = 5000; // Wait at least 5s before showing
+  var pageLoadTime = Date.now();
+
+  document.addEventListener('mouseout', function (e) {
+    if (triggered) return;
+    if (Date.now() - pageLoadTime < minTimeOnPage) return;
+
+    // Only trigger when cursor leaves through the top of the viewport
+    if (e.clientY > 10) return;
+    if (e.relatedTarget || e.toElement) return;
+
+    triggered = true;
+    try { sessionStorage.setItem('td_exit_shown', '1'); } catch (ex) {}
+
+    // Use the existing lead modal if available
+    if (typeof openLeadModal === 'function') {
+      openLeadModal({ mode: 'sell+buy' });
+      trackEvent('exit_intent', { category: 'cro', label: 'lead_modal_shown' });
+    }
   });
 }
 

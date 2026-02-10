@@ -79,6 +79,16 @@ jobs:
         run: node scripts/check-orphan-sitemap.mjs
         continue-on-error: true
 
+      - name: Broken image check
+        run: node scripts/check-broken-images.mjs
+
+      - name: Performance budget check
+        run: node scripts/check-performance-budget.mjs
+
+      - name: Content freshness report
+        run: node scripts/check-content-freshness.mjs --days 90
+        continue-on-error: true
+
       - name: Topic coverage report
         run: node scripts/topic-coverage.mjs
         continue-on-error: true

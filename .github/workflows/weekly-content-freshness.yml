@@ -1,0 +1,30 @@
+name: Weekly Content Freshness Report
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9am UTC
+  workflow_dispatch:
+
+jobs:
+  freshness-check:
+    name: Content Freshness Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run content freshness check
+        run: node scripts/check-content-freshness.mjs --days 90
+
+      - name: Run broken image check
+        run: node scripts/check-broken-images.mjs
+
+      - name: Run performance budget check
+        run: node scripts/check-performance-budget.mjs

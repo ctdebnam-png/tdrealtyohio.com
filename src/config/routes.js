@@ -278,6 +278,33 @@ function buildRoutes() {
     { path: '/thank-you/buyer_consult/', noindex: true, pageType: PAGE_TYPES.LANDING, priority: '0.0', schema: [] },
   );
 
+  // Blog posts
+  const BLOG_POSTS = [
+    { slug: 'how-much-save-selling-columbus-home-1-percent', title: 'How Much Can You Save Selling Your Columbus Home for 1% Commission?' },
+    { slug: '1-percent-vs-3-percent-commission-comparison', title: '1% vs 3% Commission: What\'s the Real Difference?' },
+    { slug: 'central-ohio-housing-market-2026', title: 'Central Ohio Housing Market Update: February 2026' },
+    { slug: 'first-time-homebuyer-cash-back', title: 'First-Time Homebuyers: Get 1% Cash Back at Closing' },
+    { slug: 'pre-listing-inspection-benefits', title: 'What Is a Pre-Listing Inspection and Why Should Columbus Sellers Get One?' },
+    { slug: 'selling-home-westerville-ohio-2026', title: 'Selling Your Home in Westerville, Ohio in 2026' },
+    { slug: 'why-agents-leaving-traditional-brokerages-100-commission', title: 'Why Agents Are Leaving Traditional Brokerages for 100% Commission' },
+    { slug: 'closing-costs-columbus-ohio', title: 'Closing Costs When Selling a Home in Central Ohio' },
+    { slug: 'home-staging-tips-columbus', title: 'Home Staging Tips That Help Columbus Homes Sell Faster' },
+    { slug: 'fsbo-vs-realtor-columbus', title: 'FSBO vs. Realtor in Columbus: Which Option Saves You More?' },
+    { slug: 'best-time-sell-house-columbus-ohio', title: 'Best Time to Sell a House in Columbus, Ohio (2026 Data)' },
+  ];
+  BLOG_POSTS.forEach(post => {
+    routes.push({
+      path: `/blog/${post.slug}/`,
+      title: `${post.title} | TD Realty Ohio`,
+      description: '',
+      pageType: PAGE_TYPES.BLOG,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['Article', 'BreadcrumbList'],
+      parent: '/blog/',
+    });
+  });
+
   // Landing pages (noindex, excluded from sitemap)
   routes.push(
     { path: '/lp/sell-home-columbus/', noindex: true, pageType: PAGE_TYPES.LANDING, priority: '0.0', schema: [] },
