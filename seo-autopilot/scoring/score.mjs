@@ -121,6 +121,7 @@ function loadScoringConfig() {
  * @param {number} inputs.thinCount - From countThinPages()
  * @param {number} inputs.underlinkedPillarCount - From countUnderlinkedPillars()
  * @param {number} inputs.nearDuplicatePairsCount - From near-duplicates auditor
+ * @param {object} [inputs.conversionDeltas] - From conversion-attribution
  * @returns {{ score: number, components: object, rationale: object[] }}
  */
 export function computeScore({
@@ -130,6 +131,7 @@ export function computeScore({
   thinCount = 0,
   underlinkedPillarCount = 0,
   nearDuplicatePairsCount = 0,
+  conversionDeltas = {},
 }) {
   const config = loadScoringConfig();
   const w = config.weights;
@@ -228,6 +230,26 @@ export function computeScore({
   score += nearDupPts;
   rationale.push({ key: 'contentNearDuplicates', value: nearDuplicatePairsCount, weightApplied: nearDupPts });
 
+  // Conversion deltas (Chunk 19)
+  const convDeltaPct = conversionDeltas.totalDeltaPct || 0;
+  const convRateDeltaPct = conversionDeltas.conversionRateDeltaPct || 0;
+  const convInsufficient = conversionDeltas.insufficientData !== false;
+  if (!convInsufficient) {
+    const convPts = clamp(
+      convDeltaPct * (w.conversionDelta || 30),
+      -15, 15,
+    );
+    score += convPts;
+    rationale.push({ key: 'conversionDelta', value: convDeltaPct, weightApplied: convPts });
+
+    const convRatePts = clamp(
+      convRateDeltaPct * (w.conversionRateDelta || 15),
+      -10, 10,
+    );
+    score += convRatePts;
+    rationale.push({ key: 'conversionRateDelta', value: convRateDeltaPct, weightApplied: convRatePts });
+  }
+
   // Clamp final score
   score = Math.round(clamp(score, 0, 100));
 
@@ -251,6 +273,11 @@ export function computeScore({
     content: {
       thinCount: thinCount,
       nearDuplicatePairsCount: nearDuplicatePairsCount,
+    },
+    conversions: {
+      totalDeltaPct: convDeltaPct,
+      conversionRateDeltaPct: convRateDeltaPct,
+      insufficientData: convInsufficient,
     },
   };
 

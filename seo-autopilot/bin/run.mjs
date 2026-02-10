@@ -66,6 +66,8 @@ import { planStrikingRefresh } from '../planners/striking-refresh-plan.mjs';
 import { executeStrikingRefresh, revertStrikingRefresh } from '../generators/striking-refresh.mjs';
 import { applyPillarNav, removeAllPillarNavBlocks } from '../fixers/pillar-nav.mjs';
 import { auditNavConsistency } from '../auditors/nav-consistency.mjs';
+import { pullConversions, loadConversions } from '../collectors/conversions.mjs';
+import { computeConversionAttribution } from '../analyzers/conversion-attribution.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -153,6 +155,7 @@ async function main() {
     strikingRefresh: { action: 'none', targetPagePath: null, queries: [], pageType: '', reason: '' },
     pillarNav: { filesChanged: 0, details: [] },
     navConsistency: { totalChecked: 0, issues: [], pillarInDegree: {} },
+    conversions: { lastDay: null, last7: null, deltas: null },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -334,6 +337,50 @@ async function main() {
     report.errors.push(`queryPageMap: ${err.message}`);
   }
 
+  // Conversion data collection (Chunk 19)
+  let conversionAttribution = { last7: { totalConversions: 0 }, deltas: {}, insufficientData: true };
+  try {
+    const convResult = await pullConversions();
+    if (convResult.ok) {
+      console.log(`[conversions] Pulled ${convResult.days.length} day(s)`);
+    } else if (convResult.skipped) {
+      console.log(`[conversions] Skipped: ${convResult.reason}`);
+    }
+
+    // Load (either freshly pulled or existing on disk)
+    const convData = loadConversions();
+    if (convData.days.length > 0) {
+      const gscClicks7 = state.gsc?.totals7?.clicks || 0;
+      conversionAttribution = computeConversionAttribution({
+        days: convData.days,
+        gscClicks7,
+      });
+
+      if (!conversionAttribution.insufficientData) {
+        console.log(`[conversions] Last 7d: ${conversionAttribution.last7.totalConversions} conversions, delta: ${(conversionAttribution.deltas.totalDeltaPct * 100).toFixed(1)}%`);
+        console.log(`[conversions] Money page share: ${(conversionAttribution.moneyPageShare * 100).toFixed(1)}%`);
+      }
+
+      // Persist compact summary in state
+      state.conversions = {
+        lastCheckedAt: new Date().toISOString(),
+        last7Total: conversionAttribution.last7.totalConversions,
+        moneyPageShare: conversionAttribution.moneyPageShare,
+        totalDeltaPct: conversionAttribution.deltas.totalDeltaPct,
+      };
+
+      // Report
+      report.conversions = {
+        lastDay: convData.days.length > 0 ? convData.days[convData.days.length - 1] : null,
+        last7: conversionAttribution.last7,
+        deltas: conversionAttribution.deltas,
+      };
+    }
+  } catch (err) {
+    report.errors.push(`conversions: ${err.message}`);
+    console.error('[seo-autopilot] Conversions error (non-fatal):', err.message);
+  }
+
   // ─────────────────────────── PHASE 2: SCORE + FOCUS ──────────────────────
 
   // Blog discovery (needed for thin page count and content planning)
@@ -410,6 +457,11 @@ async function main() {
     thinCount,
     underlinkedPillarCount,
     nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount || 0,
+    conversionDeltas: {
+      totalDeltaPct: conversionAttribution.deltas?.totalDeltaPct || 0,
+      conversionRateDeltaPct: conversionAttribution.deltas?.formSubmitDeltaPct || 0,
+      insufficientData: conversionAttribution.insufficientData,
+    },
   });
 
   console.log(`\n=== SCORE: ${scoreResult.score}/100 ===`);
