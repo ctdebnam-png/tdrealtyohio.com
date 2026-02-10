@@ -50,34 +50,46 @@
   </script>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "TD Realty Ohio, LLC",
-    "description": "Full-service real estate agent serving Grove City, Ohio with 1% listing commission.",
-    "url": "https://tdrealtyohio.com/areas/grove-city/",
-    "telephone": "(614) 392-8858",
-    "email": "info@tdrealtyohio.com",
-    "areaServed": {
-      "@type": "City",
-      "name": "Grove City",
-      "containedInPlace": {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "@id": "https://tdrealtyohio.com/#realestateagent",
+  "name": "TD Realty Ohio, LLC",
+  "description": "Full-service real estate agent serving Grove City, Ohio with 1% listing commission.",
+  "url": "https://tdrealtyohio.com/areas/grove-city/",
+  "telephone": "(614) 392-8858",
+  "email": "info@tdrealtyohio.com",
+  "areaServed": {
+    "@type": "City",
+    "name": "Grove City",
+    "containedInPlace": [
+      {
+        "@type": "AdministrativeArea",
+        "name": "Franklin County"
+      },
+      {
         "@type": "State",
         "name": "Ohio"
       }
-    },
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Westerville",
-      "addressRegion": "OH",
-      "addressCountry": "US"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 40.0417,
-      "longitude": -83.0804
-    }
-  }
+    ]
+  },
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Westerville",
+    "addressRegion": "OH",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 40.0417,
+    "longitude": -83.0804
+  },
+  "serviceArea": {
+    "@type": "AdministrativeArea",
+    "name": "Central Ohio"
+  },
+  "availableLanguage": "en-US"
+}
   </script>
   <script type="application/ld+json">
   {
@@ -87,7 +99,8 @@
     "description": "Full-service home listing in Grove City, Ohio at 1% commission (sell + buy) or 2% (sell only). Includes MLS, pro photos, pre-listing inspection.",
     "provider": {
       "@type": "RealEstateAgent",
-      "name": "TD Realty Ohio, LLC",
+      "@id": "https://tdrealtyohio.com/#realestateagent",
+"name": "TD Realty Ohio, LLC",
       "url": "https://tdrealtyohio.com"
     },
     "areaServed": {

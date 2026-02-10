@@ -17,7 +17,10 @@ module.exports = {
   requiredBusinessFacts: {
     phone: '(614) 392-8858',
     email: 'info@tdrealtyohio.com',
-    licenses: ['2023006602', '2023006467']
+    licenses: ['2023006602', '2023006467'],
+    allowedAdditionalPhones: ['8006699777', '8009279275', '8882787101', '6145551234'],
+    allowedAdditionalEmails: ['travisdrealtor@gmail.com'],
+    driftIgnoreGlobs: ['admin/**/*.html']
   },
 
   // First-time buyer program statement (must appear on buyers page)

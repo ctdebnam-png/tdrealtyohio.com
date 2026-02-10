@@ -59,28 +59,35 @@
   </script>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "TD Realty Ohio, LLC",
-    "description": "Full-service real estate agent serving ZIP code 43065 (Powell, Ohio) with 1% listing commission.",
-    "url": "https://tdrealtyohio.com/areas/zip/43065/",
-    "telephone": "(614) 392-8858",
-    "email": "info@tdrealtyohio.com",
-    "areaServed": {
-      "@type": "PostalAddress",
-      "postalCode": "43065",
-      "addressLocality": "Powell",
-      "addressRegion": "OH",
-      "addressCountry": "US"
-    },
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Westerville",
-      "addressRegion": "OH",
-      "addressCountry": "US"
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "@id": "https://tdrealtyohio.com/#realestateagent",
+  "name": "TD Realty Ohio, LLC",
+  "description": "Full-service real estate agent serving ZIP code 43065 (Powell, Ohio) with 1% listing commission.",
+  "url": "https://tdrealtyohio.com/areas/zip/43065/",
+  "telephone": "(614) 392-8858",
+  "email": "info@tdrealtyohio.com",
+  "areaServed": {
+    "@type": "City",
+    "name": "ZIP Code 43065",
+    "containedInPlace": {
+      "@type": "State",
+      "name": "Ohio"
     }
-  }
+  },
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Westerville",
+    "addressRegion": "OH",
+    "addressCountry": "US"
+  },
+  "serviceArea": {
+    "@type": "AdministrativeArea",
+    "name": "Central Ohio"
+  },
+  "availableLanguage": "en-US"
+}
   </script>
   <script type="application/ld+json">
   {
@@ -103,7 +110,9 @@
     },
     "hasCredential": [
       { "@type": "EducationalOccupationalCredential", "credentialCategory": "Broker License", "recognizedBy": { "@type": "Organization", "name": "Ohio Division of Real Estate" }, "name": "Broker License #2023006467" },
+      "@id": "https://tdrealtyohio.com/#organization",
       { "@type": "EducationalOccupationalCredential", "credentialCategory": "Brokerage License", "recognizedBy": { "@type": "Organization", "name": "Ohio Division of Real Estate" }, "name": "Brokerage License #2023006602" }
+      "@id": "https://tdrealtyohio.com/#organization",
     ]
   }
   </script>
