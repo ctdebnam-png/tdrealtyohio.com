@@ -33,6 +33,41 @@
         "actionsPlanned": 1,
         "actionsApplied": 1
       }
+    },
+    {
+      "runAt": "2026-02-10T13:39:26.932Z",
+      "score": 0,
+      "components": {
+        "gsc": {
+          "clicks28": 0,
+          "clicks7": 0,
+          "impr28": 0,
+          "impr7": 0,
+          "ctr28": 0,
+          "ctr7": 0,
+          "pos28": 0,
+          "pos7": 0
+        },
+        "tech": {
+          "criticalCount": 13,
+          "otherCount": 39,
+          "brokenInternalLinks": 3
+        },
+        "links": {
+          "orphanCount": 3,
+          "underlinkedPillars": 7
+        },
+        "content": {
+          "thinCount": 1,
+          "nearDuplicatePairsCount": 0,
+          "lastAction": "none"
+        }
+      },
+      "decisions": {
+        "focus": "tech",
+        "actionsPlanned": 1,
+        "actionsApplied": 1
+      }
     }
   ]
 }

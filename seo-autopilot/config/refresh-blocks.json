@@ -1,0 +1,23 @@
+{
+  "blog": {
+    "markerStart": "<!-- SEO_AUTOPILOT_STRIKE_START -->",
+    "markerEnd": "<!-- SEO_AUTOPILOT_STRIKE_END -->",
+    "maxQueriesPerRefresh": 3,
+    "maxWordsAdd": 450,
+    "requiredFormat": "H2 + short paragraphs + mini FAQ"
+  },
+  "money": {
+    "markerStart": "<!-- SEO_AUTOPILOT_STRIKE_START -->",
+    "markerEnd": "<!-- SEO_AUTOPILOT_STRIKE_END -->",
+    "maxQueriesPerRefresh": 2,
+    "maxWordsAdd": 350,
+    "requiredFormat": "H2 + short paragraphs"
+  },
+  "area": {
+    "markerStart": "<!-- SEO_AUTOPILOT_STRIKE_START -->",
+    "markerEnd": "<!-- SEO_AUTOPILOT_STRIKE_END -->",
+    "maxQueriesPerRefresh": 2,
+    "maxWordsAdd": 350,
+    "requiredFormat": "H2 + short paragraphs + short FAQ"
+  }
+}

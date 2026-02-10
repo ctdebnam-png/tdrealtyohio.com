@@ -61,6 +61,9 @@ import { writeJsonStable } from '../lib/write-json.mjs';
 import { runHousekeeping } from '../lib/housekeeping.mjs';
 import { extractMoneyPageIntents } from '../analyzers/money-page-intents.mjs';
 import { enhanceMoneyPage, revertMoneyEnhancement } from '../generators/money-page-enhance.mjs';
+import { buildQueryPageMap } from '../analyzers/query-page-map.mjs';
+import { planStrikingRefresh } from '../planners/striking-refresh-plan.mjs';
+import { executeStrikingRefresh, revertStrikingRefresh } from '../generators/striking-refresh.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -145,6 +148,7 @@ async function main() {
     quality: { thinRankIntentCount: 0, nearDuplicatePairsCount: 0, thinRankIntent: [], nearDuplicatePairs: [] },
     areas: { selected: null, wordsBefore: 0, wordsAfter: 0, linksAdded: [], reason: '' },
     moneyEnhancements: [],
+    strikingRefresh: { action: 'none', targetPagePath: null, queries: [], pageType: '', reason: '' },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -308,6 +312,22 @@ async function main() {
     }
   } catch (err) {
     report.errors.push(`moneyIntents: ${err.message}`);
+  }
+
+  // Build query-to-page map from striking-distance queries (Chunk 17)
+  let queryPageMap = [];
+  try {
+    const strikingQueries = state.gsc?.opportunities?.strikingDistanceQueries || opportunities.strikingDistanceQueries || [];
+    if (strikingQueries.length > 0) {
+      const mapResult = buildQueryPageMap({
+        strikingDistanceQueries: strikingQueries,
+        rankIntentRoutes: config.rankIntentRoutes || [],
+      });
+      queryPageMap = mapResult.fullMap;
+      state.queryPageMap = mapResult.compactMap;
+    }
+  } catch (err) {
+    report.errors.push(`queryPageMap: ${err.message}`);
   }
 
   // ─────────────────────────── PHASE 2: SCORE + FOCUS ──────────────────────
@@ -703,8 +723,100 @@ async function main() {
     }
   }
 
-  // Refresh or Publish focus: run content engine
-  if ((focus === 'refresh' || focus === 'publish') && focusPlan.budgets.contentActionAllowed) {
+  // Striking-distance refresh (Chunk 17) — runs before generic content engine
+  let strikingRefreshDone = false;
+  if (focus === 'refresh' && queryPageMap.length > 0 && focusPlan.budgets.contentActionAllowed) {
+    try {
+      console.log('\n=== STRIKING DISTANCE REFRESH ===');
+      const expState = loadJson(join(STATE_DIR, 'experiments.json'), {});
+
+      const strikePlan = planStrikingRefresh({
+        queryMap: queryPageMap,
+        rankIntentRoutes: config.rankIntentRoutes || [],
+        moneyRoutes: config.moneyRoutes || [],
+        state,
+        experimentsState: expState,
+        nearDuplicatePairs: qualitySignals.nearDuplicatePairs || [],
+        thinRankIntent: qualitySignals.thinRankIntent || [],
+      });
+
+      console.log(`[strike] Plan: ${strikePlan.action} — ${strikePlan.reason}`);
+      report.strikingRefresh = {
+        action: strikePlan.action,
+        targetPagePath: strikePlan.targetPagePath,
+        queries: (strikePlan.queries || []).map(q => q.query),
+        pageType: strikePlan.pageType,
+        reason: strikePlan.reason,
+      };
+
+      if (strikePlan.action === 'refresh' && strikePlan.targetPagePath) {
+        const strikeResult = executeStrikingRefresh({
+          targetPagePath: strikePlan.targetPagePath,
+          queries: strikePlan.queries,
+          pageType: strikePlan.pageType,
+        });
+
+        if (strikeResult.success) {
+          console.log(`[strike] ${strikeResult.reason}: ${strikePlan.targetPagePath} (+${strikeResult.wordsAdded} words, ${strikeResult.queriesTargeted.length} queries)`);
+
+          // Post-refresh near-duplicate check
+          let revertNeeded = false;
+          try {
+            const qualityConfig = loadJson(join(__dirname, '..', 'config', 'quality.json'), {});
+            const afterPages = listHtmlPages(buildOutput.outputDir, { canonicalStrategy: config.canonicalStrategy });
+            const afterNearDup = detectNearDuplicates(afterPages, qualityConfig, blogResult.posts);
+            const newPairsCount = afterNearDup.pairs?.length || 0;
+            const oldPairsCount = qualitySignals.nearDuplicatePairsCount || 0;
+            if (newPairsCount > oldPairsCount) {
+              console.log(`[strike] Near-duplicate count increased (${oldPairsCount} -> ${newPairsCount}) — reverting`);
+              revertNeeded = true;
+            }
+          } catch (err) {
+            console.warn(`[strike] Post-refresh quality check error (non-fatal): ${err.message}`);
+          }
+
+          if (revertNeeded) {
+            revertStrikingRefresh(strikeResult.filePath, strikeResult.originalContent);
+            report.strikingRefresh.action = 'reverted';
+            report.strikingRefresh.reason = 'reverted_near_duplicate';
+            console.log(`[strike] Reverted refresh of ${strikePlan.targetPagePath}`);
+          } else {
+            strikingRefreshDone = true;
+
+            // Track state
+            state.strikingRefresh = state.strikingRefresh || { history: [] };
+            state.strikingRefresh.lastRefreshAt = new Date().toISOString();
+            state.strikingRefresh.lastTargetPath = strikePlan.targetPagePath;
+            state.strikingRefresh.history = state.strikingRefresh.history || [];
+            state.strikingRefresh.history.push({
+              pagePath: strikePlan.targetPagePath,
+              at: new Date().toISOString(),
+              queries: strikeResult.queriesTargeted,
+              wordsAdded: strikeResult.wordsAdded,
+            });
+            if (state.strikingRefresh.history.length > 50) {
+              state.strikingRefresh.history = state.strikingRefresh.history.slice(-50);
+            }
+
+            moduleOutcomes.content = {
+              lastRunAt: new Date().toISOString(),
+              action: 'striking-refresh',
+              target: strikePlan.targetPagePath,
+            };
+          }
+        } else {
+          console.log(`[strike] Execution failed: ${strikeResult.reason}`);
+          report.strikingRefresh.reason = strikeResult.reason;
+        }
+      }
+    } catch (err) {
+      report.errors.push(`strikingRefresh: ${err.message}`);
+      console.error('[seo-autopilot] Striking refresh error (non-fatal):', err.message);
+    }
+  }
+
+  // Refresh or Publish focus: run content engine (skip if striking-refresh already acted)
+  if ((focus === 'refresh' || focus === 'publish') && focusPlan.budgets.contentActionAllowed && !strikingRefreshDone) {
     try {
       console.log('\n=== CONTENT ENGINE ===');
       const backlog = loadBacklog();
@@ -789,8 +901,8 @@ async function main() {
     }
   }
 
-  // Area page expansion (Chunk 11) — runs as refresh subtype when no content action was taken
-  if (focus === 'refresh' && report.content.action === 'none' && pages) {
+  // Area page expansion (Chunk 11) — runs as refresh subtype when no content/striking action was taken
+  if (focus === 'refresh' && report.content.action === 'none' && !strikingRefreshDone && pages) {
     try {
       console.log('\n=== AREA EXPANSION ===');
 
