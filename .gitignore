@@ -33,3 +33,7 @@ output/
 # Python
 __pycache__/
 *.pyc
+
+# SEO Autopilot ephemeral artifacts
+seo-autopilot/report/latest.json
+seo-autopilot/state/*.json

@@ -1,0 +1,6 @@
+{
+  "baseUrl": "https://tdrealtyohio.com",
+  "canonicalStrategy": "trailing-slash",
+  "rankIntentRoutes": [],
+  "utilityRoutesNoIndex": []
+}

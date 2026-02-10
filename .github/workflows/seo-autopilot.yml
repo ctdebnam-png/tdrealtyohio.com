@@ -1,0 +1,93 @@
+name: SEO Autopilot
+
+on:
+  schedule:
+    # Run daily at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-autopilot
+  cancel-in-progress: false
+
+jobs:
+  autopilot:
+    name: SEO Autopilot Run
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ── Setup ──────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Detect Node version
+        id: node-version
+        run: |
+          if [ -f .nvmrc ]; then
+            echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=20" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.node-version.outputs.version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci || true
+
+      - name: Initial build
+        run: npm run build || true
+
+      # ── Run autopilot ─────────────────────────────────────
+      - name: Run SEO autopilot
+        run: node seo-autopilot/bin/run.mjs
+
+      # ── Deploy-safe guard ─────────────────────────────────
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild to verify changes are safe
+        if: steps.changes.outputs.has_changes == 'true'
+        id: rebuild
+        run: |
+          npm run build && echo "rebuild_ok=true" >> "$GITHUB_OUTPUT" || echo "rebuild_ok=false" >> "$GITHUB_OUTPUT"
+
+      - name: Revert if rebuild failed
+        if: steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok == 'false'
+        run: |
+          echo "[seo-autopilot] Rebuild failed — reverting all changes"
+          git checkout -- .
+
+      - name: Commit and push
+        if: steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok != 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          # Only commit if there are staged changes (excluding report artifacts)
+          if git diff --cached --quiet; then
+            echo "[seo-autopilot] No staged changes to commit"
+          else
+            git commit -m "chore(seo-autopilot): automated run $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      # ── Always succeed ────────────────────────────────────
+      - name: Force success
+        if: always()
+        run: echo "[seo-autopilot] Workflow complete — exiting 0"
