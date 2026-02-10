@@ -7,6 +7,7 @@
 
 import { readFileSync } from 'fs';
 import { parseHtml } from '../lib/parse-html.mjs';
+import { loadIndexingPolicy, canonicalBaseFromPolicy, expectedDirectiveForRoute } from '../lib/indexing-policy.mjs';
 
 // ── Asset path prefixes that are not page routes ──────────
 const ASSET_PREFIXES = [
@@ -72,11 +73,10 @@ function normalizeTarget(href, baseUrl, strategy) {
  * @returns {object} Audit results
  */
 export function runBuildAudit(pages, config) {
-  const {
-    baseUrl = '',
-    canonicalStrategy = 'slash',
-    utilityRoutesNoIndex = [],
-  } = config;
+  const policy = loadIndexingPolicy();
+  const baseUrl = canonicalBaseFromPolicy(policy);
+  const canonicalStrategy = policy.canonical?.trailingSlash === 'never' ? 'no-slash' : 'slash';
+  const utilityRoutesNoIndex = (policy.indexing?.noindexExact || []).concat(policy.indexing?.noindexPrefixes || []);
 
   // Build route index for internal link checking
   const routeIndex = new Set(pages.map((p) => p.routePath));
@@ -141,7 +141,7 @@ export function runBuildAudit(pages, config) {
     };
 
     const issues = pageResult.issues;
-    const isUtility = utilitySet.has(page.routePath);
+    const isUtility = utilitySet.has(page.routePath) || expectedDirectiveForRoute(page.routePath, policy) === 'noindex';
 
     // ── Core tags ──────────────────────────────────────────
     if (!titleText) {
