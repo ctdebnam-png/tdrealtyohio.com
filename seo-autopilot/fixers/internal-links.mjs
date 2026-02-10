@@ -5,9 +5,7 @@
  * Uses a "Related Guides" block injected before </main>.
  *
  * Strategy: maintains related-guides.json as a config file that
- * maps source pages to their related links. The fixer:
- * 1. Updates related-guides.json with new planned links
- * 2. Injects or updates the Related Guides block in source HTML
+ * maps source pages to links grouped by intent clusters when available.
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
@@ -21,9 +19,6 @@ const GUIDES_PATH = join(__dirname, '..', 'config', 'related-guides.json');
 const BLOCK_START = '<!-- seo-autopilot:related-guides -->';
 const BLOCK_END = '<!-- /seo-autopilot:related-guides -->';
 
-/**
- * Load the related guides config.
- */
 function loadGuidesConfig() {
   try {
     return JSON.parse(readFileSync(GUIDES_PATH, 'utf-8'));
@@ -32,41 +27,13 @@ function loadGuidesConfig() {
   }
 }
 
-/**
- * Save related guides config.
- */
 function saveGuidesConfig(config) {
   writeFileSync(GUIDES_PATH, JSON.stringify(config, null, 2) + '\n', 'utf-8');
 }
 
-/**
- * Convert a route path to a file path.
- */
 function routeToFile(routePath) {
   if (routePath === '/') return join(ROOT, 'index.html');
   return join(ROOT, routePath, 'index.html');
-}
-
-/**
- * Build the Related Guides HTML block.
- */
-function buildGuidesBlock(links) {
-  if (!links || links.length === 0) return '';
-
-  const items = links
-    .map((l) => `      <li><a href="${l.href}">${escapeHtml(l.text)}</a></li>`)
-    .join('\n');
-
-  return `${BLOCK_START}
-  <section class="section-compact" style="background: var(--off-white); padding: 2rem 0;">
-    <div class="container">
-      <h3 style="margin-bottom: 1rem;">Related Guides</h3>
-      <ul style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem;">
-${items}
-      </ul>
-    </div>
-  </section>
-  ${BLOCK_END}`;
 }
 
 function escapeHtml(str) {
@@ -77,10 +44,67 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+function normalizeGuidesEntry(entry) {
+  if (Array.isArray(entry)) {
+    return {
+      intentClusters: [{ intent: 'related guides', links: entry }],
+      usedLegacyShape: true,
+    };
+  }
+
+  if (entry && Array.isArray(entry.intentClusters)) {
+    return {
+      intentClusters: entry.intentClusters.map((cluster) => ({
+        intent: cluster.intent || 'related guides',
+        links: Array.isArray(cluster.links) ? cluster.links : [],
+      })),
+      usedLegacyShape: false,
+    };
+  }
+
+  return { intentClusters: [], usedLegacyShape: false };
+}
+
+function flattenLinks(intentClusters) {
+  return intentClusters.flatMap((cluster) => cluster.links || []);
+}
+
+function buildGuidesBlock(entry) {
+  const { intentClusters } = normalizeGuidesEntry(entry);
+  if (intentClusters.length === 0) return '';
+
+  const clustersHtml = intentClusters
+    .filter((cluster) => (cluster.links || []).length > 0)
+    .map((cluster) => {
+      const items = cluster.links
+        .map((l) => `              <li><a href="${l.href}">${escapeHtml(l.text)}</a></li>`)
+        .join('\n');
+
+      return `        <article class="guide-card">
+          <h4>${escapeHtml(cluster.intent)}</h4>
+          <ul>
+${items}
+          </ul>
+        </article>`;
+    })
+    .join('\n');
+
+  if (!clustersHtml) return '';
+
+  return `${BLOCK_START}
+  <section class="section-compact u-04df6151">
+    <div class="container">
+      <h3 class="u-4986ecf7">Related Guides by Intent</h3>
+      <div class="guide-card-grid" data-collapsible-grid="3">
+${clustersHtml}
+      </div>
+    </div>
+  </section>
+  ${BLOCK_END}`;
+}
+
 /**
- * Apply link plan actions.
- *
- * @param {Array<{fromPath: string, toPath: string, anchorText: string, placementRule: string}>} actions
+ * @param {Array<{fromPath: string, toPath: string, anchorText: string, placementRule: string, intentCluster?: string}>} actions
  * @returns {{ filesEdited: number, linksAdded: number, details: Array }}
  */
 export function applyInternalLinks(actions) {
@@ -91,7 +115,6 @@ export function applyInternalLinks(actions) {
   const guidesConfig = loadGuidesConfig();
   const details = [];
 
-  // Group actions by source file
   const bySource = {};
   for (const action of actions) {
     if (!bySource[action.fromPath]) bySource[action.fromPath] = [];
@@ -116,42 +139,39 @@ export function applyInternalLinks(actions) {
       continue;
     }
 
-    // Ensure the page has </main> for injection
     if (!html.includes('</main>')) {
       details.push({ fromPath, status: 'skipped', reason: 'no </main> tag found' });
       continue;
     }
 
-    // Update guides config for this source page
-    if (!guidesConfig[fromPath]) guidesConfig[fromPath] = [];
+    const normalized = normalizeGuidesEntry(guidesConfig[fromPath]);
+    if (normalized.intentClusters.length === 0) {
+      normalized.intentClusters.push({ intent: 'related guides', links: [] });
+    }
 
     for (const action of fileActions) {
-      // Check if link already exists in config
-      const exists = guidesConfig[fromPath].some(
-        (l) => l.href === action.toPath,
-      );
+      const clusterIntent = action.intentCluster || 'related guides';
+      let cluster = normalized.intentClusters.find((c) => c.intent === clusterIntent);
+      if (!cluster) {
+        cluster = { intent: clusterIntent, links: [] };
+        normalized.intentClusters.push(cluster);
+      }
+
+      const exists = flattenLinks(normalized.intentClusters).some((l) => l.href === action.toPath);
       if (!exists) {
-        guidesConfig[fromPath].push({
-          href: action.toPath,
-          text: action.anchorText,
-        });
+        cluster.links.push({ href: action.toPath, text: action.anchorText });
         linksAdded++;
-        details.push({
-          fromPath,
-          toPath: action.toPath,
-          anchorText: action.anchorText,
-          status: 'added',
-        });
+        details.push({ fromPath, toPath: action.toPath, anchorText: action.anchorText, intentCluster: clusterIntent, status: 'added' });
       }
     }
 
-    // Build the Related Guides block
-    const links = guidesConfig[fromPath];
-    if (!links || links.length === 0) continue;
+    guidesConfig[fromPath] = normalized.usedLegacyShape
+      ? flattenLinks(normalized.intentClusters)
+      : { intentClusters: normalized.intentClusters };
 
-    const block = buildGuidesBlock(links);
+    const block = buildGuidesBlock(guidesConfig[fromPath]);
+    if (!block) continue;
 
-    // Remove existing block if present
     let newHtml = html;
     const startIdx = newHtml.indexOf(BLOCK_START);
     const endIdx = newHtml.indexOf(BLOCK_END);
@@ -159,7 +179,6 @@ export function applyInternalLinks(actions) {
       newHtml = newHtml.slice(0, startIdx) + newHtml.slice(endIdx + BLOCK_END.length);
     }
 
-    // Insert before </main>
     newHtml = newHtml.replace('</main>', `  ${block}\n  </main>`);
 
     if (newHtml !== html) {
@@ -168,7 +187,6 @@ export function applyInternalLinks(actions) {
     }
   }
 
-  // Save updated guides config
   saveGuidesConfig(guidesConfig);
 
   return { filesEdited, linksAdded, details };
