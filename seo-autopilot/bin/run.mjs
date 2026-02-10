@@ -32,12 +32,19 @@ import { selectCandidates } from '../experiments/select-candidates.mjs';
 import { generateVariant } from '../experiments/generate-variant.mjs';
 import { applyVariant } from '../experiments/apply-variant.mjs';
 import { evaluateExperiments } from '../experiments/evaluate.mjs';
+import { discoverBlog } from '../lib/blog-discovery.mjs';
+import { planContent } from '../planners/content-plan.mjs';
+import { refreshBlogPost, refreshMoneyPage } from '../generators/refresh.mjs';
+import { publishPost } from '../generators/publish-post.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
 const REPORT_DIR = join(__dirname, '..', 'report');
 const CONFIG_PATH = join(__dirname, '..', 'config', 'site.json');
 const PILLARS_PATH = join(__dirname, '..', 'config', 'pillars.json');
+const BACKLOG_PATH = join(__dirname, '..', 'config', 'content-backlog.json');
+const SEO_DEFAULTS_PATH = join(__dirname, '..', 'config', 'seo-defaults.json');
+const RELATED_GUIDES_PATH = join(__dirname, '..', 'config', 'related-guides.json');
 
 function loadConfig() {
   try {
@@ -54,6 +61,30 @@ function loadPillars() {
   } catch {
     console.warn('[seo-autopilot] Could not load pillars.json — using defaults');
     return { pillars: [], rules: { maxNewLinksPerRun: 3, maxLinksAddedPerFile: 2, minAnchorLength: 4 } };
+  }
+}
+
+function loadBacklog() {
+  try {
+    return JSON.parse(readFileSync(BACKLOG_PATH, 'utf-8'));
+  } catch {
+    return null;
+  }
+}
+
+function loadSeoDefaults() {
+  try {
+    return JSON.parse(readFileSync(SEO_DEFAULTS_PATH, 'utf-8'));
+  } catch {
+    return { baseUrl: 'https://tdrealtyohio.com' };
+  }
+}
+
+function loadRelatedGuides() {
+  try {
+    return JSON.parse(readFileSync(RELATED_GUIDES_PATH, 'utf-8'));
+  } catch {
+    return {};
   }
 }
 
@@ -370,7 +401,161 @@ async function main() {
       console.error('[seo-autopilot] Experiments error (non-fatal):', err.message);
     }
 
-    // Step 7: After-audit + link graph
+    // Step 7: Content clusters — blog discovery, planning, and execution
+    report.content = { action: 'none', target: null, reason: '', filesEdited: [], wordsAdded: 0 };
+    try {
+      console.log('\n=== CONTENT ENGINE ===');
+
+      // 7a: Blog discovery
+      const blogResult = discoverBlog();
+      console.log(`[content] Blog type: ${blogResult.type}, ${blogResult.posts.length} post(s) found`);
+
+      // 7b: Content planning
+      const backlog = loadBacklog();
+      const seoDefaults = loadSeoDefaults();
+
+      // Load state for content tracking
+      const contentStatePath = join(__dirname, '..', 'state', 'state.json');
+      let contentState = {};
+      try { contentState = JSON.parse(readFileSync(contentStatePath, 'utf-8')); } catch { /* new */ }
+
+      // Build audit result for tech gate (need pages array with issues)
+      let auditForGate = null;
+      if (pages) {
+        try {
+          const gateAudit = runBuildAudit(pages, config);
+          auditForGate = gateAudit;
+        } catch { /* skip gate check */ }
+      }
+
+      const strikingDistanceQueries = contentState.gsc?.opportunities?.strikingDistanceQueries || [];
+
+      const contentPlan = planContent({
+        strikingDistanceQueries,
+        backlog,
+        blogPosts: blogResult.posts,
+        rankIntentRoutes: config.rankIntentRoutes || [],
+        auditResult: auditForGate,
+        state: contentState,
+        linkGraph: linkGraphBefore,
+      });
+
+      console.log(`[content] Plan: ${contentPlan.action} — ${contentPlan.reason}`);
+      report.content.action = contentPlan.action;
+      report.content.target = contentPlan.target;
+      report.content.reason = contentPlan.reason;
+
+      // 7c: Execute the content action
+      if (contentPlan.action === 'refresh-post' && contentPlan.target) {
+        const targetPath = contentPlan.target.pathOrSlug;
+        const post = blogResult.posts.find(p => p.path === targetPath);
+        if (post) {
+          const result = refreshBlogPost({
+            filePath: post.filePath,
+            query: contentPlan.target.query,
+            internalLinksTo: contentPlan.target.internalLinksTo || [],
+            rankIntentRoutes: config.rankIntentRoutes || [],
+          });
+          console.log(`[content] Refresh blog post: ${result.reason} (${result.wordsAdded} words)`);
+          report.content.filesEdited = result.filesEdited;
+          report.content.wordsAdded = result.wordsAdded;
+
+          // Update state
+          contentState.content = contentState.content || {};
+          contentState.content.lastActionAt = new Date().toISOString();
+          contentState.content.lastRefreshAt = new Date().toISOString();
+          contentState.content.lastTargets = [{ path: targetPath, action: 'refresh-post' }];
+          await writeFile(contentStatePath, JSON.stringify(contentState, null, 2) + '\n');
+        }
+      } else if (contentPlan.action === 'refresh-page' && contentPlan.target) {
+        const result = refreshMoneyPage({
+          routePath: contentPlan.target.pathOrSlug,
+          query: contentPlan.target.query,
+          internalLinksTo: contentPlan.target.internalLinksTo || [],
+        });
+        console.log(`[content] Refresh money page: ${result.reason} (${result.wordsAdded} words)`);
+        report.content.filesEdited = result.filesEdited;
+        report.content.wordsAdded = result.wordsAdded;
+
+        // Update state
+        contentState.content = contentState.content || {};
+        contentState.content.lastActionAt = new Date().toISOString();
+        contentState.content.lastRefreshAt = new Date().toISOString();
+        contentState.content.lastTargets = [{ path: contentPlan.target.pathOrSlug, action: 'refresh-page' }];
+        await writeFile(contentStatePath, JSON.stringify(contentState, null, 2) + '\n');
+      } else if (contentPlan.action === 'publish-post' && contentPlan.target) {
+        const result = publishPost({
+          topic: {
+            topicId: contentPlan.target.topicId,
+            primaryIntent: contentPlan.target.primaryIntent,
+            targetQueryHints: contentPlan.target.targetQueryHints,
+            requiredSections: contentPlan.target.requiredSections,
+            internalLinksTo: contentPlan.target.internalLinksTo,
+          },
+          clusterId: contentPlan.target.clusterId,
+          pillarPath: contentPlan.target.pillarPath,
+          blogPosts: blogResult.posts,
+          rankIntentRoutes: config.rankIntentRoutes || [],
+          seoDefaults,
+        });
+        console.log(`[content] Publish post: ${result.reason} — ${result.slug} (${result.wordsAdded} words)`);
+        report.content.filesEdited = result.filesCreated;
+        report.content.wordsAdded = result.wordsAdded;
+
+        if (result.success) {
+          // Update backlog: mark topic as done
+          if (backlog) {
+            for (const cluster of backlog.clusters) {
+              for (const t of cluster.topics) {
+                if (t.topicId === contentPlan.target.topicId) {
+                  t.status = 'done';
+                  t.publishedAt = new Date().toISOString();
+                  t.slug = result.slug;
+                  t.routePath = result.routePath;
+                }
+              }
+            }
+            await writeFile(BACKLOG_PATH, JSON.stringify(backlog, null, 2) + '\n');
+          }
+
+          // Update state
+          contentState.content = contentState.content || {};
+          contentState.content.lastActionAt = new Date().toISOString();
+          contentState.content.lastPublishAt = new Date().toISOString();
+          contentState.content.lastTargets = [{ path: result.routePath, action: 'publish-post', slug: result.slug }];
+          await writeFile(contentStatePath, JSON.stringify(contentState, null, 2) + '\n');
+
+          // Update related-guides for the cluster pillar (Step 7 from chunk spec)
+          try {
+            const guides = loadRelatedGuides();
+            const pillar = contentPlan.target.pillarPath;
+            if (pillar) {
+              if (!guides[pillar]) guides[pillar] = [];
+              guides[pillar].push({
+                path: result.routePath,
+                anchor: result.slug.replace(/-/g, ' '),
+                addedAt: new Date().toISOString(),
+              });
+              // Cap at 10 per pillar, drop oldest
+              if (guides[pillar].length > 10) {
+                guides[pillar] = guides[pillar].slice(-10);
+              }
+              await writeFile(RELATED_GUIDES_PATH, JSON.stringify(guides, null, 2) + '\n');
+              console.log(`[content] Updated related-guides for ${pillar}`);
+            }
+          } catch (err) {
+            console.warn(`[content] Could not update related-guides: ${err.message}`);
+          }
+        }
+      } else {
+        console.log('[content] No content action taken');
+      }
+    } catch (err) {
+      report.errors.push(`content: ${err.message}`);
+      console.error('[seo-autopilot] Content engine error (non-fatal):', err.message);
+    }
+
+    // Step 8: After-audit + link graph
     if (pages) {
       try {
         const afterPages = listHtmlPages(buildOutput.outputDir, {
@@ -424,7 +609,7 @@ async function main() {
           }
         }
 
-        report.notes = `Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues. Links added: ${report.budgetUsed.linksAdded}.`;
+        report.notes = `Before: ${report.beforeAudit?.issuesTotal ?? '?'} issues. After: ${afterAudit.totals.issuesTotal} issues. Links added: ${report.budgetUsed.linksAdded}. Content: ${report.content?.action || 'none'}.`;
       } catch (err) {
         report.errors.push(`afterAudit: ${err.message}`);
         console.error('[seo-autopilot] After-audit error (non-fatal):', err.message);
