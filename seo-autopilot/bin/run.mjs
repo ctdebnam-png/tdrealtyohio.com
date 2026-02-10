@@ -28,6 +28,10 @@ import { generateLinkPlan } from '../planners/link-plan.mjs';
 import { applyInternalLinks } from '../fixers/internal-links.mjs';
 import { pullGscData } from '../collectors/gsc.mjs';
 import { computeOpportunities, buildPageSnapshots } from '../analyzers/gsc-opportunities.mjs';
+import { selectCandidates } from '../experiments/select-candidates.mjs';
+import { generateVariant } from '../experiments/generate-variant.mjs';
+import { applyVariant } from '../experiments/apply-variant.mjs';
+import { evaluateExperiments } from '../experiments/evaluate.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -270,7 +274,103 @@ async function main() {
       console.error('[seo-autopilot] GSC error (non-fatal):', err.message);
     }
 
-    // Step 6: After-audit + link graph
+    // Step 6: Experiment evaluation + new experiments
+    report.experiments = { applied: [], evaluated: [] };
+    try {
+      // 6a: Evaluate existing running experiments
+      const statePath = join(__dirname, '..', 'state', 'state.json');
+      let currentState = {};
+      try { currentState = JSON.parse(readFileSync(statePath, 'utf-8')); } catch { /* new state */ }
+      const pageSnapshots = currentState.gsc?.pageSnapshots || {};
+
+      const evalResults = evaluateExperiments(pageSnapshots);
+      if (evalResults.length > 0) {
+        console.log('\n=== EXPERIMENT EVALUATIONS ===');
+        for (const ev of evalResults) {
+          console.log(`  ${ev.path}: ${ev.result} — ${ev.notes}`);
+        }
+        report.experiments.evaluated = evalResults;
+      }
+
+      // 6b: Select candidates and apply new experiments (only if GSC data is available)
+      const opportunities = currentState.gsc?.opportunities?.highImpressionsLowCtrPages || [];
+      if (opportunities.length > 0) {
+        const experimentsConfigPath = join(__dirname, '..', 'config', 'experiments.json');
+        let experimentsConfig = {};
+        try { experimentsConfig = JSON.parse(readFileSync(experimentsConfigPath, 'utf-8')); } catch { /* defaults */ }
+
+        const experimentsStatePath = join(__dirname, '..', 'state', 'experiments.json');
+        let experimentsState = {};
+        try { experimentsState = JSON.parse(readFileSync(experimentsStatePath, 'utf-8')); } catch { /* defaults */ }
+
+        const candidates = selectCandidates({
+          opportunities,
+          experimentsConfig,
+          experimentsState,
+          siteConfig: config,
+        });
+
+        if (candidates.length > 0) {
+          console.log(`\n=== EXPERIMENT CANDIDATES: ${candidates.length} ===`);
+          let applied = 0;
+          const maxChanges = experimentsConfig.maxMetaChangesPerRun || 3;
+
+          for (const candidate of candidates) {
+            if (applied >= maxChanges) break;
+
+            const variant = generateVariant({
+              path: candidate.path,
+              existingTitle: '', // Will be looked up from route registry
+              existingDescription: '',
+              topQueries: candidate.topQueries || [],
+              ctr28: candidate.ctr28,
+            });
+
+            if (variant) {
+              const baseline = pageSnapshots[candidate.path] || {
+                impressions7: 0, clicks7: 0,
+                ctr7: candidate.ctr28, pos7: candidate.pos28,
+              };
+
+              applyVariant({
+                path: candidate.path,
+                title: variant.chosen.title,
+                description: variant.chosen.description,
+                existingTitle: variant.variantA.title !== variant.chosen.title ? variant.variantA.title : '',
+                existingDescription: '',
+                baseline: {
+                  impressions7: baseline.impressions7 || 0,
+                  clicks7: baseline.clicks7 || 0,
+                  ctr7: baseline.ctr7 || 0,
+                  pos7: baseline.pos7 || 0,
+                },
+              });
+
+              report.experiments.applied.push({
+                path: candidate.path,
+                title: variant.chosen.title,
+                description: variant.chosen.description,
+              });
+              applied++;
+              console.log(`  Applied: ${candidate.path} — "${variant.chosen.title}"`);
+            }
+          }
+
+          if (applied === 0) {
+            console.log('  No viable variants generated');
+          }
+        } else {
+          console.log('\n[experiments] No eligible candidates');
+        }
+      } else {
+        console.log('\n[experiments] No GSC opportunities available — skipping experiments');
+      }
+    } catch (err) {
+      report.errors.push(`experiments: ${err.message}`);
+      console.error('[seo-autopilot] Experiments error (non-fatal):', err.message);
+    }
+
+    // Step 7: After-audit + link graph
     if (pages) {
       try {
         const afterPages = listHtmlPages(buildOutput.outputDir, {

@@ -57,6 +57,17 @@ function loadRoutes() {
 }
 
 /**
+ * Load route-meta.json overrides (from experiments or manual config).
+ */
+function loadRouteMeta() {
+  try {
+    return JSON.parse(readFileSync(join(__dirname, '..', 'config', 'route-meta.json'), 'utf-8'));
+  } catch {
+    return {};
+  }
+}
+
+/**
  * Build a map of route path -> route object.
  */
 function buildRouteMap(routes) {
@@ -200,6 +211,7 @@ export function fixMetadata(pages) {
   const defaults = loadSeoDefaults();
   const routes = loadRoutes();
   const routeMap = buildRouteMap(routes);
+  const routeMeta = loadRouteMeta();
 
   let filesChanged = 0;
   let tagsAdded = 0;
@@ -219,7 +231,13 @@ export function fixMetadata(pages) {
     // Don't patch template fragments (no <head>)
     if (!html.includes('</head>')) continue;
 
-    const tags = buildMetaTags(route, defaults);
+    // Merge route-meta.json overrides (from experiments) into route data
+    const override = routeMeta[page.routePath];
+    const mergedRoute = override
+      ? { ...route, title: override.title || route.title, description: override.description || route.description }
+      : route;
+
+    const tags = buildMetaTags(mergedRoute, defaults);
     const missingOg = findMissingOgTags(html, tags.og);
     const missingTwitter = findMissingTwitterTags(html, tags.twitter);
 
