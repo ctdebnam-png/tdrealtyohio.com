@@ -1,7 +1,7 @@
 /**
  * Duplicate Intent Check
- * Detects pages in /areas and /compare that target the same intent cluster
- * without sufficient differentiating content sections.
+ * Detects pages in /areas, /compare, and local landing clusters that target
+ * the same intent without sufficient differentiating content sections.
  */
 
 const fs = require('fs');
@@ -91,6 +91,24 @@ function getSlugTokens(relativePath) {
   return toTokenSet(slug);
 }
 
+function classifyPage(relativePath) {
+  if (relativePath.startsWith('areas/')) {
+    return { group: 'areas', clusterKey: 'areas' };
+  }
+
+  if (relativePath.startsWith('compare/')) {
+    return { group: 'compare', clusterKey: 'compare' };
+  }
+
+  const localLandingMatch = relativePath.match(/^tools\/([^/]+)\/([^/]+)\/index\.html$/);
+  if (localLandingMatch) {
+    const [, toolSlug] = localLandingMatch;
+    return { group: 'local-landing', clusterKey: `tools/${toolSlug}` };
+  }
+
+  return null;
+}
+
 function flattenSchemaAttributes(node, attrs = []) {
   if (node === null || node === undefined) {
     return attrs;
@@ -163,6 +181,8 @@ function parsePage(filePath, relativePath) {
     LOCAL_STAT_TERMS.some(term => normalizedBody.includes(term)) &&
     /(\$\s?\d|\d+\s?%|\d+,\d+)/.test(bodyText);
 
+  const pageClass = classifyPage(relativePath);
+
   return {
     relativePath,
     title,
@@ -175,9 +195,12 @@ function parsePage(filePath, relativePath) {
     bodyTokens: toTokenSet(bodyText),
     slugTokens: getSlugTokens(relativePath),
     faqTokens: toTokenSet(faqQuestions.join(' ')),
+    faqCount: faqQuestions.length,
     internalLinks,
     schemaAttrs: new Set(schemaAttrs.filter(Boolean)),
-    hasLocalStats
+    hasLocalStats,
+    pageGroup: pageClass?.group || 'other',
+    clusterKey: pageClass?.clusterKey || 'other'
   };
 }
 
@@ -200,8 +223,9 @@ function calcOverlap(pageA, pageB, thresholds) {
     h1Similarity >= thresholds.h1Similarity &&
     metaSimilarity >= thresholds.metaSimilarity;
 
+  const bodyThresholdMet = bodySimilarity >= thresholds.bodySimilarity;
   const samePrimaryIntent =
-    (strongHeaderOverlap && bodySimilarity >= thresholds.bodySimilarity) ||
+    (strongHeaderOverlap && bodyThresholdMet) ||
     primaryIntentScore >= thresholds.primaryIntentScore;
 
   if (!samePrimaryIntent) {
@@ -228,10 +252,17 @@ function calcOverlap(pageA, pageB, thresholds) {
   };
 
   const differentiatorCount = Object.values(differentiators).filter(Boolean).length;
+  const coreDifferentiators = {
+    localStats: differentiators.localStats,
+    uniqueFaq: differentiators.neighborhoodFaq,
+    uniqueInternalLinks: differentiators.uniqueInternalLinks
+  };
+  const coreDifferentiatorCount = Object.values(coreDifferentiators).filter(Boolean).length;
 
   return {
     urlA: `/${pageA.relativePath.replace(/index\.html$/, '')}`.replace(/\/+/g, '/').replace(/\/$/, '') || '/',
     urlB: `/${pageB.relativePath.replace(/index\.html$/, '')}`.replace(/\/+/g, '/').replace(/\/$/, '') || '/',
+    intentMatchReason: bodyThresholdMet ? 'header+body-threshold' : 'primary-intent-score',
     overlap: {
       titleSimilarity: Number(titleSimilarity.toFixed(3)),
       h1Similarity: Number(h1Similarity.toFixed(3)),
@@ -242,6 +273,10 @@ function calcOverlap(pageA, pageB, thresholds) {
     },
     differentiators,
     differentiatorCount,
+    coreDifferentiators,
+    coreDifferentiatorCount,
+    group: pageA.pageGroup,
+    clusterKey: pageA.clusterKey,
     uniqueSignals: {
       uniqueLinksA: uniqueLinksA.slice(0, 10),
       uniqueLinksB: uniqueLinksB.slice(0, 10),
@@ -267,14 +302,20 @@ async function checkDuplicateIntent(config, verbose) {
         titleSimilarity: 0.75,
         h1Similarity: 0.75,
         metaSimilarity: 0.7,
-        bodySimilarity: 0.72,
         primaryIntentScore: 0.76,
         maxFaqSimilarity: 0.75,
         minUniqueLinks: 3,
         minUniqueSchemaAttrs: 2,
-        minDifferentiators: 2
+        minDifferentiators: 2,
+        minCoreDifferentiators: 1,
+        bodySimilarityByGroup: {
+          areas: 0.72,
+          compare: 0.68,
+          'local-landing': 0.82
+        }
       },
-      queue: []
+      queue: [],
+      refreshQueue: []
     }
   };
 
@@ -288,11 +329,12 @@ async function checkDuplicateIntent(config, verbose) {
 
   const areasFiles = await glob('areas/**/*.html', { cwd: siteRoot, absolute: true });
   const compareFiles = await glob('compare/**/*.html', { cwd: siteRoot, absolute: true });
+  const localLandingFiles = await glob('tools/*/*/index.html', { cwd: siteRoot, absolute: true });
 
-  const candidateFiles = [...areasFiles, ...compareFiles].map(file => ({
+  const candidateFiles = [...areasFiles, ...compareFiles, ...localLandingFiles].map(file => ({
     absolute: file,
     relative: path.relative(siteRoot, file)
-  }));
+  })).filter(file => classifyPage(file.relative));
 
   result.stats.filesChecked = candidateFiles.length;
 
@@ -305,6 +347,16 @@ async function checkDuplicateIntent(config, verbose) {
       const pageA = pages[i];
       const pageB = pages[j];
 
+      // Compare only within the same cluster family.
+      if (pageA.clusterKey !== pageB.clusterKey) {
+        continue;
+      }
+
+      const thresholdsForPair = {
+        ...thresholds,
+        bodySimilarity: thresholds.bodySimilarityByGroup?.[pageA.pageGroup] ?? thresholds.bodySimilarity ?? 0.72
+      };
+
       // Fast prefilter: require some slug/topic overlap.
       const slugSimilarity = jaccard(pageA.slugTokens, pageB.slugTokens);
       if (slugSimilarity < 0.15) {
@@ -313,14 +365,14 @@ async function checkDuplicateIntent(config, verbose) {
 
       result.stats.pairsAnalyzed++;
 
-      const overlap = calcOverlap(pageA, pageB, thresholds);
+      const overlap = calcOverlap(pageA, pageB, thresholdsForPair);
       if (!overlap) {
         continue;
       }
 
       const isInsufficientlyDifferentiated = overlap.differentiatorCount < thresholds.minDifferentiators;
       if (isInsufficientlyDifferentiated) {
-        duplicates.push(overlap);
+        duplicates.push({ ...overlap, bodySimilarityThreshold: thresholdsForPair.bodySimilarity });
       }
     }
   }
@@ -331,24 +383,73 @@ async function checkDuplicateIntent(config, verbose) {
   result.report.queue = duplicates.map((item, index) => ({
     rank: index + 1,
     priorityScore: item.overlap.primaryIntentScore,
+    group: item.group,
+    clusterKey: item.clusterKey,
     urlA: item.urlA,
     urlB: item.urlB,
     differentiatorCount: item.differentiatorCount,
+    coreDifferentiatorCount: item.coreDifferentiatorCount,
+    bodySimilarityThreshold: item.bodySimilarityThreshold,
+    intentMatchReason: item.intentMatchReason,
     overlap: item.overlap,
     missingDifferentiators: Object.entries(item.differentiators)
       .filter(([, value]) => !value)
       .map(([key]) => key)
   }));
 
+  const refreshPriority = new Map();
+  result.report.queue.forEach((item) => {
+    [item.urlA, item.urlB].forEach((url) => {
+      const current = refreshPriority.get(url) || {
+        url,
+        maxPriorityScore: 0,
+        overlaps: 0,
+        groups: new Set(),
+        relatedUrls: new Set(),
+        blockingSignals: new Set()
+      };
+
+      current.maxPriorityScore = Math.max(current.maxPriorityScore, item.priorityScore);
+      current.overlaps += 1;
+      current.groups.add(item.group);
+      current.relatedUrls.add(url === item.urlA ? item.urlB : item.urlA);
+      item.missingDifferentiators.forEach(signal => current.blockingSignals.add(signal));
+      refreshPriority.set(url, current);
+    });
+  });
+
+  result.report.refreshQueue = [...refreshPriority.values()]
+    .map((entry, index) => ({
+      rank: index + 1,
+      url: entry.url,
+      maxPriorityScore: Number(entry.maxPriorityScore.toFixed(3)),
+      overlaps: entry.overlaps,
+      groups: [...entry.groups],
+      relatedUrls: [...entry.relatedUrls],
+      blockingSignals: [...entry.blockingSignals]
+    }))
+    .sort((a, b) => {
+      if (b.maxPriorityScore !== a.maxPriorityScore) {
+        return b.maxPriorityScore - a.maxPriorityScore;
+      }
+      return b.overlaps - a.overlaps;
+    })
+    .map((entry, index) => ({ ...entry, rank: index + 1 }));
+
   if (duplicates.length > 0) {
     result.passed = false;
 
     duplicates.forEach(item => {
-      result.errors.push({
+      const hardFail = item.coreDifferentiatorCount < thresholds.minCoreDifferentiators;
+      const targetCollection = hardFail ? result.errors : result.warnings;
+
+      targetCollection.push({
         file: `${item.urlA} <-> ${item.urlB}`,
         message:
-          `High intent overlap (score=${item.overlap.primaryIntentScore}) with only ` +
-          `${item.differentiatorCount}/${thresholds.minDifferentiators} differentiators.`
+          `High intent overlap (score=${item.overlap.primaryIntentScore}, body=${item.overlap.bodySimilarity}, ` +
+          `reason=${item.intentMatchReason}, body-threshold=${item.bodySimilarityThreshold}) with only ` +
+          `${item.differentiatorCount}/${thresholds.minDifferentiators} ` +
+          `differentiators and ${item.coreDifferentiatorCount}/${thresholds.minCoreDifferentiators} core differentiators.`
       });
     });
   }
