@@ -4,7 +4,7 @@
  * Generates sitemap.xml from HTML files using canonical URLs
  */
 
-import { readdir, readFile, stat, writeFile } from 'fs/promises';
+import { readdir, stat, writeFile } from 'fs/promises';
 import { execFile } from 'child_process';
 import { join, dirname, relative } from 'path';
 import { promisify } from 'util';
@@ -46,22 +46,6 @@ const PRIORITY_MAP = {
 // Pages to exclude from sitemap
 // Note: /lp/ pages are ad landing pages with noindex meta tags
 const EXCLUDE = ['/404.html', '/404/', '/lp/', '/sell-and-buy/', '/admin/'];
-
-/**
- * Get canonical URL from HTML file
- */
-async function getCanonicalUrl(filePath) {
-  try {
-    const content = await readFile(filePath, 'utf-8');
-    const match = content.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
-    if (match) {
-      return match[1];
-    }
-  } catch (e) {
-    // File might not exist
-  }
-  return null;
-}
 
 /**
  * Map file path to canonical URL
@@ -128,7 +112,7 @@ async function findHtmlFiles(dir, files = []) {
 /**
  * Get last modified date for a file
  */
-async function getLastMod(filePath, existingLastMod = null) {
+async function getLastMod(filePath) {
   const relativePath = relative(ROOT, filePath).replace(/\\/g, '/');
 
   // Preferred source: git commit date for the file
@@ -144,38 +128,49 @@ async function getLastMod(filePath, existingLastMod = null) {
     // Fall through to filesystem mtime
   }
 
-  // Fallback source: filesystem mtime
+  // Fallback source: filesystem mtime for the specific file
   try {
     const fileStats = await stat(filePath);
     if (!Number.isNaN(fileStats.mtimeMs)) {
       return fileStats.mtime.toISOString().split('T')[0];
     }
   } catch {
-    // Guard below preserves existing value when no reliable date is available
+    // Handled by explicit error below
   }
 
-  return existingLastMod;
+  throw new Error(`Unable to determine lastmod for ${relativePath}`);
 }
 
 /**
- * Parse an existing sitemap to preserve historic lastmod values when needed
+ * Flag suspicious lastmod distributions that often indicate a bug
  */
-async function readExistingSitemapLastMods() {
-  const existing = new Map();
+function validateLastModDistribution(urls) {
+  if (urls.length < 5) return;
 
-  try {
-    const sitemapContent = await readFile(join(ROOT, 'sitemap.xml'), 'utf-8');
-    const urlPattern = /<url>\s*<loc>([^<]+)<\/loc>[\s\S]*?<lastmod>([^<]+)<\/lastmod>[\s\S]*?<\/url>/g;
-    let match;
-
-    while ((match = urlPattern.exec(sitemapContent)) !== null) {
-      existing.set(match[1], match[2]);
-    }
-  } catch {
-    // No existing sitemap yet
+  const counts = new Map();
+  for (const url of urls) {
+    counts.set(url.lastmod, (counts.get(url.lastmod) || 0) + 1);
   }
 
-  return existing;
+  const uniqueCount = counts.size;
+  const mostCommonCount = Math.max(...counts.values());
+  const mostCommonRatio = mostCommonCount / urls.length;
+
+  const today = new Date().toISOString().split('T')[0];
+
+  if (uniqueCount === 1) {
+    const onlyDate = urls[0].lastmod;
+    const severity = onlyDate === today ? 'Error' : 'Warning';
+    console.warn(
+      `${severity}: suspicious sitemap lastmod pattern: all ${urls.length} URLs share ${onlyDate}. ` +
+      'Verify dates are being sourced from each page file and not a global value.'
+    );
+  } else if (mostCommonRatio >= 0.9) {
+    console.warn(
+      `Warning: ${mostCommonCount}/${urls.length} URLs share the same lastmod date. ` +
+      'Verify dates are being sourced from file-specific metadata.'
+    );
+  }
 }
 
 /**
@@ -185,7 +180,6 @@ async function generateSitemap() {
   console.log('Generating sitemap.xml...');
 
   const htmlFiles = await findHtmlFiles(ROOT);
-  const existingLastMods = await readExistingSitemapLastMods();
   const urls = [];
 
   for (const filePath of htmlFiles) {
@@ -199,7 +193,7 @@ async function generateSitemap() {
       continue;
     }
 
-    const lastmod = await getLastMod(filePath, existingLastMods.get(canonicalUrl));
+    const lastmod = await getLastMod(filePath);
     const priority = PRIORITY_MAP[path] || (path.startsWith('/blog/') && path !== '/blog/' ? '0.6' : '0.5');
     const changefreq = path.startsWith('/blog/') ? 'monthly' :
                        path === '/' ? 'weekly' :
@@ -219,6 +213,8 @@ async function generateSitemap() {
     if (pDiff !== 0) return pDiff;
     return a.loc.localeCompare(b.loc);
   });
+
+  validateLastModDistribution(urls);
 
   // Generate XML
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
