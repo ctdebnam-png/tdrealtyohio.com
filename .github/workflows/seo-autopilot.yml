@@ -83,8 +83,19 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          # Only commit if there are staged changes (excluding report artifacts)
+          # Only stage specific state/config files — never git add -A
+          git add \
+            seo-autopilot/state/state.json \
+            seo-autopilot/state/score-history.json \
+            seo-autopilot/state/module-outcomes.json \
+            seo-autopilot/state/experiments.json \
+            seo-autopilot/config/*.json \
+            2>/dev/null || true
+          # Stage any HTML files the autopilot may have edited (links, meta, area pages)
+          git add -u -- '*.html' 2>/dev/null || true
+          # Stage content-backlog and related-guides updates
+          git add seo-autopilot/config/content-backlog.json seo-autopilot/config/related-guides.json 2>/dev/null || true
+          # Only commit if there are staged changes
           if git diff --cached --quiet; then
             echo "[seo-autopilot] No staged changes to commit"
           else

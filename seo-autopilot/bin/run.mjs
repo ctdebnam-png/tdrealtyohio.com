@@ -209,8 +209,12 @@ async function main() {
       issueCounts: beforeAudit.totals.issueCounts,
       ...(DEBUG ? { pages: beforeAudit.pages } : {}),
     };
-    console.log('\n=== BEFORE AUDIT ===');
-    printAuditSummary(beforeAudit);
+    if (DEBUG) {
+      console.log('\n=== BEFORE AUDIT ===');
+      printAuditSummary(beforeAudit);
+    } else {
+      console.log(`\n[audit] ${beforeAudit.totals.pagesScanned} pages, ${beforeAudit.totals.issuesTotal} issues`);
+    }
   } catch (err) {
     report.errors.push(`beforeAudit: ${err.message}`);
     console.error('[seo-autopilot] Before-audit error (non-fatal):', err.message);
@@ -220,8 +224,10 @@ async function main() {
     try {
       linkGraphBefore = buildLinkGraph(pages, config);
       report.linkGraphBefore = linkGraphSummary(linkGraphBefore);
-      console.log('\n=== LINK GRAPH ===');
-      printLinkGraphSummary(linkGraphBefore);
+      if (DEBUG) {
+        console.log('\n=== LINK GRAPH ===');
+        printLinkGraphSummary(linkGraphBefore);
+      }
     } catch (err) {
       report.errors.push(`linkGraphBefore: ${err.message}`);
       console.error('[seo-autopilot] Link graph error (non-fatal):', err.message);
@@ -473,29 +479,29 @@ async function main() {
   try {
     const siteBaseUrl = config.baseUrl || '';
     if (siteBaseUrl) {
-      console.log('\n=== LIVE INDEXING CHECKS ===');
+      if (DEBUG) console.log('\n=== LIVE INDEXING CHECKS ===');
 
       // Robots.txt and sitemap checks
       const robotsSitemapResult = await auditLiveRobotsSitemap();
-      if (robotsSitemapResult.issues.length > 0) {
+      if (DEBUG && robotsSitemapResult.issues.length > 0) {
         console.log(`[live] Robots/sitemap issues: ${robotsSitemapResult.issues.length}`);
         for (const issue of robotsSitemapResult.issues.slice(0, 5)) {
           console.log(`  ${issue.code}: ${issue.detail}`);
         }
-      } else {
-        console.log('[live] Robots/sitemap: OK');
       }
 
       // Live URL indexing checks
       const liveResult = await auditLiveIndexing({ robotsDisallowed: robotsSitemapResult.robotsDisallowed });
       const totalLiveIssues = Object.values(liveResult.issueCounts).reduce((a, b) => a + b, 0);
-      if (totalLiveIssues > 0) {
-        console.log(`[live] Indexing issues: ${totalLiveIssues}`);
-        for (const [code, count] of Object.entries(liveResult.issueCounts)) {
-          console.log(`  ${code}: ${count}`);
+      if (DEBUG) {
+        if (totalLiveIssues > 0) {
+          console.log(`[live] Indexing issues: ${totalLiveIssues}`);
+          for (const [code, count] of Object.entries(liveResult.issueCounts)) {
+            console.log(`  ${code}: ${count}`);
+          }
+        } else {
+          console.log('[live] All live routes OK');
         }
-      } else {
-        console.log('[live] All live routes OK');
       }
 
       // Merge issue counts
@@ -865,26 +871,34 @@ async function main() {
         pagesScanned: afterAudit.totals.pagesScanned, issuesTotal: afterAudit.totals.issuesTotal,
         issueCounts: afterAudit.totals.issueCounts, samples: afterAudit.samples, ...(DEBUG ? { pages: afterAudit.pages } : {}),
       };
-      console.log('\n=== AFTER AUDIT ===');
-      printAuditSummary(afterAudit);
+      if (DEBUG) {
+        console.log('\n=== AFTER AUDIT ===');
+        printAuditSummary(afterAudit);
+      } else {
+        console.log(`\n[audit:after] ${afterAudit.totals.pagesScanned} pages, ${afterAudit.totals.issuesTotal} issues`);
+      }
 
       const linkGraphAfter = buildLinkGraph(afterPages, config);
       report.linkGraphAfter = linkGraphSummary(linkGraphAfter);
-      console.log('=== LINK GRAPH (AFTER) ===');
-      printLinkGraphSummary(linkGraphAfter);
+      if (DEBUG) {
+        console.log('=== LINK GRAPH (AFTER) ===');
+        printLinkGraphSummary(linkGraphAfter);
+      }
 
       // Diffs
       if (report.beforeAudit) {
         report.diff = computeDiff(report.beforeAudit.issueCounts, report.afterAudit.issueCounts);
-        const diffEntries = Object.entries(report.diff);
-        if (diffEntries.length > 0) {
-          console.log('=== DIFF ===');
-          for (const [code, { before, after, delta }] of diffEntries) {
-            console.log(`  ${code}: ${before} -> ${after} (${delta > 0 ? '+' : ''}${delta})`);
+        if (DEBUG) {
+          const diffEntries = Object.entries(report.diff);
+          if (diffEntries.length > 0) {
+            console.log('=== DIFF ===');
+            for (const [code, { before, after, delta }] of diffEntries) {
+              console.log(`  ${code}: ${before} -> ${after} (${delta > 0 ? '+' : ''}${delta})`);
+            }
           }
         }
       }
-      if (report.linkGraphBefore && report.linkGraphAfter) {
+      if (DEBUG && report.linkGraphBefore && report.linkGraphAfter) {
         const eDelta = report.linkGraphAfter.edgesInGraph - report.linkGraphBefore.edgesInGraph;
         const oDelta = report.linkGraphAfter.orphanCount - report.linkGraphBefore.orphanCount;
         if (eDelta !== 0 || oDelta !== 0) {
