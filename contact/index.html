@@ -14,7 +14,7 @@
   <meta property="og:title" content="Contact TD Realty Ohio">
   <meta property="og:description" content="Schedule a free consultation with TD Realty Ohio. No pressure, just honest advice on buying or selling in Central Ohio.">
   <meta property="og:url" content="https://tdrealtyohio.com/contact/">
-  <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
+  <meta property="og:image" content="https://tdrealtyohio.com/og/td-realty-ohio.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contact TD Realty Ohio">
   <meta name="twitter:description" content="Schedule a free consultation with TD Realty Ohio. No pressure, just honest advice on buying or selling in Central Ohio.">
-  <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
+  <meta name="twitter:image" content="https://tdrealtyohio.com/og/td-realty-ohio.jpg">
 
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <!-- Fonts -->
@@ -35,12 +35,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="/assets/css/styles.css?v=20260209" as="style">
+  <link rel="preload" href="/assets/css/styles.css?v=20260211" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/assets/css/styles.css?v=20260209">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260211">
   <!-- Analytics bootstrap (centralized) -->
   <script src="/assets/js/analytics-consent.js"></script>
 
@@ -72,11 +72,19 @@
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
     "@id": "https://tdrealtyohio.com/#realestateagent",
-"name": "TD Realty Ohio, LLC",
+    "name": "TD Realty Ohio, LLC",
     "description": "Low commission real estate brokerage serving Central Ohio. 1-2% listing fees with full service.",
-    "url": "https://tdrealtyohio.com",
+    "url": "https://tdrealtyohio.com/",
     "telephone": "(614) 392-8858",
     "email": "info@tdrealtyohio.com",
+    "image": "https://tdrealtyohio.com/og/td-realty-ohio.jpg",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tdrealtyohio.com/favicon.svg"
+    },
+    "sameAs": [
+      "https://www.zillow.com/profile/travisdrealtor"
+    ],
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Westerville",
@@ -89,8 +97,9 @@
       "longitude": -83.0804
     },
     "areaServed": {
-      "@type": "State",
-      "name": "Ohio"
+      "@type": "City",
+      "name": "Columbus",
+      "containedInPlace": { "@type": "State", "name": "Ohio" }
     },
     "openingHoursSpecification": [
       {
@@ -178,7 +187,7 @@
           <!-- Contact Form -->
           <div>
             <h2>Send a Message</h2>
-            <p class="u-4986ecf7">Fill out the form below. TD Realty Ohio responds to inquiries within one business day.</p>
+            <p class="u-4986ecf7">Fill out the form below. We'll follow up within one business day with next steps for your situation.</p>
             <form id="contact-form" class="contact-form" action="https://formspree.io/f/mykkypyd" method="POST" novalidate>
               <div class="u-75dfc578" aria-hidden="true">
                 <label for="hp-contact-website">Website</label>
@@ -263,8 +272,9 @@
                   </svg>
                 </div>
                 <div>
-                  <div class="contact-label">Phone</div>
+                  <div class="contact-label">Call or Text</div>
                   <div class="contact-value"><a href="tel:6143928858" data-phone>(614) 392-8858</a></div>
+                  <div class="contact-sub"><a href="sms:6143928858">Send a text</a></div>
                 </div>
               </div>
 
@@ -317,15 +327,15 @@
         <ol class="expect-steps">
           <li class="expect-step">
             <strong class="expect-step-title">Quick Response</strong>
-            <p class="expect-step-text">TD Realty Ohio responds to inquiries within one business day, often sooner. For urgent needs, call or text directly.</p>
+            <p class="expect-step-text">Form submissions get a reply within one business day. Need an answer sooner? <a href="tel:6143928858">Call</a> or <a href="sms:6143928858">text (614) 392-8858</a> directly.</p>
           </li>
           <li class="expect-step">
             <strong class="expect-step-title">Free Consultation</strong>
-            <p class="expect-step-text">You'll discuss your goals, timeline, and questions about buying or selling in Central Ohio. Decide if TD Realty Ohio is right for your needs.</p>
+            <p class="expect-step-text">Discuss your goals, timeline, and questions about buying or selling in Central Ohio. No obligation.</p>
           </li>
           <li class="expect-step">
             <strong class="expect-step-title">Personalized Plan</strong>
-            <p class="expect-step-text">You'll receive a tailored recommendation based on your situation, whether that's a market analysis, a showing schedule, or a listing strategy.</p>
+            <p class="expect-step-text">Get a tailored recommendation — whether that's a market analysis, a listing strategy, or a showing schedule.</p>
           </li>
         </ol>
       </div>
@@ -419,8 +429,8 @@
     </div>
   </footer>
 
-  <script src="/assets/js/nav.js?v=20260209"></script>
-  <script src="/assets/js/main.js?v=20260209"></script>
+  <script src="/assets/js/nav.js?v=20260211"></script>
+  <script src="/assets/js/main.js?v=20260211"></script>
   <script>
     // Populate hidden calculator fields from URL params
     (function() {
