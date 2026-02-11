@@ -2,40 +2,56 @@
  * TD Realty Ohio - Canonical Navigation Registry
  * Single source of truth for all navigation across the site.
  *
- * This file defines all navigational destinations and their groupings.
- * The hamburger menu and footer MUST render from this registry.
+ * Header: 5 flat items — Sell, Buy, Areas, About, Contact (CTA).
+ * Footer: Sell, Buy, Learn columns.
+ * Mobile hamburger built from this registry in main.js.
  */
 
 const NAV_REGISTRY = {
-  // Primary navigation groups
+  // Header links (flat, no dropdowns)
+  header: [
+    { label: 'Sell',    href: '/sellers/' },
+    { label: 'Buy',     href: '/buyers/' },
+    { label: 'Areas',   href: '/areas/' },
+    { label: 'About',   href: '/about/' },
+    { label: 'Contact', href: '/contact/', isCta: true }
+  ],
+
+  // Footer navigation groups
   groups: {
-    services: {
-      label: 'Services',
+    sell: {
+      label: 'Sell',
       items: [
-        { label: 'For Sellers', href: '/sellers/', showInHeader: true, headerLabel: 'Sellers' },
-        { label: 'For Buyers', href: '/buyers/', showInHeader: true, headerLabel: 'Buyers' },
-        { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/', showInHeader: false },
-        { label: 'Service Areas', href: '/areas/', showInHeader: true, headerLabel: 'Areas' },
-        { label: 'Free Home Value', href: '/home-value/', showInHeader: false },
-        { label: 'Affordability Calculator', href: '/affordability/', showInHeader: false },
-        { label: 'Referral Credit', href: '/referrals/', showInHeader: false },
-        { label: 'Compare Options', href: '/compare/', showInHeader: false }
+        { label: 'Sell Your Home',         href: '/sellers/' },
+        { label: '1% Commission',          href: '/1-percent-commission/' },
+        { label: '2% Sell Only',           href: '/sell-only-2-percent/' },
+        { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
+        { label: 'Free Home Value',        href: '/home-value/' }
       ]
     },
-    company: {
-      label: 'Company',
+    buy: {
+      label: 'Buy',
       items: [
-        { label: 'About', href: '/about/', showInHeader: true },
-        { label: 'Contact', href: '/contact/', showInHeader: true, isHeaderCta: true },
-        { label: 'Blog', href: '/blog/', showInHeader: true },
-        { label: 'Agent Opportunities', href: '/agents/', showInHeader: false },
-        { label: 'FAQ', href: '/faq/', showInHeader: true }
+        { label: 'Buy a Home',              href: '/buyers/' },
+        { label: '1% Cash Back',            href: '/buy/cash-back/' },
+        { label: 'Affordability Calculator', href: '/affordability/' }
+      ]
+    },
+    learn: {
+      label: 'Learn',
+      items: [
+        { label: 'Blog',                href: '/blog/' },
+        { label: 'FAQ',                 href: '/faq/' },
+        { label: 'About',               href: '/about/' },
+        { label: 'Compare Options',     href: '/compare/' },
+        { label: 'Free Tools',          href: '/tools/' },
+        { label: 'Service Areas',       href: '/areas/' },
+        { label: 'Reviews',             href: '/reviews/' },
+        { label: 'Agent Opportunities', href: '/agents/' },
+        { label: 'Referral Credit',     href: '/referrals/' }
       ]
     }
   },
-
-  // Additional items not in the main nav groups
-  headerExtras: [],
 
   // Footer legal links (separate from main nav)
   footerLegal: [
@@ -65,65 +81,57 @@ const NAV_REGISTRY = {
 
 // Helper functions
 function getHeaderNav() {
-  const items = [];
-
-  // Add header extras first (1% Listing, Tools)
-  NAV_REGISTRY.headerExtras.forEach(item => {
-    items.push({ label: item.label, href: item.href });
-  });
-
-  // Add items from groups that are marked showInHeader
-  Object.values(NAV_REGISTRY.groups).forEach(group => {
-    group.items.forEach(item => {
-      if (item.showInHeader && !item.isHeaderCta) {
-        items.push({
-          label: item.headerLabel || item.label,
-          href: item.href
-        });
-      }
-    });
-  });
-
-  // Add Contact CTA last
-  const contactItem = NAV_REGISTRY.groups.company.items.find(i => i.isHeaderCta);
-  if (contactItem) {
-    items.push({
-      label: contactItem.label,
-      href: contactItem.href,
-      isCta: true
-    });
-  }
-
-  return items;
+  return NAV_REGISTRY.header.map(item => ({
+    label: item.label,
+    href: item.href,
+    isCta: item.isCta || false
+  }));
 }
 
-function getFooterServices() {
-  return NAV_REGISTRY.groups.services.items.map(item => ({
+function getFooterSell() {
+  return NAV_REGISTRY.groups.sell.items.map(item => ({
     label: item.label,
     href: item.href
   }));
 }
 
-function getFooterCompany() {
-  return NAV_REGISTRY.groups.company.items.filter(item => !item.isHeaderCta).map(item => ({
+function getFooterBuy() {
+  return NAV_REGISTRY.groups.buy.items.map(item => ({
     label: item.label,
     href: item.href
   }));
 }
+
+function getFooterLearn() {
+  return NAV_REGISTRY.groups.learn.items.map(item => ({
+    label: item.label,
+    href: item.href
+  }));
+}
+
+// Legacy aliases for backward compatibility with check scripts
+function getFooterServices() { return getFooterSell(); }
+function getFooterCompany() { return getFooterLearn(); }
 
 function getMobileNav() {
-  // Mobile nav shows grouped structure
   return {
-    services: {
-      label: NAV_REGISTRY.groups.services.label,
-      items: NAV_REGISTRY.groups.services.items.map(item => ({
+    sell: {
+      label: NAV_REGISTRY.groups.sell.label,
+      items: NAV_REGISTRY.groups.sell.items.map(item => ({
         label: item.label,
         href: item.href
       }))
     },
-    company: {
-      label: NAV_REGISTRY.groups.company.label,
-      items: NAV_REGISTRY.groups.company.items.map(item => ({
+    buy: {
+      label: NAV_REGISTRY.groups.buy.label,
+      items: NAV_REGISTRY.groups.buy.items.map(item => ({
+        label: item.label,
+        href: item.href
+      }))
+    },
+    learn: {
+      label: NAV_REGISTRY.groups.learn.label,
+      items: NAV_REGISTRY.groups.learn.items.map(item => ({
         label: item.label,
         href: item.href
       }))
@@ -134,11 +142,14 @@ function getMobileNav() {
 function getAllDestinations() {
   const destinations = new Set();
 
+  // Header links
+  NAV_REGISTRY.header.forEach(item => destinations.add(item.href));
+
+  // Footer groups
   Object.values(NAV_REGISTRY.groups).forEach(group => {
     group.items.forEach(item => destinations.add(item.href));
   });
 
-  NAV_REGISTRY.headerExtras.forEach(item => destinations.add(item.href));
   NAV_REGISTRY.footerLegal.forEach(item => destinations.add(item.href));
 
   return Array.from(destinations).sort();
@@ -149,6 +160,9 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     NAV_REGISTRY,
     getHeaderNav,
+    getFooterSell,
+    getFooterBuy,
+    getFooterLearn,
     getFooterServices,
     getFooterCompany,
     getMobileNav,

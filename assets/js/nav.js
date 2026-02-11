@@ -2,36 +2,54 @@
  * TD Realty Ohio - Navigation Configuration
  * Single source of truth for header nav, footer nav, and hamburger menu.
  *
- * Ordering within each group is canonical — hamburger, footer, and desktop
- * header all render from this config to guarantee parity.
+ * Header: 5 flat items — Sell, Buy, Areas, About, Contact (CTA).
+ * Footer: Sell, Buy, Learn, Contact columns.
+ * Mobile hamburger is rebuilt from TD_NAV by initMobileNav() in main.js.
  */
 
 const TD_NAV = {
-  services: {
-    title: 'Services',
-    items: [
-      { label: 'For Sellers',            href: '/sellers/',              headerTopLevel: true },
-      { label: 'For Buyers',             href: '/buyers/',               headerTopLevel: true },
-      { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
-      { label: 'Service Areas',          href: '/areas/',                headerTopLevel: true },
-      { label: 'Free Home Value',        href: '/home-value/' },
-      { label: 'Affordability Calculator',href: '/affordability/' },
-      { label: 'Referral Credit',        href: '/referrals/' },
-      { label: 'Compare Options',        href: '/compare/' }
-    ]
-  },
-  company: {
-    title: 'Company',
-    items: [
-      { label: 'About',               href: '/about/',   headerTopLevel: true },
-      { label: 'Contact',             href: '/contact/' },
-      { label: 'Blog',                href: '/blog/' },
-      { label: 'Agent Opportunities', href: '/agents/' },
-      { label: 'FAQ',                 href: '/faq/' }
-    ]
-  },
-  // Legal links are in src/config/nav.js NAV_REGISTRY.footerLegal
-  // and rendered statically in footer HTML — not part of the nav config.
+  header: [
+    { label: 'Sell',    href: '/sellers/' },
+    { label: 'Buy',     href: '/buyers/' },
+    { label: 'Areas',   href: '/areas/' },
+    { label: 'About',   href: '/about/' },
+    { label: 'Contact', href: '/contact/', isCta: true }
+  ],
+  footer: {
+    sell: {
+      title: 'Sell',
+      items: [
+        { label: 'Sell Your Home',         href: '/sellers/' },
+        { label: '1% Commission',          href: '/1-percent-commission/' },
+        { label: '2% Sell Only',           href: '/sell-only-2-percent/' },
+        { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
+        { label: 'Free Home Value',        href: '/home-value/' }
+      ]
+    },
+    buy: {
+      title: 'Buy',
+      items: [
+        { label: 'Buy a Home',              href: '/buyers/' },
+        { label: '1% Cash Back',            href: '/buy/cash-back/' },
+        { label: 'Affordability Calculator', href: '/affordability/' }
+      ]
+    },
+    learn: {
+      title: 'Learn',
+      items: [
+        { label: 'Blog',                href: '/blog/' },
+        { label: 'FAQ',                 href: '/faq/' },
+        { label: 'About',               href: '/about/' },
+        { label: 'Compare Options',     href: '/compare/' },
+        { label: 'Free Tools',          href: '/tools/' },
+        { label: 'Service Areas',       href: '/areas/' },
+        { label: 'Reviews',             href: '/reviews/' },
+        { label: 'Agent Opportunities', href: '/agents/' },
+        { label: 'Referral Credit',     href: '/referrals/' }
+      ]
+    }
+  }
+  // Legal links rendered statically in footer HTML — not part of the nav config.
 };
 
 /**

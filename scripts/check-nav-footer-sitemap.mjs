@@ -26,14 +26,16 @@ const { NAV_REGISTRY } = require('../src/config/nav.js');
 
 // Derive canonical nav from the single source of truth
 const CANONICAL_NAV = {
-  services: NAV_REGISTRY.groups.services.items.map(i => ({ href: i.href, label: i.label })),
-  company: NAV_REGISTRY.groups.company.items.map(i => ({ href: i.href, label: i.label })),
+  sell: NAV_REGISTRY.groups.sell.items.map(i => ({ href: i.href, label: i.label })),
+  buy: NAV_REGISTRY.groups.buy.items.map(i => ({ href: i.href, label: i.label })),
+  learn: NAV_REGISTRY.groups.learn.items.map(i => ({ href: i.href, label: i.label })),
 };
 
 // Allowed labels on the sitemap page that are NOT in the nav registry
 // (commission landers, compare sub-pages, legal, areas, blog articles)
 const SITEMAP_ALLOWED_EXTRA_LABELS = new Set([
   'Home', 'All Areas', 'All Articles',
+  'Sell', 'Buy', 'Contact',
   '1% Commission Listing', 'Sell Only (2%)',
   'Compare Options', '1% vs 3% Commission', 'Discount Broker vs Full Service', 'Flat Fee MLS vs Full Service',
   'Privacy Policy', 'Terms of Service', 'Fair Housing Statement',
@@ -173,24 +175,24 @@ async function checkSitemapPage() {
   }
 }
 
-// Check 4: Footer Company section must have all canonical company links
+// Check 4: Footer Learn section must have all canonical learn links
 async function checkFooterCompanyCompleteness() {
   const files = await glob('**/*.html', {
     cwd: ROOT,
     ignore: ['node_modules/**', 'lp/**'],
   });
 
-  const requiredHrefs = CANONICAL_NAV.company.map(c => c.href);
+  const requiredHrefs = CANONICAL_NAV.learn.map(c => c.href);
 
   for (const file of files) {
     const html = await readFile(join(ROOT, file), 'utf-8');
-    const footerCompanyMatch = html.match(/class="footer-title">Company<\/h3>\s*<ul class="footer-links">([\s\S]*?)<\/ul>/i);
-    if (!footerCompanyMatch) continue;
+    const footerLearnMatch = html.match(/data-footer-nav="learn"[^>]*>([\s\S]*?)<\/ul>/i);
+    if (!footerLearnMatch) continue;
 
-    const hrefs = extractHrefs(footerCompanyMatch[0], /[\s\S]*/);
+    const hrefs = extractHrefs(footerLearnMatch[0], /[\s\S]*/);
     for (const required of requiredHrefs) {
       if (!hrefs.includes(required)) {
-        fail(`${file}: footer Company missing "${required}"`);
+        fail(`${file}: footer Learn missing "${required}"`);
       }
     }
   }

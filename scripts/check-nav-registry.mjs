@@ -2,10 +2,10 @@
 /**
  * Nav Registry CI Check
  *
- * Header nav links are static HTML in every page (for SEO crawlability).
- * Footer links are also static HTML in every page (for SEO and reliability).
+ * Header: 5 flat links (Sell, Buy, Areas, About, Contact CTA).
+ * Footer: Sell, Buy, Learn groups via data-footer-nav attributes.
  * This script validates:
- *   1. Every page has <nav id="main-nav"> with static links matching NAV_REGISTRY
+ *   1. Every page has <nav id="main-nav"> with header links matching NAV_REGISTRY
  *   2. assets/js/nav.js TD_NAV matches src/config/nav.js NAV_REGISTRY
  *   3. Footer data-footer-nav containers have static links matching NAV_REGISTRY
  *   4. No testimonials links
@@ -24,8 +24,8 @@ const ROOT = join(__dirname, '..');
 
 const { NAV_REGISTRY } = require(join(ROOT, 'src', 'config', 'nav.js'));
 
-const registryServicesHrefs = NAV_REGISTRY.groups.services.items.map(i => i.href);
-const registryCompanyHrefs  = NAV_REGISTRY.groups.company.items.map(i => i.href);
+const registryHeaderHrefs = NAV_REGISTRY.header.map(i => i.href);
+const footerGroupNames = Object.keys(NAV_REGISTRY.groups); // sell, buy, learn
 
 const errors = [];
 
@@ -67,7 +67,7 @@ async function checkHtmlFiles() {
 
     const rp = rel(file);
 
-    // 1. Check nav exists and static links match NAV_REGISTRY
+    // 1. Check nav exists and static links match NAV_REGISTRY header
     const navMatch = html.match(/<nav[^>]*id="main-nav"[^>]*>([\s\S]*?)<\/nav>/i);
     if (!navMatch) {
       errors.push(`${rp}: missing <nav id="main-nav">`);
@@ -79,53 +79,35 @@ async function checkHtmlFiles() {
       while ((hm = hrefRe.exec(navInner)) !== null) {
         foundHrefs.add(hm[1]);
       }
-      for (const href of registryServicesHrefs) {
-        if (!foundHrefs.has(href)) {
-          errors.push(`${rp}: nav#main-nav missing link to ${href}`);
-        }
-      }
-      for (const href of registryCompanyHrefs) {
+      for (const href of registryHeaderHrefs) {
         if (!foundHrefs.has(href)) {
           errors.push(`${rp}: nav#main-nav missing link to ${href}`);
         }
       }
     }
 
-    // 2. Check footer placeholder containers exist
-    if (!html.includes('data-footer-nav="services"')) {
-      errors.push(`${rp}: missing data-footer-nav="services" container`);
-    }
-    if (!html.includes('data-footer-nav="company"')) {
-      errors.push(`${rp}: missing data-footer-nav="company" container`);
+    // 2. Check footer group containers exist
+    for (const groupName of footerGroupNames) {
+      if (!html.includes(`data-footer-nav="${groupName}"`)) {
+        errors.push(`${rp}: missing data-footer-nav="${groupName}" container`);
+      }
     }
 
     // 3. Check footer static links match NAV_REGISTRY
-    const svcMatch = html.match(/data-footer-nav="services">([\s\S]*?)<\/ul>/i);
-    if (svcMatch) {
-      const hrefRe2 = /href="([^"]+)"/g;
-      const footerSvcHrefs = new Set();
-      let hm2;
-      while ((hm2 = hrefRe2.exec(svcMatch[1])) !== null) {
-        footerSvcHrefs.add(hm2[1]);
-      }
-      for (const href of registryServicesHrefs) {
-        if (!footerSvcHrefs.has(href)) {
-          errors.push(`${rp}: footer services missing link to ${href}`);
+    for (const groupName of footerGroupNames) {
+      const groupRe = new RegExp(`data-footer-nav="${groupName}"[^>]*>([\\s\\S]*?)<\\/ul>`, 'i');
+      const groupMatch = html.match(groupRe);
+      if (groupMatch) {
+        const footerHrefRe = /href="([^"]+)"/g;
+        const footerHrefs = new Set();
+        let fm;
+        while ((fm = footerHrefRe.exec(groupMatch[1])) !== null) {
+          footerHrefs.add(fm[1]);
         }
-      }
-    }
-
-    const cmpMatch = html.match(/data-footer-nav="company">([\s\S]*?)<\/ul>/i);
-    if (cmpMatch) {
-      const hrefRe3 = /href="([^"]+)"/g;
-      const footerCmpHrefs = new Set();
-      let hm3;
-      while ((hm3 = hrefRe3.exec(cmpMatch[1])) !== null) {
-        footerCmpHrefs.add(hm3[1]);
-      }
-      for (const href of registryCompanyHrefs) {
-        if (!footerCmpHrefs.has(href)) {
-          errors.push(`${rp}: footer company missing link to ${href}`);
+        for (const item of NAV_REGISTRY.groups[groupName].items) {
+          if (!footerHrefs.has(item.href)) {
+            errors.push(`${rp}: footer ${groupName} missing link to ${item.href}`);
+          }
         }
       }
     }
@@ -143,50 +125,37 @@ async function checkAssetsNavJs() {
   const navJsPath = join(ROOT, 'assets', 'js', 'nav.js');
   const src = await readFile(navJsPath, 'utf-8');
 
-  const servicesBlock = src.match(/services:\s*\{[\s\S]*?items:\s*\[([\s\S]*?)\]/);
-  const companyBlock  = src.match(/company:\s*\{[\s\S]*?items:\s*\[([\s\S]*?)\]/);
-
-  function hrefsFromBlock(block) {
-    if (!block) return [];
-    const hrefs = [];
-    const re = /href:\s*'([^']+)'/g;
-    let m;
-    while ((m = re.exec(block[1])) !== null) {
-      hrefs.push(m[1]);
-    }
-    return hrefs;
+  // Extract all hrefs from nav.js
+  const hrefRegex = /href:\s*'([^']+)'/g;
+  const navJsHrefs = new Set();
+  let m;
+  while ((m = hrefRegex.exec(src)) !== null) {
+    navJsHrefs.add(m[1]);
   }
 
-  const tdServices = hrefsFromBlock(servicesBlock);
-  const tdCompany  = hrefsFromBlock(companyBlock);
-
-  const regSvcSet = new Set(registryServicesHrefs);
-  const tdSvcSet  = new Set(tdServices);
-  for (const href of registryServicesHrefs) {
-    if (!tdSvcSet.has(href)) {
-      errors.push(`assets/js/nav.js: TD_NAV services missing href ${href}`);
-    }
+  // Get all hrefs from NAV_REGISTRY (header + footer groups)
+  const registryHrefs = new Set();
+  for (const item of NAV_REGISTRY.header) {
+    registryHrefs.add(item.href);
   }
-  for (const href of tdServices) {
-    if (!regSvcSet.has(href)) {
-      errors.push(`assets/js/nav.js: TD_NAV services has unexpected href ${href}`);
+  for (const group of Object.values(NAV_REGISTRY.groups)) {
+    for (const item of group.items) {
+      registryHrefs.add(item.href);
     }
   }
 
-  const regCoSet = new Set(registryCompanyHrefs);
-  const tdCoSet  = new Set(tdCompany);
-  for (const href of registryCompanyHrefs) {
-    if (!tdCoSet.has(href)) {
-      errors.push(`assets/js/nav.js: TD_NAV company missing href ${href}`);
+  for (const href of registryHrefs) {
+    if (!navJsHrefs.has(href)) {
+      errors.push(`assets/js/nav.js: TD_NAV missing href ${href}`);
     }
   }
-  for (const href of tdCompany) {
-    if (!regCoSet.has(href)) {
-      errors.push(`assets/js/nav.js: TD_NAV company has unexpected href ${href}`);
+  for (const href of navJsHrefs) {
+    if (!registryHrefs.has(href)) {
+      errors.push(`assets/js/nav.js: TD_NAV has unexpected href ${href}`);
     }
   }
 
-  console.log(`assets/js/nav.js: TD_NAV services=${tdServices.length}, company=${tdCompany.length} hrefs.\n`);
+  console.log(`assets/js/nav.js: TD_NAV has ${navJsHrefs.size} hrefs, NAV_REGISTRY has ${registryHrefs.size} hrefs.\n`);
 }
 
 async function main() {
