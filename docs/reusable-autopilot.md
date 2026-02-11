@@ -48,6 +48,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: ./.github/actions/seo-autopilot
         with:
           node_version: '20'

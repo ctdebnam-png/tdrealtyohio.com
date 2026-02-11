@@ -20,6 +20,12 @@ jobs:
     timeout-minutes: 15
 
     steps:
+      # Checkout must happen first so the local composite action is available
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: ./.github/actions/seo-autopilot
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
