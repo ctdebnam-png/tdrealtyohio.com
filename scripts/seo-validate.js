@@ -33,12 +33,12 @@ async function validateRobotsTxt() {
     return;
   }
 
-  // Check for Sitemap directive (exact URL)
-  const expectedSitemap = `Sitemap: ${DOMAIN}/sitemap.xml`;
-  if (content.includes(expectedSitemap)) {
-    console.log(`  PASS  Sitemap directive present: ${expectedSitemap}`);
+  // Check for Sitemap directive (accept sitemap.xml or sitemap-index.xml)
+  const sitemapMatch = content.match(/^Sitemap:\s*https:\/\/tdrealtyohio\.com\/sitemap(?:-index)?\.xml$/m);
+  if (sitemapMatch) {
+    console.log(`  PASS  Sitemap directive present: ${sitemapMatch[0]}`);
   } else {
-    errors.push(`robots.txt: missing or incorrect Sitemap directive (expected "${expectedSitemap}")`);
+    errors.push(`robots.txt: missing or incorrect Sitemap directive (expected "Sitemap: ${DOMAIN}/sitemap.xml" or "Sitemap: ${DOMAIN}/sitemap-index.xml")`);
   }
 
   // Check for User-agent: * with Allow: /
