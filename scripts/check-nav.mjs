@@ -53,25 +53,28 @@ async function checkFile(filePath) {
   }
 
   // 2. Check for footer group containers
-  const footerGroups = ['sell', 'buy', 'learn'];
-  for (const group of footerGroups) {
+  const footerGroupNames = NAV_REGISTRY.footerGroups
+    ? Object.keys(NAV_REGISTRY.footerGroups)
+    : ['services', 'learn'];
+  for (const group of footerGroupNames) {
     if (!content.includes(`data-footer-nav="${group}"`)) {
       errors.push(`${rel}: missing data-footer-nav="${group}" container`);
     }
   }
 
-  // 3. Check footer static links match NAV_REGISTRY
-  for (const groupName of footerGroups) {
+  // 3. Check footer static links match NAV_REGISTRY.footerGroups
+  const footerGroupsConfig = NAV_REGISTRY.footerGroups || {};
+  for (const groupName of footerGroupNames) {
     const groupRe = new RegExp(`data-footer-nav="${groupName}"[^>]*>([\\s\\S]*?)<\\/ul>`, 'i');
     const groupMatch = content.match(groupRe);
-    if (groupMatch) {
+    if (groupMatch && footerGroupsConfig[groupName]) {
       const footerHrefRe = /href="([^"]+)"/g;
       const footerHrefs = new Set();
       let fm;
       while ((fm = footerHrefRe.exec(groupMatch[1])) !== null) {
         footerHrefs.add(fm[1]);
       }
-      for (const item of NAV_REGISTRY.groups[groupName].items) {
+      for (const item of footerGroupsConfig[groupName].items) {
         if (!footerHrefs.has(item.href)) {
           errors.push(`${rel}: footer ${groupName} missing link to ${item.href}`);
         }
@@ -119,9 +122,11 @@ async function checkNavSync() {
 
   // Check for extra hrefs in nav.js not in registry
   for (const href of navJsHrefs) {
-    if (!registryHrefs.has(href)) {
-      errors.push(`assets/js/nav.js TD_NAV has extra link: ${href} (not in src/config/nav.js)`);
-    }
+    if (registryHrefs.has(href)) continue;
+    // Allow hrefs in footerInternal or footerLegal (validation-only lists)
+    if (NAV_REGISTRY.footerInternal && NAV_REGISTRY.footerInternal.includes(href)) continue;
+    if (NAV_REGISTRY.footerLegal && NAV_REGISTRY.footerLegal.some(l => l.href === href)) continue;
+    errors.push(`assets/js/nav.js TD_NAV has extra link: ${href} (not in src/config/nav.js)`);
   }
 
   console.log(`  NAV_REGISTRY has ${registryHrefs.size} destinations`);

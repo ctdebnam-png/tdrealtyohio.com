@@ -518,7 +518,6 @@ function generateArticleSections(sections, topic, internalLinksTo, rankIntentRou
     '/affordability/': 'affordability calculator',
     '/compare/': 'listing option comparison',
     '/sell-and-buy/': 'sell and buy program',
-    '/sell-only-2-percent/': 'sell-only 2% listing',
     '/blog/': 'our blog',
     '/faq/': 'FAQ page',
   };

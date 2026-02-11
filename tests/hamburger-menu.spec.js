@@ -28,26 +28,22 @@ const TARGET_ROUTES = [
   '/contact/',
 ];
 
-// Expected nav groups (must match TD_NAV in assets/js/nav.js)
-const EXPECTED_GROUPS = ['Services', 'Company'];
+// Expected nav groups (must match TD_NAV.mobile in assets/js/nav.js)
+const EXPECTED_GROUPS = ['Sell', 'Buy', 'Learn'];
 
-const EXPECTED_SERVICES_LINKS = [
-  { label: 'For Sellers', href: '/sellers/' },
-  { label: 'For Buyers', href: '/buyers/' },
-  { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
-  { label: 'Service Areas', href: '/areas/' },
-  { label: 'Free Home Value', href: '/home-value/' },
-  { label: 'Affordability Calculator', href: '/affordability/' },
-  { label: 'Referral Credit', href: '/referrals/' },
-  { label: 'Compare Options', href: '/compare/' },
+const EXPECTED_SELL_LINKS = [
+  { label: 'Sell Your Home', href: '/sellers/' },
+  { label: '1% Listing Fee', href: '/sellers/#full-service' },
 ];
 
-const EXPECTED_COMPANY_LINKS = [
-  { label: 'About', href: '/about/' },
-  { label: 'Contact', href: '/contact/' },
-  { label: 'Blog', href: '/blog/' },
-  { label: 'Agent Opportunities', href: '/agents/' },
+const EXPECTED_BUY_LINKS = [
+  { label: 'Buy a Home', href: '/buyers/' },
+  { label: 'Affordability Calculator', href: '/affordability/' },
+];
+
+const EXPECTED_LEARN_LINKS = [
   { label: 'FAQ', href: '/faq/' },
+  { label: 'Compare Options', href: '/compare/' },
 ];
 
 test.describe('Hamburger Menu', () => {
@@ -80,7 +76,7 @@ test.describe('Hamburger Menu', () => {
       }
     });
 
-    test(`links match footer on ${route}`, async ({ page }) => {
+    test(`has expected nav links on ${route}`, async ({ page }) => {
       await page.goto(route, { waitUntil: 'domcontentloaded' });
 
       // Open hamburger
@@ -92,31 +88,16 @@ test.describe('Hamburger Menu', () => {
       const menuLinks = await panel.locator('.nav-menu-body .nav-link').evaluateAll(els =>
         els.map(el => ({
           label: el.textContent.trim(),
-          href: new URL(el.getAttribute('href'), window.location.origin).pathname,
+          href: el.getAttribute('href'),
         }))
       );
 
-      // Collect footer links
-      const footerServicesLinks = await page.locator('[data-footer-nav="services"] a').evaluateAll(els =>
-        els.map(el => ({
-          label: el.textContent.trim(),
-          href: new URL(el.getAttribute('href'), window.location.origin).pathname,
-        }))
-      );
-      const footerCompanyLinks = await page.locator('[data-footer-nav="company"] a').evaluateAll(els =>
-        els.map(el => ({
-          label: el.textContent.trim(),
-          href: new URL(el.getAttribute('href'), window.location.origin).pathname,
-        }))
-      );
-
-      const footerLinks = [...footerServicesLinks, ...footerCompanyLinks];
-
-      // Every footer link should appear in the hamburger (same label, same order)
-      expect(menuLinks.length).toBeGreaterThanOrEqual(footerLinks.length);
-      for (let i = 0; i < footerLinks.length; i++) {
-        expect(menuLinks[i].label).toBe(footerLinks[i].label);
-        expect(menuLinks[i].href).toBe(footerLinks[i].href);
+      // All expected links from the NAV allowlist should be present
+      const allExpected = [...EXPECTED_SELL_LINKS, ...EXPECTED_BUY_LINKS, ...EXPECTED_LEARN_LINKS];
+      expect(menuLinks.length).toBe(allExpected.length);
+      for (let i = 0; i < allExpected.length; i++) {
+        expect(menuLinks[i].label).toBe(allExpected[i].label);
+        expect(menuLinks[i].href).toBe(allExpected[i].href);
       }
     });
   }

@@ -3,8 +3,11 @@
  * Single source of truth for all navigation across the site.
  *
  * Header: 5 flat items — Sell, Buy, Areas, About, Contact (CTA).
- * Footer: Sell, Buy, Learn columns.
- * Mobile hamburger built from this registry in main.js.
+ * Mobile: Sell, Buy, Learn groups (rendered by initMobileNav in main.js).
+ * Footer: static HTML; FOOTER_INTERNAL used for drift-guard validation only.
+ *
+ * IMPORTANT: Only paths listed here should appear in the mobile drawer and
+ * footer nav. Do NOT add pages without explicit approval.
  */
 
 const NAV_REGISTRY = {
@@ -14,41 +17,54 @@ const NAV_REGISTRY = {
     { label: 'Buy',     href: '/buyers/' },
     { label: 'Areas',   href: '/areas/' },
     { label: 'About',   href: '/about/' },
+    { label: 'Blog',    href: '/blog/' },
     { label: 'Contact', href: '/contact/', isCta: true }
   ],
 
-  // Footer navigation groups
+  // Mobile drawer groups (rendered by initMobileNav in main.js)
   groups: {
     sell: {
       label: 'Sell',
       items: [
-        { label: 'Sell Your Home',         href: '/sellers/' },
-        { label: '1% Commission',          href: '/1-percent-commission/' },
-        { label: '2% Sell Only',           href: '/sell-only-2-percent/' },
-        { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
-        { label: 'Free Home Value',        href: '/home-value/' }
+        { label: 'Sell Your Home', href: '/sellers/' },
+        { label: '1% Listing Fee', href: '/sellers/#full-service' }
       ]
     },
     buy: {
       label: 'Buy',
       items: [
         { label: 'Buy a Home',              href: '/buyers/' },
-        { label: '1% Cash Back',            href: '/buy/cash-back/' },
         { label: 'Affordability Calculator', href: '/affordability/' }
       ]
     },
     learn: {
       label: 'Learn',
       items: [
-        { label: 'Blog',                href: '/blog/' },
-        { label: 'FAQ',                 href: '/faq/' },
-        { label: 'About',               href: '/about/' },
-        { label: 'Compare Options',     href: '/compare/' },
-        { label: 'Free Tools',          href: '/tools/' },
-        { label: 'Service Areas',       href: '/areas/' },
-        { label: 'Reviews',             href: '/reviews/' },
-        { label: 'Agent Opportunities', href: '/agents/' },
-        { label: 'Referral Credit',     href: '/referrals/' }
+        { label: 'FAQ',             href: '/faq/' },
+        { label: 'Compare Options', href: '/compare/' }
+      ]
+    }
+  },
+
+  // Footer column groups (for check scripts — maps to data-footer-nav attributes)
+  footerGroups: {
+    services: {
+      label: 'Services',
+      items: [
+        { label: 'Sell Your Home',         href: '/sellers/' },
+        { label: 'Buy a Home',             href: '/buyers/' },
+        { label: 'Service Areas',          href: '/areas/' },
+        { label: 'Home Value',             href: '/home-value/' },
+        { label: 'Affordability',          href: '/affordability/' }
+      ]
+    },
+    learn: {
+      label: 'Learn',
+      items: [
+        { label: 'Blog',    href: '/blog/' },
+        { label: 'FAQ',     href: '/faq/' },
+        { label: 'About',   href: '/about/' },
+        { label: 'Contact', href: '/contact/' }
       ]
     }
   },
@@ -59,6 +75,13 @@ const NAV_REGISTRY = {
     { label: 'Terms of Service', href: '/terms/' },
     { label: 'Fair Housing', href: '/fair-housing/' },
     { label: 'Site Map', href: '/sitemap-page/' }
+  ],
+
+  // Footer internal link allowlist (for drift-guard validation)
+  footerInternal: [
+    '/', '/sellers/', '/buyers/', '/areas/', '/home-value/',
+    '/affordability/', '/about/', '/contact/', '/blog/', '/faq/',
+    '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
   ],
 
   // Contact info (must not be changed)
@@ -81,32 +104,27 @@ const NAV_REGISTRY = {
 
 // Helper functions
 function getHeaderNav() {
-  return NAV_REGISTRY.header.map(item => ({
-    label: item.label,
-    href: item.href,
-    isCta: item.isCta || false
-  }));
+  return NAV_REGISTRY.header.map(function(item) {
+    return { label: item.label, href: item.href, isCta: item.isCta || false };
+  });
 }
 
 function getFooterSell() {
-  return NAV_REGISTRY.groups.sell.items.map(item => ({
-    label: item.label,
-    href: item.href
-  }));
+  return NAV_REGISTRY.groups.sell.items.map(function(item) {
+    return { label: item.label, href: item.href };
+  });
 }
 
 function getFooterBuy() {
-  return NAV_REGISTRY.groups.buy.items.map(item => ({
-    label: item.label,
-    href: item.href
-  }));
+  return NAV_REGISTRY.groups.buy.items.map(function(item) {
+    return { label: item.label, href: item.href };
+  });
 }
 
 function getFooterLearn() {
-  return NAV_REGISTRY.groups.learn.items.map(item => ({
-    label: item.label,
-    href: item.href
-  }));
+  return NAV_REGISTRY.groups.learn.items.map(function(item) {
+    return { label: item.label, href: item.href };
+  });
 }
 
 // Legacy aliases for backward compatibility with check scripts
@@ -117,40 +135,41 @@ function getMobileNav() {
   return {
     sell: {
       label: NAV_REGISTRY.groups.sell.label,
-      items: NAV_REGISTRY.groups.sell.items.map(item => ({
-        label: item.label,
-        href: item.href
-      }))
+      items: NAV_REGISTRY.groups.sell.items.map(function(item) {
+        return { label: item.label, href: item.href };
+      })
     },
     buy: {
       label: NAV_REGISTRY.groups.buy.label,
-      items: NAV_REGISTRY.groups.buy.items.map(item => ({
-        label: item.label,
-        href: item.href
-      }))
+      items: NAV_REGISTRY.groups.buy.items.map(function(item) {
+        return { label: item.label, href: item.href };
+      })
     },
     learn: {
       label: NAV_REGISTRY.groups.learn.label,
-      items: NAV_REGISTRY.groups.learn.items.map(item => ({
-        label: item.label,
-        href: item.href
-      }))
+      items: NAV_REGISTRY.groups.learn.items.map(function(item) {
+        return { label: item.label, href: item.href };
+      })
     }
   };
 }
 
 function getAllDestinations() {
-  const destinations = new Set();
+  var destinations = new Set();
 
   // Header links
-  NAV_REGISTRY.header.forEach(item => destinations.add(item.href));
+  NAV_REGISTRY.header.forEach(function(item) { destinations.add(item.href); });
 
-  // Footer groups
-  Object.values(NAV_REGISTRY.groups).forEach(group => {
-    group.items.forEach(item => destinations.add(item.href));
+  // Nav groups
+  Object.values(NAV_REGISTRY.groups).forEach(function(group) {
+    group.items.forEach(function(item) {
+      // Strip hash for destination validation
+      var path = item.href.split('#')[0] || '/';
+      destinations.add(path);
+    });
   });
 
-  NAV_REGISTRY.footerLegal.forEach(item => destinations.add(item.href));
+  NAV_REGISTRY.footerLegal.forEach(function(item) { destinations.add(item.href); });
 
   return Array.from(destinations).sort();
 }

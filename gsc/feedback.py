@@ -37,7 +37,7 @@ SCORING_CATEGORIES = [
 PAGE_DIRS = ["blog", "areas", "compare", "lp", "sellers", "buyers", "about",
              "contact", "agents", "faq", "referrals",
              "1-percent-commission", "pre-listing-inspection", "home-value",
-             "affordability", "sell-and-buy", "sell-only-2-percent",
+             "affordability", "sell-and-buy",
              "privacy", "terms", "fair-housing", "sitemap-page"]
 
 

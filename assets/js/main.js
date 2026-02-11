@@ -297,58 +297,23 @@ function initMobileNav() {
   closeWrap.innerHTML = '<button type="button" aria-label="Close menu" id="mobile-nav-close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/></svg></button>';
   panel.appendChild(closeWrap);
 
-  // Build mobile nav body from TD_NAV config for parity with footer
+  // Build mobile nav body from TD_NAV.mobile allowlist only.
+  // No links are scraped from the DOM, sitemap, or directory.
   var body = document.createElement('div');
   body.className = 'nav-menu-body';
 
   var currentPath = normalizePath(window.location.pathname);
-  var navConfig = typeof TD_NAV !== 'undefined' ? TD_NAV : {
-    services: {
-      title: 'Services',
-      items: [
-        { label: 'For Sellers', href: '/sellers/' },
-        { label: 'For Buyers', href: '/buyers/' },
-        { label: 'Service Areas', href: '/areas/' },
-        { label: 'Free Home Value', href: '/home-value/' },
-        { label: 'Affordability Calculator', href: '/affordability/' }
-      ]
-    },
-    company: {
-      title: 'Company',
-      items: [
-        { label: 'About', href: '/about/' },
-        { label: 'Blog', href: '/blog/' },
-        { label: 'Contact', href: '/contact/' },
-        { label: 'FAQ', href: '/faq/' }
-      ]
-    }
-  };
+  var mobileConfig = (typeof TD_NAV !== 'undefined' && TD_NAV.mobile) ? TD_NAV.mobile : null;
 
   var mobileGroups = [];
-  if (navConfig && navConfig.footer) {
-    [
-      ['sell', 4],
-      ['buy', 3],
-      ['learn', 4]
-    ].forEach(function (groupPair) {
-      var key = groupPair[0];
-      var maxItems = groupPair[1];
-      var group = navConfig.footer[key];
+  if (mobileConfig) {
+    ['sell', 'buy', 'learn'].forEach(function (key) {
+      var group = mobileConfig[key];
       if (!group || !Array.isArray(group.items) || !group.items.length) return;
       mobileGroups.push({
         key: key,
         title: group.title,
-        items: group.items.slice(0, maxItems)
-      });
-    });
-  } else {
-    ['services', 'company'].forEach(function (groupKey) {
-      var group = navConfig[groupKey];
-      if (!group) return;
-      mobileGroups.push({
-        key: groupKey,
-        title: group.title,
-        items: group.items || []
+        items: group.items
       });
     });
   }
@@ -1901,6 +1866,51 @@ function initCollapsibleGrids() {
 }
 
 document.addEventListener('DOMContentLoaded', initCollapsibleGrids);
+
+// ── Nav Drift Guard ──────────────────────────────────────
+// In dev, validates that mobile drawer and footer links match the allowlist.
+// Logs console errors for any unexpected internal hrefs.
+function initNavDriftGuard() {
+  if (typeof TD_NAV === 'undefined') return;
+
+  // Build allowlist from TD_NAV.mobile items
+  var allowed = new Set();
+  if (TD_NAV.mobile) {
+    ['sell', 'buy', 'learn'].forEach(function (key) {
+      var group = TD_NAV.mobile[key];
+      if (group && group.items) {
+        group.items.forEach(function (item) { allowed.add(item.href); });
+      }
+    });
+  }
+  if (TD_NAV.utility) {
+    TD_NAV.utility.forEach(function (item) { allowed.add(item.href); });
+  }
+
+  // Validate mobile drawer links
+  var panel = document.getElementById('mobile-nav-panel');
+  if (panel) {
+    panel.querySelectorAll('a[href^="/"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!allowed.has(href)) {
+        console.error('[TD NavGuard] Unexpected mobile-drawer link:', href, a);
+      }
+    });
+  }
+
+  // Validate footer internal links against footerInternal allowlist
+  if (TD_NAV.footerInternal) {
+    var footerAllowed = new Set(TD_NAV.footerInternal);
+    document.querySelectorAll('.footer-links a[href^="/"], .footer-legal a[href^="/"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!footerAllowed.has(href)) {
+        console.error('[TD NavGuard] Unexpected footer link:', href, a);
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initNavDriftGuard);
 
 // Export config for use in other scripts if needed
 if (typeof module !== 'undefined' && module.exports) {
