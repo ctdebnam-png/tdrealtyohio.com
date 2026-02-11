@@ -75,6 +75,7 @@ import { auditImages } from '../auditors/image-audit.mjs';
 import { fixImageAlt } from '../fixers/image-alt.mjs';
 import { fixImageLazy } from '../fixers/image-lazy.mjs';
 import { fixOgImage } from '../fixers/og-image.mjs';
+import { auditSchema } from '../auditors/schema.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -165,6 +166,7 @@ async function main() {
     conversions: { lastDay: null, last7: null, deltas: null },
     localSeo: { napDrift: { phoneMismatchCount: 0, emailMismatchCount: 0, sampleRoutes: [] }, schema: { injected: false, pages: [] } },
     images: { pagesChecked: 0, issueCounts: {}, oversizedImages: [], ogImageIssues: [], fixes: {} },
+    schema: { issueCounts: {}, keyPages: {} },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -488,6 +490,29 @@ async function main() {
     report.errors.push(`imageAudit: ${err.message}`);
   }
 
+  // Schema audit (Chunk 22) — read-only structured data validation
+  let schemaAuditResult = { issueCounts: {}, keyPages: {} };
+  try {
+    schemaAuditResult = auditSchema(pages || []);
+    report.schema = {
+      issueCounts: schemaAuditResult.issueCounts,
+      keyPages: schemaAuditResult.keyPages,
+    };
+    const totalSchemaIssues = Object.values(schemaAuditResult.issueCounts).reduce((a, b) => a + b, 0);
+    if (totalSchemaIssues > 0) {
+      const ic = schemaAuditResult.issueCounts;
+      const parts = [];
+      if (ic.SCHEMA_INVALID_JSON) parts.push(`${ic.SCHEMA_INVALID_JSON} invalid JSON`);
+      if (ic.SCHEMA_INVALID_LOCALBUSINESS) parts.push(`${ic.SCHEMA_INVALID_LOCALBUSINESS} invalid LocalBusiness`);
+      if (ic.SCHEMA_INVALID_FAQPAGE) parts.push(`${ic.SCHEMA_INVALID_FAQPAGE} invalid FAQPage`);
+      if (ic.SCHEMA_INVALID_BLOGPOSTING) parts.push(`${ic.SCHEMA_INVALID_BLOGPOSTING} invalid Article`);
+      if (ic.SCHEMA_CONTENT_MISMATCH) parts.push(`${ic.SCHEMA_CONTENT_MISMATCH} mismatch`);
+      console.log(`[schema] ${totalSchemaIssues} schema issue(s): ${parts.join(', ')}`);
+    }
+  } catch (err) {
+    report.errors.push(`schemaAudit: ${err.message}`);
+  }
+
   // Classify audit issues
   const techClassification = beforeAudit
     ? classifyIssues(beforeAudit, config.rankIntentRoutes || [])
@@ -514,6 +539,10 @@ async function main() {
       totalDeltaPct: conversionAttribution.deltas?.totalDeltaPct || 0,
       conversionRateDeltaPct: conversionAttribution.deltas?.formSubmitDeltaPct || 0,
       insufficientData: conversionAttribution.insufficientData,
+    },
+    schemaIssues: {
+      totalIssueCount: Object.values(schemaAuditResult.issueCounts || {}).reduce((a, b) => a + b, 0),
+      keyPageIssueCount: Object.values(schemaAuditResult.keyPages || {}).reduce((sum, p) => sum + (p.issues?.length || 0), 0),
     },
   });
 

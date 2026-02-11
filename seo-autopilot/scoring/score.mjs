@@ -132,6 +132,7 @@ export function computeScore({
   underlinkedPillarCount = 0,
   nearDuplicatePairsCount = 0,
   conversionDeltas = {},
+  schemaIssues = {},
 }) {
   const config = loadScoringConfig();
   const w = config.weights;
@@ -250,6 +251,18 @@ export function computeScore({
     rationale.push({ key: 'conversionRateDelta', value: convRateDeltaPct, weightApplied: convRatePts });
   }
 
+  // Schema issues (Chunk 22)
+  // Invalid schema on key pages (/, /contact/) is a major penalty
+  const schemaKeyPageIssues = schemaIssues.keyPageIssueCount || 0;
+  const schemaOtherIssues = (schemaIssues.totalIssueCount || 0) - schemaKeyPageIssues;
+  const schemaKeyPts = clamp(schemaKeyPageIssues * -5, -15, 0);
+  const schemaOtherPts = clamp(schemaOtherIssues * -1, -5, 0);
+  score += schemaKeyPts + schemaOtherPts;
+  if (schemaKeyPageIssues > 0 || schemaOtherIssues > 0) {
+    rationale.push({ key: 'schemaKeyPageIssues', value: schemaKeyPageIssues, weightApplied: schemaKeyPts });
+    rationale.push({ key: 'schemaOtherIssues', value: schemaOtherIssues, weightApplied: schemaOtherPts });
+  }
+
   // Clamp final score
   score = Math.round(clamp(score, 0, 100));
 
@@ -278,6 +291,10 @@ export function computeScore({
       totalDeltaPct: convDeltaPct,
       conversionRateDeltaPct: convRateDeltaPct,
       insufficientData: convInsufficient,
+    },
+    schema: {
+      keyPageIssueCount: schemaKeyPageIssues,
+      otherIssueCount: schemaOtherIssues,
     },
   };
 

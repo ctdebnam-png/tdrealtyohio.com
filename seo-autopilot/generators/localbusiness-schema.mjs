@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { validateLocalBusiness } from '../schema/validators/localbusiness.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -92,6 +93,15 @@ function resolveFilePath(routePath) {
  */
 export function injectLocalBusinessSchema() {
   const schema = buildLocalBusinessSchema();
+
+  // Validate before injection (Chunk 22 gate)
+  const validation = validateLocalBusiness(schema);
+  if (!validation.ok) {
+    const codes = validation.errors.map(e => e.code).join(', ');
+    console.warn(`[schema] LocalBusiness validation failed (${codes}) — skipping injection`);
+    return { injected: false, pagesUpdated: [], schema, validationErrors: validation.errors };
+  }
+
   const jsonLd = JSON.stringify(schema, null, 2);
 
   const block = [
