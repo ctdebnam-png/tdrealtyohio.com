@@ -1,0 +1,27 @@
+{
+  "tech": {
+    "allowedAnyDay": true,
+    "maxEditsPerWeek": 7
+  },
+  "meta": {
+    "minDaysBetweenRuns": 7,
+    "maxPagesPerWindow": 3,
+    "requiresOpportunity": true
+  },
+  "contentRefresh": {
+    "minDaysBetweenRuns": 10,
+    "maxPagesPerWindow": 1,
+    "requiresStrikingDistance": true
+  },
+  "contentPublish": {
+    "minDaysBetweenRuns": 14,
+    "maxPublishesPerWindow": 1,
+    "requiresBacklog": true,
+    "requiresTechClean": true
+  },
+  "areas": {
+    "minDaysBetweenRuns": 14,
+    "maxPagesPerWindow": 1,
+    "requiresThinOrUnderlinked": true
+  }
+}

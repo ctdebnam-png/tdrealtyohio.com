@@ -1,4 +1,85 @@
 {
+  "safety": {
+    "lastGoodSha": "d7acda436e5ac23e9b9c3573f7416245edd827de",
+    "lastGoodAt": "2026-02-10T13:39:26.953Z",
+    "consecutiveReverts": 0
+  },
+  "live": {
+    "lastCheckedAt": "2026-02-10T13:39:25.770Z",
+    "issueCounts": {
+      "LIVE_ROBOTS_MISSING": 1,
+      "LIVE_SITEMAP_MISSING": 1,
+      "LIVE_FETCH_ERROR": 9
+    },
+    "worstRoutes": [
+      {
+        "route": "/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/sellers/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/buyers/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/1-percent-commission/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/home-value/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/areas/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/blog/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/about/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      },
+      {
+        "route": "/contact/",
+        "codes": [
+          "LIVE_FETCH_ERROR"
+        ]
+      }
+    ]
+  },
+  "quality": {
+    "lastCheckedAt": "2026-02-10T13:39:25.770Z",
+    "thinRankIntentCount": 0,
+    "nearDuplicatePairsCount": 0
+  },
+  "indexing": {
+    "lastCheckedAt": "2026-02-10T13:39:25.770Z",
+    "sitemapMissingCount": 0,
+    "sitemapExtraCount": 109,
+    "canonicalBuildMismatchCount": 0,
+    "canonicalLiveMismatchCount": 0
+  },
   "linksAdded": [
     {
       "from": "/blog/",

@@ -3,6 +3,9 @@ name: Daily Ads Report
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   daily-report:
     name: Pull Data & Generate Report

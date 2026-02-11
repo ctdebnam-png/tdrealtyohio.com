@@ -1,0 +1,19 @@
+{
+  "businessName": "TD Realty Ohio, LLC",
+  "website": "https://tdrealtyohio.com",
+  "phone": "(614) 392-8858",
+  "email": "info@tdrealtyohio.com",
+  "address": {
+    "street": "",
+    "city": "Westerville",
+    "region": "OH",
+    "postalCode": "",
+    "country": "US"
+  },
+  "serviceArea": ["Westerville, OH", "Central Ohio"],
+  "licenses": {
+    "brokerage": "2023006602",
+    "broker": "2023006467"
+  },
+  "sameAs": []
+}

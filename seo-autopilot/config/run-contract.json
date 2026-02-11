@@ -1,0 +1,4 @@
+{
+  "command": "npm run seo:autopilot",
+  "node": "20"
+}

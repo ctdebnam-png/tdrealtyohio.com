@@ -121,6 +121,7 @@ function loadScoringConfig() {
  * @param {number} inputs.thinCount - From countThinPages()
  * @param {number} inputs.underlinkedPillarCount - From countUnderlinkedPillars()
  * @param {number} inputs.nearDuplicatePairsCount - From near-duplicates auditor
+ * @param {object} [inputs.conversionDeltas] - From conversion-attribution
  * @returns {{ score: number, components: object, rationale: object[] }}
  */
 export function computeScore({
@@ -130,6 +131,9 @@ export function computeScore({
   thinCount = 0,
   underlinkedPillarCount = 0,
   nearDuplicatePairsCount = 0,
+  conversionDeltas = {},
+  schemaIssues = {},
+  perfIssues = {},
 }) {
   const config = loadScoringConfig();
   const w = config.weights;
@@ -228,6 +232,51 @@ export function computeScore({
   score += nearDupPts;
   rationale.push({ key: 'contentNearDuplicates', value: nearDuplicatePairsCount, weightApplied: nearDupPts });
 
+  // Conversion deltas (Chunk 19)
+  const convDeltaPct = conversionDeltas.totalDeltaPct || 0;
+  const convRateDeltaPct = conversionDeltas.conversionRateDeltaPct || 0;
+  const convInsufficient = conversionDeltas.insufficientData !== false;
+  if (!convInsufficient) {
+    const convPts = clamp(
+      convDeltaPct * (w.conversionDelta || 30),
+      -15, 15,
+    );
+    score += convPts;
+    rationale.push({ key: 'conversionDelta', value: convDeltaPct, weightApplied: convPts });
+
+    const convRatePts = clamp(
+      convRateDeltaPct * (w.conversionRateDelta || 15),
+      -10, 10,
+    );
+    score += convRatePts;
+    rationale.push({ key: 'conversionRateDelta', value: convRateDeltaPct, weightApplied: convRatePts });
+  }
+
+  // Schema issues (Chunk 22)
+  // Invalid schema on key pages (/, /contact/) is a major penalty
+  const schemaKeyPageIssues = schemaIssues.keyPageIssueCount || 0;
+  const schemaOtherIssues = (schemaIssues.totalIssueCount || 0) - schemaKeyPageIssues;
+  const schemaKeyPts = clamp(schemaKeyPageIssues * -5, -15, 0);
+  const schemaOtherPts = clamp(schemaOtherIssues * -1, -5, 0);
+  score += schemaKeyPts + schemaOtherPts;
+  if (schemaKeyPageIssues > 0 || schemaOtherIssues > 0) {
+    rationale.push({ key: 'schemaKeyPageIssues', value: schemaKeyPageIssues, weightApplied: schemaKeyPts });
+    rationale.push({ key: 'schemaOtherIssues', value: schemaOtherIssues, weightApplied: schemaOtherPts });
+  }
+
+  // Performance issues (Chunk 23)
+  const perfOverBudget = perfIssues.htmlOverBudget || 0;
+  const perfBlocking = perfIssues.headBlockingScripts || 0;
+  const perfRegressionCount = perfIssues.regressionCount || 0;
+  const perfOverPts = clamp(perfOverBudget * -2, -6, 0);
+  const perfBlockPts = clamp(perfBlocking * -1, -3, 0);
+  const perfRegPts = clamp(perfRegressionCount * -3, -9, 0);
+  const totalPerfPts = perfOverPts + perfBlockPts + perfRegPts;
+  if (totalPerfPts < 0) {
+    score += totalPerfPts;
+    rationale.push({ key: 'perfIssues', value: { overBudget: perfOverBudget, blocking: perfBlocking, regressions: perfRegressionCount }, weightApplied: totalPerfPts });
+  }
+
   // Clamp final score
   score = Math.round(clamp(score, 0, 100));
 
@@ -251,6 +300,20 @@ export function computeScore({
     content: {
       thinCount: thinCount,
       nearDuplicatePairsCount: nearDuplicatePairsCount,
+    },
+    conversions: {
+      totalDeltaPct: convDeltaPct,
+      conversionRateDeltaPct: convRateDeltaPct,
+      insufficientData: convInsufficient,
+    },
+    schema: {
+      keyPageIssueCount: schemaKeyPageIssues,
+      otherIssueCount: schemaOtherIssues,
+    },
+    perf: {
+      htmlOverBudget: perfOverBudget,
+      headBlockingScripts: perfBlocking,
+      regressions: perfRegressionCount,
     },
   };
 

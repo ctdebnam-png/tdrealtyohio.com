@@ -10,7 +10,9 @@
     "orphanPages": -15,
     "underlinkedPillars": -10,
     "contentThinPages": -10,
-    "contentNearDuplicates": -10
+    "contentNearDuplicates": -10,
+    "conversionDelta": 30,
+    "conversionRateDelta": 15
   },
   "thresholds": {
     "minDaysBetweenSameModule": 3,

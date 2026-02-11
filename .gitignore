@@ -34,8 +34,11 @@ output/
 __pycache__/
 *.pyc
 
-# SEO Autopilot ephemeral artifacts
+# SEO Autopilot ephemeral artifacts (gitignored — may contain GSC data or secrets)
 seo-autopilot/report/latest.json
 seo-autopilot/report/link-graph.json
+seo-autopilot/report/workflows-noise.json
+seo-autopilot/report/consolidation-plan.json
 seo-autopilot/state/gsc-latest.json
+seo-autopilot/state/query-pages.json
 seo-autopilot/state/snapshots/

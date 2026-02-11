@@ -61,6 +61,32 @@ import { writeJsonStable } from '../lib/write-json.mjs';
 import { runHousekeeping } from '../lib/housekeeping.mjs';
 import { extractMoneyPageIntents } from '../analyzers/money-page-intents.mjs';
 import { enhanceMoneyPage, revertMoneyEnhancement } from '../generators/money-page-enhance.mjs';
+import { buildQueryPageMap } from '../analyzers/query-page-map.mjs';
+import { planStrikingRefresh } from '../planners/striking-refresh-plan.mjs';
+import { executeStrikingRefresh, revertStrikingRefresh } from '../generators/striking-refresh.mjs';
+import { applyPillarNav, removeAllPillarNavBlocks } from '../fixers/pillar-nav.mjs';
+import { auditNavConsistency } from '../auditors/nav-consistency.mjs';
+import { pullConversions, loadConversions } from '../collectors/conversions.mjs';
+import { computeConversionAttribution } from '../analyzers/conversion-attribution.mjs';
+import { injectLocalBusinessSchema } from '../generators/localbusiness-schema.mjs';
+import { auditNapDrift } from '../auditors/nap-drift.mjs';
+import { generateCitationsPlan } from '../generators/citations-plan.mjs';
+import { auditImages } from '../auditors/image-audit.mjs';
+import { fixImageAlt } from '../fixers/image-alt.mjs';
+import { fixImageLazy } from '../fixers/image-lazy.mjs';
+import { fixOgImage } from '../fixers/og-image.mjs';
+import { auditSchema } from '../auditors/schema.mjs';
+import { auditPerf } from '../auditors/perf.mjs';
+import { detectPerfRegressions } from '../analyzers/perf-regressions.mjs';
+import { applyPerfHints } from '../fixers/perf-hints.mjs';
+import { buildQueryPagesIndex } from '../analyzers/query-pages-index.mjs';
+import { detectCannibalization } from '../analyzers/cannibalization.mjs';
+import { planConsolidation } from '../planners/consolidation-plan.mjs';
+import { applyConsolidationMitigation, removeConsolidationMitigations } from '../fixers/consolidation-mitigations.mjs';
+import { auditWorkflowNoise } from '../auditors/workflows-noise.mjs';
+import { fixWorkflowsQuietMode } from '../fixers/workflows-quiet-mode.mjs';
+import { checkDeployWindows, recordWindowUsage } from '../lib/window-check.mjs';
+import { auditIntegrationsHealth } from '../auditors/integrations-health.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -174,6 +200,18 @@ async function main() {
     quality: { thinRankIntentCount: 0, nearDuplicatePairsCount: 0, thinRankIntent: [], nearDuplicatePairs: [] },
     areas: { selected: null, wordsBefore: 0, wordsAfter: 0, linksAdded: [], reason: '' },
     moneyEnhancements: [],
+    strikingRefresh: { action: 'none', targetPagePath: null, queries: [], pageType: '', reason: '' },
+    pillarNav: { filesChanged: 0, details: [] },
+    navConsistency: { totalChecked: 0, issues: [], pillarInDegree: {} },
+    conversions: { lastDay: null, last7: null, deltas: null },
+    localSeo: { napDrift: { phoneMismatchCount: 0, emailMismatchCount: 0, sampleRoutes: [] }, schema: { injected: false, pages: [] } },
+    images: { pagesChecked: 0, issueCounts: {}, oversizedImages: [], ogImageIssues: [], fixes: {} },
+    schema: { issueCounts: {}, keyPages: {} },
+    perf: { issueCounts: {}, perRoute: [], regressions: [], fixes: {} },
+    cannibalization: { multiPageCount: 0, pairs: 0, planItems: 0, mitigation: null },
+    workflowNoise: { workflowsTotal: 0, pushTriggeredCount: 0, prBotCount: 0, likelyFailCount: 0 },
+    deployWindows: { allowed: {}, reasons: {}, selectedFocus: '', effectiveFocus: '' },
+    integrations: {},
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -201,6 +239,21 @@ async function main() {
     await saveSnapshot({ headSha: baselineSha, reason: 'pre_run', focus: '' });
   } catch (err) {
     report.errors.push(`snapshot: ${err.message}`);
+  }
+
+  // ─────────────────────────── INTEGRATIONS HEALTH ────────────────────────
+  try {
+    const intHealth = auditIntegrationsHealth();
+    report.integrations = intHealth.integrations;
+    state.integrations = {};
+    for (const [name, info] of Object.entries(intHealth.integrations)) {
+      state.integrations[name] = info.status;
+    }
+    if (intHealth.summary.missingEnv > 0) {
+      console.log(`[integrations] ${intHealth.summary.available} available, ${intHealth.summary.missingEnv} missing env, ${intHealth.summary.disabled} disabled`);
+    }
+  } catch (err) {
+    report.errors.push(`integrationsHealth: ${err.message}`);
   }
 
   // ─────────────────────────── PHASE 1: COLLECT DATA ───────────────────────
@@ -339,6 +392,92 @@ async function main() {
     report.errors.push(`moneyIntents: ${err.message}`);
   }
 
+  // Build query-to-page map from striking-distance queries (Chunk 17)
+  let queryPageMap = [];
+  try {
+    const strikingQueries = state.gsc?.opportunities?.strikingDistanceQueries || opportunities.strikingDistanceQueries || [];
+    if (strikingQueries.length > 0) {
+      const mapResult = buildQueryPageMap({
+        strikingDistanceQueries: strikingQueries,
+        rankIntentRoutes: config.rankIntentRoutes || [],
+      });
+      queryPageMap = mapResult.fullMap;
+      state.queryPageMap = mapResult.compactMap;
+    }
+  } catch (err) {
+    report.errors.push(`queryPageMap: ${err.message}`);
+  }
+
+  // Conversion data collection (Chunk 19)
+  let conversionAttribution = { last7: { totalConversions: 0 }, deltas: {}, insufficientData: true };
+  try {
+    const convResult = await pullConversions();
+    if (convResult.ok) {
+      console.log(`[conversions] Pulled ${convResult.days.length} day(s)`);
+    } else if (convResult.skipped) {
+      console.log(`[conversions] Skipped: ${convResult.reason}`);
+    }
+
+    // Load (either freshly pulled or existing on disk)
+    const convData = loadConversions();
+    if (convData.days.length > 0) {
+      const gscClicks7 = state.gsc?.totals7?.clicks || 0;
+      conversionAttribution = computeConversionAttribution({
+        days: convData.days,
+        gscClicks7,
+      });
+
+      if (!conversionAttribution.insufficientData) {
+        console.log(`[conversions] Last 7d: ${conversionAttribution.last7.totalConversions} conversions, delta: ${(conversionAttribution.deltas.totalDeltaPct * 100).toFixed(1)}%`);
+        console.log(`[conversions] Money page share: ${(conversionAttribution.moneyPageShare * 100).toFixed(1)}%`);
+      }
+
+      // Persist compact summary in state
+      state.conversions = {
+        lastCheckedAt: new Date().toISOString(),
+        last7Total: conversionAttribution.last7.totalConversions,
+        moneyPageShare: conversionAttribution.moneyPageShare,
+        totalDeltaPct: conversionAttribution.deltas.totalDeltaPct,
+      };
+
+      // Report
+      report.conversions = {
+        lastDay: convData.days.length > 0 ? convData.days[convData.days.length - 1] : null,
+        last7: conversionAttribution.last7,
+        deltas: conversionAttribution.deltas,
+      };
+    }
+  } catch (err) {
+    report.errors.push(`conversions: ${err.message}`);
+    console.error('[seo-autopilot] Conversions error (non-fatal):', err.message);
+  }
+
+  // Cannibalization analysis (Chunk 24) — requires GSC data
+  let cannibalizationPairs = [];
+  let consolidationPlan = { items: [] };
+  try {
+    const gscRows28 = state.gsc?.rows28 || [];
+    if (gscRows28.length > 0) {
+      const qpIndex = await buildQueryPagesIndex(gscRows28);
+      if (qpIndex.multiPageCount > 0) {
+        const cannResult = detectCannibalization(qpIndex.multiPageQueries);
+        cannibalizationPairs = cannResult.pairs;
+        if (cannResult.totalCandidates > 0) {
+          consolidationPlan = await planConsolidation(cannResult.pairs);
+          console.log(`[cannibalization] ${cannResult.totalCandidates} competing pair(s), ${consolidationPlan.items.length} plan item(s)`);
+        }
+      }
+      report.cannibalization = {
+        multiPageCount: qpIndex.multiPageCount,
+        pairs: cannibalizationPairs.length,
+        planItems: consolidationPlan.items.length,
+        mitigation: null,
+      };
+    }
+  } catch (err) {
+    report.errors.push(`cannibalization: ${err.message}`);
+  }
+
   // ─────────────────────────── PHASE 2: SCORE + FOCUS ──────────────────────
 
   // Blog discovery (needed for thin page count and content planning)
@@ -375,6 +514,131 @@ async function main() {
     console.error('[seo-autopilot] Quality audit error (non-fatal):', err.message);
   }
 
+  // Nav consistency audit (Chunk 18) — read-only check
+  try {
+    const navResult = auditNavConsistency(pages || []);
+    report.navConsistency = {
+      totalChecked: navResult.totalChecked,
+      issues: navResult.issues,
+      pillarInDegree: navResult.pillarInDegree,
+    };
+    if (navResult.issues.length > 0) {
+      console.log(`[nav] ${navResult.issues.length} consistency issue(s)`);
+      for (const issue of navResult.issues.slice(0, 3)) {
+        console.log(`  ${issue.code}: ${issue.detail}`);
+      }
+    }
+  } catch (err) {
+    report.errors.push(`navConsistency: ${err.message}`);
+  }
+
+  // NAP drift audit (Chunk 20) — read-only check
+  let napDriftResult = { phoneMismatchCount: 0, emailMismatchCount: 0, nameMismatchCount: 0 };
+  try {
+    napDriftResult = auditNapDrift(pages || []);
+    report.localSeo.napDrift = {
+      phoneMismatchCount: napDriftResult.phoneMismatchCount,
+      emailMismatchCount: napDriftResult.emailMismatchCount,
+      sampleRoutes: [
+        ...napDriftResult.phoneMismatches.slice(0, 5).map(m => ({ route: m.routePath, type: 'phone', snippet: m.snippet })),
+        ...napDriftResult.emailMismatches.slice(0, 5).map(m => ({ route: m.routePath, type: 'email', snippet: m.snippet })),
+      ],
+    };
+    const totalDrift = napDriftResult.phoneMismatchCount + napDriftResult.emailMismatchCount;
+    if (totalDrift > 0) {
+      console.log(`[nap] ${totalDrift} NAP drift issue(s): ${napDriftResult.phoneMismatchCount} phone, ${napDriftResult.emailMismatchCount} email`);
+    }
+  } catch (err) {
+    report.errors.push(`napDrift: ${err.message}`);
+  }
+
+  // Image audit (Chunk 21) — read-only scan
+  try {
+    const imageAuditResult = auditImages(pages || []);
+    report.images = {
+      pagesChecked: imageAuditResult.pagesChecked,
+      issueCounts: imageAuditResult.issueCounts,
+      oversizedImages: imageAuditResult.oversizedImages,
+      ogImageIssues: imageAuditResult.ogImageIssues,
+      fixes: {},
+    };
+    const totalImgIssues = imageAuditResult.summary.totalIssues;
+    if (totalImgIssues > 0) {
+      const counts = imageAuditResult.issueCounts;
+      const parts = [];
+      if (counts.MISSING_ALT) parts.push(`${counts.MISSING_ALT} missing alt`);
+      if (counts.EMPTY_ALT) parts.push(`${counts.EMPTY_ALT} empty alt`);
+      if (counts.MISSING_OG_IMAGE) parts.push(`${counts.MISSING_OG_IMAGE} missing og:image`);
+      if (counts.OVERSIZED_IMAGE) parts.push(`${counts.OVERSIZED_IMAGE} oversized`);
+      console.log(`[images] ${totalImgIssues} image issue(s): ${parts.join(', ')}`);
+    }
+  } catch (err) {
+    report.errors.push(`imageAudit: ${err.message}`);
+  }
+
+  // Schema audit (Chunk 22) — read-only structured data validation
+  let schemaAuditResult = { issueCounts: {}, keyPages: {} };
+  try {
+    schemaAuditResult = auditSchema(pages || []);
+    report.schema = {
+      issueCounts: schemaAuditResult.issueCounts,
+      keyPages: schemaAuditResult.keyPages,
+    };
+    const totalSchemaIssues = Object.values(schemaAuditResult.issueCounts).reduce((a, b) => a + b, 0);
+    if (totalSchemaIssues > 0) {
+      const ic = schemaAuditResult.issueCounts;
+      const parts = [];
+      if (ic.SCHEMA_INVALID_JSON) parts.push(`${ic.SCHEMA_INVALID_JSON} invalid JSON`);
+      if (ic.SCHEMA_INVALID_LOCALBUSINESS) parts.push(`${ic.SCHEMA_INVALID_LOCALBUSINESS} invalid LocalBusiness`);
+      if (ic.SCHEMA_INVALID_FAQPAGE) parts.push(`${ic.SCHEMA_INVALID_FAQPAGE} invalid FAQPage`);
+      if (ic.SCHEMA_INVALID_BLOGPOSTING) parts.push(`${ic.SCHEMA_INVALID_BLOGPOSTING} invalid Article`);
+      if (ic.SCHEMA_CONTENT_MISMATCH) parts.push(`${ic.SCHEMA_CONTENT_MISMATCH} mismatch`);
+      console.log(`[schema] ${totalSchemaIssues} schema issue(s): ${parts.join(', ')}`);
+    }
+  } catch (err) {
+    report.errors.push(`schemaAudit: ${err.message}`);
+  }
+
+  // Performance audit (Chunk 23) — fast built-HTML check
+  let perfAuditResult = { issueCounts: {}, perRoute: [], issues: [] };
+  try {
+    perfAuditResult = auditPerf();
+    const totalPerfIssues = Object.values(perfAuditResult.issueCounts).reduce((a, b) => a + b, 0);
+    if (totalPerfIssues > 0) {
+      const ic = perfAuditResult.issueCounts;
+      const parts = [];
+      if (ic.PERF_HTML_OVER_BUDGET) parts.push(`${ic.PERF_HTML_OVER_BUDGET} over-budget HTML`);
+      if (ic.PERF_HEAD_BLOCKING_SCRIPT) parts.push(`${ic.PERF_HEAD_BLOCKING_SCRIPT} blocking scripts`);
+      if (ic.PERF_TOO_MANY_SCRIPTS) parts.push(`${ic.PERF_TOO_MANY_SCRIPTS} too many scripts`);
+      if (ic.PERF_INLINE_JS_OVER_BUDGET) parts.push(`${ic.PERF_INLINE_JS_OVER_BUDGET} inline JS over budget`);
+      console.log(`[perf] ${totalPerfIssues} perf issue(s): ${parts.join(', ')}`);
+    }
+  } catch (err) {
+    report.errors.push(`perfAudit: ${err.message}`);
+  }
+
+  // Perf regression detection (Chunk 23)
+  let perfRegressions = [];
+  try {
+    const regressionResult = await detectPerfRegressions(perfAuditResult.perRoute);
+    perfRegressions = regressionResult.regressions;
+    if (perfRegressions.length > 0) {
+      console.log(`[perf] ${perfRegressions.length} regression(s) detected`);
+      for (const r of perfRegressions) {
+        console.log(`  ${r.route}: ${r.metric} ${r.previous} → ${r.current} (+${(r.deltaPct * 100).toFixed(0)}%)`);
+      }
+    }
+  } catch (err) {
+    report.errors.push(`perfRegressions: ${err.message}`);
+  }
+
+  report.perf = {
+    issueCounts: perfAuditResult.issueCounts,
+    perRoute: perfAuditResult.perRoute,
+    regressions: perfRegressions,
+    fixes: {},
+  };
+
   // Classify audit issues
   const techClassification = beforeAudit
     ? classifyIssues(beforeAudit, config.rankIntentRoutes || [])
@@ -397,6 +661,20 @@ async function main() {
     thinCount,
     underlinkedPillarCount,
     nearDuplicatePairsCount: qualitySignals.nearDuplicatePairsCount || 0,
+    conversionDeltas: {
+      totalDeltaPct: conversionAttribution.deltas?.totalDeltaPct || 0,
+      conversionRateDeltaPct: conversionAttribution.deltas?.formSubmitDeltaPct || 0,
+      insufficientData: conversionAttribution.insufficientData,
+    },
+    schemaIssues: {
+      totalIssueCount: Object.values(schemaAuditResult.issueCounts || {}).reduce((a, b) => a + b, 0),
+      keyPageIssueCount: Object.values(schemaAuditResult.keyPages || {}).reduce((sum, p) => sum + (p.issues?.length || 0), 0),
+    },
+    perfIssues: {
+      htmlOverBudget: perfAuditResult.issueCounts.PERF_HTML_OVER_BUDGET || 0,
+      headBlockingScripts: perfAuditResult.issueCounts.PERF_HEAD_BLOCKING_SCRIPT || 0,
+      regressionCount: perfRegressions.length,
+    },
   });
 
   console.log(`\n=== SCORE: ${scoreResult.score}/100 ===`);
@@ -465,6 +743,51 @@ async function main() {
     // Non-fatal
   }
 
+  // Workflow noise audit (Chunk 27) — scan GitHub Actions for noise risk
+  let workflowNoiseCounts = { pushTriggeredCount: 0, prBotCount: 0 };
+  try {
+    const wfNoiseResult = auditWorkflowNoise();
+    workflowNoiseCounts = wfNoiseResult.summary;
+    report.workflowNoise = wfNoiseResult.summary;
+
+    // Write full report (gitignored)
+    await writeJsonStable(join(REPORT_DIR, 'workflows-noise.json'), wfNoiseResult);
+
+    // Write compact state (committed)
+    const compactWfState = {
+      checkedAt: wfNoiseResult.checkedAt,
+      pushTriggeredCount: wfNoiseResult.summary.pushTriggeredCount,
+      prTriggeredCount: wfNoiseResult.summary.prTriggeredCount,
+      prBotCount: wfNoiseResult.summary.prBotCount,
+      likelyFailCount: wfNoiseResult.summary.likelyFailCount,
+      pushTriggeredFiles: wfNoiseResult.workflows
+        .filter(w => w.risk.runsOnPush)
+        .map(w => w.file)
+        .slice(0, 20),
+    };
+    await writeJsonStable(join(STATE_DIR, 'workflows-noise.json'), compactWfState, 'workflowsNoise');
+
+    // Single-line summary
+    if (DEBUG) {
+      console.log(`\n[workflows] ${wfNoiseResult.summary.workflowsTotal} workflows: ${wfNoiseResult.summary.pushTriggeredCount} push, ${wfNoiseResult.summary.prBotCount} PR-bot, ${wfNoiseResult.summary.likelyFailCount} fail-prone`);
+    } else {
+      console.log(`\n[workflows] ${wfNoiseResult.summary.workflowsTotal} total, ${wfNoiseResult.summary.pushTriggeredCount} push, ${wfNoiseResult.summary.prBotCount} PR-bot`);
+    }
+
+    // Optional auto-remediation (off by default)
+    if (process.env.SEO_AUTOPILOT_FIX_WORKFLOWS === '1') {
+      const noisyWfs = wfNoiseResult.workflows.filter(w => w.risk.runsOnPush || w.risk.runsOnPR);
+      if (noisyWfs.length > 0) {
+        const fixResult = fixWorkflowsQuietMode(noisyWfs);
+        if (fixResult.filesFixed > 0) {
+          console.log(`[workflows] Fixed ${fixResult.filesFixed} workflow(s)`);
+        }
+      }
+    }
+  } catch (err) {
+    report.errors.push(`workflowNoise: ${err.message}`);
+  }
+
   // Compute focus plan
   const moduleOutcomes = loadModuleOutcomes();
   // Collect near-duplicate route set for focus gating
@@ -483,6 +806,7 @@ async function main() {
     moneyRoutes: config.moneyRoutes || [],
     liveIssueCounts: report.live?.issueCounts || {},
     nearDuplicateRoutes,
+    workflowNoiseCounts,
   });
 
   // Override focus if repeated reverts (Step 7)
@@ -491,6 +815,53 @@ async function main() {
     focusPlan.reason = `Forced tech: ${consecutiveReverts} consecutive reverts`;
     focusPlan.budgets = { ...focusPlan.budgets, contentActionAllowed: false };
   }
+
+  // Deploy windows gate (Chunk 28) — throttle edits by time windows
+  const backlogForWindows = loadBacklog();
+  const pendingTopics = backlogForWindows?.clusters?.reduce((sum, c) => sum + c.topics.filter(t => t.status === 'pending').length, 0) || 0;
+  const windowCheck = checkDeployWindows({
+    windows: state.windows || {},
+    signals: {
+      criticalCount: techClassification.criticalCount,
+      liveIssueCount: (report.live?.issueCounts?.LIVE_NOINDEX || 0) + (report.live?.issueCounts?.LIVE_ROBOTS_TXT_BLOCKING || 0),
+      highImpLowCtrCount: (opportunities.highImpressionsLowCtrPages || []).length,
+      strikingDistanceCount: (opportunities.strikingDistanceQueries || []).length,
+      pendingTopicCount: pendingTopics,
+      thinCount,
+      underlinkedCount: underlinkedPillarCount,
+    },
+  });
+
+  // If chosen focus is not allowed by deploy window, degrade
+  const selectedFocus = focusPlan.focus;
+  const focusWindowMap = { tech: 'tech', links: 'tech', ctr: 'meta', money: 'meta', refresh: 'refresh', publish: 'publish' };
+  const windowKey = focusWindowMap[focusPlan.focus];
+  if (windowKey && !windowCheck.allowed[windowKey]) {
+    // Find next allowed focus in priority order
+    const priorities = ['tech', 'links', 'ctr', 'money', 'refresh', 'publish', 'none'];
+    const windowKeys = { tech: 'tech', links: 'tech', ctr: 'meta', money: 'meta', refresh: 'refresh', publish: 'publish', none: null };
+    let degraded = false;
+    for (const p of priorities) {
+      const wk = windowKeys[p];
+      if (wk === null || windowCheck.allowed[wk]) {
+        if (p !== focusPlan.focus) {
+          focusPlan.focus = p;
+          focusPlan.reason = `Window blocked (${windowCheck.reasons[windowKey]}); degraded from ${selectedFocus} to ${p}`;
+          if (p === 'none') focusPlan.budgets.contentActionAllowed = false;
+          degraded = true;
+        }
+        break;
+      }
+    }
+  }
+
+  // Report deploy windows
+  report.deployWindows = {
+    allowed: windowCheck.allowed,
+    reasons: windowCheck.reasons,
+    selectedFocus,
+    effectiveFocus: focusPlan.focus,
+  };
 
   console.log(`\n=== FOCUS: ${focusPlan.focus} ===`);
   console.log(`  Reason: ${focusPlan.reason}`);
@@ -531,6 +902,53 @@ async function main() {
         for (const f of hygieneResult.fixes) console.log(`  ${f.file}: ${f.action}`);
       }
       report.indexingHygiene = hygieneResult;
+
+      // LocalBusiness schema injection (Chunk 20)
+      try {
+        const schemaResult = injectLocalBusinessSchema();
+        report.localSeo.schema = { injected: schemaResult.injected, pages: schemaResult.pagesUpdated };
+        if (schemaResult.injected) {
+          console.log(`[tech] LocalBusiness schema: injected on ${schemaResult.pagesUpdated.join(', ')}`);
+        }
+      } catch (err) {
+        report.errors.push(`localBusinessSchema: ${err.message}`);
+      }
+
+      // Citations plan generation (Chunk 20)
+      try {
+        await generateCitationsPlan();
+      } catch (err) {
+        report.errors.push(`citationsPlan: ${err.message}`);
+      }
+
+      // Image SEO fixers (Chunk 21)
+      try {
+        const altResult = fixImageAlt(pages);
+        const lazyResult = fixImageLazy(pages);
+        const ogResult = fixOgImage(pages);
+        report.images.fixes = {
+          alt: { filesChanged: altResult.filesChanged, tagsFixed: altResult.tagsFixed },
+          lazy: { filesChanged: lazyResult.filesChanged, tagsFixed: lazyResult.tagsFixed },
+          ogImage: { filesChanged: ogResult.filesChanged, tagsFixed: ogResult.tagsFixed },
+        };
+        const totalFixFiles = altResult.filesChanged + lazyResult.filesChanged + ogResult.filesChanged;
+        if (totalFixFiles > 0) {
+          console.log(`[tech] Image fixes: alt=${altResult.tagsFixed}, lazy=${lazyResult.tagsFixed}, og=${ogResult.tagsFixed}`);
+        }
+      } catch (err) {
+        report.errors.push(`imageFixer: ${err.message}`);
+      }
+
+      // Performance hints fixer (Chunk 23)
+      try {
+        const perfFixResult = applyPerfHints(pages);
+        report.perf.fixes = { filesChanged: perfFixResult.filesChanged, actions: perfFixResult.actions };
+        if (perfFixResult.filesChanged > 0) {
+          console.log(`[tech] Perf hints: ${perfFixResult.filesChanged} file(s) updated`);
+        }
+      } catch (err) {
+        report.errors.push(`perfHints: ${err.message}`);
+      }
 
       moduleOutcomes.tech = {
         lastRunAt: new Date().toISOString(),
@@ -671,6 +1089,42 @@ async function main() {
       report.errors.push(`linkPlan: ${err.message}`);
       console.error('[seo-autopilot] Link plan error (non-fatal):', err.message);
     }
+
+    // Pillar nav: apply subnav + crosslinks to pillar root pages (Chunk 18)
+    try {
+      const pillarNavResult = applyPillarNav();
+      report.pillarNav = pillarNavResult;
+      if (pillarNavResult.filesChanged > 0) {
+        console.log(`[links] Pillar nav: ${pillarNavResult.filesChanged} file(s) updated`);
+        for (const d of pillarNavResult.details) {
+          if (d.subnavInserted || d.nextStepsInserted) {
+            console.log(`  ${d.route}: subnav=${d.subnavInserted}, nextSteps=${d.nextStepsInserted}`);
+          }
+        }
+      }
+    } catch (err) {
+      report.errors.push(`pillarNav: ${err.message}`);
+      console.error('[seo-autopilot] Pillar nav error (non-fatal):', err.message);
+    }
+
+    // Consolidation mitigation (Chunk 24) — apply one safe mitigation per run
+    if (consolidationPlan.items.length > 0) {
+      try {
+        const topItem = consolidationPlan.items[0];
+        const mitResult = applyConsolidationMitigation(topItem);
+        report.cannibalization.mitigation = {
+          applied: mitResult.applied,
+          primary: topItem.primary,
+          supporting: topItem.supporting,
+          actions: mitResult.actions,
+        };
+        if (mitResult.applied) {
+          console.log(`[links] Consolidation: mitigated ${topItem.supporting[0]} → ${topItem.primary}`);
+        }
+      } catch (err) {
+        report.errors.push(`consolidationMitigation: ${err.message}`);
+      }
+    }
   }
 
   // CTR focus: run experiment evaluation + apply
@@ -786,8 +1240,100 @@ async function main() {
     }
   }
 
-  // Refresh or Publish focus: run content engine
-  if ((focus === 'refresh' || focus === 'publish') && focusPlan.budgets.contentActionAllowed) {
+  // Striking-distance refresh (Chunk 17) — runs before generic content engine
+  let strikingRefreshDone = false;
+  if (focus === 'refresh' && queryPageMap.length > 0 && focusPlan.budgets.contentActionAllowed) {
+    try {
+      console.log('\n=== STRIKING DISTANCE REFRESH ===');
+      const expState = loadJson(join(STATE_DIR, 'experiments.json'), {});
+
+      const strikePlan = planStrikingRefresh({
+        queryMap: queryPageMap,
+        rankIntentRoutes: config.rankIntentRoutes || [],
+        moneyRoutes: config.moneyRoutes || [],
+        state,
+        experimentsState: expState,
+        nearDuplicatePairs: qualitySignals.nearDuplicatePairs || [],
+        thinRankIntent: qualitySignals.thinRankIntent || [],
+      });
+
+      console.log(`[strike] Plan: ${strikePlan.action} — ${strikePlan.reason}`);
+      report.strikingRefresh = {
+        action: strikePlan.action,
+        targetPagePath: strikePlan.targetPagePath,
+        queries: (strikePlan.queries || []).map(q => q.query),
+        pageType: strikePlan.pageType,
+        reason: strikePlan.reason,
+      };
+
+      if (strikePlan.action === 'refresh' && strikePlan.targetPagePath) {
+        const strikeResult = executeStrikingRefresh({
+          targetPagePath: strikePlan.targetPagePath,
+          queries: strikePlan.queries,
+          pageType: strikePlan.pageType,
+        });
+
+        if (strikeResult.success) {
+          console.log(`[strike] ${strikeResult.reason}: ${strikePlan.targetPagePath} (+${strikeResult.wordsAdded} words, ${strikeResult.queriesTargeted.length} queries)`);
+
+          // Post-refresh near-duplicate check
+          let revertNeeded = false;
+          try {
+            const qualityConfig = loadJson(join(__dirname, '..', 'config', 'quality.json'), {});
+            const afterPages = listHtmlPages(buildOutput.outputDir, { canonicalStrategy: config.canonicalStrategy });
+            const afterNearDup = detectNearDuplicates(afterPages, qualityConfig, blogResult.posts);
+            const newPairsCount = afterNearDup.pairs?.length || 0;
+            const oldPairsCount = qualitySignals.nearDuplicatePairsCount || 0;
+            if (newPairsCount > oldPairsCount) {
+              console.log(`[strike] Near-duplicate count increased (${oldPairsCount} -> ${newPairsCount}) — reverting`);
+              revertNeeded = true;
+            }
+          } catch (err) {
+            console.warn(`[strike] Post-refresh quality check error (non-fatal): ${err.message}`);
+          }
+
+          if (revertNeeded) {
+            revertStrikingRefresh(strikeResult.filePath, strikeResult.originalContent);
+            report.strikingRefresh.action = 'reverted';
+            report.strikingRefresh.reason = 'reverted_near_duplicate';
+            console.log(`[strike] Reverted refresh of ${strikePlan.targetPagePath}`);
+          } else {
+            strikingRefreshDone = true;
+
+            // Track state
+            state.strikingRefresh = state.strikingRefresh || { history: [] };
+            state.strikingRefresh.lastRefreshAt = new Date().toISOString();
+            state.strikingRefresh.lastTargetPath = strikePlan.targetPagePath;
+            state.strikingRefresh.history = state.strikingRefresh.history || [];
+            state.strikingRefresh.history.push({
+              pagePath: strikePlan.targetPagePath,
+              at: new Date().toISOString(),
+              queries: strikeResult.queriesTargeted,
+              wordsAdded: strikeResult.wordsAdded,
+            });
+            if (state.strikingRefresh.history.length > 50) {
+              state.strikingRefresh.history = state.strikingRefresh.history.slice(-50);
+            }
+
+            moduleOutcomes.content = {
+              lastRunAt: new Date().toISOString(),
+              action: 'striking-refresh',
+              target: strikePlan.targetPagePath,
+            };
+          }
+        } else {
+          console.log(`[strike] Execution failed: ${strikeResult.reason}`);
+          report.strikingRefresh.reason = strikeResult.reason;
+        }
+      }
+    } catch (err) {
+      report.errors.push(`strikingRefresh: ${err.message}`);
+      console.error('[seo-autopilot] Striking refresh error (non-fatal):', err.message);
+    }
+  }
+
+  // Refresh or Publish focus: run content engine (skip if striking-refresh already acted)
+  if ((focus === 'refresh' || focus === 'publish') && focusPlan.budgets.contentActionAllowed && !strikingRefreshDone) {
     try {
       console.log('\n=== CONTENT ENGINE ===');
       const backlog = loadBacklog();
@@ -890,8 +1436,8 @@ async function main() {
     }
   }
 
-  // Area page expansion (Chunk 11) — runs as refresh subtype when no content action was taken
-  if (focus === 'refresh' && report.content.action === 'none' && pages) {
+  // Area page expansion (Chunk 11) — runs as refresh subtype when no content/striking action was taken
+  if (focus === 'refresh' && report.content.action === 'none' && !strikingRefreshDone && pages) {
     try {
       console.log('\n=== AREA EXPANSION ===');
 
@@ -1231,6 +1777,15 @@ async function main() {
     try {
       await saveSnapshot({ headSha: currentSha, reason: 'post_run_ok', focus });
     } catch { /* non-fatal */ }
+  }
+
+  // Record deploy window usage (Chunk 28)
+  if (focus !== 'none' && !reverted) {
+    const windowMap = { tech: 'tech', links: 'tech', ctr: 'meta', money: 'meta', refresh: 'contentRefresh', publish: 'contentPublish' };
+    const wKey = windowMap[focus];
+    if (wKey) {
+      state.windows = recordWindowUsage(state.windows || {}, wKey);
+    }
   }
 
   await saveState(state);

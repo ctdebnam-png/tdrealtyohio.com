@@ -1,0 +1,17 @@
+{
+  "topNav": [
+    { "href": "/sellers/", "text": "Sellers" },
+    { "href": "/buyers/", "text": "Buyers" },
+    { "href": "/1-percent-commission/", "text": "1% Commission" },
+    { "href": "/areas/", "text": "Areas" },
+    { "href": "/blog/", "text": "Guides" },
+    { "href": "/contact/", "text": "Contact" }
+  ],
+  "footerNav": [
+    { "href": "/about/", "text": "About" },
+    { "href": "/contact/", "text": "Contact" },
+    { "href": "/sellers/", "text": "Sellers" },
+    { "href": "/buyers/", "text": "Buyers" },
+    { "href": "/areas/", "text": "Areas" }
+  ]
+}

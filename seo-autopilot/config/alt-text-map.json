@@ -1,0 +1,11 @@
+{
+  "_comment": "Canonical alt text for site images. Keys are src paths.",
+  "images": {
+    "/media/compliance/equal-housing.svg": "Equal Housing Opportunity logo",
+    "/media/compliance/realtor.svg": "Realtor® logo",
+    "/media/compliance/columbus-realtors.svg": "Columbus Realtors® logo",
+    "/media/compliance/ohio-realtors.svg": "Ohio Realtors® logo",
+    "/assets/images/og-default.jpg": "TD Realty Ohio",
+    "/assets/images/maps/downtown-columbus-ohio-1331979.jpg": "Downtown Columbus Ohio skyline"
+  }
+}
