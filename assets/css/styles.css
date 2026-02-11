@@ -1926,6 +1926,22 @@ main {
   color: var(--gold);
 }
 
+.contact-sub {
+  font-size: 0.8125rem;
+  margin-top: 0.125rem;
+}
+
+.contact-sub a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--gray-300);
+}
+
+.contact-sub a:hover {
+  text-decoration-color: var(--gold);
+}
+
 /* ===== AFFILIATIONS ===== */
 .affiliations {
   display: flex;
