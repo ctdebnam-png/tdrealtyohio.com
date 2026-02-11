@@ -13,35 +13,34 @@
 const NAV_REGISTRY = {
   // Header links (flat, no dropdowns)
   header: [
-    { label: 'Sell',    href: '/sellers/' },
-    { label: 'Buy',     href: '/buyers/' },
-    { label: 'Areas',   href: '/areas/' },
-    { label: 'About',   href: '/about/' },
-    { label: 'Blog',    href: '/blog/' },
-    { label: 'Contact', href: '/contact/', isCta: true }
+    { label: 'Sellers',       href: '/sellers/' },
+    { label: 'Buyers',        href: '/buyers/' },
+    { label: 'Service Areas', href: '/areas/' },
+    { label: 'About',         href: '/about/' },
+    { label: 'Blog',          href: '/blog/' },
+    { label: 'Contact',       href: '/contact/', isCta: true }
   ],
 
   // Mobile drawer groups (rendered by initMobileNav in main.js)
   groups: {
     sell: {
-      label: 'Sell',
+      label: 'Sellers',
       items: [
         { label: 'Sell Your Home', href: '/sellers/' },
         { label: '1% Listing Fee', href: '/sellers/#full-service' }
       ]
     },
     buy: {
-      label: 'Buy',
+      label: 'Buyers',
       items: [
-        { label: 'Buy a Home',              href: '/buyers/' },
-        { label: 'Affordability Calculator', href: '/affordability/' }
+        { label: 'Buy a Home', href: '/buyers/' }
       ]
     },
     learn: {
       label: 'Learn',
       items: [
-        { label: 'FAQ',             href: '/faq/' },
-        { label: 'Compare Options', href: '/compare/' }
+        { label: 'About', href: '/about/' },
+        { label: 'Blog',  href: '/blog/' }
       ]
     }
   },
@@ -51,19 +50,16 @@ const NAV_REGISTRY = {
     services: {
       label: 'Services',
       items: [
-        { label: 'Sell Your Home',         href: '/sellers/' },
-        { label: 'Buy a Home',             href: '/buyers/' },
-        { label: 'Service Areas',          href: '/areas/' },
-        { label: 'Home Value',             href: '/home-value/' },
-        { label: 'Affordability',          href: '/affordability/' }
+        { label: 'Sellers',       href: '/sellers/' },
+        { label: 'Buyers',        href: '/buyers/' },
+        { label: 'Service Areas', href: '/areas/' }
       ]
     },
     learn: {
-      label: 'Learn',
+      label: 'Company',
       items: [
-        { label: 'Blog',    href: '/blog/' },
-        { label: 'FAQ',     href: '/faq/' },
         { label: 'About',   href: '/about/' },
+        { label: 'Blog',    href: '/blog/' },
         { label: 'Contact', href: '/contact/' }
       ]
     }
@@ -79,8 +75,7 @@ const NAV_REGISTRY = {
 
   // Footer internal link allowlist (for drift-guard validation)
   footerInternal: [
-    '/', '/sellers/', '/buyers/', '/areas/', '/home-value/',
-    '/affordability/', '/about/', '/contact/', '/blog/', '/faq/',
+    '/sellers/', '/buyers/', '/areas/', '/about/', '/contact/', '/blog/',
     '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
   ],
 
