@@ -76,6 +76,9 @@ import { fixImageAlt } from '../fixers/image-alt.mjs';
 import { fixImageLazy } from '../fixers/image-lazy.mjs';
 import { fixOgImage } from '../fixers/og-image.mjs';
 import { auditSchema } from '../auditors/schema.mjs';
+import { auditPerf } from '../auditors/perf.mjs';
+import { detectPerfRegressions } from '../analyzers/perf-regressions.mjs';
+import { applyPerfHints } from '../fixers/perf-hints.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -167,6 +170,7 @@ async function main() {
     localSeo: { napDrift: { phoneMismatchCount: 0, emailMismatchCount: 0, sampleRoutes: [] }, schema: { injected: false, pages: [] } },
     images: { pagesChecked: 0, issueCounts: {}, oversizedImages: [], ogImageIssues: [], fixes: {} },
     schema: { issueCounts: {}, keyPages: {} },
+    perf: { issueCounts: {}, perRoute: [], regressions: [], fixes: {} },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -513,6 +517,46 @@ async function main() {
     report.errors.push(`schemaAudit: ${err.message}`);
   }
 
+  // Performance audit (Chunk 23) — fast built-HTML check
+  let perfAuditResult = { issueCounts: {}, perRoute: [], issues: [] };
+  try {
+    perfAuditResult = auditPerf();
+    const totalPerfIssues = Object.values(perfAuditResult.issueCounts).reduce((a, b) => a + b, 0);
+    if (totalPerfIssues > 0) {
+      const ic = perfAuditResult.issueCounts;
+      const parts = [];
+      if (ic.PERF_HTML_OVER_BUDGET) parts.push(`${ic.PERF_HTML_OVER_BUDGET} over-budget HTML`);
+      if (ic.PERF_HEAD_BLOCKING_SCRIPT) parts.push(`${ic.PERF_HEAD_BLOCKING_SCRIPT} blocking scripts`);
+      if (ic.PERF_TOO_MANY_SCRIPTS) parts.push(`${ic.PERF_TOO_MANY_SCRIPTS} too many scripts`);
+      if (ic.PERF_INLINE_JS_OVER_BUDGET) parts.push(`${ic.PERF_INLINE_JS_OVER_BUDGET} inline JS over budget`);
+      console.log(`[perf] ${totalPerfIssues} perf issue(s): ${parts.join(', ')}`);
+    }
+  } catch (err) {
+    report.errors.push(`perfAudit: ${err.message}`);
+  }
+
+  // Perf regression detection (Chunk 23)
+  let perfRegressions = [];
+  try {
+    const regressionResult = await detectPerfRegressions(perfAuditResult.perRoute);
+    perfRegressions = regressionResult.regressions;
+    if (perfRegressions.length > 0) {
+      console.log(`[perf] ${perfRegressions.length} regression(s) detected`);
+      for (const r of perfRegressions) {
+        console.log(`  ${r.route}: ${r.metric} ${r.previous} → ${r.current} (+${(r.deltaPct * 100).toFixed(0)}%)`);
+      }
+    }
+  } catch (err) {
+    report.errors.push(`perfRegressions: ${err.message}`);
+  }
+
+  report.perf = {
+    issueCounts: perfAuditResult.issueCounts,
+    perRoute: perfAuditResult.perRoute,
+    regressions: perfRegressions,
+    fixes: {},
+  };
+
   // Classify audit issues
   const techClassification = beforeAudit
     ? classifyIssues(beforeAudit, config.rankIntentRoutes || [])
@@ -543,6 +587,11 @@ async function main() {
     schemaIssues: {
       totalIssueCount: Object.values(schemaAuditResult.issueCounts || {}).reduce((a, b) => a + b, 0),
       keyPageIssueCount: Object.values(schemaAuditResult.keyPages || {}).reduce((sum, p) => sum + (p.issues?.length || 0), 0),
+    },
+    perfIssues: {
+      htmlOverBudget: perfAuditResult.issueCounts.PERF_HTML_OVER_BUDGET || 0,
+      headBlockingScripts: perfAuditResult.issueCounts.PERF_HEAD_BLOCKING_SCRIPT || 0,
+      regressionCount: perfRegressions.length,
     },
   });
 
@@ -713,6 +762,17 @@ async function main() {
         }
       } catch (err) {
         report.errors.push(`imageFixer: ${err.message}`);
+      }
+
+      // Performance hints fixer (Chunk 23)
+      try {
+        const perfFixResult = applyPerfHints(pages);
+        report.perf.fixes = { filesChanged: perfFixResult.filesChanged, actions: perfFixResult.actions };
+        if (perfFixResult.filesChanged > 0) {
+          console.log(`[tech] Perf hints: ${perfFixResult.filesChanged} file(s) updated`);
+        }
+      } catch (err) {
+        report.errors.push(`perfHints: ${err.message}`);
       }
 
       moduleOutcomes.tech = {

@@ -1,0 +1,15 @@
+{
+  "routes": ["/", "/sellers/", "/buyers/", "/1-percent-commission/", "/contact/"],
+  "budgets": {
+    "maxHtmlBytes": 250000,
+    "maxInlineCssBytes": 25000,
+    "maxInlineJsBytes": 25000,
+    "maxScriptsCount": 25,
+    "maxStylesheetsCount": 10,
+    "maxFontRequests": 6
+  },
+  "regressions": {
+    "htmlBytesPct": 0.15,
+    "scriptCount": 0.20
+  }
+}

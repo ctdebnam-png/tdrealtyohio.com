@@ -133,6 +133,7 @@ export function computeScore({
   nearDuplicatePairsCount = 0,
   conversionDeltas = {},
   schemaIssues = {},
+  perfIssues = {},
 }) {
   const config = loadScoringConfig();
   const w = config.weights;
@@ -263,6 +264,19 @@ export function computeScore({
     rationale.push({ key: 'schemaOtherIssues', value: schemaOtherIssues, weightApplied: schemaOtherPts });
   }
 
+  // Performance issues (Chunk 23)
+  const perfOverBudget = perfIssues.htmlOverBudget || 0;
+  const perfBlocking = perfIssues.headBlockingScripts || 0;
+  const perfRegressionCount = perfIssues.regressionCount || 0;
+  const perfOverPts = clamp(perfOverBudget * -2, -6, 0);
+  const perfBlockPts = clamp(perfBlocking * -1, -3, 0);
+  const perfRegPts = clamp(perfRegressionCount * -3, -9, 0);
+  const totalPerfPts = perfOverPts + perfBlockPts + perfRegPts;
+  if (totalPerfPts < 0) {
+    score += totalPerfPts;
+    rationale.push({ key: 'perfIssues', value: { overBudget: perfOverBudget, blocking: perfBlocking, regressions: perfRegressionCount }, weightApplied: totalPerfPts });
+  }
+
   // Clamp final score
   score = Math.round(clamp(score, 0, 100));
 
@@ -295,6 +309,11 @@ export function computeScore({
     schema: {
       keyPageIssueCount: schemaKeyPageIssues,
       otherIssueCount: schemaOtherIssues,
+    },
+    perf: {
+      htmlOverBudget: perfOverBudget,
+      headBlockingScripts: perfBlocking,
+      regressions: perfRegressionCount,
     },
   };
 
