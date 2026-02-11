@@ -79,6 +79,10 @@ import { auditSchema } from '../auditors/schema.mjs';
 import { auditPerf } from '../auditors/perf.mjs';
 import { detectPerfRegressions } from '../analyzers/perf-regressions.mjs';
 import { applyPerfHints } from '../fixers/perf-hints.mjs';
+import { buildQueryPagesIndex } from '../analyzers/query-pages-index.mjs';
+import { detectCannibalization } from '../analyzers/cannibalization.mjs';
+import { planConsolidation } from '../planners/consolidation-plan.mjs';
+import { applyConsolidationMitigation, removeConsolidationMitigations } from '../fixers/consolidation-mitigations.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -171,6 +175,7 @@ async function main() {
     images: { pagesChecked: 0, issueCounts: {}, oversizedImages: [], ogImageIssues: [], fixes: {} },
     schema: { issueCounts: {}, keyPages: {} },
     perf: { issueCounts: {}, perRoute: [], regressions: [], fixes: {} },
+    cannibalization: { multiPageCount: 0, pairs: 0, planItems: 0, mitigation: null },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -394,6 +399,32 @@ async function main() {
   } catch (err) {
     report.errors.push(`conversions: ${err.message}`);
     console.error('[seo-autopilot] Conversions error (non-fatal):', err.message);
+  }
+
+  // Cannibalization analysis (Chunk 24) — requires GSC data
+  let cannibalizationPairs = [];
+  let consolidationPlan = { items: [] };
+  try {
+    const gscRows28 = state.gsc?.rows28 || [];
+    if (gscRows28.length > 0) {
+      const qpIndex = await buildQueryPagesIndex(gscRows28);
+      if (qpIndex.multiPageCount > 0) {
+        const cannResult = detectCannibalization(qpIndex.multiPageQueries);
+        cannibalizationPairs = cannResult.pairs;
+        if (cannResult.totalCandidates > 0) {
+          consolidationPlan = await planConsolidation(cannResult.pairs);
+          console.log(`[cannibalization] ${cannResult.totalCandidates} competing pair(s), ${consolidationPlan.items.length} plan item(s)`);
+        }
+      }
+      report.cannibalization = {
+        multiPageCount: qpIndex.multiPageCount,
+        pairs: cannibalizationPairs.length,
+        planItems: consolidationPlan.items.length,
+        mitigation: null,
+      };
+    }
+  } catch (err) {
+    report.errors.push(`cannibalization: ${err.message}`);
   }
 
   // ─────────────────────────── PHASE 2: SCORE + FOCUS ──────────────────────
@@ -930,6 +961,25 @@ async function main() {
     } catch (err) {
       report.errors.push(`pillarNav: ${err.message}`);
       console.error('[seo-autopilot] Pillar nav error (non-fatal):', err.message);
+    }
+
+    // Consolidation mitigation (Chunk 24) — apply one safe mitigation per run
+    if (consolidationPlan.items.length > 0) {
+      try {
+        const topItem = consolidationPlan.items[0];
+        const mitResult = applyConsolidationMitigation(topItem);
+        report.cannibalization.mitigation = {
+          applied: mitResult.applied,
+          primary: topItem.primary,
+          supporting: topItem.supporting,
+          actions: mitResult.actions,
+        };
+        if (mitResult.applied) {
+          console.log(`[links] Consolidation: mitigated ${topItem.supporting[0]} → ${topItem.primary}`);
+        }
+      } catch (err) {
+        report.errors.push(`consolidationMitigation: ${err.message}`);
+      }
     }
   }
 

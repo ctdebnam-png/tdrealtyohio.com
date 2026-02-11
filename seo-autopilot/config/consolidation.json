@@ -1,0 +1,8 @@
+{
+  "minSharedQueries": 5,
+  "minImpressionsPerQuery": 50,
+  "maxPagesPerQuery": 3,
+  "applyMitigations": true,
+  "allowCanonicalChanges": false,
+  "maxMitigationsPerRun": 1
+}
