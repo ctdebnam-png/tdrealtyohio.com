@@ -71,6 +71,10 @@ import { computeConversionAttribution } from '../analyzers/conversion-attributio
 import { injectLocalBusinessSchema } from '../generators/localbusiness-schema.mjs';
 import { auditNapDrift } from '../auditors/nap-drift.mjs';
 import { generateCitationsPlan } from '../generators/citations-plan.mjs';
+import { auditImages } from '../auditors/image-audit.mjs';
+import { fixImageAlt } from '../fixers/image-alt.mjs';
+import { fixImageLazy } from '../fixers/image-lazy.mjs';
+import { fixOgImage } from '../fixers/og-image.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -160,6 +164,7 @@ async function main() {
     navConsistency: { totalChecked: 0, issues: [], pillarInDegree: {} },
     conversions: { lastDay: null, last7: null, deltas: null },
     localSeo: { napDrift: { phoneMismatchCount: 0, emailMismatchCount: 0, sampleRoutes: [] }, schema: { injected: false, pages: [] } },
+    images: { pagesChecked: 0, issueCounts: {}, oversizedImages: [], ogImageIssues: [], fixes: {} },
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -459,6 +464,30 @@ async function main() {
     report.errors.push(`napDrift: ${err.message}`);
   }
 
+  // Image audit (Chunk 21) — read-only scan
+  try {
+    const imageAuditResult = auditImages(pages || []);
+    report.images = {
+      pagesChecked: imageAuditResult.pagesChecked,
+      issueCounts: imageAuditResult.issueCounts,
+      oversizedImages: imageAuditResult.oversizedImages,
+      ogImageIssues: imageAuditResult.ogImageIssues,
+      fixes: {},
+    };
+    const totalImgIssues = imageAuditResult.summary.totalIssues;
+    if (totalImgIssues > 0) {
+      const counts = imageAuditResult.issueCounts;
+      const parts = [];
+      if (counts.MISSING_ALT) parts.push(`${counts.MISSING_ALT} missing alt`);
+      if (counts.EMPTY_ALT) parts.push(`${counts.EMPTY_ALT} empty alt`);
+      if (counts.MISSING_OG_IMAGE) parts.push(`${counts.MISSING_OG_IMAGE} missing og:image`);
+      if (counts.OVERSIZED_IMAGE) parts.push(`${counts.OVERSIZED_IMAGE} oversized`);
+      console.log(`[images] ${totalImgIssues} image issue(s): ${parts.join(', ')}`);
+    }
+  } catch (err) {
+    report.errors.push(`imageAudit: ${err.message}`);
+  }
+
   // Classify audit issues
   const techClassification = beforeAudit
     ? classifyIssues(beforeAudit, config.rankIntentRoutes || [])
@@ -637,6 +666,24 @@ async function main() {
         await generateCitationsPlan();
       } catch (err) {
         report.errors.push(`citationsPlan: ${err.message}`);
+      }
+
+      // Image SEO fixers (Chunk 21)
+      try {
+        const altResult = fixImageAlt(pages);
+        const lazyResult = fixImageLazy(pages);
+        const ogResult = fixOgImage(pages);
+        report.images.fixes = {
+          alt: { filesChanged: altResult.filesChanged, tagsFixed: altResult.tagsFixed },
+          lazy: { filesChanged: lazyResult.filesChanged, tagsFixed: lazyResult.tagsFixed },
+          ogImage: { filesChanged: ogResult.filesChanged, tagsFixed: ogResult.tagsFixed },
+        };
+        const totalFixFiles = altResult.filesChanged + lazyResult.filesChanged + ogResult.filesChanged;
+        if (totalFixFiles > 0) {
+          console.log(`[tech] Image fixes: alt=${altResult.tagsFixed}, lazy=${lazyResult.tagsFixed}, og=${ogResult.tagsFixed}`);
+        }
+      } catch (err) {
+        report.errors.push(`imageFixer: ${err.message}`);
       }
 
       moduleOutcomes.tech = {
