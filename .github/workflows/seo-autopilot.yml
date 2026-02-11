@@ -20,88 +20,15 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      # ── Setup ──────────────────────────────────────────────
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: ./.github/actions/seo-autopilot
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Detect Node version
-        id: node-version
-        run: |
-          if [ -f .nvmrc ]; then
-            echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
-          else
-            echo "version=20" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ steps.node-version.outputs.version }}
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci || true
-
-      - name: Initial build
-        run: npm run build || true
-
-      # ── Run autopilot ─────────────────────────────────────
-      - name: Run SEO autopilot
-        run: node seo-autopilot/bin/run.mjs
+          node_version: '20'
+          debug: '0'
         env:
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
           GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
           GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
           GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
-
-      # ── Deploy-safe guard ─────────────────────────────────
-      - name: Check for changes
-        id: changes
-        run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "has_changes=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_changes=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Rebuild to verify changes are safe
-        if: steps.changes.outputs.has_changes == 'true'
-        id: rebuild
-        run: |
-          npm run build && echo "rebuild_ok=true" >> "$GITHUB_OUTPUT" || echo "rebuild_ok=false" >> "$GITHUB_OUTPUT"
-
-      - name: Revert if rebuild failed
-        if: steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok == 'false'
-        run: |
-          echo "[seo-autopilot] Rebuild failed — reverting all changes"
-          git checkout -- .
-
-      - name: Commit and push
-        if: steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok != 'false'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Only stage specific state/config files — never git add -A
-          git add \
-            seo-autopilot/state/state.json \
-            seo-autopilot/state/score-history.json \
-            seo-autopilot/state/module-outcomes.json \
-            seo-autopilot/state/experiments.json \
-            seo-autopilot/config/*.json \
-            2>/dev/null || true
-          # Stage any HTML files the autopilot may have edited (links, meta, area pages)
-          git add -u -- '*.html' 2>/dev/null || true
-          # Stage content-backlog and related-guides updates
-          git add seo-autopilot/config/content-backlog.json seo-autopilot/config/related-guides.json 2>/dev/null || true
-          # Only commit if there are staged changes
-          if git diff --cached --quiet; then
-            echo "[seo-autopilot] No staged changes to commit"
-          else
-            git commit -m "chore(seo-autopilot): automated run $(date -u +%Y-%m-%d)"
-            git push
-          fi
 
       # ── Always succeed ────────────────────────────────────
       - name: Force success

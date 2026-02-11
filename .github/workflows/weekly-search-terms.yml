@@ -3,6 +3,9 @@ name: Weekly Search Terms Analysis
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   search-terms:
     name: Search Terms -> Content Queue

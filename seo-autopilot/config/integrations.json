@@ -1,0 +1,14 @@
+{
+  "gsc": {
+    "enabled": true,
+    "requiredEnv": ["GSC_SITE_URL", "GSC_CLIENT_ID", "GSC_CLIENT_SECRET", "GSC_REFRESH_TOKEN"]
+  },
+  "cloudflareKv": {
+    "enabled": false,
+    "requiredEnv": ["CF_ACCOUNT_ID", "CF_KV_NAMESPACE_ID", "CF_API_TOKEN"]
+  },
+  "cloudflareD1": {
+    "enabled": false,
+    "requiredEnv": ["CF_ACCOUNT_ID", "CF_D1_DATABASE_ID", "CF_API_TOKEN"]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "keepTriggersFor": [
+    "deploy.yml",
+    "cloudflare-pages.yml"
+  ]
+}

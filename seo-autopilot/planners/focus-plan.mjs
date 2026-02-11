@@ -60,6 +60,7 @@ export function computeFocusPlan({
   moneyRoutes = [],
   liveIssueCounts = {},
   nearDuplicateRoutes = [],
+  workflowNoiseCounts = {},
 }) {
   const config = loadScoringConfig();
   const thresholds = config.thresholds || {};
@@ -93,6 +94,17 @@ export function computeFocusPlan({
     return {
       focus: 'tech',
       reason: `${criticalCount} critical tech issue(s) exceed threshold`,
+      budgets: { ...budgets, contentActionAllowed: false },
+    };
+  }
+
+  // 1a) Workflow noise gate (Chunk 27): push triggers or PR bots
+  const pushTriggered = workflowNoiseCounts.pushTriggeredCount || 0;
+  const prBots = workflowNoiseCounts.prBotCount || 0;
+  if (pushTriggered > 0 || prBots > 0) {
+    return {
+      focus: 'tech',
+      reason: `Workflow noise risk: ${pushTriggered} push-triggered, ${prBots} PR-bot workflow(s) — pausing growth work`,
       budgets: { ...budgets, contentActionAllowed: false },
     };
   }

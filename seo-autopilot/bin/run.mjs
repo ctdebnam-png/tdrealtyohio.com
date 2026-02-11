@@ -83,6 +83,10 @@ import { buildQueryPagesIndex } from '../analyzers/query-pages-index.mjs';
 import { detectCannibalization } from '../analyzers/cannibalization.mjs';
 import { planConsolidation } from '../planners/consolidation-plan.mjs';
 import { applyConsolidationMitigation, removeConsolidationMitigations } from '../fixers/consolidation-mitigations.mjs';
+import { auditWorkflowNoise } from '../auditors/workflows-noise.mjs';
+import { fixWorkflowsQuietMode } from '../fixers/workflows-quiet-mode.mjs';
+import { checkDeployWindows, recordWindowUsage } from '../lib/window-check.mjs';
+import { auditIntegrationsHealth } from '../auditors/integrations-health.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -176,6 +180,9 @@ async function main() {
     schema: { issueCounts: {}, keyPages: {} },
     perf: { issueCounts: {}, perRoute: [], regressions: [], fixes: {} },
     cannibalization: { multiPageCount: 0, pairs: 0, planItems: 0, mitigation: null },
+    workflowNoise: { workflowsTotal: 0, pushTriggeredCount: 0, prBotCount: 0, likelyFailCount: 0 },
+    deployWindows: { allowed: {}, reasons: {}, selectedFocus: '', effectiveFocus: '' },
+    integrations: {},
     score: null, focusPlan: null, moduleOutcomes: null,
     safety: { reverted: false, reason: '', baselineSha: '', stats: {}, auditDelta: {} },
     notes: '', errors: [],
@@ -203,6 +210,21 @@ async function main() {
     await saveSnapshot({ headSha: baselineSha, reason: 'pre_run', focus: '' });
   } catch (err) {
     report.errors.push(`snapshot: ${err.message}`);
+  }
+
+  // ─────────────────────────── INTEGRATIONS HEALTH ────────────────────────
+  try {
+    const intHealth = auditIntegrationsHealth();
+    report.integrations = intHealth.integrations;
+    state.integrations = {};
+    for (const [name, info] of Object.entries(intHealth.integrations)) {
+      state.integrations[name] = info.status;
+    }
+    if (intHealth.summary.missingEnv > 0) {
+      console.log(`[integrations] ${intHealth.summary.available} available, ${intHealth.summary.missingEnv} missing env, ${intHealth.summary.disabled} disabled`);
+    }
+  } catch (err) {
+    report.errors.push(`integrationsHealth: ${err.message}`);
   }
 
   // ─────────────────────────── PHASE 1: COLLECT DATA ───────────────────────
@@ -692,6 +714,51 @@ async function main() {
     // Non-fatal
   }
 
+  // Workflow noise audit (Chunk 27) — scan GitHub Actions for noise risk
+  let workflowNoiseCounts = { pushTriggeredCount: 0, prBotCount: 0 };
+  try {
+    const wfNoiseResult = auditWorkflowNoise();
+    workflowNoiseCounts = wfNoiseResult.summary;
+    report.workflowNoise = wfNoiseResult.summary;
+
+    // Write full report (gitignored)
+    await writeJsonStable(join(REPORT_DIR, 'workflows-noise.json'), wfNoiseResult);
+
+    // Write compact state (committed)
+    const compactWfState = {
+      checkedAt: wfNoiseResult.checkedAt,
+      pushTriggeredCount: wfNoiseResult.summary.pushTriggeredCount,
+      prTriggeredCount: wfNoiseResult.summary.prTriggeredCount,
+      prBotCount: wfNoiseResult.summary.prBotCount,
+      likelyFailCount: wfNoiseResult.summary.likelyFailCount,
+      pushTriggeredFiles: wfNoiseResult.workflows
+        .filter(w => w.risk.runsOnPush)
+        .map(w => w.file)
+        .slice(0, 20),
+    };
+    await writeJsonStable(join(STATE_DIR, 'workflows-noise.json'), compactWfState, 'workflowsNoise');
+
+    // Single-line summary
+    if (DEBUG) {
+      console.log(`\n[workflows] ${wfNoiseResult.summary.workflowsTotal} workflows: ${wfNoiseResult.summary.pushTriggeredCount} push, ${wfNoiseResult.summary.prBotCount} PR-bot, ${wfNoiseResult.summary.likelyFailCount} fail-prone`);
+    } else {
+      console.log(`\n[workflows] ${wfNoiseResult.summary.workflowsTotal} total, ${wfNoiseResult.summary.pushTriggeredCount} push, ${wfNoiseResult.summary.prBotCount} PR-bot`);
+    }
+
+    // Optional auto-remediation (off by default)
+    if (process.env.SEO_AUTOPILOT_FIX_WORKFLOWS === '1') {
+      const noisyWfs = wfNoiseResult.workflows.filter(w => w.risk.runsOnPush || w.risk.runsOnPR);
+      if (noisyWfs.length > 0) {
+        const fixResult = fixWorkflowsQuietMode(noisyWfs);
+        if (fixResult.filesFixed > 0) {
+          console.log(`[workflows] Fixed ${fixResult.filesFixed} workflow(s)`);
+        }
+      }
+    }
+  } catch (err) {
+    report.errors.push(`workflowNoise: ${err.message}`);
+  }
+
   // Compute focus plan
   const moduleOutcomes = loadModuleOutcomes();
   // Collect near-duplicate route set for focus gating
@@ -710,6 +777,7 @@ async function main() {
     moneyRoutes: config.moneyRoutes || [],
     liveIssueCounts: report.live?.issueCounts || {},
     nearDuplicateRoutes,
+    workflowNoiseCounts,
   });
 
   // Override focus if repeated reverts (Step 7)
@@ -718,6 +786,53 @@ async function main() {
     focusPlan.reason = `Forced tech: ${consecutiveReverts} consecutive reverts`;
     focusPlan.budgets = { ...focusPlan.budgets, contentActionAllowed: false };
   }
+
+  // Deploy windows gate (Chunk 28) — throttle edits by time windows
+  const backlogForWindows = loadBacklog();
+  const pendingTopics = backlogForWindows?.clusters?.reduce((sum, c) => sum + c.topics.filter(t => t.status === 'pending').length, 0) || 0;
+  const windowCheck = checkDeployWindows({
+    windows: state.windows || {},
+    signals: {
+      criticalCount: techClassification.criticalCount,
+      liveIssueCount: (report.live?.issueCounts?.LIVE_NOINDEX || 0) + (report.live?.issueCounts?.LIVE_ROBOTS_TXT_BLOCKING || 0),
+      highImpLowCtrCount: (opportunities.highImpressionsLowCtrPages || []).length,
+      strikingDistanceCount: (opportunities.strikingDistanceQueries || []).length,
+      pendingTopicCount: pendingTopics,
+      thinCount,
+      underlinkedCount: underlinkedPillarCount,
+    },
+  });
+
+  // If chosen focus is not allowed by deploy window, degrade
+  const selectedFocus = focusPlan.focus;
+  const focusWindowMap = { tech: 'tech', links: 'tech', ctr: 'meta', money: 'meta', refresh: 'refresh', publish: 'publish' };
+  const windowKey = focusWindowMap[focusPlan.focus];
+  if (windowKey && !windowCheck.allowed[windowKey]) {
+    // Find next allowed focus in priority order
+    const priorities = ['tech', 'links', 'ctr', 'money', 'refresh', 'publish', 'none'];
+    const windowKeys = { tech: 'tech', links: 'tech', ctr: 'meta', money: 'meta', refresh: 'refresh', publish: 'publish', none: null };
+    let degraded = false;
+    for (const p of priorities) {
+      const wk = windowKeys[p];
+      if (wk === null || windowCheck.allowed[wk]) {
+        if (p !== focusPlan.focus) {
+          focusPlan.focus = p;
+          focusPlan.reason = `Window blocked (${windowCheck.reasons[windowKey]}); degraded from ${selectedFocus} to ${p}`;
+          if (p === 'none') focusPlan.budgets.contentActionAllowed = false;
+          degraded = true;
+        }
+        break;
+      }
+    }
+  }
+
+  // Report deploy windows
+  report.deployWindows = {
+    allowed: windowCheck.allowed,
+    reasons: windowCheck.reasons,
+    selectedFocus,
+    effectiveFocus: focusPlan.focus,
+  };
 
   console.log(`\n=== FOCUS: ${focusPlan.focus} ===`);
   console.log(`  Reason: ${focusPlan.reason}`);
@@ -1548,6 +1663,15 @@ async function main() {
     try {
       await saveSnapshot({ headSha: currentSha, reason: 'post_run_ok', focus });
     } catch { /* non-fatal */ }
+  }
+
+  // Record deploy window usage (Chunk 28)
+  if (focus !== 'none' && !reverted) {
+    const windowMap = { tech: 'tech', links: 'tech', ctr: 'meta', money: 'meta', refresh: 'contentRefresh', publish: 'contentPublish' };
+    const wKey = windowMap[focus];
+    if (wKey) {
+      state.windows = recordWindowUsage(state.windows || {}, wKey);
+    }
   }
 
   await saveState(state);

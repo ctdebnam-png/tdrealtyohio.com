@@ -3,6 +3,9 @@ name: Daily Site Optimizer
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   optimize:
     name: Pull, Analyze, and PR On-Site Changes

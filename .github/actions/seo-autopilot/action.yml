@@ -1,0 +1,136 @@
+name: SEO Autopilot
+description: Runs the SEO autopilot pipeline with safety guards, commit gating, and quiet-mode defaults
+
+inputs:
+  node_version:
+    description: Node.js version to use
+    required: false
+    default: '20'
+  working_directory:
+    description: Repository root
+    required: false
+    default: '.'
+  debug:
+    description: Set to "1" to enable verbose output
+    required: false
+    default: '0'
+
+runs:
+  using: composite
+  steps:
+    # ── Setup ────────────────────────────────────────────────
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ github.token }}
+
+    - name: Read run contract
+      id: contract
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        if [ -f seo-autopilot/config/run-contract.json ]; then
+          CMD=$(node -e "const c=require('./seo-autopilot/config/run-contract.json'); console.log(c.command)")
+          NODE_VER=$(node -e "const c=require('./seo-autopilot/config/run-contract.json'); console.log(c.node || '${{ inputs.node_version }}')")
+          echo "command=$CMD" >> "$GITHUB_OUTPUT"
+          echo "node_version=$NODE_VER" >> "$GITHUB_OUTPUT"
+        else
+          echo "command=node seo-autopilot/bin/run.mjs" >> "$GITHUB_OUTPUT"
+          echo "node_version=${{ inputs.node_version }}" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ steps.contract.outputs.node_version }}
+        cache: npm
+
+    - name: Install dependencies
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci || true
+        else
+          npm install || true
+        fi
+
+    - name: Initial build
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: npm run build || true
+
+    # ── Run autopilot ──────────────────────────────────────
+    - name: Run SEO autopilot
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      env:
+        SEO_AUTOPILOT_DEBUG: ${{ inputs.debug }}
+      run: ${{ steps.contract.outputs.command }} || true
+
+    # ── Deploy-safe guard ──────────────────────────────────
+    - name: Check for changes
+      id: changes
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "has_changes=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "has_changes=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Check if commit is warranted
+      id: should_commit
+      if: steps.changes.outputs.has_changes == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        if node seo-autopilot/lib/should-commit.mjs; then
+          echo "worthy=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "worthy=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Rebuild to verify changes are safe
+      if: steps.should_commit.outputs.worthy == 'true'
+      id: rebuild
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        npm run build && echo "rebuild_ok=true" >> "$GITHUB_OUTPUT" || echo "rebuild_ok=false" >> "$GITHUB_OUTPUT"
+
+    - name: Revert if rebuild failed
+      if: steps.should_commit.outputs.worthy == 'true' && steps.rebuild.outputs.rebuild_ok == 'false'
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        echo "[seo-autopilot] Rebuild failed — reverting all changes"
+        git checkout -- .
+
+    - name: Commit and push
+      if: steps.should_commit.outputs.worthy == 'true' && steps.rebuild.outputs.rebuild_ok != 'false'
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        # Only stage specific state/config files — never git add -A
+        git add \
+          seo-autopilot/state/state.json \
+          seo-autopilot/state/score-history.json \
+          seo-autopilot/state/module-outcomes.json \
+          seo-autopilot/state/experiments.json \
+          seo-autopilot/config/*.json \
+          2>/dev/null || true
+        # Stage any HTML files the autopilot may have edited
+        git add -u -- '*.html' 2>/dev/null || true
+        # Stage content-backlog and related-guides updates
+        git add seo-autopilot/config/content-backlog.json seo-autopilot/config/related-guides.json 2>/dev/null || true
+        # Only commit if there are staged changes
+        if git diff --cached --quiet; then
+          echo "[seo-autopilot] No staged changes to commit"
+        else
+          git commit -m "chore(seo-autopilot): automated run $(date -u +%Y-%m-%d)"
+          git push
+        fi

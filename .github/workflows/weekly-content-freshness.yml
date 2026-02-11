@@ -3,6 +3,9 @@ name: Weekly Content Freshness Report
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   freshness-check:
     name: Content Freshness Audit

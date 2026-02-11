@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-02-11",
+  "primaryNoiseWorkflow": "seo-autopilot.yml",
+  "notes": [
+    "seo-autopilot.yml is the only scheduled workflow (daily 06:00 UTC + manual).",
+    "All other 10 workflows are workflow_dispatch only — zero push/PR triggers.",
+    "seo-autopilot.yml already has 'Force success' step (if: always()) so it never fails.",
+    "apply-ads-changes.yml has 'exit 1' for validation but is manual-only — no email noise.",
+    "No workflow creates PRs, issues, or comments.",
+    "should-commit.mjs gates commits to meaningful changes only.",
+    "workflows-noise.mjs auditor detects reintroduced push triggers."
+  ]
+}
