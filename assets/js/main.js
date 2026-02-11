@@ -324,13 +324,45 @@ function initMobileNav() {
     }
   };
 
-  if (navConfig) {
+  var mobileGroups = [];
+  if (navConfig && navConfig.footer) {
+    [
+      ['sell', 4],
+      ['buy', 3],
+      ['learn', 4]
+    ].forEach(function (groupPair) {
+      var key = groupPair[0];
+      var maxItems = groupPair[1];
+      var group = navConfig.footer[key];
+      if (!group || !Array.isArray(group.items) || !group.items.length) return;
+      mobileGroups.push({
+        key: key,
+        title: group.title,
+        items: group.items.slice(0, maxItems)
+      });
+    });
+  } else {
     ['services', 'company'].forEach(function (groupKey) {
       var group = navConfig[groupKey];
       if (!group) return;
+      mobileGroups.push({
+        key: groupKey,
+        title: group.title,
+        items: group.items || []
+      });
+    });
+  }
+
+  if (mobileGroups.length) {
+    var lead = document.createElement('div');
+    lead.className = 'mobile-nav-lead';
+    lead.innerHTML = '<p class="mobile-nav-lead-title">Save more without giving up service</p><p class="mobile-nav-lead-copy">1% listing option, 2% sell-only option, and local full-service support.</p>';
+    body.appendChild(lead);
+
+    mobileGroups.forEach(function (group) {
       var header = document.createElement('div');
       header.className = 'nav-section-header';
-      header.id = 'mobile-nav-group-' + groupKey;
+      header.id = 'mobile-nav-group-' + group.key;
       header.textContent = group.title;
       body.appendChild(header);
 
@@ -477,8 +509,8 @@ function initMarketBanner() {
     banner.className = 'market-banner';
     banner.setAttribute('role', 'status');
     banner.innerHTML =
-      '<span class="market-banner-text">Central Ohio Market Update: Median days on market <strong>10\u201320 days</strong> for well-priced homes. ' +
-      '<a href="/home-value/">Get your free valuation \u2192</a></span>';
+      '<span class="market-banner-text">Central Ohio market snapshot: well-priced homes often move in <strong>10\u201320 days</strong>. ' +
+      '<a href="/home-value/">Get a quick value estimate \u2192</a></span>';
     var skipLink = document.querySelector('.skip-link');
     if (skipLink && skipLink.nextSibling) {
       skipLink.parentNode.insertBefore(banner, skipLink.nextSibling);
