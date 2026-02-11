@@ -2,7 +2,7 @@
  * TD Realty Ohio - Navigation Configuration
  * Single source of truth for header nav, footer nav, and hamburger menu.
  *
- * Header: 5 flat items — Sell, Buy, Areas, About, Contact (CTA).
+ * Header: 6 flat items — Sellers, Buyers, Service Areas, About, Blog, Contact (CTA).
  * Mobile menu: built from TD_NAV.mobile by initMobileNav() in main.js.
  * Footer: static HTML; TD_NAV.footerInternal used for drift-guard validation only.
  *
@@ -12,35 +12,34 @@
 
 var TD_NAV = {
   header: [
-    { label: 'Sell',    href: '/sellers/' },
-    { label: 'Buy',     href: '/buyers/' },
-    { label: 'Areas',   href: '/areas/' },
-    { label: 'About',   href: '/about/' },
-    { label: 'Blog',    href: '/blog/' },
-    { label: 'Contact', href: '/contact/', isCta: true }
+    { label: 'Sellers',       href: '/sellers/' },
+    { label: 'Buyers',        href: '/buyers/' },
+    { label: 'Service Areas', href: '/areas/' },
+    { label: 'About',         href: '/about/' },
+    { label: 'Blog',          href: '/blog/' },
+    { label: 'Contact',       href: '/contact/', isCta: true }
   ],
 
   // ── Mobile drawer menu (rendered by initMobileNav) ──────────────
   mobile: {
     sell: {
-      title: 'Sell',
+      title: 'Sellers',
       items: [
         { label: 'Sell Your Home', href: '/sellers/' },
         { label: '1% Listing Fee', href: '/sellers/#full-service' }
       ]
     },
     buy: {
-      title: 'Buy',
+      title: 'Buyers',
       items: [
-        { label: 'Buy a Home',              href: '/buyers/' },
-        { label: 'Affordability Calculator', href: '/affordability/' }
+        { label: 'Buy a Home', href: '/buyers/' }
       ]
     },
     learn: {
       title: 'Learn',
       items: [
-        { label: 'FAQ',             href: '/faq/' },
-        { label: 'Compare Options', href: '/compare/' }
+        { label: 'About', href: '/about/' },
+        { label: 'Blog',  href: '/blog/' }
       ]
     }
   },
@@ -52,8 +51,7 @@ var TD_NAV = {
 
   // ── Footer internal link allowlist (for drift-guard validation) ─
   footerInternal: [
-    '/', '/sellers/', '/buyers/', '/areas/', '/home-value/',
-    '/affordability/', '/about/', '/contact/', '/blog/', '/faq/',
+    '/sellers/', '/buyers/', '/areas/', '/about/', '/contact/', '/blog/',
     '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
   ]
 };

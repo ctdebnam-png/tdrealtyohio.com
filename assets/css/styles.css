@@ -2058,6 +2058,19 @@ main {
   opacity: 0.8;
 }
 
+.footer-pricing-disclosure {
+  font-size: 0.8125rem;
+  color: var(--gray-500);
+  text-align: center;
+  padding: 0.5rem 0 0;
+  margin: 0;
+}
+
+.footer-pricing-disclosure a {
+  color: var(--gray-400);
+  text-decoration: underline;
+}
+
 .footer-license {
   font-size: 0.8125rem;
   color: var(--gray-500);
