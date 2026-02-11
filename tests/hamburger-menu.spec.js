@@ -6,7 +6,7 @@ const { test, expect } = require('@playwright/test');
  *
  * Validates that the mobile hamburger menu:
  * 1. Opens and is visible on all target routes
- * 2. Contains "Services" and "Company" group headings
+ * 2. Contains "Sell", "Buy", and "Learn" group headings
  * 3. Links match the footer navigation exactly
  * 4. Navigating via a link closes the menu
  * 5. ESC key closes the menu
@@ -28,27 +28,8 @@ const TARGET_ROUTES = [
   '/contact/',
 ];
 
-// Expected nav groups (must match TD_NAV in assets/js/nav.js)
-const EXPECTED_GROUPS = ['Services', 'Company'];
-
-const EXPECTED_SERVICES_LINKS = [
-  { label: 'For Sellers', href: '/sellers/' },
-  { label: 'For Buyers', href: '/buyers/' },
-  { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
-  { label: 'Service Areas', href: '/areas/' },
-  { label: 'Free Home Value', href: '/home-value/' },
-  { label: 'Affordability Calculator', href: '/affordability/' },
-  { label: 'Referral Credit', href: '/referrals/' },
-  { label: 'Compare Options', href: '/compare/' },
-];
-
-const EXPECTED_COMPANY_LINKS = [
-  { label: 'About', href: '/about/' },
-  { label: 'Contact', href: '/contact/' },
-  { label: 'Blog', href: '/blog/' },
-  { label: 'Agent Opportunities', href: '/agents/' },
-  { label: 'FAQ', href: '/faq/' },
-];
+// Expected nav groups (must match TD_NAV.footer in assets/js/nav.js)
+const EXPECTED_GROUPS = ['Sell', 'Buy', 'Learn'];
 
 test.describe('Hamburger Menu', () => {
   test.use({
@@ -73,7 +54,7 @@ test.describe('Hamburger Menu', () => {
       await expect(panel).toBeVisible({ timeout: 3000 });
       await expect(hamburger).toHaveAttribute('aria-expanded', 'true');
 
-      // Should contain both group headings
+      // Should contain all group headings
       for (const group of EXPECTED_GROUPS) {
         const heading = panel.locator('.nav-section-header', { hasText: group });
         await expect(heading).toBeVisible();
@@ -96,21 +77,27 @@ test.describe('Hamburger Menu', () => {
         }))
       );
 
-      // Collect footer links
-      const footerServicesLinks = await page.locator('[data-footer-nav="services"] a').evaluateAll(els =>
+      // Collect footer links from the three nav groups
+      const footerSellLinks = await page.locator('[data-footer-nav="sell"] a').evaluateAll(els =>
         els.map(el => ({
           label: el.textContent.trim(),
           href: new URL(el.getAttribute('href'), window.location.origin).pathname,
         }))
       );
-      const footerCompanyLinks = await page.locator('[data-footer-nav="company"] a').evaluateAll(els =>
+      const footerBuyLinks = await page.locator('[data-footer-nav="buy"] a').evaluateAll(els =>
+        els.map(el => ({
+          label: el.textContent.trim(),
+          href: new URL(el.getAttribute('href'), window.location.origin).pathname,
+        }))
+      );
+      const footerLearnLinks = await page.locator('[data-footer-nav="learn"] a').evaluateAll(els =>
         els.map(el => ({
           label: el.textContent.trim(),
           href: new URL(el.getAttribute('href'), window.location.origin).pathname,
         }))
       );
 
-      const footerLinks = [...footerServicesLinks, ...footerCompanyLinks];
+      const footerLinks = [...footerSellLinks, ...footerBuyLinks, ...footerLearnLinks];
 
       // Every footer link should appear in the hamburger (same label, same order)
       expect(menuLinks.length).toBeGreaterThanOrEqual(footerLinks.length);
@@ -130,7 +117,7 @@ test.describe('Hamburger Menu', () => {
     await expect(panel).toBeVisible({ timeout: 3000 });
 
     // Click "About" link
-    await panel.locator('.nav-link', { hasText: 'About' }).click();
+    await panel.locator('.nav-link', { hasText: 'About' }).first().click();
 
     // Should navigate to /about/
     await page.waitForURL('**/about/', { timeout: 5000 });

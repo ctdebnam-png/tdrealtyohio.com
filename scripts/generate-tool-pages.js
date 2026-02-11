@@ -140,24 +140,23 @@ function htmlHead(title, description, canonicalPath, extra) {
   });
 }
 
-function htmlNav(activeLink) {
-  var toolsActive = activeLink === 'tools' ? ' active' : '';
+function htmlNav() {
   return `  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header class="header">
     <div class="header-inner">
       <a href="/" class="logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></a>
       <nav class="nav" id="main-nav" aria-label="Main navigation">
-        <a href="/sellers/" class="nav-link">Sellers</a>
-        <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
-        <a href="/buyers/" class="nav-link">Buyers</a>
-        <a href="/tools/" class="nav-link${toolsActive}">Tools</a>
+        <a href="/sellers/" class="nav-link">Sell</a>
+        <a href="/buyers/" class="nav-link">Buy</a>
         <a href="/areas/" class="nav-link">Areas</a>
-        <a href="/blog/" class="nav-link">Blog</a>
         <a href="/about/" class="nav-link">About</a>
         <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
       </nav>
+      <a href="tel:6143928858" class="mobile-phone-btn" aria-label="Call (614) 392-8858">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width:24px;height:24px;"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/></svg>
       </button>
     </div>
   </header>`;
@@ -172,51 +171,63 @@ function htmlFooter() {
           <p>Full-service real estate. Lower commission.</p>
         </div>
         <div>
-          <h3 class="footer-title">Services</h3>
-          <ul class="footer-links">
-            <li><a href="/sellers/">For Sellers</a></li>
-            <li><a href="/buyers/">For Buyers</a></li>
-            <li><a href="/tools/">Free Tools</a></li>
+          <h3 class="footer-title">Sell</h3>
+          <ul class="footer-links" data-footer-nav="sell">
+            <li><a href="/sellers/">Sell Your Home</a></li>
+            <li><a href="/1-percent-commission/">1% Commission</a></li>
+            <li><a href="/sell-only-2-percent/">2% Sell Only</a></li>
             <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
-            <li><a href="/areas/">Service Areas</a></li>
-            <li><a href="/home-value/">Home Value</a></li>
-            <li><a href="/affordability/">Affordability</a></li>
+            <li><a href="/home-value/">Free Home Value</a></li>
+          </ul>
+          <h3 class="footer-title">Buy</h3>
+          <ul class="footer-links" data-footer-nav="buy">
+            <li><a href="/buyers/">Buy a Home</a></li>
+            <li><a href="/buy/cash-back/">1% Cash Back</a></li>
+            <li><a href="/affordability/">Affordability Calculator</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="footer-title">Company</h3>
-          <ul class="footer-links">
-            <li><a href="/about/">About</a></li>
-            <li><a href="/contact/">Contact</a></li>
+          <h3 class="footer-title">Learn</h3>
+          <ul class="footer-links" data-footer-nav="learn">
             <li><a href="/blog/">Blog</a></li>
-            <li><a href="/agents/">Agent Opportunities</a></li>
             <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/compare/">Compare Options</a></li>
+            <li><a href="/tools/">Free Tools</a></li>
+            <li><a href="/areas/">Service Areas</a></li>
+            <li><a href="/reviews/">Reviews</a></li>
+            <li><a href="/agents/">Agent Opportunities</a></li>
+            <li><a href="/referrals/">Referral Credit</a></li>
           </ul>
         </div>
         <div>
           <h3 class="footer-title">Contact</h3>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <a href="tel:6143928858">(614) 392-8858</a>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:6143928858" data-phone>(614) 392-8858</a>
           </div>
           <div class="footer-contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <a href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span data-location>Westerville, Ohio</span>
           </div>
         </div>
       </div>
       <div class="footer-compliance-logos">
         <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener noreferrer" title="Equal Housing Opportunity" aria-label="Equal Housing Opportunity - opens in new tab">
-          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50" width="50" loading="lazy">
+          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50" width="50" loading="lazy" decoding="async">
         </a>
-        <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" title="National Association of REALTORS" aria-label="National Association of REALTORS - opens in new tab">
-          <img src="/media/compliance/realtor.svg" alt="REALTOR" height="50" width="50" loading="lazy">
+        <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" title="National Association of REALTORS\u00ae" aria-label="National Association of REALTORS - opens in new tab">
+          <img src="/media/compliance/realtor.svg" alt="REALTOR\u00ae" height="50" width="50" loading="lazy" decoding="async">
         </a>
-        <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" title="Columbus REALTORS" aria-label="Columbus REALTORS - opens in new tab">
-          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS" height="45" width="120" loading="lazy">
+        <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" title="Columbus REALTORS\u00ae" aria-label="Columbus REALTORS - opens in new tab">
+          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS\u00ae" height="45" width="120" loading="lazy" decoding="async">
         </a>
-        <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" title="Ohio REALTORS" aria-label="Ohio REALTORS - opens in new tab">
-          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS" height="45" width="120" loading="lazy">
+        <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" title="Ohio REALTORS\u00ae" aria-label="Ohio REALTORS - opens in new tab">
+          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS\u00ae" height="45" width="120" loading="lazy" decoding="async">
         </a>
       </div>
       <div class="footer-bottom">
@@ -228,7 +239,8 @@ function htmlFooter() {
         </div>
       </div>
       <div class="footer-license">
-        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602<br>
+        TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602
+        <br><a href="tel:+16143928858">(614) 392-8858</a> &middot; <a href="mailto:info@tdrealtyohio.com">info@tdrealtyohio.com</a>
       </div>
     </div>
   </footer>`;
@@ -292,8 +304,9 @@ function modalCSS() {
 }
 
 function toolScripts(slug) {
-  return `  <script src="/assets/js/main.js"></script>
-  <script src="/assets/js/tools.js"></script>`;
+  return `  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/tools.js" defer></script>`;
 }
 
 /* ===== TOOL FORM HTML BUILDERS ===== */
@@ -886,7 +899,7 @@ function generateToolPage(tool) {
     breadcrumb + modalCSS()
   ) + `
 <body>
-${htmlNav('tools')}
+${htmlNav()}
 
   <main id="main-content">
     <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
@@ -984,7 +997,7 @@ function generateCityToolWrapper(tool, city) {
     schema + modalCSS()
   ) + `
 <body>
-${htmlNav('tools')}
+${htmlNav()}
 
   <main id="main-content">
     <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
@@ -1098,7 +1111,7 @@ function generateToolsIndex() {
     schema
   ) + `
 <body>
-${htmlNav('tools')}
+${htmlNav()}
 
   <main id="main-content">
     <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
@@ -1144,7 +1157,8 @@ ${htmlCTA()}
   </main>
 
 ${htmlFooter()}
-  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/nav.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
 </body>
 </html>`;
 }

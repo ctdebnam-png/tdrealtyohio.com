@@ -101,16 +101,14 @@ test.describe('Snapshot Regression - Mobile (390x844)', () => {
     const mobilePanel = page.locator('#mobile-nav-panel');
     await expect(mobilePanel).toHaveClass(/mobile-open/);
 
-    // Screenshot the header together with the nav
+    // Screenshot the header and the mobile nav panel
     const header = page.locator('.header');
-    const nav = page.locator('nav.nav');
     await expect(header).toBeVisible();
-    await expect(nav).toBeVisible();
 
     await expect(header).toHaveScreenshot('mobile-header-open-header.png', {
       maxDiffPixelRatio: 0.01,
     });
-    await expect(nav).toHaveScreenshot('mobile-header-open-nav.png', {
+    await expect(mobilePanel).toHaveScreenshot('mobile-header-open-nav.png', {
       maxDiffPixelRatio: 0.01,
     });
   });

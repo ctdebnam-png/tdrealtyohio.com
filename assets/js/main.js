@@ -302,52 +302,63 @@ function initMobileNav() {
   body.className = 'nav-menu-body';
 
   var currentPath = normalizePath(window.location.pathname);
-  var navConfig = typeof TD_NAV !== 'undefined' ? TD_NAV : {
-    services: {
-      title: 'Services',
+  var navFooter = (typeof TD_NAV !== 'undefined' && TD_NAV.footer) ? TD_NAV.footer : {
+    sell: {
+      title: 'Sell',
       items: [
-        { label: 'For Sellers', href: '/sellers/' },
-        { label: 'For Buyers', href: '/buyers/' },
-        { label: 'Service Areas', href: '/areas/' },
-        { label: 'Free Home Value', href: '/home-value/' },
+        { label: 'Sell Your Home', href: '/sellers/' },
+        { label: '1% Commission', href: '/1-percent-commission/' },
+        { label: '2% Sell Only', href: '/sell-only-2-percent/' },
+        { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
+        { label: 'Free Home Value', href: '/home-value/' }
+      ]
+    },
+    buy: {
+      title: 'Buy',
+      items: [
+        { label: 'Buy a Home', href: '/buyers/' },
+        { label: '1% Cash Back', href: '/buy/cash-back/' },
         { label: 'Affordability Calculator', href: '/affordability/' }
       ]
     },
-    company: {
-      title: 'Company',
+    learn: {
+      title: 'Learn',
       items: [
-        { label: 'About', href: '/about/' },
         { label: 'Blog', href: '/blog/' },
-        { label: 'Contact', href: '/contact/' },
-        { label: 'FAQ', href: '/faq/' }
+        { label: 'FAQ', href: '/faq/' },
+        { label: 'About', href: '/about/' },
+        { label: 'Compare Options', href: '/compare/' },
+        { label: 'Free Tools', href: '/tools/' },
+        { label: 'Service Areas', href: '/areas/' },
+        { label: 'Reviews', href: '/reviews/' },
+        { label: 'Agent Opportunities', href: '/agents/' },
+        { label: 'Referral Credit', href: '/referrals/' }
       ]
     }
   };
 
-  if (navConfig) {
-    ['services', 'company'].forEach(function (groupKey) {
-      var group = navConfig[groupKey];
-      if (!group) return;
-      var header = document.createElement('div');
-      header.className = 'nav-section-header';
-      header.id = 'mobile-nav-group-' + groupKey;
-      header.textContent = group.title;
-      body.appendChild(header);
+  ['sell', 'buy', 'learn'].forEach(function (groupKey) {
+    var group = navFooter[groupKey];
+    if (!group) return;
+    var header = document.createElement('div');
+    header.className = 'nav-section-header';
+    header.id = 'mobile-nav-group-' + groupKey;
+    header.textContent = group.title;
+    body.appendChild(header);
 
-      group.items.forEach(function (item) {
-        var href = normalizePath(item.href);
-        var a = document.createElement('a');
-        a.href = item.href;
-        a.className = 'nav-link';
-        a.textContent = item.label;
-        if (href === currentPath) {
-          a.classList.add('active');
-          a.setAttribute('aria-current', 'page');
-        }
-        body.appendChild(a);
-      });
+    group.items.forEach(function (item) {
+      var href = normalizePath(item.href);
+      var a = document.createElement('a');
+      a.href = item.href;
+      a.className = 'nav-link';
+      a.textContent = item.label;
+      if (href === currentPath) {
+        a.classList.add('active');
+        a.setAttribute('aria-current', 'page');
+      }
+      body.appendChild(a);
     });
-  }
+  });
 
   // Add CTA
   var cta = document.createElement('a');
