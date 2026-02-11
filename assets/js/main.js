@@ -100,6 +100,38 @@ function getUTMData() {
   catch (e) { return {}; }
 }
 
+// ===== DEFERRED CSS BUNDLES =====
+function loadDeferredStylesheet(href) {
+  if (!href || document.querySelector('link[data-deferred-css="' + href + '"]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.media = 'print';
+  link.dataset.deferredCss = href;
+  link.onload = function () { link.media = 'all'; };
+  document.head.appendChild(link);
+}
+
+(function loadOptionalPageFamilyBundles() {
+  const path = normalizePath(window.location.pathname);
+  const bundles = ['/assets/css/bundles/extended.css?v=20260210'];
+
+  // Landing pages already load /assets/css/lp.css directly in-page.
+  if (path.startsWith('/lp/')) {
+    bundles.length = 0;
+  }
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(function () {
+      bundles.forEach(loadDeferredStylesheet);
+    }, { timeout: 1500 });
+  } else {
+    window.addEventListener('load', function () {
+      bundles.forEach(loadDeferredStylesheet);
+    }, { once: true });
+  }
+})();
+
 // ===== UTILITY FUNCTIONS =====
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-US', {
@@ -117,6 +149,65 @@ function updateSliderTrack(slider) {
   const value = parseFloat(slider.value);
   const percentage = ((value - min) / (max - min)) * 100;
   slider.style.setProperty('--value', percentage + '%');
+}
+
+// ===== SHARED SCROLL STATE LOOP =====
+var _scrollStateLoop = {
+  subscribers: [],
+  listening: false,
+  rafPending: false,
+  lastY: window.pageYOffset || document.documentElement.scrollTop || 0,
+  initialized: false
+};
+
+function getScrollState() {
+  var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+  var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  var docHeight = (document.documentElement.scrollHeight || 0) - viewportHeight;
+  var progress = docHeight > 0 ? (y / docHeight) * 100 : 0;
+  var delta = y - _scrollStateLoop.lastY;
+
+  return {
+    y: y,
+    viewportHeight: viewportHeight,
+    docHeight: docHeight,
+    progress: progress,
+    delta: delta,
+    previousY: _scrollStateLoop.lastY
+  };
+}
+
+function dispatchScrollState() {
+  _scrollStateLoop.rafPending = false;
+  var state = getScrollState();
+  _scrollStateLoop.subscribers.forEach(function(subscriber) {
+    subscriber(state);
+  });
+  _scrollStateLoop.lastY = state.y;
+}
+
+function scheduleScrollStateDispatch() {
+  if (_scrollStateLoop.rafPending) return;
+  _scrollStateLoop.rafPending = true;
+  requestAnimationFrame(dispatchScrollState);
+}
+
+function ensureScrollStateLoop() {
+  if (_scrollStateLoop.listening) return;
+  _scrollStateLoop.listening = true;
+  _scrollStateLoop.lastY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  window.addEventListener('scroll', scheduleScrollStateDispatch, { passive: true });
+}
+
+function subscribeToScrollState(subscriber, options) {
+  var opts = options || {};
+  _scrollStateLoop.subscribers.push(subscriber);
+  ensureScrollStateLoop();
+
+  if (!_scrollStateLoop.initialized || opts.runOnSubscribe) {
+    _scrollStateLoop.initialized = true;
+    subscriber(getScrollState());
+  }
 }
 
 // ===== PATH NORMALIZATION (shared by setActiveNavLink + initMobileNav) =====
@@ -1106,13 +1197,13 @@ function initHeaderScroll() {
   const header = document.querySelector('.header');
   if (!header) return;
 
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 100) {
+  subscribeToScrollState(function(state) {
+    if (state.y > 100) {
       header.classList.add('scrolled');
     } else {
       header.classList.remove('scrolled');
     }
-  });
+  }, { runOnSubscribe: true });
 }
 
 // ===== ACTIVE NAV LINK =====
@@ -1249,13 +1340,13 @@ function initBackToTop() {
   document.body.appendChild(btn);
 
   var visible = false;
-  window.addEventListener('scroll', function () {
-    var shouldShow = window.pageYOffset > window.innerHeight;
+  subscribeToScrollState(function(state) {
+    var shouldShow = state.y > state.viewportHeight;
     if (shouldShow !== visible) {
       visible = shouldShow;
       btn.classList.toggle('visible', visible);
     }
-  }, { passive: true });
+  }, { runOnSubscribe: true });
 
   btn.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1264,29 +1355,18 @@ function initBackToTop() {
 
 // ===== STICKY UI: HIDE ON SCROLL DOWN, SHOW ON SCROLL UP =====
 function initStickyScrollBehavior() {
-  var lastY = 0;
-  var ticking = false;
   var stickyEls = document.querySelectorAll('.sticky-cta, .sticky-contact-bar');
   if (!stickyEls.length) return;
 
-  window.addEventListener('scroll', function () {
-    if (!ticking) {
-      requestAnimationFrame(function () {
-        var y = window.pageYOffset;
-        var delta = y - lastY;
-        stickyEls.forEach(function (el) {
-          if (delta > 10 && y > 200) {
-            el.classList.add('scroll-hidden');
-          } else if (delta < -5) {
-            el.classList.remove('scroll-hidden');
-          }
-        });
-        lastY = y;
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
+  subscribeToScrollState(function(state) {
+    stickyEls.forEach(function (el) {
+      if (state.delta > 10 && state.y > 200) {
+        el.classList.add('scroll-hidden');
+      } else if (state.delta < -5) {
+        el.classList.remove('scroll-hidden');
+      }
+    });
+  });
 }
 
 // ===== INITIALIZE =====
@@ -1398,19 +1478,9 @@ function initScrollProgress() {
   bar.setAttribute('aria-hidden', 'true');
   document.body.appendChild(bar);
 
-  var ticking = false;
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(function() {
-        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        bar.style.width = progress + '%';
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
+  subscribeToScrollState(function(state) {
+    bar.style.width = state.progress + '%';
+  }, { runOnSubscribe: true });
 }
 
 // ── Testimonial Carousel ────────────────────────────────

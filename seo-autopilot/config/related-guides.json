@@ -25,20 +25,84 @@
       "text": "compare/discount broker vs full service"
     }
   ],
-  "/buyers/": [
-    {
-      "href": "/sell-only-2-percent/",
-      "text": "sell only 2 percent"
-    },
-    {
-      "href": "/sell-and-buy/",
-      "text": "sell and buy"
-    },
-    {
-      "href": "/compare/fsbo-vs-1-percent-listing/",
-      "text": "compare/fsbo vs 1 percent listing"
-    }
-  ],
+  "/sellers/": {
+    "intentClusters": [
+      {
+        "intent": "sell in Columbus suburbs",
+        "links": [
+          { "href": "/areas/dublin/", "text": "Sell a home in Dublin: pricing strategy, demand, and prep timeline" },
+          { "href": "/areas/westerville/", "text": "Westerville seller guide: local comps, seasonality, and showing cadence" },
+          { "href": "/areas/powell/", "text": "Powell home sale playbook for luxury-leaning suburban inventory" },
+          { "href": "/areas/new-albany/", "text": "New Albany selling strategy for high-expectation buyers" },
+          { "href": "/areas/worthington/", "text": "Worthington sellers: balancing pricing power and time-to-offer" }
+        ]
+      },
+      {
+        "intent": "compare commission models",
+        "links": [
+          { "href": "/compare/1-percent-vs-3-percent/", "text": "1% vs 3% commission comparison with typical Central Ohio numbers" },
+          { "href": "/compare/discount-broker-vs-full-service/", "text": "Discount broker vs full-service representation at offer and inspection stage" },
+          { "href": "/compare/flat-fee-mls-vs-full-service/", "text": "Flat fee MLS vs full-service support from listing through closing" },
+          { "href": "/compare/fsbo-vs-1-percent-listing/", "text": "FSBO vs 1% listing route for sellers weighing control vs outcomes" },
+          { "href": "/sell-only-2-percent/", "text": "Sell-only 2% option when you are not buying your next home yet" }
+        ]
+      },
+      {
+        "intent": "plan proceeds and timing",
+        "links": [
+          { "href": "/sell/net-sheet/", "text": "Get a personalized net sheet before you set list price expectations" },
+          { "href": "/tools/seller-net-proceeds/", "text": "Calculate estimated take-home proceeds with current cost assumptions" },
+          { "href": "/sell/timeline/", "text": "Map your ideal listing date, move window, and closing targets" },
+          { "href": "/tools/sell-buy-timing/", "text": "Compare sell-first vs buy-first timing scenarios for move-up sellers" },
+          { "href": "/tools/pre-listing-checklist/", "text": "Use the pre-listing checklist to reduce delays before launch" }
+        ]
+      }
+    ]
+  },
+  "/buyers/": {
+    "intentClusters": [
+      {
+        "intent": "first-time buyer incentives in Central Ohio",
+        "links": [
+          { "href": "/buy/cash-back/", "text": "How the 1% buyer cash-back credit can reduce your closing cash" },
+          { "href": "/affordability/", "text": "Affordability calculator for first-time buyers comparing payment options" },
+          { "href": "/buy/pre-approval/", "text": "Pre-approval steps that unlock local and lender incentive programs" },
+          { "href": "/tools/buyer-credit-estimator/", "text": "Estimate your buyer credit amount before writing your first offer" },
+          { "href": "/tools/buyer-closing-costs/", "text": "Plan Central Ohio closing costs with line-item estimates" }
+        ]
+      },
+      {
+        "intent": "first-time buyer by neighborhood",
+        "links": [
+          { "href": "/buyers/first-time/columbus/", "text": "First-time buying strategy in Columbus neighborhoods" },
+          { "href": "/buyers/first-time/westerville/", "text": "Westerville first-time buyer pricing and competition overview" },
+          { "href": "/buyers/first-time/dublin/", "text": "Dublin first-time buyer guide for schools, pricing, and inventory" }
+        ]
+      }
+    ]
+  },
+  "/compare/": {
+    "intentClusters": [
+      {
+        "intent": "compare commission models",
+        "links": [
+          { "href": "/compare/1-percent-vs-3-percent/", "text": "1% vs 3% listing commission breakdown with real savings scenarios" },
+          { "href": "/compare/discount-broker-vs-full-service/", "text": "Discount broker vs full-service support when negotiation gets complex" },
+          { "href": "/compare/flat-fee-mls-vs-full-service/", "text": "Flat fee MLS vs full-service risk, workload, and closing outcomes" },
+          { "href": "/compare/fsbo-vs-1-percent-listing/", "text": "FSBO vs 1% listing agent net proceeds and timeline trade-offs" },
+          { "href": "/sellers/", "text": "How TD Realty's 1% and 2% listing options compare to legacy models" }
+        ]
+      },
+      {
+        "intent": "estimate net proceeds",
+        "links": [
+          { "href": "/sell/net-sheet/", "text": "Request a custom seller net sheet before choosing a listing model" },
+          { "href": "/tools/seller-net-proceeds/", "text": "Use the seller net proceeds tool to model commission-side impacts" },
+          { "href": "/tools/repair-vs-credit/", "text": "Compare repair credits vs pre-listing fixes before going live" }
+        ]
+      }
+    ]
+  },
   "/": [
     {
       "href": "/sell-and-buy/",
@@ -47,12 +111,6 @@
     {
       "href": "/compare/fsbo-vs-1-percent-listing/",
       "text": "compare/fsbo vs 1 percent listing"
-    }
-  ],
-  "/compare/": [
-    {
-      "href": "/sell-and-buy/",
-      "text": "sell and buy"
     }
   ]
 }

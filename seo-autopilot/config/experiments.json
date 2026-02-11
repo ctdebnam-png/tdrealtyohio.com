@@ -1,10 +1,11 @@
 {
   "maxPagesPerRun": 3,
+  "maxFilesChangedPerRun": 3,
   "lockDays": 21,
   "cooldownDays": 21,
   "minImpressions28": 200,
   "minClicksBaseline7": 5,
-  "improvementCtrThreshold": 0.10,
-  "worsenCtrThreshold": -0.10,
+  "improvementCtrThreshold": 0.1,
+  "worsenCtrThreshold": -0.1,
   "maxMetaChangesPerRun": 3
 }

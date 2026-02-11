@@ -15,6 +15,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { fetchWithTrace } from '../lib/fetch-with-trace.mjs';
 import { parseIndexingDirectives } from '../lib/parse-indexing-directives.mjs';
+import { loadIndexingPolicy, canonicalBaseFromPolicy, expectedDirectiveForRoute } from '../lib/indexing-policy.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const LIVE_CHECKS_PATH = join(__dirname, '..', 'config', 'live-checks.json');
@@ -38,8 +39,9 @@ function loadSiteConfig() {
 export async function auditLiveIndexing({ robotsDisallowed = [] } = {}) {
   const liveConfig = loadLiveChecksConfig();
   const siteConfig = loadSiteConfig();
-  const baseUrl = siteConfig.baseUrl || '';
-  const strategy = siteConfig.canonicalStrategy || 'slash';
+  const policy = loadIndexingPolicy();
+  const baseUrl = canonicalBaseFromPolicy(policy);
+  const strategy = policy.canonical?.trailingSlash === 'never' ? 'no-slash' : 'slash';
   const rankSet = new Set(siteConfig.rankIntentRoutes || []);
   const disallowedSet = new Set(robotsDisallowed);
 
@@ -54,6 +56,7 @@ export async function auditLiveIndexing({ robotsDisallowed = [] } = {}) {
   for (const route of liveConfig.routes || []) {
     const url = baseUrl + route;
     const isRankIntent = rankSet.has(route);
+    const expectedDirective = expectedDirectiveForRoute(route, policy);
 
     const fetchResult = await fetchWithTrace(url, {
       maxHops: liveConfig.maxRedirectHops || 5,
@@ -94,15 +97,23 @@ export async function auditLiveIndexing({ robotsDisallowed = [] } = {}) {
 
       // x-robots-tag check
       const xRobots = final.headersSubset?.['x-robots-tag'] || '';
-      if (isRankIntent && xRobots.toLowerCase().includes('noindex')) {
+      if (expectedDirective !== 'noindex' && xRobots.toLowerCase().includes('noindex')) {
         issues.push({ code: 'LIVE_NOINDEX', detail: `x-robots-tag: ${xRobots}` });
       }
 
       // Meta robots noindex check
-      if (isRankIntent && directives.robotsMeta && directives.robotsMeta.includes('noindex')) {
+      if (expectedDirective !== 'noindex' && directives.robotsMeta && directives.robotsMeta.includes('noindex')) {
         issues.push({ code: 'LIVE_NOINDEX', detail: `meta robots: ${directives.robotsMeta}` });
       }
 
+
+      if (expectedDirective === 'noindex') {
+        const metaNoindex = directives.robotsMeta && directives.robotsMeta.includes('noindex');
+        const headerNoindex = xRobots.toLowerCase().includes('noindex');
+        if (!metaNoindex && !headerNoindex) {
+          issues.push({ code: 'LIVE_EXPECTED_NOINDEX_MISSING', detail: 'Policy expects noindex for route' });
+        }
+      }
       // Canonical checks
       if (isRankIntent && !directives.canonicalHref) {
         issues.push({ code: 'LIVE_CANONICAL_MISSING', detail: 'No canonical tag found' });

@@ -17,10 +17,34 @@ import json
 import re
 from datetime import date, datetime
 from pathlib import Path
+from urllib.parse import urlparse
+
+from .keyword_ownership import KeywordOwnership
 
 SITE_ROOT = Path(".")
 SITE_URL = "https://tdrealtyohio.com"
 OUTPUT_DIR = Path("output/gsc-reports")
+TARGET_CTR = 0.03
+
+# Higher values = stronger conversion intent for business outcomes.
+CONVERSION_INTENT_WEIGHTS = {
+    "/contact/": 1.7,
+    "/sell/pricing-call/": 1.6,
+    "/sell/net-sheet/": 1.55,
+    "/home-value/": 1.45,
+    "/sellers/": 1.35,
+    "/buyers/": 1.25,
+    "/1-percent-commission/": 1.25,
+    "/compare/": 1.2,
+    "/areas/": 1.05,
+    "/blog/": 0.7,
+}
+
+LEAD_PATHS = (
+    "/contact/",
+    "/sell/pricing-call/",
+    "/sell/net-sheet/",
+)
 
 # ── Complete site inventory ──────────────────────────────────────────
 
@@ -169,6 +193,127 @@ def load_gsc_data() -> dict:
             continue
 
     return {}
+
+
+def _normalize_site_path(url_or_path: str) -> str:
+    if not url_or_path:
+        return "/"
+    parsed = urlparse(url_or_path)
+    path = parsed.path or url_or_path
+    if not path.startswith("/"):
+        path = "/" + path
+    return "/" if path == "/" else path.rstrip("/") + "/"
+
+
+def _build_internal_link_graph(pages: list[dict]) -> dict[str, set[str]]:
+    graph = {}
+    known_paths = {p["path"] for p in pages}
+    for page in pages:
+        html = page["file"].read_text(errors="replace")
+        links = set(re.findall(r'href=["\'](/[^"\'#?]*)["\']', html))
+        normalized = {_normalize_site_path(link) for link in links}
+        graph[page["path"]] = {p for p in normalized if p in known_paths}
+    return graph
+
+
+def _lead_path_distance(graph: dict[str, set[str]], start: str) -> int | None:
+    if start in LEAD_PATHS:
+        return 0
+    visited = {start}
+    frontier = {start}
+    distance = 0
+    while frontier and distance < 6:
+        distance += 1
+        nxt = set()
+        for node in frontier:
+            for neigh in graph.get(node, set()):
+                if neigh in visited:
+                    continue
+                if neigh in LEAD_PATHS:
+                    return distance
+                visited.add(neigh)
+                nxt.add(neigh)
+        frontier = nxt
+    return None
+
+
+def _conversion_intent_weight(path: str) -> float:
+    for prefix, weight in CONVERSION_INTENT_WEIGHTS.items():
+        if path.startswith(prefix):
+            return weight
+    return 0.85
+
+
+def _rank_potential(position: float) -> float:
+    if 4 <= position <= 10:
+        return 1.0
+    if 11 <= position <= 20:
+        return 0.75
+    if 21 <= position <= 35:
+        return 0.4
+    return 0.15
+
+
+def build_seo_roi_queue(pages: list[dict], gsc: dict) -> list[dict]:
+    """Build a prioritized SEO ROI queue.
+
+    Combined score:
+    impressions opportunity × CTR gap × rank potential × conversion weight
+    where conversion weight includes lead-path proximity assist.
+    """
+    graph = _build_internal_link_graph(pages)
+    queue = []
+
+    for page in pages:
+        url = f"{SITE_URL}{page['path']}"
+        metrics = gsc.get(url, {})
+        impressions = float(metrics.get("impressions", 0) or 0)
+        ctr = float(metrics.get("ctr", 0) or 0)
+        position = float(metrics.get("position", 99) or 99)
+
+        if impressions <= 0:
+            continue
+
+        impressions_opportunity = min(3.0, impressions / 250.0)
+        ctr_gap = max(0.0, TARGET_CTR - ctr) / TARGET_CTR
+        rank_potential = _rank_potential(position)
+
+        intent_weight = _conversion_intent_weight(page["path"])
+        distance = _lead_path_distance(graph, page["path"])
+        proximity_weight = 1.35 if distance == 0 else (1.15 if distance == 1 else (1.0 if distance == 2 else 0.8))
+        if distance is None:
+            proximity_weight = 0.65
+        conversion_weight = intent_weight * proximity_weight
+
+        combined_score = impressions_opportunity * ctr_gap * rank_potential * conversion_weight
+        if combined_score <= 0:
+            continue
+
+        queue.append({
+            "url": url,
+            "path": page["path"],
+            "category": page["category"],
+            "score": round(combined_score, 5),
+            "why_prioritized": (
+                f"impr_opp={impressions_opportunity:.2f} × ctr_gap={ctr_gap:.2f} "
+                f"× rank_potential={rank_potential:.2f} × conv_weight={conversion_weight:.2f}"
+            ),
+            "components": {
+                "impressions": impressions,
+                "ctr": ctr,
+                "position": position,
+                "impressions_opportunity": round(impressions_opportunity, 4),
+                "ctr_gap": round(ctr_gap, 4),
+                "rank_potential": round(rank_potential, 4),
+                "conversion_intent_weight": round(intent_weight, 4),
+                "lead_path_distance": distance,
+                "lead_path_proximity_weight": round(proximity_weight, 4),
+                "conversion_weight": round(conversion_weight, 4),
+            },
+        })
+
+    queue.sort(key=lambda row: (-row["score"], row["path"]))
+    return queue
 
 
 # ── Strategy 1: Title tag optimization ───────────────────────────────
@@ -484,6 +629,7 @@ def strategy_keyword_gaps(pages: list[dict], gsc: dict,
     or queries where position could improve with on-page optimization.
     """
     print("\n=== Strategy: Keyword Gap Analysis ===")
+    ownership = KeywordOwnership.load()
 
     # Load query data from performance report
     perf_files = sorted(OUTPUT_DIR.glob("performance_*.json"), reverse=True)
@@ -508,22 +654,30 @@ def strategy_keyword_gaps(pages: list[dict], gsc: dict,
         impressions = q.get("impressions", 0)
         position = q.get("position", 0)
         clicks = q.get("clicks", 0)
+        owner_path, cluster_id = ownership.choose_owner_for_query(query_text)
+
+        # If ownership is configured and no owner exists, skip recommendation.
+        if ownership.enabled and cluster_id and not owner_path:
+            continue
+
+        rec_target = owner_path or "site-wide"
+        owner_note = f" Target page: {owner_path}." if owner_path else ""
 
         # High impressions + poor position = opportunity
         if impressions > 20 and position > 10:
             result.add(
-                "site-wide", "keyword_gaps", "opportunity_keyword",
+                rec_target, "keyword_gaps", "opportunity_keyword",
                 f'"{query_text}" — {impressions} impressions, '
                 f'position {position:.0f}, {clicks} clicks. '
-                f'Improve on-page targeting to move to page 1.'
+                f'Improve on-page targeting to move to page 1.{owner_note}'
             )
         # Page 1 but low CTR = title/description issue
         elif impressions > 30 and position <= 10 and clicks == 0:
             result.add(
-                "site-wide", "keyword_gaps", "low_ctr_keyword",
+                rec_target, "keyword_gaps", "low_ctr_keyword",
                 f'"{query_text}" — position {position:.0f} with '
                 f'{impressions} impressions but 0 clicks. '
-                f'Title/description may not match search intent.'
+                f'Title/description may not match search intent.{owner_note}'
             )
 
 
@@ -626,6 +780,61 @@ def write_optimization_report(result: OptimizationResult, dry_run: bool):
     print(f"  -> {md_path}")
 
 
+def write_seo_roi_queue_report(pages: list[dict], gsc: dict):
+    """Write weekly SEO ROI queue report with prioritization reasons."""
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    queue = build_seo_roi_queue(pages, gsc)
+    generated = datetime.utcnow().isoformat()
+    week_tag = date.today().strftime("%G-W%V")
+
+    report = {
+        "generated": generated,
+        "week": week_tag,
+        "formula": "impressions_opportunity * ctr_gap * rank_potential * conversion_weight",
+        "queue": queue,
+    }
+
+    json_path = OUTPUT_DIR / f"seo_roi_queue_{week_tag}.json"
+    json_path.write_text(json.dumps(report, indent=2, default=str))
+    (OUTPUT_DIR / "seo_roi_queue_latest.json").write_text(
+        json.dumps(report, indent=2, default=str)
+    )
+
+    md_lines = [f"# Weekly SEO ROI Queue — {week_tag}", ""]
+    md_lines.append(
+        "Prioritization formula: `impressions opportunity × CTR gap × rank potential × conversion weight`."
+    )
+    md_lines.append("")
+    md_lines.append("| Priority | Page | Score | Why prioritized |")
+    md_lines.append("|---|---|---:|---|")
+    for idx, row in enumerate(queue[:30], 1):
+        md_lines.append(
+            f"| {idx} | {row['path']} | {row['score']:.4f} | {row['why_prioritized']} |"
+        )
+
+    md_lines.append("\n## Component detail\n")
+    for idx, row in enumerate(queue[:15], 1):
+        comp = row["components"]
+        md_lines.append(f"### {idx}. {row['path']}")
+        md_lines.append(
+            f"- Score: **{row['score']:.4f}** from {row['why_prioritized']}"
+        )
+        md_lines.append(
+            f"- GSC inputs: impressions={int(comp['impressions'])}, ctr={comp['ctr']:.2%}, position={comp['position']:.1f}"
+        )
+        md_lines.append(
+            f"- Conversion context: intent_weight={comp['conversion_intent_weight']:.2f}, "
+            f"lead_path_distance={comp['lead_path_distance']}, "
+            f"proximity_weight={comp['lead_path_proximity_weight']:.2f}"
+        )
+
+    md_path = OUTPUT_DIR / f"seo_roi_queue_{week_tag}.md"
+    md_path.write_text("\n".join(md_lines) + "\n")
+
+    print(f"  -> {json_path}")
+    print(f"  -> {md_path}")
+
+
 # ── Available strategies ─────────────────────────────────────────────
 
 STRATEGIES = {
@@ -678,6 +887,7 @@ def main():
         func(pages, gsc, args.dry_run, result)
 
     write_optimization_report(result, args.dry_run)
+    write_seo_roi_queue_report(pages, gsc)
 
     summary = result.summary()
     print(f"\nDone. {summary['total_actions']} optimization actions identified.")

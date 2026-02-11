@@ -152,6 +152,16 @@ async function checkSeo(config, verbose) {
       }
     }
 
+
+    // Disallow legacy meta keywords tags
+    if ($('meta[name="keywords"]').length > 0) {
+      result.errors.push({
+        file: file.relative,
+        message: 'Legacy meta keywords tag is not allowed'
+      });
+      result.passed = false;
+    }
+
     // Check for duplicate title tags
     if ($('title').length > 1) {
       result.errors.push({

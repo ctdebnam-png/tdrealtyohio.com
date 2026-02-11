@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About TD Realty Ohio | Central Ohio Brokerage</title>
   <meta name="description" content="Central Ohio brokerage offering 1-2% listing fees, buyer cash back, and free pre-listing inspections. Based in Westerville, serving Columbus.">
-  <meta name="keywords" content="TD Realty Ohio, Central Ohio real estate brokerage, low commission realtor Columbus">
-
   <!-- Canonical -->
   <link rel="canonical" href="https://tdrealtyohio.com/about/">
   <meta property="article:modified_time" content="2026-02-07">
@@ -44,19 +42,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -85,7 +72,8 @@
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    "name": "TD Realty Ohio, LLC",
+    "@id": "https://tdrealtyohio.com/#realestateagent",
+"name": "TD Realty Ohio, LLC",
     "url": "https://tdrealtyohio.com",
     "telephone": "(614) 392-8858",
     "email": "info@tdrealtyohio.com",
@@ -120,7 +108,8 @@
     "jobTitle": "Broker/Owner",
     "worksFor": {
       "@type": "RealEstateAgent",
-      "name": "TD Realty Ohio, LLC",
+      "@id": "https://tdrealtyohio.com/#realestateagent",
+"name": "TD Realty Ohio, LLC",
       "url": "https://tdrealtyohio.com"
     },
     "hasCredential": [
@@ -130,7 +119,8 @@
         "name": "Ohio Real Estate Broker License",
         "recognizedBy": {
           "@type": "Organization",
-          "name": "Ohio Division of Real Estate"
+          "@id": "https://tdrealtyohio.com/#organization",
+"name": "Ohio Division of Real Estate"
         },
         "identifier": "2023006467"
       }
@@ -149,6 +139,17 @@
 
   <!-- Open Graph (auto-injected by seo-autopilot) -->
   <meta property="og:site_name" content="TD Realty Ohio">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://tdrealtyohio.com/about/#webpage",
+    "url": "https://tdrealtyohio.com/about/",
+    "name": "About TD Realty Ohio | Central Ohio Brokerage",
+    "description": "Central Ohio brokerage offering 1-2% listing fees, buyer cash back, and free pre-listing inspections. Based in Westerville, serving Columbus."
+  }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -198,7 +199,7 @@
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content">
@@ -225,13 +226,13 @@
 
             <p>TD Realty Ohio charges less because the business model is more efficient. Lower overhead, fewer layers of management, no franchise fees going to a corporate headquarters. Those savings go directly to clients and agents.</p>
 
-            <h3 style="margin-top: 2rem;">For Sellers</h3>
+            <h3 class="u-cf0f3aef">For Sellers</h3>
             <p>Homeowners selling through TD Realty Ohio pay 1% listing commission when they sell and buy with the brokerage, or 2% for sell-only transactions. Every listing includes a free pre-listing inspection, a $400–500 value (estimate, Feb 2026) that helps sellers price accurately and avoid surprises during buyer inspections. Full MLS exposure, professional photography, offer review and counteroffer drafting, and contract management through closing are standard.</p>
 
-            <h3 style="margin-top: 2rem;">For First-Time Buyers</h3>
+            <h3 class="u-cf0f3aef">For First-Time Buyers</h3>
             <p>First-time homebuyers working with TD Realty Ohio receive 1% of the purchase price back at closing. On a $300,000 home, that's $3,000 that can go toward closing costs, buying down the interest rate, or covering move-in expenses. Full buyer representation is included.</p>
 
-            <h3 style="margin-top: 2rem;">What You Get With Every Listing</h3>
+            <h3 class="u-cf0f3aef">What You Get With Every Listing</h3>
             <ul class="benefits-list">
               <li>Free pre-listing home inspection ($400–500 estimated value, Feb 2026)</li>
               <li>Professional photography</li>
@@ -246,7 +247,7 @@
           <div>
             <div class="about-sidebar-card">
               <h3 class="about-sidebar-title">Service Areas</h3>
-              <p style="margin-bottom: 1rem;">TD Realty Ohio serves the Columbus metropolitan area:</p>
+              <p class="u-4986ecf7">TD Realty Ohio serves the Columbus metropolitan area:</p>
               <div class="about-area-tags">
                 <span class="about-area-tag">Columbus</span>
                 <span class="about-area-tag">Westerville</span>
@@ -321,14 +322,14 @@
     </section>
 
     <!-- Founder Story -->
-    <section class="section" style="background-color: var(--gray-50);">
+    <section class="section u-0645b988">
       <div class="container">
-        <div style="max-width: 720px; margin: 0 auto;">
+        <div class="u-816f49ef">
           <h2>Why TD Realty Ohio Was Founded</h2>
           <p>Broker/Owner Travis Debnam has been selling homes in Central Ohio since 2017, closing 48 transactions across the metro area with a <a href="https://www.zillow.com/profile/travisdrealtor" target="_blank" rel="noopener noreferrer" aria-label="5.0 rating on Zillow - opens in new tab">5.0 rating on Zillow</a>. In 2023, he earned his broker&rsquo;s license and founded TD Realty Ohio after seeing the same problem repeatedly: homeowners were paying 3% listing commissions for services that no longer cost 3% to deliver.</p>
           <p>The internet changed how homes are marketed. MLS syndication, online photography tools, and digital transaction management have dramatically reduced the cost of selling a home. But commission rates stayed where they were 30 years ago. Too many sellers, especially first-time sellers and people on tight budgets, were handing over thousands of dollars they didn't need to spend.</p>
           <p>TD Realty Ohio launched in 2023 with a straightforward goal: provide MLS exposure, professional photography, showing coordination, pricing analysis, and contract-to-close management at a rate that reflects what it actually costs. No franchise fees, no corporate overhead, no layers of management taking a cut.</p>
-          <h3 style="margin-top: 2rem; color: var(--navy);">A Growing Team</h3>
+          <h3 class="u-35af6a86">A Growing Team</h3>
           <p>What started as a one-broker operation has grown into a brokerage that is actively expanding its team of licensed agents across Central Ohio. Every agent at TD Realty Ohio shares the same philosophy: deliver full-service representation without the inflated commission. Our team combines local market knowledge with modern tools to serve clients across the Columbus metro.</p>
           <p>Based in Westerville and serving the Columbus metro, our agents help clients selling starter homes in <a href="/areas/reynoldsburg/">Reynoldsburg</a>, buying first places in <a href="/areas/clintonville/">Clintonville</a>, or upgrading in <a href="/areas/dublin/">Dublin</a> keep more of their equity.</p>
         </div>
@@ -343,7 +344,7 @@
           <p>A common question: how can TD Realty Ohio offer 1-2% commissions while others charge 3%?</p>
         </div>
 
-        <div class="grid-3 about-pillars" style="max-width: 900px; margin: 0 auto;">
+        <div class="grid-3 about-pillars u-12a642d2">
           <div class="about-pillar-card">
             <div class="about-pillar-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -360,7 +361,7 @@
               </svg>
             </div>
             <h4>Technology</h4>
-            <p class="text-muted" style="margin-bottom: 0;">Modern tools and systems streamline paperwork, communication, and marketing, reducing overhead without reducing service quality.</p>
+            <p class="text-muted u-c42e0ec4">Modern tools and systems streamline paperwork, communication, and marketing, reducing overhead without reducing service quality.</p>
           </div>
 
           <div class="about-pillar-card">
@@ -371,7 +372,7 @@
               </svg>
             </div>
             <h4>Efficiency</h4>
-            <p class="text-muted" style="margin-bottom: 0;">Focused operations and direct broker involvement on every transaction mean less overhead and more value passed to clients.</p>
+            <p class="text-muted u-c42e0ec4">Focused operations and direct broker involvement on every transaction mean less overhead and more value passed to clients.</p>
           </div>
 
           <div class="about-pillar-card">
@@ -384,11 +385,11 @@
               </svg>
             </div>
             <h4>Volume</h4>
-            <p class="text-muted" style="margin-bottom: 0;">Lower rates attract more clients. More transactions at lower margins can be more sustainable than fewer transactions at higher margins.</p>
+            <p class="text-muted u-c42e0ec4">Lower rates attract more clients. More transactions at lower margins can be more sustainable than fewer transactions at higher margins.</p>
           </div>
         </div>
 
-        <p class="text-center text-muted" style="margin-top: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        <p class="text-center text-muted u-f6121b6d">
           The real estate industry has traditionally operated on commission structures established decades ago. Technology and modern business practices make it possible to deliver the same service for less. TD Realty Ohio passes those savings to clients.
         </p>
       </div>
@@ -471,16 +472,16 @@
 
       <div class="footer-compliance-logos">
         <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener noreferrer" title="Equal Housing Opportunity" aria-label="Equal Housing Opportunity - opens in new tab">
-          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50" width="50" loading="lazy">
+          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50" width="50" loading="lazy" decoding="async">
         </a>
         <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" title="National Association of REALTORS®" aria-label="National Association of REALTORS - opens in new tab">
-          <img src="/media/compliance/realtor.svg" alt="REALTOR®" height="50" width="50" loading="lazy">
+          <img src="/media/compliance/realtor.svg" alt="REALTOR®" height="50" width="50" loading="lazy" decoding="async">
         </a>
         <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" title="Columbus REALTORS®" aria-label="Columbus REALTORS - opens in new tab">
-          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS®" height="45" width="120" loading="lazy">
+          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS®" height="45" width="120" loading="lazy" decoding="async">
         </a>
         <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" title="Ohio REALTORS®" aria-label="Ohio REALTORS - opens in new tab">
-          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS®" height="45" width="120" loading="lazy">
+          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS®" height="45" width="120" loading="lazy" decoding="async">
         </a>
       </div>
 

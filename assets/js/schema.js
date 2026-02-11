@@ -21,6 +21,10 @@
 const TD_SCHEMA_CONFIG = {
   name: 'TD Realty Ohio, LLC',
   url: 'https://tdrealtyohio.com',
+  ids: {
+    organization: 'https://tdrealtyohio.com/#organization',
+    realEstateAgent: 'https://tdrealtyohio.com/#realestateagent'
+  },
   telephone: '(614) 392-8858',
   email: 'info@tdrealtyohio.com',
 
@@ -93,6 +97,7 @@ function buildOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': TD_SCHEMA_CONFIG.ids.organization,
     name: TD_SCHEMA_CONFIG.name,
     url: TD_SCHEMA_CONFIG.url,
     telephone: TD_SCHEMA_CONFIG.telephone,
@@ -123,6 +128,7 @@ function buildRealEstateAgentSchema(options) {
   var schema = {
     '@context': 'https://schema.org',
     '@type': 'RealEstateAgent',
+    '@id': TD_SCHEMA_CONFIG.ids.realEstateAgent,
     name: TD_SCHEMA_CONFIG.name,
     url: TD_SCHEMA_CONFIG.url,
     telephone: TD_SCHEMA_CONFIG.telephone,
@@ -133,6 +139,9 @@ function buildRealEstateAgentSchema(options) {
       '@type': 'Person',
       name: TD_SCHEMA_CONFIG.broker.name,
       jobTitle: TD_SCHEMA_CONFIG.broker.jobTitle
+    },
+    parentOrganization: {
+      '@id': TD_SCHEMA_CONFIG.ids.organization
     }
   };
 
@@ -142,6 +151,13 @@ function buildRealEstateAgentSchema(options) {
 
   if (opts.areaServed) {
     schema.areaServed = opts.areaServed;
+  }
+
+  if (opts.serviceRegion) {
+    schema.serviceArea = {
+      '@type': 'AdministrativeArea',
+      name: opts.serviceRegion
+    };
   }
 
   if (opts.aggregateRating) {

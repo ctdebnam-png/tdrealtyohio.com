@@ -9,18 +9,8 @@
  * Mismatches indicate deployment or configuration issues.
  */
 
-import { readFileSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 import { toAbsoluteUrl, normalizePath } from '../lib/url-normalize.mjs';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const CONFIG_PATH = join(__dirname, '..', 'config', 'site.json');
-
-function loadConfig() {
-  try { return JSON.parse(readFileSync(CONFIG_PATH, 'utf-8')); }
-  catch { return { baseUrl: '', canonicalStrategy: 'slash', rankIntentRoutes: [] }; }
-}
+import { loadIndexingPolicy, canonicalBaseFromPolicy } from '../lib/indexing-policy.mjs';
 
 /**
  * Audit canonical agreement between intended, built, and live canonicals.
@@ -38,9 +28,9 @@ export function auditCanonicalAgreement({
   liveResults = [],
   rankIntentRoutes = [],
 } = {}) {
-  const config = loadConfig();
-  const baseUrl = config.baseUrl || 'https://tdrealtyohio.com';
-  const strategy = config.canonicalStrategy || 'slash';
+  const policy = loadIndexingPolicy();
+  const baseUrl = canonicalBaseFromPolicy(policy);
+  const strategy = policy.canonical?.trailingSlash === 'never' ? 'no-slash' : 'slash';
   const rankSet = new Set(rankIntentRoutes);
 
   const canonicalSet = new Set(canonicalUrls);

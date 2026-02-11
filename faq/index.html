@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FAQ | 1% Commission Questions | TD Realty Ohio</title>
   <meta name="description" content="FAQs about TD Realty Ohio's 1% listing commission, buyer cash back, pre-listing inspections, and full-service real estate in Columbus.">
-  <meta name="keywords" content="1 percent commission FAQ, low commission realtor questions, Columbus real estate FAQ, TD Realty Ohio questions">
-
   <link rel="canonical" href="https://tdrealtyohio.com/faq/">
   <meta property="article:modified_time" content="2026-02-02">
 
@@ -34,20 +32,8 @@
   <link rel="preload" href="/assets/js/main.js" as="script">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
-
-  <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    if (localStorage.getItem('cookie-consent') !== 'declined') {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17866418952';
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', 'AW-17866418952');
-    }
-  </script>
+  <!-- Analytics bootstrap (centralized) -->
+  <script src="/assets/js/analytics-consent.js"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -196,7 +182,8 @@
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
-    "name": "TD Realty Ohio, LLC",
+    "@id": "https://tdrealtyohio.com/#realestateagent",
+"name": "TD Realty Ohio, LLC",
     "url": "https://tdrealtyohio.com",
     "telephone": "(614) 392-8858",
     "email": "info@tdrealtyohio.com",
@@ -237,6 +224,17 @@
 
   <!-- Open Graph (auto-injected by seo-autopilot) -->
   <meta property="og:site_name" content="TD Realty Ohio">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://tdrealtyohio.com/faq/#webpage",
+    "url": "https://tdrealtyohio.com/faq/",
+    "name": "FAQ | 1% Commission Questions | TD Realty Ohio",
+    "description": "FAQs about TD Realty Ohio"
+  }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -276,7 +274,7 @@
   </header>
 
   <main id="main-content">
-    <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
+    <section class="hero hero-sm u-57920310">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -297,7 +295,7 @@
     </section>
 
     <section class="section">
-      <div class="container" style="max-width: 800px;">
+      <div class="container u-7d701bf7">
 
         <nav class="faq-nav" aria-label="FAQ sections">
           <a href="#commission" class="faq-nav-link">Commission & Pricing</a>
@@ -574,16 +572,16 @@
 
       <div class="footer-compliance-logos">
         <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp" target="_blank" rel="noopener noreferrer" title="Equal Housing Opportunity" aria-label="Equal Housing Opportunity - opens in new tab">
-          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50" width="50" loading="lazy">
+          <img src="/media/compliance/equal-housing.svg" alt="Equal Housing Opportunity" height="50" width="50" loading="lazy" decoding="async">
         </a>
         <a href="https://www.nar.realtor/" target="_blank" rel="noopener noreferrer" title="National Association of REALTORS®" aria-label="National Association of REALTORS - opens in new tab">
-          <img src="/media/compliance/realtor.svg" alt="REALTOR®" height="50" width="50" loading="lazy">
+          <img src="/media/compliance/realtor.svg" alt="REALTOR®" height="50" width="50" loading="lazy" decoding="async">
         </a>
         <a href="https://www.columbusrealtors.com/" target="_blank" rel="noopener noreferrer" title="Columbus REALTORS®" aria-label="Columbus REALTORS - opens in new tab">
-          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS®" height="45" width="120" loading="lazy">
+          <img src="/media/compliance/columbus-realtors.svg" alt="Columbus REALTORS®" height="45" width="120" loading="lazy" decoding="async">
         </a>
         <a href="https://www.ohiorealtors.org/" target="_blank" rel="noopener noreferrer" title="Ohio REALTORS®" aria-label="Ohio REALTORS - opens in new tab">
-          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS®" height="45" width="120" loading="lazy">
+          <img src="/media/compliance/ohio-realtors.svg" alt="Ohio REALTORS®" height="45" width="120" loading="lazy" decoding="async">
         </a>
       </div>
 

@@ -22,15 +22,194 @@ jobs:
     steps:
       - uses: ./.github/actions/seo-autopilot
         with:
-          node_version: '20'
-          debug: '0'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Detect Node version
+        id: node-version
+        run: |
+          if [ -f .nvmrc ]; then
+            echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=20" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.node-version.outputs.version }}
+          cache: 'npm'
+
+      # ── Critical phase: setup + build ───────────────────
+      - name: Install dependencies
+        id: install
+        continue-on-error: false
+        run: npm ci
+
+      - name: Initial build
+        id: initial-build
+        continue-on-error: false
+        run: npm run build
+
+      # ── Critical phase: core autopilot ───────────────────
+      - name: Run SEO autopilot
+        id: core-autopilot
+        continue-on-error: false
+        run: node seo-autopilot/bin/run.mjs
         env:
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
           GSC_CLIENT_ID: ${{ secrets.GSC_CLIENT_ID }}
           GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
           GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
 
-      # ── Always succeed ────────────────────────────────────
-      - name: Force success
+      - name: Enforce critical phase success
         if: always()
-        run: echo "[seo-autopilot] Workflow complete — exiting 0"
+        env:
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          INITIAL_BUILD_OUTCOME: ${{ steps.initial-build.outcome }}
+          CORE_AUTOPILOT_OUTCOME: ${{ steps.core-autopilot.outcome }}
+        run: |
+          failed=0
+          for step in INSTALL_OUTCOME INITIAL_BUILD_OUTCOME CORE_AUTOPILOT_OUTCOME; do
+            value="${!step}"
+            if [ "$value" != "success" ]; then
+              echo "::error::[seo-autopilot] Critical step ${step} did not succeed (outcome=${value:-not-run})."
+              failed=1
+            fi
+          done
+
+          if [ "$failed" -ne 0 ]; then
+            echo "[seo-autopilot] One or more critical steps failed; stopping workflow."
+            exit 1
+          fi
+
+      # ── Non-critical phase: deploy-safe guard ────────────
+      - name: Check for changes
+        id: changes
+        continue-on-error: true
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Warn if change detection failed
+        if: steps.changes.outcome == 'failure'
+        run: echo "::warning::[seo-autopilot] Change detection failed; skipping commit/push safeguards."
+
+      - name: Rebuild to verify changes are safe
+        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true'
+        id: rebuild
+        continue-on-error: true
+        run: |
+          npm run build && echo "rebuild_ok=true" >> "$GITHUB_OUTPUT" || echo "rebuild_ok=false" >> "$GITHUB_OUTPUT"
+
+      - name: Warn if rebuild verification step failed
+        if: steps.rebuild.outcome == 'failure'
+        run: echo "::warning::[seo-autopilot] Rebuild verification step failed; changes may not be deploy-safe."
+
+      - name: Run site quality gate
+        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok != 'false'
+        id: quality-gate
+        continue-on-error: true
+        run: node tools/site-quality-gate/run-checks.js --ci
+
+      - name: Warn if quality gate failed
+        if: steps.quality-gate.outcome == 'failure'
+        run: echo "::warning::[seo-autopilot] Quality gate failed; reverting all changes."
+
+
+      - name: Revert if rebuild failed
+        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && (steps.rebuild.outputs.rebuild_ok == 'false' || steps.quality-gate.outcome == 'failure')
+        id: revert-after-failed-rebuild
+        continue-on-error: true
+        run: |
+          echo "[seo-autopilot] Rebuild failed — reverting all changes"
+          git checkout -- .
+
+      - name: Warn if revert step failed
+        if: steps.revert-after-failed-rebuild.outcome == 'failure'
+        run: echo "::warning::[seo-autopilot] Revert step failed; repository may include unsafe edits."
+
+      - name: Commit and push
+        if: steps.changes.outcome == 'success' && steps.changes.outputs.has_changes == 'true' && steps.rebuild.outputs.rebuild_ok != 'false' && steps.quality-gate.outcome != 'failure'
+        id: commit-and-push
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Only stage specific state/config files — never git add -A
+          git add \
+            seo-autopilot/state/state.json \
+            seo-autopilot/state/score-history.json \
+            seo-autopilot/state/module-outcomes.json \
+            seo-autopilot/state/experiments.json \
+            seo-autopilot/config/*.json \
+            2>/dev/null || true
+          # Stage any HTML files the autopilot may have edited (links, meta, area pages)
+          git add -u -- '*.html' 2>/dev/null || true
+          # Stage content-backlog and related-guides updates
+          git add seo-autopilot/config/content-backlog.json seo-autopilot/config/related-guides.json 2>/dev/null || true
+          # Only commit if there are staged changes
+          if git diff --cached --quiet; then
+            echo "[seo-autopilot] No staged changes to commit"
+          else
+            git commit -m "chore(seo-autopilot): automated run $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Warn if commit/push failed
+        if: steps.commit-and-push.outcome == 'failure'
+        run: echo "::warning::[seo-autopilot] Commit/push failed; autopilot changes were not published."
+
+      # ── Failure visibility + diagnostics ──────────────────
+      - name: Prepare failure diagnostics
+        if: failure()
+        run: |
+          mkdir -p seo-autopilot-artifacts
+          if [ -d seo-autopilot/report ]; then
+            cp -R seo-autopilot/report seo-autopilot-artifacts/report
+          fi
+          mkdir -p seo-autopilot-artifacts/state
+          cp -f seo-autopilot/state/state.json seo-autopilot/state/score-history.json seo-autopilot/state/module-outcomes.json seo-autopilot/state/experiments.json seo-autopilot-artifacts/state/ 2>/dev/null || true
+          git status --short > seo-autopilot-artifacts/git-status.txt || true
+          git diff -- seo-autopilot/state seo-autopilot/config '*.html' > seo-autopilot-artifacts/state-and-content.diff || true
+          git diff --cached -- seo-autopilot/state seo-autopilot/config '*.html' > seo-autopilot-artifacts/staged-state-and-content.diff || true
+
+      - name: Upload autopilot failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-autopilot-failure-artifacts-${{ github.run_id }}
+          path: seo-autopilot-artifacts/
+          if-no-files-found: warn
+
+      - name: Write failure summary
+        if: failure()
+        env:
+          INSTALL_OUTCOME: ${{ steps.install.outcome }}
+          INITIAL_BUILD_OUTCOME: ${{ steps.initial-build.outcome }}
+          CORE_AUTOPILOT_OUTCOME: ${{ steps.core-autopilot.outcome }}
+          CHANGES_OUTCOME: ${{ steps.changes.outcome }}
+          REBUILD_OUTCOME: ${{ steps.rebuild.outcome }}
+          QUALITY_GATE_OUTCOME: ${{ steps.quality-gate.outcome }}
+          REVERT_OUTCOME: ${{ steps.revert-after-failed-rebuild.outcome }}
+          COMMIT_PUSH_OUTCOME: ${{ steps.commit-and-push.outcome }}
+        run: |
+          {
+            echo "## ❌ SEO Autopilot run failed"
+            echo
+            echo "### Critical phase outcomes"
+            echo "- Install dependencies: ${INSTALL_OUTCOME:-not-run}"
+            echo "- Initial build: ${INITIAL_BUILD_OUTCOME:-not-run}"
+            echo "- Core autopilot: ${CORE_AUTOPILOT_OUTCOME:-not-run}"
+            echo
+            echo "### Non-critical phase outcomes"
+            echo "- Change detection: ${CHANGES_OUTCOME:-not-run}"
+            echo "- Rebuild verification: ${REBUILD_OUTCOME:-not-run}"
+            echo "- Quality gate: ${QUALITY_GATE_OUTCOME:-not-run}"
+            echo "- Revert on failed rebuild: ${REVERT_OUTCOME:-not-run}"
+            echo "- Commit/push: ${COMMIT_PUSH_OUTCOME:-not-run}"
+            echo
+            echo "Artifacts uploaded: **seo-autopilot-failure-artifacts-${{ github.run_id }}**"
+          } >> "$GITHUB_STEP_SUMMARY"

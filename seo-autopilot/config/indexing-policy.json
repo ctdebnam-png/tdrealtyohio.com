@@ -1,0 +1,124 @@
+{
+  "canonical": {
+    "scheme": "https",
+    "host": "tdrealtyohio.com",
+    "trailingSlash": "always",
+    "disallowWww": true
+  },
+  "indexing": {
+    "defaultDirective": "index",
+    "indexPrefixes": [
+      "/",
+      "/about/",
+      "/affordability/",
+      "/agents/",
+      "/areas/",
+      "/blog/",
+      "/buy/",
+      "/buyers/",
+      "/compare/",
+      "/contact/",
+      "/faq/",
+      "/fair-housing/",
+      "/home-value/",
+      "/pre-listing-inspection/",
+      "/referrals/",
+      "/reviews/",
+      "/sell/",
+      "/sell-and-buy/",
+      "/sell-only-2-percent/",
+      "/sellers/",
+      "/sitemap-page/",
+      "/terms/",
+      "/tools/"
+    ],
+    "noindexPrefixes": [
+      "/thank-you/",
+      "/lp/",
+      "/admin/"
+    ],
+    "noindexExact": [
+      "/404/",
+      "/500/"
+    ]
+  },
+  "routePolicies": [
+    {
+      "name": "tools-family",
+      "action": "index",
+      "prefixes": [
+        "/tools/"
+      ]
+    },
+    {
+      "name": "landing-pages",
+      "action": "noindex-follow",
+      "prefixes": [
+        "/lp/"
+      ]
+    },
+    {
+      "name": "thank-you-pages",
+      "action": "noindex-follow",
+      "prefixes": [
+        "/thank-you/"
+      ],
+      "exact": [
+        "/thank-you/"
+      ]
+    },
+    {
+      "name": "admin",
+      "action": "block",
+      "prefixes": [
+        "/admin/"
+      ]
+    },
+    {
+      "name": "utility-comparators",
+      "action": "canonicalize",
+      "prefixes": [
+        "/compare/"
+      ],
+      "patterns": [
+        "^/compare/(?:[a-z0-9-]+-vs-[a-z0-9-]+|discount-broker-vs-full-service|1-percent-vs-3-percent|flat-fee-mls-vs-full-service|fsbo-vs-1-percent-listing)/$"
+      ],
+      "canonicalTarget": "/compare/"
+    },
+    {
+      "name": "near-duplicate-regional-pages",
+      "action": "canonicalize",
+      "patterns": [
+        "^/tools/[a-z0-9-]+/(?:columbus|dublin|delaware|powell|hilliard|gahanna|worthington|new-albany|westerville|upper-arlington)/$",
+        "^/buyers/first-time/[a-z0-9-]+/$"
+      ]
+    }
+  ],
+  "contentQuality": {
+    "minWordCount": 220,
+    "differentiation": {
+      "enabled": true,
+      "jaccardSimilarityThreshold": 0.88,
+      "minimumSharedFamilySize": 3
+    },
+    "taskOutputDir": "ops/tasks/indexing-remediation"
+  },
+  "sitemap": {
+    "includeByDefault": true,
+    "excludePrefixes": [
+      "/thank-you/",
+      "/lp/",
+      "/admin/",
+      "/templates/"
+    ],
+    "excludeExact": [
+      "/404/",
+      "/500/",
+      "/sell-and-buy/"
+    ],
+    "excludePatterns": [
+      "^/.*error.*$"
+    ],
+    "excludeNoindex": true
+  }
+}

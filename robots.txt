@@ -9,6 +9,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /lp/
+Disallow: /admin/
 Disallow: /ops/
 Disallow: /ads-bot/
 
@@ -66,4 +67,4 @@ Disallow: /
 # ==============================================
 # SITEMAP
 # ==============================================
-Sitemap: https://tdrealtyohio.com/sitemap.xml
+Sitemap: https://tdrealtyohio.com/sitemap-index.xml
