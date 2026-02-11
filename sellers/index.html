@@ -272,6 +272,7 @@
         <a href="/buyers/" class="nav-link">Buy</a>
         <a href="/areas/" class="nav-link">Areas</a>
         <a href="/about/" class="nav-link">About</a>
+        <a href="/blog/" class="nav-link">Blog</a>
         <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
       </nav>
 
@@ -318,6 +319,7 @@
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#whats-included">What's Included</a></li>
         <li><a href="#savings-calculator">Savings Calculator</a></li>
+        <li><a href="#sell-only-details">2% Sell Only</a></li>
         <li><a href="#pre-listing-inspection">Pre-Listing Inspection</a></li>
         <li><a href="#selling-process">The Process</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -333,7 +335,7 @@
         </div>
 
         <div class="commission-paths">
-          <div class="path-card featured">
+          <div class="path-card featured" id="full-service">
             <span class="path-badge">Best Value</span>
             <div class="path-rate">1<span>%</span></div>
             <div class="path-subtitle">Sell + Buy</div>
@@ -342,12 +344,11 @@
             <a href="/1-percent-commission/" class="btn btn-outline u-d3feb47d">Learn More</a>
           </div>
 
-          <div class="path-card">
+          <div class="path-card" id="sell-only" style="opacity:0.85;">
             <div class="path-rate">2<span>%</span></div>
             <div class="path-subtitle">Sell Only</div>
-            <p class="path-description">Selling without buying? List your home for a 2% listing fee with the same full-service representation.</p>
-            <p class="path-comparison">Compared to a 3% listing fee, <strong>you keep 1% more of your sale price</strong></p>
-            <a href="/sell-only-2-percent/" class="btn btn-outline u-d3feb47d">Learn More</a>
+            <p class="path-description">Selling without buying? 2% listing fee with the same full service.</p>
+            <p class="text-muted" style="font-size:0.875rem;"><a href="#sell-only-details">See sell-only pricing details</a></p>
           </div>
         </div>
 
@@ -795,6 +796,43 @@
       </div>
     </section>
 
+    <!-- Sell Only 2% Disclosure (secondary) -->
+    <section class="section bg-off-white" id="sell-only-details">
+      <div class="container">
+        <h3 class="text-muted" style="font-size:1.25rem;">Selling only? Listing fee is 2%</h3>
+        <p class="text-muted">Not buying another home right now? You still save. List your Central Ohio home for 2% commission instead of the traditional 3%.</p>
+
+        <div class="two-col">
+          <div>
+            <h3>Full Service at 2% Commission</h3>
+            <p>Whether you're relocating out of state, moving in with family, or transitioning to renting, you shouldn't have to pay 3% just because you're not buying locally.</p>
+            <p>The 2% sell-only rate includes everything a traditional agent provides:</p>
+            <ul class="benefits-list">
+              <li>Full MLS listing with professional photography</li>
+              <li>Syndication to Zillow, Realtor.com, Redfin, and 100+ sites</li>
+              <li>Showing coordination and lockbox access</li>
+              <li>Expert pricing strategy and negotiation</li>
+              <li>Contract management through closing</li>
+              <li><strong>Free pre-listing home inspection</strong> ($400-500 value)</li>
+            </ul>
+            <p>Also buying? <a href="#full-service">Get the 1% rate instead</a></p>
+          </div>
+
+          <div>
+            <h3>Common Sell-Only Situations</h3>
+            <ul class="benefits-list">
+              <li><strong>Relocating out of state</strong> — Job transfer or moving closer to family</li>
+              <li><strong>Transitioning to renting</strong> — Downsizing or testing a new area</li>
+              <li><strong>Moving in with family</strong> — Combining households or caregiving</li>
+              <li><strong>Investment property</strong> — Liquidating a rental or investment</li>
+              <li><strong>Estate sale</strong> — Selling an inherited property</li>
+              <li><strong>Timing doesn't align</strong> — Sell at 2% today; if plans change before closing, we can adjust to 1%</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Free Seller Tools -->
     <section class="section">
       <div class="container">
@@ -884,19 +922,13 @@
         </div>
 
         <div>
-          <h3 class="footer-title">Sell</h3>
-          <ul class="footer-links" data-footer-nav="sell">
+          <h3 class="footer-title">Services</h3>
+          <ul class="footer-links" data-footer-nav="services">
             <li><a href="/sellers/">Sell Your Home</a></li>
-            <li><a href="/1-percent-commission/">1% Commission</a></li>
-            <li><a href="/sell-only-2-percent/">2% Sell Only</a></li>
-            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
-            <li><a href="/home-value/">Free Home Value</a></li>
-          </ul>
-          <h3 class="footer-title">Buy</h3>
-          <ul class="footer-links" data-footer-nav="buy">
             <li><a href="/buyers/">Buy a Home</a></li>
-            <li><a href="/buy/cash-back/">1% Cash Back</a></li>
-            <li><a href="/affordability/">Affordability Calculator</a></li>
+            <li><a href="/areas/">Service Areas</a></li>
+            <li><a href="/home-value/">Home Value</a></li>
+            <li><a href="/affordability/">Affordability</a></li>
           </ul>
         </div>
 
@@ -906,12 +938,7 @@
             <li><a href="/blog/">Blog</a></li>
             <li><a href="/faq/">FAQ</a></li>
             <li><a href="/about/">About</a></li>
-            <li><a href="/compare/">Compare Options</a></li>
-            <li><a href="/tools/">Free Tools</a></li>
-            <li><a href="/areas/">Service Areas</a></li>
-            <li><a href="/reviews/">Reviews</a></li>
-            <li><a href="/agents/">Agent Opportunities</a></li>
-            <li><a href="/referrals/">Referral Credit</a></li>
+            <li><a href="/contact/">Contact</a></li>
           </ul>
         </div>
 

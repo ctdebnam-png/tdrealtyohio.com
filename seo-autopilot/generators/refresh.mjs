@@ -306,7 +306,6 @@ function buildInternalLinks(internalLinksTo, rankSet) {
     '/affordability/': 'Affordability calculator',
     '/compare/': 'Compare listing options',
     '/sell-and-buy/': 'Sell and buy with TD Realty',
-    '/sell-only-2-percent/': 'Sell-only listing at 2%',
     '/blog/': 'Real estate blog',
     '/faq/': 'Frequently asked questions',
     '/referrals/': 'Referral credit program',

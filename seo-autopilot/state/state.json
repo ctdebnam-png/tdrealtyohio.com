@@ -13,12 +13,6 @@
       "date": "2026-02-10"
     },
     {
-      "from": "/buyers/",
-      "to": "/sell-only-2-percent/",
-      "anchor": "sell only 2 percent",
-      "date": "2026-02-10"
-    },
-    {
       "from": "/",
       "to": "/sell-and-buy/",
       "anchor": "sell and buy",

@@ -13,8 +13,7 @@ const SERVICE_PATH_PREFIXES = [
   'buy/',
   'pre-listing-inspection/',
   '1-percent-commission/',
-  'sell-and-buy/',
-  'sell-only-2-percent/'
+  'sell-and-buy/'
 ];
 const HOWTO_EXPECTED_PATHS = new Set(['buyers/index.html', 'sellers/index.html']);
 

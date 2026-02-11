@@ -24,22 +24,24 @@ const ROOT = join(__dirname, '..');
 const require = createRequire(import.meta.url);
 const { NAV_REGISTRY } = require('../src/config/nav.js');
 
-// Derive canonical nav from the single source of truth
-const CANONICAL_NAV = {
-  sell: NAV_REGISTRY.groups.sell.items.map(i => ({ href: i.href, label: i.label })),
-  buy: NAV_REGISTRY.groups.buy.items.map(i => ({ href: i.href, label: i.label })),
-  learn: NAV_REGISTRY.groups.learn.items.map(i => ({ href: i.href, label: i.label })),
-};
+// Derive canonical nav from the single source of truth (mobile drawer groups)
+const CANONICAL_NAV = {};
+for (const [key, group] of Object.entries(NAV_REGISTRY.groups)) {
+  CANONICAL_NAV[key] = group.items.map(i => ({ href: i.href, label: i.label }));
+}
 
 // Allowed labels on the sitemap page that are NOT in the nav registry
 // (commission landers, compare sub-pages, legal, areas, blog articles)
 const SITEMAP_ALLOWED_EXTRA_LABELS = new Set([
   'Home', 'All Areas', 'All Articles',
   'Sell', 'Buy', 'Contact',
-  '1% Commission Listing', 'Sell Only (2%)',
+  '1% Commission Listing',
   'Compare Options', '1% vs 3% Commission', 'Discount Broker vs Full Service', 'Flat Fee MLS vs Full Service',
   'Privacy Policy', 'Terms of Service', 'Fair Housing Statement',
-  'Home Value Estimate',
+  'Home Value Estimate', 'Pre-Listing Inspection', 'Free Home Value',
+  'About',
+  // Pages that exist but are not in the consumer nav allowlist
+  'Agent Opportunities', 'Referral Credit',
 ]);
 
 // Banned labels that must NOT appear on /sitemap-page/
@@ -175,24 +177,28 @@ async function checkSitemapPage() {
   }
 }
 
-// Check 4: Footer Learn section must have all canonical learn links
+// Check 4: Footer sections must have all canonical links from footerGroups
 async function checkFooterCompanyCompleteness() {
+  if (!NAV_REGISTRY.footerGroups) return;
+
   const files = await glob('**/*.html', {
     cwd: ROOT,
     ignore: ['node_modules/**', 'lp/**'],
   });
 
-  const requiredHrefs = CANONICAL_NAV.learn.map(c => c.href);
+  for (const [groupName, group] of Object.entries(NAV_REGISTRY.footerGroups)) {
+    const requiredHrefs = group.items.map(c => c.href);
 
-  for (const file of files) {
-    const html = await readFile(join(ROOT, file), 'utf-8');
-    const footerLearnMatch = html.match(/data-footer-nav="learn"[^>]*>([\s\S]*?)<\/ul>/i);
-    if (!footerLearnMatch) continue;
+    for (const file of files) {
+      const html = await readFile(join(ROOT, file), 'utf-8');
+      const footerMatch = html.match(new RegExp(`data-footer-nav="${groupName}"[^>]*>([\\s\\S]*?)<\\/ul>`, 'i'));
+      if (!footerMatch) continue;
 
-    const hrefs = extractHrefs(footerLearnMatch[0], /[\s\S]*/);
-    for (const required of requiredHrefs) {
-      if (!hrefs.includes(required)) {
-        fail(`${file}: footer Learn missing "${required}"`);
+      const hrefs = extractHrefs(footerMatch[0], /[\s\S]*/);
+      for (const required of requiredHrefs) {
+        if (!hrefs.includes(required)) {
+          fail(`${file}: footer ${groupName} missing "${required}"`);
+        }
       }
     }
   }

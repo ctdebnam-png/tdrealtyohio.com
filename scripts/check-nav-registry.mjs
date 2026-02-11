@@ -25,7 +25,9 @@ const ROOT = join(__dirname, '..');
 const { NAV_REGISTRY } = require(join(ROOT, 'src', 'config', 'nav.js'));
 
 const registryHeaderHrefs = NAV_REGISTRY.header.map(i => i.href);
-const footerGroupNames = Object.keys(NAV_REGISTRY.groups); // sell, buy, learn
+const footerGroupNames = NAV_REGISTRY.footerGroups
+  ? Object.keys(NAV_REGISTRY.footerGroups)
+  : ['services', 'learn'];
 
 const errors = [];
 
@@ -93,18 +95,19 @@ async function checkHtmlFiles() {
       }
     }
 
-    // 3. Check footer static links match NAV_REGISTRY
+    // 3. Check footer static links match NAV_REGISTRY.footerGroups
+    const footerGroupsConfig = NAV_REGISTRY.footerGroups || {};
     for (const groupName of footerGroupNames) {
       const groupRe = new RegExp(`data-footer-nav="${groupName}"[^>]*>([\\s\\S]*?)<\\/ul>`, 'i');
       const groupMatch = html.match(groupRe);
-      if (groupMatch) {
+      if (groupMatch && footerGroupsConfig[groupName]) {
         const footerHrefRe = /href="([^"]+)"/g;
         const footerHrefs = new Set();
         let fm;
         while ((fm = footerHrefRe.exec(groupMatch[1])) !== null) {
           footerHrefs.add(fm[1]);
         }
-        for (const item of NAV_REGISTRY.groups[groupName].items) {
+        for (const item of footerGroupsConfig[groupName].items) {
           if (!footerHrefs.has(item.href)) {
             errors.push(`${rp}: footer ${groupName} missing link to ${item.href}`);
           }
@@ -133,7 +136,7 @@ async function checkAssetsNavJs() {
     navJsHrefs.add(m[1]);
   }
 
-  // Get all hrefs from NAV_REGISTRY (header + footer groups)
+  // Get all hrefs from NAV_REGISTRY (header + groups)
   const registryHrefs = new Set();
   for (const item of NAV_REGISTRY.header) {
     registryHrefs.add(item.href);
@@ -150,9 +153,12 @@ async function checkAssetsNavJs() {
     }
   }
   for (const href of navJsHrefs) {
-    if (!registryHrefs.has(href)) {
-      errors.push(`assets/js/nav.js: TD_NAV has unexpected href ${href}`);
-    }
+    // Skip footerInternal-only hrefs (e.g. /) since those aren't in groups
+    if (registryHrefs.has(href)) continue;
+    // Allow hrefs in footerLegal or footerInternal
+    if (NAV_REGISTRY.footerInternal && NAV_REGISTRY.footerInternal.includes(href)) continue;
+    if (NAV_REGISTRY.footerLegal && NAV_REGISTRY.footerLegal.some(l => l.href === href)) continue;
+    errors.push(`assets/js/nav.js: TD_NAV has unexpected href ${href}`);
   }
 
   console.log(`assets/js/nav.js: TD_NAV has ${navJsHrefs.size} hrefs, NAV_REGISTRY has ${registryHrefs.size} hrefs.\n`);

@@ -691,7 +691,6 @@ def _all_page_paths() -> list[Path]:
                      "pre-listing-inspection/index.html",
                      "home-value/index.html", "affordability/index.html",
                      "sell-and-buy/index.html",
-                     "sell-only-2-percent/index.html",
                      "privacy/index.html", "terms/index.html",
                      "fair-housing/index.html", "sitemap-page/index.html",
                      "blog/index.html", "areas/index.html",

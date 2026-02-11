@@ -3,60 +3,65 @@
  * Single source of truth for header nav, footer nav, and hamburger menu.
  *
  * Header: 5 flat items — Sell, Buy, Areas, About, Contact (CTA).
- * Footer: Sell, Buy, Learn, Contact columns.
- * Mobile hamburger is rebuilt from TD_NAV by initMobileNav() in main.js.
+ * Mobile menu: built from TD_NAV.mobile by initMobileNav() in main.js.
+ * Footer: static HTML; TD_NAV.footerInternal used for drift-guard validation only.
+ *
+ * IMPORTANT: Only paths listed here should appear in the mobile drawer and
+ * footer nav. Do NOT add pages without explicit approval.
  */
 
-const TD_NAV = {
+var TD_NAV = {
   header: [
     { label: 'Sell',    href: '/sellers/' },
     { label: 'Buy',     href: '/buyers/' },
     { label: 'Areas',   href: '/areas/' },
     { label: 'About',   href: '/about/' },
+    { label: 'Blog',    href: '/blog/' },
     { label: 'Contact', href: '/contact/', isCta: true }
   ],
-  footer: {
+
+  // ── Mobile drawer menu (rendered by initMobileNav) ──────────────
+  mobile: {
     sell: {
       title: 'Sell',
       items: [
-        { label: 'Sell Your Home',         href: '/sellers/' },
-        { label: '1% Commission',          href: '/1-percent-commission/' },
-        { label: '2% Sell Only',           href: '/sell-only-2-percent/' },
-        { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
-        { label: 'Free Home Value',        href: '/home-value/' }
+        { label: 'Sell Your Home', href: '/sellers/' },
+        { label: '1% Listing Fee', href: '/sellers/#full-service' }
       ]
     },
     buy: {
       title: 'Buy',
       items: [
         { label: 'Buy a Home',              href: '/buyers/' },
-        { label: '1% Cash Back',            href: '/buy/cash-back/' },
         { label: 'Affordability Calculator', href: '/affordability/' }
       ]
     },
     learn: {
       title: 'Learn',
       items: [
-        { label: 'Blog',                href: '/blog/' },
-        { label: 'FAQ',                 href: '/faq/' },
-        { label: 'About',               href: '/about/' },
-        { label: 'Compare Options',     href: '/compare/' },
-        { label: 'Free Tools',          href: '/tools/' },
-        { label: 'Service Areas',       href: '/areas/' },
-        { label: 'Reviews',             href: '/reviews/' },
-        { label: 'Agent Opportunities', href: '/agents/' },
-        { label: 'Referral Credit',     href: '/referrals/' }
+        { label: 'FAQ',             href: '/faq/' },
+        { label: 'Compare Options', href: '/compare/' }
       ]
     }
-  }
-  // Legal links rendered statically in footer HTML — not part of the nav config.
+  },
+
+  // ── Utility links (always shown at bottom of mobile drawer) ─────
+  utility: [
+    { label: 'Contact', href: '/contact/' }
+  ],
+
+  // ── Footer internal link allowlist (for drift-guard validation) ─
+  footerInternal: [
+    '/', '/sellers/', '/buyers/', '/areas/', '/home-value/',
+    '/affordability/', '/about/', '/contact/', '/blog/', '/faq/',
+    '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
+  ]
 };
 
 /**
  * Navigation rendering functions are intentionally no-ops.
  * Header and footer links are static HTML for SEO and zero-JS reliability.
- * Mobile hamburger is rebuilt from TD_NAV by initMobileNav() in main.js
- * to guarantee parity with the footer.
+ * Mobile hamburger is rebuilt from TD_NAV.mobile by initMobileNav() in main.js.
  */
 function renderHeaderNav() {}
 function renderMobileNav() { renderHeaderNav(); }
