@@ -26,8 +26,7 @@ var TD_NAV = {
     sell: {
       title: 'Sellers',
       items: [
-        { label: 'Sell Your Home', href: '/sellers/' },
-        { label: '1% Listing Fee', href: '/sellers/#full-service' }
+        { label: 'Sell Your Home', href: '/sellers/' }
       ]
     },
     buy: {
@@ -36,8 +35,15 @@ var TD_NAV = {
         { label: 'Buy a Home', href: '/buyers/' }
       ]
     },
+    explore: {
+      title: 'Explore',
+      items: [
+        { label: 'Service Areas', href: '/areas/' },
+        { label: 'Tools', href: '/tools/' }
+      ]
+    },
     learn: {
-      title: 'Learn',
+      title: 'Company',
       items: [
         { label: 'About', href: '/about/' },
         { label: 'Blog',  href: '/blog/' },
