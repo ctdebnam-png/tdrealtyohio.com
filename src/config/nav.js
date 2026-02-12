@@ -18,6 +18,7 @@ const NAV_REGISTRY = {
     { label: 'Service Areas', href: '/areas/' },
     { label: 'About',         href: '/about/' },
     { label: 'Blog',          href: '/blog/' },
+    { label: 'Agent Opportunity', href: '/agents/' },
     { label: 'Contact',       href: '/contact/', isCta: true }
   ],
 
@@ -40,7 +41,8 @@ const NAV_REGISTRY = {
       label: 'Learn',
       items: [
         { label: 'About', href: '/about/' },
-        { label: 'Blog',  href: '/blog/' }
+        { label: 'Blog',  href: '/blog/' },
+        { label: 'Agent Opportunity', href: '/agents/' }
       ]
     }
   },
@@ -60,6 +62,7 @@ const NAV_REGISTRY = {
       items: [
         { label: 'About',   href: '/about/' },
         { label: 'Blog',    href: '/blog/' },
+        { label: 'Agent Opportunity', href: '/agents/' },
         { label: 'Contact', href: '/contact/' }
       ]
     }
@@ -76,7 +79,7 @@ const NAV_REGISTRY = {
   // Footer internal link allowlist (for drift-guard validation)
   footerInternal: [
     '/sellers/', '/buyers/', '/areas/', '/about/', '/contact/', '/blog/',
-    '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
+    '/agents/', '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
   ],
 
   // Contact info (must not be changed)
