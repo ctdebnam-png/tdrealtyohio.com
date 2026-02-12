@@ -17,11 +17,11 @@ const errors = [];
 
 // ── Allowlists ──
 const HEADER_ALLOWLIST = new Set([
-  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/contact/'
+  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/agents/', '/contact/'
 ]);
 
 const FOOTER_NAV_ALLOWLIST = new Set([
-  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/contact/'
+  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/agents/', '/contact/'
 ]);
 
 const FOOTER_LEGAL_ALLOWLIST = new Set([

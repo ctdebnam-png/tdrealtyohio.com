@@ -17,6 +17,7 @@ var TD_NAV = {
     { label: 'Service Areas', href: '/areas/' },
     { label: 'About',         href: '/about/' },
     { label: 'Blog',          href: '/blog/' },
+    { label: 'Agent Opportunity', href: '/agents/' },
     { label: 'Contact',       href: '/contact/', isCta: true }
   ],
 
@@ -39,7 +40,8 @@ var TD_NAV = {
       title: 'Learn',
       items: [
         { label: 'About', href: '/about/' },
-        { label: 'Blog',  href: '/blog/' }
+        { label: 'Blog',  href: '/blog/' },
+        { label: 'Agent Opportunity', href: '/agents/' }
       ]
     }
   },
@@ -52,7 +54,7 @@ var TD_NAV = {
   // ── Footer internal link allowlist (for drift-guard validation) ─
   footerInternal: [
     '/sellers/', '/buyers/', '/areas/', '/about/', '/contact/', '/blog/',
-    '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
+    '/agents/', '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
   ]
 };
 

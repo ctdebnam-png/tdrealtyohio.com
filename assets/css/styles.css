@@ -2524,7 +2524,7 @@ main {
     white-space: normal;
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--gray-700);
+    color: var(--gray-800, #343a40);
     text-decoration: none;
     transition: color 0.15s ease;
   }
@@ -2535,7 +2535,8 @@ main {
   }
 
   .mobile-nav-panel .nav-link:active {
-    opacity: 0.8;
+    background: var(--gray-100);
+    color: var(--navy);
   }
 
   .mobile-nav-panel .nav-link:focus-visible {
@@ -2565,7 +2566,7 @@ main {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--gray-400);
+    color: var(--gray-600);
     padding: 1rem 0 0.375rem 0;
     border-bottom: none;
     margin-top: 0.75rem;
@@ -5505,8 +5506,22 @@ html[data-reveal] .reveal-stagger.visible > * {
 /* ===== SOCIAL PROOF SECTION ===== */
 .social-proof-section {
   background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+  color: var(--white);
   position: relative;
   overflow: hidden;
+}
+
+.social-proof-section .section-header h2 {
+  color: var(--white);
+}
+
+.social-proof-section .section-header p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.social-proof-section .social-proof-card p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
 }
 
 .social-proof-section::before {
@@ -5597,7 +5612,7 @@ html[data-reveal] .reveal-stagger.visible > * {
 
 .social-proof-cta .btn-outline {
   color: var(--white);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .social-proof-cta .btn-outline:hover {
@@ -5613,6 +5628,17 @@ html[data-reveal] .reveal-stagger.visible > * {
 
   .social-proof-quote {
     font-size: 1.125rem;
+  }
+
+  .social-proof-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .social-proof-cta .btn {
+    width: 100%;
+    text-align: center;
   }
 
   .social-proof-stars svg {
