@@ -602,6 +602,7 @@ function initSellerCalculator() {
     var savings = Math.max(traditional - tdRealty, 0);
 
     if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
+    if (priceSlider) priceSlider.setAttribute('aria-valuetext', formatCurrency(price));
     if (traditionalEl) traditionalEl.textContent = formatCurrency(traditional);
     if (tdRealtyEl) tdRealtyEl.textContent = formatCurrency(tdRealty);
     if (savingsEl) savingsEl.textContent = formatCurrency(savings);
@@ -662,6 +663,7 @@ function initBuyerCalculator() {
     var agentKeeps = Math.max(commission - cashBack, 0);
 
     if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
+    if (priceSlider) priceSlider.setAttribute('aria-valuetext', formatCurrency(price));
     if (commissionEl) commissionEl.textContent = formatCurrency(commission);
     if (cashBackEl) cashBackEl.textContent = formatCurrency(cashBack);
     if (agentKeepsEl) agentKeepsEl.textContent = formatCurrency(agentKeeps);
@@ -885,8 +887,18 @@ function initLeadModal() {
 function initFaqAccordion() {
   const faqItems = document.querySelectorAll('.faq-item');
 
-  faqItems.forEach(item => {
+  faqItems.forEach((item, i) => {
     const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    if (answer && !answer.id) {
+      answer.id = 'faq-answer-' + i;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'faq-q-' + i);
+    }
+    if (question) {
+      if (!question.id) question.id = 'faq-q-' + i;
+      if (answer) question.setAttribute('aria-controls', answer.id);
+    }
 
     question.addEventListener('click', () => {
       const isActive = item.classList.contains('active');
@@ -908,8 +920,18 @@ function initFaqAccordion() {
 function initProcessAccordion() {
   const processSteps = document.querySelectorAll('.process-step-expandable');
 
-  processSteps.forEach(step => {
+  processSteps.forEach((step, i) => {
     const header = step.querySelector('.process-step-header');
+    const details = step.querySelector('.step-details');
+    if (details && !details.id) {
+      details.id = 'process-details-' + i;
+      details.setAttribute('role', 'region');
+      details.setAttribute('aria-labelledby', 'process-header-' + i);
+    }
+    if (header) {
+      if (!header.id) header.id = 'process-header-' + i;
+      if (details) header.setAttribute('aria-controls', details.id);
+    }
 
     header.addEventListener('click', () => {
       const isActive = step.classList.contains('active');

@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260212">
-  <script src="/assets/js/analytics-consent.js"></script>
+  <script src="/assets/js/analytics-consent.js?v=20260212"></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -191,7 +191,7 @@
                 <label class="calculator-label" for="bcc-price">Purchase Price</label>
                 <span class="calculator-slider-value" id="bcc-price-display">$400,000</span>
               </div>
-              <input type="range" class="calculator-range" id="bcc-price" min="150000" max="800000" step="10000" value="400000" style="--value:38.46%">
+              <input type="range" class="calculator-range" id="bcc-price" min="150000" max="800000" step="10000" value="400000" aria-valuetext="$400,000" style="--value:38.46%">
               <div class="slider-labels"><span>$150K</span><span>$800K</span></div>
             </div>
             <div class="form-group">
@@ -326,9 +326,9 @@
       </div>
     </div>
   </footer>
-  <script src="/assets/js/nav.js?v=20260209"></script>
-  <script src="/assets/js/main.js?v=20260209"></script>
-  <script src="/assets/js/tools.js"></script>
+  <script src="/assets/js/nav.js?v=20260212"></script>
+  <script src="/assets/js/main.js?v=20260212"></script>
+  <script src="/assets/js/tools.js?v=20260212"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       initTool('buyer-closing-costs');

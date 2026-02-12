@@ -272,7 +272,7 @@ async function audit() {
 
     // ── 9. CTA consistency on money pages ─────────────
     if (route && MONEY_PAGE_TYPES.has(route.pageType)) {
-      const ctaLinks = content.match(/<a[^>]*class="[^"]*btn[^"]*btn-primary[^"]*"[^>]*href=["']([^"']+)["'][^>]*>/gi) || [];
+      const ctaLinks = content.match(/<a[^>]*(?:class="[^"]*btn[^"]*btn-primary[^"]*"[^>]*href=["']([^"']+)["']|href=["']([^"']+)["'][^>]*class="[^"]*btn[^"]*btn-primary[^"]*")[^>]*>/gi) || [];
       if (ctaLinks.length === 0) {
         warn('cta', rp, 'Money page has no primary CTA (.btn.btn-primary)');
       } else {

@@ -112,8 +112,7 @@
     ],
     "excludeExact": [
       "/404/",
-      "/500/",
-      "/sell-and-buy/"
+      "/500/"
     ],
     "excludePatterns": [
       "^/.*error.*$"

@@ -35,7 +35,7 @@
 
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260212">
   <!-- Analytics bootstrap (centralized) -->
-  <script src="/assets/js/analytics-consent.js"></script>
+  <script src="/assets/js/analytics-consent.js?v=20260212"></script>
 
   <!-- FAQ Schema -->
   <script type="application/ld+json">
@@ -146,6 +146,28 @@
     "url": "https://tdrealtyohio.com/agents/",
     "name": "100% Commission Real Estate Columbus | TD Realty Ohio",
     "description": "Keep 100% commission on listings, 90% on buyer sides. No desk fees, franchise fees, or monthly minimums. Licensed agents: join TD Realty Ohio in Columbus."
+  }
+  </script>
+
+  <!-- Service JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "100% Commission Agent Opportunity",
+    "description": "Keep 100% of your commission on listings and 90% on buyer sides. No desk fees, franchise fees, or monthly minimums.",
+    "provider": {
+      "@type": "RealEstateAgent",
+      "@id": "https://tdrealtyohio.com/#realestateagent",
+      "name": "TD Realty Ohio, LLC",
+      "url": "https://tdrealtyohio.com"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Columbus",
+      "containedInPlace": { "@type": "State", "name": "Ohio" }
+    },
+    "serviceType": "Real Estate Brokerage"
   }
   </script>
 </head>
@@ -484,7 +506,7 @@
     </div>
   </footer>
 
-  <script src="/assets/js/nav.js?v=20260209"></script>
-  <script src="/assets/js/main.js?v=20260209"></script>
+  <script src="/assets/js/nav.js?v=20260212"></script>
+  <script src="/assets/js/main.js?v=20260212"></script>
 </body>
 </html>

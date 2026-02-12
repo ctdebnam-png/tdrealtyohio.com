@@ -116,8 +116,8 @@ function buildRoutes() {
     { path: '/affordability/', title: 'Affordability Calculator | TD Realty Ohio', description: 'Calculate how much home you can afford in Central Ohio. Factor in income, debts, down payment, and current rates.', pageType: PAGE_TYPES.CALCULATOR, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
     { path: '/contact/', title: 'Contact TD Realty Ohio | Free Consultation', description: 'Get a free consultation about buying or selling your Central Ohio home. Call (614) 392-8858 or submit the form.', pageType: PAGE_TYPES.CONTACT, priority: '0.8', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/' },
     { path: '/about/', title: 'About TD Realty Ohio | Travis Debnam, Broker', description: 'Selling homes since 2017. Licensed Ohio brokerage since 2023. Full-service real estate at reduced commission rates.', pageType: PAGE_TYPES.ABOUT, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/' },
-    { path: '/agents/', title: 'Agent Opportunities | 100% Commission | TD Realty Ohio', description: 'Join TD Realty Ohio and keep 100% of your commission. No desk fees, no splits. Licensed Ohio agents welcome.', pageType: PAGE_TYPES.SERVICE, priority: '0.6', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
-    { path: '/referrals/', title: 'Referral Credit Program | TD Realty Ohio', description: 'Refer a friend or family member to TD Realty Ohio and earn a referral credit at closing.', pageType: PAGE_TYPES.SERVICE, priority: '0.5', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
+    { path: '/agents/', title: 'Agent Opportunities | 100% Commission | TD Realty Ohio', description: 'Join TD Realty Ohio and keep 100% of your commission. No desk fees, no splits. Licensed Ohio agents welcome.', pageType: PAGE_TYPES.SERVICE, priority: '0.6', changefreq: 'monthly', schema: ['Service', 'BreadcrumbList'], parent: '/' },
+    { path: '/referrals/', title: 'Referral Credit Program | TD Realty Ohio', description: 'Refer a friend or family member to TD Realty Ohio and earn a referral credit at closing.', pageType: PAGE_TYPES.SERVICE, priority: '0.5', changefreq: 'monthly', schema: ['Service', 'BreadcrumbList'], parent: '/' },
     { path: '/faq/', title: 'Frequently Asked Questions | TD Realty Ohio', description: 'Common questions about 1% commission, the home selling process, buyer cash back, and TD Realty Ohio services.', pageType: PAGE_TYPES.FAQ, priority: '0.7', changefreq: 'monthly', schema: ['FAQPage', 'BreadcrumbList'], parent: '/' },
     { path: '/blog/', title: 'Real Estate Blog | TD Realty Ohio', description: 'Central Ohio real estate insights, market updates, and home buying and selling tips from TD Realty Ohio.', pageType: PAGE_TYPES.BLOG_INDEX, priority: '0.7', changefreq: 'weekly', schema: ['BreadcrumbList'], parent: '/' },
     { path: '/areas/', title: 'Service Areas | Central Ohio | TD Realty Ohio', description: 'TD Realty Ohio serves Columbus, Westerville, Dublin, Powell, and 20+ Central Ohio communities.', pageType: PAGE_TYPES.HUB, priority: '0.8', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/' },
@@ -250,7 +250,7 @@ function buildRoutes() {
       pageType: PAGE_TYPES.SERVICE,
       priority: '0.6',
       changefreq: 'monthly',
-      schema: ['LocalBusiness', 'BreadcrumbList'],
+      schema: ['Service', 'LocalBusiness', 'BreadcrumbList'],
       parent: '/buyers/',
     });
   });
@@ -263,7 +263,7 @@ function buildRoutes() {
       pageType: PAGE_TYPES.SERVICE,
       priority: '0.5',
       changefreq: 'monthly',
-      schema: ['LocalBusiness', 'BreadcrumbList'],
+      schema: ['Service', 'LocalBusiness', 'BreadcrumbList'],
       parent: '/buyers/',
     });
   });

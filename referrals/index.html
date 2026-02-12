@@ -42,7 +42,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260212">
   <!-- Analytics bootstrap (centralized) -->
-  <script src="/assets/js/analytics-consent.js"></script>
+  <script src="/assets/js/analytics-consent.js?v=20260212"></script>
 
   <!-- Breadcrumb Schema -->
   <script type="application/ld+json">
@@ -97,6 +97,28 @@
     "url": "https://tdrealtyohio.com/referrals/",
     "name": "Referral Credit Program | TD Realty Ohio",
     "description": "Refer a friend to TD Realty Ohio and they receive a $250 closing credit. Share the savings of our 1% listing commission in Columbus."
+  }
+  </script>
+
+  <!-- Service JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Referral Credit Program",
+    "description": "Refer a friend or family member to TD Realty Ohio and they receive a $250 closing credit.",
+    "provider": {
+      "@type": "RealEstateAgent",
+      "@id": "https://tdrealtyohio.com/#realestateagent",
+      "name": "TD Realty Ohio, LLC",
+      "url": "https://tdrealtyohio.com"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Columbus",
+      "containedInPlace": { "@type": "State", "name": "Ohio" }
+    },
+    "serviceType": "Real Estate Referral"
   }
   </script>
 </head>
@@ -329,7 +351,7 @@
     </div>
   </footer>
 
-  <script src="/assets/js/nav.js?v=20260209"></script>
-  <script src="/assets/js/main.js?v=20260209"></script>
+  <script src="/assets/js/nav.js?v=20260212"></script>
+  <script src="/assets/js/main.js?v=20260212"></script>
 </body>
 </html>

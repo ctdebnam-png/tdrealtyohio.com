@@ -91,6 +91,7 @@ svg {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -102,6 +103,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -8758,12 +8760,7 @@ a.trust-item, a.stat-card, a.info-card,
 }
 
 /* ── 15. Mobile Overflow Guard ── */
-html {
-  overflow-x: hidden;
-}
-body {
-  overflow-x: hidden;
-}
+/* html/body overflow-x: hidden merged into base rules above */
 /* Constrain known overflow offenders */
 .section-wave,
 .hero-glow,
