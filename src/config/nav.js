@@ -27,8 +27,7 @@ const NAV_REGISTRY = {
     sell: {
       label: 'Sellers',
       items: [
-        { label: 'Sell Your Home', href: '/sellers/' },
-        { label: '1% Listing Fee', href: '/sellers/#full-service' }
+        { label: 'Sell Your Home', href: '/sellers/' }
       ]
     },
     buy: {
@@ -37,8 +36,15 @@ const NAV_REGISTRY = {
         { label: 'Buy a Home', href: '/buyers/' }
       ]
     },
+    explore: {
+      label: 'Explore',
+      items: [
+        { label: 'Service Areas', href: '/areas/' },
+        { label: 'Tools', href: '/tools/' }
+      ]
+    },
     learn: {
-      label: 'Learn',
+      label: 'Company',
       items: [
         { label: 'About', href: '/about/' },
         { label: 'Blog',  href: '/blog/' },
@@ -130,26 +136,17 @@ function getFooterServices() { return getFooterSell(); }
 function getFooterCompany() { return getFooterLearn(); }
 
 function getMobileNav() {
-  return {
-    sell: {
-      label: NAV_REGISTRY.groups.sell.label,
-      items: NAV_REGISTRY.groups.sell.items.map(function(item) {
+  var result = {};
+  Object.keys(NAV_REGISTRY.groups).forEach(function(key) {
+    var group = NAV_REGISTRY.groups[key];
+    result[key] = {
+      label: group.label,
+      items: group.items.map(function(item) {
         return { label: item.label, href: item.href };
       })
-    },
-    buy: {
-      label: NAV_REGISTRY.groups.buy.label,
-      items: NAV_REGISTRY.groups.buy.items.map(function(item) {
-        return { label: item.label, href: item.href };
-      })
-    },
-    learn: {
-      label: NAV_REGISTRY.groups.learn.label,
-      items: NAV_REGISTRY.groups.learn.items.map(function(item) {
-        return { label: item.label, href: item.href };
-      })
-    }
-  };
+    };
+  });
+  return result;
 }
 
 function getAllDestinations() {
