@@ -1484,7 +1484,8 @@ document.addEventListener('DOMContentLoaded', function () {
     initAnimatedChecks,
     initBackToTop,
     initStickyScrollBehavior,
-    initExitIntent
+    initExitIntent,
+    initToolAccordion
   ];
 
   inits.forEach(function (fn) {
@@ -1533,6 +1534,28 @@ function initStickyMobileCTA() {
     });
   }, { threshold: 0 });
   observer.observe(hero);
+}
+
+// ── Tool Accordion ───────────────────────────────────────
+function initToolAccordion() {
+  var toggles = document.querySelectorAll('.tool-accordion-toggle');
+  toggles.forEach(function(btn) {
+    var targetId = btn.getAttribute('aria-controls');
+    var body = targetId ? document.getElementById(targetId) : btn.nextElementSibling;
+    if (!body) return;
+
+    // On desktop (>768px), open by default
+    if (window.innerWidth > 768) {
+      body.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+
+    btn.addEventListener('click', function() {
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      body.classList.toggle('open');
+    });
+  });
 }
 
 // ── Animated Savings Bars ────────────────────────────────
