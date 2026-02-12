@@ -17,7 +17,8 @@ const errors = [];
 
 // ── Allowlists ──
 const HEADER_ALLOWLIST = new Set([
-  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/agents/', '/contact/'
+  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/agents/', '/contact/',
+  '/buy/cash-back/'
 ]);
 
 const FOOTER_NAV_ALLOWLIST = new Set([

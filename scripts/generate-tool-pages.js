@@ -149,7 +149,7 @@ function htmlNav(activeLink) {
       <nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
         <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
-        <a href="/buyers/" class="nav-link">Buyers</a>
+        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
         <a href="/tools/" class="nav-link${toolsActive}">Tools</a>
         <a href="/areas/" class="nav-link">Areas</a>
         <a href="/blog/" class="nav-link">Blog</a>

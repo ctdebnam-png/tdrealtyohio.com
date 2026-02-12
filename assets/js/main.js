@@ -461,6 +461,65 @@ function initNavMore() {
   });
 }
 
+// ===== DESKTOP NAV DROPDOWNS (Buyers submenu, etc.) =====
+// Initialises all .nav-dropdown elements with click-open, outside-click-close,
+// and ESC-close behaviour. Integrates with the unified _headerUI controller.
+function initNavDropdowns() {
+  var dropdowns = document.querySelectorAll('.nav-dropdown');
+  if (!dropdowns.length) return;
+
+  dropdowns.forEach(function (wrapper) {
+    var toggle = wrapper.querySelector('.nav-dropdown-toggle');
+    var menu = wrapper.querySelector('.nav-dropdown-menu');
+    if (!toggle || !menu) return;
+
+    function openDropdown() {
+      // Close mobile nav if open
+      if (_headerUI.closeMobile) _headerUI.closeMobile();
+      // Close any other open nav-dropdown
+      dropdowns.forEach(function (other) {
+        if (other !== wrapper && other.classList.contains('open')) {
+          other.classList.remove('open');
+          var otherToggle = other.querySelector('.nav-dropdown-toggle');
+          if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      wrapper.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDropdown() {
+      wrapper.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    // Click toggles open/close
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (wrapper.classList.contains('open')) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', function (e) {
+      if (!wrapper.contains(e.target) && wrapper.classList.contains('open')) {
+        closeDropdown();
+      }
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && wrapper.classList.contains('open')) {
+        closeDropdown();
+        toggle.focus();
+      }
+    });
+  });
+}
+
 // ===== MARKET BANNER (dismissible, sitewide, CLS-safe) =====
 function initMarketBanner() {
   var dismissed = false;
@@ -1376,6 +1435,7 @@ document.addEventListener('DOMContentLoaded', function () {
     typeof renderFooterNav === 'function' ? renderFooterNav : null,
     initMobileNav,
     initNavMore,
+    initNavDropdowns,
     initMarketBanner,
     initSellerCalculator,
     initBuyerCalculator,

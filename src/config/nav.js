@@ -2,7 +2,7 @@
  * TD Realty Ohio - Canonical Navigation Registry
  * Single source of truth for all navigation across the site.
  *
- * Header: 5 flat items — Sell, Buy, Areas, About, Contact (CTA).
+ * Header: 6 top-level items + Contact CTA. Buyers has a dropdown submenu.
  * Mobile: Sell, Buy, Learn groups (rendered by initMobileNav in main.js).
  * Footer: static HTML; FOOTER_INTERNAL used for drift-guard validation only.
  *
@@ -11,10 +11,13 @@
  */
 
 const NAV_REGISTRY = {
-  // Header links (flat, no dropdowns)
+  // Header links (Buyers has children for dropdown submenu)
   header: [
     { label: 'Sellers',       href: '/sellers/' },
-    { label: 'Buyers',        href: '/buyers/' },
+    { label: 'Buyers',        href: '/buyers/', children: [
+      { label: 'Buy a Home',                       href: '/buyers/' },
+      { label: '1% Cash Back (First-Time Buyers)', href: '/buy/cash-back/' }
+    ]},
     { label: 'Service Areas', href: '/areas/' },
     { label: 'About',         href: '/about/' },
     { label: 'Blog',          href: '/blog/' },
@@ -33,7 +36,8 @@ const NAV_REGISTRY = {
     buy: {
       label: 'Buyers',
       items: [
-        { label: 'Buy a Home', href: '/buyers/' }
+        { label: 'Buy a Home', href: '/buyers/' },
+        { label: '1% Cash Back (First-Time Buyers)', href: '/buy/cash-back/' }
       ]
     },
     explore: {
@@ -152,8 +156,13 @@ function getMobileNav() {
 function getAllDestinations() {
   var destinations = new Set();
 
-  // Header links
-  NAV_REGISTRY.header.forEach(function(item) { destinations.add(item.href); });
+  // Header links (including children for dropdown sub-items)
+  NAV_REGISTRY.header.forEach(function(item) {
+    destinations.add(item.href);
+    if (item.children) {
+      item.children.forEach(function(child) { destinations.add(child.href); });
+    }
+  });
 
   // Nav groups
   Object.values(NAV_REGISTRY.groups).forEach(function(group) {

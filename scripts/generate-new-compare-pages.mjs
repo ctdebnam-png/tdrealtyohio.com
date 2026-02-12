@@ -56,10 +56,10 @@ function headOpen({ title, description, keywords, canonical, ogTitle, ogDesc, tw
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="/assets/css/styles.css?v=20260208" as="style">
+  <link rel="preload" href="/assets/css/styles.css?v=20260212" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260212">
 
   <!-- Google tag (gtag.js) – only loads if user has not declined cookies -->
   <script>
