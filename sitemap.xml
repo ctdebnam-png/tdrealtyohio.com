@@ -655,40 +655,10 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://tdrealtyohio.com/templates/blocks/disclosure-buyer-full/</loc>
-    <lastmod>2026-02-10</lastmod>
+    <loc>https://tdrealtyohio.com/sell-and-buy/</loc>
+    <lastmod>2026-02-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/templates/blocks/disclosure-listing-fee/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/templates/blocks/disclosure-seller-full/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/templates/blocks/pricing-summary/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/templates/blocks/whats-separate-sellers/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://tdrealtyohio.com/templates/partials/canonical-head/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/thank-you/buyer_cash_back/</loc>

@@ -91,6 +91,7 @@ svg {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -102,6 +103,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -4451,6 +4453,17 @@ body.nav-open {
   transform: scale(1.1);
 }
 
+.pricing-card--link:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: var(--radius-lg);
+}
+
+.pricing-card--featured:hover .pricing-card-rate,
+.pricing-card--featured:focus-visible .pricing-card-rate {
+  color: var(--navy);
+}
+
 .pricing-card-rate {
   font-size: 3rem;
   font-weight: 700;
@@ -5444,7 +5457,7 @@ html[data-reveal] .reveal-stagger.visible > * {
 
 /* Pricing featured card rate emphasis */
 .pricing-card--featured .pricing-card-rate {
-  color: var(--gold-dark);
+  color: var(--navy);
   font-size: 3.5rem;
 }
 
@@ -8747,12 +8760,7 @@ a.trust-item, a.stat-card, a.info-card,
 }
 
 /* ── 15. Mobile Overflow Guard ── */
-html {
-  overflow-x: hidden;
-}
-body {
-  overflow-x: hidden;
-}
+/* html/body overflow-x: hidden merged into base rules above */
 /* Constrain known overflow offenders */
 .section-wave,
 .hero-glow,

@@ -419,6 +419,7 @@ function initToolSlider(sliderId, displayId, opts) {
 
   function update() {
     display.textContent = format(slider.value);
+    slider.setAttribute('aria-valuetext', format(slider.value));
     if (typeof updateSliderTrack === 'function') updateSliderTrack(slider);
     if (opts && opts.onChange) opts.onChange(parseInt(slider.value));
   }

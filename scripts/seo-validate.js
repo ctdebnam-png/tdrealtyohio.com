@@ -173,7 +173,7 @@ async function crossReferenceFilesystem(sitemapUrls) {
     const relativePath = path.slice(1); // "sellers/"
 
     // Skip non-public paths that shouldn't be in the sitemap (warn only)
-    const nonPublicPrefixes = ['templates/', 'scripts/', 'tools/', 'data/'];
+    const nonPublicPrefixes = ['templates/', 'scripts/', 'data/'];
     if (nonPublicPrefixes.some(p => relativePath.startsWith(p))) {
       warnings.push(`sitemap.xml contains non-public path ${url} — consider removing from sitemap`);
       continue;

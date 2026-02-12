@@ -51,7 +51,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/styles.css?v=20260212">
   <!-- Analytics bootstrap (centralized) -->
-  <script src="/assets/js/analytics-consent.js" defer></script>
+  <script src="/assets/js/analytics-consent.js?v=20260212" defer></script>
 
   <!-- Structured Data: Organization + RealEstateAgent -->
   <script type="application/ld+json">
@@ -409,7 +409,7 @@
                   <label class="calculator-label" for="seller-price-slider">Home Sale Price</label>
                   <span class="calculator-slider-value" data-price-display>$400,000</span>
                 </div>
-                <input type="range" class="calculator-range u-3fe8ec80" data-price-slider id="seller-price-slider" min="200000" max="800000" step="10000" value="400000">
+                <input type="range" class="calculator-range u-3fe8ec80" data-price-slider id="seller-price-slider" min="200000" max="800000" step="10000" value="400000" aria-valuetext="$400,000">
                 <div class="slider-labels">
                   <span>$200K</span>
                   <span>$800K</span>
@@ -447,7 +447,7 @@
                   <label class="calculator-label" for="buyer-price-slider">Purchase Price</label>
                   <span class="calculator-slider-value" data-buyer-price-display>$400,000</span>
                 </div>
-                <input type="range" class="calculator-range" data-buyer-price-slider id="buyer-price-slider" min="200000" max="800000" step="10000" value="400000">
+                <input type="range" class="calculator-range" data-buyer-price-slider id="buyer-price-slider" min="200000" max="800000" step="10000" value="400000" aria-valuetext="$400,000">
                 <div class="slider-labels">
                   <span>$200K</span>
                   <span>$800K</span>
@@ -477,7 +477,7 @@
           <p>Lower overhead, streamlined workflows, same full-service representation.</p>
         </div>
 
-        <div class="feature-grid reveal-stagger">
+        <div class="feature-grid">
           <a href="/pre-listing-inspection/" class="feature-card u-ff353aaa">
             <div class="feature-card-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -490,28 +490,6 @@
             <p class="feature-card-text">Every listing includes a professional inspection before you hit the market. Price accurately and avoid surprises that derail deals.</p>
             <span class="feature-card-link">Learn more &rarr;</span>
           </a>
-
-          <div class="feature-card">
-            <div class="feature-card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <polyline points="22 4 12 14.01 9 11.01"/>
-              </svg>
-            </div>
-            <h3 class="feature-card-title">Full-Service Representation</h3>
-            <p class="feature-card-text">MLS listing, professional photos, syndication to Zillow/Realtor.com/Redfin, showing coordination, offer negotiation, and contract-to-close management.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-            </div>
-            <h3 class="feature-card-title">Local, Direct Communication</h3>
-            <p class="feature-card-text">Based in Westerville, licensed in Ohio. You work directly with your agent from listing to closing. No call centers or hand-offs.</p>
-          </div>
 
           <a href="/compare/" class="feature-card u-ff353aaa">
             <div class="feature-card-icon">
@@ -707,8 +685,8 @@
 
 
 
-  <script src="/assets/js/nav.js?v=20260211"></script>
-  <script src="/assets/js/main.js?v=20260211"></script>
+  <script src="/assets/js/nav.js?v=20260212"></script>
+  <script src="/assets/js/main.js?v=20260212"></script>
   <script>
     // Calculator mode toggle (seller vs buyer) with accessible tab pattern
     const tabs = document.querySelectorAll('.mode-btn[role="tab"]');
@@ -756,6 +734,7 @@
       buyerSlider.addEventListener('input', () => {
         const price = parseInt(buyerSlider.value);
         buyerPriceDisplay.textContent = '$' + price.toLocaleString();
+        buyerSlider.setAttribute('aria-valuetext', '$' + price.toLocaleString());
         cashBackDisplay.textContent = '$' + Math.round(price * 0.01).toLocaleString();
         updateSliderTrack(buyerSlider);
       });
