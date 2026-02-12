@@ -58,9 +58,9 @@ function generateZipPage(z) {
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="/assets/css/styles.css?v=20260208" as="style">
+  <link rel="preload" href="/assets/css/styles.css?v=20260212" as="style">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=20260208">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260212">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -147,7 +147,7 @@ function generateZipPage(z) {
       </a>
       <nav class="nav-desktop" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
-        <a href="/buyers/" class="nav-link">Buyers</a>
+        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
         <a href="/areas/" class="nav-link active">Areas</a>
         <a href="/about/" class="nav-link">About</a>
         <a href="/blog/" class="nav-link">Blog</a>

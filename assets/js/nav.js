@@ -2,7 +2,7 @@
  * TD Realty Ohio - Navigation Configuration
  * Single source of truth for header nav, footer nav, and hamburger menu.
  *
- * Header: 6 flat items — Sellers, Buyers, Service Areas, About, Blog, Contact (CTA).
+ * Header: 6 top-level items + Contact CTA. Buyers has a dropdown submenu.
  * Mobile menu: built from TD_NAV.mobile by initMobileNav() in main.js.
  * Footer: static HTML; TD_NAV.footerInternal used for drift-guard validation only.
  *
@@ -13,7 +13,10 @@
 var TD_NAV = {
   header: [
     { label: 'Sellers',       href: '/sellers/' },
-    { label: 'Buyers',        href: '/buyers/' },
+    { label: 'Buyers',        href: '/buyers/', children: [
+      { label: 'Buy a Home',                       href: '/buyers/' },
+      { label: '1% Cash Back (First-Time Buyers)', href: '/buy/cash-back/' }
+    ]},
     { label: 'Service Areas', href: '/areas/' },
     { label: 'About',         href: '/about/' },
     { label: 'Blog',          href: '/blog/' },
@@ -32,7 +35,8 @@ var TD_NAV = {
     buy: {
       title: 'Buyers',
       items: [
-        { label: 'Buy a Home', href: '/buyers/' }
+        { label: 'Buy a Home', href: '/buyers/' },
+        { label: '1% Cash Back (First-Time Buyers)', href: '/buy/cash-back/' }
       ]
     },
     explore: {

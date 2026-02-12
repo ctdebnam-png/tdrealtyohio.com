@@ -417,6 +417,90 @@ li { margin-bottom: 0.5rem; }
   margin-left: 1rem;
 }
 
+/* --- Desktop nav dropdown (Buyers submenu) ---- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--gray-700);
+  padding: 0.5rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: color var(--transition);
+}
+
+.nav-dropdown-toggle:hover {
+  color: var(--navy);
+}
+
+.nav-dropdown-toggle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--gold);
+  transition: width var(--transition);
+}
+
+.nav-dropdown.open .nav-dropdown-toggle::after {
+  width: 100%;
+}
+
+.nav-dropdown-toggle svg {
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown.open .nav-dropdown-toggle svg {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem 0;
+  min-width: 280px;
+  z-index: 100;
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: block;
+}
+
+.nav-dropdown-menu .nav-link {
+  display: block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+.nav-dropdown-menu .nav-link::after {
+  display: none;
+}
+
+.nav-dropdown-menu .nav-link:hover {
+  background: var(--gray-50);
+  color: var(--navy);
+}
+
 /* --- Desktop "More" dropdown ---- */
 .nav-more {
   position: relative;
@@ -2242,6 +2326,10 @@ main {
   .nav-link {
     font-size: 1rem;
   }
+
+  .nav-dropdown-toggle {
+    font-size: 1rem;
+  }
 }
 
 /* Medium-large screens - slightly tighter */
@@ -2251,6 +2339,10 @@ main {
   }
 
   .nav-link {
+    font-size: 0.875rem;
+  }
+
+  .nav-dropdown-toggle {
     font-size: 0.875rem;
   }
 
@@ -2379,7 +2471,11 @@ main {
     display: flex;
   }
 
-  /* Desktop-only "More" dropdown collapses on mobile */
+  /* Desktop-only dropdowns collapse on mobile (mobile drawer handles sub-items) */
+  .nav-dropdown {
+    display: none;
+  }
+
   .nav-more-toggle {
     display: none;
   }
