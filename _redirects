@@ -28,15 +28,15 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /affordability          /affordability/         301
 /sitemap-page           /sitemap-page/          301
 /pre-listing-inspection /pre-listing-inspection/ 301
-/1-percent-commission   /1-percent-commission/  301
+/1-percent-commission   /agents/                301
 /areas                  /areas/                 301
 /blog                   /blog/                  301
 /testimonials           /                       301
 /testimonials/          /                       301
 /compare                /compare/               301
 /faq                    /faq/                   301
-/sell-and-buy           /1-percent-commission/  301
-/sell-and-buy/          /1-percent-commission/  301
+/sell-and-buy           /agents/                301
+/sell-and-buy/          /agents/                301
 /sell-only-2-percent    /sellers/#sell-only     301
 /sell-only-2-percent/   /sellers/#sell-only     301
 /sell-only-2-percent/*  /sellers/#sell-only     301
@@ -69,7 +69,7 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /affordability.html     /affordability/         301
 /sitemap-page.html      /sitemap-page/          301
 /pre-listing-inspection.html /pre-listing-inspection/ 301
-/1-percent-commission.html /1-percent-commission/ 301
+/1-percent-commission.html /agents/                301
 /testimonials.html      /                       301
 /compare.html           /compare/               301
 /faq.html               /faq/                   301
@@ -91,3 +91,21 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 
 /areas/galena/          /areas/                 301
 /areas/galena/*         /areas/                 301
+
+
+# Retired consumer discount/savings routes now point to agent recruiting focus
+/1-percent-commission/                      /agents/ 301
+/compare/1-percent-vs-3-percent/           /agents/ 301
+/compare/fsbo-vs-1-percent-listing/        /agents/ 301
+/compare/discount-broker-vs-full-service/  /agents/ 301
+/lp/sell-home-columbus/                    /agents/ 301
+/lp/sell-home-westerville/                 /agents/ 301
+/blog/1-percent-vs-3-percent-commission-comparison/ /agents/ 301
+/blog/how-much-save-selling-columbus-home-1-percent/ /agents/ 301
+/blog/first-time-homebuyer-cash-back/      /agents/ 301
+/buy/cash-back/                            /agents/ 301
+
+/sellers/              /agents/               301
+/sellers               /agents/               301
+/lp/*                  /agents/               301
+/compare/*             /agents/               301
