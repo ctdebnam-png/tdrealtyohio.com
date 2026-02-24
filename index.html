@@ -244,12 +244,12 @@
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-content hero-content--center">
-          <p class="hero-tagline">Smart-fee brokerage for Central Ohio</p>
-          <h1 class="hero-title">Work with a trusted <span class="hero-rate">full-service</span> brokerage.</h1>
-          <p class="hero-subtitle">You get full-service representation, local guidance, and straightforward pricing from consult to close.</p>
+          <p class="hero-tagline">Central Ohio brokerage for clients and growth-focused agents</p>
+          <h1 class="hero-title">Build your business with a <span class="hero-rate">brokerage that supports agents</span>.</h1>
+          <p class="hero-subtitle">TD Realty Ohio now emphasizes agent growth, practical broker support, and strong client service across Central Ohio.</p>
           <div class="hero-buttons hero-buttons--center">
-            <a href="/sellers/" class="btn btn-primary btn-lg">Sell a Home</a>
-            <a href="/buyers/" class="btn btn-outline-white btn-lg">Buy a Home</a>
+            <a href="/agents/" class="btn btn-primary btn-lg">Explore Agent Opportunity</a>
+            <a href="/contact/?interest=agent" class="btn btn-outline-white btn-lg">Speak With the Broker</a>
           </div>
           <div class="trust-badges-inline" aria-label="Trust indicators">
             <span>Licensed Ohio Brokerage</span>
@@ -302,8 +302,8 @@
     <section class="section pricing-section reveal">
       <div class="container">
         <div class="section-header">
-          <h2>How Pricing Works</h2>
-          <p>Transparent, simple pricing. No hidden fees.</p>
+          <h2>How the Brokerage Model Works</h2>
+          <p>Clear expectations, accountable support, and a practical operating model.</p>
         </div>
         <div class="pricing-grid pricing-grid--main reveal-stagger">
           <a href="/sellers/" class="pricing-card pricing-card--featured pricing-card--link">
@@ -410,7 +410,7 @@
               </div>
               <div class="calculator-results">
                 <div class="result-row">
-                  <span class="result-label">Typical 3% Listing Fee</span>
+                  <span class="result-label">Reference Listing Cost</span>
                   <span class="result-value strikethrough" data-traditional>$12,000</span>
                 </div>
                 <div class="result-row">
@@ -418,11 +418,11 @@
                   <span class="result-value" data-td-realty>$4,000</span>
                 </div>
                 <div class="result-row">
-                  <span class="result-label">You Keep</span>
-                  <span class="result-value highlight" data-savings>$8,000</span>
+                  <span class="result-label">Estimated Difference</span>
+                  <span class="result-value highlight" data-difference>$8,000</span>
                 </div>
               </div>
-              <a href="/contact/" class="btn btn-primary btn-lg calculator-cta" id="seller-calc-cta">Get Your Savings Estimate</a>
+              <a href="/contact/" class="btn btn-primary btn-lg calculator-cta" id="seller-calc-cta">Request a Planning Call</a>
               <p class="calculator-disclosure">
                 Listing fee only. Buyer agent compensation is separate. <a href="#disclosures">See disclosures</a>
               </p>
@@ -448,7 +448,7 @@
                   <span class="result-value highlight" data-cash-back>$4,000</span>
                 </div>
               </div>
-              <a href="/contact/?mode=buy" class="btn btn-primary btn-lg calculator-cta" id="buyer-calc-cta">Claim Your Cash Back</a>
+              <a href="/contact/?mode=buy" class="btn btn-primary btn-lg calculator-cta" id="buyer-calc-cta">Plan Your Home Search</a>
               <p class="calculator-disclosure">
                 Disclosure: Buyer-side costs vary by lender and transaction terms. We provide custom guidance based on your specific purchase scenario. <a href="/buyers/" class="u-ed12483e">Learn more →</a>
               </p>
@@ -548,7 +548,7 @@
         <p class="cta-eyebrow">Free consultation — no obligation</p>
         <h2>Keep More of Your Equity</h2>
         <div class="hero-buttons flex-center">
-          <a href="/contact/?interest=selling" class="btn btn-primary btn-lg" id="cta-contact-link">Get Your Savings Estimate</a>
+          <a href="/contact/?interest=selling" class="btn btn-primary btn-lg" id="cta-contact-link">Request a Planning Call</a>
           <a href="tel:6143928858" class="btn btn-outline-white btn-lg">Call (614) 392-8858</a>
         </div>
       </div>
@@ -576,7 +576,7 @@
     <div class="container">
       <h3 class="u-4986ecf7">Related Guides</h3>
       <ul class="u-93eeafcd">
-      <li><a href="/sell-and-buy/">sell and buy</a></li>
+      <li><a href="/agents/">agent opportunity</a></li>
       <li><a href="/compare/flat-fee-mls-vs-full-service/">compare/flat-fee mls vs full service</a></li>
       </ul>
     </div>
@@ -593,7 +593,7 @@
             <span class="logo-mark">TD</span>
             <span>Realty Ohio</span>
           </div>
-          <p>Full-service real estate. Lower commission.</p>
+          <p>Central Ohio real estate brokerage for serious professionals.</p>
         </div>
 
         <div>
@@ -750,11 +750,11 @@
       const mode = rate === 0.01 ? 'sell+buy' : 'sell-only';
       const typicalFee = Math.round(price * 0.03);
       const tdFee = Math.round(price * rate);
-      const savings = typicalFee - tdFee;
+      const difference = typicalFee - tdFee;
       return {
-        url: '/contact/?salePrice=' + price + '&mode=' + mode + '&typicalFee=' + typicalFee + '&tdFee=' + tdFee + '&savings=' + savings,
-        data: { homePrice: price, mode: mode, computedSavings: savings },
-        params: { salePrice: price, mode: mode, typicalFee: typicalFee, tdFee: tdFee, savings: savings }
+        url: '/contact/?salePrice=' + price + '&mode=' + mode + '&typicalFee=' + typicalFee + '&tdFee=' + tdFee + '&difference=' + difference,
+        data: { homePrice: price, mode: mode, computedDifference: difference },
+        params: { salePrice: price, mode: mode, typicalFee: typicalFee, tdFee: tdFee, difference: difference }
       };
     }
 

@@ -92,10 +92,10 @@ const ZIPS = [
 ];
 
 const COMPARISONS = [
-  { slug: '1-percent-vs-3-percent', title: '1% Listing Fee vs 3% Traditional Commission in Ohio', shortTitle: '1% vs 3% Commission', description: 'Compare a 1% listing commission to the traditional 3% rate. See Ohio-specific math showing exactly how much you save at different home prices.' },
+  { slug: 'agent-career-models-ohio', title: 'Real Estate Brokerage Models for Ohio Agents', shortTitle: 'Agent Brokerage Models', description: 'Compare brokerage models and support structures for Ohio agents evaluating their next move.' },
   { slug: 'flat-fee-mls-vs-full-service', title: 'Flat Fee MLS vs Full Service Agent in Ohio', shortTitle: 'Flat Fee MLS vs Full Service', description: 'Compare flat-fee MLS listing services to full-service representation. Understand what you give up, what you keep, and when each option makes sense.' },
-  { slug: 'fsbo-vs-1-percent-listing', title: 'FSBO vs 1% Listing Agent in Ohio', shortTitle: 'FSBO vs 1% Listing', description: 'Compare selling your home yourself (FSBO) to using a 1% listing agent. See the real costs, time investment, and typical price differences.' },
-  { slug: 'discount-broker-vs-full-service', title: 'Redfin-Style Discount Broker vs TD Realty Ohio', shortTitle: 'Discount Broker vs TD Realty', description: 'Compare national discount brokerages like Redfin to a local 1% brokerage. Understand the difference in local expertise, service level, and actual savings.' },
+  { slug: 'agent-growth-systems-ohio', title: 'Agent Growth Systems in Ohio Brokerages', shortTitle: 'Agent Growth Systems', description: 'Evaluate operations, support, and accountability systems that help agents grow in Ohio.' },
+  { slug: 'independent-agent-vs-team-model-ohio', title: 'Independent Agent vs Team Model in Ohio', shortTitle: 'Independent vs Team', description: 'Break down independence, support, and economics when choosing between agent team and brokerage models.' },
 ];
 
 // Build all routes
@@ -108,9 +108,9 @@ function buildRoutes() {
     { path: '/', title: 'TD Realty Ohio | 1\u20132% Commission Real Estate', description: 'Serving Central Ohio. Low-commission options for buyers and sellers.', pageType: PAGE_TYPES.HOME, priority: '1.0', changefreq: 'weekly', schema: ['Organization', 'RealEstateAgent', 'LocalBusiness'], parent: null },
     { path: '/sellers/', title: 'Sell Your Columbus Home for 1-2% Commission | TD Realty Ohio', description: 'List your Central Ohio home for 1-2% commission instead of 3%. Full MLS, pro photos, free inspection included.', pageType: PAGE_TYPES.SERVICE, priority: '0.9', changefreq: 'monthly', schema: ['Service', 'LocalBusiness', 'BreadcrumbList'], parent: '/' },
     { path: '/buyers/', title: 'Buy a Home in Columbus, OH | 1% Cash Back | TD Realty Ohio', description: 'First-time homebuyers get 1% cash back at closing. Full-service buyer representation in Central Ohio.', pageType: PAGE_TYPES.SERVICE, priority: '0.9', changefreq: 'monthly', schema: ['Service', 'LocalBusiness', 'BreadcrumbList'], parent: '/' },
-    { path: '/1-percent-commission/', title: '1% Commission Real Estate | Sell + Buy | TD Realty Ohio', description: 'List your home for 1% when you buy and sell with TD Realty Ohio. Full-service representation at a fraction of the cost.', pageType: PAGE_TYPES.SERVICE, priority: '0.9', changefreq: 'monthly', schema: ['Service', 'LocalBusiness', 'BreadcrumbList'], parent: '/' },
+    { path: '/1-percent-commission/', title: 'Agent Opportunity | TD Realty Ohio', description: 'This legacy route now points to TD Realty Ohio agent opportunity details.', pageType: PAGE_TYPES.SERVICE, priority: '0.1', changefreq: 'yearly', schema: ['Service', 'LocalBusiness', 'BreadcrumbList'], parent: '/' },
     // /sell-only-2-percent/ removed — consolidated into /sellers/#sell-only
-    { path: '/sell-and-buy/', title: 'Sell and Buy Together for 1% | TD Realty Ohio', description: 'List for just 1% commission when you buy your next home through TD Realty Ohio.', pageType: PAGE_TYPES.SERVICE, priority: '0.7', changefreq: 'monthly', schema: ['Service', 'BreadcrumbList'], parent: '/' },
+    { path: '/sell-and-buy/', title: 'Agent Opportunity | TD Realty Ohio', description: 'Legacy path retained for redirects to the agent opportunity page.', pageType: PAGE_TYPES.SERVICE, priority: '0.1', changefreq: 'yearly', schema: ['Service', 'BreadcrumbList'], parent: '/' },
     { path: '/pre-listing-inspection/', title: 'Free Pre-Listing Inspection | TD Realty Ohio', description: 'Every listing includes a complimentary pre-listing inspection. Know your home condition before buyers do.', pageType: PAGE_TYPES.SERVICE, priority: '0.8', changefreq: 'monthly', schema: ['Service', 'LocalBusiness', 'BreadcrumbList'], parent: '/sellers/' },
     { path: '/home-value/', title: 'Free Home Value Estimate | TD Realty Ohio', description: 'Get a free, no-obligation estimate of your Central Ohio home value. Compare to Zillow and Redfin estimates.', pageType: PAGE_TYPES.TOOL, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/' },
     { path: '/affordability/', title: 'Affordability Calculator | TD Realty Ohio', description: 'Calculate how much home you can afford in Central Ohio. Factor in income, debts, down payment, and current rates.', pageType: PAGE_TYPES.CALCULATOR, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
@@ -121,7 +121,7 @@ function buildRoutes() {
     { path: '/faq/', title: 'Frequently Asked Questions | TD Realty Ohio', description: 'Common questions about 1% commission, the home selling process, buyer cash back, and TD Realty Ohio services.', pageType: PAGE_TYPES.FAQ, priority: '0.7', changefreq: 'monthly', schema: ['FAQPage', 'BreadcrumbList'], parent: '/' },
     { path: '/blog/', title: 'Real Estate Blog | TD Realty Ohio', description: 'Central Ohio real estate insights, market updates, and home buying and selling tips from TD Realty Ohio.', pageType: PAGE_TYPES.BLOG_INDEX, priority: '0.7', changefreq: 'weekly', schema: ['BreadcrumbList'], parent: '/' },
     { path: '/areas/', title: 'Service Areas | Central Ohio | TD Realty Ohio', description: 'TD Realty Ohio serves Columbus, Westerville, Dublin, Powell, and 20+ Central Ohio communities.', pageType: PAGE_TYPES.HUB, priority: '0.8', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/' },
-    { path: '/compare/', title: 'Compare Real Estate Options | TD Realty Ohio', description: 'Compare commission structures, service levels, and costs. See how 1% listing stacks up against traditional, flat fee, FSBO, and discount brokers.', pageType: PAGE_TYPES.HUB, priority: '0.7', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
+    { path: '/compare/', title: 'Compare Real Estate Approaches | TD Realty Ohio', description: 'Compare service models, responsibilities, and support structures across common real estate approaches.', pageType: PAGE_TYPES.HUB, priority: '0.7', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
     { path: '/reviews/', title: 'Client Reviews | TD Realty Ohio', description: 'Read verified reviews from TD Realty Ohio clients on Zillow and Google. See what buyers and sellers say about their experience.', pageType: PAGE_TYPES.REVIEWS, priority: '0.6', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/' },
     { path: '/credentials/', title: 'Credentials & Disclosures | TD Realty Ohio', description: 'Licensing, brokerage facts, and regulatory disclosures for TD Realty Ohio, LLC. Broker License #2023006467.', pageType: PAGE_TYPES.CREDENTIALS, priority: '0.5', changefreq: 'yearly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/' },
   );
@@ -236,7 +236,7 @@ function buildRoutes() {
 
   // Buyer funnel pages
   routes.push(
-    { path: '/buy/cash-back/', title: 'Claim Your 1% Cash Back | First-Time Buyer | TD Realty Ohio', description: 'First-time homebuyers get 1% of the purchase price back at closing with TD Realty Ohio.', pageType: PAGE_TYPES.SERVICE, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
+    { path: '/buy/cash-back/', title: 'Buyer Consultation | TD Realty Ohio', description: 'Legacy buyer incentive path retained for redirects.', pageType: PAGE_TYPES.SERVICE, priority: '0.1', changefreq: 'yearly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
     { path: '/buy/pre-approval/', title: 'Get Pre-Approved to Buy | TD Realty Ohio', description: 'Get connected with local lenders and start your pre-approval process for buying a home in Ohio.', pageType: PAGE_TYPES.SERVICE, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
     { path: '/buy/consult/', title: 'Free Buyer Consultation | TD Realty Ohio', description: 'Schedule a free buyer consultation to discuss your home search, budget, and neighborhoods.', pageType: PAGE_TYPES.SERVICE, priority: '0.7', changefreq: 'monthly', schema: ['LocalBusiness', 'BreadcrumbList'], parent: '/buyers/' },
   );
@@ -280,10 +280,10 @@ function buildRoutes() {
 
   // Blog posts
   const BLOG_POSTS = [
-    { slug: 'how-much-save-selling-columbus-home-1-percent', title: 'How Much Can You Save Selling Your Columbus Home for 1% Commission?' },
+    { slug: 'why-agents-change-brokerages-central-ohio', title: 'Why Agents Change Brokerages in Central Ohio' },
     { slug: '1-percent-vs-3-percent-commission-comparison', title: '1% vs 3% Commission: What\'s the Real Difference?' },
     { slug: 'central-ohio-housing-market-2026', title: 'Central Ohio Housing Market Update: February 2026' },
-    { slug: 'first-time-homebuyer-cash-back', title: 'First-Time Homebuyers: Get 1% Cash Back at Closing' },
+    { slug: 'agent-recruiting-qa-central-ohio', title: 'Agent Recruiting Q&A in Central Ohio' },
     { slug: 'pre-listing-inspection-benefits', title: 'What Is a Pre-Listing Inspection and Why Should Columbus Sellers Get One?' },
     { slug: 'selling-home-westerville-ohio-2026', title: 'Selling Your Home in Westerville, Ohio in 2026' },
     { slug: 'why-agents-leaving-traditional-brokerages-100-commission', title: 'Why Agents Are Leaving Traditional Brokerages for 100% Commission' },
