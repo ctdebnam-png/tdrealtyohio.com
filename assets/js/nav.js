@@ -15,7 +15,7 @@ var TD_NAV = {
     { label: 'Sellers',       href: '/sellers/' },
     { label: 'Buyers',        href: '/buyers/', children: [
       { label: 'Buy a Home',                       href: '/buyers/' },
-      { label: '1% Cash Back (First-Time Buyers)', href: '/buy/cash-back/' }
+      { label: 'Buyer Representation', href: '/buyers/' }
     ]},
     { label: 'Service Areas', href: '/areas/' },
     { label: 'About',         href: '/about/' },
@@ -36,7 +36,7 @@ var TD_NAV = {
       title: 'Buyers',
       items: [
         { label: 'Buy a Home', href: '/buyers/' },
-        { label: '1% Cash Back (First-Time Buyers)', href: '/buy/cash-back/' }
+        { label: 'Buyer Representation', href: '/buyers/' }
       ]
     },
     explore: {

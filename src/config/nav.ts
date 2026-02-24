@@ -24,11 +24,9 @@ export const nav: NavConfig = {
   services: [
     { label: 'For Sellers', href: '/sellers/' },
     { label: 'For Buyers', href: '/buyers/' },
-    { label: 'Pre-Listing Inspection', href: '/pre-listing-inspection/' },
     { label: 'Service Areas', href: '/areas/' },
     { label: 'Free Home Value', href: '/home-value/' },
     { label: 'Affordability Calculator', href: '/affordability/' },
-    { label: 'Referral Credit', href: '/referrals/' },
     { label: 'Compare Options', href: '/compare/' },
   ],
   company: [
