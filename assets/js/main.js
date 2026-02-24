@@ -50,17 +50,17 @@ const TD_CONFIG = {
     buyerCashBack: {
       primaryExample: { price: 300000, cashBack: 3000 },
       secondaryExample: { price: 400000, cashBack: 4000 },
-      description: 'First-time homebuyers receive 1% of the purchase price back at closing.',
-      disclaimer: 'Cash back program subject to lender approval. May be applied toward closing costs or prepaid items. Some loan programs have restrictions.'
+      description: 'Buyer clients receive full-service representation from search through closing.',
+      disclaimer: 'Program details vary by transaction and lender guidelines.'
     },
     sellAndBuy: {
-      rate: '1%',
-      description: 'List your current home for just 1% commission when you also buy your next home with TD Realty Ohio.',
+      rate: 'Standard',
+      description: 'Sell your current home and buy your next one with coordinated planning and full-service support.',
       disclaimer: 'Both transactions must occur within a reasonable timeframe. Buyer agent compensation negotiated separately.'
     },
     sellOnly: {
-      rate: '2%',
-      description: 'Not buying? List your home for 2% commission with the same full-service representation.',
+      rate: 'Standard',
+      description: 'Seller clients receive full-service representation from pricing through closing.',
       disclaimer: 'Buyer agent compensation negotiated separately.'
     }
   },
@@ -321,7 +321,7 @@ function initMobileNav() {
   if (mobileGroups.length) {
     var lead = document.createElement('div');
     lead.className = 'mobile-nav-lead';
-    lead.innerHTML = '<p class="mobile-nav-lead-title">Save more without giving up service</p><p class="mobile-nav-lead-copy">1% listing option, 2% sell-only option, and local full-service support.</p>';
+    lead.innerHTML = '<p class="mobile-nav-lead-title">Local guidance for buyers and sellers</p><p class="mobile-nav-lead-copy">Explore services, neighborhoods, and practical next steps with full-service support.</p>';
     body.appendChild(lead);
 
     mobileGroups.forEach(function (group) {
@@ -633,7 +633,7 @@ function initSellerCalculator() {
       currentRate = rate === 'buy-sell' ? TD_CONFIG.rates.buyAndSell : TD_CONFIG.rates.sellOnly;
 
       if (rateLabel) {
-        rateLabel.textContent = rate === 'buy-sell' ? '1%' : '2%';
+        rateLabel.textContent = rate === 'buy-sell' ? 'Plan A' : 'Plan B';
       }
 
       calculate();
@@ -704,8 +704,8 @@ function initLeadModal() {
   overlay.innerHTML =
     '<div class="lead-modal">' +
       '<button type="button" class="lead-modal-close" aria-label="Close">&times;</button>' +
-      '<h3 id="lead-modal-title">Get Your Savings Estimate</h3>' +
-      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">See your personalized savings. We\'ll follow up within one business day.</p>' +
+      '<h3 id="lead-modal-title">Request Your Estimate</h3>' +
+      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">Share a few details and we\'ll follow up within one business day.</p>' +
       '<div class="lead-modal-savings" id="lead-modal-savings" hidden></div>' +
       '<form id="lead-modal-form" novalidate>' +
         '<input type="hidden" name="homePrice" id="lm-homePrice">' +
@@ -774,10 +774,10 @@ function initLeadModal() {
     var savingsEl = document.getElementById('lead-modal-savings');
     if (savingsEl) {
       if (data.computedSavings && parseInt(data.computedSavings) > 0) {
-        savingsEl.textContent = 'Your estimated savings: ' + formatCurrency(parseInt(data.computedSavings));
+        savingsEl.textContent = 'Estimated amount: ' + formatCurrency(parseInt(data.computedSavings));
         savingsEl.hidden = false;
       } else if (data.computedCashBack && parseInt(data.computedCashBack) > 0) {
-        savingsEl.textContent = 'Your estimated cash back: ' + formatCurrency(parseInt(data.computedCashBack));
+        savingsEl.textContent = 'Estimated amount: ' + formatCurrency(parseInt(data.computedCashBack));
         savingsEl.hidden = false;
       } else {
         savingsEl.hidden = true;
@@ -787,7 +787,7 @@ function initLeadModal() {
     // Update title based on mode
     var titleEl = document.getElementById('lead-modal-title');
     if (titleEl) {
-      titleEl.textContent = data.mode === 'buy' ? 'Claim Your Cash Back' : 'Get Your Savings Estimate';
+      titleEl.textContent = data.mode === 'buy' ? 'Request Buyer Consultation' : 'Request Seller Consultation';
     }
 
     overlay.classList.add('open');
@@ -1515,7 +1515,7 @@ function initStickyMobileCTA() {
     ctaText = 'Start Home Search';
   } else if (path.indexOf('/seller') === 0 || path.indexOf('/sell') === 0) {
     ctaHref = '/contact/?interest=selling';
-    ctaText = 'Get Savings Estimate';
+    ctaText = 'Get Seller Consultation';
   }
 
   bar.innerHTML =

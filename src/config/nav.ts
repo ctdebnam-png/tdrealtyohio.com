@@ -26,8 +26,6 @@ export const nav: NavConfig = {
     { label: 'For Buyers', href: '/buyers/' },
     { label: 'Service Areas', href: '/areas/' },
     { label: 'Free Home Value', href: '/home-value/' },
-    { label: 'Affordability Calculator', href: '/affordability/' },
-    { label: 'Compare Options', href: '/compare/' },
   ],
   company: [
     { label: 'About', href: '/about/' },
