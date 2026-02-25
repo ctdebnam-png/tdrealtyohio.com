@@ -321,7 +321,7 @@ function initMobileNav() {
   if (mobileGroups.length) {
     var lead = document.createElement('div');
     lead.className = 'mobile-nav-lead';
-    lead.innerHTML = '<p class="mobile-nav-lead-title">Sell with local, full-service support</p><p class="mobile-nav-lead-copy">Get strategic pricing, marketing, and contract-to-close guidance across Central Ohio.</p>';
+    lead.innerHTML = '<p class="mobile-nav-lead-title">Full-service support across Central Ohio</p><p class="mobile-nav-lead-copy">Selling and buying guidance with pricing, marketing, negotiation, and contract-to-close coordination.</p>';
     body.appendChild(lead);
 
     mobileGroups.forEach(function (group) {
