@@ -1,6 +1,6 @@
 # TD Realty Ohio - robots.txt
 # https://tdrealtyohio.com
-# Generated: 2026-02-25T15:10:33.487Z
+# Generated: 2026-02-10T00:07:06.528Z
 
 # ==============================================
 # DEFAULT: Allow all standard search engines
@@ -9,6 +9,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /lp/
+Disallow: /admin/
 Disallow: /ops/
 Disallow: /ads-bot/
 
@@ -66,4 +67,4 @@ Disallow: /
 # ==============================================
 # SITEMAP
 # ==============================================
-Sitemap: https://tdrealtyohio.com/sitemap.xml
+Sitemap: https://tdrealtyohio.com/sitemap-index.xml
