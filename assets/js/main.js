@@ -223,15 +223,15 @@ function normalizePath(path) {
 
 // ===== SCROLL-LOCK UTILITY (shared by mobileNav + leadModal) =====
 var _scrollLocks = {};
-var _savedScrollY = 0;
+var _storedScrollY = 0;
 
 function lockScroll(source) {
   var wasLocked = Object.keys(_scrollLocks).length > 0;
   _scrollLocks[source] = true;
   if (!wasLocked) {
-    _savedScrollY = window.scrollY || window.pageYOffset;
+    _storedScrollY = window.scrollY || window.pageYOffset;
     document.body.style.position = 'fixed';
-    document.body.style.top = '-' + _savedScrollY + 'px';
+    document.body.style.top = '-' + _storedScrollY + 'px';
     document.body.style.width = '100%';
   }
 }
@@ -242,7 +242,7 @@ function unlockScroll(source) {
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.width = '';
-    window.scrollTo(0, _savedScrollY);
+    window.scrollTo(0, _storedScrollY);
   }
 }
 
@@ -588,7 +588,7 @@ function initSellerCalculator() {
   const toggleBtns = calculator.querySelectorAll('[data-toggle-btn]');
   const traditionalEl = calculator.querySelector('[data-traditional]');
   const tdRealtyEl = calculator.querySelector('[data-td-realty]');
-  const savingsEl = calculator.querySelector('[data-savings]');
+  const estimateEl = calculator.querySelector('[data-estimate]');
   const rateLabel = calculator.querySelector('[data-rate-label]');
 
   let currentRate = TD_CONFIG.rates.buyAndSell;
@@ -599,13 +599,13 @@ function initSellerCalculator() {
     var price = priceSlider ? clampPrice(priceSlider.value, min, max, TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
     var traditional = Math.round(price * TD_CONFIG.rates.traditional);
     var tdRealty = Math.round(price * currentRate);
-    var savings = Math.max(traditional - tdRealty, 0);
+    var estimate = Math.max(traditional - tdRealty, 0);
 
     if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
     if (priceSlider) priceSlider.setAttribute('aria-valuetext', formatCurrency(price));
     if (traditionalEl) traditionalEl.textContent = formatCurrency(traditional);
     if (tdRealtyEl) tdRealtyEl.textContent = formatCurrency(tdRealty);
-    if (savingsEl) savingsEl.textContent = formatCurrency(savings);
+    if (estimateEl) estimateEl.textContent = formatCurrency(estimate);
   }
 
   if (priceSlider) {
@@ -706,11 +706,11 @@ function initLeadModal() {
       '<button type="button" class="lead-modal-close" aria-label="Close">&times;</button>' +
       '<h3 id="lead-modal-title">Request Your Estimate</h3>' +
       '<p class="lead-modal-subtitle" id="lead-modal-subtitle">Share a few details and we\'ll follow up within one business day.</p>' +
-      '<div class="lead-modal-savings" id="lead-modal-savings" hidden></div>' +
+      '<div class="lead-modal-estimate" id="lead-modal-estimate" hidden></div>' +
       '<form id="lead-modal-form" novalidate>' +
         '<input type="hidden" name="homePrice" id="lm-homePrice">' +
         '<input type="hidden" name="mode" id="lm-mode">' +
-        '<input type="hidden" name="computedSavings" id="lm-computedSavings">' +
+        '<input type="hidden" name="computedEstimate" id="lm-computedEstimate">' +
         '<input type="hidden" name="purchasePrice" id="lm-purchasePrice">' +
         '<input type="hidden" name="computedCashBack" id="lm-computedCashBack">' +
         '<input type="hidden" name="pagePath" id="lm-pagePath">' +
@@ -765,22 +765,22 @@ function initLeadModal() {
     var el;
     el = document.getElementById('lm-homePrice'); if (el) el.value = data.homePrice || '';
     el = document.getElementById('lm-mode'); if (el) el.value = data.mode || '';
-    el = document.getElementById('lm-computedSavings'); if (el) el.value = data.computedSavings || '';
+    el = document.getElementById('lm-computedEstimate'); if (el) el.value = data.computedEstimate || '';
     el = document.getElementById('lm-purchasePrice'); if (el) el.value = data.purchasePrice || '';
     el = document.getElementById('lm-computedCashBack'); if (el) el.value = data.computedCashBack || '';
     el = document.getElementById('lm-pagePath'); if (el) el.value = window.location.pathname;
 
-    // Show savings summary
-    var savingsEl = document.getElementById('lead-modal-savings');
-    if (savingsEl) {
-      if (data.computedSavings && parseInt(data.computedSavings) > 0) {
-        savingsEl.textContent = 'Estimated amount: ' + formatCurrency(parseInt(data.computedSavings));
-        savingsEl.hidden = false;
+    // Show estimate summary
+    var estimateEl = document.getElementById('lead-modal-estimate');
+    if (estimateEl) {
+      if (data.computedEstimate && parseInt(data.computedEstimate) > 0) {
+        estimateEl.textContent = 'Estimated figure: ' + formatCurrency(parseInt(data.computedEstimate));
+        estimateEl.hidden = false;
       } else if (data.computedCashBack && parseInt(data.computedCashBack) > 0) {
-        savingsEl.textContent = 'Estimated amount: ' + formatCurrency(parseInt(data.computedCashBack));
-        savingsEl.hidden = false;
+        estimateEl.textContent = 'Estimated figure: ' + formatCurrency(parseInt(data.computedCashBack));
+        estimateEl.hidden = false;
       } else {
-        savingsEl.hidden = true;
+        estimateEl.hidden = true;
       }
     }
 
@@ -849,7 +849,7 @@ function initLeadModal() {
       extra: {
         homePrice: document.getElementById('lm-homePrice').value,
         mode: mode,
-        computedSavings: document.getElementById('lm-computedSavings').value,
+        computedEstimate: document.getElementById('lm-computedEstimate').value,
         purchasePrice: document.getElementById('lm-purchasePrice').value,
         computedCashBack: document.getElementById('lm-computedCashBack').value
       }
@@ -1105,7 +1105,7 @@ function initFormHandler(formId, successMessage) {
     if (formData.get('calcMode')) extra.calcMode = formData.get('calcMode');
     if (formData.get('calcTypicalFee')) extra.typicalFee = formData.get('calcTypicalFee');
     if (formData.get('calcTdFee')) extra.tdFee = formData.get('calcTdFee');
-    if (formData.get('calcSavings')) extra.savings = formData.get('calcSavings');
+    if (formData.get('calcEstimate')) extra.estimate = formData.get('calcEstimate');
     if (formData.get('calcPurchasePrice')) extra.purchasePrice = formData.get('calcPurchasePrice');
     if (formData.get('calcCashBack')) extra.cashBack = formData.get('calcCashBack');
 
@@ -1474,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initCookieConsent,
     initEventTracking,
     initStickyMobileCTA,
-    initSavingsBars,
+    initInfoBars,
     initScrollProgress,
     initTestimonialCarousel,
     initMicroForm,
@@ -1558,9 +1558,9 @@ function initToolAccordion() {
   });
 }
 
-// ── Animated Savings Bars ────────────────────────────────
-function initSavingsBars() {
-  var bars = document.querySelectorAll('.savings-bar-fill');
+// ── Animated Info Bars ────────────────────────────────
+function initInfoBars() {
+  var bars = document.querySelectorAll('.info-bar-fill');
   if (!bars.length) return;
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
