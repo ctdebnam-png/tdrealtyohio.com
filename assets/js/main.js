@@ -43,12 +43,6 @@ const TD_CONFIG = {
 
   memberships: {
   },
-  calculator: {
-    minPrice: 200000,
-    maxPrice: 800000,
-    defaultPrice: 400000,
-    step: 10000
-  },
   areas: [
     'Columbus', 'Westerville', 'Dublin', 'Powell', 'Delaware', 'Gahanna',
     'New Albany', 'Hilliard', 'Upper Arlington', 'Worthington', 'Lewis Center',
@@ -298,7 +292,7 @@ function initMobileNav() {
   if (mobileGroups.length) {
     var lead = document.createElement('div');
     lead.className = 'mobile-nav-lead';
-    lead.innerHTML = '<p class="mobile-nav-lead-title">Full-service support across Central Ohio</p><p class="mobile-nav-lead-copy">Selling and buying guidance with pricing strategy, marketing, negotiation, and contract-to-close coordination.</p>';
+    lead.innerHTML = '<p class="mobile-nav-lead-title">Broker-led representation in Central Ohio</p><p class="mobile-nav-lead-copy">Direct access to the broker, clear timelines, and contract-to-close execution.</p>';
     body.appendChild(lead);
 
     mobileGroups.forEach(function (group) {
@@ -564,11 +558,9 @@ function initLeadModal() {
     '<div class="lead-modal">' +
       '<button type="button" class="lead-modal-close" aria-label="Close">&times;</button>' +
       '<h3 id="lead-modal-title">Request a Consultation</h3>' +
-      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">Tell us what you're trying to do. We'll follow up within one business day.</p>' +
+      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">Share your timeline and goals. We respond within one business day.</p>' +
       '<form id="lead-modal-form" novalidate>' +
-        '<input type="hidden" name="homePrice" id="lm-homePrice">' +
         '<input type="hidden" name="mode" id="lm-mode">' +
-        '<input type="hidden" name="purchasePrice" id="lm-purchasePrice">' +
         '<input type="hidden" name="pagePath" id="lm-pagePath">' +
         '<div class="form-row">' +
           '<div class="form-group">' +
@@ -619,9 +611,7 @@ function initLeadModal() {
   window.openLeadModal = function(data) {
     data = data || {};
     var el;
-    el = document.getElementById('lm-homePrice'); if (el) el.value = data.homePrice || '';
     el = document.getElementById('lm-mode'); if (el) el.value = data.mode || '';
-    el = document.getElementById('lm-purchasePrice'); if (el) el.value = data.purchasePrice || '';
     el = document.getElementById('lm-pagePath'); if (el) el.value = window.location.pathname;
 
 
@@ -681,11 +671,7 @@ function initLeadModal() {
       utm_term: utm.utm_term || '',
       gclid: utm.gclid || '',
       msclkid: utm.msclkid || '',
-      extra: {
-        homePrice: document.getElementById('lm-homePrice').value,
-        mode: mode,
-        purchasePrice: document.getElementById('lm-purchasePrice').value,
-      }
+      extra: { mode: mode }
     };
 
     var success = false;
@@ -1277,7 +1263,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initCookieConsent,
     initEventTracking,
     initStickyMobileCTA,
-    initSavingsBars,
     initScrollProgress,
     initTestimonialCarousel,
     initMicroForm,
@@ -1359,21 +1344,6 @@ function initToolAccordion() {
       body.classList.toggle('open');
     });
   });
-}
-
-// ── Animated Savings Bars ────────────────────────────────
-function initSavingsBars() {
-  var bars = document.querySelectorAll('.savings-bar-fill');
-  if (!bars.length) return;
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animated');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  bars.forEach(function(bar) { observer.observe(bar); });
 }
 
 // ── Scroll Progress Bar ─────────────────────────────────
