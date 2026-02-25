@@ -1,6 +1,6 @@
 /**
  * TD Realty Ohio - Main JavaScript
- * Single configuration object, calculators, and UI interactions
+ * Single configuration object and UI interactions
  */
 
 // ===== CONFIGURATION =====
@@ -38,32 +38,9 @@ const TD_CONFIG = {
     priceRangeHigh: 514000,
     licensedSince: 2017
   },
-  rates: {
-    traditional: 0.03,
-    buyAndSell: 0.01,
-    sellOnly: 0.02,
-    buyerCommission: 0.03,
-    buyerCashBack: 0.01
-  },
+
   // Centralized offer messaging - use these examples sitewide for consistency
-  offers: {
-    buyerCashBack: {
-      primaryExample: { price: 300000, cashBack: 3000 },
-      secondaryExample: { price: 400000, cashBack: 4000 },
-      description: 'First-time homebuyers receive 1% of the purchase price back at closing.',
-      disclaimer: 'Cash back program subject to lender approval. May be applied toward closing costs or prepaid items. Some loan programs have restrictions.'
-    },
-    sellAndBuy: {
-      rate: '1%',
-      description: 'List your current home for just 1% commission when you also buy your next home with TD Realty Ohio.',
-      disclaimer: 'Both transactions must occur within a reasonable timeframe. Buyer agent compensation negotiated separately.'
-    },
-    sellOnly: {
-      rate: '2%',
-      description: 'Not buying? List your home for 2% commission with the same full-service representation.',
-      disclaimer: 'Buyer agent compensation negotiated separately.'
-    }
-  },
+
   memberships: {
   },
   calculator: {
@@ -321,7 +298,7 @@ function initMobileNav() {
   if (mobileGroups.length) {
     var lead = document.createElement('div');
     lead.className = 'mobile-nav-lead';
-    lead.innerHTML = '<p class="mobile-nav-lead-title">Full-service support across Central Ohio</p><p class="mobile-nav-lead-copy">Selling and buying guidance with pricing, marketing, negotiation, and contract-to-close coordination.</p>';
+    lead.innerHTML = '<p class="mobile-nav-lead-title">Full-service support across Central Ohio</p><p class="mobile-nav-lead-copy">Selling and buying guidance with pricing strategy, marketing, negotiation, and contract-to-close coordination.</p>';
     body.appendChild(lead);
 
     mobileGroups.forEach(function (group) {
@@ -570,124 +547,6 @@ function initMarketBanner() {
   });
 }
 
-// ===== CALCULATOR UTILITY: CLAMP & VALIDATE =====
-function clampPrice(value, min, max, fallback) {
-  var n = parseInt(value, 10);
-  if (isNaN(n) || n < min) return min;
-  if (n > max) return max;
-  return n;
-}
-
-// ===== SELLER CALCULATOR (SLIDER VERSION) =====
-function initSellerCalculator() {
-  const calculator = document.getElementById('seller-calculator');
-  if (!calculator) return;
-
-  const priceSlider = calculator.querySelector('[data-price-slider]');
-  const priceDisplay = calculator.querySelector('[data-price-display]');
-  const toggleBtns = calculator.querySelectorAll('[data-toggle-btn]');
-  const traditionalEl = calculator.querySelector('[data-traditional]');
-  const tdRealtyEl = calculator.querySelector('[data-td-realty]');
-  const savingsEl = calculator.querySelector('[data-savings]');
-  const rateLabel = calculator.querySelector('[data-rate-label]');
-
-  let currentRate = TD_CONFIG.rates.buyAndSell;
-
-  function calculate() {
-    var min = TD_CONFIG.calculator.minPrice;
-    var max = TD_CONFIG.calculator.maxPrice;
-    var price = priceSlider ? clampPrice(priceSlider.value, min, max, TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
-    var traditional = Math.round(price * TD_CONFIG.rates.traditional);
-    var tdRealty = Math.round(price * currentRate);
-    var savings = Math.max(traditional - tdRealty, 0);
-
-    if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
-    if (priceSlider) priceSlider.setAttribute('aria-valuetext', formatCurrency(price));
-    if (traditionalEl) traditionalEl.textContent = formatCurrency(traditional);
-    if (tdRealtyEl) tdRealtyEl.textContent = formatCurrency(tdRealty);
-    if (savingsEl) savingsEl.textContent = formatCurrency(savings);
-  }
-
-  if (priceSlider) {
-    priceSlider.min = TD_CONFIG.calculator.minPrice;
-    priceSlider.max = TD_CONFIG.calculator.maxPrice;
-    priceSlider.step = TD_CONFIG.calculator.step;
-    priceSlider.value = clampPrice(priceSlider.value, TD_CONFIG.calculator.minPrice, TD_CONFIG.calculator.maxPrice, TD_CONFIG.calculator.defaultPrice);
-    priceSlider.addEventListener('input', () => {
-      updateSliderTrack(priceSlider);
-      calculate();
-    });
-    priceSlider.addEventListener('change', () => {
-      updateSliderTrack(priceSlider);
-      calculate();
-    });
-    updateSliderTrack(priceSlider);
-  }
-
-  toggleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggleBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const rate = btn.dataset.rate;
-      currentRate = rate === 'buy-sell' ? TD_CONFIG.rates.buyAndSell : TD_CONFIG.rates.sellOnly;
-
-      if (rateLabel) {
-        rateLabel.textContent = rate === 'buy-sell' ? '1%' : '2%';
-      }
-
-      calculate();
-    });
-  });
-
-  calculate();
-}
-
-// ===== BUYER CALCULATOR (SLIDER VERSION) =====
-function initBuyerCalculator() {
-  const calculator = document.getElementById('buyer-calculator');
-  if (!calculator) return;
-
-  const priceSlider = calculator.querySelector('[data-price-slider]');
-  const priceDisplay = calculator.querySelector('[data-price-display]');
-  const commissionEl = calculator.querySelector('[data-commission]');
-  const cashBackEl = calculator.querySelector('[data-cash-back]');
-  const agentKeepsEl = calculator.querySelector('[data-agent-keeps]');
-
-  function calculate() {
-    var min = TD_CONFIG.calculator.minPrice;
-    var max = TD_CONFIG.calculator.maxPrice;
-    var price = priceSlider ? clampPrice(priceSlider.value, min, max, TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
-    var commission = Math.round(price * TD_CONFIG.rates.buyerCommission);
-    var cashBack = Math.round(price * TD_CONFIG.rates.buyerCashBack);
-    var agentKeeps = Math.max(commission - cashBack, 0);
-
-    if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
-    if (priceSlider) priceSlider.setAttribute('aria-valuetext', formatCurrency(price));
-    if (commissionEl) commissionEl.textContent = formatCurrency(commission);
-    if (cashBackEl) cashBackEl.textContent = formatCurrency(cashBack);
-    if (agentKeepsEl) agentKeepsEl.textContent = formatCurrency(agentKeeps);
-  }
-
-  if (priceSlider) {
-    priceSlider.min = TD_CONFIG.calculator.minPrice;
-    priceSlider.max = TD_CONFIG.calculator.maxPrice;
-    priceSlider.step = TD_CONFIG.calculator.step;
-    priceSlider.value = clampPrice(priceSlider.value, TD_CONFIG.calculator.minPrice, TD_CONFIG.calculator.maxPrice, TD_CONFIG.calculator.defaultPrice);
-    priceSlider.addEventListener('input', () => {
-      updateSliderTrack(priceSlider);
-      calculate();
-    });
-    priceSlider.addEventListener('change', () => {
-      updateSliderTrack(priceSlider);
-      calculate();
-    });
-    updateSliderTrack(priceSlider);
-  }
-
-  calculate();
-}
-
 // ===== LEAD FORM MODAL =====
 function initLeadModal() {
   // Prevent duplicate overlay
@@ -704,15 +563,12 @@ function initLeadModal() {
   overlay.innerHTML =
     '<div class="lead-modal">' +
       '<button type="button" class="lead-modal-close" aria-label="Close">&times;</button>' +
-      '<h3 id="lead-modal-title">Get Your Savings Estimate</h3>' +
-      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">See your personalized savings. We\'ll follow up within one business day.</p>' +
-      '<div class="lead-modal-savings" id="lead-modal-savings" hidden></div>' +
+      '<h3 id="lead-modal-title">Request a Consultation</h3>' +
+      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">Tell us what you're trying to do. We'll follow up within one business day.</p>' +
       '<form id="lead-modal-form" novalidate>' +
         '<input type="hidden" name="homePrice" id="lm-homePrice">' +
         '<input type="hidden" name="mode" id="lm-mode">' +
-        '<input type="hidden" name="computedSavings" id="lm-computedSavings">' +
         '<input type="hidden" name="purchasePrice" id="lm-purchasePrice">' +
-        '<input type="hidden" name="computedCashBack" id="lm-computedCashBack">' +
         '<input type="hidden" name="pagePath" id="lm-pagePath">' +
         '<div class="form-row">' +
           '<div class="form-group">' +
@@ -732,7 +588,7 @@ function initLeadModal() {
           '<label for="lm-phone">Phone <span style="font-weight:400;color:var(--gray-500);">(optional)</span></label>' +
           '<input type="tel" id="lm-phone" name="phone" autocomplete="tel">' +
         '</div>' +
-        '<button type="submit" class="btn btn-primary btn-lg">Get Your Estimate</button>' +
+        '<button type="submit" class="btn btn-primary btn-lg">Request Consultation</button>' +
         '<p class="lead-modal-consent">By submitting, you agree to be contacted by TD Realty Ohio about your real estate needs. <a href="/privacy/">Privacy Policy</a></p>' +
         '<div class="form-status" id="lead-modal-status"></div>' +
       '</form>' +
@@ -765,30 +621,9 @@ function initLeadModal() {
     var el;
     el = document.getElementById('lm-homePrice'); if (el) el.value = data.homePrice || '';
     el = document.getElementById('lm-mode'); if (el) el.value = data.mode || '';
-    el = document.getElementById('lm-computedSavings'); if (el) el.value = data.computedSavings || '';
     el = document.getElementById('lm-purchasePrice'); if (el) el.value = data.purchasePrice || '';
-    el = document.getElementById('lm-computedCashBack'); if (el) el.value = data.computedCashBack || '';
     el = document.getElementById('lm-pagePath'); if (el) el.value = window.location.pathname;
 
-    // Show savings summary
-    var savingsEl = document.getElementById('lead-modal-savings');
-    if (savingsEl) {
-      if (data.computedSavings && parseInt(data.computedSavings) > 0) {
-        savingsEl.textContent = 'Your estimated savings: ' + formatCurrency(parseInt(data.computedSavings));
-        savingsEl.hidden = false;
-      } else if (data.computedCashBack && parseInt(data.computedCashBack) > 0) {
-        savingsEl.textContent = 'Your estimated cash back: ' + formatCurrency(parseInt(data.computedCashBack));
-        savingsEl.hidden = false;
-      } else {
-        savingsEl.hidden = true;
-      }
-    }
-
-    // Update title based on mode
-    var titleEl = document.getElementById('lead-modal-title');
-    if (titleEl) {
-      titleEl.textContent = data.mode === 'buy' ? 'Claim Your Cash Back' : 'Get Your Savings Estimate';
-    }
 
     overlay.classList.add('open');
     lockScroll('leadModal');
@@ -838,7 +673,7 @@ function initLeadModal() {
       referrer: document.referrer,
       intent_type: intentType,
       intent_strength: 'high',
-      event_name: 'calculator_lead',
+      event_name: 'consultation_lead',
       utm_source: utm.utm_source || '',
       utm_medium: utm.utm_medium || '',
       utm_campaign: utm.utm_campaign || '',
@@ -849,9 +684,7 @@ function initLeadModal() {
       extra: {
         homePrice: document.getElementById('lm-homePrice').value,
         mode: mode,
-        computedSavings: document.getElementById('lm-computedSavings').value,
         purchasePrice: document.getElementById('lm-purchasePrice').value,
-        computedCashBack: document.getElementById('lm-computedCashBack').value
       }
     };
 
@@ -868,7 +701,7 @@ function initLeadModal() {
     }
 
     if (success) {
-      trackEvent('form_submit', { category: 'lead', label: 'calculator_lead_modal' });
+      trackEvent('form_submit', { category: 'lead', label: 'consultation_lead_modal' });
       statusEl.textContent = 'Thank you! We\'ll be in touch shortly.';
       statusEl.className = 'form-status success';
       submitBtn.textContent = 'Sent!';
@@ -878,7 +711,7 @@ function initLeadModal() {
       statusEl.textContent = 'Something went wrong. Please call (614) 392-8858.';
       statusEl.className = 'form-status error';
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Get Your Estimate';
+      submitBtn.textContent = 'Request Consultation';
     }
   });
 }
@@ -1101,13 +934,6 @@ function initFormHandler(formId, successMessage) {
     if (formData.get('experience')) extra.experience = formData.get('experience');
     if (formData.get('interest')) extra.interest = formData.get('interest');
     if (formData.get('transaction_type')) extra.transaction_type = formData.get('transaction_type');
-    if (formData.get('calcSalePrice')) extra.salePrice = formData.get('calcSalePrice');
-    if (formData.get('calcMode')) extra.calcMode = formData.get('calcMode');
-    if (formData.get('calcTypicalFee')) extra.typicalFee = formData.get('calcTypicalFee');
-    if (formData.get('calcTdFee')) extra.tdFee = formData.get('calcTdFee');
-    if (formData.get('calcSavings')) extra.savings = formData.get('calcSavings');
-    if (formData.get('calcPurchasePrice')) extra.purchasePrice = formData.get('calcPurchasePrice');
-    if (formData.get('calcCashBack')) extra.cashBack = formData.get('calcCashBack');
 
     const payload = {
       name: fullName,
@@ -1358,27 +1184,6 @@ function initEventTracking() {
     });
   });
 
-  // Track calculator interactions (slider move, tab toggle)
-  document.querySelectorAll('[data-price-slider], [data-buyer-price-slider]').forEach(function(slider) {
-    var tracked = false;
-    slider.addEventListener('input', function() {
-      if (!tracked) { trackEvent('calculator_interact', { category: 'calculator', label: 'slider_move' }); tracked = true; }
-    });
-  });
-  document.querySelectorAll('[data-toggle-btn]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      trackEvent('calculator_interact', { category: 'calculator', label: 'toggle_' + (btn.dataset.rate || '') });
-    });
-  });
-
-  // ── Conversion events: calculator_submit ──
-  document.querySelectorAll('[data-calculator-submit]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var calcName = btn.dataset.calculatorSubmit || 'unknown';
-      trackEvent('calculator_submit', { category: 'calculator', label: calcName });
-    });
-  });
-
   // Track form starts (first field focus)
   document.querySelectorAll('form').forEach(function(form) {
     var started = false;
@@ -1459,8 +1264,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initNavMore,
     initNavDropdowns,
     initMarketBanner,
-    initSellerCalculator,
-    initBuyerCalculator,
     initFaqAccordion,
     initProcessAccordion,
     initContactForm,
@@ -1515,7 +1318,7 @@ function initStickyMobileCTA() {
     ctaText = 'Start Home Search';
   } else if (path.indexOf('/seller') === 0 || path.indexOf('/sell') === 0) {
     ctaHref = '/contact/?interest=selling';
-    ctaText = 'Get Savings Estimate';
+    ctaText = 'Get Seller Consultation';
   }
 
   bar.innerHTML =

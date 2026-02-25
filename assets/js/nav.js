@@ -14,8 +14,7 @@ var TD_NAV = {
   header: [
     { label: 'Sellers',       href: '/sellers/' },
     { label: 'Buyers',        href: '/buyers/', children: [
-      { label: 'Buy a Home',                       href: '/buyers/' },
-      { label: 'Buyer Representation', href: '/buyers/' }
+      { label: 'Buyer Services', href: '/buyers/' }
     ]},
     { label: 'Service Areas', href: '/areas/' },
     { label: 'About',         href: '/about/' },
@@ -35,15 +34,13 @@ var TD_NAV = {
     buy: {
       title: 'Buyers',
       items: [
-        { label: 'Buy a Home', href: '/buyers/' },
-        { label: 'Buyer Representation', href: '/buyers/' }
+        { label: 'Buyer Services', href: '/buyers/' }
       ]
     },
     explore: {
       title: 'Explore',
       items: [
-        { label: 'Service Areas', href: '/areas/' },
-        { label: 'Tools', href: '/tools/' }
+        { label: 'Service Areas', href: '/areas/' }
       ]
     },
     learn: {
