@@ -91,3 +91,8 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 
 /areas/galena/          /areas/                 301
 /areas/galena/*         /areas/                 301
+
+/tools/seller-net-proceeds/   /sellers/               301
+/tools/buyer-closing-costs/   /buyers/                301
+/tools/repair-vs-credit/      /sellers/               301
+/tools/sell-now-vs-wait/      /sellers/               301
