@@ -50,17 +50,17 @@ const TD_CONFIG = {
     buyerCashBack: {
       primaryExample: { price: 300000, cashBack: 3000 },
       secondaryExample: { price: 400000, cashBack: 4000 },
-      description: 'Buyer clients receive full-service representation from search through closing.',
-      disclaimer: 'Program details vary by transaction and lender guidelines.'
+      description: 'First-time homebuyers receive 1% of the purchase price back at closing.',
+      disclaimer: 'Cash back program subject to lender approval. May be applied toward closing costs or prepaid items. Some loan programs have restrictions.'
     },
     sellAndBuy: {
-      rate: 'Standard',
-      description: 'Sell your current home and buy your next one with coordinated planning and full-service support.',
+      rate: '1%',
+      description: 'List your current home for just 1% commission when you also buy your next home with TD Realty Ohio.',
       disclaimer: 'Both transactions must occur within a reasonable timeframe. Buyer agent compensation negotiated separately.'
     },
     sellOnly: {
-      rate: 'Standard',
-      description: 'Seller clients receive full-service representation from pricing through closing.',
+      rate: '2%',
+      description: 'Not buying? List your home for 2% commission with the same full-service representation.',
       disclaimer: 'Buyer agent compensation negotiated separately.'
     }
   },
@@ -223,15 +223,15 @@ function normalizePath(path) {
 
 // ===== SCROLL-LOCK UTILITY (shared by mobileNav + leadModal) =====
 var _scrollLocks = {};
-var _storedScrollY = 0;
+var _savedScrollY = 0;
 
 function lockScroll(source) {
   var wasLocked = Object.keys(_scrollLocks).length > 0;
   _scrollLocks[source] = true;
   if (!wasLocked) {
-    _storedScrollY = window.scrollY || window.pageYOffset;
+    _savedScrollY = window.scrollY || window.pageYOffset;
     document.body.style.position = 'fixed';
-    document.body.style.top = '-' + _storedScrollY + 'px';
+    document.body.style.top = '-' + _savedScrollY + 'px';
     document.body.style.width = '100%';
   }
 }
@@ -242,7 +242,7 @@ function unlockScroll(source) {
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.width = '';
-    window.scrollTo(0, _storedScrollY);
+    window.scrollTo(0, _savedScrollY);
   }
 }
 
@@ -321,7 +321,7 @@ function initMobileNav() {
   if (mobileGroups.length) {
     var lead = document.createElement('div');
     lead.className = 'mobile-nav-lead';
-    lead.innerHTML = '<p class="mobile-nav-lead-title">Local guidance for buyers and sellers</p><p class="mobile-nav-lead-copy">Explore services, neighborhoods, and practical next steps with full-service support.</p>';
+    lead.innerHTML = '<p class="mobile-nav-lead-title">Save more without giving up service</p><p class="mobile-nav-lead-copy">1% listing option, 2% sell-only option, and local full-service support.</p>';
     body.appendChild(lead);
 
     mobileGroups.forEach(function (group) {
@@ -588,7 +588,7 @@ function initSellerCalculator() {
   const toggleBtns = calculator.querySelectorAll('[data-toggle-btn]');
   const traditionalEl = calculator.querySelector('[data-traditional]');
   const tdRealtyEl = calculator.querySelector('[data-td-realty]');
-  const estimateEl = calculator.querySelector('[data-estimate]');
+  const savingsEl = calculator.querySelector('[data-savings]');
   const rateLabel = calculator.querySelector('[data-rate-label]');
 
   let currentRate = TD_CONFIG.rates.buyAndSell;
@@ -599,13 +599,13 @@ function initSellerCalculator() {
     var price = priceSlider ? clampPrice(priceSlider.value, min, max, TD_CONFIG.calculator.defaultPrice) : TD_CONFIG.calculator.defaultPrice;
     var traditional = Math.round(price * TD_CONFIG.rates.traditional);
     var tdRealty = Math.round(price * currentRate);
-    var estimate = Math.max(traditional - tdRealty, 0);
+    var savings = Math.max(traditional - tdRealty, 0);
 
     if (priceDisplay) priceDisplay.textContent = formatCurrency(price);
     if (priceSlider) priceSlider.setAttribute('aria-valuetext', formatCurrency(price));
     if (traditionalEl) traditionalEl.textContent = formatCurrency(traditional);
     if (tdRealtyEl) tdRealtyEl.textContent = formatCurrency(tdRealty);
-    if (estimateEl) estimateEl.textContent = formatCurrency(estimate);
+    if (savingsEl) savingsEl.textContent = formatCurrency(savings);
   }
 
   if (priceSlider) {
@@ -633,7 +633,7 @@ function initSellerCalculator() {
       currentRate = rate === 'buy-sell' ? TD_CONFIG.rates.buyAndSell : TD_CONFIG.rates.sellOnly;
 
       if (rateLabel) {
-        rateLabel.textContent = rate === 'buy-sell' ? 'Plan A' : 'Plan B';
+        rateLabel.textContent = rate === 'buy-sell' ? '1%' : '2%';
       }
 
       calculate();
@@ -704,13 +704,13 @@ function initLeadModal() {
   overlay.innerHTML =
     '<div class="lead-modal">' +
       '<button type="button" class="lead-modal-close" aria-label="Close">&times;</button>' +
-      '<h3 id="lead-modal-title">Request Your Estimate</h3>' +
-      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">Share a few details and we\'ll follow up within one business day.</p>' +
-      '<div class="lead-modal-estimate" id="lead-modal-estimate" hidden></div>' +
+      '<h3 id="lead-modal-title">Get Your Savings Estimate</h3>' +
+      '<p class="lead-modal-subtitle" id="lead-modal-subtitle">See your personalized savings. We\'ll follow up within one business day.</p>' +
+      '<div class="lead-modal-savings" id="lead-modal-savings" hidden></div>' +
       '<form id="lead-modal-form" novalidate>' +
         '<input type="hidden" name="homePrice" id="lm-homePrice">' +
         '<input type="hidden" name="mode" id="lm-mode">' +
-        '<input type="hidden" name="computedEstimate" id="lm-computedEstimate">' +
+        '<input type="hidden" name="computedSavings" id="lm-computedSavings">' +
         '<input type="hidden" name="purchasePrice" id="lm-purchasePrice">' +
         '<input type="hidden" name="computedCashBack" id="lm-computedCashBack">' +
         '<input type="hidden" name="pagePath" id="lm-pagePath">' +
@@ -765,29 +765,29 @@ function initLeadModal() {
     var el;
     el = document.getElementById('lm-homePrice'); if (el) el.value = data.homePrice || '';
     el = document.getElementById('lm-mode'); if (el) el.value = data.mode || '';
-    el = document.getElementById('lm-computedEstimate'); if (el) el.value = data.computedEstimate || '';
+    el = document.getElementById('lm-computedSavings'); if (el) el.value = data.computedSavings || '';
     el = document.getElementById('lm-purchasePrice'); if (el) el.value = data.purchasePrice || '';
     el = document.getElementById('lm-computedCashBack'); if (el) el.value = data.computedCashBack || '';
     el = document.getElementById('lm-pagePath'); if (el) el.value = window.location.pathname;
 
-    // Show estimate summary
-    var estimateEl = document.getElementById('lead-modal-estimate');
-    if (estimateEl) {
-      if (data.computedEstimate && parseInt(data.computedEstimate) > 0) {
-        estimateEl.textContent = 'Estimated figure: ' + formatCurrency(parseInt(data.computedEstimate));
-        estimateEl.hidden = false;
+    // Show savings summary
+    var savingsEl = document.getElementById('lead-modal-savings');
+    if (savingsEl) {
+      if (data.computedSavings && parseInt(data.computedSavings) > 0) {
+        savingsEl.textContent = 'Your estimated savings: ' + formatCurrency(parseInt(data.computedSavings));
+        savingsEl.hidden = false;
       } else if (data.computedCashBack && parseInt(data.computedCashBack) > 0) {
-        estimateEl.textContent = 'Estimated figure: ' + formatCurrency(parseInt(data.computedCashBack));
-        estimateEl.hidden = false;
+        savingsEl.textContent = 'Your estimated cash back: ' + formatCurrency(parseInt(data.computedCashBack));
+        savingsEl.hidden = false;
       } else {
-        estimateEl.hidden = true;
+        savingsEl.hidden = true;
       }
     }
 
     // Update title based on mode
     var titleEl = document.getElementById('lead-modal-title');
     if (titleEl) {
-      titleEl.textContent = data.mode === 'buy' ? 'Request Buyer Consultation' : 'Request Seller Consultation';
+      titleEl.textContent = data.mode === 'buy' ? 'Claim Your Cash Back' : 'Get Your Savings Estimate';
     }
 
     overlay.classList.add('open');
@@ -849,7 +849,7 @@ function initLeadModal() {
       extra: {
         homePrice: document.getElementById('lm-homePrice').value,
         mode: mode,
-        computedEstimate: document.getElementById('lm-computedEstimate').value,
+        computedSavings: document.getElementById('lm-computedSavings').value,
         purchasePrice: document.getElementById('lm-purchasePrice').value,
         computedCashBack: document.getElementById('lm-computedCashBack').value
       }
@@ -1105,7 +1105,7 @@ function initFormHandler(formId, successMessage) {
     if (formData.get('calcMode')) extra.calcMode = formData.get('calcMode');
     if (formData.get('calcTypicalFee')) extra.typicalFee = formData.get('calcTypicalFee');
     if (formData.get('calcTdFee')) extra.tdFee = formData.get('calcTdFee');
-    if (formData.get('calcEstimate')) extra.estimate = formData.get('calcEstimate');
+    if (formData.get('calcSavings')) extra.savings = formData.get('calcSavings');
     if (formData.get('calcPurchasePrice')) extra.purchasePrice = formData.get('calcPurchasePrice');
     if (formData.get('calcCashBack')) extra.cashBack = formData.get('calcCashBack');
 
@@ -1474,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initCookieConsent,
     initEventTracking,
     initStickyMobileCTA,
-    initInfoBars,
+    initSavingsBars,
     initScrollProgress,
     initTestimonialCarousel,
     initMicroForm,
@@ -1515,7 +1515,7 @@ function initStickyMobileCTA() {
     ctaText = 'Start Home Search';
   } else if (path.indexOf('/seller') === 0 || path.indexOf('/sell') === 0) {
     ctaHref = '/contact/?interest=selling';
-    ctaText = 'Get Seller Consultation';
+    ctaText = 'Get Savings Estimate';
   }
 
   bar.innerHTML =
@@ -1558,9 +1558,9 @@ function initToolAccordion() {
   });
 }
 
-// ── Animated Info Bars ────────────────────────────────
-function initInfoBars() {
-  var bars = document.querySelectorAll('.info-bar-fill');
+// ── Animated Savings Bars ────────────────────────────────
+function initSavingsBars() {
+  var bars = document.querySelectorAll('.savings-bar-fill');
   if (!bars.length) return;
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {

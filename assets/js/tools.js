@@ -720,7 +720,7 @@ function calcRepairVsCredit() {
 
   // Offer Credit
   var credit = {
-    title: 'Offer a Closing Cost Guidance',
+    title: 'Offer a Credit at Closing',
     when: [],
     considerations: []
   };
@@ -882,7 +882,7 @@ function calcBuyerOfferReadiness() {
 
   readiness.push({ item: 'Down payment funds: ' + fc(downPayment) + ' (' + downPct + '%)', status: 'info', note: 'Verify funds are in an accessible account.' });
   readiness.push({ item: 'Proof of funds documentation', status: 'info', note: 'Recent bank statement showing down payment + reserves.' });
-  readiness.push({ item: 'Earnest money ready', status: 'info', note: 'Typically a modest deposit amount (' + fc(Math.round(targetPrice * 0.01)) + '-' + fc(Math.round(targetPrice * 0.02)) + ').' });
+  readiness.push({ item: 'Earnest money ready', status: 'info', note: 'Typically 1-2% of purchase price (' + fc(Math.round(targetPrice * 0.01)) + '-' + fc(Math.round(targetPrice * 0.02)) + ').' });
 
   if (mustHaves.length > 0) {
     readiness.push({ item: 'Must-haves prioritized', status: 'ready', note: 'Your priorities: ' + mustHaves.join(', ') + '.' });
@@ -930,8 +930,8 @@ function calcBuyerOfferReadiness() {
 
   html += '<div style="background:linear-gradient(135deg,#1a2e44,#2d4a7c);color:white;padding:1.5rem;border-radius:var(--radius-md);margin-top:1.5rem;text-align:center;">';
   html += '<p style="margin-bottom:0.5rem;">First-time buyer? You could receive</p>';
-  html += '<div style="font-size:2rem;font-weight:700;color:var(--gold);font-family:\'DM Serif Display\',serif;">' + fc(cashBack) + ' buyer support credit</div>';
-  html += '<p style="opacity:0.8;margin-top:0.5rem;font-size:0.875rem;">Buyer support options may be available at closing, subject to lender approval.</p></div>';
+  html += '<div style="font-size:2rem;font-weight:700;color:var(--gold);font-family:\'DM Serif Display\',serif;">' + fc(cashBack) + ' cash back</div>';
+  html += '<p style="opacity:0.8;margin-top:0.5rem;font-size:0.875rem;">1% cash back at closing with TD Realty Ohio. Subject to lender approval.</p></div>';
 
   contentDiv.innerHTML = html;
   var resultsDiv = document.getElementById('tool-results');
@@ -996,9 +996,9 @@ function calcBuyerClosingCosts() {
 
   if (firstTime && cashBack > 0) {
     html += '<div style="background:linear-gradient(135deg,#1a2e44,#2d4a7c);color:white;padding:1.5rem;border-radius:var(--radius-md);margin-top:1.5rem;text-align:center;">';
-    html += '<p style="margin-bottom:0.5rem;">First-time buyer buyer support credit with TD Realty</p>';
+    html += '<p style="margin-bottom:0.5rem;">First-time buyer cash back with TD Realty</p>';
     html += '<div style="font-size:2rem;font-weight:700;color:var(--gold);font-family:\'DM Serif Display\',serif;">' + fc(cashBack) + '</div>';
-    html += '<p style="opacity:0.8;margin-top:0.5rem;font-size:0.875rem;">Closing-cost support options vary based on lender and transaction details.</p></div>';
+    html += '<p style="opacity:0.8;margin-top:0.5rem;font-size:0.875rem;">1% of purchase price back at closing. May be applied to closing costs. Subject to lender approval.</p></div>';
   }
 
   contentDiv.innerHTML = html;
@@ -1019,10 +1019,10 @@ function calcMoveUpPlan() {
 
   var fc = typeof formatCurrency === 'function' ? formatCurrency : function(v) { return '$' + v.toLocaleString(); };
 
-  // Estimated proceeds using baseline closing-cost assumptions
+  // Estimated equity (assume 1% listing fee + ~2.5% buyer agent + ~1.5% closing)
   var sellingCosts = Math.round(currentValue * 0.05);
-  var estimatedProceeds = currentValue - sellingCosts;
-  var gapAmount = targetPrice - estimatedProceeds - cashAvailable;
+  var estimatedEquity = currentValue - sellingCosts;
+  var gapAmount = targetPrice - estimatedEquity - cashAvailable;
 
   var recommendation = '';
   var lenderQuestions = [];
@@ -1066,7 +1066,7 @@ function calcMoveUpPlan() {
   html += '<h4 style="color:var(--navy);margin-bottom:0.75rem;">Financial Snapshot</h4>';
   html += '<div class="result-row"><span class="result-label">Current Home Value</span><span class="result-value">' + fc(currentValue) + '</span></div>';
   html += '<div class="result-row"><span class="result-label">Est. Selling Costs (5%)</span><span class="result-value">-' + fc(sellingCosts) + '</span></div>';
-  html += '<div class="result-row"><span class="result-label">Estimated Proceeds</span><span class="result-value highlight">' + fc(estimatedProceeds) + '</span></div>';
+  html += '<div class="result-row"><span class="result-label">Est. Net Equity</span><span class="result-value highlight">' + fc(estimatedEquity) + '</span></div>';
   html += '<div class="result-row"><span class="result-label">Cash Available</span><span class="result-value">' + fc(cashAvailable) + '</span></div>';
   html += '<div class="result-row"><span class="result-label">Target Purchase Price</span><span class="result-value">' + fc(targetPrice) + '</span></div>';
   if (gapAmount > 0) {
@@ -1084,8 +1084,8 @@ function calcMoveUpPlan() {
   html += '</ul>';
 
   html += '<div style="background:var(--off-white);padding:1rem;border-radius:var(--radius-md);margin-top:1.5rem;">';
-  html += '<p style="color:var(--navy);font-weight:600;margin-bottom:0.25rem;">TD Realty Ohio: Full-Service Listing Support</p>';
-  html += '<p style="color:var(--gray-600);font-size:0.9375rem;margin:0;">When you sell and buy with us, your listing plan is customized for your goals. Example home value: ' + fc(currentValue) + ' home, with an estimated difference of ' + fc(Math.round(currentValue * 0.02)) + ' based on your selected strategy.</p></div>';
+  html += '<p style="color:var(--navy);font-weight:600;margin-bottom:0.25rem;">TD Realty Ohio: 1% Listing Fee</p>';
+  html += '<p style="color:var(--gray-600);font-size:0.9375rem;margin:0;">When you sell and buy with us, your listing fee is just 1%. On your ' + fc(currentValue) + ' home, that saves you ' + fc(Math.round(currentValue * 0.02)) + ' compared to a traditional 3% listing fee.</p></div>';
 
   contentDiv.innerHTML = html;
   var resultsDiv = document.getElementById('tool-results');
