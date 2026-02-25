@@ -81,9 +81,10 @@ function generatePostHtml(brief) {
   <meta name="twitter:description" content="TODO: Write Twitter description">
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a2e44">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -145,7 +146,7 @@ function generatePostHtml(brief) {
         <div class="nav-section-header">Services</div>
         <a href="/sellers/" class="nav-link">For Sellers</a>
         <a href="/buyers/" class="nav-link">For Buyers</a>
-        <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
+        <a href="/sellers/" class="nav-link">Seller Preparation</a>
         <a href="/areas/" class="nav-link">Service Areas</a>
         <a href="/home-value/" class="nav-link">Free Home Value</a>
         <a href="/affordability/" class="nav-link">Affordability Calculator</a>
@@ -216,7 +217,7 @@ ${internalLinks.map(l => `        <!-- ${l} -->`).join('\n')}
           <ul class="footer-links">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
-            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
+            <li><a href="/sellers/">Seller Preparation</a></li>
             <li><a href="/areas/">Service Areas</a></li>
             <li><a href="/home-value/">Home Value</a></li>
             <li><a href="/affordability/">Affordability</a></li>

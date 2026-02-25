@@ -32,7 +32,7 @@
       "detail": "299 words (minimum: 300). Impressions: 0"
     },
     {
-      "page": "/pre-listing-inspection/",
+      "page": "/sellers/",
       "strategy": "structured_data",
       "action": "missing_schema",
       "detail": "missing BreadcrumbList schema"

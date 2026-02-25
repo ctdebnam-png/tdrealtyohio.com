@@ -8,7 +8,7 @@ Mark each checkbox complete and copy completion updates into `ops/logs/offpage/*
 ## 1. /areas/westerville/
 - City cluster: /areas/westerville/
 - Primary service angle: 1% listing + move-up sellers
-- GBP post/topic alignment: Westerville seller savings case study and pre-listing inspection offer
+- GBP post/topic alignment: Westerville seller savings case study and seller preparation offer
 - Citation consistency checks: Google Business Profile NAP; Bing Places + Apple Maps listings; Top Columbus-area directories with Westerville service mention
 - Review-generation prompt: Ask recent Westerville sellers to mention pricing strategy, savings vs 3% listing, and inspection prep support.
 - Local partnership/link opportunities: Westerville Chamber member businesses; Local stagers and photographers; Neighborhood HOA newsletters

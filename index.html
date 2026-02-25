@@ -197,6 +197,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -320,7 +321,6 @@
           <a href="/buyers/" class="service-card service-card--link">
             <div class="service-badge">Buyers</div>
             <div class="service-card-rate">Full</div>
-            <div class="service-card-label">buyer support</div>
             <p class="service-card-desc">Full buyer representation with personalized strategy and support from search through closing.</p>
           </a>
         </div>
@@ -444,7 +444,6 @@
               <div class="calculator-results">
                 <div class="result-row">
                   <span class="result-label">Estimated Buyer Closing Costs</span>
-                  <span class="result-value highlight" data-cash-back>$4,000</span>
                 </div>
               </div>
               <a href="/contact/?mode=buy" class="btn btn-primary btn-lg calculator-cta" id="buyer-calc-cta">Plan Your Home Search</a>
@@ -466,7 +465,7 @@
         </div>
 
         <div class="feature-grid">
-          <a href="/pre-listing-inspection/" class="feature-card u-ff353aaa">
+          <a href="/sellers/" class="feature-card u-ff353aaa">
             <div class="feature-card-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
@@ -474,7 +473,7 @@
                 <path d="M9 14l2 2 4-4"/>
               </svg>
             </div>
-            <h3 class="feature-card-title">Free Pre-Listing Inspection</h3>
+            <h3 class="feature-card-title">Free Listing Preparation</h3>
             <p class="feature-card-text">Every listing includes a professional inspection before you hit the market. Price accurately and avoid surprises that derail deals.</p>
             <span class="feature-card-link">Learn more &rarr;</span>
           </a>
@@ -671,8 +670,6 @@
     </div>
   </footer>
 
-
-
   <script src="/assets/js/nav.js?v=20260212"></script>
   <script src="/assets/js/main.js?v=20260212"></script>
   <script>
@@ -716,14 +713,12 @@
     // Buyer calculator
     const buyerSlider = document.querySelector('[data-buyer-price-slider]');
     const buyerPriceDisplay = document.querySelector('[data-buyer-price-display]');
-    const buyer supportDisplay = document.querySelector('[data-cash-back]');
 
     if (buyerSlider) {
       buyerSlider.addEventListener('input', () => {
         const price = parseInt(buyerSlider.value);
         buyerPriceDisplay.textContent = '$' + price.toLocaleString();
         buyerSlider.setAttribute('aria-valuetext', '$' + price.toLocaleString());
-        buyer supportDisplay.textContent = '$' + Math.round(price * 0.01).toLocaleString();
         updateSliderTrack(buyerSlider);
       });
       updateSliderTrack(buyerSlider);
@@ -761,11 +756,7 @@
     function buyerContactUrl() {
       const slider = document.getElementById('buyer-price-slider');
       const price = slider ? parseInt(slider.value) : 400000;
-      const buyer support = Math.round(price * 0.01);
       return {
-        url: '/contact/?purchasePrice=' + price + '&mode=buy&buyer support=' + buyer support,
-        data: { purchasePrice: price, mode: 'buy', computedbuyer support: buyer support },
-        params: { purchasePrice: price, mode: 'buy', buyer support: buyer support }
       };
     }
 

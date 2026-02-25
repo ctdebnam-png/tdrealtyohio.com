@@ -21,7 +21,6 @@ All pages use a clean directory structure (e.g., `/sellers/` not `sellers.html`)
 | `/sellers/` | Seller services, commission paths, process, FAQs |
 | `/buyers/` | First-time buyer cash back program, calculator |
 | `/1-percent-commission/` | 1% listing commission details |
-| `/pre-listing-inspection/` | Free pre-listing inspection benefit |
 | `/home-value/` | Home value estimate tool |
 | `/affordability/` | Affordability calculator |
 | `/contact/` | Contact form and information |
@@ -45,7 +44,6 @@ tdrealtyohio.com/
 ├── sellers/index.html      # Seller services
 ├── buyers/index.html       # Buyer services
 ├── 1-percent-commission/   # Commission details
-├── pre-listing-inspection/ # Inspection benefit
 ├── home-value/             # Home value tool
 ├── affordability/          # Affordability calculator
 ├── contact/                # Contact page

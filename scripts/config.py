@@ -31,7 +31,7 @@ BROKERAGE = {
     "value_props": [
         "1% listing commission when you buy and sell with us",
         "2% listing commission for sell-only clients",
-        "Free pre-listing home inspection with every listing",
+        "Free seller home inspection with every listing",
         "1% cashback for first-time homebuyers at closing",
     ],
 }

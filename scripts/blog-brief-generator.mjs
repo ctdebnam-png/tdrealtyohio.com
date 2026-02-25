@@ -27,7 +27,7 @@ const DEFAULT_KEYWORDS = [
   { keyword: 'best time to sell house Columbus', position: 12, impressions: 150 },
   { keyword: 'home staging tips Columbus Ohio', position: null, impressions: 0 },
   { keyword: 'closing costs Ohio seller', position: 18, impressions: 100 },
-  { keyword: 'pre-listing inspection worth it', position: 8, impressions: 80 },
+  { keyword: 'seller preparation worth it', position: 8, impressions: 80 },
   { keyword: 'sell home as is Columbus', position: null, impressions: 0 },
   { keyword: 'property tax Columbus Ohio', position: 20, impressions: 90 },
   { keyword: 'first time home buyer Ohio programs', position: 14, impressions: 250 },

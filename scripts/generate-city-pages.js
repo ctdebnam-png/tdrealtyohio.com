@@ -607,9 +607,10 @@ function generateCityPage(city) {
   <meta name="twitter:description" content="Full-service real estate in ${city.name} at 1% listing commission. Save ${formatSavings(city.medianPrice)} on the median home.">
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a2e44">
 
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -686,7 +687,7 @@ function generateCityPage(city) {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "1-2% Commission Real Estate in ${city.name}",
-    "description": "Full-service home listing in ${city.name}, Ohio at 1% commission (sell + buy) or 2% (sell only). Includes MLS, pro photos, pre-listing inspection.",
+    "description": "Full-service home listing in ${city.name}, Ohio at 1% commission (sell + buy) or 2% (sell only). Includes MLS, pro photos, seller preparation.",
     "provider": {
       "@type": "RealEstateAgent",
       "@id": "https://tdrealtyohio.com/#realestateagent",
@@ -750,7 +751,7 @@ ${city.faqs.map(faq => `      {
         <a href="/sellers/" class="nav-link">Sellers</a>
         <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
         <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
-        <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
+        <a href="/sellers/" class="nav-link">Seller Preparation</a>
         <a href="/home-value/" class="nav-link">Home Value</a>
         <a href="/affordability/" class="nav-link">Affordability</a>
         <a href="/areas/" class="nav-link active">Areas</a>
@@ -847,9 +848,9 @@ ${city.faqs.map(faq => `      {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             1% Commission Details
           </a>
-          <a href="/pre-listing-inspection/" class="internal-link">
+          <a href="/sellers/" class="internal-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            Pre-Listing Inspection
+            Seller Preparation
           </a>
           <a href="/affordability/" class="internal-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -890,7 +891,7 @@ ${generateFaqSection(city)}
           <ul class="footer-links">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
-            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
+            <li><a href="/sellers/">Seller Preparation</a></li>
             <li><a href="/areas/">Service Areas</a></li>
             <li><a href="/home-value/">Home Value</a></li>
             <li><a href="/affordability/">Affordability</a></li>

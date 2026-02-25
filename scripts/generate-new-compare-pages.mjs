@@ -49,9 +49,10 @@ function headOpen({ title, description, keywords, canonical, ogTitle, ogDesc, tw
   <meta name="twitter:title" content="${twTitle}">
   <meta name="twitter:description" content="${twDesc}">
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a2e44">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,7 +137,7 @@ function headerNav() {
           <button class="nav-more-toggle" aria-expanded="false">More <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button>
           <div class="nav-more-dropdown">
             <div class="nav-section-header">Services</div>
-            <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
+            <a href="/sellers/" class="nav-link">Seller Preparation</a>
             <a href="/home-value/" class="nav-link">Free Home Value</a>
             <a href="/affordability/" class="nav-link">Affordability Calculator</a>
             <a href="/referrals/" class="nav-link">Referral Credit</a>
@@ -202,7 +203,7 @@ function footer() {
           <ul class="footer-links" data-footer-nav="services">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
-            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
+            <li><a href="/sellers/">Seller Preparation</a></li>
             <li><a href="/areas/">Service Areas</a></li>
             <li><a href="/home-value/">Free Home Value</a></li>
             <li><a href="/affordability/">Affordability Calculator</a></li>
@@ -558,7 +559,7 @@ ${headerNav()}
               <td class="highlight-col included">Agent manages timeline through closing</td>
             </tr>
             <tr>
-              <td>Pre-Listing Inspection</td>
+              <td>Seller Preparation</td>
               <td class="you-do">You pay separately ($400-500)</td>
               <td class="highlight-col included">FREE at TD Realty Ohio</td>
             </tr>
@@ -815,7 +816,7 @@ ${headerNav()}
               </svg>
             </button>
             <div class="faq-answer">
-              <p>TD Realty Ohio charges 1% of the sale price when you sell and buy together. If you're only selling, the rate is 2%. On a $400,000 home, that's $4,000 (sell + buy) or $8,000 (sell only). Both rates include full service: MLS listing, professional photography, pricing strategy, negotiation, and transaction management, plus a free pre-listing home inspection.</p>
+              <p>TD Realty Ohio charges 1% of the sale price when you sell and buy together. If you're only selling, the rate is 2%. On a $400,000 home, that's $4,000 (sell + buy) or $8,000 (sell only). Both rates include full service: MLS listing, professional photography, pricing strategy, negotiation, and transaction management, plus a free seller home inspection.</p>
             </div>
           </div>
         </div>

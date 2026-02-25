@@ -220,7 +220,7 @@ function generateBlock(blockName, areaName, remainingWords) {
     return [
       `        <h2>Housing Patterns</h2>`,
       `        <p>The housing stock in this part of Central Ohio includes a mix of single-family homes, townhomes, and condominiums. Lot sizes, construction eras, and neighborhood layouts vary from one section to another, which means buyers have a range of options depending on their priorities.</p>`,
-      `        <p>Sellers in the area benefit from understanding how their property compares to others nearby. Features like updated kitchens, finished basements, and outdoor living spaces tend to be valued by buyers searching in this market. A pre-listing evaluation can help identify which improvements offer the best return.</p>`,
+      `        <p>Sellers in the area benefit from understanding how their property compares to others nearby. Features like updated kitchens, finished basements, and outdoor living spaces tend to be valued by buyers searching in this market. A seller evaluation can help identify which improvements offer the best return.</p>`,
     ].join('\n');
   }
 

@@ -56,7 +56,7 @@ MONEY_PAGE_PREFIXES = (
     "/buyers/",
     "/1-percent-commission/",
     "/home-value/",
-    "/pre-listing-inspection/",
+    "/sellers/",
     "/compare/",
     "/contact/",
 )
@@ -67,7 +67,7 @@ CONVERSION_ASSIST_PREFIX_WEIGHTS = {
     "/1-percent-commission/": 0.9,
     "/sellers/": 0.85,
     "/buyers/": 0.85,
-    "/pre-listing-inspection/": 0.8,
+    "/sellers/": 0.8,
     "/areas/": 0.7,
     "/blog/": 0.35,
 }
@@ -77,7 +77,7 @@ INTERNAL_LINK_TARGETS = {
     "/sellers/": "Sell Your Home",
     "/buyers/": "Buy a Home",
     "/1-percent-commission/": "1% Commission Details",
-    "/pre-listing-inspection/": "Free Pre-Listing Inspection",
+    "/sellers/": "Free Seller Preparation",
     "/home-value/": "Get a Free Home Value Estimate",
     "/areas/": "Service Areas",
     "/about/": "About TD Realty Ohio",

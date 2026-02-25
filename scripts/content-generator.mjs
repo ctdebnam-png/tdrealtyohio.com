@@ -96,7 +96,7 @@ function generateFAQBlock(keyword) {
 
   if (keyword.includes('inspection')) {
     faqs.push({
-      q: 'What does a pre-listing inspection cover?',
+      q: 'What does a seller preparation cover?',
       a: 'A licensed inspector examines the structure, systems, roof, HVAC, plumbing, and electrical. You receive a written report to address issues before listing.',
     });
   }

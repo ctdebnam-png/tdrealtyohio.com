@@ -43,7 +43,7 @@ This report documents the site audit findings and fixes applied to tdrealtyohio.
 **Evidence:**
 - Crawl verified all main pages have identical nav structure
 - Only 3 LP (landing) pages have simplified nav - intentional for conversion focus
-- Nav order: Sellers → 1% Listing → Buyers → Tools → Pre-Listing Inspection → Home Value → Affordability → Areas → Blog → About → Contact
+- Nav order: Sellers → 1% Listing → Buyers → Tools → Seller Preparation → Home Value → Affordability → Areas → Blog → About → Contact
 
 ---
 

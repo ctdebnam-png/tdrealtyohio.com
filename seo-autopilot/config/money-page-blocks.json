@@ -5,7 +5,7 @@
     "faq": [
       { "q": "What does the listing fee cover?", "aHint": "Explain services without guarantees." },
       { "q": "How long does it take to sell a home?", "aHint": "Explain variables, no promises." },
-      { "q": "Do I need a pre-listing inspection?", "aHint": "Explain when it helps, not mandatory." }
+      { "q": "Do I need a seller preparation?", "aHint": "Explain when it helps, not mandatory." }
     ],
     "schema": { "type": "FAQPage", "enabled": true }
   },

@@ -301,7 +301,7 @@ function buildInternalLinks(internalLinksTo, rankSet) {
     '/1-percent-commission/': '1% commission listing details',
     '/contact/': 'Schedule a consultation',
     '/areas/': 'Central Ohio service areas',
-    '/pre-listing-inspection/': 'Pre-listing inspection program',
+    '/sellers/': 'Pre-listing inspection program',
     '/home-value/': 'Free home value estimate',
     '/affordability/': 'Affordability calculator',
     '/compare/': 'Compare listing options',

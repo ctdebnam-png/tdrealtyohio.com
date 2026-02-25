@@ -10,11 +10,11 @@ var TD_TOOLS = {
     name: 'Seller Net Proceeds Estimate',
     slug: 'seller-net-proceeds',
     intent: 'seller',
-    related: ['pre-listing-checklist', 'sell-buy-timing', 'repair-vs-credit']
+    related: ['seller-documents', 'sell-buy-timing', 'repair-vs-credit']
   },
-  'pre-listing-checklist': {
-    name: 'Pre-Listing Inspection Readiness Checklist',
-    slug: 'pre-listing-checklist',
+  'seller-documents': {
+    name: 'Seller Preparation Readiness Checklist',
+    slug: 'seller-documents',
     intent: 'seller',
     related: ['seller-net-proceeds', 'seller-documents', 'repair-vs-credit']
   },
@@ -28,19 +28,19 @@ var TD_TOOLS = {
     name: 'Sell Now vs Wait Planner',
     slug: 'sell-now-vs-wait',
     intent: 'seller',
-    related: ['sell-buy-timing', 'seller-net-proceeds', 'pre-listing-checklist']
+    related: ['sell-buy-timing', 'seller-net-proceeds', 'seller-documents']
   },
   'repair-vs-credit': {
     name: 'Repair vs Credit Decision Helper',
     slug: 'repair-vs-credit',
     intent: 'seller',
-    related: ['pre-listing-checklist', 'seller-net-proceeds', 'seller-documents']
+    related: ['seller-documents', 'seller-net-proceeds', 'seller-documents']
   },
   'seller-documents': {
     name: 'Seller Document Organizer',
     slug: 'seller-documents',
     intent: 'seller',
-    related: ['pre-listing-checklist', 'seller-net-proceeds', 'sell-buy-timing']
+    related: ['seller-documents', 'seller-net-proceeds', 'sell-buy-timing']
   },
   'buyer-offer-readiness': {
     name: 'Buyer Offer Readiness Pack',
@@ -539,7 +539,7 @@ function calcPreListingChecklist() {
 
   contentDiv.innerHTML = html;
   if (resultsDiv) resultsDiv.style.display = 'block';
-  if (typeof trackEvent === 'function') trackEvent('tool_calculate', { label: 'pre-listing-checklist' });
+  if (typeof trackEvent === 'function') trackEvent('tool_calculate', { label: 'seller-documents' });
 }
 
 // 3. Sell & Buy Timing
@@ -627,7 +627,7 @@ function calcSellNowVsWait() {
   sellNow.tradeoffs.push('Faster path to your next home or next chapter');
   if (reason === 'financial') sellNow.tradeoffs.push('Addresses financial needs sooner');
   sellNow.nextSteps.push('Get a free home value estimate');
-  sellNow.nextSteps.push('Schedule a pre-listing inspection');
+  sellNow.nextSteps.push('Schedule a seller preparation');
   sellNow.nextSteps.push('Discuss pricing strategy with your agent');
   sellNow.nextSteps.push('Begin decluttering and basic prep');
   scenarios.push(sellNow);
@@ -643,7 +643,7 @@ function calcSellNowVsWait() {
     waitPrep.tradeoffs.push('Time to complete strategic improvements');
     waitPrep.tradeoffs.push('Potentially better seasonal timing if listing in spring/summer');
     waitPrep.tradeoffs.push('Market could shift in either direction during wait');
-    waitPrep.nextSteps.push('Complete a pre-listing checklist');
+    waitPrep.nextSteps.push('Complete a seller checklist');
     waitPrep.nextSteps.push('Address highest-impact repairs');
     waitPrep.nextSteps.push('Deep clean and stage the home');
     waitPrep.nextSteps.push('Get pre-approved for your next purchase if buying');

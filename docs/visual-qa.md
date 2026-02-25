@@ -51,7 +51,7 @@ Use this checklist before every deploy to catch regressions.
 - [ ] `/sellers/`
 - [ ] `/buyers/`
 - [ ] `/1-percent-commission/`
-- [ ] `/pre-listing-inspection/`
+- [ ] `/sellers/`
 - [ ] `/home-value/`
 - [ ] `/affordability/`
 - [ ] `/areas/`

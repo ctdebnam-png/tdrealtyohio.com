@@ -184,7 +184,7 @@ BLOG_AREA_MAP = {
     "how-much-save-selling-columbus-home-1-percent": ["columbus"],
     "first-time-homebuyer-cash-back": [],
     "1-percent-vs-3-percent-commission-comparison": [],
-    "pre-listing-inspection-benefits": [],
+    "seller-inspection-benefits": [],
     "why-agents-leaving-traditional-brokerages-100-commission": [],
 }
 
@@ -500,7 +500,7 @@ def fix_internal_link_equity(dry_run: bool, result: FixResult):
         "/sellers/": "Selling Your Home",
         "/buyers/": "Buying a Home",
         "/1-percent-commission/": "1% Commission",
-        "/pre-listing-inspection/": "Free Pre-Listing Inspection",
+        "/sellers/": "Free Seller Preparation",
         "/home-value/": "Free Home Value Estimate",
         "/compare/": "Compare Options",
         "/blog/": "Blog",
@@ -688,7 +688,7 @@ def _all_page_paths() -> list[Path]:
                      "agents/index.html",
                      "faq/index.html", "referrals/index.html",
                      "1-percent-commission/index.html",
-                     "pre-listing-inspection/index.html",
+                     "seller-inspection/index.html",
                      "home-value/index.html", "affordability/index.html",
                      "sell-and-buy/index.html",
                      "privacy/index.html", "terms/index.html",

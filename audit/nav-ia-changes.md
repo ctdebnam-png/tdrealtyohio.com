@@ -83,7 +83,7 @@ The following pages remain live and indexed but are no longer in the header, mob
 - `/referrals/` — Referral Credit
 - `/tools/` — Free Tools
 - `/1-percent-commission/` — 1% Commission (linked from /sellers/ pricing section)
-- `/pre-listing-inspection/` — Pre-Listing Inspection (linked from /sellers/ content)
+- `/sellers/` — Seller Preparation (linked from /sellers/ content)
 - `/buy/cash-back/` — 1% Cash Back (linked from /buyers/ content)
 - `/compare/` — Compare Options (still in mobile drawer Learn)
 

@@ -50,7 +50,7 @@ LEAD_PATHS = (
 
 SITE_SECTIONS = {
     "core": [
-        "sellers", "buyers", "1-percent-commission", "pre-listing-inspection",
+        "sellers", "buyers", "1-percent-commission", "seller-inspection",
         "home-value", "affordability", "sell-and-buy",
         "about", "contact", "agents", "faq", "referrals",
         "privacy", "terms", "fair-housing",

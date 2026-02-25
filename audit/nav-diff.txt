@@ -10,15 +10,15 @@ tools/index.html:
   Footer Company missing: /faq/
 
 lp/buy-home-columbus/index.html:
-  Footer Services missing: /sellers/, /buyers/, /pre-listing-inspection/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
+  Footer Services missing: /sellers/, /buyers/, /sellers/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
   Footer Company missing: /about/, /contact/, /blog/, /testimonials/, /agents/, /faq/
 
 lp/sell-home-columbus/index.html:
-  Footer Services missing: /sellers/, /buyers/, /pre-listing-inspection/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
+  Footer Services missing: /sellers/, /buyers/, /sellers/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
   Footer Company missing: /about/, /contact/, /blog/, /testimonials/, /agents/, /faq/
 
 lp/sell-home-westerville/index.html:
-  Footer Services missing: /sellers/, /buyers/, /pre-listing-inspection/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
+  Footer Services missing: /sellers/, /buyers/, /sellers/, /areas/, /home-value/, /affordability/, /referrals/, /compare/
   Footer Company missing: /about/, /contact/, /blog/, /testimonials/, /agents/, /faq/
 
 tools/buyer-closing-costs/index.html:
@@ -36,7 +36,7 @@ tools/move-up-plan/index.html:
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/index.html:
+tools/seller-documents/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
@@ -216,52 +216,52 @@ tools/move-up-plan/worthington/index.html:
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/columbus/index.html:
+tools/seller-documents/columbus/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/delaware/index.html:
+tools/seller-documents/delaware/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/dublin/index.html:
+tools/seller-documents/dublin/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/gahanna/index.html:
+tools/seller-documents/gahanna/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/hilliard/index.html:
+tools/seller-documents/hilliard/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/new-albany/index.html:
+tools/seller-documents/new-albany/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/powell/index.html:
+tools/seller-documents/powell/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/upper-arlington/index.html:
+tools/seller-documents/upper-arlington/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/westerville/index.html:
+tools/seller-documents/westerville/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/
 
-tools/pre-listing-checklist/worthington/index.html:
+tools/seller-documents/worthington/index.html:
   Footer Services missing: /referrals/, /compare/
   Footer Services extra (not in registry): /tools/
   Footer Company missing: /faq/

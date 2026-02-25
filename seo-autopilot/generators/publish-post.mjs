@@ -296,7 +296,7 @@ ${faqSchemaEntries}
           <button class="nav-more-toggle" aria-expanded="false">More <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button>
           <div class="nav-more-dropdown">
             <div class="nav-section-header">Services</div>
-            <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
+            <a href="/sellers/" class="nav-link">Seller Preparation</a>
             <a href="/home-value/" class="nav-link">Free Home Value</a>
             <a href="/affordability/" class="nav-link">Affordability Calculator</a>
             <a href="/referrals/" class="nav-link">Referral Credit</a>
@@ -406,7 +406,7 @@ ${faqItems.map(f => `            <div class="faq-item">
           <ul class="footer-links" data-footer-nav="services">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
-            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
+            <li><a href="/sellers/">Seller Preparation</a></li>
             <li><a href="/areas/">Service Areas</a></li>
             <li><a href="/home-value/">Free Home Value</a></li>
             <li><a href="/affordability/">Affordability Calculator</a></li>
@@ -513,7 +513,7 @@ function generateArticleSections(sections, topic, internalLinksTo, rankIntentRou
     '/1-percent-commission/': '1% commission listing',
     '/contact/': 'contact page',
     '/areas/': 'service areas',
-    '/pre-listing-inspection/': 'pre-listing inspection',
+    '/sellers/': 'seller preparation',
     '/home-value/': 'free home value estimate',
     '/affordability/': 'affordability calculator',
     '/compare/': 'listing option comparison',
@@ -586,7 +586,7 @@ function generateSectionContent(sectionName, primaryHint, intent, topic) {
     lines.push(``);
     lines.push(`          <p>There are several practical ways to manage and reduce these costs without sacrificing the quality of service you receive. Choosing a low-commission listing agent is one of the most effective strategies. TD Realty Ohio charges 1-2% instead of the traditional 3% listing commission, which can mean thousands of dollars in savings on a typical Columbus-area home.</p>`);
     lines.push(``);
-    lines.push(`          <p>Other cost-reduction strategies include getting a pre-listing inspection to prevent costly repair negotiations, pricing your home accurately from the start to avoid extended market time, and working with your agent to negotiate favorable terms on items like title insurance and closing fee allocation.</p>`);
+    lines.push(`          <p>Other cost-reduction strategies include getting a seller preparation to prevent costly repair negotiations, pricing your home accurately from the start to avoid extended market time, and working with your agent to negotiate favorable terms on items like title insurance and closing fee allocation.</p>`);
   } else if (lower.includes('timeline') || lower.includes('process') || lower.includes('step')) {
     lines.push(`          <p>The typical timeline for a real estate transaction in Central Ohio varies based on market conditions, financing type, and negotiation complexity. Understanding the general sequence of events helps you plan ahead and avoid delays.</p>`);
     lines.push(``);

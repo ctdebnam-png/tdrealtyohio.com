@@ -20,6 +20,7 @@ const SITEMAP_FILES = {
   core: 'sitemap-core.xml',
   areas: 'sitemap-areas.xml',
   blog: 'sitemap-blog.xml',
+  compare: 'sitemap-compare.xml',
 };
 
 // Priority mapping based on page type
@@ -28,15 +29,22 @@ const PRIORITY_MAP = {
   '/sellers/': '0.9',
   '/buyers/': '0.9',
   '/tools/': '0.7',
-  '/pre-listing-inspection/': '0.8',
+  '/1-percent-commission/': '0.9',
+  '/sell-only-2-percent/': '0.9',
+  '/sellers/': '0.8',
   '/contact/': '0.8',
   '/home-value/': '0.7',
   '/affordability/': '0.7',
   '/areas/': '0.8',
   '/about/': '0.7',
-  '/careers/': '0.6',
+  '/agents/': '0.6',
+  '/referrals/': '0.5',
   '/blog/': '0.7',
   '/faq/': '0.7',
+  '/compare/': '0.7',
+  '/compare/1-percent-vs-3-percent/': '0.7',
+  '/compare/discount-broker-vs-full-service/': '0.7',
+  '/compare/flat-fee-mls-vs-full-service/': '0.7',
   '/sitemap-page/': '0.4',
   '/privacy/': '0.3',
   '/terms/': '0.3',
@@ -157,6 +165,7 @@ async function getLastMod(filePath) {
 function routeToSitemapKey(route) {
   if (route.startsWith('/areas/')) return 'areas';
   if (route.startsWith('/blog/')) return 'blog';
+  if (route.startsWith('/compare/')) return 'compare';
   return 'core';
 }
 
