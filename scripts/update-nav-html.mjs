@@ -14,7 +14,7 @@ const htmlFiles = globSync('**/*.html', {
 });
 
 // --- Old nav pattern (the static nav block used in all pages) ---
-const oldNavPattern = /<nav class="nav" id="main-nav" aria-label="Main navigation">\s*<div class="nav-section-header">Services<\/div>\s*<a href="\/sellers\/" class="nav-link">For Sellers<\/a>\s*<a href="\/buyers\/" class="nav-link">For Buyers<\/a>\s*<a href="\/pre-listing-inspection\/" class="nav-link">Pre-Listing Inspection<\/a>\s*<a href="\/areas\/" class="nav-link">Service Areas<\/a>\s*<a href="\/home-value\/" class="nav-link">Free Home Value<\/a>\s*<a href="\/affordability\/" class="nav-link">Affordability Calculator<\/a>\s*<a href="\/referrals\/" class="nav-link">Referral Credit<\/a>\s*<a href="\/compare\/" class="nav-link">Compare Options<\/a>\s*<div class="nav-section-header">Company<\/div>\s*<a href="\/about\/" class="nav-link">About<\/a>\s*(?:<a href="\/contact\/" class="nav-link">Contact<\/a>\s*)?<a href="\/blog\/" class="nav-link">Blog<\/a>\s*<a href="\/agents\/" class="nav-link">Agent Opportunities<\/a>\s*<a href="\/faq\/" class="nav-link">FAQ<\/a>\s*<a href="\/contact\/" class="btn btn-primary nav-cta">Contact<\/a>\s*<\/nav>/;
+const oldNavPattern = /<nav class="nav" id="main-nav" aria-label="Main navigation">\s*<div class="nav-section-header">Services<\/div>\s*<a href="\/sellers\/" class="nav-link">For Sellers<\/a>\s*<a href="\/buyers\/" class="nav-link">For Buyers<\/a>\s*<a href="\/seller-inspection\/" class="nav-link">Seller Preparation<\/a>\s*<a href="\/areas\/" class="nav-link">Service Areas<\/a>\s*<a href="\/home-value\/" class="nav-link">Free Home Value<\/a>\s*<a href="\/affordability\/" class="nav-link">Affordability Calculator<\/a>\s*<a href="\/referrals\/" class="nav-link">Referral Credit<\/a>\s*<a href="\/compare\/" class="nav-link">Compare Options<\/a>\s*<div class="nav-section-header">Company<\/div>\s*<a href="\/about\/" class="nav-link">About<\/a>\s*(?:<a href="\/contact\/" class="nav-link">Contact<\/a>\s*)?<a href="\/blog\/" class="nav-link">Blog<\/a>\s*<a href="\/agents\/" class="nav-link">Agent Opportunities<\/a>\s*<a href="\/faq\/" class="nav-link">FAQ<\/a>\s*<a href="\/contact\/" class="btn btn-primary nav-cta">Contact<\/a>\s*<\/nav>/;
 
 const newNav = `<nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">For Sellers</a>
@@ -25,7 +25,7 @@ const newNav = `<nav class="nav" id="main-nav" aria-label="Main navigation">
           <button class="nav-more-toggle" aria-expanded="false">More <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button>
           <div class="nav-more-dropdown">
             <div class="nav-section-header">Services</div>
-            <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
+            <a href="/sellers/" class="nav-link">Seller Preparation</a>
             <a href="/home-value/" class="nav-link">Free Home Value</a>
             <a href="/affordability/" class="nav-link">Affordability Calculator</a>
             <a href="/referrals/" class="nav-link">Referral Credit</a>

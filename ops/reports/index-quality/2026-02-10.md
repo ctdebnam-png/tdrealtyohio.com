@@ -61,7 +61,7 @@ Generated: 2026-02-10T18:56:59.688Z
 - /blog/fsbo-vs-realtor-columbus/
 - /blog/home-staging-tips-columbus/
 - /blog/how-much-save-selling-columbus-home-1-percent/
-- /blog/pre-listing-inspection-benefits/
+- /blog/seller-inspection-benefits/
 - /blog/selling-home-westerville-ohio-2026/
 - /blog/why-agents-leaving-traditional-brokerages-100-commission/
 - /buy/cash-back/
@@ -73,7 +73,7 @@ Generated: 2026-02-10T18:56:59.688Z
 - /fair-housing/
 - /faq/
 - /home-value/
-- /pre-listing-inspection/
+- /sellers/
 - /privacy/
 - /referrals/
 - /reviews/

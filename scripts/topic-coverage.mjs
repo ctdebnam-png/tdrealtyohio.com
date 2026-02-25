@@ -79,7 +79,7 @@ function buildCoverageMap() {
     if (path === '/buyers/') {
       Object.values(coverage).forEach(c => c.intents.add('buyer'));
     }
-    if (path === '/pre-listing-inspection/') {
+    if (path === '/sellers/') {
       Object.values(coverage).forEach(c => c.intents.add('inspection'));
     }
 

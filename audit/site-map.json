@@ -17,7 +17,7 @@
       "status": 200,
       "canonical_link": "https://tdrealtyohio.com/",
       "title": "TD Realty Ohio | Columbus, OH Real Estate",
-      "meta_description": "Central Ohio real estate with 1-2% listing commission and free pre-listing inspection. First-time buyers get 1% cash back. Full-service representation.",
+      "meta_description": "Central Ohio real estate with 1-2% listing commission and free seller preparation. First-time buyers get 1% cash back. Full-service representation.",
       "og_tags": {
         "og:type": "website",
         "og:title": "TD Realty Ohio | 1% Commission Brokerage Columbus OH",
@@ -54,8 +54,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -125,8 +125,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -161,11 +161,11 @@
       "status": 200,
       "canonical_link": "https://tdrealtyohio.com/about/",
       "title": "About TD Realty Ohio | Central Ohio Brokerage",
-      "meta_description": "Central Ohio brokerage offering 1-2% listing fees, buyer cash back, and free pre-listing inspections. Based in Westerville, serving Columbus.",
+      "meta_description": "Central Ohio brokerage offering 1-2% listing fees, buyer cash back, and free seller preparations. Based in Westerville, serving Columbus.",
       "og_tags": {
         "og:type": "website",
         "og:title": "About TD Realty Ohio | Central Ohio Brokerage",
-        "og:description": "Central Ohio brokerage offering lower listing fees for sellers, cash back for first-time buyers, and free pre-listing inspections.",
+        "og:description": "Central Ohio brokerage offering lower listing fees for sellers, cash back for first-time buyers, and free seller preparations.",
         "og:url": "https://tdrealtyohio.com/about/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
@@ -175,7 +175,7 @@
       "twitter_tags": {
         "twitter:card": "summary_large_image",
         "twitter:title": "About TD Realty Ohio | Central Ohio Brokerage",
-        "twitter:description": "Central Ohio brokerage offering lower listing fees for sellers, cash back for first-time buyers, and free pre-listing inspections.",
+        "twitter:description": "Central Ohio brokerage offering lower listing fees for sellers, cash back for first-time buyers, and free seller preparations.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 29,
@@ -197,8 +197,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -269,8 +269,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -341,8 +341,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -412,8 +412,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -483,8 +483,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -554,8 +554,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -625,8 +625,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -696,8 +696,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -767,8 +767,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -838,8 +838,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -909,8 +909,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -980,8 +980,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1051,8 +1051,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1122,8 +1122,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1193,8 +1193,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1264,8 +1264,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1335,8 +1335,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1406,8 +1406,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1477,8 +1477,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1548,8 +1548,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1619,8 +1619,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1690,8 +1690,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1761,8 +1761,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1832,8 +1832,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1903,8 +1903,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -1974,8 +1974,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2045,8 +2045,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2116,8 +2116,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2152,7 +2152,7 @@
       "status": 200,
       "canonical_link": "https://tdrealtyohio.com/blog/",
       "title": "Real Estate Blog | TD Realty Ohio",
-      "meta_description": "Real estate tips for Columbus buyers and sellers. Low commission listings, pre-listing inspections, and Ohio market trends. Read now.",
+      "meta_description": "Real estate tips for Columbus buyers and sellers. Low commission listings, seller preparations, and Ohio market trends. Read now.",
       "og_tags": {
         "og:type": "website",
         "og:title": "Real Estate Blog | TD Realty Ohio",
@@ -2188,8 +2188,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2260,8 +2260,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2332,8 +2332,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2404,8 +2404,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2476,8 +2476,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2548,8 +2548,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2620,8 +2620,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2692,8 +2692,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2723,17 +2723,17 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/blog/pre-listing-inspection-benefits/",
-      "file_path": "blog/pre-listing-inspection-benefits/index.html",
+      "url": "https://tdrealtyohio.com/blog/seller-inspection-benefits/",
+      "file_path": "blog/seller-inspection-benefits/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/blog/pre-listing-inspection-benefits/",
-      "title": "Pre-Listing Inspection Benefits | TD Realty Ohio",
-      "meta_description": "Learn why Columbus home sellers should get a pre-listing inspection. Avoid surprises, price accurately, and sell faster with this strategic advantage.",
+      "canonical_link": "https://tdrealtyohio.com/blog/seller-inspection-benefits/",
+      "title": "Seller Preparation Benefits | TD Realty Ohio",
+      "meta_description": "Learn why Columbus home sellers should get a seller preparation. Avoid surprises, price accurately, and sell faster with this strategic advantage.",
       "og_tags": {
         "og:type": "article",
-        "og:title": "Pre-Listing Inspection Benefits | TD Realty Ohio",
-        "og:description": "Learn why Columbus home sellers should get a pre-listing inspection. Avoid surprises, price accurately, and sell faster.",
-        "og:url": "https://tdrealtyohio.com/blog/pre-listing-inspection-benefits/",
+        "og:title": "Seller Preparation Benefits | TD Realty Ohio",
+        "og:description": "Learn why Columbus home sellers should get a seller preparation. Avoid surprises, price accurately, and sell faster.",
+        "og:url": "https://tdrealtyohio.com/blog/seller-inspection-benefits/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630",
@@ -2741,8 +2741,8 @@
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "What Is a Pre-Listing Inspection and Why Should Columbus Sellers Get One?",
-        "twitter:description": "Learn why Columbus home sellers should get a pre-listing inspection.",
+        "twitter:title": "What Is a Seller Preparation and Why Should Columbus Sellers Get One?",
+        "twitter:description": "Learn why Columbus home sellers should get a seller preparation.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 28,
@@ -2764,8 +2764,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2836,8 +2836,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2908,8 +2908,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -2980,8 +2980,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3051,8 +3051,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3122,8 +3122,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3193,8 +3193,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3264,8 +3264,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3336,8 +3336,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3408,8 +3408,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3448,7 +3448,7 @@
       "og_tags": {
         "og:type": "website",
         "og:title": "Frequently Asked Questions | TD Realty Ohio",
-        "og:description": "Get answers about 1% commission listings, buyer cash back, pre-listing inspections, and how TD Realty Ohio saves you thousands.",
+        "og:description": "Get answers about 1% commission listings, buyer cash back, seller preparations, and how TD Realty Ohio saves you thousands.",
         "og:url": "https://tdrealtyohio.com/faq/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
@@ -3479,8 +3479,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3551,8 +3551,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3645,17 +3645,17 @@
       "has_tools_nav": false
     },
     {
-      "url": "https://tdrealtyohio.com/pre-listing-inspection/",
-      "file_path": "pre-listing-inspection/index.html",
+      "url": "https://tdrealtyohio.com/sellers/",
+      "file_path": "seller-inspection/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/pre-listing-inspection/",
-      "title": "Free Pre-Listing Inspection Columbus | TD Realty Ohio",
+      "canonical_link": "https://tdrealtyohio.com/sellers/",
+      "title": "Free Seller Preparation Columbus | TD Realty Ohio",
       "meta_description": "Every TD Realty Ohio listing includes a free home inspection ($400+ value). Know your Central Ohio home",
       "og_tags": {
         "og:type": "website",
         "og:title": "Free Pre-Listing Home Inspection | TD Realty Ohio",
         "og:description": "Know your home",
-        "og:url": "https://tdrealtyohio.com/pre-listing-inspection/",
+        "og:url": "https://tdrealtyohio.com/sellers/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630",
@@ -3686,8 +3686,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3758,8 +3758,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3830,8 +3830,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3901,8 +3901,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -3972,8 +3972,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -4044,8 +4044,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -4116,8 +4116,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -4188,8 +4188,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -4259,8 +4259,8 @@
           "text": "Tools"
         },
         {
-          "href": "/pre-listing-inspection/",
-          "text": "Pre-Listing Inspection"
+          "href": "/sellers/",
+          "text": "Seller Preparation"
         },
         {
           "href": "/home-value/",
@@ -6296,25 +6296,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/",
-      "file_path": "tools/pre-listing-checklist/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/",
+      "file_path": "tools/seller-documents/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/",
-      "title": "Pre-Listing Inspection Readiness Checklist | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/",
+      "title": "Seller Preparation Readiness Checklist | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/",
+        "og:title": "Seller Preparation Readiness Checklist | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 24,
@@ -6355,25 +6355,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/columbus/",
-      "file_path": "tools/pre-listing-checklist/columbus/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/columbus/",
+      "file_path": "tools/seller-documents/columbus/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/columbus/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Columbus, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Columbus home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/columbus/",
+      "title": "Seller Preparation Readiness Checklist for Columbus, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Columbus home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Columbus, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Columbus home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/columbus/",
+        "og:title": "Seller Preparation Readiness Checklist for Columbus, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Columbus home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/columbus/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Columbus, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Columbus home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Columbus, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Columbus home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6414,25 +6414,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/delaware/",
-      "file_path": "tools/pre-listing-checklist/delaware/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/delaware/",
+      "file_path": "tools/seller-documents/delaware/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/delaware/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Delaware, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Delaware home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/delaware/",
+      "title": "Seller Preparation Readiness Checklist for Delaware, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Delaware home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Delaware, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Delaware home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/delaware/",
+        "og:title": "Seller Preparation Readiness Checklist for Delaware, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Delaware home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/delaware/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Delaware, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Delaware home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Delaware, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Delaware home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6473,25 +6473,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/dublin/",
-      "file_path": "tools/pre-listing-checklist/dublin/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/dublin/",
+      "file_path": "tools/seller-documents/dublin/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/dublin/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Dublin, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Dublin home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/dublin/",
+      "title": "Seller Preparation Readiness Checklist for Dublin, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Dublin home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Dublin, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Dublin home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/dublin/",
+        "og:title": "Seller Preparation Readiness Checklist for Dublin, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Dublin home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/dublin/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Dublin, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Dublin home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Dublin, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Dublin home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6532,25 +6532,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/gahanna/",
-      "file_path": "tools/pre-listing-checklist/gahanna/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/gahanna/",
+      "file_path": "tools/seller-documents/gahanna/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/gahanna/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Gahanna, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Gahanna home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/gahanna/",
+      "title": "Seller Preparation Readiness Checklist for Gahanna, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Gahanna home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Gahanna, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Gahanna home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/gahanna/",
+        "og:title": "Seller Preparation Readiness Checklist for Gahanna, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Gahanna home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/gahanna/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Gahanna, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Gahanna home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Gahanna, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Gahanna home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6591,25 +6591,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/hilliard/",
-      "file_path": "tools/pre-listing-checklist/hilliard/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/hilliard/",
+      "file_path": "tools/seller-documents/hilliard/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/hilliard/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Hilliard, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Hilliard home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/hilliard/",
+      "title": "Seller Preparation Readiness Checklist for Hilliard, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Hilliard home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Hilliard, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Hilliard home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/hilliard/",
+        "og:title": "Seller Preparation Readiness Checklist for Hilliard, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Hilliard home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/hilliard/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Hilliard, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Hilliard home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Hilliard, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Hilliard home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6650,25 +6650,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/new-albany/",
-      "file_path": "tools/pre-listing-checklist/new-albany/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/new-albany/",
+      "file_path": "tools/seller-documents/new-albany/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/new-albany/",
-      "title": "Pre-Listing Inspection Readiness Checklist for New Albany, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your New Albany home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/new-albany/",
+      "title": "Seller Preparation Readiness Checklist for New Albany, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your New Albany home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for New Albany, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your New Albany home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/new-albany/",
+        "og:title": "Seller Preparation Readiness Checklist for New Albany, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your New Albany home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/new-albany/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for New Albany, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your New Albany home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for New Albany, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your New Albany home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6709,25 +6709,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/powell/",
-      "file_path": "tools/pre-listing-checklist/powell/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/powell/",
+      "file_path": "tools/seller-documents/powell/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/powell/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Powell, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Powell home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/powell/",
+      "title": "Seller Preparation Readiness Checklist for Powell, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Powell home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Powell, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Powell home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/powell/",
+        "og:title": "Seller Preparation Readiness Checklist for Powell, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Powell home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/powell/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Powell, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Powell home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Powell, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Powell home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6768,25 +6768,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/upper-arlington/",
-      "file_path": "tools/pre-listing-checklist/upper-arlington/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/upper-arlington/",
+      "file_path": "tools/seller-documents/upper-arlington/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/upper-arlington/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Upper Arlington, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Upper Arlington home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/upper-arlington/",
+      "title": "Seller Preparation Readiness Checklist for Upper Arlington, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Upper Arlington home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Upper Arlington, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Upper Arlington home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/upper-arlington/",
+        "og:title": "Seller Preparation Readiness Checklist for Upper Arlington, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Upper Arlington home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/upper-arlington/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Upper Arlington, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Upper Arlington home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Upper Arlington, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Upper Arlington home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6827,25 +6827,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/westerville/",
-      "file_path": "tools/pre-listing-checklist/westerville/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/westerville/",
+      "file_path": "tools/seller-documents/westerville/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/westerville/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Westerville, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Westerville home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/westerville/",
+      "title": "Seller Preparation Readiness Checklist for Westerville, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Westerville home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Westerville, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Westerville home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/westerville/",
+        "og:title": "Seller Preparation Readiness Checklist for Westerville, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Westerville home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/westerville/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Westerville, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Westerville home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Westerville, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Westerville home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,
@@ -6886,25 +6886,25 @@
       "has_tools_nav": true
     },
     {
-      "url": "https://tdrealtyohio.com/tools/pre-listing-checklist/worthington/",
-      "file_path": "tools/pre-listing-checklist/worthington/index.html",
+      "url": "https://tdrealtyohio.com/tools/seller-documents/worthington/",
+      "file_path": "tools/seller-documents/worthington/index.html",
       "status": 200,
-      "canonical_link": "https://tdrealtyohio.com/tools/pre-listing-checklist/worthington/",
-      "title": "Pre-Listing Inspection Readiness Checklist for Worthington, Ohio | TD Realty Ohio",
-      "meta_description": "Get a personalized pre-listing preparation checklist for your Worthington home. Know what to fix, clean, and gather before you list for sale.",
+      "canonical_link": "https://tdrealtyohio.com/tools/seller-documents/worthington/",
+      "title": "Seller Preparation Readiness Checklist for Worthington, Ohio | TD Realty Ohio",
+      "meta_description": "Get a personalized seller preparation checklist for your Worthington home. Know what to fix, clean, and gather before you list for sale.",
       "og_tags": {
         "og:type": "website",
-        "og:title": "Pre-Listing Inspection Readiness Checklist for Worthington, Ohio | TD Realty Ohio",
-        "og:description": "Get a personalized pre-listing preparation checklist for your Worthington home. Know what to fix, clean, and gather before you list for sale.",
-        "og:url": "https://tdrealtyohio.com/tools/pre-listing-checklist/worthington/",
+        "og:title": "Seller Preparation Readiness Checklist for Worthington, Ohio | TD Realty Ohio",
+        "og:description": "Get a personalized seller preparation checklist for your Worthington home. Know what to fix, clean, and gather before you list for sale.",
+        "og:url": "https://tdrealtyohio.com/tools/seller-documents/worthington/",
         "og:image": "https://tdrealtyohio.com/assets/images/og-default.jpg",
         "og:image:width": "1200",
         "og:image:height": "630"
       },
       "twitter_tags": {
         "twitter:card": "summary_large_image",
-        "twitter:title": "Pre-Listing Inspection Readiness Checklist for Worthington, Ohio | TD Realty Ohio",
-        "twitter:description": "Get a personalized pre-listing preparation checklist for your Worthington home. Know what to fix, clean, and gather before you list for sale.",
+        "twitter:title": "Seller Preparation Readiness Checklist for Worthington, Ohio | TD Realty Ohio",
+        "twitter:description": "Get a personalized seller preparation checklist for your Worthington home. Know what to fix, clean, and gather before you list for sale.",
         "twitter:image": "https://tdrealtyohio.com/assets/images/og-default.jpg"
       },
       "internal_links_found_count": 26,

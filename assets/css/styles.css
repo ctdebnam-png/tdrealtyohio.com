@@ -9768,3 +9768,17 @@ details.td-details--flush .td-details-body {
   font-size: 0.75em;
   margin-left: 0.25rem;
 }
+
+/* Sellers hero callout readability */
+.hero-planning-callout {
+  margin-top: 1rem;
+}
+.hero-planning-amount {
+  display: block;
+  color: var(--gold);
+  font-weight: 700;
+}
+.hero-planning-label {
+  display: block;
+  color: rgba(255,255,255,0.9);
+}

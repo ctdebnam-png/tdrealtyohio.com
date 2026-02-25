@@ -127,8 +127,8 @@
         "group": "Services"
       },
       {
-        "href": "/pre-listing-inspection/",
-        "label": "Pre-Listing Inspection",
+        "href": "/sellers/",
+        "label": "Seller Preparation",
         "surface": "footer",
         "group": "Services"
       },
@@ -273,8 +273,8 @@
         "group": "Services"
       },
       {
-        "href": "/pre-listing-inspection/",
-        "label": "Pre-Listing Inspection",
+        "href": "/sellers/",
+        "label": "Seller Preparation",
         "surface": "htmlSitemap",
         "group": "Services"
       },
@@ -543,8 +543,8 @@
         "group": "Blog"
       },
       {
-        "href": "/blog/pre-listing-inspection-benefits/",
-        "label": "Pre-Listing Inspection Benefits",
+        "href": "/blog/seller-inspection-benefits/",
+        "label": "Seller Preparation Benefits",
         "surface": "htmlSitemap",
         "group": "Blog"
       },
@@ -611,7 +611,7 @@
         "group": null
       },
       {
-        "href": "/pre-listing-inspection/",
+        "href": "/sellers/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
@@ -719,7 +719,7 @@
         "group": null
       },
       {
-        "href": "/blog/pre-listing-inspection-benefits/",
+        "href": "/blog/seller-inspection-benefits/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
@@ -893,7 +893,7 @@
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/",
+        "href": "/tools/seller-documents/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
@@ -1001,61 +1001,61 @@
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/columbus/",
+        "href": "/tools/seller-documents/columbus/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/westerville/",
+        "href": "/tools/seller-documents/westerville/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/dublin/",
+        "href": "/tools/seller-documents/dublin/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/powell/",
+        "href": "/tools/seller-documents/powell/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/delaware/",
+        "href": "/tools/seller-documents/delaware/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/gahanna/",
+        "href": "/tools/seller-documents/gahanna/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/new-albany/",
+        "href": "/tools/seller-documents/new-albany/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/hilliard/",
+        "href": "/tools/seller-documents/hilliard/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/upper-arlington/",
+        "href": "/tools/seller-documents/upper-arlington/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null
       },
       {
-        "href": "/tools/pre-listing-checklist/worthington/",
+        "href": "/tools/seller-documents/worthington/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null

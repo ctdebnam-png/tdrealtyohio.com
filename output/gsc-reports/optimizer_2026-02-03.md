@@ -70,7 +70,7 @@
 - **[structured_data]** missing_schema: missing BreadcrumbList schema
 - **[canonical_audit]** meta_issue: has noindex directive!; missing article:modified_time
 
-### /pre-listing-inspection/
+### /sellers/
 
 - **[structured_data]** missing_schema: missing BreadcrumbList schema
 

@@ -56,7 +56,7 @@ If data is missing, acknowledge the limitation.
 The brokerage's key differentiators:
 - 1% listing commission (vs typical 3%) when clients buy and sell
 - 2% for sell-only transactions
-- Free pre-listing home inspection
+- Free seller home inspection
 - 1% cashback for first-time buyers
 
 Mention these naturally in the CTA section, not throughout the article.
@@ -64,7 +64,7 @@ Mention these naturally in the CTA section, not throughout the article.
 Output ONLY the article body HTML (no <html>, <head>, or <body> tags). Use <h2> for \
 major sections and <h3> for subsections. Use <p> tags for paragraphs. Include at least \
 one internal link to another tdrealtyohio.com page (e.g. /contact/, /sellers/, \
-/pre-listing-inspection/, /areas/). Include at least one external link to a data source.
+/sellers/, /areas/). Include at least one external link to a data source.
 """
 
 EVENTS_SYSTEM_PROMPT = """\
@@ -358,9 +358,10 @@ def _wrap_in_page(
   <meta name="twitter:description" content="{esc_desc}">
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
 
-  <link rel="icon" href="/favicon.ico" sizes="32x32">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a2e44">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -421,7 +422,7 @@ def _wrap_in_page(
         <a href="/sellers/" class="nav-link">Sellers</a>
         <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
         <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
-        <a href="/pre-listing-inspection/" class="nav-link">Pre-Listing Inspection</a>
+        <a href="/sellers/" class="nav-link">Seller Preparation</a>
         <a href="/home-value/" class="nav-link">Home Value</a>
         <a href="/affordability/" class="nav-link">Affordability</a>
         <a href="/areas/" class="nav-link">Areas</a>
@@ -491,7 +492,7 @@ def _wrap_in_page(
           <ul class="footer-links">
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
-            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
+            <li><a href="/sellers/">Seller Preparation</a></li>
             <li><a href="/areas/">Service Areas</a></li>
           </ul>
         </div>

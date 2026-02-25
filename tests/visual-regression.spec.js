@@ -23,7 +23,7 @@ const KEY_ROUTES = [
   { path: '/sellers/', name: 'sellers' },
   { path: '/1-percent-commission/', name: '1-percent-commission' },
   { path: '/buyers/', name: 'buyers' },
-  { path: '/pre-listing-inspection/', name: 'pre-listing-inspection' },
+  { path: '/sellers/', name: 'seller-inspection' },
   { path: '/home-value/', name: 'home-value' },
   { path: '/affordability/', name: 'affordability' },
   { path: '/areas/', name: 'areas' },

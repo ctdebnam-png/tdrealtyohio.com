@@ -54,7 +54,7 @@
           { "href": "/tools/seller-net-proceeds/", "text": "Calculate estimated take-home proceeds with current cost assumptions" },
           { "href": "/sell/timeline/", "text": "Map your ideal listing date, move window, and closing targets" },
           { "href": "/tools/sell-buy-timing/", "text": "Compare sell-first vs buy-first timing scenarios for move-up sellers" },
-          { "href": "/tools/pre-listing-checklist/", "text": "Use the pre-listing checklist to reduce delays before launch" }
+          { "href": "/tools/seller-documents/", "text": "Use the seller checklist to reduce delays before launch" }
         ]
       }
     ]
@@ -98,7 +98,7 @@
         "links": [
           { "href": "/sell/net-sheet/", "text": "Request a custom seller net sheet before choosing a listing model" },
           { "href": "/tools/seller-net-proceeds/", "text": "Use the seller net proceeds tool to model commission-side impacts" },
-          { "href": "/tools/repair-vs-credit/", "text": "Compare repair credits vs pre-listing fixes before going live" }
+          { "href": "/tools/repair-vs-credit/", "text": "Compare repair credits vs seller fixes before going live" }
         ]
       }
     ]

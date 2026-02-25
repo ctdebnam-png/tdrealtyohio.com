@@ -38,7 +38,7 @@ const SITEMAP_ALLOWED_EXTRA_LABELS = new Set([
   '1% Commission Listing',
   'Compare Options', '1% vs 3% Commission', 'Discount Broker vs Full Service', 'Flat Fee MLS vs Full Service',
   'Privacy Policy', 'Terms of Service', 'Fair Housing Statement',
-  'Home Value Estimate', 'Pre-Listing Inspection', 'Free Home Value',
+  'Home Value Estimate', 'Seller Preparation', 'Free Home Value',
   'About', 'Blog',
   // Pages that exist but are not in the consumer nav allowlist
   'Agent Opportunities', 'Referral Credit',

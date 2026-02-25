@@ -36,7 +36,7 @@ const CONVERSION_ASSIST_WEIGHTS = [
   ['/1-percent-commission/', 0.9],
   ['/sellers/', 0.85],
   ['/buyers/', 0.85],
-  ['/pre-listing-inspection/', 0.8],
+  ['/sellers/', 0.8],
   ['/areas/', 0.7],
   ['/blog/', 0.35],
 ];

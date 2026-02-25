@@ -50,9 +50,10 @@ function generateZipPage(z) {
   <meta name="twitter:description" content="${z.typicalPrice} homes in ${z.zip}. 1% listing commission. Full-service real estate.">
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a2e44">
 
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -209,7 +210,7 @@ function generateZipPage(z) {
         <p>TD Realty Ohio lists homes in ${z.zip} for <strong>1-2% commission</strong> instead of the traditional 3%. On a home in the ${z.typicalPrice} range, that saves you thousands at closing.</p>
         <ul class="check-list">
           <li>Full MLS listing with professional photography</li>
-          <li>Complimentary pre-listing inspection</li>
+          <li>Complimentary seller preparation</li>
           <li>Expert pricing strategy for the ${z.city} market</li>
           <li>Experienced negotiation from listing to close</li>
         </ul>
@@ -277,7 +278,7 @@ function generateZipPage(z) {
             <a href="/sellers/">For Sellers</a>
             <a href="/buyers/">For Buyers</a>
             <a href="/1-percent-commission/">1% Commission</a>
-            <a href="/pre-listing-inspection/">Pre-Listing Inspection</a>
+            <a href="/sellers/">Seller Preparation</a>
             <a href="/home-value/">Free Home Value</a>
             <a href="/affordability/">Affordability Calculator</a>
           </nav>

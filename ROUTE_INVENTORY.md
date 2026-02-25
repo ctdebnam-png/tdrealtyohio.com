@@ -18,7 +18,6 @@ Generated: 2026-02-03
 | `/sellers/` | 200 | https://tdrealtyohio.com/sellers/ | Sell Your Columbus Home for 1-2% Commission \| TD Realty Ohio | Sell Your Columbus Home for 1-2% Commission | Get My Savings Estimate, Call (614) 392-8858 | Header, Footer |
 | `/1-percent-commission/` | 200 | https://tdrealtyohio.com/1-percent-commission/ | 1% Commission Real Estate Listing Columbus Ohio \| TD Realty Ohio | Sell Your Central Ohio Home for 1% Commission | Get Your Free Savings Estimate, Call (614) 392-8858 | Header, Footer |
 | `/buyers/` | 200 | https://tdrealtyohio.com/buyers/ | Columbus First-Time Homebuyer Cash Back \| TD Realty Ohio | First-Time Buyer? Get 1% Back at Closing | Start My Home Search, Call (614) 392-8858 | Header, Footer |
-| `/pre-listing-inspection/` | 200 | https://tdrealtyohio.com/pre-listing-inspection/ | Free Pre-Listing Inspection \| TD Realty Ohio | Free Pre-Listing Inspection | Get Started, Call (614) 392-8858 | Header, Footer |
 | `/home-value/` | 200 | https://tdrealtyohio.com/home-value/ | What's Your Home Worth? Free Valuation \| TD Realty Ohio | What's Your Home Worth? | Get My Free Valuation | Header, Footer |
 | `/affordability/` | 200 | https://tdrealtyohio.com/affordability/ | Affordability Calculator \| TD Realty Ohio | How Much Home Can You Afford? | Calculate, Contact | Header, Footer |
 | `/areas/` | 200 | https://tdrealtyohio.com/areas/ | Central Ohio Communities \| TD Realty Ohio | Central Ohio Communities | Calculate Your Savings, View Full Page | Header, Footer |
@@ -68,7 +67,6 @@ Generated: 2026-02-03
 | `/blog/fsbo-vs-realtor-columbus/` | FSBO vs Realtor Columbus |
 | `/blog/how-much-save-selling-columbus-home-1-percent/` | How Much You Can Save Selling at 1% |
 | `/blog/home-staging-tips-columbus/` | Home Staging Tips Columbus |
-| `/blog/pre-listing-inspection-benefits/` | Pre-Listing Inspection Benefits |
 | `/blog/selling-home-westerville-ohio-2025/` | Selling Home in Westerville Ohio |
 | `/blog/why-agents-leaving-traditional-brokerages-100-commission/` | Why Agents Are Leaving Traditional Brokerages |
 
@@ -106,7 +104,6 @@ Generated: 2026-02-03
 
 ### Header (consistent across all pages)
 - Logo: "TD Realty Ohio" with TD mark
-- Navigation links: Sellers, 1% Listing, Buyers, Pre-Listing Inspection, Home Value, Affordability, Areas, Blog, About
 - Primary CTA: Contact button
 - Mobile: Hamburger menu
 

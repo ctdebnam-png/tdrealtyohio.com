@@ -30,7 +30,7 @@ const SECTIONS = {
     { path: '/sell-and-buy/', label: 'Sell & Buy Together (1%)' },
     { path: '/sell-only-2-percent/', label: 'Sell Only (2%)' },
     { path: '/buyers/', label: 'For Buyers' },
-    { path: '/pre-listing-inspection/', label: 'Pre-Listing Inspection' },
+    { path: '/sellers/', label: 'Seller Preparation' },
     { path: '/agents/', label: 'Agent Opportunities' },
     { path: '/referrals/', label: 'Referral Program' },
   ],

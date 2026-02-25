@@ -19,7 +19,7 @@ const TARGET_ROUTES = [
   '/sellers/',
   '/1-percent-commission/',
   '/buyers/',
-  '/pre-listing-inspection/',
+  '/sellers/',
   '/home-value/',
   '/affordability/',
   '/areas/',

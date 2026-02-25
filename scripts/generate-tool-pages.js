@@ -52,15 +52,15 @@ const TOOLS = [
     intent: 'seller',
     description: 'Estimate your net proceeds after all costs of selling your home.',
     metaDescription: 'Estimate your home sale net proceeds with TD Realty Ohio\'s free calculator. See listing fees, buyer agent compensation, closing costs, and your take-home amount.',
-    related: ['pre-listing-checklist', 'sell-buy-timing', 'repair-vs-credit']
+    related: ['seller-documents', 'sell-buy-timing', 'repair-vs-credit']
   },
   {
-    slug: 'pre-listing-checklist',
-    name: 'Pre-Listing Inspection Readiness Checklist',
+    slug: 'seller-documents',
+    name: 'Seller Preparation Readiness Checklist',
     shortName: 'Pre-Listing Checklist',
     intent: 'seller',
     description: 'Get a personalized checklist of what to prepare before listing your home.',
-    metaDescription: 'Get a personalized pre-listing preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.',
+    metaDescription: 'Get a personalized seller preparation checklist for your home. Know what to fix, clean, and gather before you list for sale.',
     related: ['seller-net-proceeds', 'seller-documents', 'repair-vs-credit']
   },
   {
@@ -79,7 +79,7 @@ const TOOLS = [
     intent: 'seller',
     description: 'Evaluate whether to sell now or wait based on your personal situation.',
     metaDescription: 'Should you sell your home now or wait? Get personalized scenario analysis based on your timeline, flexibility, and goals.',
-    related: ['sell-buy-timing', 'seller-net-proceeds', 'pre-listing-checklist']
+    related: ['sell-buy-timing', 'seller-net-proceeds', 'seller-documents']
   },
   {
     slug: 'repair-vs-credit',
@@ -88,7 +88,7 @@ const TOOLS = [
     intent: 'seller',
     description: 'Decide whether to make a repair or offer a credit to the buyer.',
     metaDescription: 'Should you repair before selling or offer a buyer credit? Get a balanced decision framework for common repair situations.',
-    related: ['pre-listing-checklist', 'seller-net-proceeds', 'seller-documents']
+    related: ['seller-documents', 'seller-net-proceeds', 'seller-documents']
   },
   {
     slug: 'seller-documents',
@@ -97,7 +97,7 @@ const TOOLS = [
     intent: 'seller',
     description: 'Get a personalized list of documents to gather before selling your home.',
     metaDescription: 'Get a customized list of documents you need to sell your Ohio home. Organized by category with timeline guidance.',
-    related: ['pre-listing-checklist', 'seller-net-proceeds', 'sell-buy-timing']
+    related: ['seller-documents', 'seller-net-proceeds', 'sell-buy-timing']
   },
   {
     slug: 'buyer-offer-readiness',
@@ -177,7 +177,7 @@ function htmlFooter() {
             <li><a href="/sellers/">For Sellers</a></li>
             <li><a href="/buyers/">For Buyers</a></li>
             <li><a href="/tools/">Free Tools</a></li>
-            <li><a href="/pre-listing-inspection/">Pre-Listing Inspection</a></li>
+            <li><a href="/sellers/">Seller Preparation</a></li>
             <li><a href="/areas/">Service Areas</a></li>
             <li><a href="/home-value/">Home Value</a></li>
             <li><a href="/affordability/">Affordability</a></li>
@@ -255,7 +255,7 @@ function pricingSummaryBlock() {
           <div style="background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; border: 1px solid var(--gray-200);">
             <div style="font-size: 2.5rem; font-weight: 700; color: var(--navy); font-family: 'DM Serif Display', serif;">1%</div>
             <div style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Listing Fee</div>
-            <p style="color: var(--gray-600); margin: 0; font-size: 0.9375rem;">When you sell and buy with TD Realty Ohio. Includes a free pre-listing inspection.</p>
+            <p style="color: var(--gray-600); margin: 0; font-size: 0.9375rem;">When you sell and buy with TD Realty Ohio. Includes a free seller preparation.</p>
           </div>
           <div style="background: var(--white); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center; border: 1px solid var(--gray-200);">
             <div style="font-size: 2.5rem; font-weight: 700; color: var(--navy); font-family: 'DM Serif Display', serif;">2%</div>
@@ -301,7 +301,7 @@ function toolScripts(slug) {
 function buildToolForm(tool) {
   switch (tool.slug) {
     case 'seller-net-proceeds': return formSellerNetProceeds();
-    case 'pre-listing-checklist': return formPreListingChecklist();
+    case 'seller-documents': return formPreListingChecklist();
     case 'sell-buy-timing': return formSellBuyTiming();
     case 'sell-now-vs-wait': return formSellNowVsWait();
     case 'repair-vs-credit': return formRepairVsCredit();
@@ -316,7 +316,7 @@ function buildToolForm(tool) {
 function buildToolCalcCall(tool) {
   switch (tool.slug) {
     case 'seller-net-proceeds': return 'calcSellerNetProceeds()';
-    case 'pre-listing-checklist': return 'calcPreListingChecklist()';
+    case 'seller-documents': return 'calcPreListingChecklist()';
     case 'sell-buy-timing': return 'calcSellBuyTiming()';
     case 'sell-now-vs-wait': return 'calcSellNowVsWait()';
     case 'repair-vs-credit': return 'calcRepairVsCredit()';
@@ -848,7 +848,7 @@ ${actionButtons()}
      tool.slug === 'repair-vs-credit' ? 'rvc' : 'plc');
 
   var pdfExport = '';
-  if (tool.slug === 'pre-listing-checklist' || tool.slug === 'seller-documents') {
+  if (tool.slug === 'seller-documents' || tool.slug === 'seller-documents') {
     pdfExport = `
           <button type="button" class="btn btn-outline btn-sm" style="margin-top:0.75rem;" onclick="exportToPDF('${tool.name}', document.getElementById('${contentId}-results-content').innerHTML)">Export PDF</button>`;
   }
