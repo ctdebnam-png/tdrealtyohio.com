@@ -157,7 +157,7 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Home Selling Services",
+                "name": "Home Selling",
                 "description": "Full-service home selling support including service strategy, marketing, negotiation, and closing coordination"
               }
             },
@@ -165,7 +165,7 @@
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",
-                "name": "Home Buying Services",
+                "name": "Home Buying",
                 "description": "Full-service buyer representation with neighborhood guidance, offer strategy, and contract-to-close support"
               }
             },
@@ -246,12 +246,12 @@
         <div class="hero-content hero-content--center">
           <p class="hero-tagline">Central Ohio real estate brokerage</p>
           <h1 class="hero-title">Sell or buy with full-service support.</h1>
-          <p class="hero-subtitle">Pricing strategy, marketing, negotiation, and contract-to-close guidance across Central Ohio.</p>
+          <p class="hero-subtitle">Pricing strategy, marketing, negotiation, and contract-to-close coordination across Central Ohio.</p>
           <div class="hero-buttons hero-buttons--center">
-            <a href="/sellers/" class="btn btn-primary btn-lg">Selling Services</a>
-            <a href="/buyers/" class="btn btn-outline-white btn-lg">Buying Services</a>
+            <a href="/sellers/" class="btn btn-primary btn-lg">Selling</a>
+            <a href="/buyers/" class="btn btn-outline-white btn-lg">Buying</a>
           </div>
-          <p><a href="/agents/">Agent Opportunity</a></p>
+          <p class="hero-tertiary-link"><a href="/agents/">Agent Opportunity</a></p>
           <div class="trust-badges-inline" aria-label="Trust indicators">
             <span>Licensed Ohio Brokerage</span>
             <span aria-hidden="true">|</span>
@@ -369,100 +369,12 @@
       </div>
     </section>
 
-    <!-- Calculator Section -->
-    <section class="section calculator-section reveal">
-      <div class="container">
-        <div class="two-col">
-          <div>
-            <h2>See what your next move could look like</h2>
-            <p>This calculator provides a planning estimate. Final costs and compensation depend on your transaction details and written agreement.</p>
-            <ul class="benefits-list">
-              <li>Full MLS listing and marketing</li>
-              <li>Professional photography included</li>
-              <li>Offer review and counteroffer strategy</li>
-              <li><a href="/sellers/">Selling services overview</a></li>
-            </ul>
-          </div>
-
-          <div class="calculator" id="seller-calculator">
-            <div class="calculator-mode-toggle" role="tablist" aria-label="Calculator type">
-              <button type="button" class="mode-btn active" id="tab-seller" role="tab" aria-selected="true" aria-controls="seller-calc-content" data-mode="seller">Selling</button>
-              <button type="button" class="mode-btn" id="tab-buyer" role="tab" aria-selected="false" aria-controls="buyer-calc-content" data-mode="buyer">Buying</button>
-            </div>
-
-            <!-- Seller Calculator -->
-            <div id="seller-calc-content" role="tabpanel" aria-labelledby="tab-seller">
-              <h3 class="calculator-title">listing plan seller planning calculator</h3>
-              <div class="calculator-slider-group">
-                <div class="calculator-slider-header">
-                  <label class="calculator-label" for="seller-price-slider">Home Sale Price</label>
-                  <span class="calculator-slider-value" data-price-display>$400,000</span>
-                </div>
-                <input type="range" class="calculator-range u-3fe8ec80" data-price-slider id="seller-price-slider" min="200000" max="800000" step="10000" value="400000" aria-valuetext="$400,000">
-                <div class="slider-labels">
-                  <span>$200K</span>
-                  <span>$800K</span>
-                </div>
-              </div>
-              <div class="calculator-toggle">
-                <button type="button" class="toggle-btn active" data-toggle-btn data-rate="buy-sell">Selling & Buying</button>
-                <button type="button" class="toggle-btn" data-toggle-btn data-rate="sell-only">Sell Only</button>
-              </div>
-              <div class="calculator-results">
-                <div class="result-row">
-                  <span class="result-label">Reference Listing Cost</span>
-                  <span class="result-value strikethrough" data-traditional>$12,000</span>
-                </div>
-                <div class="result-row">
-                  <span class="result-label">Estimated Listing Costs</span>
-                  <span class="result-value" data-td-realty>$4,000</span>
-                </div>
-                <div class="result-row">
-                  <span class="result-label">Estimated Difference</span>
-                  <span class="result-value highlight" data-difference>$8,000</span>
-                </div>
-              </div>
-              <a href="/contact/" class="btn btn-primary btn-lg calculator-cta" id="seller-calc-cta">Request a Planning Call</a>
-              <p class="calculator-disclosure">
-                Listing-side compensation only. Buyer agent compensation is separate. <a href="#disclosures">See disclosures</a>
-              </p>
-            </div>
-
-            <!-- Buyer Calculator -->
-            <div id="buyer-calc-content" role="tabpanel" aria-labelledby="tab-buyer" hidden>
-              <h3 class="calculator-title">Buyer Cost Planning</h3>
-              <div class="calculator-slider-group">
-                <div class="calculator-slider-header">
-                  <label class="calculator-label" for="buyer-price-slider">Purchase Price</label>
-                  <span class="calculator-slider-value" data-buyer-price-display>$400,000</span>
-                </div>
-                <input type="range" class="calculator-range" data-buyer-price-slider id="buyer-price-slider" min="200000" max="800000" step="10000" value="400000" aria-valuetext="$400,000">
-                <div class="slider-labels">
-                  <span>$200K</span>
-                  <span>$800K</span>
-                </div>
-              </div>
-              <div class="calculator-results">
-                <div class="result-row">
-                  <span class="result-label">Estimated Buyer Closing Costs</span>
-                </div>
-              </div>
-              <a href="/contact/?mode=buy" class="btn btn-primary btn-lg calculator-cta" id="buyer-calc-cta">Plan Your Home Search</a>
-              <p class="calculator-disclosure">
-                Disclosure: Buyer-side costs vary by lender and transaction terms. We provide custom guidance based on your specific purchase scenario. <a href="/buyers/" class="u-ed12483e">Learn more →</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Why TD Realty Section -->
     <section class="section-standard section-features reveal">
       <div class="container">
         <div class="section-header">
           <h2>Why TD Realty Ohio</h2>
-          <p>Lower overhead, streamlined workflows, same full-service support.</p>
+          <p>Experienced guidance, clear communication, and full-service support from consultation through closing.</p>
         </div>
 
         <div class="feature-grid">
@@ -488,8 +400,8 @@
                 <line x1="10" y1="15" x2="14" y2="15"/>
               </svg>
             </div>
-            <h3 class="feature-card-title">Review Your Options</h3>
-            <p class="feature-card-text">Compare selling approaches and decide which service level fits your goals.</p>
+            <h3 class="feature-card-title">Review common selling approaches</h3>
+            <p class="feature-card-text">Explore process expectations and decide what support is right for your situation.</p>
             <span class="feature-card-link">Review options &rarr;</span>
           </a>
         </div>
@@ -673,151 +585,6 @@
 
   <script src="/assets/js/nav.js?v=20260212"></script>
   <script src="/assets/js/main.js?v=20260212"></script>
-  <script>
-    // Calculator mode toggle (seller vs buyer) with accessible tab pattern
-    const tabs = document.querySelectorAll('.mode-btn[role="tab"]');
-    const sellerPanel = document.getElementById('seller-calc-content');
-    const buyerPanel = document.getElementById('buyer-calc-content');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Update tab states
-        tabs.forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-
-        // Update panel visibility
-        const mode = tab.dataset.mode;
-        if (mode === 'seller') {
-          sellerPanel.hidden = false;
-          buyerPanel.hidden = true;
-        } else {
-          sellerPanel.hidden = true;
-          buyerPanel.hidden = false;
-        }
-      });
-
-      // Keyboard navigation for tabs
-      tab.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-          const currentIndex = Array.from(tabs).indexOf(tab);
-          const nextIndex = e.key === 'ArrowRight' ? (currentIndex + 1) % tabs.length : (currentIndex - 1 + tabs.length) % tabs.length;
-          tabs[nextIndex].focus();
-          tabs[nextIndex].click();
-        }
-      });
-    });
-
-    // Buyer calculator
-    const buyerSlider = document.querySelector('[data-buyer-price-slider]');
-    const buyerPriceDisplay = document.querySelector('[data-buyer-price-display]');
-
-    if (buyerSlider) {
-      buyerSlider.addEventListener('input', () => {
-        const price = parseInt(buyerSlider.value);
-        buyerPriceDisplay.textContent = '$' + price.toLocaleString();
-        buyerSlider.setAttribute('aria-valuetext', '$' + price.toLocaleString());
-        updateSliderTrack(buyerSlider);
-      });
-      updateSliderTrack(buyerSlider);
-    }
-
-    // Helper: persist calculator values as URL params (no page reload)
-    function persistCalcParams(params) {
-      try {
-        var u = new URL(window.location);
-        Object.keys(params).forEach(function(k) {
-          if (params[k] !== undefined && params[k] !== '') u.searchParams.set(k, params[k]);
-        });
-        history.replaceState(null, '', u);
-      } catch (e) { /* ignore */ }
-    }
-
-    // Build contact URL with seller calculator params
-    function sellerContactUrl() {
-      const slider = document.getElementById('seller-price-slider');
-      const price = slider ? parseInt(slider.value) : 400000;
-      const activeToggle = document.querySelector('[data-toggle-btn].active');
-      const rate = activeToggle && activeToggle.dataset.rate === 'sell-only' ? 0.02 : 0.01;
-      const mode = rate === 0.01 ? 'sell+buy' : 'sell-only';
-      const typicalFee = Math.round(price * 0.03);
-      const tdFee = Math.round(price * rate);
-      const difference = typicalFee - tdFee;
-      return {
-        url: '/contact/?salePrice=' + price + '&mode=' + mode + '&typicalFee=' + typicalFee + '&tdFee=' + tdFee + '&difference=' + difference,
-        data: { homePrice: price, mode: mode, computedDifference: difference },
-        params: { salePrice: price, mode: mode, typicalFee: typicalFee, tdFee: tdFee, difference: difference }
-      };
-    }
-
-    // Build contact URL with buyer calculator params
-    function buyerContactUrl() {
-      const slider = document.getElementById('buyer-price-slider');
-      const price = slider ? parseInt(slider.value) : 400000;
-      return {
-      };
-    }
-
-    // Keep CTA href in sync with calculator values
-    function syncCalcCtaLinks() {
-      var sellerCta = document.getElementById('seller-calc-cta');
-      var buyerCta = document.getElementById('buyer-calc-cta');
-      if (sellerCta) sellerCta.href = sellerContactUrl().url;
-      if (buyerCta) buyerCta.href = buyerContactUrl().url;
-    }
-
-    // Wire seller calculator CTA
-    const sellerCta = document.getElementById('seller-calc-cta');
-    if (sellerCta) {
-      sellerCta.addEventListener('click', (e) => {
-        var info = sellerContactUrl();
-        persistCalcParams(info.params);
-        if (typeof openLeadModal === 'function') {
-          e.preventDefault();
-          openLeadModal(info.data);
-        }
-      });
-    }
-
-    // Wire buyer calculator CTA
-    const buyerCta = document.getElementById('buyer-calc-cta');
-    if (buyerCta) {
-      buyerCta.addEventListener('click', (e) => {
-        var info = buyerContactUrl();
-        persistCalcParams(info.params);
-        if (typeof openLeadModal === 'function') {
-          e.preventDefault();
-          openLeadModal(info.data);
-        }
-      });
-    }
-
-    // Sync CTA hrefs on slider/toggle changes
-    var sellerSliderSync = document.getElementById('seller-price-slider');
-    if (sellerSliderSync) sellerSliderSync.addEventListener('input', syncCalcCtaLinks);
-    document.querySelectorAll('[data-toggle-btn]').forEach(function(b) { b.addEventListener('click', function() { setTimeout(syncCalcCtaLinks, 0); }); });
-    if (buyerSlider) buyerSlider.addEventListener('input', syncCalcCtaLinks);
-    syncCalcCtaLinks();
-    // Keep bottom CTA link in sync with calculator params
-    function syncContactLink() {
-      var link = document.getElementById('cta-contact-link');
-      if (!link) return;
-      var u = new URL(window.location);
-      var p = u.searchParams;
-      if (p.toString()) {
-        link.href = '/contact/?' + p.toString();
-      }
-    }
-    // Update link whenever calculator changes
-    var sellerSlider = document.getElementById('seller-price-slider');
-    if (sellerSlider) sellerSlider.addEventListener('input', function() { setTimeout(syncContactLink, 0); });
-    document.querySelectorAll('[data-toggle-btn]').forEach(function(b) { b.addEventListener('click', function() { setTimeout(syncContactLink, 0); }); });
-    if (buyerSlider) buyerSlider.addEventListener('input', function() { setTimeout(syncContactLink, 0); });
-    syncContactLink();
-  </script>
   <script>
     // Scroll reveal — only if IntersectionObserver supported; no-JS = sections visible
     (function() {
