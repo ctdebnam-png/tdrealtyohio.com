@@ -72,6 +72,23 @@
       opacity: 0;
       pointer-events: none;
     }
+    .agent-model {
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      background: var(--white);
+      max-width: 760px;
+    }
+    .agent-model h2 {
+      margin-bottom: .75rem;
+      font-size: 1.5rem;
+    }
+    .agent-model p {
+      margin-bottom: .75rem;
+    }
+    .agent-model p:last-child {
+      margin-bottom: 0;
+    }
     @media (max-width: 900px) {
       .pricing-grid { grid-template-columns: 1fr; }
       .form-grid { grid-template-columns: 1fr; }
@@ -100,8 +117,13 @@
   <main id="main-content" class="agent-join-main">
     <div class="container" style="max-width:980px;">
       <h1>The model that matches your stance</h1>
-      <p><strong>Keep your business, buy a back office.</strong></p>
-      <p>Listing heavy agents keep 100 percent on listings, buyer heavy agents get 90/10, and everyone gets brokerage level E and O plus Dotloop, with a hard annual cap.</p>
+
+      <section id="agent-model" class="agent-model content-section" aria-labelledby="agent-model-title">
+        <h2 id="agent-model-title">Keep your business, buy a back office</h2>
+        <p>If you want no training, no leads, no hand holding, the offer has to be simple and economically legible in one read. The clean version is 100 percent on listings less a flat file fee and 90/10 on buyer sides with Dotloop and brokerage level E and O included.</p>
+        <p>Add an annual cap on the 10 percent, for example $8,000 to $12,000, after which the agent is effectively 95/5 or 100 percent less the file fee for the rest of the year.</p>
+        <p>Transaction review within one business day, same day response for contract questions during business hours, and commission paid within 24 hours of confirmed funding and receipt of complete file.</p>
+      </section>
 
       <section aria-labelledby="pricing-heading" class="content-section">
         <h2 id="pricing-heading">How pricing works</h2>
