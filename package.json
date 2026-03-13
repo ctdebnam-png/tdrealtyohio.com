@@ -1,7 +1,7 @@
 {
   "name": "tdrealtyohio",
   "version": "1.0.0",
-  "description": "TD Realty Ohio - Low Commission Real Estate Brokerage",
+  "description": "TD Realty Ohio - Full-Service Central Ohio Brokerage",
   "private": true,
   "engines": {
     "node": ">=22.0.0"

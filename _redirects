@@ -38,3 +38,9 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /tools/*                        /contact/       301
 /areas/*                        /areas/         301
 /blog/why-agents-leaving-traditional-brokerages-100-commission/ /agents/ 301
+
+/blog*                          /about/         301
+/sitemap-page*                  /               301
+/tools*                         /contact/       301
+/buy*                           /buyers/        301
+/sell*                          /sellers/       301

@@ -29,10 +29,11 @@ BROKERAGE = {
     "license_broker": "2023006467",
     "license_brokerage": "2023006602",
     "value_props": [
-        "full-service listing representation commission when you buy and sell with us",
-        "2% listing commission for sell-only clients",
-        "Free seller home inspection with every listing",
-        "1% buyer support for first-time homebuyers at closing",
+        "standard full-service representation for buying, selling, and leasing",
+        "direct broker access across Central Ohio transactions",
+        "100% on listing sides for agents",
+        "90/10 split on buy sides for agents",
+        "25% of the first month's lease on rental transactions for agents",
     ],
 }
 
