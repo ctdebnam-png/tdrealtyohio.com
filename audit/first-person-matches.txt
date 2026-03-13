@@ -1,4 +1,4 @@
-1-percent-commission/index.html:597 [my + noun] <div class="faq-question">Will my home get less marketing exposure at 1%?</div>
+sellers/index.html:597 [my + noun] <div class="faq-question">Will my home get less marketing exposure at 1%?</div>
 blog/1-percent-vs-3-percent-commission-comparison/index.html:357 [I + verb] <li><strong>Can I see reviews from recent clients?</strong> Past performance predicts future service
 blog/1-percent-vs-3-percent-commission-comparison/index.html:358 [my + noun] <li><strong>How will you price my home?</strong> Look for data-driven analysis, not just optimistic 
 blog/1-percent-vs-3-percent-commission-comparison/index.html:361 [my + noun] <li><strong>What happens if my home doesn't sell?</strong> Understand the listing agreement terms.</
@@ -7,7 +7,7 @@ blog/closing-costs-columbus-ohio/index.html:201 [I + verb] <p>Here is a detailed
 blog/closing-costs-columbus-ohio/index.html:329 [I'm] <p>For this example, I'm assuming the seller is responsible for the listing agent commission only, w
 blog/closing-costs-columbus-ohio/index.html:498 [I + verb] <p>If you are considering selling a home in <a href="/areas/columbus/">Columbus</a> or anywhere in C
 blog/fsbo-vs-realtor-columbus/index.html:189 [I + verb] <p class="lead">Every Columbus homeowner selling their property faces the same tempting thought: "Wh
-blog/fsbo-vs-realtor-columbus/index.html:193 [I + verb] <p>I am writing this as a broker who offers <a href="/1-percent-commission/">1-2% listing commission
+blog/fsbo-vs-realtor-columbus/index.html:193 [I + verb] <p>I am writing this as a broker who offers <a href="/sellers/">1-2% listing commission
 blog/fsbo-vs-realtor-columbus/index.html:510 [I + verb] <p>If you are considering selling your Columbus-area home, I would encourage you to at least get a <
 blog/home-staging-tips-columbus/index.html:190 [I'll] <p>After helping sellers across Central Ohio list and sell their homes, I've seen the difference tha
 blog/home-staging-tips-columbus/index.html:190 [I've] <p>After helping sellers across Central Ohio list and sell their homes, I've seen the difference tha

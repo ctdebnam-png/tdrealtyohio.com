@@ -865,7 +865,7 @@ function calcBuyerOfferReadiness() {
 
   var fc = typeof formatCurrency === 'function' ? formatCurrency : function(v) { return '$' + v.toLocaleString(); };
   var downPayment = Math.round(targetPrice * downPct / 100);
-  var cashBack = Math.round(targetPrice * 0.01);
+  var buyer support = Math.round(targetPrice * 0.01);
 
   var readiness = [];
   var lenderQuestions = [];
@@ -930,8 +930,8 @@ function calcBuyerOfferReadiness() {
 
   html += '<div style="background:linear-gradient(135deg,#1a2e44,#2d4a7c);color:white;padding:1.5rem;border-radius:var(--radius-md);margin-top:1.5rem;text-align:center;">';
   html += '<p style="margin-bottom:0.5rem;">First-time buyer? You could receive</p>';
-  html += '<div style="font-size:2rem;font-weight:700;color:var(--gold);font-family:\'DM Serif Display\',serif;">' + fc(cashBack) + ' cash back</div>';
-  html += '<p style="opacity:0.8;margin-top:0.5rem;font-size:0.875rem;">1% cash back at closing with TD Realty Ohio. Subject to lender approval.</p></div>';
+  html += '<div style="font-size:2rem;font-weight:700;color:var(--gold);font-family:\'DM Serif Display\',serif;">' + fc(buyer support) + ' buyer support</div>';
+  html += '<p style="opacity:0.8;margin-top:0.5rem;font-size:0.875rem;">buyer representation at closing with TD Realty Ohio. Subject to lender approval.</p></div>';
 
   contentDiv.innerHTML = html;
   var resultsDiv = document.getElementById('tool-results');
@@ -978,7 +978,7 @@ function calcBuyerClosingCosts() {
   var totalLow = 0, totalHigh = 0;
   items.forEach(function(item) { totalLow += item.low; totalHigh += item.high; });
 
-  var cashBack = firstTime ? Math.round(purchasePrice * 0.01) : 0;
+  var buyer support = firstTime ? Math.round(purchasePrice * 0.01) : 0;
 
   var contentDiv = document.getElementById('bcc-results-content');
   if (!contentDiv) return;
@@ -994,10 +994,10 @@ function calcBuyerClosingCosts() {
 
   html += '<div class="result-row" style="border-top:2px solid var(--navy);margin-top:0.75rem;padding-top:0.75rem;"><span class="result-label" style="font-weight:700;">Total Estimated Closing Costs</span><span class="result-value highlight">' + fc(totalLow) + ' - ' + fc(totalHigh) + '</span></div>';
 
-  if (firstTime && cashBack > 0) {
+  if (firstTime && buyer support > 0) {
     html += '<div style="background:linear-gradient(135deg,#1a2e44,#2d4a7c);color:white;padding:1.5rem;border-radius:var(--radius-md);margin-top:1.5rem;text-align:center;">';
-    html += '<p style="margin-bottom:0.5rem;">First-time buyer cash back with TD Realty</p>';
-    html += '<div style="font-size:2rem;font-weight:700;color:var(--gold);font-family:\'DM Serif Display\',serif;">' + fc(cashBack) + '</div>';
+    html += '<p style="margin-bottom:0.5rem;">First-time buyer buyer support with TD Realty</p>';
+    html += '<div style="font-size:2rem;font-weight:700;color:var(--gold);font-family:\'DM Serif Display\',serif;">' + fc(buyer support) + '</div>';
     html += '<p style="opacity:0.8;margin-top:0.5rem;font-size:0.875rem;">1% of purchase price back at closing. May be applied to closing costs. Subject to lender approval.</p></div>';
   }
 
@@ -1019,7 +1019,7 @@ function calcMoveUpPlan() {
 
   var fc = typeof formatCurrency === 'function' ? formatCurrency : function(v) { return '$' + v.toLocaleString(); };
 
-  // Estimated equity (assume 1% listing fee + ~2.5% buyer agent + ~1.5% closing)
+  // Estimated equity (assume full-service listing representation fee + ~2.5% buyer agent + ~1.5% closing)
   var sellingCosts = Math.round(currentValue * 0.05);
   var estimatedEquity = currentValue - sellingCosts;
   var gapAmount = targetPrice - estimatedEquity - cashAvailable;
@@ -1084,7 +1084,7 @@ function calcMoveUpPlan() {
   html += '</ul>';
 
   html += '<div style="background:var(--off-white);padding:1rem;border-radius:var(--radius-md);margin-top:1.5rem;">';
-  html += '<p style="color:var(--navy);font-weight:600;margin-bottom:0.25rem;">TD Realty Ohio: 1% Listing Fee</p>';
+  html += '<p style="color:var(--navy);font-weight:600;margin-bottom:0.25rem;">TD Realty Ohio: full-service listing representation Fee</p>';
   html += '<p style="color:var(--gray-600);font-size:0.9375rem;margin:0;">When you sell and buy with us, your listing fee is just 1%. On your ' + fc(currentValue) + ' home, that saves you ' + fc(Math.round(currentValue * 0.02)) + ' compared to a traditional 3% listing fee.</p></div>';
 
   contentDiv.innerHTML = html;

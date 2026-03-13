@@ -34,7 +34,7 @@ Content from the standalone 2% sell-only page was consolidated into `/sellers/#s
 | Label | Href |
 |---|---|
 | Sell Your Home | `/sellers/` |
-| 1% Listing Fee | `/sellers/#full-service` |
+| full-service listing representation Fee | `/sellers/#full-service` |
 
 ### Buy
 | Label | Href |
@@ -82,9 +82,9 @@ The following pages remain live and indexed but are no longer in the header, mob
 - `/reviews/` — Reviews
 - `/referrals/` — Referral Credit
 - `/tools/` — Free Tools
-- `/1-percent-commission/` — 1% Commission (linked from /sellers/ pricing section)
+- `/sellers/` — full-service representation (linked from /sellers/ pricing section)
 - `/sellers/` — Seller Preparation (linked from /sellers/ content)
-- `/buy/cash-back/` — 1% Cash Back (linked from /buyers/ content)
+- `/buy/cash-back/` — buyer representation (linked from /buyers/ content)
 - `/compare/` — Compare Options (still in mobile drawer Learn)
 
 ## Guard

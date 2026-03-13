@@ -1,3 +1,5 @@
+const { BROKERAGE_FACTS } = require('../../src/content/brokerage.js');
+
 function scriptTag(schemaObject) {
   return `  <script type="application/ld+json">\n${JSON.stringify(schemaObject, null, 2)}\n  </script>`;
 }
@@ -9,27 +11,28 @@ function organizationAndAgentGraph() {
       {
         '@type': 'Organization',
         '@id': 'https://tdrealtyohio.com/#organization',
-        name: 'TD Realty Ohio, LLC',
+        name: BROKERAGE_FACTS.legalName,
         url: 'https://tdrealtyohio.com/',
-        telephone: '(614) 392-8858',
-        email: 'info@tdrealtyohio.com',
+        telephone: BROKERAGE_FACTS.phone,
+        email: BROKERAGE_FACTS.email,
         image: 'https://tdrealtyohio.com/assets/images/og-default.jpg',
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Westerville',
-          addressRegion: 'OH',
-          addressCountry: 'US'
+          addressLocality: BROKERAGE_FACTS.addressLocality,
+          addressRegion: BROKERAGE_FACTS.addressRegion,
+          addressCountry: BROKERAGE_FACTS.addressCountry
         }
       },
       {
         '@type': 'RealEstateAgent',
         '@id': 'https://tdrealtyohio.com/#agent',
-        name: 'TD Realty Ohio, LLC',
+        name: BROKERAGE_FACTS.legalName,
         url: 'https://tdrealtyohio.com/',
-        telephone: '(614) 392-8858',
-        email: 'info@tdrealtyohio.com',
+        telephone: BROKERAGE_FACTS.phone,
+        email: BROKERAGE_FACTS.email,
         image: 'https://tdrealtyohio.com/assets/images/og-default.jpg',
-        areaServed: { '@type': 'AdministrativeArea', name: 'Central Ohio' },
+        description: BROKERAGE_FACTS.primaryMessage,
+        areaServed: { '@type': 'AdministrativeArea', name: BROKERAGE_FACTS.serviceArea },
         parentOrganization: { '@id': 'https://tdrealtyohio.com/#organization' }
       }
     ]
@@ -56,7 +59,7 @@ function webApplicationSchema({ name, description, url, areaServed }) {
     name,
     description,
     url,
-    applicationCategory: 'FinanceApplication',
+    applicationCategory: 'BusinessApplication',
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     provider: { '@id': 'https://tdrealtyohio.com/#agent' },
@@ -73,7 +76,7 @@ function collectionPageSchema({ name, description, url }) {
     url,
     isPartOf: {
       '@type': 'WebSite',
-      name: 'TD Realty Ohio',
+      name: BROKERAGE_FACTS.brandName,
       url: 'https://tdrealtyohio.com/'
     },
     about: { '@id': 'https://tdrealtyohio.com/#agent' }

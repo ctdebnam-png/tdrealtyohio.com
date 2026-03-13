@@ -15,7 +15,7 @@ const TARGET_KEYWORDS = [
   'sell home Columbus Ohio',
   'discount realtor Columbus OH',
   'flat fee MLS Columbus Ohio',
-  '1% listing agent Ohio',
+  'full-service listing representation agent Ohio',
   'best realtor Westerville Ohio',
   'sell home Dublin Ohio',
   'real estate agent Powell Ohio',
@@ -23,7 +23,7 @@ const TARGET_KEYWORDS = [
   'seller preparation Columbus',
   'sell and buy same agent Columbus',
   'first time homebuyer Columbus Ohio',
-  'cash back buyer agent Columbus',
+  'buyer support buyer agent Columbus',
   'Columbus Ohio housing market 2026',
   'sell home Grove City Ohio',
   'real estate agent Hilliard Ohio',
@@ -196,7 +196,7 @@ function generateRecommendations(gaps, matrix) {
     'sell home': '/sell',
     'home value': '/home-value',
     'first time homebuyer': '/buy',
-    'cash back buyer': '/buy',
+    'buyer support buyer': '/buy',
     'housing market': '/blog',
     'seller preparation': '/blog',
     'sell and buy same agent': '/about',
@@ -234,7 +234,7 @@ function generateRecommendations(gaps, matrix) {
       suggestion = `Optimise existing page ${targetPage} for keyword "${kw}". Add dedicated H2 section, FAQ schema, and internal links.`;
       action = 'optimise_existing';
     } else {
-      suggestion = `Create new blog post or landing page targeting "${kw}". Focus on local Columbus Ohio relevance and 1% commission value prop.`;
+      suggestion = `Create new blog post or landing page targeting "${kw}". Focus on local Columbus Ohio relevance and full-service representation value prop.`;
       action = 'create_content';
       targetPage = `/blog/${kw.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '')}`;
     }

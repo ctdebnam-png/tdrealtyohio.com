@@ -1,6 +1,6 @@
 {
   "routes": [
-    "/", "/sellers/", "/buyers/", "/1-percent-commission/", "/home-value/",
+    "/", "/sellers/", "/buyers/", "/sellers/", "/home-value/",
     "/areas/", "/blog/", "/about/", "/contact/"
   ],
   "maxRedirectHops": 5,

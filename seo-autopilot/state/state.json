@@ -8,8 +8,8 @@
     },
     {
       "from": "/blog/",
-      "to": "/compare/fsbo-vs-1-percent-listing/",
-      "anchor": "compare/fsbo vs 1 percent listing",
+      "to": "/compare/fsbo-vs-full-service-listing/",
+      "anchor": "compare/fsbo vs full-service listing",
       "date": "2026-02-10"
     },
     {
@@ -20,8 +20,8 @@
     },
     {
       "from": "/",
-      "to": "/compare/fsbo-vs-1-percent-listing/",
-      "anchor": "compare/fsbo vs 1 percent listing",
+      "to": "/compare/fsbo-vs-full-service-listing/",
+      "anchor": "compare/fsbo vs full-service listing",
       "date": "2026-02-10"
     },
     {
@@ -56,14 +56,14 @@
     },
     {
       "from": "/buyers/",
-      "to": "/compare/fsbo-vs-1-percent-listing/",
-      "anchor": "compare/fsbo vs 1 percent listing",
+      "to": "/compare/fsbo-vs-full-service-listing/",
+      "anchor": "compare/fsbo vs full-service listing",
       "date": "2026-02-10"
     },
     {
       "from": "/blog/",
       "to": "/compare/discount-broker-vs-full-service/",
-      "anchor": "compare/discount broker vs full service",
+      "anchor": "compare/brokerage model vs full service",
       "date": "2026-02-10"
     }
   ],

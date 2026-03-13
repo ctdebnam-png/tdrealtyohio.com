@@ -31,15 +31,15 @@ function generateZipPage(z) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${z.zip} Real Estate | ${z.city}, OH | TD Realty Ohio</title>
-  <meta name="description" content="Buying or selling in ZIP code ${z.zip} (${z.city}, Ohio)? ${z.typicalPrice} price range. 1% listing commission saves you thousands.">
+  <meta name="description" content="Buying or selling in ZIP code ${z.zip} (${z.city}, Ohio)? ${z.typicalPrice} price range. full-service listing representation commission saves you thousands.">
   <meta name="keywords" content="${z.zip} real estate, ${z.zip} homes for sale, sell home ${z.zip}, ${z.city} Ohio real estate, ${z.schoolDistrict}">
 
   <link rel="canonical" href="${canonical}">
   <meta property="article:modified_time" content="${TODAY}">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="${z.zip} Real Estate | ${z.city}, OH | 1% Commission">
-  <meta property="og:description" content="Buying or selling in ${z.zip}? ${z.typicalPrice} homes. Save thousands with 1% listing commission.">
+  <meta property="og:title" content="${z.zip} Real Estate | ${z.city}, OH | full-service representation">
+  <meta property="og:description" content="Buying or selling in ${z.zip}? ${z.typicalPrice} homes. Save thousands with full-service listing representation commission.">
   <meta property="og:url" content="${canonical}">
   <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
   <meta property="og:image:width" content="1200">
@@ -47,7 +47,7 @@ function generateZipPage(z) {
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${z.zip} Real Estate | ${z.city}, OH | TD Realty Ohio">
-  <meta name="twitter:description" content="${z.typicalPrice} homes in ${z.zip}. 1% listing commission. Full-service real estate.">
+  <meta name="twitter:description" content="${z.typicalPrice} homes in ${z.zip}. full-service listing representation commission. Full-service real estate.">
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
 
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -92,7 +92,7 @@ function generateZipPage(z) {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
     "name": "TD Realty Ohio, LLC",
-    "description": "Full-service real estate agent serving ZIP code ${z.zip} (${z.city}, Ohio) with 1% listing commission.",
+    "description": "Full-service real estate agent serving ZIP code ${z.zip} (${z.city}, Ohio) with full-service listing representation commission.",
     "url": "${canonical}",
     "telephone": "(614) 392-8858",
     "email": "info@tdrealtyohio.com",
@@ -148,7 +148,7 @@ function generateZipPage(z) {
       </a>
       <nav class="nav-desktop" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
-        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
+        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">buyer representation (First-Time Buyers)</a></div></div>
         <a href="/areas/" class="nav-link active">Areas</a>
         <a href="/about/" class="nav-link">About</a>
         <a href="/blog/" class="nav-link">Blog</a>
@@ -225,7 +225,7 @@ function generateZipPage(z) {
         <p>First-time homebuyers working with TD Realty Ohio receive <strong>1% of the purchase price back</strong> at closing, which can be applied toward closing costs or other expenses.</p>
         <ul class="check-list">
           <li>Full buyer representation from search to closing</li>
-          <li>1% cash back for first-time buyers</li>
+          <li>buyer representation for first-time buyers</li>
           <li>Local expertise in ${z.city} neighborhoods</li>
           <li>Help navigating inspections, appraisals, and negotiations</li>
         </ul>
@@ -277,7 +277,7 @@ function generateZipPage(z) {
           <nav aria-label="Footer services">
             <a href="/sellers/">For Sellers</a>
             <a href="/buyers/">For Buyers</a>
-            <a href="/1-percent-commission/">1% Commission</a>
+            <a href="/sellers/">full-service representation</a>
             <a href="/sellers/">Seller Preparation</a>
             <a href="/home-value/">Free Home Value</a>
             <a href="/affordability/">Affordability Calculator</a>

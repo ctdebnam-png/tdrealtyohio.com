@@ -330,7 +330,7 @@ All pages maintain consistent contact information:
 | Email | info@tdrealtyohio.com | Footer, contact page |
 | Broker License | #2023006467 | Footer license line |
 | Brokerage License | #2023006602 | Footer license line |
-| Buyer Cash Back | 1% (e.g., $300,000 → $3,000) | Homepage, buyers page, calculators |
+| Buyer buyer support | 1% (e.g., $300,000 → $3,000) | Homepage, buyers page, calculators |
 
 ---
 

@@ -20,7 +20,7 @@ const cities = [
     medianPrice: 275000,
     population: '906K',
     daysOnMarket: 18,
-    metaDescription: 'Selling your Columbus home? List for just 1% commission with TD Realty Ohio. Full-service real estate, free inspection, and professional photos included.',
+    metaDescription: 'Selling your Columbus home? List for just full-service representation with TD Realty Ohio. Full-service real estate, free inspection, and professional photos included.',
     description: 'Columbus is Ohio\'s capital and largest city, offering diverse neighborhoods from historic German Village to the trendy Short North Arts District. The market provides options at every price point. Columbus City Schools is the state\'s largest district, while many Columbus addresses also feed into suburban districts like Westerville, Dublin, and Hilliard.',
     county: 'Franklin',
     neighbors: ['westerville', 'dublin', 'upper-arlington', 'gahanna', 'grove-city'],
@@ -587,24 +587,24 @@ function generateCityPage(city) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${city.name}, OH Homes | 1% Listing | TD Realty Ohio</title>
-  <meta name="description" content="${city.metaDescription || `Selling your home in ${city.name}? Save thousands with TD Realty Ohio's 1% listing commission. ${formatPrice(city.medianPrice)} median home price, ${city.daysOnMarket} days average on market.`}">
+  <title>${city.name}, OH Homes | full-service listing representation | TD Realty Ohio</title>
+  <meta name="description" content="${city.metaDescription || `Selling your home in ${city.name}? Save thousands with TD Realty Ohio's full-service listing representation commission. ${formatPrice(city.medianPrice)} median home price, ${city.daysOnMarket} days average on market.`}">
   <meta name="keywords" content="sell home ${city.name} Ohio, ${city.name} real estate agent, 1 percent commission ${city.name}, ${city.name} listing agent">
 
   <link rel="canonical" href="https://tdrealtyohio.com/areas/${city.slug}/">
   <meta property="article:modified_time" content="${new Date().toISOString().split('T')[0]}">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Sell Your Home in ${city.name}, Ohio | Save with 1% Commission">
-  <meta property="og:description" content="Full-service real estate in ${city.name} at 1% listing commission. Save ${formatSavings(city.medianPrice)} on the median ${formatPrice(city.medianPrice)} home.">
+  <meta property="og:title" content="Sell Your Home in ${city.name}, Ohio | Save with full-service representation">
+  <meta property="og:description" content="Full-service real estate in ${city.name} at full-service listing representation commission. Save ${formatSavings(city.medianPrice)} on the median ${formatPrice(city.medianPrice)} home.">
   <meta property="og:url" content="https://tdrealtyohio.com/areas/${city.slug}/">
   <meta property="og:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Sell Your Home in ${city.name}, Ohio | 1% Commission">
-  <meta name="twitter:description" content="Full-service real estate in ${city.name} at 1% listing commission. Save ${formatSavings(city.medianPrice)} on the median home.">
+  <meta name="twitter:title" content="Sell Your Home in ${city.name}, Ohio | full-service representation">
+  <meta name="twitter:description" content="Full-service real estate in ${city.name} at full-service listing representation commission. Save ${formatSavings(city.medianPrice)} on the median home.">
   <meta name="twitter:image" content="https://tdrealtyohio.com/assets/images/og-default.jpg">
 
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -653,7 +653,7 @@ function generateCityPage(city) {
     "@type": "RealEstateAgent",
     "@id": "https://tdrealtyohio.com/#realestateagent",
     "name": "TD Realty Ohio, LLC",
-    "description": "Full-service real estate agent serving ${city.name}, Ohio with 1% listing commission.",
+    "description": "Full-service real estate agent serving ${city.name}, Ohio with full-service listing representation commission.",
     "url": "https://tdrealtyohio.com/areas/${city.slug}/",
     "telephone": "(614) 392-8858",
     "email": "info@tdrealtyohio.com",
@@ -687,7 +687,7 @@ function generateCityPage(city) {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "1-2% Commission Real Estate in ${city.name}",
-    "description": "Full-service home listing in ${city.name}, Ohio at 1% commission (sell + buy) or 2% (sell only). Includes MLS, pro photos, seller preparation.",
+    "description": "Full-service home listing in ${city.name}, Ohio at full-service representation (sell + buy) or 2% (sell only). Includes MLS, pro photos, seller preparation.",
     "provider": {
       "@type": "RealEstateAgent",
       "@id": "https://tdrealtyohio.com/#realestateagent",
@@ -749,8 +749,8 @@ ${city.faqs.map(faq => `      {
       <a href="/" class="logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></a>
       <nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
-        <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
-        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
+        <a href="/sellers/" class="nav-link">full-service listing representation</a>
+        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">buyer representation (First-Time Buyers)</a></div></div>
         <a href="/sellers/" class="nav-link">Seller Preparation</a>
         <a href="/home-value/" class="nav-link">Home Value</a>
         <a href="/affordability/" class="nav-link">Affordability</a>
@@ -777,7 +777,7 @@ ${city.faqs.map(faq => `      {
         </nav>
         <div class="hero-content">
           <h1 class="hero-title">Sell Your Home in ${city.name}, Ohio</h1>
-          <p class="hero-subtitle">Full-service real estate at 1% listing commission. Save up to ${formatSavings(city.medianPrice)} on the median ${city.name} home.</p>
+          <p class="hero-subtitle">Full-service real estate at full-service listing representation commission. Save up to ${formatSavings(city.medianPrice)} on the median ${city.name} home.</p>
         </div>
       </div>
     </section>
@@ -807,7 +807,7 @@ ${city.faqs.map(faq => `      {
         <div class="savings-card">
           <p style="font-size: 1.125rem; opacity: 0.9;">At the ${formatPrice(city.medianPrice)} median home price, you could save:</p>
           <div class="savings-amount">${formatSavings(city.medianPrice)}</div>
-          <p style="opacity: 0.8; margin-bottom: 1.5rem;">with our 1% listing commission vs. traditional 3%</p>
+          <p style="opacity: 0.8; margin-bottom: 1.5rem;">with our full-service listing representation commission vs. traditional 3%</p>
           <a href="/sellers/" class="btn btn-gold btn-lg">Calculate Your Savings</a>
         </div>
 
@@ -844,9 +844,9 @@ ${city.faqs.map(faq => `      {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             Free Home Value
           </a>
-          <a href="/1-percent-commission/" class="internal-link">
+          <a href="/sellers/" class="internal-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            1% Commission Details
+            full-service representation Details
           </a>
           <a href="/sellers/" class="internal-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -884,7 +884,7 @@ ${generateFaqSection(city)}
       <div class="footer-main">
         <div class="footer-brand">
           <div class="footer-logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></div>
-          <p>Full-service real estate. Lower commission.</p>
+          <p>Full-service real estate. full-service representation.</p>
         </div>
         <div>
           <h3 class="footer-title">Services</h3>

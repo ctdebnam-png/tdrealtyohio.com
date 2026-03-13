@@ -54,7 +54,7 @@ POSITION_BAND_SCORES = [
 MONEY_PAGE_PREFIXES = (
     "/sellers/",
     "/buyers/",
-    "/1-percent-commission/",
+    "/sellers/",
     "/home-value/",
     "/sellers/",
     "/compare/",
@@ -64,7 +64,7 @@ MONEY_PAGE_PREFIXES = (
 CONVERSION_ASSIST_PREFIX_WEIGHTS = {
     "/contact/": 1.0,
     "/home-value/": 0.95,
-    "/1-percent-commission/": 0.9,
+    "/sellers/": 0.9,
     "/sellers/": 0.85,
     "/buyers/": 0.85,
     "/sellers/": 0.8,
@@ -76,7 +76,7 @@ CONVERSION_ASSIST_PREFIX_WEIGHTS = {
 INTERNAL_LINK_TARGETS = {
     "/sellers/": "Sell Your Home",
     "/buyers/": "Buy a Home",
-    "/1-percent-commission/": "1% Commission Details",
+    "/sellers/": "full-service representation Details",
     "/sellers/": "Free Seller Preparation",
     "/home-value/": "Get a Free Home Value Estimate",
     "/areas/": "Service Areas",
@@ -408,7 +408,7 @@ def _build_candidate_variant(current_title: str | None, current_meta: str | None
     if current_meta:
         variant_meta = current_meta
     else:
-        variant_meta = f"Explore {top_query} with full-service support and lower commissions in Central Ohio."
+        variant_meta = f"Explore {top_query} with full-service support and full-service representations in Central Ohio."
 
     if top_query.lower() not in variant_meta.lower():
         appended = f" Learn about {top_query} and next steps today."
@@ -945,10 +945,10 @@ def _improve_meta_desc(html: str, suggestion: dict, queries: list[dict]) -> str:
         # Insert meta description after the <title> tag
         # Build a generic but accurate description
         path_hint = suggestion.get("current", "")
-        desc = "Full-service Central Ohio real estate with lower commissions. Contact us today for details."
+        desc = "Full-service Central Ohio real estate with full-service representations. Contact us today for details."
         if queries:
             top_q = queries[0]["query"]
-            desc = f"Learn about {top_q}. Full-service Central Ohio real estate with lower commissions."
+            desc = f"Learn about {top_q}. Full-service Central Ohio real estate with full-service representations."
             if len(desc) > 155:
                 desc = desc[:152].rsplit(" ", 1)[0] + "..."
 

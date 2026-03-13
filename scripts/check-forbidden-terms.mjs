@@ -17,8 +17,8 @@ const TERM_RULES = [
   { name: '2%', regex: /2%/i },
   { name: '3%', regex: /3%/i },
   { name: 'percent', regex: /\bpercent\b/i },
-  { name: 'cash back', regex: /cash\s*back/i },
-  { name: 'cashback', regex: /\bcashback\b/i },
+  { name: 'buyer support', regex: /cash\s*back/i },
+  { name: 'buyer support', regex: /\bbuyer support\b/i },
   { name: 'savings', regex: /\bsavings?\b/i },
   { name: 'save', regex: /\bsave\b/i },
   { name: 'difference', regex: /\bdifference\b/i },
@@ -35,7 +35,7 @@ for (const file of FILES) {
   const content = await readFile(file, 'utf8');
   const lines = content.split(/\r?\n/);
   lines.forEach((line, idx) => {
-    if (file === '_redirects' && /1-percent-commission|sell-only-2-percent|buy\/cash-back/.test(line)) return;
+    if (file === '_redirects' && /sellers|sell-only-2-percent|buy\/cash-back/.test(line)) return;
     for (const rule of TERM_RULES) {
       if (rule.regex.test(line)) failures.push(`${file}:${idx + 1} forbidden term "${rule.name}"`);
     }

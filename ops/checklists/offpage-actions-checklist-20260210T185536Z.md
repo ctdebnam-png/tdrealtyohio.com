@@ -7,7 +7,7 @@ Mark each checkbox complete and copy completion updates into `ops/logs/offpage/*
 
 ## 1. /areas/westerville/
 - City cluster: /areas/westerville/
-- Primary service angle: 1% listing + move-up sellers
+- Primary service angle: full-service listing representation + move-up sellers
 - GBP post/topic alignment: Westerville seller savings case study and seller preparation offer
 - Citation consistency checks: Google Business Profile NAP; Bing Places + Apple Maps listings; Top Columbus-area directories with Westerville service mention
 - Review-generation prompt: Ask recent Westerville sellers to mention pricing strategy, savings vs 3% listing, and inspection prep support.
@@ -49,7 +49,7 @@ Mark each checkbox complete and copy completion updates into `ops/logs/offpage/*
 - Primary service angle: high-volume buyer + seller coverage
 - GBP post/topic alignment: Columbus neighborhoods market update and first-time buyer rebate message
 - Citation consistency checks: Core aggregators (Foursquare/Localeze/Data Axle); Brokerage and lead portal profiles; Brand + phone consistency across all citations
-- Review-generation prompt: Request reviews that mention first-time buyer support, 1% listing economics, and responsiveness across Columbus neighborhoods.
+- Review-generation prompt: Request reviews that mention first-time buyer support, full-service listing representation economics, and responsiveness across Columbus neighborhoods.
 - Local partnership/link opportunities: Columbus neighborhood associations; Community nonprofits and sponsorship pages; Local employer relocation resources
 
 - [ ] Publish GBP post and link to this URL

@@ -11,7 +11,7 @@ Generated: 2026-02-10T18:56:59.688Z
 ## Newly Added URLs Requiring Classification Before Sitemap Inclusion
 
 - /
-- /1-percent-commission/
+- /sellers/
 - /404/
 - /about/
 - /affordability/

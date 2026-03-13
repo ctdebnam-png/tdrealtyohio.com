@@ -21,7 +21,7 @@ const { test, expect } = require('@playwright/test');
 const KEY_ROUTES = [
   { path: '/', name: 'homepage' },
   { path: '/sellers/', name: 'sellers' },
-  { path: '/1-percent-commission/', name: '1-percent-commission' },
+  { path: '/sellers/', name: 'sellers' },
   { path: '/buyers/', name: 'buyers' },
   { path: '/sellers/', name: 'seller-inspection' },
   { path: '/home-value/', name: 'home-value' },
@@ -181,9 +181,9 @@ test.describe('Calculator Interaction Tests', () => {
     const buyerPanel = page.locator('#buyer-calc-content');
     await expect(buyerPanel).toBeVisible();
 
-    // Check cash back display
-    const cashBackDisplay = buyerPanel.locator('[data-cash-back]');
-    await expect(cashBackDisplay).toContainText('$4,000');
+    // Check buyer support display
+    const buyer supportDisplay = buyerPanel.locator('[data-cash-back]');
+    await expect(buyer supportDisplay).toContainText('$4,000');
   });
 });
 

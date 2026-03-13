@@ -48,11 +48,11 @@ function getInternalLinks(keyword, city) {
   // Hub links
   if (keyword.includes('sell') || keyword.includes('seller') || keyword.includes('listing')) {
     links.push({ text: 'selling your home', url: '/sellers/' });
-    links.push({ text: '1% listing commission', url: '/1-percent-commission/' });
+    links.push({ text: 'full-service listing representation commission', url: '/sellers/' });
   }
   if (keyword.includes('buy') || keyword.includes('buyer') || keyword.includes('first time')) {
     links.push({ text: 'buying a home', url: '/buyers/' });
-    links.push({ text: '1% cash back program', url: '/buyers/' });
+    links.push({ text: 'buyer representation program', url: '/buyers/' });
   }
 
   // City links
@@ -78,18 +78,18 @@ function generateFAQBlock(keyword) {
 
   if (keyword.includes('sell') || keyword.includes('listing')) {
     faqs.push({
-      q: 'What does a 1% listing commission include?',
+      q: 'What does a full-service listing representation commission include?',
       a: 'Full MLS listing, professional photography, pricing strategy, negotiation, and closing support. The only difference is the fee — service is the same.',
     });
     faqs.push({
-      q: 'How much can I save with a 1% commission?',
+      q: 'How much can I save with a full-service representation?',
       a: 'On a $400,000 home, you save $8,000 compared to a traditional 3% listing fee. Use our commission calculator for your specific price.',
     });
   }
 
   if (keyword.includes('buy') || keyword.includes('first time')) {
     faqs.push({
-      q: 'How does the 1% cash back program work?',
+      q: 'How does the buyer representation program work?',
       a: 'First-time homebuyers receive 1% of the purchase price back at closing, subject to lender approval. This can be applied toward closing costs.',
     });
   }

@@ -25,7 +25,7 @@
     "sellers-1-percent": {
       "campaign": "Sellers Columbus Metro",
       "matchType": "phrase",
-      "landingPage": "https://tdrealtyohio.com/1-percent-commission/",
+      "landingPage": "https://tdrealtyohio.com/sellers/",
       "intent": "seller",
       "expectedIntent": "seller"
     },

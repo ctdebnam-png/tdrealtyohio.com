@@ -26,7 +26,7 @@
     "listing_comparison": {
       "terms": [
         "flat fee mls vs full service",
-        "discount broker vs full service",
+        "brokerage model vs full service",
         "1 percent vs 3 percent commission"
       ]
     },
@@ -70,7 +70,7 @@
         "area_pages"
       ]
     },
-    "/1-percent-commission/": {
+    "/sellers/": {
       "group": "commission_offer",
       "priority": 110,
       "primary_cluster": "one_percent_commission",

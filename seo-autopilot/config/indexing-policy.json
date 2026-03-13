@@ -80,7 +80,7 @@
         "/compare/"
       ],
       "patterns": [
-        "^/compare/(?:[a-z0-9-]+-vs-[a-z0-9-]+|discount-broker-vs-full-service|1-percent-vs-3-percent|flat-fee-mls-vs-full-service|fsbo-vs-1-percent-listing)/$"
+        "^/compare/(?:[a-z0-9-]+-vs-[a-z0-9-]+|discount-broker-vs-full-service|1-percent-vs-3-percent|flat-fee-mls-vs-full-service|fsbo-vs-full-service-listing)/$"
       ],
       "canonicalTarget": "/compare/"
     },

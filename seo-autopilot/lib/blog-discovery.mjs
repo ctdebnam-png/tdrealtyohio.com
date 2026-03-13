@@ -120,7 +120,7 @@ function inferTopic(tags, title, description) {
     description,
   ].join(' ').toLowerCase();
 
-  if (text.includes('buyer') || text.includes('buying') || text.includes('homebuyer') || text.includes('cash back')) {
+  if (text.includes('buyer') || text.includes('buying') || text.includes('homebuyer') || text.includes('buyer support')) {
     return 'buyer';
   }
   if (text.includes('agent') || text.includes('brokerage') || text.includes('commission split')) {

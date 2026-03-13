@@ -27,7 +27,7 @@ function loadTemplate() {
   } catch {
     return {
       requiredBlocks: ['Snapshot', 'Housing patterns', 'Commute and access', 'What affects price', 'Buying and selling considerations', 'FAQ'],
-      internalLinks: { alwaysInclude: ['/areas/', '/contact/'], conditional: [{ when: 'sellerIntent', include: ['/sellers/', '/1-percent-commission/'] }] },
+      internalLinks: { alwaysInclude: ['/areas/', '/contact/'], conditional: [{ when: 'sellerIntent', include: ['/sellers/', '/sellers/'] }] },
     };
   }
 }
@@ -164,7 +164,7 @@ function generateAreaBlocks(areaName, blocks, pillarLinks, maxWordsAdd) {
     '/contact/': 'Contact Us',
     '/sellers/': 'Seller Services',
     '/buyers/': 'Buyer Programs',
-    '/1-percent-commission/': '1% Commission Listing',
+    '/sellers/': 'full-service representation Listing',
   };
 
   sections.push(`    <section class="section" style="padding-top: 2rem;">`);

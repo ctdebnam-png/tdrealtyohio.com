@@ -24,7 +24,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const BLOCK_TARGETS = {
   'pricing-summary': [
     'sellers/index.html',
-    '1-percent-commission/index.html',
+    'sellers/index.html',
   ],
 };
 

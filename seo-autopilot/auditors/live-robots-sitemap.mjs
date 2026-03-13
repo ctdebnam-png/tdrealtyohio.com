@@ -133,7 +133,7 @@ export async function auditLiveRobotsSitemap() {
     }
 
     // Check that at least some rank-intent routes are in the sitemap
-    const liveCheckRoutes = ['/sellers/', '/buyers/', '/1-percent-commission/', '/areas/', '/blog/', '/about/', '/contact/'];
+    const liveCheckRoutes = ['/sellers/', '/buyers/', '/sellers/', '/areas/', '/blog/', '/about/', '/contact/'];
     let matchedRoutes = 0;
     for (const route of liveCheckRoutes) {
       const fullUrl = baseUrl + route;

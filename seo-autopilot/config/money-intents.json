@@ -12,7 +12,7 @@
       { "bucketId": "process", "hintQueries": ["steps", "timeline", "offer", "inspection"] }
     ]
   },
-  "/1-percent-commission/": {
+  "/sellers/": {
     "intentBuckets": [
       { "bucketId": "how-it-works", "hintQueries": ["how does", "commission", "listing fee"] },
       { "bucketId": "comparison", "hintQueries": ["vs", "traditional", "3 percent"] }

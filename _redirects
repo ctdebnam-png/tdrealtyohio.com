@@ -1,20 +1,5 @@
-# ========================================
-# TD Realty Ohio - URL Canonicalization
-# ========================================
-
-# Host canonicalization: www to non-www
-# (Cloudflare Pages handles this at the edge)
 https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 
-# Canonical URL strategy:
-# - Clean routes with trailing slashes (e.g., /sellers/) are canonical
-# - .html URLs redirect to clean routes (301)
-# - Non-trailing-slash URLs redirect to trailing-slash canonical (301)
-# - Directories use trailing slash (e.g., /areas/, /blog/)
-
-# ----------------------------------------
-# Redirect non-trailing-slash to trailing-slash canonical
-# ----------------------------------------
 /sellers                /sellers/               301
 /buyers                 /buyers/                301
 /contact                /contact/               301
@@ -23,40 +8,8 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /terms                  /terms/                 301
 /fair-housing           /fair-housing/          301
 /agents                 /agents/                301
-/referrals              /referrals/             301
-/home-value             /home-value/            301
-/affordability          /affordability/         301
-/sitemap-page           /sitemap-page/          301
-/1-percent-commission   /sellers/               301
-/1-percent-commission/  /sellers/               301
-/1-percent-commission.html /sellers/            301
-/sell-only-2-percent         /sellers/          301
-/sell-only-2-percent/        /sellers/          301
-/buy/cash-back               /buyers/           301
-/buy/cash-back/              /buyers/           301
 /areas                  /areas/                 301
-/blog                   /blog/                  301
-/testimonials           /                       301
-/testimonials/          /                       301
-/compare                /sellers/               301
-/compare/*              /sellers/               301
-/sell-and-buy           /sellers/               301
-/sell-and-buy/          /sellers/               301
-/lp/*                   /                       301
-/faq                    /faq/                   301
-/reviews                /reviews/               301
-/credentials            /credentials/           301
-/tools/seller-net-proceeds /tools/seller-net-proceeds/ 301
-/tools/buyer-closing-costs /tools/buyer-closing-costs/ 301
-/sell/net-sheet         /sell/net-sheet/         301
-/sell/pricing-call      /sell/pricing-call/      301
-/sell/timeline          /sell/timeline/          301
-/buy/pre-approval       /buy/pre-approval/       301
-/buy/consult            /buy/consult/            301
 
-# ----------------------------------------
-# Redirect .html URLs to clean routes (SEO)
-# ----------------------------------------
 /index.html             /                       301
 /sellers.html           /sellers/               301
 /buyers.html            /buyers/                301
@@ -66,33 +19,22 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /terms.html             /terms/                 301
 /fair-housing.html      /fair-housing/          301
 /agents.html            /agents/                301
-/referrals.html         /referrals/             301
-/home-value.html        /home-value/            301
-/affordability.html     /affordability/         301
-/sitemap-page.html      /sitemap-page/          301
-/testimonials.html      /                       301
-/compare.html           /sellers/               301
-/faq.html               /faq/                   301
-/sell-only-2-percent.html /sellers/              301
-/reviews.html           /reviews/               301
-/credentials.html       /credentials/           301
 
-# ----------------------------------------
-# Legacy route redirects
-# ----------------------------------------
-/agent-opportunities    /agents/                301
-/agent-opportunities/   /agents/                301
+# Legacy promotional and tooling pages redirected to core pages
+/sellers*          /sellers/       301
+/sell-only-2-percent*           /sellers/       301
+/sell-and-buy*                  /sellers/       301
+/compare*                       /sellers/       301
+/home-value*                    /sellers/       301
+/referrals*                     /contact/       301
+/careers*                       /agents/        301
+/credentials*                   /about/         301
+/faq*                           /contact/       301
+/reviews*                       /about/         301
+/lp/*                           /               301
 
-# ----------------------------------------
-# City landing pages
-# ----------------------------------------
-# Redirect cities without dedicated pages to main areas page
-/blog/selling-home-westerville-ohio-2025/*  /blog/selling-home-westerville-ohio-2026/:splat  301
-
-/areas/galena/          /areas/                 301
-/areas/galena/*         /areas/                 301
-
-/tools/seller-net-proceeds/   /sellers/               301
-/tools/buyer-closing-costs/   /buyers/                301
-/tools/repair-vs-credit/      /sellers/               301
-/tools/sell-now-vs-wait/      /sellers/               301
+/sell/*                         /sellers/       301
+/buy/*                          /buyers/        301
+/tools/*                        /contact/       301
+/areas/*                        /areas/         301
+/blog/why-agents-leaving-traditional-brokerages-100-commission/ /agents/ 301

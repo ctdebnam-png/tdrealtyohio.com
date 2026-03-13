@@ -398,7 +398,7 @@ ${faqItems.map(f => `            <div class="faq-item">
             <span class="logo-mark">TD</span>
             <span>Realty Ohio</span>
           </div>
-          <p>Full-service real estate. Lower commission.</p>
+          <p>Full-service real estate. full-service representation.</p>
         </div>
 
         <div>
@@ -510,7 +510,7 @@ function generateArticleSections(sections, topic, internalLinksTo, rankIntentRou
   const pathLabels = {
     '/sellers/': 'seller services',
     '/buyers/': 'buyer programs',
-    '/1-percent-commission/': '1% commission listing',
+    '/sellers/': 'full-service representation listing',
     '/contact/': 'contact page',
     '/areas/': 'service areas',
     '/sellers/': 'seller preparation',
@@ -616,7 +616,7 @@ function generateSectionContent(sectionName, primaryHint, intent, topic) {
     lines.push(``);
     lines.push(`          <p>Each option comes with its own set of trade-offs in terms of cost, service level, convenience, and risk. The right choice depends on your specific circumstances, including your local market conditions, your experience with real estate transactions, and how much hands-on involvement you want in the process.</p>`);
     lines.push(``);
-    lines.push(`          <p>We recommend evaluating each option based on your total costs (not just the commission rate), the services included, and the agent's track record in your specific market area. A lower commission does not have to mean less service when you work with the right brokerage.</p>`);
+    lines.push(`          <p>We recommend evaluating each option based on your total costs (not just the commission rate), the services included, and the agent's track record in your specific market area. A full-service representation does not have to mean less service when you work with the right brokerage.</p>`);
   } else {
     // Generic section content
     lines.push(`          <p>${escHtml(sectionName)} is an important consideration when dealing with ${primaryHint} in the Central Ohio real estate market. Local practices and regulations can differ from other parts of the state, so understanding how this works in the Columbus metro area is valuable.</p>`);
@@ -648,7 +648,7 @@ function generateFaqItems(topic, primaryHint) {
     },
     {
       question: `How much can I save by working with a low-commission agent?`,
-      answer: `TD Realty Ohio charges 1-2% listing commission instead of the traditional 3%. On a typical Columbus-area home, this can save you thousands of dollars. For example, on a $350,000 home, the difference between a 3% and 1% listing commission is $7,000 in additional net proceeds.`,
+      answer: `TD Realty Ohio charges 1-2% listing commission instead of the traditional 3%. On a typical Columbus-area home, this can save you thousands of dollars. For example, on a $350,000 home, the difference between a 3% and full-service listing representation commission is $7,000 in additional net proceeds.`,
     },
     {
       question: `What areas does TD Realty Ohio serve?`,

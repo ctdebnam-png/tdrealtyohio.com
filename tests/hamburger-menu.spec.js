@@ -17,7 +17,7 @@ const { test, expect } = require('@playwright/test');
 const TARGET_ROUTES = [
   '/',
   '/sellers/',
-  '/1-percent-commission/',
+  '/sellers/',
   '/buyers/',
   '/sellers/',
   '/home-value/',
@@ -33,7 +33,7 @@ const EXPECTED_GROUPS = ['Sell', 'Buy', 'Learn'];
 
 const EXPECTED_SELL_LINKS = [
   { label: 'Sell Your Home', href: '/sellers/' },
-  { label: '1% Listing Fee', href: '/sellers/#full-service' },
+  { label: 'full-service listing representation Fee', href: '/sellers/#full-service' },
 ];
 
 const EXPECTED_BUY_LINKS = [

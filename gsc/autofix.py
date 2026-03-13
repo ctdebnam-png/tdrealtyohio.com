@@ -499,7 +499,7 @@ def fix_internal_link_equity(dry_run: bool, result: FixResult):
     key_pages = {
         "/sellers/": "Selling Your Home",
         "/buyers/": "Buying a Home",
-        "/1-percent-commission/": "1% Commission",
+        "/sellers/": "full-service representation",
         "/sellers/": "Free Seller Preparation",
         "/home-value/": "Free Home Value Estimate",
         "/compare/": "Compare Options",
@@ -687,7 +687,7 @@ def _all_page_paths() -> list[Path]:
                      "about/index.html", "contact/index.html",
                      "agents/index.html",
                      "faq/index.html", "referrals/index.html",
-                     "1-percent-commission/index.html",
+                     "sellers/index.html",
                      "seller-inspection/index.html",
                      "home-value/index.html", "affordability/index.html",
                      "sell-and-buy/index.html",

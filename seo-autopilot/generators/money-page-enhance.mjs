@@ -105,8 +105,8 @@ function buildContentBlock(blockConfig, intents, routePath) {
   if (routePath !== '/sellers/' && routePath !== '/buyers/') {
     links.push({ href: '/sellers/', text: 'Learn about selling' });
   }
-  if (routePath !== '/1-percent-commission/' && links.length < 3) {
-    links.push({ href: '/1-percent-commission/', text: 'See our commission structure' });
+  if (routePath !== '/sellers/' && links.length < 3) {
+    links.push({ href: '/sellers/', text: 'See our commission structure' });
   }
 
   if (links.length > 0) {

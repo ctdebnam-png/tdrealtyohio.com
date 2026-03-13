@@ -33,7 +33,7 @@ const ROUTE_INTENT_WEIGHTS = {
 const CONVERSION_ASSIST_WEIGHTS = [
   ['/contact/', 1.0],
   ['/home-value/', 0.95],
-  ['/1-percent-commission/', 0.9],
+  ['/sellers/', 0.9],
   ['/sellers/', 0.85],
   ['/buyers/', 0.85],
   ['/sellers/', 0.8],

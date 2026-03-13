@@ -15,7 +15,7 @@
   "internalLinks": {
     "alwaysInclude": ["/areas/", "/contact/"],
     "conditional": [
-      { "when": "sellerIntent", "include": ["/sellers/", "/1-percent-commission/"] },
+      { "when": "sellerIntent", "include": ["/sellers/", "/sellers/"] },
       { "when": "buyerIntent", "include": ["/buyers/"] }
     ]
   }
