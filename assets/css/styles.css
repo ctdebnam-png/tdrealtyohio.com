@@ -8974,11 +8974,6 @@ img, video, iframe, svg:not(.logo svg) {
     background-position: center 30%;
   }
 }
-/* Hero overlay must never be fully opaque */
-.hero::before {
-  opacity: 0.7;
-}
-
 /* ── 17. Accordion Accessibility ── */
 .faq-question,
 .process-step-header,
@@ -9789,6 +9784,15 @@ details.td-details--flush .td-details-body {
   color: var(--white);
 }
 
+.home-hero::before {
+  opacity: 1;
+}
+
+.home-hero-copy {
+  position: relative;
+  z-index: 3;
+}
+
 .home-hero-layout {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -9827,6 +9831,10 @@ details.td-details--flush .td-details-body {
   margin-top: 1.5rem;
 }
 
+.home-hero .btn + .btn {
+  margin-top: 0;
+}
+
 .home-hero-panel {
   background: rgba(15, 28, 42, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -9836,7 +9844,7 @@ details.td-details--flush .td-details-body {
 }
 
 .home-hero .hero-tertiary-link {
-  color: rgba(255, 255, 255, 0.84);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .home-hero .hero-tertiary-link:hover,
