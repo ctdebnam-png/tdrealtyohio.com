@@ -22,7 +22,7 @@ const COMPARISONS = [
     title: '1% vs 3% Listing Commission',
     targetKeywords: [
       '1 percent vs 3 percent commission',
-      '1% listing fee worth it',
+      'full-service listing representation fee worth it',
       'low commission realtor comparison',
     ],
     uniqueAngle: 'Direct cost comparison with service parity proof',
@@ -39,20 +39,20 @@ const COMPARISONS = [
   },
   {
     slug: 'discount-broker-vs-full-service',
-    title: 'Discount Broker vs Full Service Agent',
+    title: 'brokerage model vs Full Service Agent',
     targetKeywords: [
-      'discount broker vs full service',
+      'brokerage model vs full service',
       'low commission realtor Columbus',
       'discount real estate agent Ohio',
     ],
     uniqueAngle: 'Three-tier comparison showing TD Realty as the middle ground',
     suggestedFaqs: [
       {
-        q: 'What services do discount brokers typically cut?',
-        a: 'Most discount brokers reduce or eliminate professional photography, showing coordination, and hands-on negotiation support. Some provide MLS access only with no agent involvement after listing. TD Realty Ohio maintains all full-service components while reducing commission through business efficiency.',
+        q: 'What services do brokerage models typically cut?',
+        a: 'Most brokerage models reduce or eliminate professional photography, showing coordination, and hands-on negotiation support. Some provide MLS access only with no agent involvement after listing. TD Realty Ohio maintains all full-service components while reducing commission through business efficiency.',
       },
       {
-        q: 'How do I know if a discount broker is legitimate?',
+        q: 'How do I know if a brokerage model is legitimate?',
         a: 'Verify their Ohio real estate license, check reviews on Google and Zillow, and ask for a detailed list of services included. A legitimate low-commission agent should be transparent about exactly what you receive.',
       },
     ],
@@ -145,7 +145,7 @@ const SEO_IMPROVEMENTS = {
     },
     {
       area: 'Meta description',
-      suggestion: 'Add a dollar-savings hook: "Save $8,000+ on a $400K home with a 1% listing agent. See the full comparison."',
+      suggestion: 'Add a dollar-savings hook: "Save $8,000+ on a $400K home with a full-service listing representation agent. See the full comparison."',
     },
     {
       area: 'Schema markup',
@@ -167,11 +167,11 @@ const SEO_IMPROVEMENTS = {
   'discount-broker-vs-full-service': [
     {
       area: 'Title tag',
-      suggestion: 'Use "Discount Broker vs Full Service Agent in Columbus, Ohio | Honest Comparison"',
+      suggestion: 'Use "brokerage model vs Full Service Agent in Columbus, Ohio | Honest Comparison"',
     },
     {
       area: 'Meta description',
-      suggestion: 'Emphasize the three-tier angle: "Not all discount brokers are the same. Compare stripped-down, traditional, and efficiency-model agents."',
+      suggestion: 'Emphasize the three-tier angle: "Not all brokerage models are the same. Compare stripped-down, traditional, and efficiency-model agents."',
     },
     {
       area: 'Schema markup',
@@ -179,7 +179,7 @@ const SEO_IMPROVEMENTS = {
     },
     {
       area: 'Content depth',
-      suggestion: 'Include a named comparison of common discount brokers in Ohio (Houzeo, ISoldMyHouse, etc.) without being defamatory—focus on service model differences.',
+      suggestion: 'Include a named comparison of common brokerage models in Ohio (Houzeo, ISoldMyHouse, etc.) without being defamatory—focus on service model differences.',
     },
     {
       area: 'E-E-A-T signals',
@@ -224,7 +224,7 @@ const SEO_IMPROVEMENTS = {
 
 const INTERNAL_LINKS = {
   '1-percent-vs-3-percent': [
-    { anchorText: '1% listing agent in Columbus', target: '/' },
+    { anchorText: 'full-service listing representation agent in Columbus', target: '/' },
     { anchorText: 'see what full service includes', target: '/compare/discount-broker-vs-full-service/' },
     { anchorText: 'flat fee MLS comparison', target: '/compare/flat-fee-mls-vs-full-service/' },
     { anchorText: 'Columbus home selling guide', target: '/areas/columbus/' },
@@ -244,8 +244,8 @@ const INTERNAL_LINKS = {
   ],
   'flat-fee-mls-vs-full-service': [
     { anchorText: 'compare 1% vs 3% commission', target: '/compare/1-percent-vs-3-percent/' },
-    { anchorText: 'discount broker comparison', target: '/compare/discount-broker-vs-full-service/' },
-    { anchorText: 'full-service 1% listing', target: '/' },
+    { anchorText: 'brokerage model comparison', target: '/compare/discount-broker-vs-full-service/' },
+    { anchorText: 'full-service full-service listing representation', target: '/' },
     { anchorText: 'New Albany real estate', target: '/areas/new-albany/' },
     { anchorText: 'Hilliard home sellers', target: '/areas/hilliard/' },
     { anchorText: 'contact TD Realty Ohio', target: '/contact/' },
@@ -260,7 +260,7 @@ const INTERNAL_LINKS = {
 const ADDITIONAL_FAQS = {
   '1-percent-vs-3-percent': [
     {
-      q: 'How much do I save with a 1% commission on a $400,000 home?',
+      q: 'How much do I save with a full-service representation on a $400,000 home?',
       a: 'On a $400,000 home you save $8,000 in listing commission (1% = $4,000 vs 3% = $12,000). This does not include the buyer agent commission, which is negotiated separately.',
     },
     {
@@ -268,7 +268,7 @@ const ADDITIONAL_FAQS = {
       a: 'Not at TD Realty Ohio. Our marketing package—professional photography, MLS listing, syndication to Zillow/Realtor.com/Redfin, and social media promotion—is identical regardless of commission rate.',
     },
     {
-      q: 'Is 1% commission legal in Ohio?',
+      q: 'Is full-service representation legal in Ohio?',
       a: 'Yes. Real estate commissions have always been negotiable. There is no minimum commission set by law or the MLS in Ohio.',
     },
     {
@@ -278,16 +278,16 @@ const ADDITIONAL_FAQS = {
   ],
   'discount-broker-vs-full-service': [
     {
-      q: 'What is the difference between a discount broker and a 1% agent?',
-      a: 'A discount broker typically reduces services to lower cost—fewer photos, no open houses, limited negotiation support. A 1% full-service agent like TD Realty Ohio keeps all services intact and reduces commission through operational efficiency.',
+      q: 'What is the difference between a brokerage model and a 1% agent?',
+      a: 'A brokerage model typically reduces services to lower cost—fewer photos, no open houses, limited negotiation support. A 1% full-service agent like TD Realty Ohio keeps all services intact and reduces commission through operational efficiency.',
     },
     {
-      q: 'Are discount brokers safe to use in Ohio?',
+      q: 'Are brokerage models safe to use in Ohio?',
       a: 'Any licensed Ohio real estate agent or broker is regulated by the Ohio Division of Real Estate. The key question is not safety but service level—make sure you understand exactly what is and is not included before signing a listing agreement.',
     },
     {
-      q: 'Can I switch from a discount broker to a full-service agent?',
-      a: 'Yes, but check your listing agreement for the contract term and cancellation policy. Some discount brokers lock you into 6-12 month agreements with early termination fees.',
+      q: 'Can I switch from a brokerage model to a full-service agent?',
+      a: 'Yes, but check your listing agreement for the contract term and cancellation policy. Some brokerage models lock you into 6-12 month agreements with early termination fees.',
     },
   ],
   'flat-fee-mls-vs-full-service': [
@@ -323,7 +323,7 @@ const CONTENT_GAPS = {
       'Agent interview questions to ask before choosing a commission rate',
     ],
     missingContentTypes: [
-      'Interactive savings calculator',
+      'Interactive planning tool',
       'Downloadable comparison PDF / checklist',
       'Video walkthrough of commission math',
       'Case study with real savings numbers',

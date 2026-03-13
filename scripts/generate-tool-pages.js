@@ -114,7 +114,7 @@ const TOOLS = [
     shortName: 'Closing Costs',
     intent: 'buyer',
     description: 'Estimate your total closing costs including county-specific rates.',
-    metaDescription: 'Estimate buyer closing costs for your Central Ohio home purchase. County-specific rates, itemized breakdown, and first-time buyer cash back info.',
+    metaDescription: 'Estimate buyer closing costs for your Central Ohio home purchase. County-specific rates, itemized breakdown, and first-time buyer buyer support info.',
     related: ['buyer-offer-readiness', 'move-up-plan', 'seller-net-proceeds']
   },
   {
@@ -148,8 +148,8 @@ function htmlNav(activeLink) {
       <a href="/" class="logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></a>
       <nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
-        <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
-        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
+        <a href="/sellers/" class="nav-link">full-service listing representation</a>
+        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">buyer representation (First-Time Buyers)</a></div></div>
         <a href="/tools/" class="nav-link${toolsActive}">Tools</a>
         <a href="/areas/" class="nav-link">Areas</a>
         <a href="/blog/" class="nav-link">Blog</a>
@@ -169,7 +169,7 @@ function htmlFooter() {
       <div class="footer-main">
         <div class="footer-brand">
           <div class="footer-logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></div>
-          <p>Full-service real estate. Lower commission.</p>
+          <p>Full-service real estate. full-service representation.</p>
         </div>
         <div>
           <h3 class="footer-title">Services</h3>

@@ -34,7 +34,7 @@ CONVERSION_INTENT_WEIGHTS = {
     "/home-value/": 1.45,
     "/sellers/": 1.35,
     "/buyers/": 1.25,
-    "/1-percent-commission/": 1.25,
+    "/sellers/": 1.25,
     "/compare/": 1.2,
     "/areas/": 1.05,
     "/blog/": 0.7,
@@ -50,7 +50,7 @@ LEAD_PATHS = (
 
 SITE_SECTIONS = {
     "core": [
-        "sellers", "buyers", "1-percent-commission", "seller-inspection",
+        "sellers", "buyers", "sellers", "seller-inspection",
         "home-value", "affordability", "sell-and-buy",
         "about", "contact", "agents", "faq", "referrals",
         "privacy", "terms", "fair-housing",

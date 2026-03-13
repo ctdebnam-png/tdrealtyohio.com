@@ -58,7 +58,7 @@ if (mainJs.includes('Math.max(traditional - tdRealty, 0)') || mainJs.includes('M
   errors++;
 }
 
-if (mainJs.includes('Math.max(commission - cashBack, 0)') || mainJs.includes('Math.max(agentKeeps')) {
+if (mainJs.includes('Math.max(commission - buyer support, 0)') || mainJs.includes('Math.max(agentKeeps')) {
   console.log('  Math.max(0) for buyer agentKeeps ✓');
 } else {
   console.error('FAIL: assets/js/main.js — buyer agentKeeps subtraction not guarded with Math.max(x, 0)');

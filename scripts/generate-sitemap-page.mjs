@@ -26,7 +26,7 @@ const SECTIONS = {
   ],
   'Services': [
     { path: '/sellers/', label: 'For Sellers' },
-    { path: '/1-percent-commission/', label: '1% Commission Listing' },
+    { path: '/sellers/', label: 'full-service representation Listing' },
     { path: '/sell-and-buy/', label: 'Sell & Buy Together (1%)' },
     { path: '/sell-only-2-percent/', label: 'Sell Only (2%)' },
     { path: '/buyers/', label: 'For Buyers' },
@@ -41,7 +41,7 @@ const SECTIONS = {
   'Compare': [
     { path: '/compare/', label: 'Compare Options' },
     { path: '/compare/1-percent-vs-3-percent/', label: '1% vs 3% Commission' },
-    { path: '/compare/discount-broker-vs-full-service/', label: 'Discount Broker vs Full Service' },
+    { path: '/compare/discount-broker-vs-full-service/', label: 'brokerage model vs Full Service' },
     { path: '/compare/flat-fee-mls-vs-full-service/', label: 'Flat Fee MLS vs Full Service' },
   ],
   'Legal': [

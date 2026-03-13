@@ -50,7 +50,7 @@ Use this checklist before every deploy to catch regressions.
 - [ ] `/` (Homepage)
 - [ ] `/sellers/`
 - [ ] `/buyers/`
-- [ ] `/1-percent-commission/`
+- [ ] `/sellers/`
 - [ ] `/sellers/`
 - [ ] `/home-value/`
 - [ ] `/affordability/`

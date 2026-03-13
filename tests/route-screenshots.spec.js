@@ -14,7 +14,7 @@ const { test, expect } = require('@playwright/test');
 const ROUTES = [
   { path: '/',                        name: 'homepage' },
   { path: '/sellers/',                name: 'sellers' },
-  { path: '/1-percent-commission/',   name: '1-percent-commission' },
+  { path: '/sellers/',   name: 'sellers' },
   { path: '/buyers/',                 name: 'buyers' },
   { path: '/sellers/', name: 'seller-inspection' },
   { path: '/home-value/',             name: 'home-value' },

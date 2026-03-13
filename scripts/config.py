@@ -29,10 +29,10 @@ BROKERAGE = {
     "license_broker": "2023006467",
     "license_brokerage": "2023006602",
     "value_props": [
-        "1% listing commission when you buy and sell with us",
+        "full-service listing representation commission when you buy and sell with us",
         "2% listing commission for sell-only clients",
         "Free seller home inspection with every listing",
-        "1% cashback for first-time homebuyers at closing",
+        "1% buyer support for first-time homebuyers at closing",
     ],
 }
 

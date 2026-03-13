@@ -49,6 +49,6 @@ npm run check:all    # Run all quality gate checks
 - Broker: Travis Debnam
 - Phone: (614) 392-8858
 - Location: Westerville, Ohio
-- Rates: 1% (sell+buy), 2% (sell only), 1% cash back (first-time buyers)
+- Rates: 1% (sell+buy), 2% (sell only), buyer representation (first-time buyers)
 - Broker License: #2023006467
 - Brokerage License: #2023006602

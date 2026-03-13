@@ -40,5 +40,5 @@ Generated: 2026-02-10T18:56:59.085Z
 - [ ] /compare/1-percent-vs-3-percent/ (utility-comparators) — wordCount=596, maxSimilarity=0. Canonicalize to https://tdrealtyohio.com/compare/ to align with route-level policy.
 - [ ] /compare/discount-broker-vs-full-service/ (utility-comparators) — wordCount=696, maxSimilarity=0. Canonicalize to https://tdrealtyohio.com/compare/ to align with route-level policy.
 - [ ] /compare/flat-fee-mls-vs-full-service/ (utility-comparators) — wordCount=948, maxSimilarity=0. Canonicalize to https://tdrealtyohio.com/compare/ to align with route-level policy.
-- [ ] /compare/fsbo-vs-1-percent-listing/ (utility-comparators) — wordCount=1654, maxSimilarity=0. Canonicalize to https://tdrealtyohio.com/compare/ to align with route-level policy.
+- [ ] /compare/fsbo-vs-full-service-listing/ (utility-comparators) — wordCount=1654, maxSimilarity=0. Canonicalize to https://tdrealtyohio.com/compare/ to align with route-level policy.
 - [ ] /tools/buyer-closing-costs/ (tools-family) — wordCount=198, maxSimilarity=0.909. Expand unique local content and clarify canonical/indexing intent before sitemap inclusion.

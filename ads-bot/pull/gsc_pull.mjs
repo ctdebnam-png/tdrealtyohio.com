@@ -85,9 +85,9 @@ async function pullGSC() {
 
     // Pull search analytics - query + page combos for target queries
     const targetQueries = [
-      '1 percent commission', '1% commission', 'low commission realtor',
+      '1 percent commission', 'full-service representation', 'low commission realtor',
       'sell home westerville', 'sell home columbus', 'discount real estate',
-      'flat fee mls ohio', 'first time homebuyer cash back',
+      'flat fee mls ohio', 'first time homebuyer buyer support',
     ];
 
     const queryPageResponse = await searchconsole.searchanalytics.query({

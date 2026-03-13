@@ -45,7 +45,7 @@ def call_claude(prompt: str, system_prompt: str) -> str:
 # ---------------------------------------------------------------------------
 
 MARKET_SYSTEM_PROMPT = """\
-You are a real estate market analyst writing for TD Realty Ohio, a discount brokerage \
+You are a real estate market analyst writing for TD Realty Ohio, a brokerage modelage \
 in Central Ohio. Write in a professional but approachable tone. Be specific with \
 numbers - always reference the actual data provided. Avoid generic filler phrases. \
 Focus on what the data means for real buyers and sellers in this specific community.
@@ -54,10 +54,10 @@ Do not make up statistics. Only reference data explicitly provided in the user p
 If data is missing, acknowledge the limitation.
 
 The brokerage's key differentiators:
-- 1% listing commission (vs typical 3%) when clients buy and sell
+- full-service listing representation commission (vs typical 3%) when clients buy and sell
 - 2% for sell-only transactions
 - Free seller home inspection
-- 1% cashback for first-time buyers
+- 1% buyer support for first-time buyers
 
 Mention these naturally in the CTA section, not throughout the article.
 
@@ -420,8 +420,8 @@ def _wrap_in_page(
 
       <nav class="nav" id="main-nav" aria-label="Main navigation">
         <a href="/sellers/" class="nav-link">Sellers</a>
-        <a href="/1-percent-commission/" class="nav-link">1% Listing</a>
-        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">1% Cash Back (First-Time Buyers)</a></div></div>
+        <a href="/sellers/" class="nav-link">full-service listing representation</a>
+        <div class="nav-dropdown" id="nav-buyers"><button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-controls="buyers-dropdown-menu">Buyers <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="nav-dropdown-menu" id="buyers-dropdown-menu"><a href="/buyers/" class="nav-link">Buy a Home</a><a href="/buy/cash-back/" class="nav-link">buyer representation (First-Time Buyers)</a></div></div>
         <a href="/sellers/" class="nav-link">Seller Preparation</a>
         <a href="/home-value/" class="nav-link">Home Value</a>
         <a href="/affordability/" class="nav-link">Affordability</a>
@@ -484,7 +484,7 @@ def _wrap_in_page(
             <span class="logo-mark">TD</span>
             <span>Realty Ohio</span>
           </div>
-          <p>Full-service real estate. Lower commission.</p>
+          <p>Full-service real estate. full-service representation.</p>
         </div>
 
         <div>

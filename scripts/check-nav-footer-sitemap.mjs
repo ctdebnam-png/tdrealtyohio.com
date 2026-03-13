@@ -35,8 +35,8 @@ for (const [key, group] of Object.entries(NAV_REGISTRY.groups)) {
 const SITEMAP_ALLOWED_EXTRA_LABELS = new Set([
   'Home', 'All Areas', 'All Articles',
   'Sell', 'Buy', 'Sellers', 'Buyers', 'Service Areas', 'Contact',
-  '1% Commission Listing',
-  'Compare Options', '1% vs 3% Commission', 'Discount Broker vs Full Service', 'Flat Fee MLS vs Full Service',
+  'full-service representation Listing',
+  'Compare Options', '1% vs 3% Commission', 'brokerage model vs Full Service', 'Flat Fee MLS vs Full Service',
   'Privacy Policy', 'Terms of Service', 'Fair Housing Statement',
   'Home Value Estimate', 'Seller Preparation', 'Free Home Value',
   'About', 'Blog',

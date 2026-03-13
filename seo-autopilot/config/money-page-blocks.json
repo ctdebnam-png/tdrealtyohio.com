@@ -18,11 +18,11 @@
     ],
     "schema": { "type": "FAQPage", "enabled": true }
   },
-  "/1-percent-commission/": {
+  "/sellers/": {
     "blockId": "money-commission-v1",
-    "requiredH2": ["How the 1% listing fee works", "What full service includes"],
+    "requiredH2": ["How the full-service listing representation fee works", "What full service includes"],
     "faq": [
-      { "q": "What does a 1% commission include?", "aHint": "Explain full-service scope." },
+      { "q": "What does a full-service representation include?", "aHint": "Explain full-service scope." },
       { "q": "How does this compare to a traditional 3% fee?", "aHint": "Explain savings without claims." }
     ],
     "schema": { "type": "FAQPage", "enabled": true }

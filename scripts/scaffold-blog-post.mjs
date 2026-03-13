@@ -210,7 +210,7 @@ ${internalLinks.map(l => `        <!-- ${l} -->`).join('\n')}
       <div class="footer-main">
         <div class="footer-brand">
           <div class="footer-logo"><span class="logo-mark">TD</span><span>Realty Ohio</span></div>
-          <p>Full-service real estate. Lower commission.</p>
+          <p>Full-service real estate. full-service representation.</p>
         </div>
         <div>
           <h3 class="footer-title">Services</h3>

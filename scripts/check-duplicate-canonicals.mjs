@@ -21,7 +21,7 @@ const SKIP_DIRS = new Set([
 
 // Money page paths that must NEVER have noindex
 const MONEY_PATHS = [
-  '/', '/sellers/', '/buyers/', '/1-percent-commission/', '/sell-only-2-percent/',
+  '/', '/sellers/', '/buyers/', '/sellers/', '/sell-only-2-percent/',
   '/sellers/', '/home-value/', '/affordability/', '/contact/',
   '/areas/', '/compare/', '/faq/', '/about/',
 ];

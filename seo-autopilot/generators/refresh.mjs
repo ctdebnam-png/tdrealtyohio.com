@@ -298,7 +298,7 @@ function buildInternalLinks(internalLinksTo, rankSet) {
   const pathLabels = {
     '/sellers/': 'Seller services and listing options',
     '/buyers/': 'Buyer programs and homebuying guide',
-    '/1-percent-commission/': '1% commission listing details',
+    '/sellers/': 'full-service representation listing details',
     '/contact/': 'Schedule a consultation',
     '/areas/': 'Central Ohio service areas',
     '/sellers/': 'Pre-listing inspection program',

@@ -29,7 +29,7 @@ const PRIORITY_MAP = {
   '/sellers/': '0.9',
   '/buyers/': '0.9',
   '/tools/': '0.7',
-  '/1-percent-commission/': '0.9',
+  '/sellers/': '0.9',
   '/sell-only-2-percent/': '0.9',
   '/sellers/': '0.8',
   '/contact/': '0.8',

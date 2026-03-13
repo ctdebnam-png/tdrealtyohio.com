@@ -5,7 +5,7 @@ A clean, professional real estate website for TD Realty Ohio, LLC. Built with va
 ## Features
 
 - **Low Commission Focus**: Clear presentation of 1-2% listing rates vs traditional 3%
-- **Interactive Calculators**: Real-time savings calculators for sellers and buyers
+- **Interactive Calculators**: Real-time planning tools for sellers and buyers
 - **Mobile Responsive**: Fully responsive design for all screen sizes
 - **SEO Optimized**: Meta tags, structured data (JSON-LD), and semantic HTML
 - **Single CSS/JS Files**: No competing stylesheets, easy to maintain
@@ -19,8 +19,8 @@ All pages use a clean directory structure (e.g., `/sellers/` not `sellers.html`)
 |-------|---------|
 | `/` | Homepage with hero, stats, calculator, services, areas |
 | `/sellers/` | Seller services, commission paths, process, FAQs |
-| `/buyers/` | First-time buyer cash back program, calculator |
-| `/1-percent-commission/` | 1% listing commission details |
+| `/buyers/` | First-time buyer buyer support program, calculator |
+| `/sellers/` | full-service listing representation commission details |
 | `/home-value/` | Home value estimate tool |
 | `/affordability/` | Affordability calculator |
 | `/contact/` | Contact form and information |
@@ -43,7 +43,7 @@ tdrealtyohio.com/
 ├── 404.html                # Error page
 ├── sellers/index.html      # Seller services
 ├── buyers/index.html       # Buyer services
-├── 1-percent-commission/   # Commission details
+├── sellers/   # Commission details
 ├── home-value/             # Home value tool
 ├── affordability/          # Affordability calculator
 ├── contact/                # Contact page

@@ -9,8 +9,8 @@
         "group": null
       },
       {
-        "href": "/1-percent-commission/",
-        "label": "1% Listing",
+        "href": "/sellers/",
+        "label": "full-service listing representation",
         "surface": "desktopHeader",
         "group": null
       },
@@ -65,8 +65,8 @@
         "group": null
       },
       {
-        "href": "/1-percent-commission/",
-        "label": "1% Listing",
+        "href": "/sellers/",
+        "label": "full-service listing representation",
         "surface": "mobileHamburger",
         "group": null
       },
@@ -249,8 +249,8 @@
         "group": "Services"
       },
       {
-        "href": "/1-percent-commission/",
-        "label": "1% Commission Listing",
+        "href": "/sellers/",
+        "label": "full-service representation Listing",
         "surface": "htmlSitemap",
         "group": "Services"
       },
@@ -316,7 +316,7 @@
       },
       {
         "href": "/compare/discount-broker-vs-full-service/",
-        "label": "Discount Broker vs Full Service",
+        "label": "brokerage model vs Full Service",
         "surface": "htmlSitemap",
         "group": "Compare"
       },
@@ -502,7 +502,7 @@
       },
       {
         "href": "/blog/how-much-save-selling-columbus-home-1-percent/",
-        "label": "1% Commission Savings Calculator",
+        "label": "full-service representation planning tool",
         "surface": "htmlSitemap",
         "group": "Blog"
       },
@@ -526,7 +526,7 @@
       },
       {
         "href": "/blog/first-time-homebuyer-cash-back/",
-        "label": "First-Time Homebuyers: Get 1% Cash Back",
+        "label": "First-Time Homebuyers: Get buyer representation",
         "surface": "htmlSitemap",
         "group": "Blog"
       },
@@ -556,7 +556,7 @@
       },
       {
         "href": "/blog/why-agents-leaving-traditional-brokerages-100-commission/",
-        "label": "Why Agents Are Leaving for 100% Commission",
+        "label": "Why Agents Are Leaving for independent-agent brokerage",
         "surface": "htmlSitemap",
         "group": "Blog"
       }
@@ -569,7 +569,7 @@
         "group": null
       },
       {
-        "href": "/1-percent-commission/",
+        "href": "/sellers/",
         "label": null,
         "surface": "xmlSitemap",
         "group": null

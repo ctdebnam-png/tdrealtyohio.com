@@ -1,6 +1,6 @@
-1-percent-commission/index.html:485 [expert negotiation] <p style="color: var(--gray-600);">Professional photos, MLS listing, and expert negotiation to get y
-1-percent-commission/index.html:527 [expert negotiation] <p style="line-height: 1.8; color: var(--gray-700);">Meanwhile, the services you receive are identic
-about/index.html:210 [expert negotiation] <p>Homeowners selling through TD Realty Ohio pay 1% listing commission when they sell and buy with t
+sellers/index.html:485 [expert negotiation] <p style="color: var(--gray-600);">Professional photos, MLS listing, and expert negotiation to get y
+sellers/index.html:527 [expert negotiation] <p style="line-height: 1.8; color: var(--gray-700);">Meanwhile, the services you receive are identic
+about/index.html:210 [expert negotiation] <p>Homeowners selling through TD Realty Ohio pay full-service listing representation commission when they sell and buy with t
 about/index.html:222 [expert negotiation] <li>Expert negotiation</li>
 about/index.html:286 [same full-service experience] <p>TD Realty Ohio launched in 2023 with a straightforward goal: offer the same full-service experien
 areas/grandview-heights/index.html:143 [direct access] "text": "Grandview's walkable restaurant and bar scene along Grandview Avenue rivals Short North wit
@@ -11,9 +11,9 @@ blog/closing-costs-columbus-ohio/index.html:400 [expert negotiation] <p>This is 
 blog/first-time-homebuyer-cash-back/index.html:127 [guidance through] "text": "You receive full buyer representation including property search assistance, showing coordin
 blog/first-time-homebuyer-cash-back/index.html:315 [guidance through] <li>Guidance through closing and beyond</li>
 blog/first-time-homebuyer-cash-back/index.html:370 [guidance through] <p>You receive full buyer representation including property search assistance, showing coordination,
-blog/fsbo-vs-realtor-columbus/index.html:327 [expert negotiation] <p>A <a href="/1-percent-commission/">low-commission agent charging 1-2%</a> gives you everything a 
-blog/fsbo-vs-realtor-columbus/index.html:339 [expert negotiation] <p>At 1% commission, you are paying $3,500 for full professional representation, just $500-$2,000 mo
-blog/how-much-save-selling-columbus-home-1-percent/index.html:102 [expert negotiation] "text": "TD Realty Ohio's 1% commission includes full MLS listing, professional photography, marketi
+blog/fsbo-vs-realtor-columbus/index.html:327 [expert negotiation] <p>A <a href="/sellers/">low-commission agent charging 1-2%</a> gives you everything a 
+blog/fsbo-vs-realtor-columbus/index.html:339 [expert negotiation] <p>At full-service representation, you are paying $3,500 for full professional representation, just $500-$2,000 mo
+blog/how-much-save-selling-columbus-home-1-percent/index.html:102 [expert negotiation] "text": "TD Realty Ohio's full-service representation includes full MLS listing, professional photography, marketi
 blog/how-much-save-selling-columbus-home-1-percent/index.html:289 [expert negotiation] <h3>Expert Negotiation</h3>
 blog/how-much-save-selling-columbus-home-1-percent/index.html:364 [expert negotiation] <p>Full MLS listing, professional photography, marketing on Zillow and all major sites, showing coor
 blog/selling-home-westerville-ohio-2025/index.html:258 [expert negotiation] <p>That $8,000 doesn't change your service level. You still get MLS exposure, professional photograp

@@ -4,7 +4,7 @@
  *
  * Generates new comparison pages for TD Realty Ohio that do not already exist.
  * Currently generates:
- *   - /compare/fsbo-vs-1-percent-listing/  (FSBO vs 1% Listing Agent)
+ *   - /compare/fsbo-vs-full-service-listing/  (FSBO vs full-service listing representation Agent)
  *
  * Usage:  node scripts/generate-new-compare-pages.mjs
  */
@@ -167,7 +167,7 @@ function serviceAreaLinks() {
     <section class="section" style="background: var(--gray-50);">
       <div class="container" style="max-width: 800px;">
         <h2 style="text-align: center; margin-bottom: 1rem;">Serving Sellers Across Central Ohio</h2>
-        <p style="text-align: center; color: var(--gray-600); margin-bottom: 2rem;">TD Realty Ohio provides 1% listing services throughout the Columbus metro area.</p>
+        <p style="text-align: center; color: var(--gray-600); margin-bottom: 2rem;">TD Realty Ohio provides full-service listing representation services throughout the Columbus metro area.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
           <a href="/areas/westerville/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">Westerville</a>
           <a href="/areas/new-albany/" style="padding: 0.5rem 1rem; border: 1px solid var(--gray-300); border-radius: var(--radius-md); text-decoration: none; color: var(--navy); font-weight: 500;">New Albany</a>
@@ -195,7 +195,7 @@ function footer() {
             <span class="logo-mark">TD</span>
             <span>Realty Ohio</span>
           </div>
-          <p>Full-service real estate. Lower commission.</p>
+          <p>Full-service real estate. full-service representation.</p>
         </div>
 
         <div>
@@ -289,22 +289,22 @@ function footer() {
 }
 
 // ---------------------------------------------------------------------------
-// Page 1: FSBO vs 1% Listing Agent
+// Page 1: FSBO vs full-service listing representation Agent
 // ---------------------------------------------------------------------------
 
 function generateFsboVs1Percent() {
-  const slug = 'fsbo-vs-1-percent-listing';
+  const slug = 'fsbo-vs-full-service-listing';
   const canonical = `https://tdrealtyohio.com/compare/${slug}/`;
 
   return `${headOpen({
-    title: 'FSBO vs 1% Listing Agent | TD Realty Ohio',
-    description: 'Compare selling your Ohio home FSBO (For Sale By Owner) vs using a 1% listing agent. See the real costs, risks, and price differences with math at $300K, $400K, and $500K.',
-    keywords: 'FSBO vs 1 percent listing agent, for sale by owner Ohio, FSBO vs agent price difference, sell home without realtor Columbus, 1% commission realtor Ohio',
+    title: 'FSBO vs full-service listing representation Agent | TD Realty Ohio',
+    description: 'Compare selling your Ohio home FSBO (For Sale By Owner) vs using a full-service listing representation agent. See the real costs, risks, and price differences with math at $300K, $400K, and $500K.',
+    keywords: 'FSBO vs full-service listing agent, for sale by owner Ohio, FSBO vs agent price difference, sell home without realtor Columbus, full-service representation realtor Ohio',
     canonical,
-    ogTitle: 'FSBO vs 1% Listing Agent Compared',
+    ogTitle: 'FSBO vs full-service listing representation Agent Compared',
     ogDesc: 'Is FSBO really cheaper? Compare the true costs, risks, and outcomes of selling yourself vs a 1% agent.',
-    twTitle: 'FSBO vs 1% Listing Agent | Ohio Seller Comparison',
-    twDesc: 'Compare the true costs of FSBO vs a 1% listing agent in Ohio.',
+    twTitle: 'FSBO vs full-service listing representation Agent | Ohio Seller Comparison',
+    twDesc: 'Compare the true costs of FSBO vs a full-service listing representation agent in Ohio.',
   })}
 
   <style>
@@ -411,7 +411,7 @@ function generateFsboVs1Percent() {
     }
   </style>
 
-${breadcrumbSchema('FSBO vs 1% Listing Agent', slug)}
+${breadcrumbSchema('FSBO vs full-service listing representation Agent', slug)}
 
   <script type="application/ld+json">
   {
@@ -444,10 +444,10 @@ ${breadcrumbSchema('FSBO vs 1% Listing Agent', slug)}
       },
       {
         "@type": "Question",
-        "name": "How much does a 1% listing agent charge on a $400,000 home?",
+        "name": "How much does a full-service listing representation agent charge on a $400,000 home?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A 1% listing agent charges $4,000 on a $400,000 sale. This is separate from buyer agent compensation. At TD Realty Ohio, the 1% rate applies when you are both selling and buying with the brokerage."
+          "text": "A full-service listing representation agent charges $4,000 on a $400,000 sale. This is separate from buyer agent compensation. At TD Realty Ohio, the 1% rate applies when you are both selling and buying with the brokerage."
         }
       }
     ]
@@ -464,7 +464,7 @@ ${headerNav()}
         <ol class="breadcrumb-list">
           <li><a href="/">Home</a></li>
           <li><a href="/compare/">Compare</a></li>
-          <li aria-current="page">FSBO vs 1% Listing Agent</li>
+          <li aria-current="page">FSBO vs full-service listing representation Agent</li>
         </ol>
       </div>
     </nav>
@@ -472,7 +472,7 @@ ${headerNav()}
     <section class="hero hero-sm" style="background: linear-gradient(135deg, #1a2e44 0%, #2d4a7c 100%);">
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title">FSBO vs 1% Listing Agent</h1>
+          <h1 class="hero-title">FSBO vs full-service listing representation Agent</h1>
           <p class="hero-subtitle">Is selling your Ohio home yourself really cheaper? A factual comparison of costs, responsibilities, and outcomes.</p>
         </div>
       </div>
@@ -489,7 +489,7 @@ ${headerNav()}
             <tr>
               <th>Task / Responsibility</th>
               <th>FSBO (You)</th>
-              <th class="highlight-col">1% Listing Agent</th>
+              <th class="highlight-col">full-service listing representation Agent</th>
             </tr>
           </thead>
           <tbody>
@@ -606,7 +606,7 @@ ${headerNav()}
         <h2>The Real Cost Comparison: FSBO vs 1% Agent</h2>
         <p>FSBO eliminates the listing agent commission. But the buyer's agent still expects compensation, and there are other costs FSBO sellers often overlook. Here is the math at three common Central Ohio price points.</p>
 
-        <p style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: 2rem;"><em>Assumptions: Buyer agent compensation at 2.5%. FSBO flat-fee MLS at $400. Attorney review for FSBO at $750. Professional photography for FSBO at $250. 1% listing rate applies when also buying with TD Realty Ohio; sell-only rate is 2%.</em></p>
+        <p style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: 2rem;"><em>Assumptions: Buyer agent compensation at 2.5%. FSBO flat-fee MLS at $400. Attorney review for FSBO at $750. Professional photography for FSBO at $250. full-service listing representation rate applies when also buying with TD Realty Ohio; sell-only rate is 2%.</em></p>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
 
@@ -697,7 +697,7 @@ ${headerNav()}
 
         <div class="warning-box" style="margin-top: 2rem;">
           <h4>The Question You Should Ask</h4>
-          <p style="margin: 0;">On a $400,000 home, the apparent FSBO savings is $2,600. But if a pricing mistake costs you even 1% ($4,000) or weak negotiation gives up $3,000 in inspection credits, the FSBO route costs you more than the 1% commission. The savings are real only if you price perfectly, negotiate effectively, and manage the transaction without errors.</p>
+          <p style="margin: 0;">On a $400,000 home, the apparent FSBO savings is $2,600. But if a pricing mistake costs you even 1% ($4,000) or weak negotiation gives up $3,000 in inspection credits, the FSBO route costs you more than the full-service representation. The savings are real only if you price perfectly, negotiate effectively, and manage the transaction without errors.</p>
         </div>
       </div>
     </section>
@@ -810,7 +810,7 @@ ${headerNav()}
 
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
-              How much does a 1% listing agent charge at TD Realty Ohio?
+              How much does a full-service listing representation agent charge at TD Realty Ohio?
               <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
@@ -857,8 +857,8 @@ ${footer()}`;
 
 const PAGES = [
   {
-    slug: 'fsbo-vs-1-percent-listing',
-    label: 'FSBO vs 1% Listing Agent',
+    slug: 'fsbo-vs-full-service-listing',
+    label: 'FSBO vs full-service listing representation Agent',
     generate: generateFsboVs1Percent,
   },
 ];

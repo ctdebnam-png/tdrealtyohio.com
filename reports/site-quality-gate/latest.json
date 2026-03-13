@@ -7,7 +7,7 @@
       "errors": [],
       "warnings": [
         {
-          "file": "1-percent-commission/index.html",
+          "file": "sellers/index.html",
           "message": "Meta description may be too long (179 chars)"
         },
         {
@@ -15,7 +15,7 @@
           "message": "Meta description may be too long (168 chars)"
         },
         {
-          "file": "compare/fsbo-vs-1-percent-listing/index.html",
+          "file": "compare/fsbo-vs-full-service-listing/index.html",
           "message": "Meta description may be too long (171 chars)"
         },
         {

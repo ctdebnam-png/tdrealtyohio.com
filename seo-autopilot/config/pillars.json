@@ -19,9 +19,9 @@
           "intent": "compare commission models",
           "preferredLinks": [
             { "href": "/compare/1-percent-vs-3-percent/", "text": "1% vs 3% commission comparison with typical Central Ohio numbers" },
-            { "href": "/compare/discount-broker-vs-full-service/", "text": "Discount broker vs full-service representation at offer and inspection stage" },
+            { "href": "/compare/discount-broker-vs-full-service/", "text": "brokerage model vs full-service representation at offer and inspection stage" },
             { "href": "/compare/flat-fee-mls-vs-full-service/", "text": "Flat fee MLS vs full-service support from listing through closing" },
-            { "href": "/compare/fsbo-vs-1-percent-listing/", "text": "FSBO vs 1% listing route for sellers weighing control vs outcomes" },
+            { "href": "/compare/fsbo-vs-full-service-listing/", "text": "FSBO vs full-service listing representation route for sellers weighing control vs outcomes" },
             { "href": "/sellers/#sell-only", "text": "Sell-only 2% option when you are not buying your next home yet" }
           ]
         }
@@ -63,9 +63,9 @@
           "intent": "compare commission models",
           "preferredLinks": [
             { "href": "/compare/1-percent-vs-3-percent/", "text": "1% vs 3% listing commission breakdown with real savings scenarios" },
-            { "href": "/compare/discount-broker-vs-full-service/", "text": "Discount broker vs full-service support when negotiation gets complex" },
+            { "href": "/compare/discount-broker-vs-full-service/", "text": "brokerage model vs full-service support when negotiation gets complex" },
             { "href": "/compare/flat-fee-mls-vs-full-service/", "text": "Flat fee MLS vs full-service risk, workload, and closing outcomes" },
-            { "href": "/compare/fsbo-vs-1-percent-listing/", "text": "FSBO vs 1% listing agent net proceeds and timeline trade-offs" },
+            { "href": "/compare/fsbo-vs-full-service-listing/", "text": "FSBO vs full-service listing representation agent net proceeds and timeline trade-offs" },
             { "href": "/sellers/", "text": "How TD Realty's 1% and 2% listing options compare to legacy models" }
           ]
         }
