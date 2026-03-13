@@ -1,7 +1,0 @@
-{
-  "areaRoutePrefix": "/areas/",
-  "exclude": ["/areas/", "/areas/index/"],
-  "maxAreaUpdatesPerRun": 1,
-  "minWordsTarget": 700,
-  "maxWordsAddPerRun": 600
-}

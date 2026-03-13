@@ -38,7 +38,7 @@ var TD_NAV = {
 
   footerInternal: [
     '/sellers/', '/buyers/', '/areas/', '/about/', '/contact/',
-    '/agents/', '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
+    '/agents/', '/privacy/', '/terms/', '/fair-housing/'
   ]
 };
 

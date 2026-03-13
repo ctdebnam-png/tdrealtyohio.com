@@ -1,0 +1,399 @@
+# Cleanup Deliverables
+
+## Files changed (HEAD commit)
+
+- README.md
+- _redirects
+- about/index.html
+- admin/profiles/index.html
+- ads-bot/analyze/daily.mjs
+- ads-bot/assets/rsa-library.json
+- ads-bot/landing-map.json
+- ads-bot/package.json
+- ads-bot/plan/generate.mjs
+- ads-bot/plan/validate_landing_map.mjs
+- ads-bot/pull/ga4_pull.mjs
+- ads-bot/pull/google_ads_pull.mjs
+- ads-bot/pull/gsc_pull.mjs
+- ads-bot/pull/index.mjs
+- agents/index.html
+- agents/join/index.html
+- areas/bexley/index.html
+- areas/blacklick/index.html
+- areas/canal-winchester/index.html
+- areas/clintonville/index.html
+- areas/columbus/index.html
+- areas/delaware/index.html
+- areas/dublin/index.html
+- areas/gahanna/index.html
+- areas/galena/index.html
+- areas/german-village/index.html
+- areas/grandview-heights/index.html
+- areas/granville/index.html
+- areas/grove-city/index.html
+- areas/hilliard/index.html
+- areas/index.html
+- areas/johnstown/index.html
+- areas/lewis-center/index.html
+- areas/new-albany/index.html
+- areas/pataskala/index.html
+- areas/pickerington/index.html
+- areas/powell/index.html
+- areas/reynoldsburg/index.html
+- areas/sunbury/index.html
+- areas/upper-arlington/index.html
+- areas/westerville/index.html
+- areas/worthington/index.html
+- areas/zip/43004/index.html
+- areas/zip/43016/index.html
+- areas/zip/43017/index.html
+- areas/zip/43021/index.html
+- areas/zip/43035/index.html
+- areas/zip/43054/index.html
+- areas/zip/43065/index.html
+- areas/zip/43081/index.html
+- areas/zip/43082/index.html
+- areas/zip/43240/index.html
+- assets/js/nav.js
+- audit/first-person-matches.txt
+- audit/nav-diff.txt
+- audit/nav-ia-changes.md
+- audit/nav-inventory.json
+- audit/recovery-phase1-report.md
+- audit/report.md
+- audit/scripts/build-nav-inventory.mjs
+- audit/scripts/check-canonicals.mjs
+- audit/scripts/check-nav.mjs
+- audit/scripts/content-lint.mjs
+- audit/scripts/crawl.mjs
+- audit/scripts/fix-navigation.mjs
+- audit/scripts/screenshots.mjs
+- audit/site-map.json
+- audit/vague-matches.txt
+- blog/best-time-sell-house-columbus-ohio/index.html
+- blog/central-ohio-housing-market-2026/index.html
+- blog/closing-costs-columbus-ohio/index.html
+- blog/home-staging-tips-columbus/index.html
+- blog/index.html
+- blog/selling-home-westerville-ohio-2026/index.html
+- blog/why-agents-leaving-traditional-brokerages-100-commission/index.html
+- buy/consult/index.html
+- buy/pre-approval/index.html
+- buyers/index.html
+- careers/index.html
+- contact/index.html
+- content/backlog.csv
+- credentials/index.html
+- data/cities.json
+- docs/remove-required-checks.md
+- docs/site-quality-gate.md
+- docs/visual-qa.md
+- fair-housing/index.html
+- faq/index.html
+- gsc/__init__.py
+- gsc/__main__.py
+- gsc/autofix.py
+- gsc/client.py
+- gsc/feedback.py
+- gsc/keyword_ownership.py
+- gsc/optimizer.py
+- gsc/reports.py
+- gsc/weekly_report.py
+- home-value/index.html
+- index.html
+- lp/buy-home-columbus/index.html
+- lp/sell-home-columbus/index.html
+- lp/sell-home-westerville/index.html
+- media/compliance/columbus-realtors.svg
+- media/compliance/equal-housing.svg
+- media/compliance/ohio-realtors.svg
+- media/compliance/realtor.svg
+- og/td-realty-ohio.jpg
+- ops/.gitignore
+- ops/checklists/offpage-actions-checklist-20260210T185536Z.md
+- ops/experiments/default-metadata-rules.json
+- ops/experiments/experiment-log.json
+- ops/experiments/metadata-experiments.json
+- ops/image-variants-manifest.json
+- ops/keyword-backlog.csv
+- ops/keyword-ownership.json
+- ops/logs/offpage/20260210T185536Z-offpage-actions.jsonl
+- ops/metrics.json
+- ops/offpage/README.md
+- ops/offpage/priority-urls.json
+- ops/reports/index-quality/2026-02-10.json
+- ops/reports/index-quality/2026-02-10.md
+- ops/reports/index-quality/latest.json
+- ops/reports/index-quality/latest.md
+- ops/reports/offpage-ops-workflow.json
+- ops/reports/topic-coverage.json
+- ops/tasks/indexing-remediation/2026-02-10-index-quality-remediation.md
+- output/gsc-reports/autofix_2026-02-03.json
+- output/gsc-reports/autofix_2026-02-03.md
+- output/gsc-reports/optimizer_2026-02-03.json
+- output/gsc-reports/optimizer_2026-02-03.md
+- output/gsc-reports/optimizer_latest.json
+- package.json
+- privacy/index.html
+- referrals/index.html
+- reports/site-quality-gate/.gitignore
+- reports/site-quality-gate/latest.json
+- reviews/index.html
+- robots.txt
+- scripts/config.py
+- sell-and-buy/index.html
+- sell/net-sheet/index.html
+- sell/pricing-call/index.html
+- sell/timeline/index.html
+- sellers/index.html
+- seo-autopilot/analyzers/gsc-opportunities.mjs
+- seo-autopilot/analyzers/money-page-intents.mjs
+- seo-autopilot/auditors/build-audit.mjs
+- seo-autopilot/auditors/canonical-agreement.mjs
+- seo-autopilot/auditors/content-thin.mjs
+- seo-autopilot/auditors/link-graph.mjs
+- seo-autopilot/auditors/live-indexing.mjs
+- seo-autopilot/auditors/live-robots-sitemap.mjs
+- seo-autopilot/auditors/near-duplicates.mjs
+- seo-autopilot/auditors/sitemap-coverage.mjs
+- seo-autopilot/bin/run.mjs
+- seo-autopilot/collectors/gsc-sitemaps.mjs
+- seo-autopilot/collectors/gsc.mjs
+- seo-autopilot/config/area-template.json
+- seo-autopilot/config/areas.json
+- seo-autopilot/config/content-backlog.json
+- seo-autopilot/config/experiments.json
+- seo-autopilot/config/gsc.json
+- seo-autopilot/config/housekeeping.json
+- seo-autopilot/config/indexing-policy.json
+- seo-autopilot/config/live-checks.json
+- seo-autopilot/config/money-intents.json
+- seo-autopilot/config/money-page-blocks.json
+- seo-autopilot/config/pillars.json
+- seo-autopilot/config/quality.json
+- seo-autopilot/config/related-guides.json
+- seo-autopilot/config/route-meta.json
+- seo-autopilot/config/safety.json
+- seo-autopilot/config/scoring.json
+- seo-autopilot/config/seo-defaults.json
+- seo-autopilot/config/site.json
+- seo-autopilot/experiments/apply-variant.mjs
+- seo-autopilot/experiments/evaluate.mjs
+- seo-autopilot/experiments/generate-variant.mjs
+- seo-autopilot/experiments/select-candidates.mjs
+- seo-autopilot/fixers/indexing-hygiene.mjs
+- seo-autopilot/fixers/internal-links.mjs
+- seo-autopilot/fixers/metadata-fixer.mjs
+- seo-autopilot/generators/area-expand.mjs
+- seo-autopilot/generators/money-page-enhance.mjs
+- seo-autopilot/generators/publish-post.mjs
+- seo-autopilot/generators/refresh.mjs
+- seo-autopilot/lib/area-discovery.mjs
+- seo-autopilot/lib/audit-delta.mjs
+- seo-autopilot/lib/blog-discovery.mjs
+- seo-autopilot/lib/canonical-url-set.mjs
+- seo-autopilot/lib/detect-build-output.mjs
+- seo-autopilot/lib/diff-budget.mjs
+- seo-autopilot/lib/extract-visible-text.mjs
+- seo-autopilot/lib/fetch-with-trace.mjs
+- seo-autopilot/lib/housekeeping.mjs
+- seo-autopilot/lib/indexing-policy.mjs
+- seo-autopilot/lib/list-html-pages.mjs
+- seo-autopilot/lib/oauth-refresh.mjs
+- seo-autopilot/lib/parse-html.mjs
+- seo-autopilot/lib/parse-indexing-directives.mjs
+- seo-autopilot/lib/schedule.mjs
+- seo-autopilot/lib/shingles.mjs
+- seo-autopilot/lib/snapshot.mjs
+- seo-autopilot/lib/url-normalize.mjs
+- seo-autopilot/lib/write-json.mjs
+- seo-autopilot/planners/area-plan.mjs
+- seo-autopilot/planners/content-plan.mjs
+- seo-autopilot/planners/focus-plan.mjs
+- seo-autopilot/planners/link-plan.mjs
+- seo-autopilot/scoring/gsc-deltas.mjs
+- seo-autopilot/scoring/score.mjs
+- seo-autopilot/state/experiments.json
+- seo-autopilot/state/module-outcomes.json
+- seo-autopilot/state/score-history.json
+- seo-autopilot/state/state.json
+- sitemap-page/index.html
+- src/config/nav.js
+- src/config/routes.js
+- src/content/messaging.js
+- src/content/metadata.js
+- templates/blocks/agent-model.html
+- templates/blocks/disclosure-buyer-full.html
+- templates/blocks/disclosure-listing-fee.html
+- templates/blocks/disclosure-seller-full.html
+- templates/blocks/pricing-summary.html
+- templates/blocks/whats-separate-sellers.html
+- templates/community_events.md
+- templates/market_update.md
+- templates/partials/canonical-head.html
+- templates/rate_update.md
+- terms/index.html
+- thank-you/buyer_consult/index.html
+- thank-you/buyer_pre_approval/index.html
+- thank-you/seller_net_sheet/index.html
+- thank-you/seller_pricing_call/index.html
+- thank-you/seller_timeline/index.html
+- tools/buyer-closing-costs/columbus/index.html
+- tools/buyer-closing-costs/delaware/index.html
+- tools/buyer-closing-costs/dublin/index.html
+- tools/buyer-closing-costs/gahanna/index.html
+- tools/buyer-closing-costs/hilliard/index.html
+- tools/buyer-closing-costs/index.html
+- tools/buyer-closing-costs/new-albany/index.html
+- tools/buyer-closing-costs/powell/index.html
+- tools/buyer-closing-costs/upper-arlington/index.html
+- tools/buyer-closing-costs/westerville/index.html
+- tools/buyer-closing-costs/worthington/index.html
+- tools/buyer-offer-readiness/columbus/index.html
+- tools/buyer-offer-readiness/delaware/index.html
+- tools/buyer-offer-readiness/dublin/index.html
+- tools/buyer-offer-readiness/gahanna/index.html
+- tools/buyer-offer-readiness/hilliard/index.html
+- tools/buyer-offer-readiness/index.html
+- tools/buyer-offer-readiness/new-albany/index.html
+- tools/buyer-offer-readiness/powell/index.html
+- tools/buyer-offer-readiness/upper-arlington/index.html
+- tools/buyer-offer-readiness/westerville/index.html
+- tools/buyer-offer-readiness/worthington/index.html
+- tools/index.html
+- tools/move-up-plan/columbus/index.html
+- tools/move-up-plan/delaware/index.html
+- tools/move-up-plan/dublin/index.html
+- tools/move-up-plan/gahanna/index.html
+- tools/move-up-plan/hilliard/index.html
+- tools/move-up-plan/index.html
+- tools/move-up-plan/new-albany/index.html
+- tools/move-up-plan/powell/index.html
+- tools/move-up-plan/upper-arlington/index.html
+- tools/move-up-plan/westerville/index.html
+- tools/move-up-plan/worthington/index.html
+- tools/repair-vs-credit/columbus/index.html
+- tools/repair-vs-credit/delaware/index.html
+- tools/repair-vs-credit/dublin/index.html
+- tools/repair-vs-credit/gahanna/index.html
+- tools/repair-vs-credit/hilliard/index.html
+- tools/repair-vs-credit/index.html
+- tools/repair-vs-credit/new-albany/index.html
+- tools/repair-vs-credit/powell/index.html
+- tools/repair-vs-credit/upper-arlington/index.html
+- tools/repair-vs-credit/westerville/index.html
+- tools/repair-vs-credit/worthington/index.html
+- tools/sell-buy-timing/columbus/index.html
+- tools/sell-buy-timing/delaware/index.html
+- tools/sell-buy-timing/dublin/index.html
+- tools/sell-buy-timing/gahanna/index.html
+- tools/sell-buy-timing/hilliard/index.html
+- tools/sell-buy-timing/index.html
+- tools/sell-buy-timing/new-albany/index.html
+- tools/sell-buy-timing/powell/index.html
+- tools/sell-buy-timing/upper-arlington/index.html
+- tools/sell-buy-timing/westerville/index.html
+- tools/sell-buy-timing/worthington/index.html
+- tools/sell-now-vs-wait/columbus/index.html
+- tools/sell-now-vs-wait/delaware/index.html
+- tools/sell-now-vs-wait/dublin/index.html
+- tools/sell-now-vs-wait/gahanna/index.html
+- tools/sell-now-vs-wait/hilliard/index.html
+- tools/sell-now-vs-wait/index.html
+- tools/sell-now-vs-wait/new-albany/index.html
+- tools/sell-now-vs-wait/powell/index.html
+- tools/sell-now-vs-wait/upper-arlington/index.html
+- tools/sell-now-vs-wait/westerville/index.html
+- tools/sell-now-vs-wait/worthington/index.html
+- tools/seller-documents/columbus/index.html
+- tools/seller-documents/delaware/index.html
+- tools/seller-documents/dublin/index.html
+- tools/seller-documents/gahanna/index.html
+- tools/seller-documents/hilliard/index.html
+- tools/seller-documents/index.html
+- tools/seller-documents/new-albany/index.html
+- tools/seller-documents/powell/index.html
+- tools/seller-documents/upper-arlington/index.html
+- tools/seller-documents/westerville/index.html
+- tools/seller-documents/worthington/index.html
+- tools/seller-net-proceeds/columbus/index.html
+- tools/seller-net-proceeds/delaware/index.html
+- tools/seller-net-proceeds/dublin/index.html
+- tools/seller-net-proceeds/gahanna/index.html
+- tools/seller-net-proceeds/hilliard/index.html
+- tools/seller-net-proceeds/index.html
+- tools/seller-net-proceeds/new-albany/index.html
+- tools/seller-net-proceeds/powell/index.html
+- tools/seller-net-proceeds/upper-arlington/index.html
+- tools/seller-net-proceeds/westerville/index.html
+- tools/seller-net-proceeds/worthington/index.html
+- tools/site-audit/audit.js
+- tools/site-quality-gate/checks/asset-budget.js
+- tools/site-quality-gate/checks/blog-content-quality.js
+- tools/site-quality-gate/checks/business.js
+- tools/site-quality-gate/checks/canonical-host.js
+- tools/site-quality-gate/checks/centralized-inline-scripts.js
+- tools/site-quality-gate/checks/content-voice.js
+- tools/site-quality-gate/checks/css-usage.js
+- tools/site-quality-gate/checks/duplicate-intent.js
+- tools/site-quality-gate/checks/indexing-policy.js
+- tools/site-quality-gate/checks/links.js
+- tools/site-quality-gate/checks/schema-consistency.js
+- tools/site-quality-gate/checks/schema.js
+- tools/site-quality-gate/checks/seo.js
+- tools/site-quality-gate/checks/sitemap.js
+- tools/site-quality-gate/checks/utils.js
+- tools/site-quality-gate/config.js
+- tools/site-quality-gate/package-lock.json
+- tools/site-quality-gate/package.json
+- tools/site-quality-gate/run-checks.js
+
+## Deleted or redirected route families
+
+- Deleted: /buy/*, /sell/*, /sell-and-buy/*, /tools/*, /home-value/*, /lp/*, /faq/*, /careers/*, /referrals/*, /blog/*, /reviews/*, /credentials/*, /thank-you/*, /sitemap-page/*, /areas/* child pages.
+- Redirected to core routes via `_redirects` patterns for all legacy families above.
+
+## Final route map
+
+- /
+- /about/
+- /buyers/
+- /sellers/
+- /agents/
+- /areas/
+- /contact/
+- /privacy/
+- /terms/
+- /fair-housing/
+
+## Final homepage copy
+- Full-service real estate brokerage with direct broker access in Central Ohio.
+- TD Realty Ohio helps clients buy, sell, and lease homes with straightforward strategy, disciplined execution, and clear communication from consultation through closing.
+- What we do: Buying Representation, Selling Representation, Leasing Support.
+- Process: consultation and strategy; execution support; contract-to-close coordination.
+
+## Final agents page copy
+- Headline: For independent agents in Central Ohio who want a clean, legible model.
+- Offer: direct broker access, practical transaction support, and clear compensation.
+- Compensation cards: 100% on listing sides; 90/10 split on buy sides; 25% of the first month’s lease on rentals.
+- Sections: What the brokerage provides; Who this model fits; CTA Talk With Travis.
+
+## Final buyers page copy
+- Headline: Buyer representation built for clarity and leverage.
+- Emphasis: direct broker access, search strategy, market guidance, offer structure, negotiation, and contract-to-close support.
+
+## Final sellers page copy
+- Headline: Seller representation that stays disciplined from pricing to close.
+- Emphasis: pricing strategy, launch prep, marketing execution, showing feedback, offer analysis, and contract-to-close oversight.
+
+## Metadata strings updated
+- Default title: TD Realty Ohio | Direct Broker Access in Central Ohio
+- Default description: TD Realty Ohio is a full-service real estate brokerage serving Central Ohio with direct broker access for buying, selling, and leasing.
+- Agents description: Independent-agent brokerage in Central Ohio with 100% on listing sides, 90/10 on buy sides, and 25% of the first month’s lease on rental transactions.
+
+## Grep proof (conflicting compensation language)
+- Command: `rg -n "80/20|annual cap|1-2% listing|1% listing|2% listing|discount listing|rebate|cashback|lower commission|custom estimate|planning estimate" --glob "!node_modules/**"`
+- Result: no matches.
+
+## Dead-weight folders removed
+- Removed non-public legacy or operational folders: `ads-bot`, `audit`, `gsc`, `ops`, `output`, `reports`, `seo-autopilot`, `templates`, `content`, `data`, `docs`, `og`, `media`, plus retired route directories and variants.

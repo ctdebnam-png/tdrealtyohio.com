@@ -1,2 +1,0 @@
-# Keep only latest.json, ignore timestamped reports
-report-*.json

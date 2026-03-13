@@ -1,5 +1,0 @@
-# Snapshots are gitignored locally (uploaded as CI artifacts)
-snapshots/
-
-# Reports are committed for review
-!reports/
