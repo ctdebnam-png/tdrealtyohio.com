@@ -9800,16 +9800,23 @@ details.td-details--flush .td-details-body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.92);
   margin-bottom: 0.85rem;
 }
 
 .home-hero-title {
+  color: var(--white);
+  font-size: clamp(2.35rem, 4.7vw, 3.4rem);
+  line-height: 1.16;
+  max-width: 17ch;
   margin-bottom: 1rem;
 }
 
 .home-hero-text {
-  max-width: 640px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.125rem;
+  line-height: 1.72;
+  max-width: 62ch;
 }
 
 .home-hero-actions {
@@ -9868,12 +9875,18 @@ details.td-details--flush .td-details-body {
 }
 
 .home-route-band {
+  margin-top: 0.75rem;
   border-top: 1px solid var(--gray-200);
   border-bottom: 1px solid var(--gray-200);
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafc 100%);
 }
 
 .home-route-card,
 .home-trust-card {
+  border: 1px solid #d8e0e8;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 10px 24px rgba(26, 46, 68, 0.06);
   padding: 1.5rem;
 }
 
@@ -9991,13 +10004,67 @@ details.td-details--flush .td-details-body {
 }
 
 @media (max-width: 768px) {
+  .home-hero {
+    padding: 5.5rem 0 3.25rem;
+  }
+
+  .home-hero-title {
+    font-size: clamp(1.85rem, 8vw, 2.3rem);
+    line-height: 1.22;
+    max-width: 14ch;
+    margin-bottom: 0.85rem;
+  }
+
+  .home-hero-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 0;
+  }
+
+  .home-hero-actions {
+    margin-top: 1.15rem;
+    gap: 0.7rem;
+  }
+
   .home-hero-actions .btn {
     width: 100%;
+    padding: 0.82rem 1.1rem;
+    font-size: 0.98rem;
+    min-height: 48px;
+  }
+
+  .home-route-band {
+    margin-top: 0;
+    padding-top: 2.35rem;
+    padding-bottom: 2.6rem;
+  }
+
+  .home-route-band h2,
+  .home-positioning h2,
+  .home-process-section h2,
+  .home-agent-bridge h2,
+  .home-faq h2,
+  .home-final-cta h2 {
+    font-size: 1.65rem;
+    line-height: 1.26;
+    margin-bottom: 1rem;
+  }
+
+  .home-route-card h3,
+  .home-trust-card h3 {
+    font-size: 1.24rem;
+    line-height: 1.3;
+    margin-bottom: 0.55rem;
   }
 
   .home-route-card,
   .home-trust-card,
   .home-process-grid article {
     padding: 1.25rem;
+  }
+
+  .home-route-card,
+  .home-trust-card {
+    border-radius: 14px;
   }
 }
