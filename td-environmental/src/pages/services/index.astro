@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceTile from '../../components/ServiceTile.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { getPublicServices } from '../../lib/data.js';
+
+const services = getPublicServices();
+
+const byCategory = services.reduce<Record<string, typeof services>>((groups, service) => {
+  (groups[service.category] ??= []).push(service);
+  return groups;
+}, {});
+const categories = Object.keys(byCategory).sort();
+const anchorFor = (category: string) => `cat-${category.toLowerCase().replace(/\W+/g, '-')}`;
+---
+
+<BaseLayout
+  title="Services"
+  description="Site assessment, subsurface investigation, and compliance services offered in central Ohio, with the scope and deliverable stated for each."
+>
+  <div class="wrap py-12">
+    <h1 class="text-3xl">Services</h1>
+    <p class="mt-3 max-w-2xl text-lg text-ink-muted">
+      Each page states the problem the work solves, what is delivered, and the
+      standard or programme it runs under.
+    </p>
+
+    {
+      services.length === 0 ? (
+        <div class="mt-8">
+          <EmptyState what="services" file="services.yaml" />
+        </div>
+      ) : (
+        categories.map((category) => (
+          <section aria-labelledby={anchorFor(category)} class="mt-10">
+            <h2 id={anchorFor(category)} class="text-xl">
+              {category}
+            </h2>
+            <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {byCategory[category].map((service) => (
+                <ServiceTile service={service} />
+              ))}
+            </ul>
+          </section>
+        ))
+      )
+    }
+  </div>
+</BaseLayout>

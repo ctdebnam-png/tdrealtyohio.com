@@ -1,0 +1,87 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { SEGMENT_COPY, type SegmentCopy } from '../../lib/segments.js';
+import { SEGMENT_LABELS, getPublicServices } from '../../lib/data.js';
+import type { BuyerSegment } from '../../lib/data.js';
+
+/**
+ * One page per segment in the buyers taxonomy (src/schemas/buyers.ts, the same
+ * enum buyers.yaml validates against), so the public pages and the research
+ * data cannot drift apart.
+ *
+ * The buyer records themselves are a prospect list: they render on
+ * /internal/buyers/ as a call list and are never published here.
+ */
+export const getStaticPaths: GetStaticPaths = () =>
+  (Object.keys(SEGMENT_COPY) as BuyerSegment[]).map((segment) => ({
+    params: { segment: SEGMENT_LABELS[segment].slug },
+    props: { segment, copy: SEGMENT_COPY[segment] },
+  }));
+
+interface Props {
+  segment: BuyerSegment;
+  copy: SegmentCopy;
+}
+
+const { segment, copy } = Astro.props;
+
+const relevantServices = getPublicServices().filter((service) =>
+  service.typical_buyer_segments.includes(segment),
+);
+---
+
+<BaseLayout title={copy.title} description={copy.summary}>
+  <div class="wrap py-12">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex gap-2 text-ink-muted">
+        <li><a href="/who-we-serve/">Who we serve</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">{copy.title}</li>
+      </ol>
+    </nav>
+
+    <h1 class="mt-4 max-w-3xl text-3xl">{copy.title}</h1>
+    <p class="mt-4 max-w-2xl text-lg">{copy.summary}</p>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_24rem]">
+      <div class="prose-body">
+        <section aria-labelledby="problem">
+          <h2 id="problem" class="text-xl">The problem</h2>
+          {copy.problem.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+
+        <section aria-labelledby="how-we-work" class="mt-8">
+          <h2 id="how-we-work" class="text-xl">How we work with you</h2>
+          <ul>
+            {copy.working_with_us.map((point) => <li>{point}</li>)}
+          </ul>
+        </section>
+
+        {
+          relevantServices.length > 0 && (
+            <section aria-labelledby="services" class="mt-8">
+              <h2 id="services" class="text-xl">
+                Services this segment usually buys
+              </h2>
+              <ul>
+                {relevantServices.map((service) => (
+                  <li>
+                    <a href={`/services/${service.slug}/`}>{service.name}</a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+
+      <ContactForm
+        context={`segment:${segment}`}
+        heading={`Talk to us about ${copy.title.toLowerCase()}`}
+        id={`contact-${SEGMENT_LABELS[segment].slug}`}
+      />
+    </div>
+  </div>
+</BaseLayout>

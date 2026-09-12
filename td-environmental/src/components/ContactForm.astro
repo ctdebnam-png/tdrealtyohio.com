@@ -1,0 +1,130 @@
+---
+import { FORM, CONTACT_NEEDS } from '../lib/site.js';
+
+interface Props {
+  /** Which page the enquiry came from, e.g. a service slug. */
+  context?: string;
+  heading?: string;
+  headingLevel?: 'h2' | 'h3';
+  id?: string;
+}
+
+const {
+  context = 'site',
+  heading = 'Ask about this work',
+  headingLevel: Heading = 'h2',
+  id = 'contact-form',
+} = Astro.props;
+
+const fieldClass =
+  'mt-1 w-full rounded-sm border border-rule bg-white px-3 py-2 text-base text-ink ' +
+  'placeholder:text-ink-muted focus:border-moss';
+const labelClass = 'block text-sm font-medium text-ink';
+---
+
+<section aria-labelledby={`${id}-heading`} class="rounded-sm border border-rule bg-white p-6">
+  <Heading id={`${id}-heading`} class="text-xl">{heading}</Heading>
+  <p class="mt-2 max-w-prose text-sm text-ink-muted">
+    Six fields. A person reads every one of them and answers the same day where
+    the working day allows.
+  </p>
+
+  <form
+    name="contact"
+    method="POST"
+    action={FORM.action ?? undefined}
+    data-netlify={FORM.netlify ? 'true' : undefined}
+    netlify-honeypot={FORM.honeypot}
+    class="mt-5 grid gap-4 sm:grid-cols-2"
+  >
+    {/* Netlify needs the form name in the body; the honeypot field is hidden from people. */}
+    <input type="hidden" name="form-name" value="contact" />
+    <input type="hidden" name="page-context" value={context} />
+    <p class="hidden">
+      <label>
+        Leave this field empty
+        <input name={FORM.honeypot} tabindex="-1" autocomplete="off" />
+      </label>
+    </p>
+
+    <p>
+      <label class={labelClass} for={`${id}-name`}>Name</label>
+      <input
+        class={fieldClass}
+        id={`${id}-name`}
+        name="name"
+        type="text"
+        autocomplete="name"
+        required
+      />
+    </p>
+
+    <p>
+      <label class={labelClass} for={`${id}-company`}>Company</label>
+      <input
+        class={fieldClass}
+        id={`${id}-company`}
+        name="company"
+        type="text"
+        autocomplete="organization"
+      />
+    </p>
+
+    <p>
+      <label class={labelClass} for={`${id}-phone`}>Phone</label>
+      <input
+        class={fieldClass}
+        id={`${id}-phone`}
+        name="phone"
+        type="tel"
+        autocomplete="tel"
+        required
+      />
+    </p>
+
+    <p>
+      <label class={labelClass} for={`${id}-email`}>Email</label>
+      <input
+        class={fieldClass}
+        id={`${id}-email`}
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+      />
+    </p>
+
+    <p class="sm:col-span-2">
+      <label class={labelClass} for={`${id}-location`}>County or property address</label>
+      <input
+        class={fieldClass}
+        id={`${id}-location`}
+        name="county-or-address"
+        type="text"
+        autocomplete="street-address"
+        aria-describedby={`${id}-location-help`}
+        required
+      />
+      <span id={`${id}-location-help`} class="mt-1 block text-sm text-ink-muted">
+        A county name is enough if the address is not settled yet.
+      </span>
+    </p>
+
+    <p class="sm:col-span-2">
+      <label class={labelClass} for={`${id}-need`}>What do you need?</label>
+      <select class={fieldClass} id={`${id}-need`} name="need" required>
+        <option value="">Choose one</option>
+        {CONTACT_NEEDS.map((need) => <option value={need}>{need}</option>)}
+      </select>
+    </p>
+
+    <p class="sm:col-span-2">
+      <button
+        type="submit"
+        class="rounded-sm bg-moss-deep px-5 py-3 font-semibold text-white hover:bg-moss"
+      >
+        Send this enquiry
+      </button>
+    </p>
+  </form>
+</section>

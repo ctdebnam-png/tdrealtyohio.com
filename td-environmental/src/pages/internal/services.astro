@@ -1,0 +1,66 @@
+---
+import InternalLayout from '../../layouts/InternalLayout.astro';
+import Provenance from '../../components/Provenance.astro';
+import { getServices, getBlockedServices, SEGMENT_LABELS } from '../../lib/data.js';
+
+const blocked = getBlockedServices();
+const all = getServices();
+
+const th = 'border border-rule bg-moss-tint px-3 py-2 text-left text-sm font-semibold';
+const td = 'border border-rule px-3 py-2 align-top text-sm';
+---
+
+<InternalLayout
+  title="Blocked services"
+  purpose="Work we cannot sell yet, and what is in the way of each. These never render on the public site: no page, no tile, no sitemap entry."
+>
+  {
+    blocked.length === 0 ? (
+      <p class="mt-8 rounded-sm border border-dashed border-rule p-5 text-ink-muted">
+        No blocked services recorded. {all.length} service record
+        {all.length === 1 ? '' : 's'} in <code>src/data/services.yaml</code>, all of
+        them sellable.
+      </p>
+    ) : (
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[64rem]">
+          <thead>
+            <tr>
+              <th scope="col" class={th}>Service</th>
+              <th scope="col" class={th}>Category</th>
+              <th scope="col" class={th}>Standard</th>
+              <th scope="col" class={th}>What is in the way</th>
+              <th scope="col" class={th}>Who would buy it</th>
+              <th scope="col" class={th}>Deliverable</th>
+              <th scope="col" class={th}>Provenance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {blocked.map((service) => (
+              <tr>
+                <th scope="row" class={`${td} font-semibold`}>
+                  {service.name}
+                  <p class="font-normal text-ink-muted">{service.description}</p>
+                </th>
+                <td class={td}>{service.category}</td>
+                <td class={td}>{service.standard ?? ''}</td>
+                <td class={`${td} bg-red-50 font-medium`}>{service.blocker}</td>
+                <td class={td}>
+                  {service.typical_buyer_segments.length > 0
+                    ? service.typical_buyer_segments
+                        .map((segment) => SEGMENT_LABELS[segment].plural)
+                        .join(', ')
+                    : '—'}
+                </td>
+                <td class={td}>{service.deliverable}</td>
+                <td class={td}>
+                  <Provenance record={service} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</InternalLayout>

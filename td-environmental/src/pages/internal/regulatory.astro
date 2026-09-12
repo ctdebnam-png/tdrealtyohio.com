@@ -1,0 +1,86 @@
+---
+import InternalLayout from '../../layouts/InternalLayout.astro';
+import Provenance from '../../components/Provenance.astro';
+import { getRegulatory } from '../../lib/data.js';
+
+const requirements = getRegulatory();
+const blocking = requirements.filter((requirement) => requirement.blocking);
+const nonBlocking = requirements.filter((requirement) => !requirement.blocking);
+
+const fee = (value: number | null) =>
+  value === null ? '' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+
+const th = 'border border-rule bg-moss-tint px-3 py-2 text-left text-sm font-semibold';
+const td = 'border border-rule px-3 py-2 align-top text-sm';
+---
+
+<InternalLayout
+  title="Regulatory requirements"
+  purpose="What the law requires, what it costs, and which requirements stop us selling work today. Blockers are listed first because they decide the order of everything else."
+>
+  {
+    requirements.length === 0 ? (
+      <p class="mt-8 rounded-sm border border-dashed border-rule p-5 text-ink-muted">
+        No regulatory records yet. Add them to <code>src/data/regulatory.yaml</code>.
+      </p>
+    ) : (
+      [
+        { key: 'blocking', label: 'Blocking today', rows: blocking, tone: 'text-red-900' },
+        { key: 'other', label: 'Applies, but not blocking', rows: nonBlocking, tone: 'text-moss-deep' },
+      ].map((group) => (
+        <section aria-labelledby={`group-${group.key}`} class="mt-12">
+          <h2 id={`group-${group.key}`} class={`text-xl ${group.tone}`}>
+            {group.label} ({group.rows.length})
+          </h2>
+          {group.rows.length === 0 ? (
+            <p class="mt-3 text-sm text-ink-muted">None recorded.</p>
+          ) : (
+            <div class="mt-4 overflow-x-auto">
+              <table class="w-full min-w-[64rem]">
+                <thead>
+                  <tr>
+                    <th scope="col" class={th}>Requirement</th>
+                    <th scope="col" class={th}>Citation</th>
+                    <th scope="col" class={th}>Agency</th>
+                    <th scope="col" class={th}>Applies to</th>
+                    <th scope="col" class={th}>Fee</th>
+                    <th scope="col" class={th}>Summary</th>
+                    <th scope="col" class={th}>Provenance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {group.rows.map((requirement) => (
+                    <tr>
+                      <th scope="row" class={`${td} font-semibold`}>
+                        {requirement.url ? (
+                          <a href={requirement.url} rel="nofollow noopener">
+                            {requirement.requirement}
+                          </a>
+                        ) : (
+                          requirement.requirement
+                        )}
+                      </th>
+                      <td class={td}>{requirement.citation}</td>
+                      <td class={td}>{requirement.agency}</td>
+                      <td class={td}>{requirement.applies_to}</td>
+                      <td class={td}>
+                        {fee(requirement.fee)}
+                        {requirement.fee_note && (
+                          <p class="text-ink-muted">{requirement.fee_note}</p>
+                        )}
+                      </td>
+                      <td class={td}>{requirement.summary}</td>
+                      <td class={td}>
+                        <Provenance record={requirement} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      ))
+    )
+  }
+</InternalLayout>

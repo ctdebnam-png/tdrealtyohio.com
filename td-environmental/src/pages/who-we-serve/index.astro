@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SEGMENT_COPY } from '../../lib/segments.js';
+import { SEGMENT_LABELS } from '../../lib/data.js';
+import type { BuyerSegment } from '../../lib/data.js';
+
+const segments = (Object.keys(SEGMENT_COPY) as BuyerSegment[])
+  .map((segment) => ({ segment, copy: SEGMENT_COPY[segment], slug: SEGMENT_LABELS[segment].slug }))
+  .sort((a, b) => a.copy.priority - b.copy.priority);
+---
+
+<BaseLayout
+  title="Who we serve"
+  description="The buyers TD Environmental works for in central Ohio: consulting firms, lenders, developers, attorneys, public agencies, land banks, port authorities, title companies, brokerages, and utilities."
+>
+  <div class="wrap py-12">
+    <h1 class="text-3xl">Who we serve</h1>
+    <p class="mt-3 max-w-2xl text-lg text-ink-muted">
+      Different buyers need different things from the same site. These pages say
+      what each one is actually buying.
+    </p>
+
+    <ul class="mt-8 grid gap-4 md:grid-cols-2">
+      {
+        segments.map(({ copy, slug }) => (
+          <li class="rounded-sm border border-rule bg-white p-5">
+            <h2 class="text-lg">
+              <a href={`/who-we-serve/${slug}/`} class="no-underline hover:underline">
+                {copy.title}
+              </a>
+            </h2>
+            <p class="mt-2 text-sm text-ink-muted">{copy.summary}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

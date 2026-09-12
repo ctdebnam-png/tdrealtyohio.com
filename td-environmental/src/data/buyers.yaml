@@ -1,0 +1,26 @@
+# buyers.yaml
+#
+# Organisations that buy environmental work in central Ohio, by segment.
+# Schema: src/schemas/buyers.ts
+#
+# Shape of one record:
+#
+# - segment: consulting_firm     # consulting_firm | lender | brokerage | title |
+#                                # developer | attorney | public_agency |
+#                                # land_bank | port_authority | utility
+#   name: ""
+#   city: null
+#   phone: null
+#   url: null
+#   contact_path: null           # the person, role, or intake route to approach
+#   credentials_held: []         # e.g. ["VAP CP189"]
+#   why_they_buy: ""
+#   source_url: null
+#   source_note: ""
+#   verified_at: null
+#   confidence: unverified
+#
+# These records are an internal call list. They render on /internal/buyers/
+# only; the public /who-we-serve/ pages describe segments, not named firms.
+#
+# Empty until records are pasted in. Unknown values stay null.

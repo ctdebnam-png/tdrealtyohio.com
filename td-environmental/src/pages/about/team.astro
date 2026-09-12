@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { getTeam, getPublishableCredentials } from '../../lib/data.js';
+
+const team = getTeam();
+const credentials = getPublishableCredentials();
+
+/** Certifications listed on a person's record, plus any held credential joined by holder. */
+const certificationsFor = (id: string, listed: string[]): string[] => {
+  const joined = credentials
+    .filter((credential) => credential.holder === id)
+    .map((credential) =>
+      credential.license_number
+        ? `${credential.name} (${credential.issuing_body}) — #${credential.license_number}`
+        : `${credential.name} (${credential.issuing_body})`,
+    );
+  return [...new Set([...listed, ...joined])];
+};
+---
+
+<BaseLayout
+  title="Team"
+  description="The people who perform TD Environmental's assessment and compliance work in central Ohio."
+>
+  <div class="wrap py-12">
+    <h1 class="text-3xl">Team</h1>
+    <p class="mt-3 max-w-2xl text-lg text-ink-muted">
+      The people who go to the site and write the report.
+    </p>
+
+    {
+      team.length === 0 ? (
+        <div class="mt-8">
+          <EmptyState what="team members" file="team.yaml" />
+        </div>
+      ) : (
+        <div class="mt-10 space-y-14">
+          {team.map((member) => {
+            const certifications = certificationsFor(member.id, member.certifications);
+            return (
+              <article class="grid gap-8 border-t border-rule pt-10 md:grid-cols-[14rem_minmax(0,1fr)]">
+                <div>
+                  {member.photo && (
+                    <img
+                      src={member.photo}
+                      alt={member.photo_alt ?? `${member.name}, ${member.role}`}
+                      width="224"
+                      height="280"
+                      class="w-full rounded-sm border border-rule object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                  <h2 class="mt-4 text-xl">{member.name}</h2>
+                  <p class="text-ink-muted">{member.role}</p>
+                  {member.years_experience !== null && (
+                    <p class="mt-1 text-sm text-ink-muted">
+                      {member.years_experience} years of experience
+                    </p>
+                  )}
+                </div>
+
+                <div class="prose-body">
+                  {member.narrative && <p>{member.narrative}</p>}
+
+                  <div class="mt-6 grid gap-8 sm:grid-cols-3">
+                    <section aria-labelledby={`${member.id}-certifications`}>
+                      <h3 id={`${member.id}-certifications`} class="text-sm font-semibold uppercase tracking-wide text-moss-deep">
+                        Certifications
+                      </h3>
+                      {certifications.length > 0 ? (
+                        <ul class="mt-2 space-y-1 text-sm">
+                          {certifications.map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p class="mt-2 text-sm text-ink-muted">None recorded.</p>
+                      )}
+                    </section>
+
+                    <section aria-labelledby={`${member.id}-education`}>
+                      <h3 id={`${member.id}-education`} class="text-sm font-semibold uppercase tracking-wide text-moss-deep">
+                        Education
+                      </h3>
+                      {member.education.length > 0 ? (
+                        <ul class="mt-2 space-y-1 text-sm">
+                          {member.education.map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p class="mt-2 text-sm text-ink-muted">None recorded.</p>
+                      )}
+                    </section>
+
+                    <section aria-labelledby={`${member.id}-expertise`}>
+                      <h3 id={`${member.id}-expertise`} class="text-sm font-semibold uppercase tracking-wide text-moss-deep">
+                        Expertise
+                      </h3>
+                      {member.expertise.length > 0 ? (
+                        <ul class="mt-2 space-y-1 text-sm">
+                          {member.expertise.map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p class="mt-2 text-sm text-ink-muted">None recorded.</p>
+                      )}
+                    </section>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

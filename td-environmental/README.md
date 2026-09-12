@@ -1,0 +1,281 @@
+# TD Environmental
+
+Two jobs, one repository:
+
+1. **Hold the market research as structured, queryable data.** Everything we
+   learn about subcontractors, buyers, credentials, services, pricing,
+   regulation, and competitors' language lives in `/src/data` as YAML, validated
+   against Zod schemas at build time. Every record carries its provenance.
+2. **Render the public marketing site from that data.** Astro, static output,
+   Tailwind, no CMS and no database. The site is a view of the data set, not a
+   second copy of it.
+
+TD Environmental is a trade name of TD Realty Ohio, LLC, Westerville, Ohio.
+
+---
+
+## Quick start
+
+```bash
+npm install
+npm run dev            # http://localhost:4321
+npm run build          # link check + schema validation + build + content checks
+npm run check:all      # everything, in order
+```
+
+Individual gates:
+
+| Command | What it does |
+| --- | --- |
+| `npm run check:data` | Validates every file in `/src/data` against its Zod schema |
+| `npm run check:links` | Fetches every URL in the data, writes `verified_at` back, reports breakage |
+| `npm run check:orc` | Fails the build on a term reserved by ORC 4733.16 |
+| `npm run check:link-text` | Fails on link text that does not say where it goes |
+| `npm run check:astro` | TypeScript and Astro diagnostics |
+| `npm run test:a11y` | axe (WCAG 2.2 AA) and content rules, via Playwright |
+
+`npm run build` runs the link check and schema validation first, then builds,
+then runs the ORC and link-text checks on the built output. Any of them failing
+fails the deploy. That is the point.
+
+---
+
+## The provenance fields
+
+Every record in every data file carries these four fields. They are not
+decoration; they are the reason the data set is worth anything.
+
+```yaml
+source_url: null          # where the fact can be read, or null
+source_note: ""           # where the fact came from, in words
+verified_at: null         # ISO date the URL last answered 2xx
+confidence: unverified    # sourced | constructed | unverified
+```
+
+**`source_url`** — the page the fact is stated on. `null` when there is no URL,
+which is common and fine: a phone call, a quote on letterhead, and a PDF that
+lives in a drive are all legitimate sources with no public URL. Say so in
+`source_note`.
+
+**`source_note`** — where the fact came from, written so that someone else can
+retrace it. "Quoted by phone, 12 March, Dana at the front desk" is a good note.
+"Website" is not.
+
+**`verified_at`** — written by the link checker, not by hand. It records the
+date `source_url` last answered 2xx. A record with a `source_url` and a null
+`verified_at` has a URL nobody has checked, and the checker will not let it be
+published from a public page.
+
+**`confidence`** —
+
+| Value | Meaning |
+| --- | --- |
+| `sourced` | The fact is stated at `source_url`, or in the document named in `source_note`, and was read there. |
+| `constructed` | The fact was derived from sourced inputs. The derivation must be written down. |
+| `unverified` | We believe it but have not confirmed it. An unverified record still may not carry an invented value. |
+
+---
+
+## The rule about unknown values
+
+**Unknown values stay null.** A plausible figure is worse than a blank, because
+a blank announces itself and a plausible figure does not. If you do not know a
+driller's day rate, `rates` stays `null` and the cell on
+`/internal/subcontractors/` stays empty until a written quote fills it.
+
+This has three enforced consequences:
+
+- **Never invent a number.** Unknown means `null` and
+  `confidence: unverified`. Do not substitute something reasonable.
+- **A number that is not read from a source is `constructed`.** It carries
+  `basis: constructed` and a `construction_method` that shows the arithmetic in
+  enough detail that someone else could redo it and get the same answer. The
+  pricing schema rejects a constructed figure without one.
+- **A URL that has not been checked is not published.** The link checker gates
+  the build on it.
+
+`/internal/pricing/` keeps sourced and constructed figures in two separate
+tables for the same reason: they are different kinds of fact and should never be
+read as the same one.
+
+---
+
+## Data files
+
+One file per domain in `/src/data`, one schema per file in `/src/schemas`.
+
+| File | What it holds | Rendered on |
+| --- | --- | --- |
+| `subcontractors.yaml` | Firms that perform work we sell. Rate fields are `null` — no rate data exists yet. | `/internal/subcontractors/` |
+| `buyers.yaml` | Organisations that buy this work, by segment. A call list. | `/internal/buyers/` |
+| `credentials.yaml` | Certifications: cost, prerequisites, what they gate, whether they are worth it. | `/internal/credentials/`, and `/about/certifications/` for the publishable ones |
+| `services.yaml` | What we sell, what we subcontract, what we cannot sell yet. | `/services/` and `/services/[slug]/`; blocked ones on `/internal/services/` only |
+| `pricing.yaml` | Price points, sourced and constructed kept apart. | `/internal/pricing/` |
+| `regulatory.yaml` | Rules that govern the work, and which ones block it. | `/internal/regulatory/` |
+| `market-language.yaml` | How competitors name and organise the same work, verbatim. | `/internal/market-language/` |
+| `team.yaml` | The people, for `/about/team/`. | `/about/team/` |
+
+`team.yaml` is not one of the seven research domains. It exists because
+`/about/team/` cannot be rendered from research data and nothing on that page
+may be invented. Every field on it is nullable for the same reason: a person
+with no photo renders without one rather than with a stand-in.
+
+**The files ship empty.** They hold documented field shapes in comments and no
+records. Paste records in; do not seed them with examples.
+
+### Publishing rules encoded in the schemas
+
+- A service with `delivery: blocked` renders on `/internal/services/` only. It
+  never gets a public page and never enters the sitemap. A blocked service must
+  name its `blocker`.
+- A credential appears on `/about/certifications/` only if
+  `displayable_on_join` is true or `earned_at` is set. A credential we are
+  working towards is not one we advertise.
+- Buyer records are a prospect list and stay internal. The public
+  `/who-we-serve/[segment]/` pages describe segments, not named firms; their
+  copy lives in `src/lib/segments.ts` and the segment taxonomy comes from the
+  buyers schema, so the two cannot drift apart.
+
+---
+
+## The link checker
+
+`scripts/check-links.ts` reads every `source_url` and `url` field across all
+data files, issues a GET with a browser User-Agent — several Ohio state sites
+answer 404 or 403 to a default agent and 200 to a browser — and records the
+status.
+
+- On 2xx it writes `verified_at: <today>` back into the record. The YAML
+  document AST is edited in place, so comments and formatting survive.
+- Non-2xx results go to `reports/broken-links.json`, with each entry flagged
+  `referenced_from_public_page`.
+- The script exits non-zero, failing the build, **only** when a URL reached from
+  a public page is non-2xx. A dead URL on an internal-only record is reported
+  and allowed through: nobody outside the firm will follow it.
+
+It runs as a prebuild step and weekly as a GitHub Action
+(`.github/workflows/link-check.yml`), which commits refreshed `verified_at`
+dates back to the repository and goes red on a broken public link.
+
+```bash
+npm run check:links            # check, write verified_at, gate the build
+npm run check:links:report     # check and report, change no files
+npx tsx scripts/check-links.ts --offline   # skip the network, local dev only
+```
+
+`--offline` (or `LINK_CHECK_OFFLINE=1`) exists so the site can be built on a
+machine with no outbound network. Never set it in CI or on the deploy host: it
+turns the gate off.
+
+---
+
+## The ORC 4733.16 check
+
+Ohio Revised Code 4733.16 reserves "engineer", "engineering", "surveyor" and
+"surveying", and their derivations, for firms holding a certificate of
+authorization from the Ohio State Board of Registration for Professional
+Engineers and Surveyors. **TD Environmental does not hold one**, so those words
+may not appear in the firm name, the domain, any page title, any meta
+description, any h1, or any service name.
+
+Three layers enforce it:
+
+1. `src/schemas/services.ts` rejects a service name containing a reserved term,
+   so a bad record fails validation before it is ever rendered.
+2. `src/layouts/BaseLayout.astro` throws during the build if a page's title or
+   description carries one, naming the page.
+3. `scripts/check-orc-4733.ts` scans the built output in `/dist` and fails the
+   build on a hit in a `<title>`, a meta description, or an `<h1>`.
+
+Body copy is not scanned. Describing a client's engineer, or a report prepared
+by one, is lawful; the prohibition is on how the firm names itself and its work.
+
+---
+
+## Site
+
+```
+/                                 home
+/services/                        index
+/services/[slug]/                 from services.yaml, non-blocked only
+/who-we-serve/                    index
+/who-we-serve/[segment]/          from the buyers segment taxonomy
+/about/
+/about/team/
+/about/certifications/            from credentials.yaml, publishable only
+/projects/
+/contact/
+/request-a-proposal/
+/internal/…                       working data views, not public
+```
+
+`/who-we-serve/consulting-firms/` is the highest-priority page. It states that
+the firm takes overflow, works under the client's contract and letterhead where
+required, carries its own professional liability, and does not solicit the
+client's clients.
+
+Two forms, both handled by Netlify Forms — no third-party form service and no
+key in the repository. A short contact form (name, company, phone, email, county
+or property address, single need dropdown) sits on every service page and on
+`/contact/`. `/request-a-proposal/` asks the scoping questions: property size,
+current and former use, whether a Phase I already exists, whether a lender or
+agency deadline is driving it, and the date needed. To move off Netlify, set
+`FORM.action` in `src/lib/site.ts` to your own POST endpoint and set
+`FORM.netlify` to false; the markup needs no other change.
+
+### Internal views
+
+`/internal/` renders the full data set as working tables: subcontractors with
+blank rate columns to fill, buyers as a call list, credentials sequenced by
+holder and by year one versus year three, pricing with sourced and constructed
+separated, regulatory blockers first, and blocked services. They are excluded
+from the sitemap (`astro.config.mjs`), disallowed in `robots.txt`, and served
+with `X-Robots-Tag: noindex` (`netlify.toml`). They are not linked from any
+public page.
+
+### Cross-linking
+
+One footer link to tdrealtyohio.com and one paragraph on `/about/` explaining
+the relationship. No shared navigation between the two sites. A test asserts
+that exactly one link to the brokerage exists on each public page.
+
+---
+
+## Accessibility
+
+WCAG 2.2 AA, checked with axe in CI across desktop and mobile viewports:
+semantic HTML, a skip link, one h1 per page, visible focus rings, labelled form
+fields, underlined links in running text, and sentence case headings. Link text
+has to name its destination — `scripts/check-link-text.ts` fails the build on
+"click here", "learn more", "read more", and their relatives.
+
+---
+
+## Deploying
+
+Static output to Netlify; `netlify.toml` holds the build command, the publish
+directory, the Node version, and the headers. Cloudflare Pages works the same
+way: build command `npm run build`, output directory `dist`.
+
+Set `SITE_URL` in the host's build environment. The default in
+`src/lib/site.ts` is a working value — **confirm the domain before the first
+production deploy**, and check that whatever you register does not contain a
+term reserved by ORC 4733.16.
+
+---
+
+## Layout
+
+```
+src/
+  data/        YAML research data, one file per domain
+  schemas/     Zod schema per data file
+  lib/         data loader, site constants, segment copy, prohibited terms
+  layouts/     BaseLayout (public), InternalLayout (internal)
+  components/  header, footer, forms, tiles, provenance badge
+  pages/       routes
+  styles/      global.css, Tailwind tokens
+scripts/       check-links, check-data, check-orc-4733, check-link-text
+tests/         axe and content-rule specs
+reports/       broken-links.json, written by the link checker
+```

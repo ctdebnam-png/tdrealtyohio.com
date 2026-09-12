@@ -1,0 +1,42 @@
+# Netlify deploy configuration for the TD Environmental static site.
+#
+# `npm run build` runs, in order:
+#   1. prebuild  -> scripts/check-links.ts   (every URL in /src/data is fetched)
+#   2. prebuild  -> scripts/check-data.ts    (Zod validation of every data file)
+#   3. astro build
+#   4. postcheck -> scripts/check-orc-4733.ts (ORC 4733.16 string check on dist)
+#
+# Any of those failing fails the deploy. That is intentional: a broken public
+# URL or a prohibited title string must never reach production.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# The internal data views are not public pages. They are excluded from the
+# sitemap and disallowed in robots.txt; this header keeps them out of indexes
+# that ignore robots.txt.
+[[headers]]
+  for = "/internal/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[redirects]]
+  from = "/services"
+  to = "/services/"
+  status = 301
+
+[[redirects]]
+  from = "/who-we-serve"
+  to = "/who-we-serve/"
+  status = 301

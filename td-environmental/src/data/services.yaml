@@ -1,0 +1,26 @@
+# services.yaml
+#
+# What the firm sells, what it subcontracts, and what it cannot sell yet.
+# Schema: src/schemas/services.ts
+#
+# Shape of one record:
+#
+# - slug: ""                     # lowercase kebab-case; becomes /services/<slug>/
+#   name: ""                     # rejected at build time if it contains a term
+#                                # reserved by ORC 4733.16
+#   category: ""
+#   description: ""
+#   standard: null               # E1527-21 | E1903 | VAP | BUSTR | RCRA | null
+#   delivery: in_house           # in_house | subcontracted | blocked
+#   blocker: null                # required when delivery is "blocked"
+#   typical_buyer_segments: []   # segment values from buyers.yaml
+#   deliverable: ""
+#   source_url: null
+#   source_note: ""
+#   verified_at: null
+#   confidence: unverified
+#
+# delivery: blocked renders on /internal/services/ only. It is never built as a
+# public page and never enters the sitemap.
+#
+# Empty until records are pasted in. Unknown values stay null.

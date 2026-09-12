@@ -1,0 +1,103 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { getPublicServices, SEGMENT_LABELS } from '../../lib/data.js';
+import type { Service } from '../../lib/data.js';
+
+/**
+ * Only services with delivery "in_house" or "subcontracted" get a public page.
+ * A blocked service renders on /internal/services/ and nowhere else.
+ */
+export const getStaticPaths: GetStaticPaths = () =>
+  getPublicServices().map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+
+const buyers = service.typical_buyer_segments.map((segment) => ({
+  slug: SEGMENT_LABELS[segment].slug,
+  label: SEGMENT_LABELS[segment].plural,
+}));
+---
+
+<BaseLayout title={service.name} description={service.description}>
+  <div class="wrap py-12">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <ol class="flex gap-2 text-ink-muted">
+        <li><a href="/services/">Services</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">{service.name}</li>
+      </ol>
+    </nav>
+
+    <h1 class="mt-4 max-w-3xl text-3xl">{service.name}</h1>
+    <p class="mt-4 max-w-2xl text-lg">{service.description}</p>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_24rem]">
+      <div class="prose-body">
+        <section aria-labelledby="scope">
+          <h2 id="scope" class="text-xl">What is delivered</h2>
+          <p>{service.deliverable}</p>
+        </section>
+
+        {
+          service.standard && (
+            <section aria-labelledby="standard" class="mt-8">
+              <h2 id="standard" class="text-xl">
+                The standard it runs under
+              </h2>
+              <p>
+                This work is performed to <strong>{service.standard}</strong>. The
+                deliverable states the standard on its face, so the party relying on it
+                can see what it was written to satisfy.
+              </p>
+            </section>
+          )
+        }
+
+        <section aria-labelledby="delivery" class="mt-8">
+          <h2 id="delivery" class="text-xl">How it is performed</h2>
+          <p>
+            {
+              service.delivery === 'in_house'
+                ? 'This work is performed by our own staff.'
+                : 'Field work on this service is performed by a subcontractor we select and oversee. Scope, schedule, and the deliverable stay our responsibility.'
+            }
+          </p>
+        </section>
+
+        {
+          buyers.length > 0 && (
+            <section aria-labelledby="who-buys" class="mt-8">
+              <h2 id="who-buys" class="text-xl">
+                Who buys this
+              </h2>
+              <ul>
+                {buyers.map((buyer) => (
+                  <li>
+                    <a href={`/who-we-serve/${buyer.slug}/`}>
+                      What {buyer.label.toLowerCase()} need from this work
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+
+      <ContactForm
+        context={`service:${service.slug}`}
+        heading={`Ask about ${service.name.toLowerCase()}`}
+        id={`contact-${service.slug}`}
+      />
+    </div>
+  </div>
+</BaseLayout>

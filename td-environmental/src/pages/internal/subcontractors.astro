@@ -1,0 +1,104 @@
+---
+import InternalLayout from '../../layouts/InternalLayout.astro';
+import Provenance from '../../components/Provenance.astro';
+import { getSubcontractors } from '../../lib/data.js';
+
+const subcontractors = getSubcontractors();
+
+const CATEGORY_LABELS: Record<string, string> = {
+  driller: 'Drilling',
+  laboratory: 'Laboratory',
+  surveyor: 'Land survey firms',
+  waste: 'Waste handling and disposal',
+  field_services: 'Field services',
+};
+
+const categories = [...new Set(subcontractors.map((s) => s.category))].sort();
+const th = 'border border-rule bg-moss-tint px-3 py-2 text-left text-sm font-semibold';
+const td = 'border border-rule px-3 py-2 align-top text-sm';
+---
+
+<InternalLayout
+  title="Subcontractors"
+  purpose="Firms that perform work we sell but do not self-perform. The rate columns are deliberately blank: no rate data exists yet, and a remembered number is not data. Fill them from a written quote or a published rate sheet."
+>
+  {
+    subcontractors.length === 0 ? (
+      <p class="mt-8 rounded-sm border border-dashed border-rule p-5 text-ink-muted">
+        No subcontractor records yet. Add them to <code>src/data/subcontractors.yaml</code>.
+      </p>
+    ) : (
+      categories.map((category) => (
+        <section class="mt-10 overflow-x-auto">
+          <table class="w-full min-w-[70rem]">
+            <caption class="mb-2 text-lg font-semibold text-moss-deep">
+              {CATEGORY_LABELS[category] ?? category}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" class={th}>Firm</th>
+                <th scope="col" class={th}>Location</th>
+                <th scope="col" class={th}>Contact</th>
+                <th scope="col" class={th}>Capabilities</th>
+                <th scope="col" class={th}>Published productivity</th>
+                <th scope="col" class={th}>Day rate (fill in)</th>
+                <th scope="col" class={th}>Unit rate (fill in)</th>
+                <th scope="col" class={th}>Small firms?</th>
+                <th scope="col" class={th}>Provenance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {subcontractors
+                .filter((s) => s.category === category)
+                .map((s) => (
+                  <tr>
+                    <th scope="row" class={`${td} font-semibold`}>
+                      {s.url ? <a href={s.url} rel="nofollow noopener">{s.name}</a> : s.name}
+                      {s.notes && <p class="mt-1 font-normal text-ink-muted">{s.notes}</p>}
+                    </th>
+                    <td class={td}>
+                      {[s.city, s.state].filter(Boolean).join(', ') || '—'}
+                      {s.address && <p class="text-ink-muted">{s.address}</p>}
+                      {s.zip && <p class="text-ink-muted">{s.zip}</p>}
+                    </td>
+                    <td class={td}>
+                      {s.phone ?? '—'}
+                      {s.email && (
+                        <p>
+                          <a href={`mailto:${s.email}`}>{s.email}</a>
+                        </p>
+                      )}
+                    </td>
+                    <td class={td}>
+                      {s.capabilities.length > 0 ? (
+                        <ul class="list-disc pl-4">
+                          {s.capabilities.map((capability) => (
+                            <li>{capability}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        '—'
+                      )}
+                    </td>
+                    <td class={td}>{s.published_productivity ?? '—'}</td>
+                    <td class={`${td} bg-amber-50`}></td>
+                    <td class={`${td} bg-amber-50`}></td>
+                    <td class={td}>
+                      {s.works_with_small_firms === null
+                        ? 'unknown'
+                        : s.works_with_small_firms
+                          ? 'yes'
+                          : 'no'}
+                    </td>
+                    <td class={td}>
+                      <Provenance record={s} />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </section>
+      ))
+    )
+  }
+</InternalLayout>

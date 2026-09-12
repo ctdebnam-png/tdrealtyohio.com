@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE, RELATED_SITE, serviceAreaSentence } from '../../lib/site.js';
+---
+
+<BaseLayout
+  title="About"
+  description={`${SITE.name} is an environmental services firm in ${SITE.city}, Ohio, trading under ${SITE.legal_entity}.`}
+>
+  <div class="wrap py-12">
+    <h1 class="text-3xl">About {SITE.name}</h1>
+
+    <div class="prose-body mt-6">
+      <p>
+        {SITE.name} assesses property conditions and supports compliance work for
+        owners, lenders, developers, and consulting firms in central Ohio.
+        {serviceAreaSentence()}
+      </p>
+
+      <h2 class="mt-10 text-xl">How we work</h2>
+      <p>
+        We scope to the decision in front of the client rather than to a template.
+        Where a smaller scope answers the question, we say so. Where a site needs
+        more than the client asked for, we say that too, before the fieldwork
+        starts rather than in a change order afterwards.
+      </p>
+      <p>
+        Every report states the standard it was written to satisfy. A party
+        relying on the document can see what it covers and what it does not.
+      </p>
+
+      <h2 class="mt-10 text-xl">Our relationship to {RELATED_SITE.name}</h2>
+      <p>
+        {SITE.name} is a trade name of {SITE.legal_entity}, the same Ohio company
+        that operates the residential brokerage {RELATED_SITE.name}. The two
+        businesses share an owner and a legal entity; they do not share staff
+        assignments, client files, or a website. Environmental work is scoped,
+        performed, and reported on its own terms, and a brokerage relationship
+        neither creates nor precludes one here. The single link to the brokerage
+        in our footer is there so the common ownership is visible rather than
+        buried.
+      </p>
+
+      <h2 class="mt-10 text-xl">Where to go next</h2>
+      <ul>
+        <li><a href="/about/team/">The people who do the work</a></li>
+        <li><a href="/about/certifications/">Certifications we hold</a></li>
+        <li><a href="/services/">Services, with scope and deliverables</a></li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

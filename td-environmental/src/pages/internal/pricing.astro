@@ -1,0 +1,115 @@
+---
+import InternalLayout from '../../layouts/InternalLayout.astro';
+import Provenance from '../../components/Provenance.astro';
+import { getPricing } from '../../lib/data.js';
+import type { PriceItem } from '../../lib/data.js';
+
+const pricing = getPricing();
+const sourced = pricing.filter((item) => item.basis === 'sourced');
+const constructed = pricing.filter((item) => item.basis === 'constructed');
+
+const range = (item: PriceItem): string => {
+  const fmt = (value: number) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: item.currency, maximumFractionDigits: 0 }).format(value);
+  if (item.amount_low === null && item.amount_high === null) return '';
+  if (item.amount_low !== null && item.amount_high !== null) {
+    return item.amount_low === item.amount_high
+      ? fmt(item.amount_low)
+      : `${fmt(item.amount_low)} – ${fmt(item.amount_high)}`;
+  }
+  return fmt((item.amount_low ?? item.amount_high) as number);
+};
+
+const th = 'border border-rule bg-moss-tint px-3 py-2 text-left text-sm font-semibold';
+const td = 'border border-rule px-3 py-2 align-top text-sm';
+---
+
+<InternalLayout
+  title="Pricing"
+  purpose="Sourced figures and constructed figures are kept in separate tables so the two are never read as the same kind of fact. An empty amount means no figure has been sourced or derived; it does not mean the work is cheap."
+>
+  {
+    pricing.length === 0 ? (
+      <p class="mt-8 rounded-sm border border-dashed border-rule p-5 text-ink-muted">
+        No price records yet. Add them to <code>src/data/pricing.yaml</code>.
+      </p>
+    ) : (
+      <>
+        <section aria-labelledby="sourced" class="mt-10">
+          <h2 id="sourced" class="text-xl">Sourced figures</h2>
+          <p class="mt-1 text-sm text-ink-muted">
+            Read directly from the cited source. Nothing here was adjusted.
+          </p>
+          {sourced.length === 0 ? (
+            <p class="mt-3 text-sm text-ink-muted">None yet.</p>
+          ) : (
+            <div class="mt-4 overflow-x-auto">
+              <table class="w-full min-w-[56rem]">
+                <thead>
+                  <tr>
+                    <th scope="col" class={th}>Item</th>
+                    <th scope="col" class={th}>Amount</th>
+                    <th scope="col" class={th}>Unit</th>
+                    <th scope="col" class={th}>Source date</th>
+                    <th scope="col" class={th}>Caveat</th>
+                    <th scope="col" class={th}>Provenance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sourced.map((item) => (
+                    <tr>
+                      <th scope="row" class={`${td} font-semibold`}>{item.item}</th>
+                      <td class={td}>{range(item)}</td>
+                      <td class={td}>{item.unit}</td>
+                      <td class={td}>{item.source_date ?? ''}</td>
+                      <td class={td}>{item.caveat}</td>
+                      <td class={td}><Provenance record={item} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+
+        <section aria-labelledby="constructed" class="mt-14">
+          <h2 id="constructed" class="text-xl">Constructed figures</h2>
+          <p class="mt-1 text-sm text-ink-muted">
+            Derived, not read. Every row shows how it was built; if the method does
+            not convince you, the figure does not hold.
+          </p>
+          {constructed.length === 0 ? (
+            <p class="mt-3 text-sm text-ink-muted">None yet.</p>
+          ) : (
+            <div class="mt-4 overflow-x-auto">
+              <table class="w-full min-w-[64rem]">
+                <thead>
+                  <tr>
+                    <th scope="col" class={th}>Item</th>
+                    <th scope="col" class={th}>Amount</th>
+                    <th scope="col" class={th}>Unit</th>
+                    <th scope="col" class={th}>How it was constructed</th>
+                    <th scope="col" class={th}>Caveat</th>
+                    <th scope="col" class={th}>Provenance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {constructed.map((item) => (
+                    <tr>
+                      <th scope="row" class={`${td} font-semibold`}>{item.item}</th>
+                      <td class={`${td} bg-amber-50`}>{range(item)}</td>
+                      <td class={td}>{item.unit}</td>
+                      <td class={td}>{item.construction_method ?? ''}</td>
+                      <td class={td}>{item.caveat}</td>
+                      <td class={td}><Provenance record={item} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      </>
+    )
+  }
+</InternalLayout>

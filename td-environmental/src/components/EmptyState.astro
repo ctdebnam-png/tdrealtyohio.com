@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** What is missing, in the words of the data file it comes from. */
+  what: string;
+  file: string;
+}
+
+const { what, file } = Astro.props;
+---
+
+<p class="rounded-sm border border-dashed border-rule bg-white p-5 text-ink-muted">
+  No {what} are published yet. They appear here once records are added to
+  <code class="rounded-sm bg-moss-tint px-1 py-0.5 text-ink">src/data/{file}</code>.
+  Nothing is shown in the meantime, because nothing here is invented to fill the
+  space.
+</p>
