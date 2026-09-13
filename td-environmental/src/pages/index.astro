@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CredentialStrip from '../components/CredentialStrip.astro';
 import ServiceTile from '../components/ServiceTile.astro';
-import { SITE, serviceAreaSentence } from '../lib/site.js';
+import { SITE, serviceAreaSentence, IS_PUBLISHED } from '../lib/site.js';
 import { getPublicServices, SEGMENT_LABELS } from '../lib/data.js';
 import { SEGMENT_COPY } from '../lib/segments.js';
 
@@ -36,12 +36,16 @@ const highlighted = (['consulting_firm', 'lender', 'developer'] as const).map((s
         >
           Request a proposal
         </a>
-        <a
-          href={SITE.phone_href}
-          class="rounded-sm border border-moss-deep px-5 py-3 font-semibold text-moss-deep no-underline hover:bg-moss-tint"
-        >
-          Call {SITE.phone_display}
-        </a>
+        {
+          IS_PUBLISHED && (
+            <a
+              href={SITE.phone_href}
+              class="rounded-sm border border-moss-deep px-5 py-3 font-semibold text-moss-deep no-underline hover:bg-moss-tint"
+            >
+              Call {SITE.phone_display}
+            </a>
+          )
+        }
       </p>
     </div>
   </section>

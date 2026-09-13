@@ -35,7 +35,13 @@ tag to remove, no second step to forget. Everything below reads that one value
 | robots meta | `noindex, nofollow, noarchive, nosnippet, noimageindex` on **every** page | `noindex` on `/internal/` only |
 | `X-Robots-Tag` | `noindex` on every path, via generated `_headers` | `/internal/` only |
 | forms | no method, no action, no handler, every control inside a `disabled` fieldset | live |
+| phone number | absent from every page — header, footer, home, contact, proposal | shown |
 | every page | carries a visible "preview only" banner | no banner |
+
+Held means **no intake path of any kind**. A phone number routes a real enquiry
+just as a form does, so while held it is absent from the markup rather than
+merely hidden — there is no `tel:` link and no phone number anywhere in the
+built output.
 
 Four independent layers keep it out of indexes, because `robots.txt` alone does
 not: a page linked from somewhere else can be indexed without ever being
@@ -260,7 +266,18 @@ Three layers enforce it:
    heading `h1`–`h6`, **the visible body copy of any page**, any service name in
    the data, the firm name, or the site origin.
 
-Body copy is scanned **fail-closed**: any occurrence fails, lawful or not. No
+**Third-party firm names are exempt, automatically.** A subcontractor really
+called "Acme Engineering Inc" is a proper noun naming somebody else's company;
+rendering it is not this firm offering engineering services. The checker reads
+the `name` fields from `subcontractors.yaml` and `buyers.yaml` and the
+`firm_name` field from `market-language.yaml`, permits those exact strings
+wherever they appear, and **reports every one it permitted** so the exemption is
+visible rather than silent. It is narrow by design: the same record's `notes`
+field saying "we use them for engineering support" still fails the build, and a
+service name in `services.yaml` gets no exemption at all — that is this firm's
+own offer, and the schema rejects it outright.
+
+Body copy is otherwise scanned **fail-closed**: any occurrence fails, lawful or not. No
 pattern can separate "we provide engineering studies" — an offer, unlawful
 without a certificate of authorization — from "delivered to your engineer", a
 reference, which is lawful. So every occurrence stops the build and a human

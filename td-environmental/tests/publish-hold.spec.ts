@@ -94,6 +94,29 @@ test.describe(PUBLISHED ? 'published' : 'held', () => {
     }
   });
 
+  test('no intake path of any kind is reachable while held', async ({ page }) => {
+    // A phone number routes a real enquiry just as a form does. Held means the
+    // number is absent from the markup, not merely unstyled or hidden.
+    const PHONE_DIGITS = /\(?614\)?[\s.-]*392[\s.-]*8858/;
+
+    for (const route of ALL_ROUTES) {
+      await page.goto(route);
+      const telLinks = page.locator('a[href^="tel:"]');
+      const body = await page.locator('body').innerText();
+
+      if (PUBLISHED) {
+        if (!route.startsWith('/internal/')) {
+          await expect(telLinks.first(), `${route} should offer a phone once live`).toBeVisible();
+        }
+      } else {
+        await expect(telLinks, `${route} must expose no tel: link while held`).toHaveCount(0);
+        expect(body, `${route} must not print a phone number while held`).not.toMatch(
+          PHONE_DIGITS,
+        );
+      }
+    }
+  });
+
   test('the hold banner appears exactly when held', async ({ page }) => {
     for (const route of ALL_ROUTES.slice(0, 6)) {
       await page.goto(route);

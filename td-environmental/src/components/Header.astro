@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../lib/site.js';
+import { SITE, IS_PUBLISHED } from '../lib/site.js';
 
 const { pathname } = Astro.url;
 const isCurrent = (href: string) =>
@@ -41,10 +41,19 @@ const nav = [
       </ul>
     </nav>
 
-    <p class="text-sm">
-      <a href={SITE.phone_href} class="font-semibold no-underline hover:underline">
-        Call {SITE.phone_display}
-      </a>
-    </p>
+    {
+      /*
+       * Held means no intake path of any kind. A phone number is a route to a
+       * real enquiry just as a form is, so it is absent — not disabled, not
+       * greyed out — until the work behind it can be insured.
+       */
+      IS_PUBLISHED && (
+        <p class="text-sm">
+          <a href={SITE.phone_href} class="font-semibold no-underline hover:underline">
+            Call {SITE.phone_display}
+          </a>
+        </p>
+      )
+    }
   </div>
 </header>
