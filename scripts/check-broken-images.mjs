@@ -18,8 +18,6 @@ const SKIP_DIRS = new Set([
   'node_modules', '.git', '.github', 'scripts', 'output', 'audit',
   'audit-output', 'audit-artifacts', 'reports', 'ops', 'ads-bot',
   'gsc', 'data', 'functions', 'docs', 'test-results',
-  // Separate project, not part of this site's deploy surface.
-  'td-environmental',
   'playwright-report', 'screenshots',
 ]);
 
