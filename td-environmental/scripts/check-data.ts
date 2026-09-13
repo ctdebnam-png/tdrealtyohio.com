@@ -9,6 +9,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { DATA_FILES, loadData, DataValidationError, getTeam } from '../src/lib/data.js';
+import { SITE_URL, IS_PUBLISHED } from '../src/lib/site.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -50,13 +51,39 @@ if (failed) {
   process.exit(1);
 }
 
-if (!process.env.SITE_URL) {
+console.log('\nData validation passed.');
+
+/**
+ * State banner. The single most costly mistake available here is publishing
+ * before the firm is insured and registered, so every build says plainly which
+ * mode it is in and against which origin.
+ */
+const REGISTERED_ORIGIN = 'https://tdenvironmentalohio.com';
+
+console.log('');
+console.log('  ─────────────────────────────────────────────────────────────');
+if (IS_PUBLISHED) {
+  console.log('   PUBLISH=true — this build is PUBLISHED.');
+  console.log('   robots allows crawling, a sitemap is generated, forms are live.');
+  console.log('   Only correct once professional liability is bound AND the trade');
+  console.log('   name is registered with the Ohio Secretary of State.');
+} else {
+  console.log('   HELD — this build is not published.');
+  console.log('   robots disallows everything, no sitemap, every page noindex,');
+  console.log('   every form inert. Deploy to preview only.');
+  console.log('   Set PUBLISH=true to go live. That is the only switch.');
+}
+console.log(`   origin: ${SITE_URL}`);
+console.log('  ─────────────────────────────────────────────────────────────');
+
+if (SITE_URL !== REGISTERED_ORIGIN) {
   console.warn(
-    '\nWARNING: SITE_URL is unset, so canonical URLs, og:url, robots.txt and the\n' +
-      'sitemap will all be built against the default origin in src/lib/site.ts.\n' +
-      'That domain is not confirmed. Set SITE_URL in the host build environment\n' +
-      'before a production deploy.',
+    `\nWARNING: SITE_URL is "${SITE_URL}", not the registered origin\n` +
+      `${REGISTERED_ORIGIN}. Canonical links, og:url, robots.txt and the sitemap\n` +
+      'will all carry that value. Confirm this is deliberate.',
   );
 }
-
-console.log('\nData validation passed.');
+if (/\/\/www\./.test(SITE_URL)) {
+  console.error('\nSITE_URL uses www. The site is apex-only; use the bare domain.');
+  process.exit(1);
+}

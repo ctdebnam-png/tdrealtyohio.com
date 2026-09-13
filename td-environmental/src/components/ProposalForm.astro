@@ -1,5 +1,5 @@
 ---
-import { FORM } from '../lib/site.js';
+import { FORM, IS_PUBLISHED } from '../lib/site.js';
 
 const fieldClass =
   'mt-1 w-full rounded-sm border border-field bg-white px-3 py-2 text-base text-ink ' +
@@ -8,14 +8,26 @@ const labelClass = 'block text-sm font-medium text-ink';
 const legendClass = 'text-base font-semibold text-moss-deep';
 ---
 
+{
+  /* See ContactForm: held means inert, not merely styled as unavailable. */
+  !IS_PUBLISHED && (
+    <p class="mt-6 max-w-3xl rounded-sm border border-clay bg-amber-50 p-3 text-sm text-ink">
+      <strong>Not accepting proposal requests yet.</strong> This form is
+      switched off until the firm is insured and registered.
+    </p>
+  )
+}
+
 <form
   name="proposal"
-  method="POST"
-  action={FORM.action ?? undefined}
-  data-netlify={FORM.netlify ? 'true' : undefined}
-  netlify-honeypot={FORM.honeypot}
+  method={IS_PUBLISHED ? 'POST' : undefined}
+  action={IS_PUBLISHED ? (FORM.action ?? undefined) : undefined}
+  data-netlify={IS_PUBLISHED && FORM.netlify ? 'true' : undefined}
+  netlify-honeypot={IS_PUBLISHED ? FORM.honeypot : undefined}
+  data-form-live={IS_PUBLISHED ? 'true' : 'false'}
   class="mt-8 max-w-3xl space-y-8"
 >
+  <fieldset disabled={!IS_PUBLISHED} class="contents">
   <input type="hidden" name="form-name" value="proposal" />
   <p class="hidden">
     <label>
@@ -175,9 +187,10 @@ const legendClass = 'text-base font-semibold text-moss-deep';
   <p>
     <button
       type="submit"
-      class="rounded-sm bg-moss-deep px-5 py-3 font-semibold text-white hover:bg-moss"
+      class="rounded-sm bg-moss-deep px-5 py-3 font-semibold text-white hover:bg-moss disabled:cursor-not-allowed disabled:bg-ink-muted"
     >
       Send this proposal request
     </button>
   </p>
+  </fieldset>
 </form>

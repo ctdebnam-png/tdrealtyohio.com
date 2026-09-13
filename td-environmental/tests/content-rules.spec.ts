@@ -7,6 +7,9 @@ import { PUBLIC_ROUTES, INTERNAL_ROUTES, sitemapRoutes } from './routes.js';
  */
 const PROHIBITED = /engineer|surveyor|surveying/i;
 
+/** While the site is held there is deliberately no sitemap; see publish-hold.spec.ts. */
+const PUBLISHED = process.env.PUBLISH === 'true';
+
 test('no page title or h1 carries a term reserved by ORC 4733.16', async ({ page }) => {
   for (const route of [...PUBLIC_ROUTES, ...INTERNAL_ROUTES]) {
     await page.goto(route);
@@ -24,6 +27,7 @@ test('no page title or h1 carries a term reserved by ORC 4733.16', async ({ page
 });
 
 test('the sitemap lists every public page and nothing else', async () => {
+  test.skip(!PUBLISHED, 'no sitemap is generated while the site is held');
   const inSitemap = new Set(sitemapRoutes());
   const expected = PUBLIC_ROUTES.filter((route) => route !== '/404/');
 
@@ -49,11 +53,14 @@ test('internal routes are marked noindex and are absent from the sitemap', async
   page,
   request,
 }) => {
-  const sitemap = await (await request.get('/sitemap-0.xml')).text();
-  expect(sitemap).not.toContain('/internal/');
+  if (PUBLISHED) {
+    const sitemap = await (await request.get('/sitemap-0.xml')).text();
+    expect(sitemap).not.toContain('/internal/');
+  }
 
   const robots = await (await request.get('/robots.txt')).text();
-  expect(robots).toContain('Disallow: /internal/');
+  // Held: "Disallow: /" already covers /internal/. Published: it is named.
+  expect(robots).toContain(PUBLISHED ? 'Disallow: /internal/' : 'Disallow: /');
 
   for (const route of INTERNAL_ROUTES) {
     await page.goto(route);

@@ -14,6 +14,44 @@ TD Environmental is a trade name of TD Realty Ohio, LLC, Westerville, Ohio.
 
 ---
 
+## The site is not published
+
+It builds, validates, and deploys to preview. It does not go live until **both**
+of these are true:
+
+1. environmental professional liability is **bound**, and
+2. the trade name is **registered** with the Ohio Secretary of State.
+
+**The go-live switch is one environment variable: `PUBLISH=true`.** Set it in
+the host's build environment and redeploy. Nothing else — no file to edit, no
+tag to remove, no second step to forget. Everything below reads that one value
+(`IS_PUBLISHED` in `src/lib/site.ts`), so there is no half-published state:
+
+| | held (default) | published (`PUBLISH=true`) |
+| --- | --- | --- |
+| `robots.txt` | `Disallow: /` for every agent | `Allow: /`, minus `/internal/` |
+| sitemap | **not generated at all** | `sitemap-index.xml` generated |
+| `Sitemap:` line in robots | absent | present |
+| robots meta | `noindex, nofollow, noarchive, nosnippet, noimageindex` on **every** page | `noindex` on `/internal/` only |
+| `X-Robots-Tag` | `noindex` on every path, via generated `_headers` | `/internal/` only |
+| forms | no method, no action, no handler, every control inside a `disabled` fieldset | live |
+| every page | carries a visible "preview only" banner | no banner |
+
+Four independent layers keep it out of indexes, because `robots.txt` alone does
+not: a page linked from somewhere else can be indexed without ever being
+crawled. Hence the meta tag, the header, and the absent sitemap as well.
+
+`npm run check:data` prints which mode the build is in, and the origin it was
+built against, on every run.
+
+**Not automated, and deliberately so** — these are one-time human actions, and
+nothing in this repository performs them: do not submit the sitemap to Search
+Console or any indexing API, and do not create business listings anywhere
+(Google Business Profile, Bing Places, directories, association member pages)
+until the same two conditions are met.
+
+---
+
 ## Quick start
 
 ```bash
@@ -208,6 +246,9 @@ Engineers and Surveyors. **TD Environmental does not hold one**, so those words
 may not appear in the firm name, the domain, any page title, any meta
 description, any h1, or any service name.
 
+**Offering the service is the trigger, not only performing it**, so the check
+covers what the site *says*, not just how its pages are named and routed.
+
 Three layers enforce it:
 
 1. `src/schemas/services.ts` rejects a service name containing a reserved term,
@@ -215,17 +256,24 @@ Three layers enforce it:
 2. `src/layouts/BaseLayout.astro` throws during the build if a page's title or
    description carries one, naming the page.
 3. `scripts/check-orc-4733.ts` scans the built output in `/dist` and fails the
-   build on a hit in a `<title>`, a meta description, or an `<h1>`.
+   build on a hit in any of: a `<title>`, a meta description or `og:` tag, any
+   heading `h1`–`h6`, **the visible body copy of any page**, any service name in
+   the data, the firm name, or the site origin.
 
-Body copy is not scanned. Describing a client's engineer, or a report prepared
-by one, is lawful; the prohibition is on how the firm names itself and its work.
+Body copy is scanned **fail-closed**: any occurrence fails, lawful or not. No
+pattern can separate "we provide engineering studies" — an offer, unlawful
+without a certificate of authorization — from "delivered to your engineer", a
+reference, which is lawful. So every occurrence stops the build and a human
+decides. Rewriting the copy is usually the right answer; where a phrase really
+is a lawful reference, add it to `ORC_COPY_ALLOWLIST` in
+`src/lib/prohibited-terms.ts` with a reason. That list is empty today, and the
+checker reports entries that stop matching so it cannot rot into a blanket
+exemption.
 
-A service page's `description` is body copy **and** its default meta
-description, and meta descriptions are scanned. When a description lawfully
-names an engineer, put a reserved-term-free summary in the service's
-`meta_description` field; the page lead keeps the full description and the
-build passes. Without that field the only way out would be to falsify the
-scope copy, which is the opposite of the point.
+A service's `description` is the page lead **and** its default meta description.
+`meta_description` exists so the two can differ where that helps, but note that
+both are now scanned — so a description naming an engineer needs the allowlist
+or a rewrite either way.
 
 Matching is done on a folded form of each string — Unicode-normalised, with
 zero-width characters removed and common Cyrillic, Greek, and fullwidth
@@ -325,10 +373,15 @@ over, both of which fail silently:
   endpoint — a Pages Function, for instance — and set `FORM.netlify` to false
   before moving.
 
-Set `SITE_URL` in the host's build environment. The default in
-`src/lib/site.ts` is a working value — **confirm the domain before the first
-production deploy**, and check that whatever you register does not contain a
-term reserved by ORC 4733.16.
+The registered origin is **`https://tdenvironmentalohio.com`**, apex only. It is
+the default in `src/lib/site.ts`, so no environment variable is needed for a
+normal build; set `SITE_URL` only to build against a different origin.
+
+That value is baked in at build time as the canonical link and `og:url` on every
+page, the `Sitemap:` line in `robots.txt`, and every `<loc>` in the sitemap.
+`npm run check:data` warns if `SITE_URL` differs from the registered origin, and
+fails outright if it carries a `www.` — the site is apex-only, and `netlify.toml`
+301s `www` to the apex so only one host is ever canonical.
 
 ---
 

@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE } from '../lib/site.js';
+import { SITE, IS_PUBLISHED, HOLD_NOTICE } from '../lib/site.js';
 import { PROHIBITED_TERM_PATTERN, ORC_CITATION } from '../lib/prohibited-terms.js';
 
 interface Props {
@@ -42,7 +42,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).hr
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {
+      /*
+       * While held, every page is noindex regardless of its own setting.
+       * robots.txt is not enough on its own: a page linked from elsewhere can
+       * still be indexed without ever being crawled.
+       */
+      !IS_PUBLISHED ? (
+        <meta
+          name="robots"
+          content="noindex, nofollow, noarchive, nosnippet, noimageindex"
+        />
+      ) : (
+        noindex && <meta name="robots" content="noindex, nofollow" />
+      )
+    }
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -56,6 +70,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).hr
     >
       Skip to main content
     </a>
+    {
+      !IS_PUBLISHED && (
+        <p
+          class="bg-clay px-4 py-2 text-center text-sm font-medium text-white"
+          data-publish-hold="true"
+        >
+          {HOLD_NOTICE}
+        </p>
+      )
+    }
     <Header />
     <main id="main" class="flex-1">
       <slot />

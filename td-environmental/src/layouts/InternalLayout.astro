@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE } from '../lib/site.js';
+import { SITE, IS_PUBLISHED, HOLD_NOTICE } from '../lib/site.js';
 
 interface Props {
   title: string;
@@ -30,7 +30,10 @@ const { pathname } = Astro.url;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} | Internal | {SITE.name}</title>
-    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta
+      name="robots"
+      content="noindex, nofollow, noarchive, nosnippet, noimageindex"
+    />
     <meta name="description" content="Internal working view. Not a public page." />
   </head>
   <body class="flex min-h-screen flex-col bg-white">
@@ -41,6 +44,16 @@ const { pathname } = Astro.url;
       Skip to main content
     </a>
 
+    {
+      !IS_PUBLISHED && (
+        <p
+          class="bg-clay px-4 py-2 text-center text-sm font-medium text-white"
+          data-publish-hold="true"
+        >
+          {HOLD_NOTICE}
+        </p>
+      )
+    }
     <header class="border-b-4 border-clay bg-moss-tint">
       <div class="wrap py-3">
         <p class="text-xs font-semibold uppercase tracking-wide text-clay">

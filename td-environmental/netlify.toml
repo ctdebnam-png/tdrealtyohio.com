@@ -23,13 +23,16 @@
     X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# The internal data views are not public pages. They are excluded from the
-# sitemap and disallowed in robots.txt; this header keeps them out of indexes
-# that ignore robots.txt.
-[[headers]]
-  for = "/internal/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
+# X-Robots-Tag is NOT set here. It is emitted into dist/_headers at build time
+# from the IS_PUBLISHED flag in src/lib/site.ts, so that going live is one flag
+# and not "one flag plus remember to edit netlify.toml".
+
+# Apex only: no www.
+[[redirects]]
+  from = "https://www.tdenvironmentalohio.com/*"
+  to = "https://tdenvironmentalohio.com/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/services"

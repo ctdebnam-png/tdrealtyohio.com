@@ -5,11 +5,54 @@
  */
 
 /**
- * The public origin. Not yet registered — confirm the domain before the first
- * production deploy and set SITE_URL in the host's build environment.
- * The domain may not contain a term reserved by ORC 4733.16.
+ * The public origin. Registered. Apex only — no www; netlify.toml redirects
+ * www to the apex so only one host is ever canonical.
+ *
+ * Carries no term reserved by ORC 4733.16.
+ *
+ * Override per environment with SITE_URL. This value is baked into canonical
+ * links, og:url, the sitemap, and robots.txt at build time, so a preview built
+ * with the wrong value would publish the wrong canonical.
  */
-export const SITE_URL = process.env.SITE_URL ?? 'https://tdenvironmental.com';
+export const SITE_URL = process.env.SITE_URL ?? 'https://tdenvironmentalohio.com';
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────
+ *  THE GO-LIVE SWITCH.  This is the only one.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * Unset or anything other than the exact string "true" means the site is HELD:
+ * it builds, validates, and deploys to preview, but it is not published.
+ *
+ * Holding is not a matter of remembering to do several things. One flag drives
+ * every published-facing behaviour, so there is no half-published state:
+ *
+ *   HELD (default)                        PUBLISHED (PUBLISH=true)
+ *   ──────────────────────────────────    ────────────────────────────────
+ *   robots.txt: Disallow: / for all       robots.txt: Allow, minus /internal/
+ *   no Sitemap: line in robots.txt        Sitemap: line present
+ *   no sitemap generated at all           sitemap-index.xml generated
+ *   noindex,nofollow,noarchive on every   noindex only on /internal/
+ *     page, public and internal
+ *   X-Robots-Tag: noindex on every path   X-Robots-Tag only on /internal/
+ *   forms inert: no action, no handler,   forms live
+ *     every control disabled
+ *   a hold banner on every page           no banner
+ *
+ * To go live: set PUBLISH=true in the host's build environment and redeploy.
+ * Nothing else. Do not hand-edit robots.txt, the meta tags, or the forms —
+ * they all read this one value.
+ *
+ * Do not set it until BOTH of these are true, because the site asserts
+ * capability the firm cannot yet insure or lawfully trade under:
+ *   1. environmental professional liability is BOUND, and
+ *   2. the trade name is REGISTERED with the Ohio Secretary of State.
+ */
+export const IS_PUBLISHED = process.env.PUBLISH === 'true';
+
+/** Shown on every page while held, so a preview can never be mistaken for live. */
+export const HOLD_NOTICE =
+  'Preview only — this site is not published. It goes live once professional liability is bound and the trade name is registered.';
 
 export const SITE = {
   /** Trade name. Checked against ORC 4733.16 by scripts/check-orc-4733.ts. */
@@ -57,6 +100,7 @@ export const RELATED_SITE = {
  * and drop `netlify` to false: the markup needs no other change.
  */
 export const FORM = {
+  /** Netlify Forms is wired only when the site is published; see IS_PUBLISHED. */
   netlify: true,
   /** null means "post back to the page's own URL", which is what Netlify wants. */
   action: null as string | null,

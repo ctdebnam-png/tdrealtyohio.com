@@ -4,11 +4,21 @@
  * certificate of authorization from the Ohio State Board of Registration for
  * Professional Engineers and Surveyors. TD Environmental does not hold one.
  *
- * The words therefore may not appear in:
+ * ORC 4733.16 is triggered by OFFERING engineering services, not only by
+ * performing them, so the prohibition covers what the site says as well as
+ * what it is structured as. The words therefore may not appear in:
  *   - the firm name or domain
  *   - any page title or meta description
- *   - any h1
+ *   - any heading
  *   - any service name
+ *   - any body copy on any rendered page
+ *
+ * The body-copy rule is enforced fail-closed: ANY occurrence fails the build,
+ * including lawful ones. A regex cannot tell "we provide engineering studies"
+ * (an offer, unlawful without a certificate of authorization) from "delivered
+ * to your engineer" (a reference, lawful), so every occurrence is stopped and
+ * a human decides. A genuinely lawful phrase is admitted by adding it to
+ * ORC_COPY_ALLOWLIST below, with a reason, where it can be audited.
  *
  * scripts/check-orc-4733.ts enforces this against the built output and fails
  * the build on a hit. src/schemas/services.ts enforces it on service names at
@@ -65,5 +75,21 @@ export const ADVISORY_TERM_PATTERN = /\bsurvey(s|ed)?\b/i;
 
 export const advisoryTermMatches = (value: string): string[] =>
   [...foldForMatching(value).matchAll(/\bsurvey(?:s|ed)?\b/gi)].map((match) => match[0]);
+
+/**
+ * Phrases admitted into body copy despite containing a reserved term.
+ *
+ * Each entry must state why the phrase is a lawful reference rather than an
+ * offer of engineering services. Adding one is a deliberate legal judgement,
+ * not a way to quiet the build — if you are not sure a phrase is a reference
+ * rather than an offer, rewrite the copy instead of allowlisting it.
+ *
+ * Entries are matched case-insensitively and removed from the text before the
+ * reserved-term scan runs. The checker reports entries that no longer match
+ * anything, so this list cannot quietly rot into a blanket exemption.
+ *
+ * Empty by design: no page currently needs one.
+ */
+export const ORC_COPY_ALLOWLIST: { phrase: string; reason: string }[] = [];
 
 export const ORC_CITATION = 'ORC 4733.16';

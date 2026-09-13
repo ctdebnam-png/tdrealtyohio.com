@@ -7,19 +7,23 @@
  * or "surveying", or any derivation of them. TD Environmental does not hold
  * one.
  *
- * This script reads the built site in /dist and fails the build if any of those
- * strings appears in:
+ * The statute is triggered by OFFERING engineering services, not only by
+ * performing them, so this reads the built site in /dist and fails the build if
+ * any reserved term appears in:
  *   - a <title>
  *   - a <meta name="description"> or og:description
- *   - any <h1>
+ *   - any heading, h1 through h6
+ *   - the visible body copy of any page
  *   - the firm name or the site origin
  *
  * Service names are additionally checked at the source, in
  * src/schemas/services.ts, so a bad record fails validation before it renders.
  *
- * Body copy is not scanned: describing a client's engineer, or a report
- * prepared by one, is lawful. The prohibition is on how the firm names itself
- * and its work.
+ * Body copy is scanned fail-closed: a lawful reference ("delivered to your
+ * engineer") fails just as a prohibited offer ("we provide engineering
+ * studies") does, because no pattern can separate them. Admit a lawful phrase
+ * by adding it to ORC_COPY_ALLOWLIST in src/lib/prohibited-terms.ts, with a
+ * reason. Rewriting the copy is usually the better answer.
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, dirname } from 'node:path';
@@ -28,6 +32,7 @@ import { fileURLToPath } from 'node:url';
 import {
   prohibitedTermMatches,
   advisoryTermMatches,
+  ORC_COPY_ALLOWLIST,
   ORC_CITATION,
 } from '../src/lib/prohibited-terms.js';
 import { SITE, SITE_URL } from '../src/lib/site.js';
@@ -68,6 +73,23 @@ const decode = (value: string): string =>
     .replace(/&#x27;/gi, "'");
 
 const stripTags = (value: string): string => decode(value.replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ');
+
+/**
+ * Removes allowlisted phrases before the scan, and records which entries were
+ * actually used so unused ones can be reported rather than left to rot.
+ */
+const allowlistHits = new Set<string>();
+const allowlisted = (text: string): string => {
+  let out = text;
+  for (const entry of ORC_COPY_ALLOWLIST) {
+    const pattern = new RegExp(entry.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    if (pattern.test(out)) {
+      allowlistHits.add(entry.phrase);
+      out = out.replace(pattern, ' ');
+    }
+  }
+  return out;
+};
 
 // 1. The firm's own name and origin.
 record('site.name', SITE.name);
@@ -110,8 +132,19 @@ for (const file of files) {
     if (value !== undefined) record(`${page} <meta ${key}>`, decode(value));
   }
 
-  for (const h1 of html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/gi)) {
-    record(`${page} <h1>`, stripTags(h1[1]));
+  for (const heading of html.matchAll(/<(h[1-6])[^>]*>([\s\S]*?)<\/\1>/gi)) {
+    record(`${page} <${heading[1].toLowerCase()}>`, stripTags(heading[2]));
+  }
+
+  // Visible body copy. Script, style and template contents are not copy.
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+  if (bodyMatch) {
+    const visible = bodyMatch[1]
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<template[\s\S]*?<\/template>/gi, ' ')
+      .replace(/<!--[\s\S]*?-->/g, ' ');
+    record(`${page} body copy`, allowlisted(stripTags(visible)));
   }
 }
 
@@ -133,11 +166,25 @@ if (violations.length > 0) {
   for (const v of violations) {
     console.error(`  ${v.where}`);
     console.error(`    term(s): ${v.terms.join(', ')}`);
-    console.error(`    text:    ${v.context.slice(0, 160)}`);
+    // Show the words around the hit, not the start of the page: on a long body
+    // the offending phrase would otherwise never appear in the output.
+    for (const term of v.terms.slice(0, 3)) {
+      const at = v.context.toLowerCase().indexOf(term.toLowerCase());
+      const from = Math.max(0, at - 70);
+      const to = Math.min(v.context.length, at + term.length + 70);
+      console.error(
+        `    context: ${from > 0 ? '…' : ''}${v.context.slice(from, to)}${to < v.context.length ? '…' : ''}`,
+      );
+    }
   }
   console.error(
     `\nThese words are reserved by ${ORC_CITATION} for firms holding a certificate of` +
-      '\nauthorization. Rename the page, service, or heading. Do not add the word back.',
+      '\nauthorization, which this firm does not hold. OFFERING the service is the' +
+      '\ntrigger, not only performing it, so this applies to body copy as much as to' +
+      '\ntitles and headings.' +
+      '\n\nRewrite the copy. If the phrase is genuinely a lawful reference rather than' +
+      '\nan offer, add it to ORC_COPY_ALLOWLIST in src/lib/prohibited-terms.ts with a' +
+      '\nreason. Do not simply put the word back.',
   );
   process.exit(1);
 }
@@ -156,6 +203,17 @@ if (advisories.length > 0) {
   console.log('');
 }
 
+const unusedAllowlist = ORC_COPY_ALLOWLIST.filter((entry) => !allowlistHits.has(entry.phrase));
+if (unusedAllowlist.length > 0) {
+  console.log(
+    `\n${ORC_CITATION} note: ${unusedAllowlist.length} allowlist entr(y/ies) matched nothing and can be removed:`,
+  );
+  for (const entry of unusedAllowlist) console.log(`  "${entry.phrase}" — ${entry.reason}`);
+  console.log('');
+}
+
 console.log(
-  `${ORC_CITATION} check passed: ${pagesScanned} page(s) scanned, no reserved terms in titles, meta descriptions, h1s, or service names.`,
+  `${ORC_CITATION} check passed: ${pagesScanned} page(s) scanned — titles, meta descriptions, ` +
+    `headings h1-h6, body copy, service names, the firm name and the site origin. ` +
+    `No reserved terms.`,
 );
