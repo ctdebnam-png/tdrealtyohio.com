@@ -1,0 +1,26 @@
+# regulatory.yaml
+#
+# Rules that govern what the firm may sell, and which of them block work today.
+# Schema: src/schemas/regulatory.ts
+#
+# Shape of one record:
+#
+# - requirement: ""
+#   citation: ""                 # e.g. "ORC 4733.16", "OAC 3745-300"
+#   agency: ""
+#   url: null
+#   applies_to: ""
+#   fee: null                    # USD, or null when no fee is published
+#   fee_note: null
+#   blocking: false              # true when it stops the firm selling work today
+#   summary: ""
+#   source_url: null
+#   source_note: ""
+#   verified_at: null
+#   confidence: unverified
+#
+# Fields shown as "" are required: the schema rejects an empty string, so fill
+# them with a real value. Fields shown as null may stay null — and should,
+# whenever the value is unknown.
+#
+# Empty until records are pasted in. Unknown values stay null.

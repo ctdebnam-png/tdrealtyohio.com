@@ -1,0 +1,30 @@
+# pricing.yaml
+#
+# Price points. Sourced figures are read from a cited source; constructed
+# figures are derived and must show their arithmetic.
+# Schema: src/schemas/pricing.ts
+#
+# Shape of one record:
+#
+# - item: ""
+#   amount_low: null             # null when unknown. Never a plausible figure.
+#   amount_high: null
+#   unit: ""                     # e.g. "per assessment", "per boring foot"
+#   currency: USD
+#   basis: sourced               # sourced | constructed
+#   construction_method: null    # required for a constructed figure: say how it
+#                                # was derived, in enough detail to redo it
+#   source_url: null
+#   source_date: null
+#   caveat: ""
+#   source_note: ""
+#   verified_at: null
+#   confidence: unverified
+#
+# Internal only. No price renders on a public page.
+#
+# Fields shown as "" are required: the schema rejects an empty string, so fill
+# them with a real value. Fields shown as null may stay null — and should,
+# whenever the value is unknown.
+#
+# Empty until records are pasted in. Unknown values stay null.

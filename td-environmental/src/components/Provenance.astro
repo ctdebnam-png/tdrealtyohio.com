@@ -1,0 +1,33 @@
+---
+import type { Provenance } from '../schemas/provenance.js';
+
+interface Props {
+  record: Provenance;
+}
+
+const { record } = Astro.props;
+
+const tone: Record<Provenance['confidence'], string> = {
+  sourced: 'bg-moss-tint text-moss-deep',
+  constructed: 'bg-amber-100 text-amber-900',
+  unverified: 'bg-red-100 text-red-900',
+};
+---
+
+<span class="inline-flex flex-col gap-1 text-xs">
+  <span class={`w-fit rounded-sm px-2 py-0.5 font-medium ${tone[record.confidence]}`}>
+    {record.confidence}
+  </span>
+  {
+    record.source_url ? (
+      <a href={record.source_url} rel="nofollow noopener">
+        {record.source_note || record.source_url}
+      </a>
+    ) : (
+      <span class="text-ink-muted">{record.source_note || 'no source recorded'}</span>
+    )
+  }
+  <span class="text-ink-muted">
+    {record.verified_at ? `checked ${record.verified_at}` : 'URL not checked'}
+  </span>
+</span>

@@ -1,0 +1,44 @@
+---
+import { SITE, RELATED_SITE, serviceAreaSentence } from '../lib/site.js';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-20 border-t border-rule bg-moss-tint">
+  <div class="wrap grid gap-8 py-10 md:grid-cols-3">
+    <div>
+      <p class="font-semibold text-moss-deep">{SITE.name}</p>
+      <p class="mt-1 text-sm text-ink-muted">{serviceAreaSentence()}</p>
+      <p class="mt-3 text-sm">
+        <a href={SITE.phone_href} class="no-underline hover:underline">
+          Call {SITE.phone_display}
+        </a>
+      </p>
+    </div>
+
+    <nav aria-label="Footer">
+      <h2 class="text-sm font-semibold text-moss-deep">Pages</h2>
+      <ul class="mt-2 space-y-1 text-sm">
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/who-we-serve/">Who we serve</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/team/">Team</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/projects/">Projects</a></li>
+        <li><a href="/request-a-proposal/">Request a proposal</a></li>
+      </ul>
+    </nav>
+
+    <div class="text-sm text-ink-muted">
+      <h2 class="text-sm font-semibold text-moss-deep">Legal</h2>
+      <p class="mt-2">
+        {SITE.name} is a trade name of {SITE.legal_entity}.
+      </p>
+      <p class="mt-2">
+        {/* The single cross-link to the brokerage. The two sites share no navigation. */}
+        <a href={RELATED_SITE.url}>{RELATED_SITE.name} residential brokerage</a>
+      </p>
+      <p class="mt-4">© {year} {SITE.legal_entity}</p>
+    </div>
+  </div>
+</footer>

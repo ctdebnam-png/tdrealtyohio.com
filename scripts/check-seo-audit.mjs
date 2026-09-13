@@ -31,6 +31,8 @@ const SKIP_DIRS = new Set([
   'audit-output', 'audit-artifacts', 'reports', 'ops', 'ads-bot',
   'gsc', 'data', 'functions', 'docs', 'media', 'templates', 'lp',
   'thank-you', 'tests',
+  // Separate project, not part of this site's deploy surface.
+  'td-environmental',
 ]);
 
 const errors = [];
