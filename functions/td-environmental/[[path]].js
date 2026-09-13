@@ -13,6 +13,15 @@
  * _redirects are NOT applied to requests a Function serves, which is why the
  * block lives here rather than in that file.
  *
+ * Verified against Cloudflare's own runtime, not just the docs:
+ *
+ *   npx wrangler pages dev . --port 8788
+ *   curl -s -o /dev/null -w '%{http_code}\n' \
+ *     http://127.0.0.1:8788/td-environmental/src/data/services.yaml   # 404
+ *
+ * With this file moved aside, that same request returns 200 and the YAML's
+ * contents. Re-run both halves if the hosting setup ever changes.
+ *
  * This is a stopgap. The project is meant to be extracted into its own
  * repository; do that before pasting real research data into it.
  */
