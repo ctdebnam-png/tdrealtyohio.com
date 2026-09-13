@@ -2,7 +2,7 @@
 import { FORM } from '../lib/site.js';
 
 const fieldClass =
-  'mt-1 w-full rounded-sm border border-rule bg-white px-3 py-2 text-base text-ink ' +
+  'mt-1 w-full rounded-sm border border-field bg-white px-3 py-2 text-base text-ink ' +
   'placeholder:text-ink-muted focus:border-moss';
 const labelClass = 'block text-sm font-medium text-ink';
 const legendClass = 'text-base font-semibold text-moss-deep';
@@ -28,7 +28,9 @@ const legendClass = 'text-base font-semibold text-moss-deep';
     <legend class={legendClass}>The property</legend>
 
     <p>
-      <label class={labelClass} for="proposal-size">Property size</label>
+      <label class={labelClass} for="proposal-size">
+        Property size <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <input
         class={fieldClass}
         id="proposal-size"
@@ -43,7 +45,9 @@ const legendClass = 'text-base font-semibold text-moss-deep';
     </p>
 
     <p>
-      <label class={labelClass} for="proposal-current-use">Current use</label>
+      <label class={labelClass} for="proposal-current-use">
+        Current use <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <input class={fieldClass} id="proposal-current-use" name="current-use" type="text" required />
     </p>
 
@@ -64,7 +68,9 @@ const legendClass = 'text-base font-semibold text-moss-deep';
   </fieldset>
 
   <fieldset class="space-y-3">
-    <legend class={legendClass}>Does a Phase I already exist?</legend>
+    <legend class={legendClass}>
+      Does a Phase I already exist? <span class="text-sm font-normal text-ink-muted">(required)</span>
+    </legend>
     <p class="flex items-center gap-2">
       <input type="radio" id="phase-i-yes" name="existing-phase-i" value="yes" required />
       <label for="phase-i-yes">Yes, and I can send it</label>
@@ -80,7 +86,10 @@ const legendClass = 'text-base font-semibold text-moss-deep';
   </fieldset>
 
   <fieldset class="space-y-3">
-    <legend class={legendClass}>Is a lender or agency deadline driving this?</legend>
+    <legend class={legendClass}>
+      Is a lender or agency deadline driving this?{' '}
+      <span class="text-sm font-normal text-ink-muted">(required)</span>
+    </legend>
     <p class="flex items-center gap-2">
       <input type="radio" id="deadline-lender" name="deadline-driver" value="lender" required />
       <label for="deadline-lender">Yes, a lender</label>
@@ -99,13 +108,17 @@ const legendClass = 'text-base font-semibold text-moss-deep';
     <legend class={legendClass}>Timing and how to reach you</legend>
 
     <p>
-      <label class={labelClass} for="proposal-date">Date needed</label>
+      <label class={labelClass} for="proposal-date">
+        Date needed <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <input class={fieldClass} id="proposal-date" name="date-needed" type="date" required />
     </p>
 
     <div class="grid gap-4 sm:grid-cols-2">
       <p>
-        <label class={labelClass} for="proposal-name">Name</label>
+        <label class={labelClass} for="proposal-name">
+        Name <span class="font-normal text-ink-muted">(required)</span>
+      </label>
         <input
           class={fieldClass}
           id="proposal-name"
@@ -126,7 +139,9 @@ const legendClass = 'text-base font-semibold text-moss-deep';
         />
       </p>
       <p>
-        <label class={labelClass} for="proposal-email">Email</label>
+        <label class={labelClass} for="proposal-email">
+        Email <span class="font-normal text-ink-muted">(required)</span>
+      </label>
         <input
           class={fieldClass}
           id="proposal-email"
@@ -137,7 +152,9 @@ const legendClass = 'text-base font-semibold text-moss-deep';
         />
       </p>
       <p>
-        <label class={labelClass} for="proposal-phone">Phone</label>
+        <label class={labelClass} for="proposal-phone">
+        Phone <span class="font-normal text-ink-muted">(required)</span>
+      </label>
         <input
           class={fieldClass}
           id="proposal-phone"

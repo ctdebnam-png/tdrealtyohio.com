@@ -1,8 +1,22 @@
 @import 'tailwindcss';
 
 /*
- * Design tokens. Every foreground/background pair used for text meets WCAG 2.2
- * AA contrast (4.5:1 for body text, 3:1 for large text and UI borders).
+ * Design tokens. Measured, not assumed — every ratio below is against the
+ * surface the colour is actually used on.
+ *
+ *   ink on white            16.86:1   body text            (AA needs 4.5)
+ *   ink-muted on white       7.47:1   secondary text       (AA needs 4.5)
+ *   ink-muted on paper       7.16:1
+ *   moss on white            9.60:1   links
+ *   moss-deep on white      13.69:1   headings
+ *   moss-deep on moss-tint  11.88:1   headings on the tinted band
+ *   clay on white            6.75:1   accents
+ *   white on moss-deep      13.69:1   buttons
+ *   field on white           4.41:1   form control borders (SC 1.4.11 needs 3)
+ *
+ * --color-rule is decorative only: at 1.41:1 on white it is a hairline between
+ * blocks, never the sole boundary of an interactive control. Form controls use
+ * --color-field for exactly that reason.
  */
 @theme {
   --color-ink: #10201c;
@@ -13,6 +27,7 @@
   --color-clay: #8a4b23;
   --color-paper: #fbfaf7;
   --color-rule: #d4dbd6;
+  --color-field: #6b7c74;
 
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;

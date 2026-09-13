@@ -19,7 +19,15 @@ export const priceItem = provenance
     amount_low: nullableNumber,
     amount_high: nullableNumber,
     unit: z.string().min(1),
-    currency: z.string().length(3).default('USD'),
+    /**
+     * ISO 4217, uppercase. Intl.NumberFormat throws a RangeError on any other
+     * three-character string, which would fail the whole build over one
+     * internal-only row.
+     */
+    currency: z
+      .string()
+      .regex(/^[A-Z]{3}$/, 'currency must be a three-letter uppercase ISO 4217 code, e.g. USD')
+      .default('USD'),
     basis: pricingBasis,
     construction_method: nullableText,
     source_date: z.string().nullable().default(null),
@@ -36,11 +44,19 @@ export const priceItem = provenance
           'a constructed figure must carry a construction_method explaining how it was derived',
       });
     }
-    if (record.basis === 'sourced' && hasFigure && !record.source_url && !record.source_date) {
+    // A date is not a citation. A sourced figure needs somewhere it can be
+    // read: a URL, or a source_note substantial enough to retrace.
+    if (
+      record.basis === 'sourced' &&
+      hasFigure &&
+      !record.source_url &&
+      record.source_note.trim().length < 20
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['source_url'],
-        message: 'a sourced figure must carry the source it was read from',
+        message:
+          'a sourced figure must carry a source_url, or a source_note naming the document it was read in (source_date alone is not a citation)',
       });
     }
     if (

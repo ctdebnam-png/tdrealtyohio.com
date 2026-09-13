@@ -21,7 +21,12 @@ const td = 'border border-rule px-3 py-2 align-top text-sm';
       </p>
     ) : (
       segments.map((segment) => (
-        <section class="mt-10 overflow-x-auto">
+        <section
+          class="mt-10 overflow-x-auto"
+          tabindex="0"
+          role="region"
+          aria-label={`${SEGMENT_LABELS[segment].plural} call list, scrollable`}
+        >
           <table class="w-full min-w-[60rem]">
             <caption class="mb-2 text-lg font-semibold text-moss-deep">
               {SEGMENT_LABELS[segment].plural}

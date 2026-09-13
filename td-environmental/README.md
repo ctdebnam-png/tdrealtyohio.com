@@ -62,9 +62,13 @@ retrace it. "Quoted by phone, 12 March, Dana at the front desk" is a good note.
 "Website" is not.
 
 **`verified_at`** — written by the link checker, not by hand. It records the
-date `source_url` last answered 2xx. A record with a `source_url` and a null
-`verified_at` has a URL nobody has checked, and the checker will not let it be
-published from a public page.
+date on which **every** URL on the record answered 2xx. It belongs to the
+record, not to one field: a record whose `url` is live but whose `source_url` is
+dead is not a verified record, so it is not stamped. When a URL that previously
+answered 2xx goes dead, the checker clears the date back to null rather than
+leaving a stamp that claims the source is still reachable. A record with a
+`source_url` and a null `verified_at` has a URL nobody has checked, and the
+checker will not let it be published from a public page.
 
 **`confidence`** —
 
@@ -123,6 +127,15 @@ with no photo renders without one rather than with a stand-in.
 **The files ship empty.** They hold documented field shapes in comments and no
 records. Paste records in; do not seed them with examples.
 
+In those templates, a field shown as `""` is required and must be filled with a
+real value — the schema rejects an empty string, `source_note` included. A field
+shown as `null` may stay null, and should whenever the value is unknown.
+
+`slug` in `services.yaml` and `id` in `team.yaml` must be unique: two records
+sharing one would silently build the same page twice, the second overwriting the
+first. Validation rejects the duplicate instead. A `photo` path in `team.yaml`
+is checked against `public/` so a profile cannot ship a broken image.
+
 ### Publishing rules encoded in the schemas
 
 - A service with `delivery: blocked` renders on `/internal/services/` only. It
@@ -135,6 +148,17 @@ records. Paste records in; do not seed them with examples.
   `/who-we-serve/[segment]/` pages describe segments, not named firms; their
   copy lives in `src/lib/segments.ts` and the segment taxonomy comes from the
   buyers schema, so the two cannot drift apart.
+- A credential reaches the public "Credentials held" strip only once `earned_at`
+  is set. `displayable_on_join` puts it on `/about/certifications/` with its
+  status stated — held since a date, or carried by someone joining — because a
+  credential the firm does not yet hold must never read as one it holds.
+
+**One thing no gate enforces:** the positioning copy on the home page
+(`src/pages/index.astro`) and the segment copy in `src/lib/segments.ts` are
+written by hand, not derived from `services.yaml`. If a service is marked
+`blocked`, its page disappears from the public site but that prose does not
+change. Read `/internal/services/` whenever a blocker is added, and check that
+nothing on the public site still promises the blocked work.
 
 ---
 
@@ -156,6 +180,12 @@ status.
 It runs as a prebuild step and weekly as a GitHub Action
 (`.github/workflows/link-check.yml`), which commits refreshed `verified_at`
 dates back to the repository and goes red on a broken public link.
+
+⚠️ **The workflows only run once this project is its own repository.** GitHub
+reads workflows from `.github/workflows/` at the *repository* root. While this
+project lives in a subdirectory of `tdrealtyohio.com`, neither workflow is
+triggered by anything. The local gates (`npm run build`, `npm run check:all`)
+are the only enforcement until the extraction happens.
 
 ```bash
 npm run check:links            # check, write verified_at, gate the build
@@ -189,6 +219,23 @@ Three layers enforce it:
 
 Body copy is not scanned. Describing a client's engineer, or a report prepared
 by one, is lawful; the prohibition is on how the firm names itself and its work.
+
+A service page's `description` is body copy **and** its default meta
+description, and meta descriptions are scanned. When a description lawfully
+names an engineer, put a reserved-term-free summary in the service's
+`meta_description` field; the page lead keeps the full description and the
+build passes. Without that field the only way out would be to falsify the
+scope copy, which is the opposite of the point.
+
+Matching is done on a folded form of each string — Unicode-normalised, with
+zero-width characters removed and common Cyrillic, Greek, and fullwidth
+homoglyphs mapped to ASCII — so `engin<zero-width space>eering` and
+`еngineering` with a Cyrillic е are caught rather than waved through.
+
+A bare "survey" is **not** blocked. ORC 4733.16 reserves "surveyor" and
+"surveying"; "survey" is ordinary Phase I vocabulary ("windshield survey",
+"site reconnaissance survey"). The check prints those occurrences as an
+advisory for a human to confirm, and does not fail the build on them.
 
 ---
 
@@ -233,6 +280,15 @@ from the sitemap (`astro.config.mjs`), disallowed in `robots.txt`, and served
 with `X-Robots-Tag: noindex` (`netlify.toml`). They are not linked from any
 public page.
 
+**None of that is access control.** Those three measures keep the pages out of
+search results; they do not stop anyone who knows or guesses a URL from reading
+the prospect list, the subcontractor records, and the pricing. Anyone who can
+reach the site can reach `/internal/pricing/`. If that matters — and once real
+records land, it does — put a real control in front of it: Netlify's
+password protection or role-based access on the `/internal/*` path, or an edge
+function that checks a header, are the smallest changes that would actually
+restrict it. Until then, treat everything on `/internal/` as published.
+
 ### Cross-linking
 
 One footer link to tdrealtyohio.com and one paragraph on `/about/` explaining
@@ -253,9 +309,21 @@ has to name its destination — `scripts/check-link-text.ts` fails the build on
 
 ## Deploying
 
-Static output to Netlify; `netlify.toml` holds the build command, the publish
-directory, the Node version, and the headers. Cloudflare Pages works the same
-way: build command `npm run build`, output directory `dist`.
+Static output to **Netlify**; `netlify.toml` holds the build command, the
+publish directory, the Node version, the headers, and the redirects.
+
+Cloudflare Pages can serve the same `dist/`, with two things that do not carry
+over, both of which fail silently:
+
+- **`netlify.toml` is ignored.** The security headers and the
+  `X-Robots-Tag: noindex` on `/internal/` come with it, so port them to a
+  `_headers` file in `public/` before switching.
+- **Netlify Forms do not exist there.** Both forms post to their own URL and
+  rely on Netlify capturing them at deploy time. On Cloudflare Pages that POST
+  hits a static asset and the submission is lost with no error shown to the
+  person who filled it in. Set `FORM.action` in `src/lib/site.ts` to a real
+  endpoint — a Pages Function, for instance — and set `FORM.netlify` to false
+  before moving.
 
 Set `SITE_URL` in the host's build environment. The default in
 `src/lib/site.ts` is a working value — **confirm the domain before the first

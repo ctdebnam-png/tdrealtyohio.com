@@ -1,16 +1,23 @@
 ---
+import { SITE } from '../lib/site.js';
+
+/**
+ * Shown on a public page when a data-driven section has no records yet.
+ *
+ * This is read by clients, so it says what a visitor needs — not what a
+ * developer needs. Repository paths, file names, and instructions to add
+ * records belong on /internal/, never here.
+ */
 interface Props {
-  /** What is missing, in the words of the data file it comes from. */
-  what: string;
-  file: string;
+  /** A complete sentence in the firm's voice, addressed to a visitor. */
+  message: string;
 }
 
-const { what, file } = Astro.props;
+const { message } = Astro.props;
 ---
 
-<p class="rounded-sm border border-dashed border-rule bg-white p-5 text-ink-muted">
-  No {what} are published yet. They appear here once records are added to
-  <code class="rounded-sm bg-moss-tint px-1 py-0.5 text-ink">src/data/{file}</code>.
-  Nothing is shown in the meantime, because nothing here is invented to fill the
-  space.
+<p class="rounded-sm border border-rule bg-white p-5 text-ink-muted">
+  {message}
+  <a href={SITE.phone_href} class="whitespace-nowrap">Call {SITE.phone_display}</a>
+  and we will tell you plainly what we can take on today.
 </p>

@@ -6,16 +6,39 @@ import { getTeam, getPublishableCredentials } from '../../lib/data.js';
 const team = getTeam();
 const credentials = getPublishableCredentials();
 
-/** Certifications listed on a person's record, plus any held credential joined by holder. */
+/**
+ * Certifications listed on a person's record, plus any publishable credential
+ * joined from credentials.yaml.
+ *
+ * The two sources are written differently — "VAP CP189" by hand versus
+ * "Certified Professional (Ohio EPA) — #189" from the join — so deduplicating
+ * on the rendered string would print the same credential twice. Records are
+ * matched on the credential name instead, and the joined form wins because it
+ * carries the issuing body and the licence number.
+ */
+const normalise = (value: string): string =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+
 const certificationsFor = (id: string, listed: string[]): string[] => {
   const joined = credentials
     .filter((credential) => credential.holder === id)
-    .map((credential) =>
-      credential.license_number
+    .map((credential) => ({
+      key: normalise(credential.name),
+      text: credential.license_number
         ? `${credential.name} (${credential.issuing_body}) — #${credential.license_number}`
         : `${credential.name} (${credential.issuing_body})`,
-    );
-  return [...new Set([...listed, ...joined])];
+    }));
+
+  const joinedKeys = new Set(joined.map((entry) => entry.key));
+  const handWritten = listed.filter((entry) => {
+    const key = normalise(entry);
+    return !joinedKeys.has(key) && ![...joinedKeys].some((k) => key.includes(k) || k.includes(key));
+  });
+
+  return [...joined.map((entry) => entry.text), ...handWritten];
 };
 ---
 
@@ -32,7 +55,7 @@ const certificationsFor = (id: string, listed: string[]): string[] => {
     {
       team.length === 0 ? (
         <div class="mt-8">
-          <EmptyState what="team members" file="team.yaml" />
+          <EmptyState message="Profiles of the people who do the work are published here as each is finalised." />
         </div>
       ) : (
         <div class="mt-10 space-y-14">

@@ -19,10 +19,51 @@
  */
 export const PROHIBITED_TERMS = ['engineer', 'engineering', 'surveyor', 'surveying'] as const;
 
-export const PROHIBITED_TERM_PATTERN = /engineer|surveyor|surveying/i;
+/**
+ * Homoglyphs and invisible characters defeat a plain ASCII match: "enginеering"
+ * with a Cyrillic е, or "engi<zero-width space>neering", reads identically to a
+ * person and passes a naive regex. Every string is folded through this before
+ * matching, so the check cannot be walked around by a paste from a word
+ * processor or by a deliberate substitution.
+ */
+const INVISIBLE = /[\u00ad\u200b-\u200f\u2060\ufeff]/g;
+const HOMOGLYPHS: Record<string, string> = {
+  // Cyrillic
+  а: 'a', е: 'e', і: 'i', ѕ: 's', ո: 'n', о: 'o', р: 'p', с: 'c', у: 'y', ԛ: 'q', ѵ: 'v',
+  // Greek
+  ε: 'e', ι: 'i', ν: 'v', ο: 'o', ρ: 'p', υ: 'u',
+  // Fullwidth latin
+  ｅ: 'e', ｇ: 'g', ｉ: 'i', ｎ: 'n', ｒ: 'r', ｓ: 's', ｖ: 'v', ｙ: 'y',
+};
 
-/** Global variant for collecting every hit in a string. Reset lastIndex before use. */
+export const foldForMatching = (value: string): string =>
+  value
+    .normalize('NFKC')
+    .replace(INVISIBLE, '')
+    .replace(/[^\x00-\x7f]/g, (char) => HOMOGLYPHS[char.toLowerCase()] ?? char);
+
+const CORE = /engineer|surveyor|surveying/i;
+
+export const PROHIBITED_TERM_PATTERN = {
+  test: (value: string): boolean => CORE.test(foldForMatching(value)),
+};
+
+/** Every hit in a string, matched against the folded form. */
 export const prohibitedTermMatches = (value: string): string[] =>
-  [...value.matchAll(/[\w-]*(?:engineer|surveyor|surveying)[\w-]*/gi)].map((m) => m[0]);
+  [...foldForMatching(value).matchAll(/[\w-]*(?:engineer|surveyor|surveying)[\w-]*/gi)].map(
+    (match) => match[0],
+  );
+
+/**
+ * Advisory only. ORC 4733.16 reserves "surveyor" and "surveying"; a bare
+ * "survey" is lawful and is ordinary Phase I vocabulary ("windshield survey",
+ * "site reconnaissance survey"). These are surfaced for a human to confirm
+ * they do not read as an offer to practise land surveying — they never fail
+ * the build.
+ */
+export const ADVISORY_TERM_PATTERN = /\bsurvey(s|ed)?\b/i;
+
+export const advisoryTermMatches = (value: string): string[] =>
+  [...foldForMatching(value).matchAll(/\bsurvey(?:s|ed)?\b/gi)].map((match) => match[0]);
 
 export const ORC_CITATION = 'ORC 4733.16';

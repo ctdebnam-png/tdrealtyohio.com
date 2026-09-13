@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CredentialStrip from '../components/CredentialStrip.astro';
 import ServiceTile from '../components/ServiceTile.astro';
-import EmptyState from '../components/EmptyState.astro';
 import { SITE, serviceAreaSentence } from '../lib/site.js';
 import { getPublicServices, SEGMENT_LABELS } from '../lib/data.js';
 import { SEGMENT_COPY } from '../lib/segments.js';
@@ -49,29 +48,31 @@ const highlighted = (['consulting_firm', 'lender', 'developer'] as const).map((s
 
   <CredentialStrip />
 
-  <section aria-labelledby="services-heading" class="wrap py-14">
-    <h2 id="services-heading" class="text-2xl">What we do</h2>
-    {
-      tiles.length > 0 ? (
-        <>
-          <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {tiles.map((service) => (
-              <ServiceTile service={service} />
-            ))}
-          </ul>
-          {services.length > tiles.length && (
-            <p class="mt-6">
-              <a href="/services/">All {services.length} services with scope and deliverables</a>
-            </p>
-          )}
-        </>
-      ) : (
-        <div class="mt-6">
-          <EmptyState what="services" file="services.yaml" />
-        </div>
-      )
-    }
-  </section>
+  {
+    /*
+     * No services published means no "What we do" section. An empty heading
+     * with an apology under it is worse than no heading: this page is read by
+     * lenders and consulting firms, and a section that says nothing invites
+     * them to conclude the firm does nothing.
+     */
+    tiles.length > 0 && (
+      <section aria-labelledby="services-heading" class="wrap py-14">
+        <h2 id="services-heading" class="text-2xl">
+          What we do
+        </h2>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {tiles.map((service) => (
+            <ServiceTile service={service} />
+          ))}
+        </ul>
+        {services.length > tiles.length && (
+          <p class="mt-6">
+            <a href="/services/">All {services.length} services with scope and deliverables</a>
+          </p>
+        )}
+      </section>
+    )
+  }
 
   <section aria-labelledby="buyers-heading" class="border-y border-rule bg-white">
     <div class="wrap py-14">

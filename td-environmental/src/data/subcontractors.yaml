@@ -24,4 +24,8 @@
 #   verified_at: null             # written by scripts/check-links.ts
 #   confidence: unverified        # sourced | constructed | unverified
 #
+# Fields shown as "" are required: the schema rejects an empty string, so fill
+# them with a real value. Fields shown as null may stay null — and should,
+# whenever the value is unknown.
+#
 # Empty until records are pasted in. Unknown values stay null.

@@ -25,7 +25,11 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { prohibitedTermMatches, ORC_CITATION } from '../src/lib/prohibited-terms.js';
+import {
+  prohibitedTermMatches,
+  advisoryTermMatches,
+  ORC_CITATION,
+} from '../src/lib/prohibited-terms.js';
 import { SITE, SITE_URL } from '../src/lib/site.js';
 import { getServices } from '../src/lib/data.js';
 
@@ -34,10 +38,14 @@ const distDir = join(root, 'dist');
 
 type Violation = { where: string; context: string; terms: string[] };
 const violations: Violation[] = [];
+const advisories: Violation[] = [];
 
 const record = (where: string, context: string) => {
   const terms = prohibitedTermMatches(context);
   if (terms.length > 0) violations.push({ where, context: context.trim(), terms });
+
+  const advisory = advisoryTermMatches(context);
+  if (advisory.length > 0) advisories.push({ where, context: context.trim(), terms: advisory });
 };
 
 const htmlFiles = (dir: string): string[] => {
@@ -90,16 +98,34 @@ for (const file of files) {
   const title = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   if (title) record(`${page} <title>`, stripTags(title[1]));
 
-  for (const meta of html.matchAll(
-    /<meta[^>]+(?:name=["'](?:description)["']|property=["']og:(?:description|title|site_name)["'])[^>]*>/gi,
-  )) {
-    const content = meta[0].match(/content=["']([^"']*)["']/i);
-    if (content) record(`${page} ${meta[0].slice(0, 40)}…`, decode(content[1]));
+  // Attribute values can contain '>' and the other quote character, so match
+  // each tag by its quoted attributes rather than by scanning to the first '>'.
+  for (const meta of html.matchAll(/<meta\s+((?:[^>"']|"[^"]*"|'[^']*')*)>/gi)) {
+    const attributes = meta[1];
+    const name = attributes.match(/(?:name|property)\s*=\s*("([^"]*)"|'([^']*)')/i);
+    const key = (name?.[2] ?? name?.[3] ?? '').toLowerCase();
+    if (!['description', 'og:description', 'og:title', 'og:site_name'].includes(key)) continue;
+    const content = attributes.match(/content\s*=\s*("([^"]*)"|'([^']*)')/i);
+    const value = content?.[2] ?? content?.[3];
+    if (value !== undefined) record(`${page} <meta ${key}>`, decode(value));
   }
 
   for (const h1 of html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/gi)) {
     record(`${page} <h1>`, stripTags(h1[1]));
   }
+}
+
+// A scan of an empty or half-built dist would pass vacuously. Refuse to be
+// the gate that waves through a build that never happened.
+if (pagesScanned === 0) {
+  console.error(`No HTML found under ${distDir}. The build output is missing or empty.`);
+  process.exit(1);
+}
+if (!files.some((file) => relative(distDir, file) === 'index.html')) {
+  console.error(
+    `${distDir} has ${pagesScanned} page(s) but no index.html — the build output looks incomplete.`,
+  );
+  process.exit(1);
 }
 
 if (violations.length > 0) {
@@ -114,6 +140,20 @@ if (violations.length > 0) {
       '\nauthorization. Rename the page, service, or heading. Do not add the word back.',
   );
   process.exit(1);
+}
+
+if (advisories.length > 0) {
+  console.log(
+    `\n${ORC_CITATION} advisory: "survey" appears in ${advisories.length} title, heading, or service name.`,
+  );
+  console.log(
+    'That word is not reserved and is ordinary Phase I vocabulary. Confirm each one',
+  );
+  console.log('does not read as an offer to practise land surveying. This does not fail the build.');
+  for (const advisory of advisories) {
+    console.log(`  ${advisory.where}: ${advisory.context.slice(0, 100)}`);
+  }
+  console.log('');
 }
 
 console.log(

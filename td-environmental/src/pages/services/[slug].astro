@@ -21,13 +21,22 @@ interface Props {
 
 const { service } = Astro.props;
 
+/**
+ * ORC 4733.16 is enforced against meta descriptions but not body copy, so a
+ * description that lawfully names a client's engineer can stay in the page
+ * lead while `meta_description` carries a reserved-term-free summary. Without
+ * that separation, one lawful sentence would block the build with no way out
+ * but to falsify the scope copy.
+ */
+const metaDescription = service.meta_description ?? service.description;
+
 const buyers = service.typical_buyer_segments.map((segment) => ({
   slug: SEGMENT_LABELS[segment].slug,
   label: SEGMENT_LABELS[segment].plural,
 }));
 ---
 
-<BaseLayout title={service.name} description={service.description}>
+<BaseLayout title={service.name} description={metaDescription}>
   <div class="wrap py-12">
     <nav aria-label="Breadcrumb" class="text-sm">
       <ol class="flex gap-2 text-ink-muted">
@@ -42,8 +51,30 @@ const buyers = service.typical_buyer_segments.map((segment) => ({
 
     <div class="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_24rem]">
       <div class="prose-body">
-        <section aria-labelledby="scope">
-          <h2 id="scope" class="text-xl">What is delivered</h2>
+        {
+          service.problem && (
+            <section aria-labelledby="problem">
+              <h2 id="problem" class="text-xl">
+                The problem this solves
+              </h2>
+              <p>{service.problem}</p>
+            </section>
+          )
+        }
+
+        {
+          service.scope && (
+            <section aria-labelledby="scope" class={service.problem ? 'mt-8' : ''}>
+              <h2 id="scope" class="text-xl">
+                What the work covers
+              </h2>
+              <p>{service.scope}</p>
+            </section>
+          )
+        }
+
+        <section aria-labelledby="deliverable" class={service.problem || service.scope ? 'mt-8' : ''}>
+          <h2 id="deliverable" class="text-xl">What is delivered</h2>
           <p>{service.deliverable}</p>
         </section>
 
@@ -95,7 +126,7 @@ const buyers = service.typical_buyer_segments.map((segment) => ({
 
       <ContactForm
         context={`service:${service.slug}`}
-        heading={`Ask about ${service.name.toLowerCase()}`}
+        heading={`Ask about ${service.name}`}
         id={`contact-${service.slug}`}
       />
     </div>

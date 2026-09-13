@@ -17,7 +17,7 @@ const {
 } = Astro.props;
 
 const fieldClass =
-  'mt-1 w-full rounded-sm border border-rule bg-white px-3 py-2 text-base text-ink ' +
+  'mt-1 w-full rounded-sm border border-field bg-white px-3 py-2 text-base text-ink ' +
   'placeholder:text-ink-muted focus:border-moss';
 const labelClass = 'block text-sm font-medium text-ink';
 ---
@@ -25,8 +25,8 @@ const labelClass = 'block text-sm font-medium text-ink';
 <section aria-labelledby={`${id}-heading`} class="rounded-sm border border-rule bg-white p-6">
   <Heading id={`${id}-heading`} class="text-xl">{heading}</Heading>
   <p class="mt-2 max-w-prose text-sm text-ink-muted">
-    Six fields. A person reads every one of them and answers the same day where
-    the working day allows.
+    Six fields, five of them required. A person reads every one of them and
+    answers the same day where the working day allows.
   </p>
 
   <form
@@ -48,7 +48,9 @@ const labelClass = 'block text-sm font-medium text-ink';
     </p>
 
     <p>
-      <label class={labelClass} for={`${id}-name`}>Name</label>
+      <label class={labelClass} for={`${id}-name`}>
+        Name <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <input
         class={fieldClass}
         id={`${id}-name`}
@@ -71,7 +73,9 @@ const labelClass = 'block text-sm font-medium text-ink';
     </p>
 
     <p>
-      <label class={labelClass} for={`${id}-phone`}>Phone</label>
+      <label class={labelClass} for={`${id}-phone`}>
+        Phone <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <input
         class={fieldClass}
         id={`${id}-phone`}
@@ -83,7 +87,9 @@ const labelClass = 'block text-sm font-medium text-ink';
     </p>
 
     <p>
-      <label class={labelClass} for={`${id}-email`}>Email</label>
+      <label class={labelClass} for={`${id}-email`}>
+        Email <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <input
         class={fieldClass}
         id={`${id}-email`}
@@ -95,7 +101,9 @@ const labelClass = 'block text-sm font-medium text-ink';
     </p>
 
     <p class="sm:col-span-2">
-      <label class={labelClass} for={`${id}-location`}>County or property address</label>
+      <label class={labelClass} for={`${id}-location`}>
+        County or property address <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <input
         class={fieldClass}
         id={`${id}-location`}
@@ -111,7 +119,9 @@ const labelClass = 'block text-sm font-medium text-ink';
     </p>
 
     <p class="sm:col-span-2">
-      <label class={labelClass} for={`${id}-need`}>What do you need?</label>
+      <label class={labelClass} for={`${id}-need`}>
+        What do you need? <span class="font-normal text-ink-muted">(required)</span>
+      </label>
       <select class={fieldClass} id={`${id}-need`} name="need" required>
         <option value="">Choose one</option>
         {CONTACT_NEEDS.map((need) => <option value={need}>{need}</option>)}

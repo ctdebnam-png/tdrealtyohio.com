@@ -32,4 +32,24 @@ export const teamMember = provenance
   .superRefine(requireSourceWhenSourced);
 
 export type TeamMember = z.infer<typeof teamMember>;
-export const team = z.array(teamMember);
+
+/**
+ * One record per holder. A repeated id would make the credentials join on
+ * /about/team/ print one person's certifications under every record sharing
+ * it, and would emit duplicate DOM ids for the aria-labelledby headings.
+ */
+export const team = z.array(teamMember).superRefine((records, ctx) => {
+  const seen = new Map<string, number>();
+  records.forEach((record, index) => {
+    const first = seen.get(record.id);
+    if (first === undefined) {
+      seen.set(record.id, index);
+      return;
+    }
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: [index, 'id'],
+      message: `duplicate id "${record.id}" (already used by record ${first}); one record per person`,
+    });
+  });
+});

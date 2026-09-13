@@ -82,10 +82,20 @@ const labelFor = (record: Record<string, unknown>, index: number): string => {
 
 const documents = new Map<string, Document>();
 const entries: Entry[] = [];
+const unreadable: { file: string; error: string }[] = [];
 
 for (const { file } of DATA_FILES) {
   const path = join(DATA_DIR, file);
   const doc = parseDocument(readFileSync(path, 'utf8'));
+
+  // A duplicate key, an unclosed quote, a tab indent — ordinary paste errors.
+  // A file with errors cannot be stringified, so it is never written back;
+  // recording it here keeps one bad file from aborting the whole run after
+  // other files have already been rewritten.
+  if (doc.errors.length > 0) {
+    unreadable.push({ file, error: doc.errors[0].message });
+    continue;
+  }
   documents.set(file, doc);
 
   const contents = doc.contents;
@@ -121,7 +131,7 @@ entries.push({
 
 // ------------------------------------------------------------------ fetch ---
 
-const fetchStatus = async (url: string): Promise<{ status: number | null; error: string | null }> => {
+const fetchOnce = async (url: string): Promise<{ status: number | null; error: string | null }> => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
@@ -141,6 +151,20 @@ const fetchStatus = async (url: string): Promise<{ status: number | null; error:
   } finally {
     clearTimeout(timer);
   }
+};
+
+/**
+ * One retry, and only for a transport failure: a DNS blip or a dropped
+ * connection should not fail a deploy, but a server that answers 404 twice is
+ * answering 404. A real status code is never retried.
+ */
+const fetchStatus = async (url: string): Promise<{ status: number | null; error: string | null }> => {
+  const first = await fetchOnce(url);
+  if (first.status !== null) return first;
+  const second = await fetchOnce(url);
+  return second.status !== null
+    ? second
+    : { status: null, error: `${second.error} (two attempts)` };
 };
 
 const runPool = async (urls: string[]): Promise<Map<string, { status: number | null; error: string | null }>> => {
@@ -192,20 +216,54 @@ const main = async () => {
 
   // ------------------------------------------------- write verified_at back ---
   if (WRITE) {
-    const touched = new Set<string>();
+    // verified_at belongs to the RECORD, so it may only be stamped when every
+    // URL on that record answered 2xx. A record whose `url` is live but whose
+    // `source_url` is dead is not a verified record, and stamping it would
+    // assert a check that did not pass. When any URL fails, an existing stamp
+    // is cleared: a date left over from a previous run would claim the source
+    // is still reachable.
+    const byRecord = new Map<string, Result[]>();
     for (const result of results) {
-      if (!result.ok || result.index < 0) continue;
-      const doc = documents.get(result.file);
-      if (!doc || !isSeq(doc.contents)) continue;
-      const item = doc.contents.items[result.index];
-      if (!isMap(item)) continue;
-      if (item.get('verified_at') === today) continue;
-      item.set('verified_at', today);
-      touched.add(result.file);
+      if (result.index < 0) continue;
+      const key = `${result.file}#${result.index}`;
+      const group = byRecord.get(key);
+      if (group) group.push(result);
+      else byRecord.set(key, [result]);
     }
+
+    const touched = new Set<string>();
+    let cleared = 0;
+    for (const [key, group] of byRecord) {
+      const file = key.slice(0, key.lastIndexOf('#'));
+      const index = Number(key.slice(key.lastIndexOf('#') + 1));
+      const doc = documents.get(file);
+      if (!doc || !isSeq(doc.contents)) continue;
+      const item = doc.contents.items[index];
+      if (!isMap(item)) continue;
+
+      const allOk = group.every((result) => result.ok);
+      const current = item.get('verified_at');
+
+      if (allOk) {
+        if (current === today) continue;
+        item.set('verified_at', today);
+        touched.add(file);
+      } else if (current !== null && current !== undefined) {
+        item.set('verified_at', null);
+        touched.add(file);
+        cleared += 1;
+      }
+    }
+
     for (const file of touched) {
-      writeFileSync(join(DATA_DIR, file), documents.get(file)!.toString({ lineWidth: 0, flowCollectionPadding: false }));
-      console.log(`\n  wrote verified_at: ${today} into ${file}`);
+      writeFileSync(
+        join(DATA_DIR, file),
+        documents.get(file)!.toString({ lineWidth: 0, flowCollectionPadding: false }),
+      );
+      console.log(`\n  updated verified_at in ${file}`);
+    }
+    if (cleared > 0) {
+      console.log(`  cleared verified_at on ${cleared} record(s) whose URL no longer answers 2xx`);
     }
   }
 
@@ -219,6 +277,7 @@ const main = async () => {
         checked_at: today,
         checked: results.length,
         unique_urls: unique.length,
+        unreadable_files: unreadable,
         broken: broken.map(({ file, record, field, url, status, error, public: isPublic }) => ({
           file,
           record,
@@ -251,11 +310,22 @@ const main = async () => {
     }
   }
 
+  if (unreadable.length > 0) {
+    console.error(`\n${unreadable.length} data file(s) could not be parsed and were skipped:`);
+    for (const bad of unreadable) console.error(`  ${bad.file}: ${bad.error}`);
+    console.error('Their URLs were not checked and no verified_at was written for them.');
+  }
+
   if (blocking.length > 0) {
     console.error(
       `\nBuild stopped: ${blocking.length} URL(s) referenced from a public page did not answer 2xx.\n` +
         'A URL that has not been checked is not published. Fix or null the URL and re-run.',
     );
+    process.exit(1);
+  }
+
+  if (unreadable.length > 0) {
+    console.error('\nBuild stopped: a data file could not be parsed.');
     process.exit(1);
   }
 };

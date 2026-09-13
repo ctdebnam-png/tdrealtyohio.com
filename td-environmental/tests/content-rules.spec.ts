@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { PUBLIC_ROUTES, INTERNAL_ROUTES } from './routes.js';
+import { PUBLIC_ROUTES, INTERNAL_ROUTES, sitemapRoutes } from './routes.js';
 
 /**
  * The rules that are not about markup: what may and may not be said, and what
@@ -20,6 +20,28 @@ test('no page title or h1 carries a term reserved by ORC 4733.16', async ({ page
     for (const heading of await page.locator('h1').allTextContents()) {
       expect(heading, `${route} h1`).not.toMatch(PROHIBITED);
     }
+  }
+});
+
+test('the sitemap lists every public page and nothing else', async () => {
+  const inSitemap = new Set(sitemapRoutes());
+  const expected = PUBLIC_ROUTES.filter((route) => route !== '/404/');
+
+  for (const route of expected) {
+    expect(inSitemap.has(route), `${route} should be in the sitemap`).toBe(true);
+  }
+  for (const route of inSitemap) {
+    expect(route.startsWith('/internal/'), `${route} must not be in the sitemap`).toBe(false);
+  }
+});
+
+test('no public page shows a repository path or a data file name', async ({ page }) => {
+  // Empty states are read by clients. Developer instructions belong on /internal/.
+  for (const route of PUBLIC_ROUTES) {
+    await page.goto(route);
+    const text = (await page.locator('body').innerText()).toLowerCase();
+    expect(text, `${route} leaks a data path`).not.toContain('src/data');
+    expect(text, `${route} leaks a file name`).not.toMatch(/\.yaml\b/);
   }
 });
 
@@ -75,7 +97,7 @@ test('the contact form appears on the pages that must carry it', async ({ page }
   }
 });
 
-test('the proposal form asks the eight scoping questions', async ({ page }) => {
+test('the proposal form asks the six scoping questions', async ({ page }) => {
   await page.goto('/request-a-proposal/');
   for (const field of [
     'property-size',
