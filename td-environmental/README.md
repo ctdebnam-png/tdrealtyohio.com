@@ -277,6 +277,16 @@ field saying "we use them for engineering support" still fails the build, and a
 service name in `services.yaml` gets no exemption at all — that is this firm's
 own offer, and the schema rejects it outright.
 
+**`regulatory.yaml` text is exempt on `/internal/` pages only.** That file records
+the rules the firm must obey — including ORC 4733.16 itself, which cannot be
+described without using the words it reserves, and whose administering body is
+literally called the Ohio State Board of Registration for Professional Engineers
+and Surveyors. Quoting a statute on an internal working page is not an offer of
+service. Regulatory records render on `/internal/regulatory/` and nowhere else,
+so the exemption is scoped to pages under `/internal/`: **the same sentence on a
+public page still fails the build.** Permitted passages are counted in the
+report.
+
 Body copy is otherwise scanned **fail-closed**: any occurrence fails, lawful or not. No
 pattern can separate "we provide engineering studies" — an offer, unlawful
 without a certificate of authorization — from "delivered to your engineer", a
