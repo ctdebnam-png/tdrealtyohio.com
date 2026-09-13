@@ -36,7 +36,13 @@ import {
   ORC_CITATION,
 } from '../src/lib/prohibited-terms.js';
 import { SITE, SITE_URL } from '../src/lib/site.js';
-import { getServices } from '../src/lib/data.js';
+import {
+  getServices,
+  getSubcontractors,
+  getBuyers,
+  getMarketLanguage,
+  getRegulatory,
+} from '../src/lib/data.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = join(root, 'dist');
@@ -75,14 +81,91 @@ const decode = (value: string): string =>
 const stripTags = (value: string): string => decode(value.replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ');
 
 /**
+ * Third-party organisation names, taken from the data itself.
+ *
+ * A subcontractor really called "Acme Engineering Inc" is a proper noun naming
+ * somebody else's firm. Rendering it is not TD Environmental offering
+ * engineering services — it is a reference to a company that lawfully holds
+ * itself out that way. ORC 4733.16 restrains what THIS firm may offer, not
+ * whose name it may write down.
+ *
+ * So these exact names are permitted wherever they appear, and every use is
+ * reported, so the exemption is visible rather than silent. It applies only to
+ * names in subcontractors.yaml, buyers.yaml and market-language.yaml — the
+ * files that describe other people's firms. A service name in services.yaml
+ * gets no such exemption: that is this firm's own offer, and the schema
+ * rejects it outright.
+ */
+const thirdPartyNames = (): string[] => {
+  const names = [
+    ...getSubcontractors().map((record) => record.name),
+    ...getBuyers().map((record) => record.name),
+    ...getMarketLanguage().map((record) => record.firm_name),
+    // An agency's own name is a proper noun too: the board that administers
+    // ORC 4733.16 is literally called the Ohio State Board of Registration for
+    // Professional Engineers and Surveyors.
+    ...getRegulatory().map((record) => record.agency),
+  ];
+  // Longest first, so "Acme Engineering Inc" is removed before a shorter name
+  // that happens to be a prefix of it.
+  return [...new Set(names)].filter(Boolean).sort((a, b) => b.length - a.length);
+};
+
+const THIRD_PARTY = thirdPartyNames();
+const thirdPartyHits = new Set<string>();
+
+/**
+ * The text of regulatory.yaml, exempt on internal pages only.
+ *
+ * That file exists to record the rules the firm must obey — including ORC
+ * 4733.16 itself, which cannot be described without using the words it
+ * reserves. Quoting a statute on an internal working page is not an offer of
+ * engineering services, and requiring an allowlist entry for each would train
+ * whoever maintains this into allowlisting reflexively, which is how a legal
+ * gate rots.
+ *
+ * Scoped deliberately: regulatory records render on /internal/regulatory/ and
+ * nowhere else, so this exemption applies ONLY to pages under /internal/. The
+ * same sentence pasted into public marketing copy still fails the build.
+ */
+const regulatoryText = (): string[] =>
+  getRegulatory()
+    .flatMap((record) => [record.requirement, record.applies_to, record.summary, record.fee_note])
+    .filter((value): value is string => typeof value === 'string' && value.length > 0)
+    .sort((a, b) => b.length - a.length);
+
+const REGULATORY = regulatoryText();
+const regulatoryHits = new Set<string>();
+
+/**
  * Removes allowlisted phrases before the scan, and records which entries were
  * actually used so unused ones can be reported rather than left to rot.
  */
 const allowlistHits = new Set<string>();
-const allowlisted = (text: string): string => {
+const escape = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const allowlisted = (text: string, internalPage = false): string => {
   let out = text;
+
+  if (internalPage) {
+    for (const passage of REGULATORY) {
+      const pattern = new RegExp(escape(passage), 'gi');
+      if (pattern.test(out)) {
+        regulatoryHits.add(passage);
+        out = out.replace(pattern, ' ');
+      }
+    }
+  }
+
+  for (const name of THIRD_PARTY) {
+    const pattern = new RegExp(escape(name), 'gi');
+    if (pattern.test(out)) {
+      thirdPartyHits.add(name);
+      out = out.replace(pattern, ' ');
+    }
+  }
   for (const entry of ORC_COPY_ALLOWLIST) {
-    const pattern = new RegExp(entry.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    const pattern = new RegExp(escape(entry.phrase), 'gi');
     if (pattern.test(out)) {
       allowlistHits.add(entry.phrase);
       out = out.replace(pattern, ' ');
@@ -144,7 +227,7 @@ for (const file of files) {
       .replace(/<style[\s\S]*?<\/style>/gi, ' ')
       .replace(/<template[\s\S]*?<\/template>/gi, ' ')
       .replace(/<!--[\s\S]*?-->/g, ' ');
-    record(`${page} body copy`, allowlisted(stripTags(visible)));
+    record(`${page} body copy`, allowlisted(stripTags(visible), page.startsWith('/internal/')));
   }
 }
 
@@ -201,6 +284,28 @@ if (advisories.length > 0) {
     console.log(`  ${advisory.where}: ${advisory.context.slice(0, 100)}`);
   }
   console.log('');
+}
+
+if (regulatoryHits.size > 0) {
+  console.log(
+    `\n${ORC_CITATION} note: ${regulatoryHits.size} passage(s) of regulatory.yaml were permitted` +
+      '\non /internal/ pages as descriptions of law rather than offers of service.' +
+      '\nThey would still fail on any public page.',
+  );
+}
+
+const namedThirdParties = [...thirdPartyHits].filter((name) => /engineer|surveyor|surveying/i.test(name));
+if (namedThirdParties.length > 0) {
+  console.log(
+    `\n${ORC_CITATION} note: ${namedThirdParties.length} third-party firm name(s) carrying a` +
+      '\nreserved term were rendered and permitted, as proper nouns naming other',
+  );
+  console.log("companies rather than this firm's own offer:");
+  for (const name of namedThirdParties) console.log(`  ${name}`);
+  console.log(
+    'Check that each appears as a named firm and not as a description of work\n' +
+      'TD Environmental offers.\n',
+  );
 }
 
 const unusedAllowlist = ORC_COPY_ALLOWLIST.filter((entry) => !allowlistHits.has(entry.phrase));

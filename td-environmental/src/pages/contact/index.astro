@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactForm from '../../components/ContactForm.astro';
-import { SITE, serviceAreaSentence } from '../../lib/site.js';
+import { SITE, serviceAreaSentence, IS_PUBLISHED } from '../../lib/site.js';
 ---
 
 <BaseLayout
@@ -13,15 +13,26 @@ import { SITE, serviceAreaSentence } from '../../lib/site.js';
 
     <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_28rem]">
       <div class="prose-body">
-        <p>
-          The quickest route is the phone. If it is easier to write it down, the
-          form goes to the same place.
-        </p>
-        <p>
-          <a href={SITE.phone_href} class="text-lg font-semibold">
-            Call {SITE.phone_display}
-          </a>
-        </p>
+        {
+          IS_PUBLISHED ? (
+            <>
+              <p>
+                The quickest route is the phone. If it is easier to write it down,
+                the form goes to the same place.
+              </p>
+              <p>
+                <a href={SITE.phone_href} class="text-lg font-semibold">
+                  Call {SITE.phone_display}
+                </a>
+              </p>
+            </>
+          ) : (
+            <p>
+              We are not taking enquiries yet. This page will carry a phone
+              number and a working form once the firm is insured and registered.
+            </p>
+          )
+        }
         <p>{SITE.city}, {SITE.state}</p>
         <p>{serviceAreaSentence()}</p>
 

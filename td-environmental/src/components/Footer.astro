@@ -1,5 +1,5 @@
 ---
-import { SITE, RELATED_SITE, serviceAreaSentence } from '../lib/site.js';
+import { SITE, RELATED_SITE, serviceAreaSentence, IS_PUBLISHED } from '../lib/site.js';
 
 const year = new Date().getFullYear();
 ---
@@ -9,11 +9,15 @@ const year = new Date().getFullYear();
     <div>
       <p class="font-semibold text-moss-deep">{SITE.name}</p>
       <p class="mt-1 text-sm text-ink-muted">{serviceAreaSentence()}</p>
-      <p class="mt-3 text-sm">
-        <a href={SITE.phone_href} class="no-underline hover:underline">
-          Call {SITE.phone_display}
-        </a>
-      </p>
+      {
+        IS_PUBLISHED && (
+          <p class="mt-3 text-sm">
+            <a href={SITE.phone_href} class="no-underline hover:underline">
+              Call {SITE.phone_display}
+            </a>
+          </p>
+        )
+      }
     </div>
 
     <nav aria-label="Footer">

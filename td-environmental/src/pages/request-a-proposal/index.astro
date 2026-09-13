@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProposalForm from '../../components/ProposalForm.astro';
-import { SITE } from '../../lib/site.js';
+import { SITE, IS_PUBLISHED } from '../../lib/site.js';
 ---
 
 <BaseLayout
@@ -18,9 +18,13 @@ import { SITE } from '../../lib/site.js';
 
     <ProposalForm />
 
-    <p class="mt-10 text-ink-muted">
-      Prefer to talk it through?
-      <a href={SITE.phone_href}>Call {SITE.phone_display}</a>.
-    </p>
+    {
+      IS_PUBLISHED && (
+        <p class="mt-10 text-ink-muted">
+          Prefer to talk it through?
+          <a href={SITE.phone_href}>Call {SITE.phone_display}</a>.
+        </p>
+      )
+    }
   </div>
 </BaseLayout>

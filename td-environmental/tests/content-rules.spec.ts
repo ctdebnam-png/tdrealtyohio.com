@@ -72,6 +72,7 @@ test('internal routes are marked noindex and are absent from the sitemap', async
 });
 
 test('the phone number is in the header of every public page', async ({ page }) => {
+  test.skip(!PUBLISHED, 'no intake path is rendered while the site is held');
   for (const route of PUBLIC_ROUTES) {
     await page.goto(route);
     await expect(
