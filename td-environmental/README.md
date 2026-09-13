@@ -168,6 +168,10 @@ One file per domain in `/src/data`, one schema per file in `/src/schemas`.
 may be invented. Every field on it is nullable for the same reason: a person
 with no photo renders without one rather than with a stand-in.
 
+**Formatting records to paste in: see [`docs/DATA-FORMAT.md`](docs/DATA-FORMAT.md)** —
+every field, every enum, a validated worked example per file, what the link
+checker does to URL fields, and which fields the ORC gate inspects.
+
 **The files ship empty.** They hold documented field shapes in comments and no
 records. Paste records in; do not seed them with examples.
 
