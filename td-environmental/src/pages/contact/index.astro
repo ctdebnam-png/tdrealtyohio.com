@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { SITE, serviceAreaSentence } from '../../lib/site.js';
+---
+
+<BaseLayout
+  title="Contact"
+  description={`Reach ${SITE.name} in ${SITE.city}, Ohio, by phone or through the enquiry form.`}
+>
+  <div class="wrap py-12">
+    <h1 class="text-3xl">Contact</h1>
+
+    <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_28rem]">
+      <div class="prose-body">
+        <p>
+          The quickest route is the phone. If it is easier to write it down, the
+          form goes to the same place.
+        </p>
+        <p>
+          <a href={SITE.phone_href} class="text-lg font-semibold">
+            Call {SITE.phone_display}
+          </a>
+        </p>
+        <p>{SITE.city}, {SITE.state}</p>
+        <p>{serviceAreaSentence()}</p>
+
+        <h2 class="mt-8 text-xl">If you already know the scope</h2>
+        <p>
+          <a href="/request-a-proposal/">
+            Send the property details and we will price it
+          </a>
+        </p>
+      </div>
+
+      <ContactForm context="contact-page" heading="Send an enquiry" id="contact-page" />
+    </div>
+  </div>
+</BaseLayout>

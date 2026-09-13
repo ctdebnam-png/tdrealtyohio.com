@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceTile from '../../components/ServiceTile.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { getPublicServices } from '../../lib/data.js';
+
+const services = getPublicServices();
+
+/**
+ * category is free text, so "Site assessment" and "Site Assessment" would
+ * otherwise become two sections with the same visible heading and the same DOM
+ * id — which breaks the aria-labelledby reference and trips axe's
+ * duplicate-id-aria rule. Records are grouped on a normalised key, and the
+ * first spelling seen supplies the heading.
+ */
+const anchorFor = (category: string) =>
+  `cat-${category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+
+const groups = new Map<string, { label: string; services: typeof services }>();
+for (const service of services) {
+  const key = anchorFor(service.category);
+  const group = groups.get(key);
+  if (group) group.services.push(service);
+  else groups.set(key, { label: service.category, services: [service] });
+}
+const categories = [...groups.entries()].sort((a, b) => a[1].label.localeCompare(b[1].label));
+---
+
+<BaseLayout
+  title="Services"
+  description="Site assessment, subsurface investigation, and compliance services offered in central Ohio, with the scope and deliverable stated for each."
+>
+  <div class="wrap py-12">
+    <h1 class="text-3xl">Services</h1>
+    <p class="mt-3 max-w-2xl text-lg text-ink-muted">
+      Each page states the problem the work solves, what is delivered, and the
+      standard or programme it runs under.
+    </p>
+
+    {
+      services.length === 0 ? (
+        <div class="mt-8">
+          <EmptyState message="Our service pages are published here as each scope is finalised." />
+        </div>
+      ) : (
+        categories.map(([key, group]) => (
+          <section aria-labelledby={key} class="mt-10">
+            <h2 id={key} class="text-xl">
+              {group.label}
+            </h2>
+            <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {group.services.map((service) => (
+                <ServiceTile service={service} />
+              ))}
+            </ul>
+          </section>
+        ))
+      )
+    }
+  </div>
+</BaseLayout>

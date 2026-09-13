@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { getPublishableCredentials } from '../../lib/data.js';
+
+/**
+ * Publishes credentials that are displayable on joining, or already earned.
+ * Credentials still in the plan are on /internal/credentials/ instead: a
+ * credential the firm does not hold is not a credential it can advertise.
+ */
+const credentials = getPublishableCredentials();
+---
+
+<BaseLayout
+  title="Certifications"
+  description="Certifications and registrations held by TD Environmental and its staff, with issuing bodies and licence numbers where they exist."
+>
+  <div class="wrap py-12">
+    <h1 class="text-3xl">Certifications</h1>
+    <p class="mt-3 max-w-2xl text-lg text-ink-muted">
+      Each one names its issuing body, and says whether it is held today or
+      carried by someone joining the firm. Nothing we are merely working
+      towards appears on this page.
+    </p>
+
+    {
+      credentials.length === 0 ? (
+        <div class="mt-8">
+          <EmptyState message="Certifications are listed here as they are earned, with the issuing body named." />
+        </div>
+      ) : (
+        <ul class="mt-8 space-y-6">
+          {credentials.map((credential) => (
+            <li class="rounded-sm border border-rule bg-white p-5">
+              <h2 class="text-lg">{credential.name}</h2>
+              <p class="mt-1 text-sm text-ink-muted">
+                Issued by {credential.issuing_body}
+                {credential.license_number && <> — licence #{credential.license_number}</>}
+              </p>
+              <p class="mt-1 text-sm font-medium">
+                {
+                  credential.earned_at
+                    ? `Held since ${credential.earned_at}`
+                    : 'Carried by a team member joining the firm'
+                }
+              </p>
+              {credential.url && (
+                <p class="mt-2 text-sm">
+                  <a href={credential.url} rel="noopener">
+                    {credential.issuing_body} programme details
+                  </a>
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</BaseLayout>

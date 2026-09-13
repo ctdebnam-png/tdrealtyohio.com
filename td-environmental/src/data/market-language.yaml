@@ -1,0 +1,24 @@
+# market-language.yaml
+#
+# How competing firms name and organise their offer, recorded verbatim, so our
+# own service names can be checked against the language buyers already read.
+# Schema: src/schemas/market-language.ts
+#
+# Shape of one record:
+#
+# - firm_name: ""
+#   city: ""
+#   url: null
+#   menu_headings: []            # verbatim from their site, in their order
+#   organizing_principle: ""     # by standard, by media, by buyer, by phase...
+#   observed_at: null            # ISO date the site was read
+#   source_url: null
+#   source_note: ""
+#   verified_at: null
+#   confidence: unverified
+#
+# Fields shown as "" are required: the schema rejects an empty string, so fill
+# them with a real value. Fields shown as null may stay null — and should,
+# whenever the value is unknown.
+#
+# Empty until records are pasted in. Unknown values stay null.

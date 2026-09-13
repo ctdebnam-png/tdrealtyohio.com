@@ -1,0 +1,196 @@
+---
+import { FORM, IS_PUBLISHED } from '../lib/site.js';
+
+const fieldClass =
+  'mt-1 w-full rounded-sm border border-field bg-white px-3 py-2 text-base text-ink ' +
+  'placeholder:text-ink-muted focus:border-moss';
+const labelClass = 'block text-sm font-medium text-ink';
+const legendClass = 'text-base font-semibold text-moss-deep';
+---
+
+{
+  /* See ContactForm: held means inert, not merely styled as unavailable. */
+  !IS_PUBLISHED && (
+    <p class="mt-6 max-w-3xl rounded-sm border border-clay bg-amber-50 p-3 text-sm text-ink">
+      <strong>Not accepting proposal requests yet.</strong> This form is
+      switched off until the firm is insured and registered.
+    </p>
+  )
+}
+
+<form
+  name="proposal"
+  method={IS_PUBLISHED ? 'POST' : undefined}
+  action={IS_PUBLISHED ? (FORM.action ?? undefined) : undefined}
+  data-netlify={IS_PUBLISHED && FORM.netlify ? 'true' : undefined}
+  netlify-honeypot={IS_PUBLISHED ? FORM.honeypot : undefined}
+  data-form-live={IS_PUBLISHED ? 'true' : 'false'}
+  class="mt-8 max-w-3xl space-y-8"
+>
+  <fieldset disabled={!IS_PUBLISHED} class="contents">
+  <input type="hidden" name="form-name" value="proposal" />
+  <p class="hidden">
+    <label>
+      Leave this field empty
+      <input name={FORM.honeypot} tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+
+  <fieldset class="space-y-4">
+    <legend class={legendClass}>The property</legend>
+
+    <p>
+      <label class={labelClass} for="proposal-size">
+        Property size <span class="font-normal text-ink-muted">(required)</span>
+      </label>
+      <input
+        class={fieldClass}
+        id="proposal-size"
+        name="property-size"
+        type="text"
+        aria-describedby="proposal-size-help"
+        required
+      />
+      <span id="proposal-size-help" class="mt-1 block text-sm text-ink-muted">
+        Acreage, building square footage, or both. An approximate figure is fine.
+      </span>
+    </p>
+
+    <p>
+      <label class={labelClass} for="proposal-current-use">
+        Current use <span class="font-normal text-ink-muted">(required)</span>
+      </label>
+      <input class={fieldClass} id="proposal-current-use" name="current-use" type="text" required />
+    </p>
+
+    <p>
+      <label class={labelClass} for="proposal-former-use">Former use</label>
+      <input
+        class={fieldClass}
+        id="proposal-former-use"
+        name="former-use"
+        type="text"
+        aria-describedby="proposal-former-use-help"
+      />
+      <span id="proposal-former-use-help" class="mt-1 block text-sm text-ink-muted">
+        Anything you know of: a filling station, a dry cleaner, farmland, a plant.
+        Leave it blank if you do not know.
+      </span>
+    </p>
+  </fieldset>
+
+  <fieldset class="space-y-3">
+    <legend class={legendClass}>
+      Does a Phase I already exist? <span class="text-sm font-normal text-ink-muted">(required)</span>
+    </legend>
+    <p class="flex items-center gap-2">
+      <input type="radio" id="phase-i-yes" name="existing-phase-i" value="yes" required />
+      <label for="phase-i-yes">Yes, and I can send it</label>
+    </p>
+    <p class="flex items-center gap-2">
+      <input type="radio" id="phase-i-no" name="existing-phase-i" value="no" />
+      <label for="phase-i-no">No</label>
+    </p>
+    <p class="flex items-center gap-2">
+      <input type="radio" id="phase-i-unknown" name="existing-phase-i" value="unknown" />
+      <label for="phase-i-unknown">I do not know</label>
+    </p>
+  </fieldset>
+
+  <fieldset class="space-y-3">
+    <legend class={legendClass}>
+      Is a lender or agency deadline driving this?{' '}
+      <span class="text-sm font-normal text-ink-muted">(required)</span>
+    </legend>
+    <p class="flex items-center gap-2">
+      <input type="radio" id="deadline-lender" name="deadline-driver" value="lender" required />
+      <label for="deadline-lender">Yes, a lender</label>
+    </p>
+    <p class="flex items-center gap-2">
+      <input type="radio" id="deadline-agency" name="deadline-driver" value="agency" />
+      <label for="deadline-agency">Yes, an agency or programme</label>
+    </p>
+    <p class="flex items-center gap-2">
+      <input type="radio" id="deadline-none" name="deadline-driver" value="none" />
+      <label for="deadline-none">No, the timing is ours</label>
+    </p>
+  </fieldset>
+
+  <fieldset class="space-y-4">
+    <legend class={legendClass}>Timing and how to reach you</legend>
+
+    <p>
+      <label class={labelClass} for="proposal-date">
+        Date needed <span class="font-normal text-ink-muted">(required)</span>
+      </label>
+      <input class={fieldClass} id="proposal-date" name="date-needed" type="date" required />
+    </p>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <p>
+        <label class={labelClass} for="proposal-name">
+        Name <span class="font-normal text-ink-muted">(required)</span>
+      </label>
+        <input
+          class={fieldClass}
+          id="proposal-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+        />
+      </p>
+      <p>
+        <label class={labelClass} for="proposal-company">Company</label>
+        <input
+          class={fieldClass}
+          id="proposal-company"
+          name="company"
+          type="text"
+          autocomplete="organization"
+        />
+      </p>
+      <p>
+        <label class={labelClass} for="proposal-email">
+        Email <span class="font-normal text-ink-muted">(required)</span>
+      </label>
+        <input
+          class={fieldClass}
+          id="proposal-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+        />
+      </p>
+      <p>
+        <label class={labelClass} for="proposal-phone">
+        Phone <span class="font-normal text-ink-muted">(required)</span>
+      </label>
+        <input
+          class={fieldClass}
+          id="proposal-phone"
+          name="phone"
+          type="tel"
+          autocomplete="tel"
+          required
+        />
+      </p>
+    </div>
+
+    <p>
+      <label class={labelClass} for="proposal-notes">Anything else we should know</label>
+      <textarea class={fieldClass} id="proposal-notes" name="notes" rows="4"></textarea>
+    </p>
+  </fieldset>
+
+  <p>
+    <button
+      type="submit"
+      class="rounded-sm bg-moss-deep px-5 py-3 font-semibold text-white hover:bg-moss disabled:cursor-not-allowed disabled:bg-ink-muted"
+    >
+      Send this proposal request
+    </button>
+  </p>
+  </fieldset>
+</form>

@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+import { SITE, IS_PUBLISHED, HOLD_NOTICE } from '../lib/site.js';
+
+interface Props {
+  title: string;
+  /** One line saying what this table is for and what to do with it. */
+  purpose: string;
+}
+
+const { title, purpose } = Astro.props;
+
+const views = [
+  { href: '/internal/', label: 'Index' },
+  { href: '/internal/subcontractors/', label: 'Subcontractors' },
+  { href: '/internal/buyers/', label: 'Call list' },
+  { href: '/internal/credentials/', label: 'Credential plan' },
+  { href: '/internal/pricing/', label: 'Pricing' },
+  { href: '/internal/regulatory/', label: 'Regulatory' },
+  { href: '/internal/services/', label: 'Blocked services' },
+  { href: '/internal/market-language/', label: 'Market language' },
+];
+
+const { pathname } = Astro.url;
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | Internal | {SITE.name}</title>
+    <meta
+      name="robots"
+      content="noindex, nofollow, noarchive, nosnippet, noimageindex"
+    />
+    <meta name="description" content="Internal working view. Not a public page." />
+  </head>
+  <body class="flex min-h-screen flex-col bg-white">
+    <a
+      href="#main"
+      class="sr-only rounded-sm bg-moss-deep px-4 py-2 text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
+    >
+      Skip to main content
+    </a>
+
+    {
+      !IS_PUBLISHED && (
+        <p
+          class="bg-clay px-4 py-2 text-center text-sm font-medium text-white"
+          data-publish-hold="true"
+        >
+          {HOLD_NOTICE}
+        </p>
+      )
+    }
+    <header class="border-b-4 border-clay bg-moss-tint">
+      <div class="wrap py-3">
+        <p class="text-xs font-semibold uppercase tracking-wide text-clay">
+          Internal working view — excluded from the sitemap and disallowed in robots.txt
+        </p>
+        <nav aria-label="Internal views" class="mt-2">
+          <ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            {
+              views.map((view) => (
+                <li>
+                  <a
+                    href={view.href}
+                    aria-current={pathname === view.href ? 'page' : undefined}
+                    class="no-underline hover:underline"
+                  >
+                    {view.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="wrap flex-1 py-8">
+      <h1 class="text-2xl">{title}</h1>
+      <p class="mt-2 max-w-3xl text-ink-muted">{purpose}</p>
+      <slot />
+    </main>
+
+    <footer class="wrap border-t border-rule py-6 text-sm text-ink-muted">
+      <p>
+        Every value here carries its provenance. A blank cell means the value is
+        unknown and stays unknown until it is sourced. Nothing on this page is
+        estimated to fill a gap.
+      </p>
+    </footer>
+  </body>
+</html>

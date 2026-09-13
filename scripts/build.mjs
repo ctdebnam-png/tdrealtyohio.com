@@ -85,6 +85,7 @@ Disallow: /api/
 Disallow: /lp/
 Disallow: /ops/
 Disallow: /ads-bot/
+Disallow: /td-environmental/
 
 # ==============================================
 # BLOCK AI TRAINING CRAWLERS

@@ -1,0 +1,31 @@
+# subcontractors.yaml
+#
+# Firms that perform work TD Environmental sells but does not self-perform.
+# Schema: src/schemas/subcontractors.ts
+#
+# Shape of one record:
+#
+# - category: driller            # driller | laboratory | surveyor | waste | field_services
+#   name: ""
+#   address: null
+#   city: null
+#   state: null
+#   zip: null
+#   phone: null
+#   email: null
+#   url: null
+#   capabilities: []
+#   published_productivity: null  # e.g. a stated footage-per-day, verbatim
+#   rates: null                   # no rate data exists yet; keep null
+#   works_with_small_firms: null
+#   notes: ""
+#   source_url: null
+#   source_note: ""
+#   verified_at: null             # written by scripts/check-links.ts
+#   confidence: unverified        # sourced | constructed | unverified
+#
+# Fields shown as "" are required: the schema rejects an empty string, so fill
+# them with a real value. Fields shown as null may stay null — and should,
+# whenever the value is unknown.
+#
+# Empty until records are pasted in. Unknown values stay null.
