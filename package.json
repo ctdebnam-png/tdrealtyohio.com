@@ -14,7 +14,7 @@
     "test:route-screenshots": "npx playwright test tests/route-screenshots.spec.js --project=snapshot-mobile --project=snapshot-tablet --project=snapshot-desktop",
     "test:route-screenshots:update": "npx playwright test tests/route-screenshots.spec.js --update-snapshots --project=snapshot-mobile --project=snapshot-tablet --project=snapshot-desktop",
     "build": "node scripts/build.mjs",
-    "sitemap": "node scripts/generate-sitemap.mjs",
+    "sitemap": "node scripts/build.mjs",
     "validate": "node scripts/indexing-guard.mjs",
     "check:broken-links": "node scripts/check-broken-links.mjs",
     "check:canonicals": "node scripts/check-duplicate-canonicals.mjs",

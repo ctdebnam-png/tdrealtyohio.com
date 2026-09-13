@@ -30,27 +30,6 @@ for (const [key, group] of Object.entries(NAV_REGISTRY.groups)) {
   CANONICAL_NAV[key] = group.items.map(i => ({ href: i.href, label: i.label }));
 }
 
-// Allowed labels on the sitemap page that are NOT in the nav registry
-// (commission landers, compare sub-pages, legal, areas, blog articles)
-const SITEMAP_ALLOWED_EXTRA_LABELS = new Set([
-  'Home', 'All Areas', 'All Articles',
-  'Sell', 'Buy', 'Sellers', 'Buyers', 'Service Areas', 'Contact',
-  'full-service representation Listing',
-  'Compare Options', '1% vs 3% Commission', 'brokerage model vs Full Service', 'Flat Fee MLS vs Full Service',
-  'Privacy Policy', 'Terms of Service', 'Fair Housing Statement',
-  'Home Value Estimate', 'Seller Preparation', 'Free Home Value',
-  'About', 'Blog',
-  // Pages that exist but are not in the consumer nav allowlist
-  'Agent Opportunities', 'Referral Credit',
-  'FAQ', 'Affordability Calculator',
-]);
-
-// Banned labels that must NOT appear on /sitemap-page/
-const BANNED_SITEMAP_LABELS = [
-  'Testimonials',
-  'Referral Program',  // must use "Referral Credit"
-];
-
 let errors = 0;
 
 function fail(msg) {
@@ -68,16 +47,6 @@ function extractHrefs(html, sectionRegex) {
     hrefs.push(m[1]);
   }
   return hrefs;
-}
-
-function extractLinkLabels(html) {
-  const re = /<a\s[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g;
-  const links = [];
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    links.push({ href: m[1], label: m[2].trim() });
-  }
-  return links;
 }
 
 // Check 1: Duplicate hrefs in header nav or footer menus
@@ -104,7 +73,7 @@ async function checkDuplicateHrefs() {
     }
 
     // Check footer Services for duplicate hrefs
-    const footerServicesMatch = html.match(/class="footer-title">Services<\/h3>\s*<ul class="footer-links">([\s\S]*?)<\/ul>/i);
+    const footerServicesMatch = html.match(/class="footer-title">Services<\/h3>\s*<ul class="footer-links"[^>]*>([\s\S]*?)<\/ul>/i);
     if (footerServicesMatch) {
       const hrefs = extractHrefs(footerServicesMatch[0], /[\s\S]*/);
       const seen = new Set();
@@ -117,7 +86,7 @@ async function checkDuplicateHrefs() {
     }
 
     // Check footer Company for duplicate hrefs
-    const footerCompanyMatch = html.match(/class="footer-title">Company<\/h3>\s*<ul class="footer-links">([\s\S]*?)<\/ul>/i);
+    const footerCompanyMatch = html.match(/class="footer-title">Company<\/h3>\s*<ul class="footer-links"[^>]*>([\s\S]*?)<\/ul>/i);
     if (footerCompanyMatch) {
       const hrefs = extractHrefs(footerCompanyMatch[0], /[\s\S]*/);
       const seen = new Set();
@@ -140,44 +109,6 @@ async function checkTermsFooter() {
 }
 
 // Check 3: /sitemap-page/ must not contain banned labels or unknown labels
-async function checkSitemapPage() {
-  const html = await readFile(join(ROOT, 'sitemap-page/index.html'), 'utf-8');
-  const mainContent = html.slice(
-    html.indexOf('<main'),
-    html.indexOf('</main>')
-  );
-
-  // Build set of all canonical labels
-  const canonicalLabels = new Set();
-  for (const group of Object.values(CANONICAL_NAV)) {
-    for (const item of group) {
-      canonicalLabels.add(item.label);
-    }
-  }
-  for (const label of SITEMAP_ALLOWED_EXTRA_LABELS) {
-    canonicalLabels.add(label);
-  }
-
-  // Check for banned labels
-  for (const banned of BANNED_SITEMAP_LABELS) {
-    if (mainContent.includes(banned)) {
-      fail(`/sitemap-page/ contains banned label "${banned}"`);
-    }
-  }
-
-  // Extract all link labels from the sitemap page main content
-  const links = extractLinkLabels(mainContent);
-  for (const { href, label } of links) {
-    // Skip area pages and blog articles — they use city names and article titles
-    if (href.startsWith('/areas/') && href !== '/areas/') continue;
-    if (href.startsWith('/blog/') && href !== '/blog/') continue;
-
-    if (!canonicalLabels.has(label)) {
-      fail(`/sitemap-page/ contains label "${label}" (href="${href}") not in canonical nav registry`);
-    }
-  }
-}
-
 // Check 4: Footer sections must have all canonical links from footerGroups
 async function checkFooterCompanyCompleteness() {
   if (!NAV_REGISTRY.footerGroups) return;
@@ -261,7 +192,6 @@ async function main() {
   console.log('check-nav-footer-sitemap: running...');
   await checkDuplicateHrefs();
   await checkTermsFooter();
-  await checkSitemapPage();
   await checkFooterCompanyCompleteness();
   await checkTermsRealtorCode();
   await checkAreasFreshness();

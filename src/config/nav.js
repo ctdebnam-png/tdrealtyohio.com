@@ -62,7 +62,6 @@ const NAV_REGISTRY = {
       label: 'Company',
       items: [
         { label: 'About',   href: '/about/' },
-        { label: 'Blog',    href: '/blog/' },
         { label: 'Agent Opportunity', href: '/agents/' },
         { label: 'Contact', href: '/contact/' }
       ]

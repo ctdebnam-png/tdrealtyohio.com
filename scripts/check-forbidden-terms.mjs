@@ -1,12 +1,18 @@
 #!/usr/bin/env node
 import { readFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+const { getIndexableRoutes } = require('../src/config/routes.js');
+
+// Page list is derived from the route registry so it cannot drift from the
+// live site; the shared assets and _redirects are scanned alongside it.
+const ROUTE_FILES = getIndexableRoutes().map((r) =>
+  r.path === '/' ? 'index.html' : `${r.path.replace(/^\//, '')}index.html`
+);
 
 const FILES = [
-  'index.html',
-  'sellers/index.html',
-  'buyers/index.html',
-  'about/index.html',
-  'tools/index.html',
+  ...ROUTE_FILES,
   'assets/js/main.js',
   'assets/js/nav.js',
   '_redirects'
@@ -17,8 +23,8 @@ const TERM_RULES = [
   { name: '2%', regex: /2%/i },
   { name: '3%', regex: /3%/i },
   { name: 'percent', regex: /\bpercent\b/i },
-  { name: 'buyer support', regex: /cash\s*back/i },
-  { name: 'buyer support', regex: /\bbuyer support\b/i },
+  { name: 'cash back', regex: /cash\s*back/i },
+  { name: 'cashback', regex: /\bcashback\b/i },
   { name: 'savings', regex: /\bsavings?\b/i },
   { name: 'save', regex: /\bsave\b/i },
   { name: 'difference', regex: /\bdifference\b/i },

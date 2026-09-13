@@ -324,7 +324,7 @@ async function main() {
   }
 
   console.log('\nDone. Fill in TODO placeholders with content, then run:');
-  console.log('  node scripts/generate-sitemap.mjs');
+  console.log("  npm run sitemap");
   console.log('  node scripts/generate-sitemap-page.mjs');
 }
 

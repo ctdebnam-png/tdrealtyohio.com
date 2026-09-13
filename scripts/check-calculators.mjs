@@ -15,54 +15,62 @@ import { glob } from 'glob';
 let errors = 0;
 
 // --- Check 1: main.js calculator safety ---
+// The seller/buyer calculators were removed from the site in da8ffdd. These
+// safety assertions only apply while calculator code is actually present, so
+// they are gated on that rather than failing for code that no longer exists.
 const mainJs = readFileSync('assets/js/main.js', 'utf8');
+const hasCalculators = /function init(?:Seller|Buyer)Calculator/.test(mainJs);
 
-// Check that clampPrice function exists
-if (!mainJs.includes('function clampPrice')) {
-  console.error('FAIL: assets/js/main.js — missing clampPrice() helper for input validation');
-  errors++;
+if (!hasCalculators) {
+  console.log('  no calculator code in assets/js/main.js — calculator safety checks skipped');
 } else {
-  console.log('  clampPrice() helper present ✓');
-}
+  // Check that clampPrice function exists
+  if (!mainJs.includes('function clampPrice')) {
+    console.error('FAIL: assets/js/main.js — missing clampPrice() helper for input validation');
+    errors++;
+  } else {
+    console.log('  clampPrice() helper present ✓');
+  }
 
-// Check that seller calculator uses clampPrice
-if (mainJs.includes('initSellerCalculator') && !mainJs.match(/function initSellerCalculator[\s\S]*?clampPrice/)) {
-  console.error('FAIL: assets/js/main.js — initSellerCalculator does not use clampPrice()');
-  errors++;
-} else {
-  console.log('  initSellerCalculator uses clampPrice ✓');
-}
+  // Check that seller calculator uses clampPrice
+  if (mainJs.includes('initSellerCalculator') && !mainJs.match(/function initSellerCalculator[\s\S]*?clampPrice/)) {
+    console.error('FAIL: assets/js/main.js — initSellerCalculator does not use clampPrice()');
+    errors++;
+  } else {
+    console.log('  initSellerCalculator uses clampPrice ✓');
+  }
 
-// Check that buyer calculator uses clampPrice
-if (mainJs.includes('initBuyerCalculator') && !mainJs.match(/function initBuyerCalculator[\s\S]*?clampPrice/)) {
-  console.error('FAIL: assets/js/main.js — initBuyerCalculator does not use clampPrice()');
-  errors++;
-} else {
-  console.log('  initBuyerCalculator uses clampPrice ✓');
-}
+  // Check that buyer calculator uses clampPrice
+  if (mainJs.includes('initBuyerCalculator') && !mainJs.match(/function initBuyerCalculator[\s\S]*?clampPrice/)) {
+    console.error('FAIL: assets/js/main.js — initBuyerCalculator does not use clampPrice()');
+    errors++;
+  } else {
+    console.log('  initBuyerCalculator uses clampPrice ✓');
+  }
 
-// Check Math.round usage in calculator functions
-const calcSection = mainJs.match(/function initSellerCalculator[\s\S]*?^}/m);
-if (calcSection && !calcSection[0].includes('Math.round')) {
-  console.error('FAIL: assets/js/main.js — initSellerCalculator does not use Math.round() for output rounding');
-  errors++;
-} else {
-  console.log('  Math.round in seller calculator ✓');
-}
+  // Check Math.round usage in calculator functions
+  const calcSection = mainJs.match(/function initSellerCalculator[\s\S]*?^}/m);
+  if (calcSection && !calcSection[0].includes('Math.round')) {
+    console.error('FAIL: assets/js/main.js — initSellerCalculator does not use Math.round() for output rounding');
+    errors++;
+  } else {
+    console.log('  Math.round in seller calculator ✓');
+  }
 
-// Check Math.max(0) for subtraction results (savings, agentKeeps)
-if (mainJs.includes('Math.max(traditional - tdRealty, 0)') || mainJs.includes('Math.max(savings')) {
-  console.log('  Math.max(0) for seller savings ✓');
-} else {
-  console.error('FAIL: assets/js/main.js — seller savings subtraction not guarded with Math.max(x, 0)');
-  errors++;
-}
+  // Check Math.max(0) for subtraction results (savings, agentKeeps)
+  if (mainJs.includes('Math.max(traditional - tdRealty, 0)') || mainJs.includes('Math.max(savings')) {
+    console.log('  Math.max(0) for seller savings ✓');
+  } else {
+    console.error('FAIL: assets/js/main.js — seller savings subtraction not guarded with Math.max(x, 0)');
+    errors++;
+  }
 
-if (mainJs.includes('Math.max(commission - buyer support, 0)') || mainJs.includes('Math.max(agentKeeps')) {
-  console.log('  Math.max(0) for buyer agentKeeps ✓');
-} else {
-  console.error('FAIL: assets/js/main.js — buyer agentKeeps subtraction not guarded with Math.max(x, 0)');
-  errors++;
+  if (mainJs.includes('Math.max(agentKeeps')) {
+    console.log('  Math.max(0) for buyer agentKeeps ✓');
+  } else {
+    console.error('FAIL: assets/js/main.js — buyer agentKeeps subtraction not guarded with Math.max(x, 0)');
+    errors++;
+  }
 }
 
 // --- Check 2: slider inputs must be keyboard-focusable ---
