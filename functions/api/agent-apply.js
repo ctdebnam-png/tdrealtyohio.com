@@ -94,47 +94,42 @@ export async function onRequestPost(context) {
     user_agent: request.headers.get('User-Agent') || ''
   };
 
+  /*
+   * Capture, and remember whether it actually happened.
+   *
+   * This skipped the write entirely when the binding was absent and swallowed
+   * any error, then returned {ok:true} either way — so an application could be
+   * dropped and the applicant told it went through.
+   */
+  let captured = false;
   if (env.LEADS) {
     try {
       await env.LEADS.put(`agent_apply:${submittedAt}:${crypto.randomUUID()}`, JSON.stringify(summary), {
         expirationTtl: 90 * 24 * 60 * 60
       });
+      captured = true;
     } catch (error) {
       console.error('Agent apply KV write failed', error);
     }
+  } else {
+    console.error('Agent apply: no LEADS binding — nothing was stored');
   }
 
-  const mailPayload = {
-    personalizations: [{ to: [{ email: 'info@tdrealtyohio.com' }] }],
-    from: {
-      email: 'noreply@tdrealtyohio.com',
-      name: 'TD Realty Ohio Website'
-    },
-    subject: 'New agent recruiting pre-screen submission',
-    content: [
-      {
-        type: 'text/plain',
-        value:
-          `New agent recruiting pre-screen submission\n\n` +
-          `Production level: ${summary.production_level}\n` +
-          `Primary business mix: ${summary.business_mix}\n` +
-          `Own CRM and marketing system: ${summary.has_crm_marketing}\n\n` +
-          `Page: ${summary.page_path}\n` +
-          `Submitted at: ${summary.submitted_at}\n` +
-          `IP: ${summary.ip}\n` +
-          `User-Agent: ${summary.user_agent}`
-      }
-    ]
-  };
+  /*
+   * No mail is sent from here.
+   *
+   * This posted to api.mailchannels.net, which stopped serving Cloudflare
+   * Workers for free in mid-2024. Every call since has failed into a catch that
+   * logged and carried on, so the endpoint has been storing applications and
+   * sending nothing while reporting success. Dead code shaped like a delivery
+   * path is worse than no delivery path — it is why nobody noticed.
+   *
+   * Server-side mail is WP-2b, via Resend, once a sending domain is verified.
+   * Until then KV is the only record and /api/leads-export is how it is read.
+   */
 
-  try {
-    await fetch('https://api.mailchannels.net/tx/v1/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(mailPayload)
-    });
-  } catch (error) {
-    console.error('Mail send failed', error);
+  if (!captured) {
+    return new Response(JSON.stringify({ ok: false, error: 'not_captured' }), { status: 500, headers });
   }
 
   return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
