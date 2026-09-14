@@ -20,8 +20,6 @@
     "check:canonicals": "node scripts/check-duplicate-canonicals.mjs",
     "check:a11y-buttons": "node scripts/check-a11y-buttons.mjs",
     "check:topic-coverage": "node scripts/topic-coverage.mjs",
-    "generate:zip-pages": "node scripts/generate-zip-pages.mjs",
-    "generate:content": "node scripts/content-generator.mjs",
     "check:nav": "node scripts/check-nav.mjs",
     "check:copy": "node scripts/check-copy.mjs",
     "check:templates": "node scripts/check-templates.js",
@@ -55,7 +53,8 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:api-capture": "node scripts/check-api-capture.mjs",
     "generate:json-ld": "node scripts/generate-json-ld.mjs",
-    "check:json-ld": "node scripts/check-json-ld.mjs"
+    "check:json-ld": "node scripts/check-json-ld.mjs",
+    "check:source-terms": "node scripts/check-source-terms.mjs"
   },
   "devDependencies": {
     "@lhci/cli": "^0.14.0",
