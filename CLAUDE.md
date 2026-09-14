@@ -25,7 +25,12 @@ npm run check:all    # Run all quality gate checks
 - Blog posts go in `blog/<slug>/index.html`
 - Area pages go in `areas/<slug>/index.html`
 - CSS cache busting: use `?v=YYYYMMDD` on stylesheet links
-- All forms submit to both `/api/lead` (KV) and Formspree (email) in parallel
+- Forms submit to `/api/lead` only, which writes to KV. There is no email
+  delivery path yet — Formspree was never wired up (no form ID has ever been in
+  this repo). Leads are retrievable through `/api/leads-export` with the
+  `EXPORT_KEY` secret, and KV entries expire after 90 days.
+- Every shipped `<form>` must name a rooted endpoint in its `action`.
+  `check:form-actions` enforces it; an empty action resolves to the page itself.
 
 ## Quality Checks (npm scripts)
 - `check:all` — runs all checks below

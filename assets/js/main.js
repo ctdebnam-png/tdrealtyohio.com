@@ -944,23 +944,25 @@ function initFormHandler(formId, successMessage) {
       extra: extra,
     };
 
-    let success = false;
-
-    // Submit to both /api/lead (KV storage) and Formspree (email) in parallel from browser
-    const kvPromise = fetch('/api/lead', {
+    /*
+     * Capture is a single request to /api/lead, and its result is the only
+     * thing that decides what the visitor is told.
+     *
+     * This used to post twice — once to /api/lead and once to form.action for
+     * Formspree — and report success on `kvOk || formspreeOk`. No Formspree
+     * form ID was ever in this repo and the markup carried action="", so
+     * form.action resolved to the page's own URL. Every submission quietly
+     * posted itself back to /contact/, and a 2xx from that stray request was
+     * enough to print "Your message has been sent" over a failed capture.
+     *
+     * If a second delivery path returns, it belongs on the server side of
+     * /api/lead, where a failed send is a value this code can see.
+     */
+    const success = await fetch('/api/lead', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
     }).then(r => r.ok).catch(() => false);
-
-    const formspreePromise = fetch(form.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' },
-    }).then(r => r.ok).catch(() => false);
-
-    const [kvOk, formspreeOk] = await Promise.all([kvPromise, formspreePromise]);
-    success = kvOk || formspreeOk;
 
     submitBtn.classList.remove('btn-loading');
 
@@ -987,9 +989,19 @@ function initFormHandler(formId, successMessage) {
         submitBtn.classList.add('btn-primary');
       }, 5000);
     } else {
+      /*
+       * The message was NOT captured. Say so, and give both ways to reach us
+       * directly, because the form is the path that just failed.
+       *
+       * Contact details come from TD_CONFIG rather than a literal, so there is
+       * one place to change them.
+       */
       submitBtn.textContent = 'Error - Try Again';
       submitBtn.disabled = false;
-      showStatus('Something went wrong. Please try again or call us at (614) 392-8858.', true);
+      showStatus(
+        `We could not send your message. Please try again, or reach us directly at ${TD_CONFIG.contact.phone} or ${TD_CONFIG.contact.email}.`,
+        true
+      );
       setTimeout(() => {
         submitBtn.textContent = originalText;
       }, 5000);
