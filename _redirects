@@ -1,46 +1,125 @@
+# Cloudflare Pages _redirects — FIRST MATCH WINS, top to bottom.
+#
+# ─────────────────────────────────────────────────────────────────────────
+# THE RULE THIS FILE EXISTS TO ENFORCE
+#
+# No pattern here may match one of the ten canonical routes in
+# src/config/routes.js. A pattern that matches its own destination is an
+# infinite redirect, and Pages applies redirects before serving the static
+# asset, so the page becomes unreachable rather than merely slow.
+#
+# Four trailing globs did exactly that and took three pages off the site:
+#
+#   /sellers*  ->  /sellers/    "/sellers/" matches "/sellers*"
+#   /sell*     ->  /sellers/    "/sellers/" is "/sell" + "ers/"
+#   /buy*      ->  /buyers/     "/buyers/"  is "/buy"  + "ers/"
+#   /areas/*   ->  /areas/      the splat also matches the empty string
+#
+# /buyers/, /sellers/ and /areas/ — all three in the top nav, and the
+# targets of both homepage CTAs — 301'd to themselves until 14 Sep 2026.
+#
+# Retirement rules are now anchored one segment DEEPER than the surviving
+# route (/areas/zip/*, /buyers/first-time/*, /sell/*, /buy/*), or name a
+# prefix no canonical route shares (/tools/, /blog/, /compare/, /lp/), or
+# are exact paths. `npm run check:routes` proves it: it serves the site
+# with `wrangler pages dev` and fails on a non-200 or a chain over one hop.
+# ─────────────────────────────────────────────────────────────────────────
+
+# Canonical host: www -> apex.
 https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 
-/sellers                /sellers/               301
-/buyers                 /buyers/                301
-/contact                /contact/               301
+# ── Trailing slash. Exact paths only; a glob here is what caused the loop.
 /about                  /about/                 301
-/privacy                /privacy/               301
-/terms                  /terms/                 301
-/fair-housing           /fair-housing/          301
 /agents                 /agents/                301
 /areas                  /areas/                 301
+/buyers                 /buyers/                301
+/contact                /contact/               301
+/fair-housing           /fair-housing/          301
+/privacy                /privacy/               301
+/sellers                /sellers/               301
+/terms                  /terms/                 301
 
+# ── Legacy .html paths.
 /index.html             /                       301
-/sellers.html           /sellers/               301
+/about.html             /about/                 301
+/agents.html            /agents/                301
 /buyers.html            /buyers/                301
 /contact.html           /contact/               301
-/about.html             /about/                 301
-/privacy.html           /privacy/               301
-/terms.html             /terms/                 301
 /fair-housing.html      /fair-housing/          301
-/agents.html            /agents/                301
+/privacy.html           /privacy/               301
+/sellers.html           /sellers/               301
+/terms.html             /terms/                 301
 
-# Legacy promotional and tooling pages redirected to core pages
-/sellers*          /sellers/       301
-/sell-only-2-percent*           /sellers/       301
-/sell-and-buy*                  /sellers/       301
-/compare*                       /sellers/       301
-/home-value*                    /sellers/       301
-/referrals*                     /contact/       301
-/careers*                       /agents/        301
-/credentials*                   /about/         301
-/faq*                           /contact/       301
-/reviews*                       /about/         301
-/lp/*                           /               301
+# ── Retired page families.
+# Each is anchored deeper than the route it points at, or shares no prefix
+# with any canonical route, so none of them can match a live page.
+/areas/zip/*            /areas/                 301
+/buyers/first-time/*    /buyers/                301
+/sell/*                 /sellers/               301
+/buy/*                  /buyers/                301
+/tools/*                /contact/               301
+/blog/*                 /about/                 301
+/compare/*              /sellers/               301
+/lp/*                   /                       301
 
-/sell/*                         /sellers/       301
-/buy/*                          /buyers/        301
-/tools/*                        /contact/       301
-/areas/*                        /areas/         301
-/blog/why-agents-leaving-traditional-brokerages-100-commission/ /agents/ 301
+# ── Retired /areas/<city>/ pages.
+# Listed individually rather than globbed: /areas/* matches /areas/ itself,
+# which is exactly the bug above. These 25 pages are gone permanently, so a
+# fixed list costs nothing to maintain.
+/areas/bexley/*             /areas/             301
+/areas/blacklick/*          /areas/             301
+/areas/canal-winchester/*   /areas/             301
+/areas/clintonville/*       /areas/             301
+/areas/columbus/*           /areas/             301
+/areas/delaware/*           /areas/             301
+/areas/dublin/*             /areas/             301
+/areas/gahanna/*            /areas/             301
+/areas/galena/*             /areas/             301
+/areas/german-village/*     /areas/             301
+/areas/grandview-heights/*  /areas/             301
+/areas/granville/*          /areas/             301
+/areas/grove-city/*         /areas/             301
+/areas/hilliard/*           /areas/             301
+/areas/johnstown/*          /areas/             301
+/areas/lewis-center/*       /areas/             301
+/areas/new-albany/*         /areas/             301
+/areas/pataskala/*          /areas/             301
+/areas/pickerington/*       /areas/             301
+/areas/powell/*             /areas/             301
+/areas/reynoldsburg/*       /areas/             301
+/areas/sunbury/*            /areas/             301
+/areas/upper-arlington/*    /areas/             301
+/areas/westerville/*        /areas/             301
+/areas/worthington/*        /areas/             301
 
-/blog*                          /about/         301
-/sitemap-page*                  /               301
-/tools*                         /contact/       301
-/buy*                           /buyers/        301
-/sell*                          /sellers/       301
+# ── Retired single pages. Exact paths, with and without trailing slash.
+/1-percent-commission   /sellers/               301
+/1-percent-commission/  /sellers/               301
+/affordability          /contact/               301
+/affordability/         /contact/               301
+/agents/join            /agents/                301
+/agents/join/           /agents/                301
+/blog                   /about/                 301
+/careers                /agents/                301
+/careers/               /agents/                301
+/compare                /sellers/               301
+/credentials            /about/                 301
+/credentials/           /about/                 301
+/faq                    /contact/               301
+/faq/                   /contact/               301
+/home-value             /sellers/               301
+/home-value/            /sellers/               301
+/pre-listing-inspection  /sellers/              301
+/pre-listing-inspection/ /sellers/              301
+/referrals              /contact/               301
+/referrals/             /contact/               301
+/reviews                /about/                 301
+/reviews/               /about/                 301
+/sell-and-buy           /sellers/               301
+/sell-and-buy/          /sellers/               301
+/sell-only-2-percent    /sellers/               301
+/sell-only-2-percent/   /sellers/               301
+/sitemap-page           /                       301
+/sitemap-page/          /                       301
+/tools                  /contact/               301
+/lp                     /                       301
