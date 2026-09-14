@@ -144,8 +144,6 @@ export async function onRequestPost(context) {
     // Event
     event_name: body.event_name || '',
     event_value: body.event_value || null,
-    calculator_type: body.calculator_type || null,
-    calculator_inputs_summary: body.calculator_inputs_summary || null,
 
     // Consent
     consent_to_contact: true,
@@ -173,8 +171,28 @@ export async function onRequestPost(context) {
     console.error('KV write failed:', err);
   }
 
-  // Formspree is now submitted directly from the browser (not server-side)
-  // to avoid Cloudflare IP triggering Formspree spam filters
+  /*
+   * The response says whether the lead was actually captured.
+   *
+   * This used to compute kvStatus — 'ok', 'no_binding' or 'error: ...' — and
+   * then return 200 {ok:true} regardless, throwing the answer away. The browser
+   * decides what to tell the visitor from this response, so a failed KV write
+   * still printed "Your message has been sent" over a lead that was never
+   * stored. Removing the dual-submit in the form fixed the browser half of that
+   * bug and left this half in place, which made the fix look complete while the
+   * same lie survived one layer down.
+   *
+   * KV is the only store. If the write did not happen, the message is gone, and
+   * a 5xx is the truthful answer — the form then shows the failure and offers
+   * the phone and email instead.
+   */
+  if (kvStatus !== 'ok') {
+    console.error(`Lead capture failed (${kvStatus}) for ${leadId}`);
+    return new Response(
+      JSON.stringify({ ok: false, error: 'not_captured', detail: kvStatus }),
+      { status: 500, headers },
+    );
+  }
 
   return new Response(JSON.stringify({ ok: true, lead_id: leadId }), {
     status: 200,

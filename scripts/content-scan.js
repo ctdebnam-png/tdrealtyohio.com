@@ -129,9 +129,13 @@ BANNED.push({
 
 // Phone number and common variants (with dots, dashes, spaces, parens)
 BANNED.push({
-  label: 'Personal phone leak',
-  regex: /6[\s.(-]*1[\s.)-]*4[\s.(-]*9[\s.)-]*5[\s.(-]*6[\s.)-]*8[\s.(-]*6[\s.)-]*5[\s.)-]*6/g,
-  raw: '614-956-8656',
+  label: 'Retired brokerage phone',
+  // One separator class for every gap. The previous version alternated two
+  // classes and the one following "614" omitted ")", so the formatted
+  // "(614) ..." form — the form that actually appears in page copy — never
+  // matched. It only ever caught the dashed and bare-digit spellings.
+  regex: /6[\s.()+-]*1[\s.()+-]*4[\s.()+-]*3[\s.()+-]*9[\s.()+-]*2[\s.()+-]*8[\s.()+-]*8[\s.()+-]*5[\s.()+-]*8/g,
+  raw: '614-392-8858',
 });
 
 BANNED.push({

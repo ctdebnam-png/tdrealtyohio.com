@@ -13,8 +13,8 @@ const TD_CONFIG = {
   },
   // Canonical source: src/config/contact.js — keep in sync
   contact: {
-    phone: '(614) 392-8858',
-    phoneRaw: '6143928858',
+    phone: '(614) 956-8656',
+    phoneRaw: '6149568656',
     email: 'info@tdrealtyohio.com',
     location: 'Westerville, Ohio'
   },
@@ -84,13 +84,16 @@ function loadDeferredStylesheet(href) {
 }
 
 (function loadOptionalPageFamilyBundles() {
-  const path = normalizePath(window.location.pathname);
+  /*
+   * One bundle, loaded on every page that runs this script — which is
+   * /contact/ and 404.html only, since the other nine ship no <script> tag.
+   *
+   * There used to be a branch here that skipped the bundle on /lp/ pages
+   * because they loaded lp.css in-page. The /lp/ family is retired and
+   * _redirects sends /lp and /lp/* to /, so the branch could never be
+   * reached and lp.css was unreachable with it. Both are gone.
+   */
   const bundles = ['/assets/css/bundles/extended.css?v=20260210'];
-
-  // Landing pages already load /assets/css/lp.css directly in-page.
-  if (path.startsWith('/lp/')) {
-    bundles.length = 0;
-  }
 
   if ('requestIdleCallback' in window) {
     window.requestIdleCallback(function () {
@@ -694,7 +697,7 @@ function initLeadModal() {
       form.reset();
       setTimeout(closeModal, 2500);
     } else {
-      statusEl.textContent = 'Something went wrong. Please call (614) 392-8858.';
+      statusEl.textContent = 'Something went wrong. Please call (614) 956-8656.';
       statusEl.className = 'form-status error';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Request Consultation';
@@ -944,23 +947,25 @@ function initFormHandler(formId, successMessage) {
       extra: extra,
     };
 
-    let success = false;
-
-    // Submit to both /api/lead (KV storage) and Formspree (email) in parallel from browser
-    const kvPromise = fetch('/api/lead', {
+    /*
+     * Capture is a single request to /api/lead, and its result is the only
+     * thing that decides what the visitor is told.
+     *
+     * This used to post twice — once to /api/lead and once to form.action for
+     * Formspree — and report success on `kvOk || formspreeOk`. No Formspree
+     * form ID was ever in this repo and the markup carried action="", so
+     * form.action resolved to the page's own URL. Every submission quietly
+     * posted itself back to /contact/, and a 2xx from that stray request was
+     * enough to print "Your message has been sent" over a failed capture.
+     *
+     * If a second delivery path returns, it belongs on the server side of
+     * /api/lead, where a failed send is a value this code can see.
+     */
+    const success = await fetch('/api/lead', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
     }).then(r => r.ok).catch(() => false);
-
-    const formspreePromise = fetch(form.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' },
-    }).then(r => r.ok).catch(() => false);
-
-    const [kvOk, formspreeOk] = await Promise.all([kvPromise, formspreePromise]);
-    success = kvOk || formspreeOk;
 
     submitBtn.classList.remove('btn-loading');
 
@@ -987,9 +992,19 @@ function initFormHandler(formId, successMessage) {
         submitBtn.classList.add('btn-primary');
       }, 5000);
     } else {
+      /*
+       * The message was NOT captured. Say so, and give both ways to reach us
+       * directly, because the form is the path that just failed.
+       *
+       * Contact details come from TD_CONFIG rather than a literal, so there is
+       * one place to change them.
+       */
       submitBtn.textContent = 'Error - Try Again';
       submitBtn.disabled = false;
-      showStatus('Something went wrong. Please try again or call us at (614) 392-8858.', true);
+      showStatus(
+        `We could not send your message. Please try again, or reach us directly at ${TD_CONFIG.contact.phone} or ${TD_CONFIG.contact.email}.`,
+        true
+      );
       setTimeout(() => {
         submitBtn.textContent = originalText;
       }, 5000);
@@ -1273,7 +1288,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initBackToTop,
     initStickyScrollBehavior,
     initExitIntent,
-    initToolAccordion
   ];
 
   inits.forEach(function (fn) {
@@ -1308,7 +1322,7 @@ function initStickyMobileCTA() {
 
   bar.innerHTML =
     '<a href="' + ctaHref + '" class="btn btn-primary">' + ctaText + '</a>' +
-    '<a href="tel:6143928858" class="btn btn-outline" aria-label="Call us">' +
+    '<a href="tel:6149568656" class="btn btn-outline" aria-label="Call us">' +
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
     '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>' +
     '</svg></a>';
@@ -1324,27 +1338,6 @@ function initStickyMobileCTA() {
   observer.observe(hero);
 }
 
-// ── Tool Accordion ───────────────────────────────────────
-function initToolAccordion() {
-  var toggles = document.querySelectorAll('.tool-accordion-toggle');
-  toggles.forEach(function(btn) {
-    var targetId = btn.getAttribute('aria-controls');
-    var body = targetId ? document.getElementById(targetId) : btn.nextElementSibling;
-    if (!body) return;
-
-    // On desktop (>768px), open by default
-    if (window.innerWidth > 768) {
-      body.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-
-    btn.addEventListener('click', function() {
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      body.classList.toggle('open');
-    });
-  });
-}
 
 // ── Scroll Progress Bar ─────────────────────────────────
 function initScrollProgress() {
@@ -1498,7 +1491,7 @@ function initMicroForm() {
       btn.textContent = origText;
       btn.disabled = false;
       submitting = false;
-      statusEl.textContent = 'Something went wrong. Please try again or call (614) 392-8858.';
+      statusEl.textContent = 'Something went wrong. Please try again or call (614) 956-8656.';
     });
   });
 }
@@ -1622,8 +1615,15 @@ function initCookieConsent() {
   banner.innerHTML =
     '<p>We use cookies and Google Analytics to improve your experience and measure site performance. ' +
     '<a href="/privacy/">Privacy Policy</a></p>' +
+    /*
+     * btn-outline-white, not btn-outline. The banner is navy, and
+     * .btn-outline is navy text on a transparent background, so Decline
+     * rendered navy-on-navy and was invisible while Accept sat beside it in
+     * gold. A consent dialog where only Accept can be seen is not a consent
+     * dialog.
+     */
     '<div><button id="cookie-accept" class="btn btn-primary btn-sm">Accept</button>' +
-    '<button id="cookie-decline" class="btn btn-outline btn-sm">Decline</button></div>';
+    '<button id="cookie-decline" class="btn btn-outline-white btn-sm">Decline</button></div>';
   document.body.appendChild(banner);
 
   document.getElementById('cookie-accept').addEventListener('click', function () {

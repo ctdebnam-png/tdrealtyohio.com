@@ -6,7 +6,7 @@
  * Checks:
  *  1. No "Testimonials" link or label in any public HTML nav/footer
  *  2. No "By Travis Debnam" in any public HTML
- *  3. No deprecated phone "614-956-8656" (any variant)
+ *  3. No deprecated phone "614-392-8858" (any variant)
  *  4. No personal email "travisdrealtor@gmail.com" in public output
  */
 
@@ -65,8 +65,8 @@ const BANNED = [
     test: (html) => /By Travis Debnam/i.test(html),
   },
   {
-    label: 'Deprecated phone 614-956-8656',
-    test: (html) => ['614-956-8656', '614.956.8656', '(614) 956-8656', '6149568656']
+    label: 'Deprecated phone 614-392-8858',
+    test: (html) => ['614-392-8858', '614.392.8858', '(614) 392-8858', '6143928858']
                        .some(v => html.includes(v)),
   },
   {

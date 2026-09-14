@@ -4,7 +4,7 @@ Generated: 2026-03-13
 
 ## Site Configuration
 - **Domain:** https://tdrealtyohio.com
-- **Phone:** (614) 392-8858
+- **Phone:** (614) 956-8656
 - **Email:** info@tdrealtyohio.com
 - **Brokerage License:** 2023006602
 - **Broker License:** 2023006467

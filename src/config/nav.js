@@ -83,8 +83,8 @@ const NAV_REGISTRY = {
 
   // Contact info (must not be changed)
   contact: {
-    phone: '(614) 392-8858',
-    phoneHref: 'tel:6143928858',
+    phone: '(614) 956-8656',
+    phoneHref: 'tel:6149568656',
     email: 'info@tdrealtyohio.com',
     emailHref: 'mailto:info@tdrealtyohio.com',
     location: 'Westerville, Ohio'
