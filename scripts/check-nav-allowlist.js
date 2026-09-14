@@ -4,9 +4,9 @@
  * Ensures header and footer nav href sets match strict allowlists.
  * If any extra or missing links appear, this check fails.
  *
- * Header allowlist: /sellers/, /buyers/, /areas/, /about/, /blog/, /contact/
- * Footer nav allowlist: /sellers/, /buyers/, /areas/, /about/, /blog/, /contact/
- * Footer legal allowlist: /privacy/, /terms/, /fair-housing/, /sitemap-page/
+ * Header allowlist: /sellers/, /buyers/, /areas/, /about/, /agents/, /contact/
+ * Footer nav allowlist: /sellers/, /buyers/, /areas/, /about/, /agents/, /contact/
+ * Footer legal allowlist: /privacy/, /terms/, /fair-housing/
  */
 
 const { readdir, readFile } = require('fs').promises;
@@ -17,16 +17,15 @@ const errors = [];
 
 // ── Allowlists ──
 const HEADER_ALLOWLIST = new Set([
-  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/agents/', '/contact/',
-  '/buy/cash-back/'
+  '/sellers/', '/buyers/', '/areas/', '/about/', '/agents/', '/contact/'
 ]);
 
 const FOOTER_NAV_ALLOWLIST = new Set([
-  '/sellers/', '/buyers/', '/areas/', '/about/', '/blog/', '/agents/', '/contact/'
+  '/sellers/', '/buyers/', '/areas/', '/about/', '/agents/', '/contact/'
 ]);
 
 const FOOTER_LEGAL_ALLOWLIST = new Set([
-  '/privacy/', '/terms/', '/fair-housing/', '/sitemap-page/'
+  '/privacy/', '/terms/', '/fair-housing/'
 ]);
 
 // ── Helpers ──

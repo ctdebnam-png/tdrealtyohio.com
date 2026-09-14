@@ -4,7 +4,7 @@ import { readdir, readFile, mkdir, writeFile } from 'fs/promises';
 import { dirname, join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
-import { loadIndexingPolicy, normalizeRoute, resolveRoutePolicy } from '../seo-autopilot/lib/indexing-policy.mjs';
+import { loadIndexingPolicy, normalizeRoute, resolveRoutePolicy } from './lib/indexing-policy.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');

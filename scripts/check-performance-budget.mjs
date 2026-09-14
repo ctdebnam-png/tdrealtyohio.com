@@ -10,9 +10,13 @@
 import { readdir, readFile, stat } from 'fs/promises';
 import { join, dirname, extname, relative } from 'path';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
+const require = createRequire(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
+
+const { getIndexableRoutes } = require('../src/config/routes.js');
 
 // Performance budgets (in KB)
 const BUDGETS = {
@@ -34,19 +38,11 @@ const BUDGETS = {
   maxJsFiles: 10,
 };
 
-// Route-level budgets for top conversion and discovery pages.
+// Route-level budgets, applied to every route in the registry.
 // Limits are in KB and validate route payload referenced from HTML.
-const ROUTE_BUDGETS = [
-  { route: '/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/sellers/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/buyers/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/areas/columbus/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/areas/westerville/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/areas/dublin/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/compare/1-percent-vs-3-percent/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/compare/discount-broker-vs-full-service/', maxJsKB: 90, maxCssKB: 220 },
-  { route: '/compare/flat-fee-mls-vs-full-service/', maxJsKB: 90, maxCssKB: 220 },
-];
+// Derived from src/config/routes.js so the list cannot drift from the live site.
+const ROUTE_BUDGET = { maxJsKB: 90, maxCssKB: 220 };
+const ROUTE_BUDGETS = getIndexableRoutes().map((r) => ({ route: r.path, ...ROUTE_BUDGET }));
 
 async function getFileSize(filePath) {
   const s = await stat(filePath);
