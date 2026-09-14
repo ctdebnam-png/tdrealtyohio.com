@@ -57,7 +57,7 @@ This surprises people, and it is why:
   writes what each route's registry entry declares.
 
 ## Quality Gates
-`npm run check:all` runs 29 checks in sequence and stops at the first failure.
+`npm run check:all` runs 31 checks in sequence and stops at the first failure.
 The last of them is `npm test`, so the Playwright suite gates the build too.
 The ones worth knowing:
 
@@ -72,6 +72,8 @@ The ones worth knowing:
 | `check:titles` | `<title>`, `og:title` or `twitter:title` drifting from the registry |
 | `check:forbidden-terms` | offer-era pricing language in shipped pages |
 | `check:source-terms` | the same language in files that never ship — the blind spot that hid 57 KB of calculator JS |
+| `check:disclosure` | a page carrying the environmental cross-link without the disclosure sentence, or the reverse |
+| `check:cross-claims` | environmental capability language anywhere outside the footer disclosure block |
 
 Three of these exist because the same class of bug shipped twice: a gate that
 reads files off disk cannot see a redirect loop, a cascade, or a response body.
@@ -120,4 +122,19 @@ reintroduce it.
 ## Related entity
 TD Environmental Ohio, LLC is a **separate** Ohio LLC under common ownership —
 not a trade name, not a dba, and not a subsidiary. Its repo is
-`ctdebnam-png/td-environmental`. Cross-links carry a disclosure sentence.
+`ctdebnam-png/td-environmental`.
+
+**This brokerage does not perform environmental work, and the site must never
+read as though it does.** WP-10 puts one cross-link and one disclosure sentence
+in the footer of all eleven pages; `src/config/related-entity.js` holds the
+sentence, and it is byte-identical to `RELATED_SITE.disclosure` in the other
+repo. The link and the sentence travel together — footer only, never nav, since
+a nav entry reads as one firm with two departments.
+
+Environmental vocabulary is allowed **only inside the `footer-related` block**.
+`check:cross-claims` fails on it anywhere else, and on the block being used
+more than once or placed outside `<footer>`.
+
+**Ordering:** the environmental site is not published yet. The footer link
+points at it, so the commit carrying that link must not deploy before that site
+goes live.

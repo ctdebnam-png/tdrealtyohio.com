@@ -26,9 +26,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="preload" href="/assets/css/styles.css?v=20260212" as="style">
+  <link rel="preload" href="/assets/css/styles.css?v=20260914" as="style">
   <link rel="preload" href="/assets/js/main.js" as="script">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=20260212">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=20260914">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17866418952"></script>
   <script>
@@ -213,6 +213,18 @@
 
       <div class="footer-license">
         TD Realty Ohio, LLC | Broker: Travis Debnam | Broker License #2023006467 | Brokerage License #2023006602
+      </div>
+      <!--
+        WP-10. The single cross-link to TD Environmental Ohio, LLC and the
+        disclosure that travels with it. Footer only, never nav.
+
+        The sentence is RELATED_ENTITY.disclosure in src/config/related-entity.js
+        and is identical on the environmental site. scripts/check-disclosure.mjs
+        fails the build if a page carries one without the other.
+      -->
+      <div class="footer-related">
+        <a href="https://tdenvironmentalohio.com" rel="noopener">TD Environmental Ohio</a> &mdash; environmental site assessment, reporting and technical support.
+        TD Environmental Ohio, LLC and TD Realty Ohio, LLC are separate Ohio limited liability companies under common ownership. Neither is a subsidiary, a trade name, or an agent of the other, and neither provides the other's services.
       </div>
     </div>
   </footer>
