@@ -94,7 +94,7 @@ function generateZipPage(z) {
     "name": "TD Realty Ohio, LLC",
     "description": "Full-service real estate agent serving ZIP code ${z.zip} (${z.city}, Ohio) with full-service listing representation commission.",
     "url": "${canonical}",
-    "telephone": "(614) 392-8858",
+    "telephone": "(614) 956-8656",
     "email": "info@tdrealtyohio.com",
     "areaServed": {
       "@type": "PostalAddress",
@@ -117,7 +117,7 @@ function generateZipPage(z) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "TD Realty Ohio, LLC",
-    "telephone": "(614) 392-8858",
+    "telephone": "(614) 956-8656",
     "email": "info@tdrealtyohio.com",
     "url": "https://tdrealtyohio.com/",
     "address": {
@@ -260,7 +260,7 @@ function generateZipPage(z) {
         <p>Whether you are buying or selling in ${z.zip}, TD Realty Ohio provides full-service representation at a fraction of the traditional cost.</p>
         <div class="cta-group">
           <a href="/contact/" class="btn btn-primary">Schedule a Free Consultation</a>
-          <a href="tel:6143928858" class="btn btn-outline">Call (614) 392-8858</a>
+          <a href="tel:6149568656" class="btn btn-outline">Call (614) 956-8656</a>
         </div>
         <p class="disclaimer">TD Realty Ohio, LLC | Broker License #2023006467 | Brokerage License #2023006602</p>
       </div>
@@ -296,7 +296,7 @@ function generateZipPage(z) {
         </div>
         <div class="footer-col">
           <h3>Contact</h3>
-          <p><a href="tel:6143928858" data-phone>(614) 392-8858</a></p>
+          <p><a href="tel:6149568656" data-phone>(614) 956-8656</a></p>
           <p><a href="mailto:info@tdrealtyohio.com" data-email>info@tdrealtyohio.com</a></p>
           <p data-location>Westerville, Ohio</p>
         </div>

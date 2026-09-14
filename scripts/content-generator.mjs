@@ -163,7 +163,7 @@ TD Realty Ohio serves Westerville, New Albany, Gahanna, Worthington, Lewis Cente
 
 ## Next Step
 
-Ready to discuss your real estate goals? [Contact TD Realty Ohio](/contact/) or call [(614) 392-8858](tel:6143928858) for a free consultation.
+Ready to discuss your real estate goals? [Contact TD Realty Ohio](/contact/) or call [(614) 956-8656](tel:6149568656) for a free consultation.
 
 ---
 

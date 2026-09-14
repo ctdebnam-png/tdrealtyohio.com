@@ -52,7 +52,7 @@ npm run check:all    # Run all quality gate checks
 ## Business Facts (keep consistent across site)
 - Company: TD Realty Ohio, LLC
 - Broker: Travis Debnam
-- Phone: (614) 392-8858
+- Phone: (614) 956-8656
 - Location: Westerville, Ohio
 - Rates: 1% (sell+buy), 2% (sell only), buyer representation (first-time buyers)
 - Broker License: #2023006467

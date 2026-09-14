@@ -25,7 +25,7 @@ const TD_SCHEMA_CONFIG = {
     organization: 'https://tdrealtyohio.com/#organization',
     realEstateAgent: 'https://tdrealtyohio.com/#realestateagent'
   },
-  telephone: '(614) 392-8858',
+  telephone: '(614) 956-8656',
   email: 'info@tdrealtyohio.com',
 
   address: {

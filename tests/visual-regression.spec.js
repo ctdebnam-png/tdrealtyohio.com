@@ -329,7 +329,7 @@ test.describe('Contact Information Consistency', () => {
 
       // Check footer phone
       const footerPhone = page.locator('footer [data-phone]');
-      await expect(footerPhone).toContainText('(614) 392-8858');
+      await expect(footerPhone).toContainText('(614) 956-8656');
     });
 
     test(`${route.name} shows correct email`, async ({ page }) => {

@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const POLICY = loadIndexingPolicy();
 const SITE_URL = canonicalBaseFromPolicy(POLICY);
-const OLD_PHONE_VARIANTS = ['614-956-8656', '614.956.8656', '(614) 956-8656', '6149568656'];
+const OLD_PHONE_VARIANTS = ['614-392-8858', '614.392.8858', '(614) 392-8858', '6143928858'];
 const BANNED_EMAIL = 'travisdrealtor@gmail.com';
 
 let errors = [];

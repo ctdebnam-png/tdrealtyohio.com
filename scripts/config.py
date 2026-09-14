@@ -23,7 +23,7 @@ BROKERAGE = {
     "name": "TD Realty Ohio, LLC",
     "broker": "Travis Debnam",
     "broker_first": "Travis",
-    "phone": "(614) 392-8858",
+    "phone": "(614) 956-8656",
     "email": "info@tdrealtyohio.com",
     "website": "https://tdrealtyohio.com",
     "license_broker": "2023006467",

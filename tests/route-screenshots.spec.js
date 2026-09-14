@@ -113,7 +113,7 @@ test('Footer contains required business facts', async ({ page }) => {
 
   const footerText = await page.locator('footer.footer').textContent();
 
-  expect(footerText).toContain('(614) 392-8858');
+  expect(footerText).toContain('(614) 956-8656');
   expect(footerText).toContain('info@tdrealtyohio.com');
   expect(footerText).toContain('2023006602');
   expect(footerText).toContain('2023006467');

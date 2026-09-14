@@ -13,8 +13,8 @@ const TD_CONFIG = {
   },
   // Canonical source: src/config/contact.js — keep in sync
   contact: {
-    phone: '(614) 392-8858',
-    phoneRaw: '6143928858',
+    phone: '(614) 956-8656',
+    phoneRaw: '6149568656',
     email: 'info@tdrealtyohio.com',
     location: 'Westerville, Ohio'
   },
@@ -694,7 +694,7 @@ function initLeadModal() {
       form.reset();
       setTimeout(closeModal, 2500);
     } else {
-      statusEl.textContent = 'Something went wrong. Please call (614) 392-8858.';
+      statusEl.textContent = 'Something went wrong. Please call (614) 956-8656.';
       statusEl.className = 'form-status error';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Request Consultation';
@@ -1320,7 +1320,7 @@ function initStickyMobileCTA() {
 
   bar.innerHTML =
     '<a href="' + ctaHref + '" class="btn btn-primary">' + ctaText + '</a>' +
-    '<a href="tel:6143928858" class="btn btn-outline" aria-label="Call us">' +
+    '<a href="tel:6149568656" class="btn btn-outline" aria-label="Call us">' +
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
     '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>' +
     '</svg></a>';
@@ -1510,7 +1510,7 @@ function initMicroForm() {
       btn.textContent = origText;
       btn.disabled = false;
       submitting = false;
-      statusEl.textContent = 'Something went wrong. Please try again or call (614) 392-8858.';
+      statusEl.textContent = 'Something went wrong. Please try again or call (614) 956-8656.';
     });
   });
 }

@@ -100,7 +100,7 @@ function localBusinessSchema() {
     "@type": "RealEstateAgent",
     "name": "TD Realty Ohio, LLC",
     "url": "https://tdrealtyohio.com",
-    "telephone": "(614) 392-8858",
+    "telephone": "(614) 956-8656",
     "email": "info@tdrealtyohio.com",
     "address": {
       "@type": "PostalAddress",
@@ -150,7 +150,7 @@ function headerNav() {
         </div>
         <a href="/contact/" class="btn btn-primary nav-cta">Contact</a>
       </nav>
-      <a href="tel:6143928858" class="mobile-phone-btn" aria-label="Call (614) 392-8858">
+      <a href="tel:6149568656" class="mobile-phone-btn" aria-label="Call (614) 956-8656">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </a>
       <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
@@ -231,7 +231,7 @@ function footer() {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
-            <a href="tel:6143928858" data-phone>(614) 392-8858</a>
+            <a href="tel:6149568656" data-phone>(614) 956-8656</a>
           </div>
           <div class="footer-contact-item">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -833,7 +833,7 @@ ${serviceAreaLinks()}
         <p>Keep most of the savings. Skip the risk and time investment.</p>
         <div class="hero-buttons flex-center">
           <a href="/contact/" class="btn btn-primary btn-lg">Get a Free Consultation</a>
-          <a href="tel:6143928858" class="btn btn-outline-white btn-lg">(614) 392-8858</a>
+          <a href="tel:6149568656" class="btn btn-outline-white btn-lg">(614) 956-8656</a>
         </div>
       </div>
     </section>
