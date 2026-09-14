@@ -78,6 +78,11 @@ The ones worth knowing:
 Three of these exist because the same class of bug shipped twice: a gate that
 reads files off disk cannot see a redirect loop, a cascade, or a response body.
 
+`.github/workflows/ci.yml` runs the whole chain on every push and pull request.
+Before it existed, all thirty-one ran only on whoever last remembered to type
+`npm run check:all` — which is how the chain stayed broken for six months.
+Cloudflare Pages builds and deploys this repo on push; it does not run these.
+
 ## Testing
 Playwright 1.56.1, pinned, forced Chromium, two viewports (mobile 375x812 and
 desktop 1280x800). **66 tests in four specs, and `npm test` is the last step of

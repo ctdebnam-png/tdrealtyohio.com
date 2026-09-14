@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# This repository had no CI at all.
+#
+# Thirty-one quality gates, and every one of them ran only on whoever's laptop
+# last remembered to type `npm run check:all`. That is the same defect the
+# gates themselves exist to catch, one level up: check:all was broken for six
+# months and nothing noticed, because nothing was running it.
+#
+# Cloudflare Pages builds and deploys this repo on push. It does not run these.
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # check:contrast renders every route, and `npm test` — the last step of
+      # check:all — runs 66 Playwright tests including axe. Both need a browser.
+      - name: Install the browser axe and the contrast gate run in
+        run: npx playwright install --with-deps chromium
+
+      # Every gate, in order, stopping at the first failure. check:routes and
+      # check:contrast serve the site with wrangler, so this covers the three
+      # gates that cannot work by reading files off disk: a redirect loop, a
+      # cascade, and a response body.
+      - name: Every quality gate
+        run: npm run check:all
+
+      - name: Upload the Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: .playwright/report/
+          if-no-files-found: ignore
