@@ -1,17 +1,29 @@
+/*
+ * Lighthouse CI.
+ *
+ * The URL list is the ten canonical routes from src/config/routes.js. It used
+ * to name nine URLs of which six were dead — three /areas/<city>/ pages and
+ * three /compare/ pages, the latter being the commission-comparison pages the
+ * site now answers 410 for. Lighthouse was auditing redirects and gone pages
+ * and reporting on them as if they were the site.
+ *
+ * Keep this list equal to the registry. If a route is added there, add it here.
+ */
 module.exports = {
   ci: {
     collect: {
       staticDistDir: '.',
       url: [
         '/',
-        '/sellers/',
+        '/about/',
         '/buyers/',
-        '/areas/columbus/',
-        '/areas/westerville/',
-        '/areas/dublin/',
-        '/compare/1-percent-vs-3-percent/',
-        '/compare/discount-broker-vs-full-service/',
-        '/compare/flat-fee-mls-vs-full-service/',
+        '/sellers/',
+        '/areas/',
+        '/contact/',
+        '/agents/',
+        '/privacy/',
+        '/terms/',
+        '/fair-housing/',
       ],
       numberOfRuns: 1,
       settings: {
