@@ -84,13 +84,16 @@ function loadDeferredStylesheet(href) {
 }
 
 (function loadOptionalPageFamilyBundles() {
-  const path = normalizePath(window.location.pathname);
+  /*
+   * One bundle, loaded on every page that runs this script — which is
+   * /contact/ and 404.html only, since the other nine ship no <script> tag.
+   *
+   * There used to be a branch here that skipped the bundle on /lp/ pages
+   * because they loaded lp.css in-page. The /lp/ family is retired and
+   * _redirects sends /lp and /lp/* to /, so the branch could never be
+   * reached and lp.css was unreachable with it. Both are gone.
+   */
   const bundles = ['/assets/css/bundles/extended.css?v=20260210'];
-
-  // Landing pages already load /assets/css/lp.css directly in-page.
-  if (path.startsWith('/lp/')) {
-    bundles.length = 0;
-  }
 
   if ('requestIdleCallback' in window) {
     window.requestIdleCallback(function () {
