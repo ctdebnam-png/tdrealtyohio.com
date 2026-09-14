@@ -10,13 +10,13 @@ pages — the HTML in the repo is the HTML that ships.
 npm install
 npm run dev          # wrangler pages dev on port 8788
 npm run check:all    # every quality gate, in order
-npm test             # Playwright (see "Testing" — currently stale)
+npm test             # Playwright — 66 tests; also the last step of check:all
 ```
 
 ## Architecture
 - **No framework, and no build step for pages.** Editing `buyers/index.html`
   edits the page. There is no template that regenerates it.
-- **One stylesheet**: `assets/css/styles.css`, ~10,100 lines, the only sheet any
+- **One stylesheet**: `assets/css/styles.css`, ~9,600 lines, the only sheet any
   page links. `assets/css/bundles/extended.css` is loaded at runtime by
   `main.js`, so it reaches only the two pages that load JS.
 - **One script**: `assets/js/main.js`, ~1,800 lines, with `TD_CONFIG` at the top.
@@ -32,8 +32,9 @@ npm test             # Playwright (see "Testing" — currently stale)
   path returns 410 even when a 301 rule also matches it.
 
 ### Only two pages load JavaScript
-`404.html` and `/contact/`. The other nine ship no `<script>` tag at all. This
-surprises people, and it is why:
+`404.html` and `/contact/`. The other nine carry no executable script — their
+only `<script>` is the `application/ld+json` block, which is data, not code.
+This surprises people, and it is why:
 - there is no mobile hamburger menu in the shipped markup — the header is a flat
   row of links,
 - analytics only fire on those two pages,
@@ -56,7 +57,8 @@ surprises people, and it is why:
   writes what each route's registry entry declares.
 
 ## Quality Gates
-`npm run check:all` runs 27 checks in sequence and stops at the first failure.
+`npm run check:all` runs 29 checks in sequence and stops at the first failure.
+The last of them is `npm test`, so the Playwright suite gates the build too.
 The ones worth knowing:
 
 | gate | what it catches |
@@ -67,18 +69,31 @@ The ones worth knowing:
 | `check:api-capture` | an endpoint claiming success on a failed write |
 | `check:form-actions` | a form with an empty or relative action |
 | `check:contrast` | renders every route and measures text contrast |
+| `check:titles` | `<title>`, `og:title` or `twitter:title` drifting from the registry |
 | `check:forbidden-terms` | offer-era pricing language in shipped pages |
+| `check:source-terms` | the same language in files that never ship — the blind spot that hid 57 KB of calculator JS |
 
 Three of these exist because the same class of bug shipped twice: a gate that
 reads files off disk cannot see a redirect loop, a cascade, or a response body.
 
 ## Testing
-Playwright 1.56.1, pinned, forced Chromium, four viewports.
+Playwright 1.56.1, pinned, forced Chromium, two viewports (mobile 375x812 and
+desktop 1280x800). **66 tests in four specs, and `npm test` is the last step of
+`check:all`.**
 
-**The specs are stale and `npm test` is not in `check:all`.** All four navigate
-to routes that no longer exist (`/home-value/`, `/affordability/`, `/blog/`,
-`/compare/`), and `hamburger-menu.spec.js` tests a mobile menu that is not in
-the shipped markup. Fixing them is outstanding work, not a passing suite.
+| spec | what it holds |
+| --- | --- |
+| `routes.spec.js` | every canonical route answers 200 in one hop and renders |
+| `links.spec.js` | every header and footer link resolves |
+| `contact-form.spec.js` | a failed capture is reported as a failure, not as success |
+| `a11y.spec.js` | axe-core on all ten routes |
+
+The previous four specs were deleted rather than repaired: they navigated routes
+that no longer exist, tested a hamburger menu absent from the shipped markup and
+calculators the site no longer has, and had no committed snapshots.
+
+Artifacts go to `.playwright/`, not the repo root — twenty-one gates walk the
+filesystem for HTML, and `playwright-report/index.html` broke four of them.
 
 ## Business Facts (keep consistent across site)
 - Company: TD Realty Ohio, LLC
