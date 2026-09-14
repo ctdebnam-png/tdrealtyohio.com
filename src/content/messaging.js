@@ -10,10 +10,19 @@ const CONSUMER_MESSAGING = {
   ]
 };
 
-const AGENT_COMPENSATION = {
-  listingSide: '100% on listing sides',
-  buySide: '90/10 split on buy sides',
-  rental: "25% of the first month’s lease on rental transactions"
+/*
+ * What the brokerage offers an agent, stated as support rather than splits.
+ *
+ * This was AGENT_COMPENSATION and carried three percentages that were
+ * rendered into the /agents/ cards, three FAQ answers, the page's meta
+ * description and the route registry's description. Compensation is a
+ * conversation to have with the broker, not a number to rank for.
+ */
+const AGENT_SUPPORT = {
+  brokerAccess: 'direct broker availability on live transactions',
+  oversight: 'transaction and compliance oversight through closing',
+  systems: 'MLS and document workflow support',
+  leadership: 'local brokerage leadership without franchise layers'
 };
 
 const CTA_TEXT = {
@@ -24,6 +33,6 @@ const CTA_TEXT = {
 
 module.exports = {
   CONSUMER_MESSAGING,
-  AGENT_COMPENSATION,
+  AGENT_SUPPORT,
   CTA_TEXT,
 };

@@ -1634,8 +1634,15 @@ function initCookieConsent() {
   banner.innerHTML =
     '<p>We use cookies and Google Analytics to improve your experience and measure site performance. ' +
     '<a href="/privacy/">Privacy Policy</a></p>' +
+    /*
+     * btn-outline-white, not btn-outline. The banner is navy, and
+     * .btn-outline is navy text on a transparent background, so Decline
+     * rendered navy-on-navy and was invisible while Accept sat beside it in
+     * gold. A consent dialog where only Accept can be seen is not a consent
+     * dialog.
+     */
     '<div><button id="cookie-accept" class="btn btn-primary btn-sm">Accept</button>' +
-    '<button id="cookie-decline" class="btn btn-outline btn-sm">Decline</button></div>';
+    '<button id="cookie-decline" class="btn btn-outline-white btn-sm">Decline</button></div>';
   document.body.appendChild(banner);
 
   document.getElementById('cookie-accept').addEventListener('click', function () {

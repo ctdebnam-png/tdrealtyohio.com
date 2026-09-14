@@ -1262,7 +1262,19 @@ main {
   font-weight: 500;
 }
 
-.cta-section-links a {
+/*
+ * Gold text links inside the CTA band — NOT the buttons that also live there.
+ *
+ * This selector is (0,1,1) and .btn-primary is (0,1,0), so without the :not()
+ * it repainted every primary button's label gold on that button's own gold
+ * background: rgb(201,162,39) on rgb(201,162,39), a 1:1 contrast ratio. The
+ * main conversion button on /agents/, /sellers/, /buyers/ and /about/ was a
+ * blank gold rectangle.
+ *
+ * Nothing caught it because every gate reads files off disk, and this is only
+ * true once the cascade is resolved in a browser.
+ */
+.cta-section-links a:not(.btn) {
   color: var(--gold);
 }
 
@@ -9918,6 +9930,22 @@ details.td-details--flush .td-details-body {
 }
 
 .home-positioning .home-kicker {
+  color: var(--gold-dark);
+}
+
+/*
+ * A kicker the markup marks as gold must actually be gold.
+ *
+ * .home-kicker sets white for the dark hero, and .text-gold (line ~215) has
+ * the SAME specificity but is ~9600 lines earlier, so source order silently
+ * discards it. .home-positioning above only works because it is (0,2,0).
+ * .home-agent-bridge had no such rule, so "For Prospective Agents" rendered
+ * white on white and the section began with a blank line.
+ *
+ * Scoped to .home-kicker.text-gold so it fixes every kicker the markup marks
+ * gold, present and future, rather than one more section at a time.
+ */
+.home-kicker.text-gold {
   color: var(--gold-dark);
 }
 
