@@ -30,6 +30,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
 const { ROUTES } = require('../src/config/routes.js');
+const { GONE_URLS } = await import('../src/config/gone-urls.mjs');
 
 const PORT = Number(process.env.CHECK_ROUTES_PORT || 8791);
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -47,10 +48,7 @@ const RETIRED = [
   ['/buyers/first-time/dublin/', '/buyers/'],
   ['/sell/net-sheet/', '/sellers/'],
   ['/buy/pre-approval/', '/buyers/'],
-  ['/tools/seller-net-proceeds/', '/contact/'],
   ['/blog/closing-costs-columbus-ohio/', '/about/'],
-  ['/compare/1-percent-vs-3-percent/', '/sellers/'],
-  ['/home-value/', '/sellers/'],
   ['/faq/', '/contact/'],
   ['/sitemap-page/', '/'],
   // Trailing-slash normalisation.
@@ -58,6 +56,21 @@ const RETIRED = [
   ['/sellers', '/sellers/'],
   ['/areas', '/areas/'],
 ];
+
+/*
+ * /tools/seller-net-proceeds/, /compare/1-percent-vs-3-percent/ and
+ * /home-value/ used to be sampled here as redirects. They are now on the gone
+ * list and answer 410, which is the point of that list, so asserting a 301 for
+ * them asserts the opposite of the intended behaviour. They are covered by the
+ * gone-URL section below instead.
+ *
+ * _redirects still carries /tools/* and /compare/* rules. They are no longer
+ * reachable for any path this repo knows about, because every /tools/ and
+ * /compare/ URL that ever existed is on the gone list and Functions run first.
+ * They survive only as a fallback for paths that never existed, which is
+ * harmless — but if the gone list is ever trimmed, those rules are what the
+ * trimmed paths fall back to.
+ */
 
 const errors = [];
 
@@ -226,6 +239,30 @@ async function main() {
       }
       console.log(`  ok ${from.padEnd(38)} -> ${landed}`);
     }
+
+    /*
+     * Every URL on the gone list must actually answer 410.
+     *
+     * Checked here rather than in check-gone-urls.mjs because this is the only
+     * check with a server running, and 410 is a behaviour, not a fact about a
+     * file: the middleware has to be reached, its import of the data file has
+     * to resolve inside the Functions bundle, and it has to win over any
+     * _redirects rule for the same path. A static check of the array proves
+     * none of that.
+     */
+    console.log(`\nGone URLs (${GONE_URLS.length}) — must answer 410:`);
+    let goneOk = 0;
+    for (const url of GONE_URLS) {
+      const res = await fetch(`${BASE}${url}`, { redirect: 'manual' });
+      if (res.status === 410) {
+        goneOk++;
+        continue;
+      }
+      const where = res.headers.get('location');
+      fail(`${url}: expected 410, got ${res.status}${where ? ` -> ${where}` : ''}`);
+      console.log(`  X  ${url.padEnd(38)} ${res.status}${where ? ` -> ${where}` : ''}`);
+    }
+    console.log(`  ok ${goneOk} of ${GONE_URLS.length} answered 410`);
 
     console.log('');
     if (errors.length > 0) {

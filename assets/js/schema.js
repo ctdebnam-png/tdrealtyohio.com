@@ -17,22 +17,51 @@
  *   const { TD_SCHEMA_CONFIG, buildOrganizationSchema, buildRealEstateAgentSchema } = require('./schema');
  */
 
+/*
+ * Contact facts come from src/config/contact.js, which declares itself the
+ * single source of truth for phone, email and licence numbers. They used to be
+ * repeated here as literals, which is how the retired phone number came to sit
+ * in four places at once.
+ *
+ * Guarded, because this file is also loadable in a browser. In Node — the only
+ * context that matters now, since JSON-LD is generated at build time — the
+ * literals below are replaced by the real thing. check:json-ld asserts the
+ * fallbacks still match, so the browser copy cannot drift either.
+ */
+var TD_CONTACT_SRC = null;
+var TD_LICENSE_SRC = null;
+if (typeof require === 'function') {
+  try {
+    var _contact = require('../../src/config/contact.js');
+    TD_CONTACT_SRC = _contact.CONTACT;
+    TD_LICENSE_SRC = _contact.LICENSES;
+  } catch (e) {
+    TD_CONTACT_SRC = null;
+  }
+}
+
 // ===== CONFIGURATION =====
 const TD_SCHEMA_CONFIG = {
-  name: 'TD Realty Ohio, LLC',
+  name: TD_LICENSE_SRC ? TD_LICENSE_SRC.company_name : 'TD Realty Ohio, LLC',
   url: 'https://tdrealtyohio.com',
   ids: {
     organization: 'https://tdrealtyohio.com/#organization',
     realEstateAgent: 'https://tdrealtyohio.com/#realestateagent'
   },
-  telephone: '(614) 392-8858',
-  email: 'info@tdrealtyohio.com',
+  telephone: TD_CONTACT_SRC ? TD_CONTACT_SRC.phone_display : '(614) 956-8656',
+  email: TD_CONTACT_SRC ? TD_CONTACT_SRC.email : 'info@tdrealtyohio.com',
 
   address: {
-    addressLocality: 'Westerville',
-    addressRegion: 'OH',
-    addressCountry: 'US'
-    // NO streetAddress — avoids implying a physical office location
+    addressLocality: TD_CONTACT_SRC ? TD_CONTACT_SRC.address.city : 'Westerville',
+    addressRegion: TD_CONTACT_SRC ? TD_CONTACT_SRC.address.state : 'OH',
+    addressCountry: TD_CONTACT_SRC ? TD_CONTACT_SRC.address.country : 'US',
+    /*
+     * streetAddress is held behind includeStreetAddress (below) and stays off.
+     * The address of record is residential; publishing it in structured data on
+     * every page is a different decision from recording it in contact.js, and
+     * it is not one this file makes on its own.
+     */
+    streetAddress: TD_CONTACT_SRC ? TD_CONTACT_SRC.address.street : null
   },
 
   geo: {
@@ -41,13 +70,13 @@ const TD_SCHEMA_CONFIG = {
   },
 
   broker: {
-    name: 'Travis Debnam',
+    name: TD_LICENSE_SRC ? TD_LICENSE_SRC.broker_name : 'Travis Debnam',
     jobTitle: 'Broker/Owner'
   },
 
   licenses: {
-    broker: '2023006467',
-    brokerage: '2023006602'
+    broker: TD_LICENSE_SRC ? TD_LICENSE_SRC.broker : '2023006467',
+    brokerage: TD_LICENSE_SRC ? TD_LICENSE_SRC.brokerage : '2023006602'
   },
 
   // When false, streetAddress is omitted from every PostalAddress block.
@@ -175,11 +204,34 @@ function buildRealEstateAgentSchema(options) {
   return schema;
 }
 
+/**
+ * Build a BreadcrumbList from a route's path and its parent chain.
+ *
+ * `trail` is an ordered array of { name, path } ending with the page itself.
+ * A single-item trail is not emitted by the generator: a breadcrumb list
+ * containing only the current page describes no path and is noise.
+ */
+function buildBreadcrumbListSchema(trail) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map(function (crumb, index) {
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        name: crumb.name,
+        item: TD_SCHEMA_CONFIG.url + crumb.path
+      };
+    })
+  };
+}
+
 // ===== EXPORTS =====
 if (typeof module !== 'undefined') {
   module.exports = {
     TD_SCHEMA_CONFIG: TD_SCHEMA_CONFIG,
     buildOrganizationSchema: buildOrganizationSchema,
-    buildRealEstateAgentSchema: buildRealEstateAgentSchema
+    buildRealEstateAgentSchema: buildRealEstateAgentSchema,
+    buildBreadcrumbListSchema: buildBreadcrumbListSchema
   };
 }

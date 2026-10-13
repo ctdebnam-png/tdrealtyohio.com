@@ -2,10 +2,13 @@
 const { defineConfig, devices } = require('@playwright/test');
 
 /**
- * TD Realty Ohio - Playwright Test Configuration
- * Tests visual consistency and interactions across viewports
+ * TD Realty Ohio — Playwright configuration.
  *
- * Playwright owns the dev server — CI workflow must NOT start wrangler separately.
+ * The suite covers what the site IS: every canonical route answers and
+ * renders, header and footer links resolve, the contact form reports failure
+ * as failure, and axe is clean on all ten routes.
+ *
+ * Playwright owns the dev server — CI must NOT start wrangler separately.
  */
 
 const isCI = !!process.env.CI;
@@ -17,7 +20,24 @@ module.exports = defineConfig({
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
   workers: isCI ? 1 : undefined,
-  reporter: isCI ? [['html', { open: 'never' }], ['list']] : 'html',
+  /*
+   * Artifacts go under a DOT directory, outside every scanner's reach.
+   *
+   * Playwright used to write playwright-report/ and test-results/ into the
+   * repo root. Once `npm test` became part of check:all, running the tests
+   * made the gates fail: indexing-guard reported playwright-report/index.html
+   * as a page missing from the sitemap, check:seo-audit wanted a canonical and
+   * an H1 on it, check:meta-og wanted ten social tags, and check:nav wanted a
+   * <nav id="main-nav"> — four failures caused entirely by having run the
+   * tests.
+   *
+   * The fix is one line here rather than an exclusion in each of the twenty-one
+   * scripts that walk the tree for HTML. Every one of them already skips
+   * dot-directories, or uses glob, which ignores them by default.
+   */
+  reporter: isCI ? [['html', { open: 'never', outputFolder: '.playwright/report' }], ['list']]
+                 : [['html', { open: 'never', outputFolder: '.playwright/report' }]],
+  outputDir: '.playwright/results',
 
   /* Global timeouts — fail fast, never hang */
   timeout: 30_000,
@@ -42,77 +62,26 @@ module.exports = defineConfig({
     navigationTimeout: 15_000,
   },
 
-  projects: isCI
-    ? [
-        /* CI: only mobile + desktop on Chromium — minimum set for gating */
-        {
-          name: 'mobile-375x812',
-          testIgnore: /snapshot-regression/,
-          use: {
-            ...devices['iPhone 13 Pro'],
-            viewport: { width: 375, height: 812 },
-          },
-        },
-        {
-          name: 'desktop-1280x800',
-          testIgnore: /snapshot-regression/,
-          use: {
-            viewport: { width: 1280, height: 800 },
-          },
-        },
-      ]
-    : [
-        /* Local dev: full viewport matrix */
-        {
-          name: 'mobile-375x812',
-          use: {
-            ...devices['iPhone 13 Pro'],
-            viewport: { width: 375, height: 812 },
-          },
-        },
-        {
-          name: 'tablet-768x1024',
-          use: {
-            ...devices['iPad (gen 7)'],
-            viewport: { width: 768, height: 1024 },
-          },
-        },
-        {
-          name: 'desktop-1280x800',
-          use: {
-            viewport: { width: 1280, height: 800 },
-          },
-        },
-        {
-          name: 'desktop-1536x864',
-          use: {
-            viewport: { width: 1536, height: 864 },
-          },
-        },
-
-        /* Snapshot Regression projects — local only */
-        {
-          name: 'snapshot-mobile',
-          testMatch: /snapshot-regression/,
-          use: {
-            viewport: { width: 390, height: 844 },
-          },
-        },
-        {
-          name: 'snapshot-tablet',
-          testMatch: /snapshot-regression/,
-          use: {
-            viewport: { width: 768, height: 1024 },
-          },
-        },
-        {
-          name: 'snapshot-desktop',
-          testMatch: /snapshot-regression/,
-          use: {
-            viewport: { width: 1440, height: 900 },
-          },
-        },
-      ],
+  /*
+   * Two viewports, both modes.
+   *
+   * There used to be four locally plus three snapshot projects, which existed
+   * for visual-regression specs that tested removed features against
+   * baselines that were never committed. Those specs are gone. Without
+   * screenshot comparison a four-viewport matrix buys almost nothing and
+   * quadruples the axe run, so the local matrix now matches CI: one narrow,
+   * one wide.
+   */
+  projects: [
+    {
+      name: 'mobile-375x812',
+      use: { ...devices['iPhone 13 Pro'], viewport: { width: 375, height: 812 } },
+    },
+    {
+      name: 'desktop-1280x800',
+      use: { viewport: { width: 1280, height: 800 } },
+    },
+  ],
 
   webServer: {
     command: 'npx wrangler pages dev . --port 8788',

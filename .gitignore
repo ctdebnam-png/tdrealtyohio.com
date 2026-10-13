@@ -16,6 +16,7 @@ Thumbs.db
 .vscode/
 
 # Playwright test artifacts
+.playwright/
 playwright-report/
 test-results/
 screenshots/

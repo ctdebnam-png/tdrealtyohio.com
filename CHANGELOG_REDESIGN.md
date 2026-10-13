@@ -6,7 +6,7 @@
 ## Summary of Changes
 
 This redesign preserves all existing factual claims while improving visual presentation, mobile experience, and conversion patterns. Key contact information maintained sitewide:
-- Phone: (614) 392-8858
+- Phone: (614) 956-8656
 - Email: info@tdrealtyohio.com
 - Brokerage License: 2023006602
 - Broker License: 2023006467
@@ -326,7 +326,7 @@ All pages maintain consistent contact information:
 
 | Field | Value | Location |
 |-------|-------|----------|
-| Phone | (614) 392-8858 | Footer, CTA sections, persistent button |
+| Phone | (614) 956-8656 | Footer, CTA sections, persistent button |
 | Email | info@tdrealtyohio.com | Footer, contact page |
 | Broker License | #2023006467 | Footer license line |
 | Brokerage License | #2023006602 | Footer license line |

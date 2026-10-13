@@ -18,6 +18,19 @@
   --gold: #c9a227;
   --gold-light: #d4b44a;
   --gold-dark: #a8871f;
+  /*
+   * Gold for TEXT on a light ground. #a8871f measures 3.41:1 on white and
+   * 3.27:1 on the off-white sections — both under the 4.5:1 AA minimum, and
+   * axe fails every kicker and step number using it. #877018 is 4.82:1 on
+   * white and 4.62:1 on off-white, so it clears AA on both grounds the site
+   * actually uses.
+   *
+   * Deliberately a SEPARATE token rather than darkening --gold-dark: that one
+   * is a background and gradient colour in twelve places, where the brand
+   * should not shift and where darkening changes the look for no accessibility
+   * gain. This splits the two jobs the one token was doing.
+   */
+  --gold-text: #877018;
   --white: #ffffff;
   --off-white: #f8f9fa;
   --gray-50: #f9fafb;
@@ -615,7 +628,7 @@ li { margin-bottom: 0.5rem; }
 
 .mobile-phone-btn:hover {
   background: var(--gray-100);
-  color: var(--gold-dark);
+  color: var(--gold-text);
 }
 
 .mobile-menu-btn {
@@ -639,7 +652,7 @@ li { margin-bottom: 0.5rem; }
 .mobile-menu-btn:hover {
   background: var(--white);
   border-color: var(--gold);
-  color: var(--gold-dark);
+  color: var(--gold-text);
 }
 
 .mobile-menu-btn:focus-visible {
@@ -1054,79 +1067,6 @@ main {
   color: var(--white);
 }
 
-/* ===== CALCULATORS ===== */
-.calculator {
-  background-color: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 2rem;
-  max-width: 500px;
-}
-
-.calculator-title {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.calculator-input-group {
-  margin-bottom: 1.5rem;
-}
-
-.calculator-label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--gray-700);
-}
-
-.calculator-input {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1.25rem;
-  font-family: inherit;
-  border: 2px solid var(--gray-300);
-  border-radius: var(--radius-md);
-  transition: border-color var(--transition);
-}
-
-.calculator-input:focus {
-  outline: none;
-  border-color: var(--navy);
-}
-
-.calculator-mode-toggle {
-  display: flex;
-  margin-bottom: 1.5rem;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 2px solid var(--navy);
-}
-
-.calculator-mode-toggle .mode-btn {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid var(--gray-300);
-  background: var(--white);
-  color: var(--navy);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  cursor: pointer;
-  min-height: 44px;
-  transition: all 0.2s ease;
-}
-
-.calculator-mode-toggle .mode-btn.active {
-  background: var(--navy);
-  color: var(--white);
-  border-color: var(--navy);
-}
-
-.calculator-toggle {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
 .toggle-btn {
   flex: 1;
   padding: 0.75rem 1rem;
@@ -1147,14 +1087,6 @@ main {
 
 .toggle-btn:not(.active):hover {
   border-color: var(--navy);
-}
-
-.calculator-results {
-  background-color: var(--off-white);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  min-height: 180px; /* Prevent layout shift when results load */
-  contain: layout; /* CSS containment for better performance */
 }
 
 .result-row {
@@ -1194,19 +1126,6 @@ main {
 .result-value.strikethrough {
   text-decoration: line-through;
   color: var(--gray-500);
-}
-
-.calculator-cta {
-  width: 100%;
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.calculator-disclosure {
-  font-size: 0.8125rem;
-  color: var(--gray-600);
-  margin-top: 1rem;
-  margin-bottom: 0;
 }
 
 /* ===== CTA SECTIONS ===== */
@@ -1262,7 +1181,19 @@ main {
   font-weight: 500;
 }
 
-.cta-section-links a {
+/*
+ * Gold text links inside the CTA band — NOT the buttons that also live there.
+ *
+ * This selector is (0,1,1) and .btn-primary is (0,1,0), so without the :not()
+ * it repainted every primary button's label gold on that button's own gold
+ * background: rgb(201,162,39) on rgb(201,162,39), a 1:1 contrast ratio. The
+ * main conversion button on /agents/, /sellers/, /buyers/ and /about/ was a
+ * blank gold rectangle.
+ *
+ * Nothing caught it because every gate reads files off disk, and this is only
+ * true once the cascade is resolved in a browser.
+ */
+.cta-section-links a:not(.btn) {
   color: var(--gold);
 }
 
@@ -1352,7 +1283,7 @@ main {
   gap: 0.35rem;
 }
 .trust-bar-link:hover .trust-bar-value {
-  color: var(--gold-dark);
+  color: var(--gold-text);
 }
 
 @media (max-width: 768px) {
@@ -1558,7 +1489,7 @@ main {
 
 .step-tip-label {
   font-weight: 600;
-  color: var(--gold-dark);
+  color: var(--gold-text);
   font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1831,7 +1762,7 @@ main {
 }
 
 .callout-tip .callout-label {
-  color: var(--gold-dark);
+  color: var(--gold-text);
 }
 
 .callout-note {
@@ -2192,10 +2123,42 @@ main {
 
 .footer-license {
   font-size: 0.8125rem;
-  color: var(--gray-500);
+  /*
+   * Not var(--gray-500). That is #8b939a, which on the navy footer measures
+   * 4.43:1 — just under the 4.5:1 AA minimum for 13px text, and axe fails it.
+   * #949ca3 is 4.97:1 on the same background. The token is unchanged because
+   * it is used elsewhere on lighter grounds where it already passes.
+   */
+  color: #949ca3;
   text-align: center;
   padding: 1rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-related {
+  font-size: 0.8125rem;
+  /*
+   * Same #949ca3 as .footer-license, and for the same reason: 4.97:1 on the
+   * navy footer, where var(--gray-500) measures 4.43:1 and axe fails it at
+   * this size.
+   */
+  color: #949ca3;
+  text-align: center;
+  padding: 0 0 1.5rem;
+  margin: 0 auto;
+  max-width: 62ch;
+  line-height: 1.6;
+}
+
+/*
+ * The cross-link is underlined rather than colour-only. It sits inside a
+ * paragraph of body text, which is `link-in-text-block`: a link distinguished
+ * from its surroundings by colour alone needs 3:1 against that text, and a
+ * disclosure a reader cannot see is a link is not a disclosure.
+ */
+.footer-related a {
+  color: #fff;
+  text-decoration: underline;
 }
 
 .footer-contact-canonical {
@@ -2756,10 +2719,6 @@ body.nav-open {
     gap: 2rem;
   }
 
-  .calculator {
-    padding: 1.5rem;
-  }
-
   .path-rate {
     font-size: 3rem;
   }
@@ -2806,124 +2765,9 @@ body.nav-open {
     border-radius: var(--radius-md);
   }
 
-  .calculator-toggle {
-    flex-direction: column;
-  }
-
   .areas-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* ===== RANGE SLIDER CALCULATOR ===== */
-.calculator-slider-group {
-  margin-bottom: 2rem;
-}
-
-.calculator-slider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-
-.calculator-slider-value {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--navy);
-}
-
-.calculator-range {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 8px;
-  background: var(--gray-200);
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
-  /* Fallback for older Safari iOS */
-  background-image: linear-gradient(to right, var(--gold) 0%, var(--gold) var(--value, 50%), var(--gray-200) var(--value, 50%), var(--gray-200) 100%);
-}
-
-/* Safari iOS fix: ensure touch targets are accessible */
-@supports (-webkit-touch-callout: none) {
-  .calculator-range {
-    min-height: 44px;
-    padding: 18px 0;
-    background-clip: content-box;
-  }
-}
-
-.calculator-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 28px;
-  height: 28px;
-  background: var(--gold);
-  border-radius: 50%;
-  cursor: pointer;
-  border: 3px solid var(--white);
-  box-shadow: var(--shadow-md);
-  transition: transform 0.2s ease;
-  /* Safari iOS needs explicit margin for thumb positioning */
-  margin-top: -10px;
-}
-
-.calculator-range::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-}
-
-.calculator-range:focus {
-  outline: none;
-}
-
-.calculator-range:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
-.calculator-range:focus::-webkit-slider-thumb {
-  box-shadow: var(--shadow-md), var(--shadow-focus);
-}
-
-.calculator-range:focus::-moz-range-thumb {
-  box-shadow: var(--shadow-md), var(--shadow-focus);
-}
-
-.calculator-range::-moz-range-thumb {
-  width: 28px;
-  height: 28px;
-  background: var(--gold);
-  border-radius: 50%;
-  cursor: pointer;
-  border: 3px solid var(--white);
-  box-shadow: var(--shadow-md);
-  transition: transform 0.2s ease;
-}
-
-.calculator-range::-moz-range-thumb:hover {
-  transform: scale(1.1);
-}
-
-.calculator-range::-webkit-slider-runnable-track {
-  height: 8px;
-  background: linear-gradient(to right, var(--gold) 0%, var(--gold) var(--value, 50%), var(--gray-200) var(--value, 50%), var(--gray-200) 100%);
-  border-radius: 4px;
-}
-
-.calculator-range::-moz-range-track {
-  background: var(--gray-200);
-  border-radius: 4px;
-  height: 8px;
-}
-
-.calculator-range::-moz-range-progress {
-  background: var(--gold);
-  border-radius: 4px;
-  height: 8px;
 }
 
 .slider-labels {
@@ -3768,7 +3612,7 @@ body.nav-open {
 
 .blog-tag-buyer {
   background: rgba(201, 162, 39, 0.15);
-  color: var(--gold-dark);
+  color: var(--gold-text);
 }
 
 .blog-tag-agent {
@@ -4562,7 +4406,7 @@ body.nav-open {
 }
 
 .feature-card-link:hover {
-  color: var(--gold-dark);
+  color: var(--gold-text);
 }
 
 @media (max-width: 600px) {
@@ -4573,134 +4417,6 @@ body.nav-open {
 
   .feature-card {
     padding: 1.5rem;
-  }
-}
-
-/* ===== TOOL PRIMARY CARD ===== */
-.tool-primary {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  transition: border-color 0.2s ease;
-}
-
-.tool-primary:hover {
-  border-color: var(--navy);
-}
-
-.tool-primary-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--navy);
-  margin: 0 0 0.5rem;
-}
-
-.tool-primary-text {
-  font-size: 0.9375rem;
-  color: var(--gray-600);
-  line-height: 1.5;
-  margin: 0 0 1rem;
-}
-
-.tool-primary .btn {
-  display: inline-block;
-}
-
-/* ===== TOOL ACCORDION ===== */
-.tool-accordion {
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-md);
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
-.tool-accordion-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0.875rem 1.25rem;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--navy);
-  background: var(--gray-50);
-  border: none;
-  cursor: pointer;
-  text-align: left;
-}
-
-.tool-accordion-toggle svg {
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
-}
-
-.tool-accordion-toggle[aria-expanded="true"] svg {
-  transform: rotate(180deg);
-}
-
-.tool-accordion-body {
-  display: none;
-}
-
-.tool-accordion-body.open {
-  display: block;
-}
-
-.tool-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.75rem 1.25rem;
-  text-decoration: none;
-  color: inherit;
-  border-top: 1px solid var(--gray-200);
-  transition: background-color 0.15s ease;
-  min-height: 44px;
-}
-
-.tool-row:hover {
-  background: var(--gray-50);
-}
-
-.tool-row:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: -2px;
-}
-
-.tool-row strong {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--navy);
-  margin-bottom: 0.125rem;
-}
-
-.tool-row span {
-  font-size: 0.8125rem;
-  color: var(--gray-500);
-  line-height: 1.3;
-}
-
-.tool-row-chevron {
-  font-size: 1.25rem;
-  color: var(--gray-400, #adb5bd);
-  flex-shrink: 0;
-}
-
-/* On desktop, show accordion body open by default */
-@media (min-width: 769px) {
-  .tool-accordion-body {
-    display: block;
-  }
-  .tool-accordion-toggle svg {
-    transform: rotate(180deg);
   }
 }
 
@@ -5214,7 +4930,6 @@ body.nav-open {
   text-align: center;
 }
 
-
 /* ── Max Content Width for Long-Form Pages ─────────────── */
 .content-prose {
   max-width: 65ch;
@@ -5262,79 +4977,6 @@ body.nav-open {
   .section-spacious {
     padding: 3.5rem 0;
   }
-}
-
-/* ── Calculator Consistency ────────────────────────────── */
-.calculator-unified {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 2rem;
-  max-width: 500px;
-}
-
-.calculator-unified .calculator-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.375rem;
-  color: var(--navy);
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.calculator-unified .calculator-slider-group {
-  margin-bottom: 1.5rem;
-}
-
-.calculator-unified .calculator-slider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-
-.calculator-unified .calculator-label {
-  font-weight: 600;
-  color: var(--gray-700);
-}
-
-.calculator-unified .calculator-slider-value {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--navy);
-}
-
-.calculator-unified .calculator-results {
-  background: var(--off-white);
-  border-radius: var(--radius-md);
-  padding: 1.25rem;
-}
-
-.calculator-unified .result-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.625rem 0;
-  border-bottom: 1px solid var(--gray-200);
-}
-
-.calculator-unified .result-row:last-child {
-  border-bottom: none;
-}
-
-.calculator-unified .result-label {
-  color: var(--gray-600);
-  font-size: 0.9375rem;
-}
-
-.calculator-unified .result-value {
-  font-weight: 700;
-  color: var(--navy);
-}
-
-.calculator-unified .result-value.highlight {
-  color: var(--success);
-  font-size: 1.375rem;
 }
 
 /* ===== LEAD FORM MODAL ===== */
@@ -5710,7 +5352,7 @@ html[data-reveal] .reveal-stagger.visible > * {
 }
 
 .process-step--link:hover .process-step-title {
-  color: var(--gold-dark);
+  color: var(--gold-text);
 }
 
 .process-step-connector {
@@ -6146,13 +5788,6 @@ html[data-reveal] .reveal-stagger.visible > * {
   z-index: -1;
 }
 
-/* ===== CALCULATOR SECTION UPGRADE ===== */
-.calculator-section {
-  background: linear-gradient(180deg, var(--off-white) 0%, var(--gray-50) 100%);
-  position: relative;
-  overflow: hidden;
-}
-
 /* ===== CTA SECTION UPGRADES ===== */
 .cta-eyebrow {
   text-transform: uppercase;
@@ -6471,7 +6106,7 @@ html[data-reveal] .reveal-stagger.visible > * {
 
 /* Credential highlight rows */
 .credential-highlight .credential-value {
-  color: var(--gold-dark);
+  color: var(--gold-text);
   font-weight: 700;
 }
 
@@ -6600,7 +6235,7 @@ html[data-reveal] .reveal-stagger.visible > * {
 }
 
 .broker-card-role {
-  color: var(--gold-dark);
+  color: var(--gold-text);
   font-weight: 600;
   margin-bottom: 0.75rem;
 }
@@ -6978,74 +6613,6 @@ html[data-reveal] .reveal-stagger.visible > * {
     margin-left: 0;
     font-size: 0.625rem;
   }
-}
-
-/* ===== HERO CTA ===== */
-/* Pulse animation removed for professional look */
-
-/* ===== SAVINGS VISUALIZATION BARS ===== */
-.savings-visual {
-  margin-top: 1.5rem;
-}
-
-.savings-bar-group {
-  margin-bottom: 0.75rem;
-}
-
-.savings-bar-label {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--gray-600);
-  margin-bottom: 0.375rem;
-}
-
-.savings-bar-track {
-  background: var(--gray-100);
-  border-radius: 6px;
-  height: 40px;
-  overflow: hidden;
-  position: relative;
-}
-
-.savings-bar-fill {
-  height: 100%;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  font-weight: 700;
-  font-size: 0.875rem;
-  color: var(--white);
-  width: 0;
-  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.savings-bar-fill.animated {
-  width: var(--bar-width);
-}
-
-.savings-bar-fill--traditional {
-  background: var(--gray-500);
-}
-
-.savings-bar-fill--td {
-  background: linear-gradient(90deg, var(--success), #22c55e);
-}
-
-.savings-visual-result {
-  text-align: center;
-  margin-top: 0.75rem;
-  padding: 0.625rem 1rem;
-  background: var(--success-bg);
-  border: 1px solid var(--success-border);
-  border-radius: var(--radius-md);
-  font-size: 0.9375rem;
-}
-
-.savings-visual-result strong {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.5rem;
-  color: var(--success);
 }
 
 /* ===== TRUST BADGES NEAR CTAs ===== */
@@ -7466,7 +7033,7 @@ html[data-reveal] .reveal-stagger.visible > * {
   align-items: center;
   gap: 0.25rem;
   background: rgba(201, 162, 39, 0.12);
-  color: var(--gold-dark);
+  color: var(--gold-text);
   padding: 0.125rem 0.5rem;
   border-radius: 100px;
   font-weight: 700;
@@ -7773,7 +7340,6 @@ html[data-reveal] .reveal-stagger.visible > * {
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
-  .savings-bar-fill { transition: none; }
   .testimonial-track { transition: none; }
   .feature-card, .pricing-card, .path-card, .guide-card { transition: none; }
   [data-reveal] .reveal { transition: none; opacity: 1; transform: none; }
@@ -7913,7 +7479,7 @@ html[data-reveal] .reveal-stagger.visible > * {
 }
 
 .lp-savings-highlight span:last-child {
-  color: var(--gold-dark);
+  color: var(--gold-text);
   font-size: 1.25rem;
 }
 
@@ -8164,25 +7730,6 @@ html[data-reveal] .reveal-stagger.visible > * {
 .btn-tertiary:focus-visible {
   outline: 3px solid var(--navy);
   outline-offset: 2px;
-}
-
-/* --- Calculator: tabular numerals for stable width during drag --- */
-.result-value,
-.calculator-slider-value,
-[data-price-display],
-[data-traditional],
-[data-td-realty],
-[data-savings],
-[data-commission],
-[data-cash-back],
-[data-agent-keeps] {
-  font-variant-numeric: tabular-nums;
-}
-
-.calculator-slider-value,
-[data-price-display] {
-  min-width: 6ch;
-  text-align: right;
 }
 
 /* --- Post-meta standardization --- */
@@ -9061,14 +8608,6 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: var(--shadow-sm);
   cursor: pointer;
 }
-/* Calculator output stability */
-.calculator-result,
-[data-traditional], [data-td-realty], [data-savings],
-[data-commission], [data-cash-back], [data-agent-keeps] {
-  min-width: 4em;
-  min-height: 1.5em;
-  display: inline-block;
-}
 
 /* ── 20. Minimum Tap Targets ── */
 button, a, input, select, textarea, [role="button"], [tabindex="0"] {
@@ -9080,6 +8619,26 @@ p a, li a, .breadcrumb a, .footer-bottom a, td a, .disclaimer a {
   min-height: auto;
   min-width: auto;
 }
+/*
+ * Inline links in prose must be distinguishable WITHOUT colour.
+ *
+ * The base `a` rule sets text-decoration: none and colour var(--navy). In body
+ * copy that is #1a2e44 link text inside #343a40 prose — a 1.2:1 difference
+ * against the surrounding text, where 3:1 is the minimum when colour is the
+ * only signal. axe fails it as link-in-text-block, and a reader who does not
+ * perceive the hue cannot tell there is a link there at all.
+ *
+ * Underlining is the fix that does not depend on colour. Buttons are excluded:
+ * they are distinguishable by shape and an underline would only look broken.
+ */
+p a:not(.btn),
+li a:not(.btn),
+td a:not(.btn),
+.disclaimer a:not(.btn) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* Card-as-link: focus-visible outline */
 a.info-card:focus-visible,
 a.stat-card:focus-visible,
@@ -9247,12 +8806,6 @@ a.trust-item:focus-visible,
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--gold);
-}
-
-/* ── Calculator result pages ── */
-.calculator-page {
-  max-width: 700px;
-  margin: 0 auto;
 }
 .calc-results {
   background: var(--gray-50);
@@ -9918,7 +9471,23 @@ details.td-details--flush .td-details-body {
 }
 
 .home-positioning .home-kicker {
-  color: var(--gold-dark);
+  color: var(--gold-text);
+}
+
+/*
+ * A kicker the markup marks as gold must actually be gold.
+ *
+ * .home-kicker sets white for the dark hero, and .text-gold (line ~215) has
+ * the SAME specificity but is ~9600 lines earlier, so source order silently
+ * discards it. .home-positioning above only works because it is (0,2,0).
+ * .home-agent-bridge had no such rule, so "For Prospective Agents" rendered
+ * white on white and the section began with a blank line.
+ *
+ * Scoped to .home-kicker.text-gold so it fixes every kicker the markup marks
+ * gold, present and future, rather than one more section at a time.
+ */
+.home-kicker.text-gold {
+  color: var(--gold-text);
 }
 
 .home-positioning-card {
@@ -9952,7 +9521,7 @@ details.td-details--flush .td-details-body {
 }
 
 .home-process-grid span {
-  color: var(--gold-dark);
+  color: var(--gold-text);
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.08em;
