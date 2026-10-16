@@ -46,9 +46,12 @@ This surprises people, and it is why:
 - CSS cache busting: `?v=YYYYMMDD` on the stylesheet link.
 - Every shipped `<form>` must name a rooted endpoint in its `action`.
   `check:form-actions` enforces it; an empty action resolves to the page itself.
-- Forms post to `/api/lead` only, which writes to KV with a 90-day TTL. **There
-  is no email delivery path.** Formspree was never wired up and the MailChannels
-  call was dead from 2024; server-side mail is WP-2b, via Resend.
+- Forms post to `/api/lead` only, which writes to KV with a 365-day TTL and then
+  emails a notice through Resend (`functions/lib/notify.js`, WP-2b). Settings:
+  `RESEND_API_KEY`, `NOTIFY_FROM` (a Resend-verified sender), `NOTIFY_TO`
+  (default ctdebnam@gmail.com). `/api/agent-apply` does the same. A notice that
+  fails is logged and the visitor still gets ok; KV stays the record.
+  Formspree was never wired up and the MailChannels call is gone.
 - An endpoint must not report success it did not have. `/api/lead` and
   `/api/agent-apply` return 5xx when the KV write did not happen;
   `check:api-capture` holds them to it.

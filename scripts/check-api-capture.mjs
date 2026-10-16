@@ -21,6 +21,11 @@
  * from wrangler.toml, so a live server can only ever exercise the happy path.
  * That is exactly why the bug survived local testing.
  *
+ * Since WP-2b both endpoints also email a notice through Resend after the
+ * write. The gate stubs fetch and holds three lines: a notice goes out only
+ * after a write that happened, its subject names the interest and the person,
+ * and a failed notice still answers 200, because the lead was captured.
+ *
  * The honeypot case is asserted too, in the other direction: a submission that
  * trips it must still return 200, indistinguishable from success, or the
  * honeypot tells a bot it was caught.
@@ -60,6 +65,23 @@ const APPLICATION = {
 
 const errors = [];
 
+const RESEND = { RESEND_API_KEY: 're_test', NOTIFY_FROM: 'Leads <leads@example.com>' };
+let sends = [];
+let resendStatus = 200;
+globalThis.fetch = async (url, init) => {
+  sends.push({ url: String(url), body: JSON.parse(init.body) });
+  return new Response('{}', { status: resendStatus });
+};
+
+function assert(label, ok, detail = '') {
+  if (ok) {
+    console.log(`  ok ${label}`);
+    return;
+  }
+  errors.push(`${label}${detail ? ': ' + detail : ''}`);
+  console.log(`  X  ${label}`);
+}
+
 async function assertStatus(label, response, expected) {
   const actual = response.status;
   if (actual === expected) {
@@ -84,11 +106,37 @@ async function main() {
     await assertStatus('KV write throws', await lead.onRequestPost(context(LEAD, THROWING_KV)), 500);
     await assertStatus('no LEADS binding', await lead.onRequestPost(context(LEAD, NO_BINDING)), 500);
 
+    sends = [];
+    await lead.onRequestPost(context(LEAD, { ...THROWING_KV, ...RESEND }));
+    assert('no notice when the KV write throws', sends.length === 0);
+    sends = [];
+    const contactLead = { ...LEAD, phone: '614-555-0100', extra: { interest: 'selling', message: 'Line one\nLine two' } };
+    const sentRes = await lead.onRequestPost(context(contactLead, { ...WORKING_KV, ...RESEND }));
+    const sentBody = await sentRes.json();
+    const notice = sends[0]?.body;
+    assert('one notice to Resend after a stored lead', sends.length === 1 && sends[0].url === 'https://api.resend.com/emails');
+    assert('notice goes to ctdebnam@gmail.com by default', notice?.to?.[0] === 'ctdebnam@gmail.com', JSON.stringify(notice?.to));
+    assert("subject is 'New website lead: [interest] - [name]'", notice?.subject === 'New website lead: selling - Gate Check', notice?.subject);
+    assert('body carries lead_id, page URL and every field',
+      !!notice && [`lead_id: ${sentBody.lead_id}`, 'page_url: https://tdrealtyohio.com/contact/', 'email: gate@example.com',
+        'phone: 614-555-0100', 'extra.interest: selling', 'extra.message:\n  Line one\n  Line two'].every((t) => notice.text.includes(t)));
+    resendStatus = 500;
+    await assertStatus('Resend fails, lead still reported captured', await lead.onRequestPost(context(LEAD, { ...WORKING_KV, ...RESEND })), 200);
+    resendStatus = 200;
+
     const agent = await import(pathToFileURL(join(ROOT, 'functions/api/agent-apply.js')).href);
     console.log('\n  /api/agent-apply');
     await assertStatus('KV write succeeds', await agent.onRequestPost(context(APPLICATION, WORKING_KV)), 200);
     await assertStatus('KV write throws', await agent.onRequestPost(context(APPLICATION, THROWING_KV)), 500);
     await assertStatus('no LEADS binding', await agent.onRequestPost(context(APPLICATION, NO_BINDING)), 500);
+    sends = [];
+    await agent.onRequestPost(context(APPLICATION, { ...WORKING_KV, ...RESEND, NOTIFY_TO: 'other@example.com' }));
+    assert('agent application sends one notice, NOTIFY_TO honored',
+      sends.length === 1 && sends[0].body.to[0] === 'other@example.com' && sends[0].body.subject.startsWith('New website lead: agent application'));
+    resendStatus = 500;
+    await assertStatus('Resend fails, application still reported captured',
+      await agent.onRequestPost(context({ ...APPLICATION, form_started_at: Date.now() - 6000 }, { ...WORKING_KV, ...RESEND })), 200);
+    resendStatus = 200;
     await assertStatus(
       'honeypot still indistinguishable from success',
       await agent.onRequestPost(context({ ...APPLICATION, website: 'bot' }, NO_BINDING)),
@@ -104,7 +152,7 @@ async function main() {
     errors.forEach((e) => console.error(`  - ${e}`));
     return 1;
   }
-  console.log('[api-capture] both endpoints report capture failures instead of claiming success.');
+  console.log('[api-capture] both endpoints report capture failures instead of claiming success, and notify after a real write.');
   return 0;
 }
 
