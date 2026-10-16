@@ -1,7 +1,11 @@
 /**
  * POST /api/lead — First-party lead capture endpoint
- * Stores leads in Cloudflare KV (LEADS namespace) and forwards to Formspree.
+ * Stores leads in Cloudflare KV (LEADS namespace) for 365 days, then emails a
+ * notice through Resend (functions/lib/notify.js). The response reflects the
+ * KV write only: a notice that fails is logged, and the visitor still gets ok.
  */
+
+import { noticeSubject, noticeText, sendNotice } from '../lib/notify.js';
 
 const ALLOWED_ORIGINS = [
   'https://tdrealtyohio.com',
@@ -154,13 +158,13 @@ export async function onRequestPost(context) {
     extra: body.extra || {},
   };
 
-  // Store in KV with 90-day TTL
+  // Store in KV with a 365-day TTL
   const kvKey = `lead:${createdAt}:${leadId}`;
   let kvStatus = 'skipped';
   try {
     if (env.LEADS) {
       await env.LEADS.put(kvKey, JSON.stringify(lead), {
-        expirationTtl: 90 * 24 * 60 * 60, // 90 days in seconds
+        expirationTtl: 365 * 24 * 60 * 60, // 365 days in seconds
       });
       kvStatus = 'ok';
     } else {
@@ -193,6 +197,25 @@ export async function onRequestPost(context) {
       { status: 500, headers },
     );
   }
+
+  /*
+   * The lead is stored; now tell a person about it. Before this, KV was the
+   * only destination and nobody looked at it, so leads sat unread until they
+   * expired. A failed notice is logged with the KV key and does not change the
+   * answer: the lead was captured, and that is what the visitor is told.
+   */
+  const interest = lead.extra?.interest || lead.extra?.transaction_type || lead.intent_type;
+  const pageUrl = body.page_url || (lead.page_path ? new URL(lead.page_path, origin).href : '');
+  const sent = await sendNotice(env, {
+    subject: noticeSubject(interest, lead.name),
+    text: noticeText('A new lead came in through tdrealtyohio.com.', {
+      lead_id: leadId,
+      page_url: pageUrl,
+      ...lead,
+    }),
+    replyTo: hasEmail ? lead.email : undefined,
+  });
+  if (sent !== 'sent') console.error(`Lead notice not sent (${sent}); record ${kvKey}`);
 
   return new Response(JSON.stringify({ ok: true, lead_id: leadId }), {
     status: 200,

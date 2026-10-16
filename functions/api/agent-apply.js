@@ -1,3 +1,5 @@
+import { noticeSubject, noticeText, sendNotice } from '../lib/notify.js';
+
 const ALLOWED_ORIGINS = [
   'https://tdrealtyohio.com',
   'https://www.tdrealtyohio.com',
@@ -102,10 +104,11 @@ export async function onRequestPost(context) {
    * dropped and the applicant told it went through.
    */
   let captured = false;
+  const kvKey = `agent_apply:${submittedAt}:${crypto.randomUUID()}`;
   if (env.LEADS) {
     try {
-      await env.LEADS.put(`agent_apply:${submittedAt}:${crypto.randomUUID()}`, JSON.stringify(summary), {
-        expirationTtl: 90 * 24 * 60 * 60
+      await env.LEADS.put(kvKey, JSON.stringify(summary), {
+        expirationTtl: 365 * 24 * 60 * 60
       });
       captured = true;
     } catch (error) {
@@ -115,22 +118,25 @@ export async function onRequestPost(context) {
     console.error('Agent apply: no LEADS binding — nothing was stored');
   }
 
-  /*
-   * No mail is sent from here.
-   *
-   * This posted to api.mailchannels.net, which stopped serving Cloudflare
-   * Workers for free in mid-2024. Every call since has failed into a catch that
-   * logged and carried on, so the endpoint has been storing applications and
-   * sending nothing while reporting success. Dead code shaped like a delivery
-   * path is worse than no delivery path — it is why nobody noticed.
-   *
-   * Server-side mail is WP-2b, via Resend, once a sending domain is verified.
-   * Until then KV is the only record and /api/leads-export is how it is read.
-   */
-
   if (!captured) {
     return new Response(JSON.stringify({ ok: false, error: 'not_captured' }), { status: 500, headers });
   }
+
+  /*
+   * Notify through Resend once the record is stored. This replaces the
+   * MailChannels call removed in October 2026, which had failed silently since
+   * mid-2024. A failed notice is logged and the applicant still gets ok,
+   * because the application was captured.
+   */
+  const sent = await sendNotice(env, {
+    subject: noticeSubject('agent application', body.name),
+    text: noticeText('A new agent application came in through tdrealtyohio.com.', {
+      page_url: summary.page_path ? new URL(summary.page_path, origin).href : '',
+      record: kvKey,
+      ...summary
+    })
+  });
+  if (sent !== 'sent') console.error(`Agent apply notice not sent (${sent}); record ${kvKey}`);
 
   return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
 }
