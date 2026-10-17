@@ -10246,8 +10246,9 @@ textarea:focus-visible {
   color: var(--navy);
 }
 
-.area-page {
-  max-width: 46rem;
+/* The column keeps the container's left edge, so it lines up with the h1. */
+.area-page > * {
+  max-width: 40rem;
 }
 
 .area-page h2 {
@@ -10261,6 +10262,13 @@ textarea:focus-visible {
 
 .area-page p {
   margin-bottom: 1.125rem;
+}
+
+/* 62ch (the site measure) runs past 80 characters on lines dense with
+   narrow glyphs such as "I-270, I-670". These paragraphs are the longest
+   on the site, so they get a slightly shorter measure. */
+.container.area-page > p {
+  max-width: 58ch;
 }
 
 .area-facts {
