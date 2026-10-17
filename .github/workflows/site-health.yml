@@ -1,0 +1,100 @@
+name: Site health
+
+# Three outside checks on the pages as they ship, on every pull request and
+# once a week. Broken links: lychee. Lighthouse budgets: performance,
+# accessibility, best practices and SEO each 90 or better, phone and desktop.
+# Accessibility: pa11y-ci over every URL in sitemap.xml.
+#
+# They run against a local copy of the site, the same way CI's own gates do:
+# the repo IS the site (no build step), and `wrangler pages dev` serves it with
+# the Functions, _redirects and _headers that Cloudflare Pages applies.
+# The weekly run catches what changes without a commit: outside links that
+# have gone dead.
+
+on:
+  pull_request:
+  schedule:
+    - cron: '17 10 * * 1' # Mondays, 10:17 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: site-health-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    name: Broken links (lychee)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Absolute links to this site's own pages (canonical, og:url, og:image)
+      # are remapped to the files in this checkout, so a PR is checked against
+      # the pages it ships rather than the ones already live.
+      - name: Check every link on every page
+        uses: lycheeverse/lychee-action@v2.9.0
+        with:
+          args: >-
+            --config .github/lychee.toml
+            --no-progress
+            --root-dir '${{ github.workspace }}'
+            --remap '^https://(www\.)?tdrealtyohio\.com/(.*)$ file://${{ github.workspace }}/$2'
+            './*.html'
+            './*/index.html'
+          fail: true
+          jobSummary: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  lighthouse:
+    name: Lighthouse budgets (${{ matrix.preset }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [mobile, desktop]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lighthouse on the ten routes, 90 or better in every category
+        uses: treosh/lighthouse-ci-action@v12
+        env:
+          LH_FORM_FACTOR: ${{ matrix.preset }}
+        with:
+          configPath: ./.lighthouserc.js
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  pa11y:
+    name: Accessibility (pa11y-ci, sitemap)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Serve the site the way Pages does
+        run: |
+          npx wrangler pages dev . --port 8788 > wrangler.log 2>&1 &
+          npx wait-on -t 120000 http-get://localhost:8788/sitemap.xml
+
+      # The sitemap lists production URLs; they are rewritten to the local
+      # server so the pages under test are this commit's.
+      - name: pa11y-ci over every URL in sitemap.xml
+        run: >-
+          npx --yes pa11y-ci@4.1.1
+          --config .github/pa11yci.json
+          --sitemap http://localhost:8788/sitemap.xml
+          --sitemap-find https://tdrealtyohio.com
+          --sitemap-replace http://localhost:8788
+
+      - name: Server log
+        if: failure()
+        run: cat wrangler.log
