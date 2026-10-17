@@ -3544,15 +3544,21 @@ body.nav-open {
   color: var(--error);
 }
 
-/* Form validation states */
-.form-input:invalid:not(:placeholder-shown),
-.form-select:invalid:not(:placeholder-shown),
-.form-textarea:invalid:not(:placeholder-shown) {
+/*
+ * Form validation states. :user-invalid only matches once the visitor has
+ * changed the field or tried to submit. The old :invalid:not(:placeholder-shown)
+ * matched every empty required field with no placeholder (Name, Email,
+ * Interest), so the contact form opened already outlined in red. A submit
+ * attempt still marks every empty field through the .error class in main.js.
+ */
+.form-input:user-invalid,
+.form-select:user-invalid,
+.form-textarea:user-invalid {
   border-color: var(--error);
 }
 
-.form-input:valid:not(:placeholder-shown),
-.form-textarea:valid:not(:placeholder-shown) {
+.form-input:user-valid,
+.form-textarea:user-valid {
   border-color: var(--success);
 }
 
@@ -9654,4 +9660,133 @@ details.td-details--flush .td-details-body {
   .home-trust-card {
     border-radius: 14px;
   }
+}
+
+/* =====================================================
+   UX FIXES, 2026-10-17 (phone and desktop audit)
+   ===================================================== */
+
+/* Phone menu button: shown wherever the header links are hidden (1024px). */
+@media (max-width: 1024px) {
+  .mobile-menu-btn {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* One primary button under a page heading, and after a group of cards. */
+.hero-cta,
+.section-cta {
+  margin-top: 1.5rem;
+}
+
+/* Lead modal: the "(optional)" note on Phone. Was an inline style, which the
+   style-src policy blocks. */
+.lead-modal-optional {
+  font-weight: 400;
+  color: var(--gray-500);
+}
+
+/* Consent checkbox: a 20px box with a 44px tap row, label tied by for/id. */
+.form-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.form-consent .form-checkbox {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  /* extended.css gives every input a 44px minimum, which would draw a 44px box */
+  min-width: 20px;
+  min-height: 20px;
+  margin: 12px 0;
+  accent-color: var(--navy);
+  cursor: pointer;
+}
+
+.form-consent label {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+/* Contact form confirmation, shown in place of the form after a send. */
+.form-confirmation {
+  padding: 1.5rem;
+  border: 1px solid var(--success);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.form-confirmation:focus {
+  outline: none;
+}
+
+.form-confirmation-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0 0 0.5rem;
+}
+
+/*
+ * Footer links: 44px tap height on phones. Prefixed with .footer because
+ * extended.css (loaded at runtime on /contact/ and 404) sets
+ * `.footer-bottom a { min-height: 1.5em }` at the same specificity, later.
+ */
+@media (max-width: 768px) {
+  .footer .footer-links a,
+  .footer .footer-legal a,
+  .footer .footer-contact-item a,
+  .footer .footer-related a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .footer-legal {
+    gap: 0 1.5rem;
+  }
+
+  .footer-links li {
+    margin-bottom: 0;
+  }
+
+  /* Cookie banner: one compact row instead of a stacked block. */
+  #cookie-consent {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  #cookie-consent p {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #cookie-consent .btn-sm {
+    min-height: 44px;
+    padding: 0 0.75rem;
+  }
+}
+
+/* Home route cards: the heading is the link now that the card buttons are gone. */
+.home-route-card h3 a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.home-route-card h3 a:hover {
+  color: var(--gold-text);
 }

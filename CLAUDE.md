@@ -10,7 +10,7 @@ pages — the HTML in the repo is the HTML that ships.
 npm install
 npm run dev          # wrangler pages dev on port 8788
 npm run check:all    # every quality gate, in order
-npm test             # Playwright — 66 tests; also the last step of check:all
+npm test             # Playwright — 94 tests; also the last step of check:all
 ```
 
 ## Architecture
@@ -19,8 +19,9 @@ npm test             # Playwright — 66 tests; also the last step of check:all
 - **One stylesheet**: `assets/css/styles.css`, ~9,600 lines, the only sheet any
   page links. `assets/css/bundles/extended.css` is loaded at runtime by
   `main.js`, so it reaches only the two pages that load JS.
-- **One script**: `assets/js/main.js`, ~1,800 lines, with `TD_CONFIG` at the top.
-  `assets/js/nav.js` is a small nav registry.
+- **Scripts**: `assets/js/main.js`, ~1,700 lines, with `TD_CONFIG` at the top.
+  `assets/js/nav.js` is a small nav registry. `assets/js/mobile-nav.js` is the
+  phone menu, standalone, loaded with `nav.js` on every page.
 - **Route registry**: `src/config/routes.js` — the source of truth for routes,
   titles, descriptions, sitemap entries, canonicals and declared JSON-LD.
 - **Contact record**: `src/config/contact.js` — the source of truth for phone,
@@ -31,13 +32,15 @@ npm test             # Playwright — 66 tests; also the last step of check:all
   `src/config/gone-urls.mjs`. Functions run BEFORE `_redirects`, so a listed
   path returns 410 even when a 301 rule also matches it.
 
-### Only two pages load JavaScript
-`404.html` and `/contact/`. The other nine carry no executable script — their
-only `<script>` is the `application/ld+json` block, which is data, not code.
-This surprises people, and it is why:
-- there is no mobile hamburger menu in the shipped markup — the header is a flat
-  row of links,
-- analytics only fire on those two pages,
+### Only two pages load main.js
+`404.html` and `/contact/`. The other nine load only `nav.js` and
+`mobile-nav.js`, which build the phone menu and do nothing else. Apart from
+those two files, their only `<script>` is the `application/ld+json` block,
+which is data, not code. That is why:
+- the phone menu lives in `mobile-nav.js`, not `main.js`. It depends on
+  nothing but `TD_NAV`. Until 2026-10-17 no page carried `#mobile-menu-btn`,
+  and phones had no menu at all,
+- analytics, the cookie banner and the lead modal run only on those two pages,
 - anything injected at runtime (including JSON-LD) would be absent from nine
   pages, which is why structured data is written into the HTML instead.
 
@@ -88,14 +91,15 @@ Cloudflare Pages builds and deploys this repo on push; it does not run these.
 
 ## Testing
 Playwright 1.56.1, pinned, forced Chromium, two viewports (mobile 375x812 and
-desktop 1280x800). **66 tests in four specs, and `npm test` is the last step of
+desktop 1280x800). **94 tests in five specs, and `npm test` is the last step of
 `check:all`.**
 
 | spec | what it holds |
 | --- | --- |
 | `routes.spec.js` | every canonical route answers 200 in one hop and renders |
 | `links.spec.js` | every header and footer link resolves |
-| `contact-form.spec.js` | a failed capture is reported as a failure, not as success |
+| `contact-form.spec.js` | a failed capture is reported as a failure, not as success; success replaces the form with a confirmation; no red fields before they are touched |
+| `mobile-nav.spec.js` | the phone menu opens at 390px on every route, and is hidden on desktop |
 | `a11y.spec.js` | axe-core on all ten routes |
 
 The previous four specs were deleted rather than repaired: they navigated routes

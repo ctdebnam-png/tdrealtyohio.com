@@ -37,7 +37,11 @@ test.describe('contact form', () => {
     await fill(page);
     await page.click('button[type="submit"]');
 
-    await expect(page.locator('#contact-form-status')).toContainText(/has been sent/i);
+    // A send replaces the form with the confirmation panel.
+    const done = page.locator('#contact-form-confirmation');
+    await expect(done).toContainText(/your message is in/i);
+    await expect(done).toContainText(/956-8656/);
+    await expect(page.locator('#contact-form')).toHaveCount(0);
     expect(calls, 'exactly one POST to /api/lead').toBe(1);
   });
 
@@ -54,8 +58,32 @@ test.describe('contact form', () => {
     await expect(status).toContainText(/could not send/i);
     // The regression this exists to catch.
     await expect(status).not.toContainText(/has been sent/i);
+    await expect(page.locator('#contact-form-confirmation')).toHaveCount(0);
     // A failure must offer another way through.
     await expect(status).toContainText(/956-8656/);
+    // The button is ready to try again, under its own label.
+    await expect(page.locator('#contact-form button[type="submit"]')).toHaveText('Send Message');
+    await expect(page.locator('#contact-form button[type="submit"]')).toBeEnabled();
+  });
+
+  test('fields are not marked invalid before the visitor touches them', async ({ page }) => {
+    await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
+    const red = await page.evaluate(() => {
+      const error = getComputedStyle(document.documentElement).getPropertyValue('--error').trim();
+      const probe = document.createElement('div');
+      probe.style.color = error;
+      document.body.appendChild(probe);
+      const errorRgb = getComputedStyle(probe).color;
+      probe.remove();
+      return ['#name', '#email', '#interest', '#message']
+        .filter((sel) => getComputedStyle(document.querySelector(sel)).borderTopColor === errorRgb);
+    });
+    expect(red, 'fields outlined in the error colour on load').toEqual([]);
+  });
+
+  test('the interest is preselected from the query string', async ({ page }) => {
+    await page.goto('/contact/?interest=selling', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('#interest')).toHaveValue('selling');
   });
 
   test('the form posts nowhere but /api/lead', async ({ page }) => {
@@ -73,7 +101,7 @@ test.describe('contact form', () => {
     await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
     await fill(page);
     await page.click('button[type="submit"]');
-    await expect(page.locator('#contact-form-status')).toContainText(/has been sent/i);
+    await expect(page.locator('#contact-form-confirmation')).toContainText(/your message is in/i);
 
     expect(strays, 'a stray POST means an action is firing natively again').toEqual([]);
   });

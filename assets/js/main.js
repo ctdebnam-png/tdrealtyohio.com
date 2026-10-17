@@ -184,7 +184,7 @@ function subscribeToScrollState(subscriber, options) {
   }
 }
 
-// ===== PATH NORMALIZATION (shared by setActiveNavLink + initMobileNav) =====
+// ===== PATH NORMALIZATION (setActiveNavLink; mobile-nav.js keeps its own copy) =====
 function normalizePath(path) {
   if (!path) return '/';
   path = path.split('?')[0].split('#')[0];
@@ -195,7 +195,7 @@ function normalizePath(path) {
   return path;
 }
 
-// ===== SCROLL-LOCK UTILITY (shared by mobileNav + leadModal) =====
+// ===== SCROLL-LOCK UTILITY (leadModal) =====
 var _scrollLocks = {};
 var _savedScrollY = 0;
 
@@ -229,170 +229,9 @@ var _headerUI = {
   closeDropdown: null
 };
 
-// ===== MOBILE NAVIGATION (off-canvas panel) =====
-// Builds mobile nav from TD_NAV config to guarantee parity with footer.
-// Panel is injected as a direct child of <body> to avoid header stacking-context issues.
-function initMobileNav() {
-  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  if (!mobileMenuBtn) return;
-  if (mobileMenuBtn.dataset.bound === '1') return;
-  mobileMenuBtn.dataset.bound = '1';
-
-  // Reuse existing panel/overlay or create new ones
-  var panel = document.getElementById('mobile-nav-panel');
-  var overlay = document.getElementById('nav-overlay');
-  var panelCreated = !panel;
-
-  if (!panel) {
-    panel = document.createElement('nav');
-    panel.id = 'mobile-nav-panel';
-    panel.className = 'mobile-nav-panel';
-    panel.setAttribute('aria-label', 'Mobile navigation');
-  }
-
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.className = 'nav-overlay';
-    overlay.id = 'nav-overlay';
-    document.body.appendChild(overlay);
-  }
-
-  if (panelCreated) {
-    document.body.appendChild(panel);
-  }
-
-  // Wire up aria-controls on the button
-  mobileMenuBtn.setAttribute('aria-controls', 'mobile-nav-panel');
-  mobileMenuBtn.setAttribute('aria-expanded', 'false');
-
-  // Close button
-  var closeWrap = document.createElement('div');
-  closeWrap.className = 'nav-close-btn';
-  closeWrap.innerHTML = '<button type="button" aria-label="Close menu" id="mobile-nav-close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/></svg></button>';
-  panel.appendChild(closeWrap);
-
-  // Build mobile nav body from TD_NAV.mobile allowlist only.
-  // No links are scraped from the DOM, sitemap, or directory.
-  var body = document.createElement('div');
-  body.className = 'nav-menu-body';
-
-  var currentPath = normalizePath(window.location.pathname);
-  var mobileConfig = (typeof TD_NAV !== 'undefined' && TD_NAV.mobile) ? TD_NAV.mobile : null;
-
-  var mobileGroups = [];
-  if (mobileConfig) {
-    ['sell', 'buy', 'learn'].forEach(function (key) {
-      var group = mobileConfig[key];
-      if (!group || !Array.isArray(group.items) || !group.items.length) return;
-      mobileGroups.push({
-        key: key,
-        title: group.title,
-        items: group.items
-      });
-    });
-  }
-
-  if (mobileGroups.length) {
-    var lead = document.createElement('div');
-    lead.className = 'mobile-nav-lead';
-    lead.innerHTML = '<p class="mobile-nav-lead-title">Broker-led representation in Central Ohio</p><p class="mobile-nav-lead-copy">Direct access to the broker, clear timelines, and contract-to-close execution.</p>';
-    body.appendChild(lead);
-
-    mobileGroups.forEach(function (group) {
-      var header = document.createElement('div');
-      header.className = 'nav-section-header';
-      header.id = 'mobile-nav-group-' + group.key;
-      header.textContent = group.title;
-      body.appendChild(header);
-
-      group.items.forEach(function (item) {
-        var href = normalizePath(item.href);
-        var a = document.createElement('a');
-        a.href = item.href;
-        a.className = 'nav-link';
-        a.textContent = item.label;
-        if (href === currentPath) {
-          a.classList.add('active');
-          a.setAttribute('aria-current', 'page');
-        }
-        body.appendChild(a);
-      });
-    });
-  }
-
-  // Add CTA
-  var cta = document.createElement('a');
-  cta.href = '/contact/';
-  cta.className = 'btn btn-primary nav-cta';
-  cta.textContent = 'Contact';
-  body.appendChild(cta);
-
-  panel.appendChild(body);
-
-  var closeBtn = closeWrap.querySelector('button');
-
-  function openNav() {
-    // Close desktop dropdown if open (unified controller)
-    if (_headerUI.closeDropdown) _headerUI.closeDropdown();
-
-    lockScroll('mobileNav');
-
-    panel.classList.add('mobile-open');
-    overlay.classList.add('active');
-    document.body.classList.add('nav-open');
-    mobileMenuBtn.setAttribute('aria-expanded', 'true');
-    _headerUI.mobileOpen = true;
-    closeBtn.focus();
-  }
-
-  function closeNav() {
-    unlockScroll('mobileNav');
-
-    panel.classList.remove('mobile-open');
-    overlay.classList.remove('active');
-    document.body.classList.remove('nav-open');
-    mobileMenuBtn.setAttribute('aria-expanded', 'false');
-    _headerUI.mobileOpen = false;
-    mobileMenuBtn.focus();
-  }
-
-  // Register with unified controller
-  _headerUI.closeMobile = closeNav;
-
-  // Direct click on the button — no e.preventDefault() since it's a <button>
-  mobileMenuBtn.addEventListener('click', function () {
-    if (panel.classList.contains('mobile-open')) { closeNav(); } else { openNav(); }
-  });
-
-  closeBtn.addEventListener('click', closeNav);
-  overlay.addEventListener('click', closeNav);
-
-  // Close on link click (navigation)
-  panel.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', closeNav);
-  });
-
-  // ESC key
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && panel.classList.contains('mobile-open')) {
-      closeNav();
-    }
-  });
-
-  // Focus trap inside panel
-  panel.addEventListener('keydown', function (e) {
-    if (e.key !== 'Tab' || !panel.classList.contains('mobile-open')) return;
-    var focusable = panel.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
-    if (!focusable.length) return;
-    var first = focusable[0];
-    var last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault(); last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault(); first.focus();
-    }
-  });
-}
+// ===== MOBILE NAVIGATION =====
+// The phone menu lives in assets/js/mobile-nav.js, which every page loads.
+// Nine pages load no other script, so it cannot depend on this file.
 
 // ===== DESKTOP "MORE" DROPDOWN =====
 function initNavMore() {
@@ -506,9 +345,9 @@ function initMarketBanner() {
     banner = document.createElement('div');
     banner.className = 'market-banner';
     banner.setAttribute('role', 'status');
+    // The value-estimate link went to /home-value/, which answers 410.
     banner.innerHTML =
-      '<span class="market-banner-text">Central Ohio market snapshot: well-priced homes often move in <strong>10\u201320 days</strong>. ' +
-      '<a href="/home-value/">Get a quick value estimate \u2192</a></span>';
+      '<span class="market-banner-text">Central Ohio market snapshot: well-priced homes often move in <strong>10\u201320 days</strong>.</span>';
     var skipLink = document.querySelector('.skip-link');
     if (skipLink && skipLink.nextSibling) {
       skipLink.parentNode.insertBefore(banner, skipLink.nextSibling);
@@ -580,7 +419,7 @@ function initLeadModal() {
           '<input type="email" id="lm-email" name="email" required autocomplete="email">' +
         '</div>' +
         '<div class="form-group">' +
-          '<label for="lm-phone">Phone <span style="font-weight:400;color:var(--gray-500);">(optional)</span></label>' +
+          '<label for="lm-phone">Phone <span class="lead-modal-optional">(optional)</span></label>' +
           '<input type="tel" id="lm-phone" name="phone" autocomplete="tel">' +
         '</div>' +
         '<button type="submit" class="btn btn-primary btn-lg">Request Consultation</button>' +
@@ -979,6 +818,37 @@ function initFormHandler(formId, successMessage) {
         });
       }
 
+      /*
+       * The contact form is replaced by a confirmation panel, so the visitor
+       * is not left looking at an empty form and wondering whether it went.
+       */
+      if (formId === 'contact-form') {
+        const panel = document.createElement('div');
+        panel.id = 'contact-form-confirmation';
+        panel.className = 'form-confirmation';
+        panel.setAttribute('role', 'status');
+        panel.setAttribute('tabindex', '-1');
+        const lead = document.createElement('p');
+        lead.className = 'form-confirmation-title';
+        lead.textContent = 'Thanks, your message is in.';
+        const next = document.createElement('p');
+        next.className = 'mb-0';
+        next.append('Travis will get back to you soon. If it is urgent, call ');
+        const tel = document.createElement('a');
+        tel.href = 'tel:' + TD_CONFIG.contact.phoneRaw;
+        tel.textContent = TD_CONFIG.contact.phone;
+        next.append(tel, '.');
+        panel.append(lead, next);
+        form.replaceWith(panel);
+        // The page just got shorter; bring the panel to the middle of the
+        // screen. Vertical only: scrollIntoView would also slide the
+        // overflow-x: hidden wrapper sideways.
+        const box = panel.getBoundingClientRect();
+        window.scrollTo({ top: window.scrollY + box.top - (window.innerHeight - box.height) / 2 });
+        panel.focus({ preventScroll: true });
+        return;
+      }
+
       submitBtn.textContent = successMessage;
       submitBtn.classList.remove('btn-primary');
       submitBtn.classList.add('btn-secondary');
@@ -999,21 +869,29 @@ function initFormHandler(formId, successMessage) {
        * Contact details come from TD_CONFIG rather than a literal, so there is
        * one place to change them.
        */
-      submitBtn.textContent = 'Error - Try Again';
+      // The button goes straight back to its own label (Send Message on the
+      // contact form); the status line carries the error.
+      submitBtn.textContent = originalText;
       submitBtn.disabled = false;
       showStatus(
         `We could not send your message. Please try again, or reach us directly at ${TD_CONFIG.contact.phone} or ${TD_CONFIG.contact.email}.`,
         true
       );
-      setTimeout(() => {
-        submitBtn.textContent = originalText;
-      }, 5000);
     }
   });
 }
 
 // ===== CONTACT FORM =====
 function initContactForm() {
+  // Page buttons link to /contact/?interest=buying (or selling, agent) so the
+  // visitor lands with the right choice already made.
+  var select = document.getElementById('interest');
+  if (select) {
+    var wanted = new URLSearchParams(window.location.search).get('interest');
+    if (wanted && select.querySelector('option[value="' + CSS.escape(wanted) + '"]')) {
+      select.value = wanted;
+    }
+  }
   initFormHandler('contact-form', 'Message Sent!');
 }
 
@@ -1261,7 +1139,6 @@ document.addEventListener('DOMContentLoaded', function () {
     populateContactInfo,
     typeof renderMobileNav === 'function' ? renderMobileNav : null,
     typeof renderFooterNav === 'function' ? renderFooterNav : null,
-    initMobileNav,
     initNavMore,
     initNavDropdowns,
     initMarketBanner,
