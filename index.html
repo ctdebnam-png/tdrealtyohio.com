@@ -23,22 +23,26 @@
     "addressRegion": "OH",
     "addressCountry": "US"
   },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 40.0417,
-    "longitude": -83.0804
-  },
-  "founder": {
+  "employee": {
     "@type": "Person",
     "name": "Travis Debnam",
-    "jobTitle": "Broker/Owner"
+    "jobTitle": "Broker",
+    "hasCredential": {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "license",
+      "name": "Broker License",
+      "identifier": "2023006467"
+    }
   }
 }
 </script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "RealEstateAgent",
+  "@type": [
+    "RealEstateAgent",
+    "LocalBusiness"
+  ],
   "@id": "https://tdrealtyohio.com/#realestateagent",
   "name": "TD Realty Ohio, LLC",
   "url": "https://tdrealtyohio.com",
@@ -50,15 +54,26 @@
     "addressRegion": "OH",
     "addressCountry": "US"
   },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 40.0417,
-    "longitude": -83.0804
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Central Ohio"
   },
-  "broker": {
+  "hasCredential": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "license",
+    "name": "Brokerage License",
+    "identifier": "2023006602"
+  },
+  "employee": {
     "@type": "Person",
     "name": "Travis Debnam",
-    "jobTitle": "Broker/Owner"
+    "jobTitle": "Broker",
+    "hasCredential": {
+      "@type": "EducationalOccupationalCredential",
+      "credentialCategory": "license",
+      "name": "Broker License",
+      "identifier": "2023006467"
+    }
   },
   "parentOrganization": {
     "@id": "https://tdrealtyohio.com/#organization"
