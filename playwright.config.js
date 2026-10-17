@@ -6,7 +6,7 @@ const { defineConfig, devices } = require('@playwright/test');
  *
  * The suite covers what the site IS: every canonical route answers and
  * renders, header and footer links resolve, the contact form reports failure
- * as failure, and axe is clean on all ten routes.
+ * as failure, and axe is clean on every registered route.
  *
  * Playwright owns the dev server — CI must NOT start wrangler separately.
  */

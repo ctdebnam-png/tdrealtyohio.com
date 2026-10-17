@@ -53,9 +53,10 @@
  * It is what the repository knows was deleted, which is not the same as what
  * Google actually holds. The authoritative set is the Search Console export.
  * When that arrives, add any indexed URL missing here and drop anything that
- * was never indexed. /areas/upper-arlington/ is a confirmed indexed stale URL
- * (~217 days) and is deliberately NOT in this list: /areas/ is a genuine
- * successor, so it keeps its 301.
+ * was never indexed. /areas/upper-arlington/ was a confirmed indexed stale URL
+ * (~217 days) and was deliberately kept off this list. It is now a live page
+ * again, with ten other /areas/<city>/ routes (src/config/areas.js), so none of
+ * those paths may ever appear here.
  */
 
 export const GONE_URLS = [

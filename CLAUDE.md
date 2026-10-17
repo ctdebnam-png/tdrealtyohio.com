@@ -2,7 +2,8 @@
 
 ## Project Overview
 Static HTML/CSS/JS site for TD Realty Ohio, LLC, a residential brokerage in
-Central Ohio. Hosted on Cloudflare Pages. Ten public routes, no build step for
+Central Ohio. Hosted on Cloudflare Pages. Twenty-one public routes (ten core
+pages plus eleven `/areas/<city>/` guides), no build step for
 pages — the HTML in the repo is the HTML that ships.
 
 ## Quick Start
@@ -10,7 +11,7 @@ pages — the HTML in the repo is the HTML that ships.
 npm install
 npm run dev          # wrangler pages dev on port 8788
 npm run check:all    # every quality gate, in order
-npm test             # Playwright — 94 tests; also the last step of check:all
+npm test             # Playwright — 188 tests; also the last step of check:all
 ```
 
 ## Architecture
@@ -38,7 +39,7 @@ npm test             # Playwright — 94 tests; also the last step of check:all
   for every tracked non-site file and expects 404.
 
 ### Only two pages load main.js
-`404.html` and `/contact/`. The other nine load only `nav.js` and
+`404.html` and `/contact/`. The other twenty load only `nav.js` and
 `mobile-nav.js`, which build the phone menu and do nothing else. Apart from
 those two files, their only `<script>` is the `application/ld+json` block,
 which is data, not code. That is why:
@@ -46,11 +47,17 @@ which is data, not code. That is why:
   nothing but `TD_NAV`. Until 2026-10-17 no page carried `#mobile-menu-btn`,
   and phones had no menu at all,
 - analytics, the cookie banner and the lead modal run only on those two pages,
-- anything injected at runtime (including JSON-LD) would be absent from nine
+- anything injected at runtime (including JSON-LD) would be absent from twenty
   pages, which is why structured data is written into the HTML instead.
 
 ## Key Conventions
 - Every public page MUST be registered in `src/config/routes.js`.
+- Area guides live at `/areas/<city>/`, one per community listed in
+  `src/config/areas.js`. Every local fact on them cites a public source in the
+  page's Sources list. They describe places, never who lives there, and say
+  nothing about fees. A city added here must also be removed from the retired
+  `/areas/<city>/*` rules in `_redirects`, because Pages applies a matching
+  redirect even when the file exists.
 - CSS cache busting: `?v=YYYYMMDD` on the stylesheet link.
 - Every shipped `<form>` must name a rooted endpoint in its `action`.
   `check:form-actions` enforces it; an empty action resolves to the page itself.
@@ -109,7 +116,7 @@ site.
 
 ## Testing
 Playwright 1.56.1, pinned, forced Chromium, two viewports (mobile 375x812 and
-desktop 1280x800). **94 tests in five specs, and `npm test` is the last step of
+desktop 1280x800). **188 tests in five specs, and `npm test` is the last step of
 `check:all`.**
 
 | spec | what it holds |
@@ -118,7 +125,7 @@ desktop 1280x800). **94 tests in five specs, and `npm test` is the last step of
 | `links.spec.js` | every header and footer link resolves |
 | `contact-form.spec.js` | a failed capture is reported as a failure, not as success; success replaces the form with a confirmation; no red fields before they are touched |
 | `mobile-nav.spec.js` | the phone menu opens at 390px on every route, and is hidden on desktop |
-| `a11y.spec.js` | axe-core on all ten routes |
+| `a11y.spec.js` | axe-core on every registered route |
 
 The previous four specs were deleted rather than repaired: they navigated routes
 that no longer exist, tested a hamburger menu absent from the shipped markup and
@@ -156,7 +163,7 @@ not a trade name, not a dba, and not a subsidiary. Its repo is
 
 **This brokerage does not perform environmental work, and the site must never
 read as though it does.** WP-10 puts one cross-link and one disclosure sentence
-in the footer of all eleven pages; `src/config/related-entity.js` holds the
+in the footer of every page; `src/config/related-entity.js` holds the
 sentence, and it is byte-identical to `RELATED_SITE.disclosure` in the other
 repo. The link and the sentence travel together — footer only, never nav, since
 a nav entry reads as one firm with two departments.
