@@ -244,12 +244,66 @@ function buildBreadcrumbListSchema(trail) {
   };
 }
 
+/**
+ * Build a Service for a service or area page, provided by the brokerage.
+ *
+ * `place` is optional. Given { name, counties, sameAs }, areaServed becomes
+ * that City, inside its counties and Ohio; otherwise it is the service area
+ * the pages name (Central Ohio). No price, rating or offer: the pages state
+ * none, so the structured data states none.
+ *
+ * @param {Object} opts
+ * @param {string} opts.name
+ * @param {string} opts.serviceType
+ * @param {string} opts.description
+ * @param {string} opts.path        - page path, e.g. '/areas/westerville/'
+ * @param {Object} [opts.place]
+ * @returns {Object} Schema.org Service
+ */
+function buildServiceSchema(opts) {
+  var areaServed = {
+    '@type': 'AdministrativeArea',
+    name: TD_SCHEMA_CONFIG.areaServed
+  };
+
+  if (opts.place) {
+    areaServed = {
+      '@type': 'City',
+      name: opts.place.name,
+      containedInPlace: opts.place.counties.map(function (county) {
+        return {
+          '@type': 'AdministrativeArea',
+          name: county,
+          containedInPlace: { '@type': 'State', name: 'Ohio' }
+        };
+      }),
+      sameAs: opts.place.sameAs
+    };
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: opts.name,
+    serviceType: opts.serviceType,
+    description: opts.description,
+    url: TD_SCHEMA_CONFIG.url + opts.path,
+    provider: {
+      '@type': ['RealEstateAgent', 'LocalBusiness'],
+      '@id': TD_SCHEMA_CONFIG.ids.realEstateAgent,
+      name: TD_SCHEMA_CONFIG.name
+    },
+    areaServed: areaServed
+  };
+}
+
 // ===== EXPORTS =====
 if (typeof module !== 'undefined') {
   module.exports = {
     TD_SCHEMA_CONFIG: TD_SCHEMA_CONFIG,
     buildOrganizationSchema: buildOrganizationSchema,
     buildRealEstateAgentSchema: buildRealEstateAgentSchema,
-    buildBreadcrumbListSchema: buildBreadcrumbListSchema
+    buildBreadcrumbListSchema: buildBreadcrumbListSchema,
+    buildServiceSchema: buildServiceSchema
   };
 }

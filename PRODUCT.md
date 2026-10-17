@@ -42,12 +42,13 @@ enforce it, and the design has to carry the same restraint.
 - Static HTML and one stylesheet (`assets/css/styles.css`) on Cloudflare Pages.
   No build step for pages; the HTML in the repo is the HTML that ships.
 - Only `404.html` and `/contact/` load `main.js`. Everything visual on the
-  other nine pages has to come from CSS.
+  other twenty pages has to come from CSS.
 - Thirty-one quality gates (`npm run check:all`) including rendered contrast,
   titles, structured data and Playwright at 375 px and 1280 px.
 
 ## Capabilities and Constraints
-- Ten public routes, registered in `src/config/routes.js`, plus `404.html`.
+- Twenty-one public routes, registered in `src/config/routes.js`, plus
+  `404.html`: ten core pages and eleven area guides at `/areas/<city>/`.
 - Contact facts come from `src/config/contact.js`. The address of record is
   residential and is not published in page copy or JSON-LD.
 - Design work changes presentation only: wording, facts, phone numbers, forms

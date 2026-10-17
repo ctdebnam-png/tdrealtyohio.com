@@ -1,13 +1,15 @@
 /*
  * Lighthouse CI.
  *
- * The URL list is the ten canonical routes from src/config/routes.js. It used
+ * The URL list is the canonical routes from src/config/routes.js. It used
  * to name nine URLs of which six were dead — three /areas/<city>/ pages and
  * three /compare/ pages, the latter being the commission-comparison pages the
  * site now answers 410 for. Lighthouse was auditing redirects and gone pages
  * and reporting on them as if they were the site.
  *
- * Keep this list equal to the registry. If a route is added there, add it here.
+ * The list is read from the registry, so a route added there is audited here
+ * without a second edit. It was a hand-kept copy until the eleven
+ * /areas/<city>/ pages arrived.
  *
  * .github/workflows/site-health.yml runs this twice, once per form factor:
  * LH_FORM_FACTOR=desktop switches to Lighthouse's desktop preset, anything else
@@ -20,23 +22,13 @@
  * blocking time, inside the performance score, is the lab stand-in for it.
  */
 const desktop = process.env.LH_FORM_FACTOR === 'desktop';
+const { getIndexableRoutes } = require('./src/config/routes.js');
 
 module.exports = {
   ci: {
     collect: {
       staticDistDir: '.',
-      url: [
-        '/',
-        '/about/',
-        '/buyers/',
-        '/sellers/',
-        '/areas/',
-        '/contact/',
-        '/agents/',
-        '/privacy/',
-        '/terms/',
-        '/fair-housing/',
-      ],
+      url: getIndexableRoutes().map((route) => route.path),
       numberOfRuns: 3,
       settings: {
         ...(desktop ? { preset: 'desktop' } : {}),

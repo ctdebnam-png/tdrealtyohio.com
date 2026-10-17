@@ -64,33 +64,25 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 
 # ── Retired /areas/<city>/ pages.
 # Listed individually rather than globbed: /areas/* matches /areas/ itself,
-# which is exactly the bug above. These 25 pages are gone permanently, so a
-# fixed list costs nothing to maintain.
+# which is exactly the bug above. These 14 pages are gone permanently, so a
+# fixed list costs nothing to maintain. Eleven others (Columbus, Delaware,
+# Dublin, Gahanna, Hilliard, New Albany, Pickerington, Powell, Upper Arlington,
+# Westerville, Worthington) are live again as /areas/<city>/ and must not be
+# listed here: Pages applies a matching rule even when the file exists.
 /areas/bexley/*             /areas/             301
 /areas/blacklick/*          /areas/             301
 /areas/canal-winchester/*   /areas/             301
 /areas/clintonville/*       /areas/             301
-/areas/columbus/*           /areas/             301
-/areas/delaware/*           /areas/             301
-/areas/dublin/*             /areas/             301
-/areas/gahanna/*            /areas/             301
 /areas/galena/*             /areas/             301
 /areas/german-village/*     /areas/             301
 /areas/grandview-heights/*  /areas/             301
 /areas/granville/*          /areas/             301
 /areas/grove-city/*         /areas/             301
-/areas/hilliard/*           /areas/             301
 /areas/johnstown/*          /areas/             301
 /areas/lewis-center/*       /areas/             301
-/areas/new-albany/*         /areas/             301
 /areas/pataskala/*          /areas/             301
-/areas/pickerington/*       /areas/             301
-/areas/powell/*             /areas/             301
 /areas/reynoldsburg/*       /areas/             301
 /areas/sunbury/*            /areas/             301
-/areas/upper-arlington/*    /areas/             301
-/areas/westerville/*        /areas/             301
-/areas/worthington/*        /areas/             301
 
 # ── Retired single pages. Exact paths, with and without trailing slash.
 /1-percent-commission   /sellers/               301

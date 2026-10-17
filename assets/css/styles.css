@@ -10218,3 +10218,154 @@ textarea:focus-visible {
     transition: none;
   }
 }
+
+/* =====================================================
+   AREA PAGES, 2026-10-17 (/areas/<city>/)
+
+   One reading column. Facts are a ruled definition list, not cards: they are
+   reference data, and a grid of boxes would read as a brochure. Sources sit
+   in small type at the foot of the column.
+   ===================================================== */
+.breadcrumb {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.75rem 0;
+}
+
+.breadcrumb-list a {
+  color: var(--ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.breadcrumb-list a:hover {
+  color: var(--navy);
+}
+
+.breadcrumb-list [aria-current] {
+  color: var(--navy);
+}
+
+.area-page {
+  max-width: 46rem;
+}
+
+.area-page h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 0.875rem;
+}
+
+.area-page h2:first-child {
+  margin-top: 0;
+}
+
+.area-page p {
+  margin-bottom: 1.125rem;
+}
+
+.area-facts {
+  margin: 0 0 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.area-facts > div {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 1.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.area-facts dt {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.area-facts dd {
+  margin: 0;
+}
+
+.area-note {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+}
+
+.area-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.area-links li {
+  margin: 0;
+}
+
+.area-sources {
+  font-size: 0.875rem;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.area-sources li {
+  margin-bottom: 0.375rem;
+}
+
+.area-sources a,
+.area-links a {
+  overflow-wrap: anywhere;
+}
+
+/* Inline links in the navy call-to-action band (the phone number). */
+.cta-section p a {
+  color: var(--on-navy);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cta-section p a:hover {
+  color: var(--on-navy-muted);
+}
+
+/* /areas/ index: the list of area pages. */
+.area-index {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2.5rem;
+}
+
+.area-index li {
+  margin: 0;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.area-index a {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.area-index span {
+  display: block;
+  color: var(--ink-muted);
+  font-size: 0.9375rem;
+  margin-top: 0.125rem;
+}
+
+@media (max-width: 640px) {
+  .area-facts > div {
+    grid-template-columns: 1fr;
+    gap: 0.125rem;
+  }
+
+  .area-index {
+    grid-template-columns: 1fr;
+  }
+}

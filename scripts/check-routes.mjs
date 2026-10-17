@@ -43,7 +43,8 @@ const BOOT_TIMEOUT_MS = 180_000;
  * matching is noticed.
  */
 const RETIRED = [
-  ['/areas/upper-arlington/', '/areas/'],
+  // /areas/upper-arlington/ used to stand here; it is a live page again.
+  ['/areas/bexley/', '/areas/'],
   ['/areas/zip/43081/', '/areas/'],
   ['/buyers/first-time/dublin/', '/buyers/'],
   ['/sell/net-sheet/', '/sellers/'],
