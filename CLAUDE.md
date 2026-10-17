@@ -31,6 +31,11 @@ npm test             # Playwright — 94 tests; also the last step of check:all
 - **410 middleware**: `functions/_middleware.js` answers 410 for the URLs in
   `src/config/gone-urls.mjs`. Functions run BEFORE `_redirects`, so a listed
   path returns 410 even when a 301 rule also matches it.
+- **Repo files are refused**: Pages publishes the repo root, so the same
+  middleware answers 404 for dot-paths (`.github`, `.claude`), `docs/`,
+  `functions/`, `scripts/`, `src/`, `tests/`, any `.md`, and root tooling files
+  such as `package.json` and `wrangler.toml`. `tests/repo-files.spec.js` asks
+  for every tracked non-site file and expects 404.
 
 ### Only two pages load main.js
 `404.html` and `/contact/`. The other nine load only `nav.js` and
