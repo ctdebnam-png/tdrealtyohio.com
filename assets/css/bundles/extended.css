@@ -5194,3 +5194,37 @@ details.td-details--flush .td-details-body {
   a { color: #000; text-decoration: underline; }
   .section-wave { display: none; }
 }
+
+/* =====================================================
+   RESTRAINT PASS, 2026-10-17
+   This bundle loads after styles.css on /contact/ and 404.html and re-adds
+   decoration the restraint layer at the end of styles.css removes. These
+   rules keep the two pages consistent with the other nine.
+   ===================================================== */
+.section.bg-off-white::after,
+.section-features::after,
+.cta-section::before,
+.cta-section::after,
+.footer::before {
+  content: none;
+}
+
+.section.bg-off-white {
+  background: var(--paper);
+}
+
+.btn,
+.btn:hover,
+.btn-primary,
+.btn-primary:hover,
+.nav .nav-cta,
+.nav .nav-cta:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+.card,
+.card:hover {
+  box-shadow: none;
+  transform: none;
+}
