@@ -93,6 +93,33 @@ for (const route of ROUTES) {
   console.log(`  ok ${route.path.padEnd(17)} ${types.join(', ')}`);
 }
 
+/*
+ * The business record says only what the pages say: RealEstateAgent and
+ * LocalBusiness, both licence numbers as the footer shows them, and no street
+ * address or map coordinates anywhere (the address of record is residential,
+ * and the pages name the town only).
+ */
+{
+  const home = await readFile(join(ROOT, 'index.html'), 'utf-8');
+  const blocks = [...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+  const agent = blocks.find((b) => [].concat(b['@type']).includes('RealEstateAgent'));
+  if (!agent || ![].concat(agent['@type']).includes('LocalBusiness')) {
+    errors.push('index.html: the RealEstateAgent block must also be typed LocalBusiness');
+  } else {
+    if (agent.hasCredential?.identifier !== LICENSES.brokerage) errors.push('index.html: brokerage licence in JSON-LD does not match contact.js');
+    if (agent.employee?.hasCredential?.identifier !== LICENSES.broker) errors.push('index.html: broker licence in JSON-LD does not match contact.js');
+    if (agent.employee?.name !== LICENSES.broker_name) errors.push('index.html: broker name in JSON-LD does not match contact.js');
+  }
+}
+for (const route of ROUTES) {
+  const html = await readFile(join(ROOT, fileFor(route.path)), 'utf-8');
+  for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    if (/"(geo|streetAddress|postalCode)"/.test(m[1]) || m[1].includes(CONTACT.address.street)) {
+      errors.push(`${fileFor(route.path)}: JSON-LD carries a street address, postal code or coordinates the pages do not show`);
+    }
+  }
+}
+
 /* Fallback literals must agree with the record they fall back to. */
 const schemaSource = await readFile(join(ROOT, 'assets/js/schema.js'), 'utf-8');
 const fallbacks = [

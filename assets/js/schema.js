@@ -64,15 +64,20 @@ const TD_SCHEMA_CONFIG = {
     streetAddress: TD_CONTACT_SRC ? TD_CONTACT_SRC.address.street : null
   },
 
-  geo: {
-    latitude: 40.0417,
-    longitude: -83.0804
-  },
+  /*
+   * No geo coordinates. The pages name the town and nothing finer, and the
+   * pair that used to sit here (40.0417, -83.0804) was west of Columbus, not
+   * in Westerville. Structured data says only what the pages say.
+   */
 
+  // "Broker: Travis Debnam" in the footer of every page.
   broker: {
     name: TD_LICENSE_SRC ? TD_LICENSE_SRC.broker_name : 'Travis Debnam',
-    jobTitle: 'Broker/Owner'
+    jobTitle: 'Broker'
   },
+
+  // The service area as the pages name it (BROKERAGE_FACTS.serviceArea).
+  areaServed: 'Central Ohio',
 
   licenses: {
     broker: TD_LICENSE_SRC ? TD_LICENSE_SRC.broker : '2023006467',
@@ -105,13 +110,27 @@ function _buildPostalAddress() {
 }
 
 /**
- * Build a Schema.org GeoCoordinates object from the config.
+ * A licence as the footer of every page shows it: "Broker License #..." and
+ * "Brokerage License #...".
  */
-function _buildGeoCoordinates() {
+function _buildLicense(name, number) {
   return {
-    '@type': 'GeoCoordinates',
-    latitude: TD_SCHEMA_CONFIG.geo.latitude,
-    longitude: TD_SCHEMA_CONFIG.geo.longitude
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'license',
+    name: name,
+    identifier: number
+  };
+}
+
+/**
+ * The broker, with the broker licence the footer shows beside his name.
+ */
+function _buildBroker() {
+  return {
+    '@type': 'Person',
+    name: TD_SCHEMA_CONFIG.broker.name,
+    jobTitle: TD_SCHEMA_CONFIG.broker.jobTitle,
+    hasCredential: _buildLicense('Broker License', TD_SCHEMA_CONFIG.licenses.broker)
   };
 }
 
@@ -132,12 +151,7 @@ function buildOrganizationSchema() {
     telephone: TD_SCHEMA_CONFIG.telephone,
     email: TD_SCHEMA_CONFIG.email,
     address: _buildPostalAddress(),
-    geo: _buildGeoCoordinates(),
-    founder: {
-      '@type': 'Person',
-      name: TD_SCHEMA_CONFIG.broker.name,
-      jobTitle: TD_SCHEMA_CONFIG.broker.jobTitle
-    }
+    employee: _buildBroker()
   };
 }
 
@@ -156,19 +170,23 @@ function buildRealEstateAgentSchema(options) {
 
   var schema = {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent',
+    // RealEstateAgent is already a kind of LocalBusiness in schema.org; both
+    // are named so a reader looking only for LocalBusiness finds it.
+    '@type': ['RealEstateAgent', 'LocalBusiness'],
     '@id': TD_SCHEMA_CONFIG.ids.realEstateAgent,
     name: TD_SCHEMA_CONFIG.name,
     url: TD_SCHEMA_CONFIG.url,
     telephone: TD_SCHEMA_CONFIG.telephone,
     email: TD_SCHEMA_CONFIG.email,
     address: _buildPostalAddress(),
-    geo: _buildGeoCoordinates(),
-    broker: {
-      '@type': 'Person',
-      name: TD_SCHEMA_CONFIG.broker.name,
-      jobTitle: TD_SCHEMA_CONFIG.broker.jobTitle
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: TD_SCHEMA_CONFIG.areaServed
     },
+    hasCredential: _buildLicense('Brokerage License', TD_SCHEMA_CONFIG.licenses.brokerage),
+    // `broker` is not a RealEstateAgent property (validator.schema.org warns
+    // on it); `employee` is.
+    employee: _buildBroker(),
     parentOrganization: {
       '@id': TD_SCHEMA_CONFIG.ids.organization
     }

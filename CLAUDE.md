@@ -31,6 +31,11 @@ npm test             # Playwright — 94 tests; also the last step of check:all
 - **410 middleware**: `functions/_middleware.js` answers 410 for the URLs in
   `src/config/gone-urls.mjs`. Functions run BEFORE `_redirects`, so a listed
   path returns 410 even when a 301 rule also matches it.
+- **Repo files are refused**: Pages publishes the repo root, so the same
+  middleware answers 404 for dot-paths (`.github`, `.claude`), `docs/`,
+  `functions/`, `scripts/`, `src/`, `tests/`, any `.md`, and root tooling files
+  such as `package.json` and `wrangler.toml`. `tests/repo-files.spec.js` asks
+  for every tracked non-site file and expects 404.
 
 ### Only two pages load main.js
 `404.html` and `/contact/`. The other nine load only `nav.js` and
@@ -94,6 +99,13 @@ reads files off disk cannot see a redirect loop, a cascade, or a response body.
 Before it existed, all thirty-one ran only on whoever last remembered to type
 `npm run check:all` — which is how the chain stayed broken for six months.
 Cloudflare Pages builds and deploys this repo on push; it does not run these.
+
+`.github/workflows/site-health.yml` adds three outside checks on every pull
+request and on Mondays: lychee for broken links (`.github/lychee.toml`),
+Lighthouse at 90 or better in all four categories on phone and desktop
+(`.lighthouserc.js`), and pa11y-ci over every URL in `sitemap.xml`
+(`.github/pa11yci.json`). All three run against this checkout, not the live
+site.
 
 ## Testing
 Playwright 1.56.1, pinned, forced Chromium, two viewports (mobile 375x812 and
