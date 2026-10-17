@@ -432,6 +432,8 @@ function initLeadModal() {
   var closeBtn = overlay.querySelector('.lead-modal-close');
   var form = document.getElementById('lead-modal-form');
   var statusEl = document.getElementById('lead-modal-status');
+  // Drawn the first time the modal opens, not on every page load behind it.
+  var spamCheck = null;
 
   function closeModal() {
     overlay.classList.remove('open');
@@ -457,6 +459,7 @@ function initLeadModal() {
     el = document.getElementById('lm-pagePath'); if (el) el.value = window.location.pathname;
 
 
+    if (!spamCheck) spamCheck = attachTurnstile(form, form.querySelector('button[type="submit"]'));
     overlay.classList.add('open');
     lockScroll('leadModal');
     // Focus first field
@@ -515,6 +518,7 @@ function initLeadModal() {
       msclkid: utm.msclkid || '',
       extra: { mode: mode }
     };
+    if (spamCheck) payload.turnstile_token = await spamCheck.token();
 
     var success = false;
     try {
@@ -527,6 +531,7 @@ function initLeadModal() {
     } catch (err) {
       success = false;
     }
+    if (spamCheck) spamCheck.reset();
 
     if (success) {
       trackEvent('form_submit', { category: 'lead', label: 'consultation_lead_modal' });
@@ -613,6 +618,77 @@ function initProcessAccordion() {
   });
 }
 
+// ===== SPAM CHECK (Cloudflare Turnstile) =====
+/*
+ * Every form that posts to /api/lead gets a Turnstile widget above its submit
+ * button, but only when the page carries <meta name="turnstile-site-key">.
+ * functions/_middleware.js adds that tag when TURNSTILE_SITE_KEY is set in the
+ * Pages project; the key is never in this file. With no tag this returns null
+ * and the form posts exactly as before. Otherwise it returns
+ * { token(), reset() }: token() resolves to the widget's token (waiting up to
+ * ten seconds if the check is still running), and the server checks it with
+ * Cloudflare before storing or emailing anything (functions/lib/turnstile.js).
+ * A token is good once, so reset() asks for a fresh one after each send.
+ */
+var turnstileLoader = null;
+function loadTurnstile() {
+  if (!turnstileLoader) {
+    turnstileLoader = new Promise(function (resolve, reject) {
+      window.tdTurnstileReady = function () { resolve(window.turnstile); };
+      var script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=tdTurnstileReady';
+      script.async = true;
+      script.defer = true;
+      script.onerror = function () { reject(new Error('turnstile_load_failed')); };
+      document.head.appendChild(script);
+    });
+  }
+  return turnstileLoader;
+}
+
+function attachTurnstile(form, before) {
+  var meta = document.querySelector('meta[name="turnstile-site-key"]');
+  var siteKey = meta && meta.content;
+  if (!siteKey || !form || !before || !before.parentNode) return null;
+
+  var box = document.createElement('div');
+  box.className = 'td-turnstile';
+  box.style.margin = '0 0 1rem';
+  before.parentNode.insertBefore(box, before);
+
+  var widgetId = null;
+  var current = '';
+  var waiting = [];
+  function settle(token) {
+    current = token || '';
+    waiting.splice(0).forEach(function (resolve) { resolve(current); });
+  }
+
+  loadTurnstile().then(function (turnstile) {
+    widgetId = turnstile.render(box, {
+      sitekey: siteKey,
+      size: 'flexible',
+      callback: settle,
+      'expired-callback': function () { current = ''; },
+      'error-callback': function () { settle(''); },
+    });
+  }).catch(function () { settle(''); });
+
+  return {
+    token: function () {
+      if (current) return Promise.resolve(current);
+      return new Promise(function (resolve) {
+        waiting.push(resolve);
+        setTimeout(function () { resolve(current); }, 10000);
+      });
+    },
+    reset: function () {
+      current = '';
+      if (widgetId !== null && window.turnstile) window.turnstile.reset(widgetId);
+    },
+  };
+}
+
 // ===== GENERIC FORM HANDLER =====
 function initFormHandler(formId, successMessage) {
   const form = document.getElementById(formId);
@@ -680,6 +756,8 @@ function initFormHandler(formId, successMessage) {
     hp.innerHTML = '<label for="' + formId + '-website">Website</label><input type="text" id="' + formId + '-website" name="website" tabindex="-1" autocomplete="off">';
     form.appendChild(hp);
   }
+
+  var spamCheck = attachTurnstile(form, form.querySelector('.form-submit-wrapper') || form.querySelector('button[type="submit"]'));
 
   // Client-side throttle: prevent rapid resubmissions
   var lastSubmitTime = 0;
@@ -785,6 +863,7 @@ function initFormHandler(formId, successMessage) {
       msclkid: utm.msclkid || '',
       extra: extra,
     };
+    if (spamCheck) payload.turnstile_token = await spamCheck.token();
 
     /*
      * Capture is a single request to /api/lead, and its result is the only
@@ -805,6 +884,7 @@ function initFormHandler(formId, successMessage) {
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
     }).then(r => r.ok).catch(() => false);
+    if (spamCheck) spamCheck.reset();
 
     submitBtn.classList.remove('btn-loading');
 
@@ -1307,6 +1387,7 @@ function initMicroForm() {
     form.appendChild(statusEl);
   }
 
+  var spamCheck = attachTurnstile(form, form.querySelector('button[type="submit"]'));
   var submitting = false;
 
   form.addEventListener('submit', function(e) {
@@ -1351,11 +1432,15 @@ function initMicroForm() {
       extra: { source: 'micro_form' }
     };
 
-    fetch('/api/lead', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'application/json' }
+    (spamCheck ? spamCheck.token() : Promise.resolve(null)).then(function(token) {
+      if (token !== null) payload.turnstile_token = token;
+      return fetch('/api/lead', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      });
     }).then(function(resp) {
+      if (spamCheck) spamCheck.reset();
       if (!resp.ok) throw new Error('Server error');
       btn.classList.remove('btn-loading');
       btn.textContent = 'Sent!';
@@ -1364,6 +1449,7 @@ function initMicroForm() {
       trackEvent('form_submit', { category: 'lead', label: 'micro_form' });
       setTimeout(function() { submitting = false; btn.disabled = false; btn.textContent = origText; }, 3000);
     }).catch(function() {
+      if (spamCheck) spamCheck.reset();
       btn.classList.remove('btn-loading');
       btn.textContent = origText;
       btn.disabled = false;

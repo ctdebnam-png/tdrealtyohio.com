@@ -59,6 +59,12 @@ which is data, not code. That is why:
   `/api/agent-apply` return 5xx when the KV write did not happen;
   `check:api-capture` holds them to it.
 - Leads are read through `/api/leads-export` with the `EXPORT_KEY` secret.
+- Spam check: Cloudflare Turnstile on every form that posts to `/api/lead`.
+  `functions/_middleware.js` writes `TURNSTILE_SITE_KEY` into each page as a
+  meta tag, `main.js` draws the widget when it is there, and
+  `functions/lib/turnstile.js` checks the token with `TURNSTILE_SECRET_KEY`
+  before the KV write and the Resend notice. Enforced only when both are set;
+  until then submissions pass with a logged warning. No key lives in the repo.
 - Structured data is generated, never hand-edited: `npm run generate:json-ld`
   writes what each route's registry entry declares.
 

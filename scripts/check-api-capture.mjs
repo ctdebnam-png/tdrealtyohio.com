@@ -26,6 +26,11 @@
  * after a write that happened, its subject names the interest and the person,
  * and a failed notice still answers 200, because the lead was captured.
  *
+ * Turnstile (functions/lib/turnstile.js) is held here too: off until both
+ * keys are set, and once they are, a missing or refused token is a 403 with
+ * nothing written to KV and nothing sent to Resend, siteverify runs before
+ * Resend, and an unreachable siteverify does not cost the lead.
+ *
  * The honeypot case is asserted too, in the other direction: a submission that
  * trips it must still return 200, indistinguishable from success, or the
  * honeypot tells a bot it was caught.
@@ -98,7 +103,11 @@ async function main() {
 
   // Handler logs are the point of the failure paths; keep them out of the report.
   const realError = console.error;
+  const realWarn = console.warn;
   console.error = () => {};
+  // Turnstile is off (no keys) for every case before the Turnstile block, and
+  // says so on each request.
+  console.warn = () => {};
   try {
     const lead = await import(pathToFileURL(join(ROOT, 'functions/api/lead.js')).href);
     console.log('  /api/lead');
@@ -142,8 +151,51 @@ async function main() {
       await agent.onRequestPost(context({ ...APPLICATION, website: 'bot' }, NO_BINDING)),
       200,
     );
+
+    console.log('\n  Turnstile, both endpoints');
+    const { SITEVERIFY_URL } = await import(pathToFileURL(join(ROOT, 'functions/lib/turnstile.js')).href);
+    const KEYS = { TURNSTILE_SITE_KEY: 'site', TURNSTILE_SECRET_KEY: 'secret' };
+    const stubFetch = globalThis.fetch;
+    const run = async (handler, body, env, verdict) => {
+      const calls = [];
+      let writes = 0;
+      globalThis.fetch = async (url, init) => {
+        calls.push({ url: String(url), body: JSON.parse(init.body) });
+        if (String(url) === SITEVERIFY_URL) {
+          if (verdict === 'down') throw new TypeError('network');
+          return Response.json({ success: verdict === 'yes' });
+        }
+        return new Response('{}', { status: 200 });
+      };
+      const kv = { LEADS: { put: async () => { writes += 1; } } };
+      const res = await handler(context(body, { ...kv, ...RESEND, ...env }));
+      globalThis.fetch = stubFetch;
+      return { res, calls, writes };
+    };
+    for (const [name, mod, body] of [['/api/lead', lead, LEAD], ['/api/agent-apply', agent, APPLICATION]]) {
+      const fresh = () => ({ ...body, ...(body.form_started_at ? { form_started_at: Date.now() - 6000 } : {}) });
+      const off = await run(mod.onRequestPost, fresh(), {}, 'no');
+      assert(`${name}: no keys, submission goes through unchecked`,
+        off.res.status === 200 && off.writes === 1 && !off.calls.some((c) => c.url === SITEVERIFY_URL));
+      const secretOnly = await run(mod.onRequestPost, fresh(), { TURNSTILE_SECRET_KEY: 'secret' }, 'no');
+      assert(`${name}: a secret with no site key (no widget) refuses nobody`, secretOnly.res.status === 200 && secretOnly.writes === 1);
+      const missing = await run(mod.onRequestPost, fresh(), KEYS, 'yes');
+      assert(`${name}: keys set, no token: 403, no KV write, no Resend`,
+        missing.res.status === 403 && missing.writes === 0 && missing.calls.length === 0, `status ${missing.res.status}`);
+      const refused = await run(mod.onRequestPost, { ...fresh(), turnstile_token: 'tok' }, KEYS, 'no');
+      assert(`${name}: refused token: 403, no KV write, Resend never called`,
+        refused.res.status === 403 && refused.writes === 0 && refused.calls.length === 1 && refused.calls[0].url === SITEVERIFY_URL);
+      const passed = await run(mod.onRequestPost, { ...fresh(), turnstile_token: 'tok' }, KEYS, 'yes');
+      assert(`${name}: accepted token: stored, siteverify before Resend, secret and token sent`,
+        passed.res.status === 200 && passed.writes === 1 &&
+          passed.calls[0]?.url === SITEVERIFY_URL && passed.calls[1]?.url === 'https://api.resend.com/emails' &&
+          passed.calls[0].body.secret === 'secret' && passed.calls[0].body.response === 'tok' && !!passed.calls[0].body.remoteip);
+      const down = await run(mod.onRequestPost, { ...fresh(), turnstile_token: 'tok' }, KEYS, 'down');
+      assert(`${name}: siteverify unreachable, the lead is kept`, down.res.status === 200 && down.writes === 1);
+    }
   } finally {
     console.error = realError;
+    console.warn = realWarn;
   }
 
   console.log('');

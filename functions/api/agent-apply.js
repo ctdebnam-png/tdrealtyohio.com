@@ -1,4 +1,5 @@
 import { noticeSubject, noticeText, sendNotice } from '../lib/notify.js';
+import { verifyTurnstile } from '../lib/turnstile.js';
 
 const ALLOWED_ORIGINS = [
   'https://tdrealtyohio.com',
@@ -82,6 +83,11 @@ export async function onRequestPost(context) {
 
   if (!PRODUCTION_LEVELS.has(body.production_level) || !BUSINESS_MIX.has(body.business_mix) || !YES_NO.has(body.has_crm_marketing)) {
     return new Response(JSON.stringify({ error: 'Missing or invalid fields' }), { status: 400, headers });
+  }
+
+  // Spam check, before anything is stored or emailed (functions/lib/turnstile.js).
+  if (await verifyTurnstile(env, body.turnstile_token, ip) === 'fail') {
+    return new Response(JSON.stringify({ ok: false, error: 'spam_check_failed' }), { status: 403, headers });
   }
 
   const submittedAt = new Date().toISOString();

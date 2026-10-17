@@ -26,6 +26,14 @@
  *     a browser and check.
  *   - the query string and hash are ignored, which is what Google does when
  *     deciding whether a URL is the same document.
+ *
+ * It has one other job: when TURNSTILE_SITE_KEY is set in the Pages project,
+ * every HTML page that comes back through it gets
+ * <meta name="turnstile-site-key" content="..."> in its <head>. The pages are
+ * static files with no build step, so this is how a key that lives only in
+ * the Pages settings reaches assets/js/main.js, which draws the Turnstile
+ * widget on the lead forms when the tag is there. No key, no tag, no widget.
+ * See functions/lib/turnstile.js.
  */
 import { GONE_SET } from '../src/config/gone-urls.mjs';
 
@@ -71,5 +79,19 @@ export async function onRequest(context) {
     });
   }
 
-  return context.next();
+  const response = await context.next();
+  const siteKey = context.env?.TURNSTILE_SITE_KEY;
+  if (!siteKey || !(response.headers.get('content-type') || '').includes('text/html')) {
+    return response;
+  }
+  return new HTMLRewriter()
+    .on('head', {
+      element(head) {
+        head.append(`<meta name="turnstile-site-key" content="${escapeAttr(siteKey)}">`, { html: true });
+      },
+    })
+    .transform(response);
 }
+
+const escapeAttr = (value) =>
+  String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
