@@ -40,3 +40,6 @@ seo-autopilot/report/latest.json
 seo-autopilot/report/link-graph.json
 seo-autopilot/state/gsc-latest.json
 seo-autopilot/state/snapshots/
+
+# Impeccable engine binary (21 MB); the launcher downloads it on first run
+.claude/skills/impeccable/scripts/bin/
