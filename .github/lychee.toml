@@ -1,0 +1,21 @@
+# lychee settings for the Site health workflow (.github/workflows/site-health.yml).
+# The workflow passes --root-dir and --remap on the command line because both
+# need the checkout's absolute path.
+
+# A directory link such as /buyers/ resolves to /buyers/index.html, the way
+# Cloudflare Pages serves it, and #fragments are checked against the target.
+index_files = ["index.html"]
+include_fragments = "full"
+
+# /api/* are Pages Functions, not files, so there is nothing on disk to find.
+# tel: and mailto: are not fetchable.
+exclude = ['^file://.*/api/', '^tel:', '^mailto:']
+
+# Directories that are not part of the site.
+exclude_path = ['node_modules', '\.playwright', '\.lighthouseci', 'tools', 'tests']
+
+max_retries = 3
+retry_wait_time = 5
+timeout = 30
+# 429 means the remote site is up and rate limiting the checker.
+accept = ["200..=299", "429"]
