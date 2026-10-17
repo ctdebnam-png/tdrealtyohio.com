@@ -1,5 +1,14 @@
 /**
- * Answers 410 Gone for retired offer-era URLs.
+ * Answers 404 for repository files, and 410 Gone for retired offer-era URLs.
+ *
+ * REPOSITORY FILES. Pages publishes the repo root as the site, because there is
+ * no build step for pages. Without this, every tracked file was public:
+ * /CLAUDE.md (which names the residential address of record), /package.json,
+ * /wrangler.toml, /src/config/contact.js, /scripts/, /tests/, /.github/ and
+ * /.claude/. The build output cannot be narrowed from the repo without moving
+ * the site into a subdirectory and changing the Pages project settings, so the
+ * files are refused here instead. tests/repo-files.spec.js asks for every
+ * tracked file that is not part of the site and expects 404 for each.
  *
  * The list lives in src/config/gone-urls.mjs and is a DATA FILE: amend the
  * array there, not this function. Everything this file does is look the path
@@ -29,6 +38,49 @@
  */
 import { GONE_SET } from '../src/config/gone-urls.mjs';
 
+/** Top-level directories that hold source, tooling or notes, never pages. */
+const PRIVATE_DIRS = new Set(['docs', 'functions', 'node_modules', 'scripts', 'src', 'tests']);
+
+/** Root-level file types that are tooling: package.json, wrangler.toml, configs. */
+const PRIVATE_ROOT_FILE = /\.(?:c?js|mjs|ts|json|lock|toml|ya?ml|sh|log|map)$/;
+
+/**
+ * True for a path that names a repository file rather than part of the site.
+ * Lower-cased first so /claude.md and /CLAUDE.md get the same answer.
+ */
+function isRepoFile(pathname) {
+  let path;
+  try {
+    path = decodeURIComponent(pathname).toLowerCase();
+  } catch {
+    return true; // a malformed escape names no page on this site
+  }
+  const segments = path.split('/').filter(Boolean);
+  if (segments.length === 0) return false;
+  // .github, .claude, .gitignore, .lighthouserc.js, and anything else dotted.
+  if (segments.some((s) => s.startsWith('.') && s !== '.well-known')) return true;
+  if (PRIVATE_DIRS.has(segments[0])) return true;
+  // CLAUDE.md, README.md, AGENTS.md, PRODUCT.md, ROUTE_INVENTORY.md, notes.
+  if (path.endsWith('.md')) return true;
+  return segments.length === 1 && PRIVATE_ROOT_FILE.test(segments[0]);
+}
+
+/** The site's own 404 page, with a 404 status and no caching of the answer. */
+async function notFound(context) {
+  const headers = {
+    'content-type': 'text/html; charset=utf-8',
+    'cache-control': 'no-store',
+    'x-robots-tag': 'noindex',
+  };
+  try {
+    const page = await context.env.ASSETS.fetch(new URL('/404.html', context.request.url));
+    if (page.ok) return new Response(page.body, { status: 404, headers });
+  } catch {
+    // fall through to the plain answer
+  }
+  return new Response('Not found', { status: 404, headers: { ...headers, 'content-type': 'text/plain; charset=utf-8' } });
+}
+
 /** Minimal, honest, and not a soft 404: the status is the message. */
 const BODY = `<!doctype html>
 <html lang="en">
@@ -57,6 +109,8 @@ const BODY = `<!doctype html>
 
 export async function onRequest(context) {
   const { pathname } = new URL(context.request.url);
+
+  if (isRepoFile(pathname)) return notFound(context);
 
   if (GONE_SET.has(pathname)) {
     return new Response(BODY, {
