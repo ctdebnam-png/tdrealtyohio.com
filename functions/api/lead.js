@@ -7,6 +7,7 @@
 
 import { noticeSubject, noticeText, sendNotice } from '../lib/notify.js';
 import { verifyTurnstile } from '../lib/turnstile.js';
+import { sendToSheets } from '../lib/sheets.js';
 
 const ALLOWED_ORIGINS = [
   'https://tdrealtyohio.com',
@@ -222,6 +223,17 @@ export async function onRequestPost(context) {
     replyTo: hasEmail ? lead.email : undefined,
   });
   if (sent !== 'sent') console.error(`Lead notice not sent (${sent}); record ${kvKey}`);
+
+  /*
+   * Travis, 2026-10-18: every lead goes straight into the Contacts database
+   * (and a hub Actions row) through the "TD website intake" Apps Script web
+   * app, instead of waiting for the Morning run to copy it from the email.
+   * Same rule as the notice: the lead is in KV, so a failure is logged and the
+   * visitor's answer does not change. Not set up yet is a warning.
+   */
+  const sheets = await sendToSheets(env, { site: 'realty', kind: 'lead', key: kvKey, received_at: createdAt, ...lead });
+  if (sheets === 'not_configured') console.warn(`Sheets not configured; lead ${kvKey} is in KV only`);
+  else if (sheets !== 'written') console.error(`Lead not written to Contacts (${sheets}); record ${kvKey}`);
 
   return new Response(JSON.stringify({ ok: true, lead_id: leadId }), {
     status: 200,
