@@ -1,5 +1,6 @@
 import { noticeSubject, noticeText, sendNotice } from '../lib/notify.js';
 import { verifyTurnstile } from '../lib/turnstile.js';
+import { sendToSheets } from '../lib/sheets.js';
 
 const ALLOWED_ORIGINS = [
   'https://tdrealtyohio.com',
@@ -143,6 +144,20 @@ export async function onRequestPost(context) {
     })
   });
   if (sent !== 'sent') console.error(`Agent apply notice not sent (${sent}); record ${kvKey}`);
+
+  // Travis, 2026-10-18: straight into the Contacts database too (see lead.js).
+  const sheets = await sendToSheets(env, {
+    site: 'realty',
+    kind: 'agent_apply',
+    key: kvKey,
+    received_at: submittedAt,
+    name: String(body.name || '').slice(0, 200),
+    email: String(body.email || '').slice(0, 200),
+    phone: String(body.phone || '').slice(0, 60),
+    ...summary,
+  });
+  if (sheets === 'not_configured') console.warn(`Sheets not configured; agent application ${kvKey} is in KV only`);
+  else if (sheets !== 'written') console.error(`Agent application not written to Contacts (${sheets}); record ${kvKey}`);
 
   return new Response(JSON.stringify({ ok: true }), { status: 200, headers });
 }
