@@ -29,13 +29,15 @@ jobs:
     name: Broken links (lychee)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       # Absolute links to this site's own pages (canonical, og:url, og:image)
       # are remapped to the files in this checkout, so a PR is checked against
       # the pages it ships rather than the ones already live.
       - name: Check every link on every page
-        uses: lycheeverse/lychee-action@v2.9.0
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: >-
             --config .github/lychee.toml
@@ -56,10 +58,12 @@ jobs:
       matrix:
         preset: [mobile, desktop]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Lighthouse on the ten routes, 90 or better in every category
-        uses: treosh/lighthouse-ci-action@v12
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12.6.2
         env:
           LH_FORM_FACTOR: ${{ matrix.preset }}
         with:
@@ -71,9 +75,11 @@ jobs:
     name: Accessibility (pa11y-ci, sitemap)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
