@@ -1,6 +1,13 @@
 # Dependencies
 node_modules/
 
+# Local secrets (see .env.example for the names)
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+
 # Quality gate timestamped reports (keep latest.json only)
 reports/site-quality-gate/report-*.json
 

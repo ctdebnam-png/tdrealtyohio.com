@@ -1,0 +1,42 @@
+# Dependabot version updates: one grouped pull request a week per ecosystem,
+# so updates arrive as a small, reviewable batch instead of a stream.
+# CI runs on every one of them; nothing merges on its own.
+# Docs: https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/New_York
+    # A release has to be a week old before it is proposed. Most hijacked
+    # npm releases are caught and pulled within days.
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 3
+    groups:
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Major versions change behaviour and get a deliberate upgrade.
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+      # Pinned exactly on purpose: the browser build has to match the one
+      # CI installs, and the axe and contrast results are tuned to it.
+      - dependency-name: '@playwright/test'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/New_York
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 2
+    groups:
+      github-actions:
+        patterns: ['*']
