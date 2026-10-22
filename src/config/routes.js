@@ -74,6 +74,17 @@ function buildRoutes() {
       parent: '/'
     },
     {
+      path: '/commercial/',
+      title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Commercial',
+      description: 'TD Realty Ohio represents buyers and sellers of commercial, industrial, land and investment property in Franklin and Delaware counties, including properties with a past.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.7',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/'
+    },
+    {
       path: '/environmental-property/',
       title: `Selling a Gas Station, Dry Cleaner or Older Industrial Property | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial Property',

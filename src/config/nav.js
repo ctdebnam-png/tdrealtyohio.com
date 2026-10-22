@@ -55,7 +55,8 @@ const NAV_REGISTRY = {
       items: [
         { label: 'Sellers',       href: '/sellers/' },
         { label: 'Buyers',        href: '/buyers/' },
-        { label: 'Service Areas', href: '/areas/' }
+        { label: 'Service Areas', href: '/areas/' },
+        { label: 'Commercial',    href: '/commercial/' }
       ]
     },
     learn: {
@@ -77,7 +78,7 @@ const NAV_REGISTRY = {
 
   // Footer internal link allowlist (for drift-guard validation)
   footerInternal: [
-    '/sellers/', '/buyers/', '/areas/', '/about/', '/contact/',
+    '/sellers/', '/buyers/', '/areas/', '/commercial/', '/about/', '/contact/',
     '/agents/', '/privacy/', '/terms/', '/fair-housing/'
   ],
 
