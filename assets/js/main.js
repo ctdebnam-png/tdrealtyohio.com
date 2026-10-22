@@ -998,7 +998,7 @@ function initHomeValueForm() {
   initFormHandler('home-value-form', 'Request Sent!');
 }
 
-// ===== COMMERCIAL PROPERTY FORM (/environmental-property/) =====
+// ===== COMMERCIAL PROPERTY FORM (/commercial/ and guides) =====
 function initPropertyForm() {
   initFormHandler('property-form', 'Request Sent!');
 }

@@ -38,15 +38,17 @@ npm test             # Playwright — 188 tests; also the last step of check:all
   such as `package.json` and `wrangler.toml`. `tests/repo-files.spec.js` asks
   for every tracked non-site file and expects 404.
 
-### Only eight pages load main.js
-`404.html`, `/contact/`, the two mailer landing pages
-`/westerville-home-value/` and `/environmental-property/` (forms `home-value-form`
-and `property-form`; both carry `data-lead-type`, an "email updates" checkbox,
+### Only six pages load main.js
+`404.html`, `/contact/`, the mailer landing page `/westerville-home-value/`
+(form `home-value-form`; it carries `data-lead-type`, an "email updates" checkbox,
 and the mailer code from `?c=` into `extra.campaign_code`), and `/commercial/`,
-which reuses `property-form` (its "buying" option sends `commercial_buyer`).
-The three commercial guides under `/commercial/` (`selling-a-gas-station-ohio`,
-`industrial-property-columbus`, `market-report`) also load main.js and reuse
-`property-form`, so eight pages load it in all. `/home-value/` is
+which uses `property-form` (its "buying" option sends `commercial_buyer`).
+The two commercial guides under `/commercial/` (`industrial-property-columbus`,
+`market-report`) also load main.js and reuse `property-form`, so six pages
+load it in all. `/environmental-property/` and
+`/commercial/selling-a-gas-station-ohio/` were retired on 2026-10-22 (301 to
+`/commercial/` in `_redirects`; the site is straight commercial, no
+environmental-property niche). `/home-value/` is
 on the 410 list as an offer-era URL, which is why the residential page is not
 there. The other twenty load only `nav.js` and
 `mobile-nav.js`, which build the phone menu and do nothing else. Apart from

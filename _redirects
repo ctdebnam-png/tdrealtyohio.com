@@ -115,3 +115,8 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /sitemap-page/          /                       301
 /tools                  /contact/               301
 /lp                     /                       301
+# Retired 2026-10-22: environmental-property niche dropped; straight commercial only. QR codes on printed mailers point here.
+/environmental-property            /commercial/  301
+/environmental-property/           /commercial/  301
+/commercial/selling-a-gas-station-ohio   /commercial/  301
+/commercial/selling-a-gas-station-ohio/  /commercial/  301
