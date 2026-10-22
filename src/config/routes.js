@@ -81,8 +81,46 @@ function buildRoutes() {
       pageType: PAGE_TYPES.SERVICE,
       priority: '0.7',
       changefreq: 'monthly',
-      schema: ['BreadcrumbList'],
+      schema: ['BreadcrumbList', 'Service'],
+      service: {
+        name: 'Commercial real estate brokerage',
+        serviceType: 'Commercial real estate brokerage',
+        counties: ['Franklin County', 'Delaware County']
+      },
       parent: '/'
+    },
+    {
+      path: '/commercial/selling-a-gas-station-ohio/',
+      title: `Selling a Gas Station in Central Ohio | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Selling a Gas Station',
+      description: 'What buyers and lenders ask when you sell a gas station or former fuel site in Franklin or Delaware County: tank records, closure letters, timing and price.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/commercial/'
+    },
+    {
+      path: '/commercial/industrial-property-columbus/',
+      title: `Industrial and Flex Property in Columbus | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Industrial and Flex Property',
+      description: 'Buying or selling older industrial, warehouse or flex property in Franklin or Delaware County: who is buying, what drives value and what slows a deal down.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/commercial/'
+    },
+    {
+      path: '/commercial/market-report/',
+      title: `Franklin and Delaware County Commercial Sales Report | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Market Report',
+      description: 'Commercial, industrial and apartment property sales in Franklin and Delaware counties over the past year: counts, median prices by type and the busiest areas.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/commercial/'
     },
     {
       path: '/environmental-property/',
