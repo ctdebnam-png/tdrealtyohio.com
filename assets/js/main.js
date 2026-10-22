@@ -56,7 +56,8 @@ const TD_CONFIG = {
 (function captureUTM() {
   try {
     const params = new URLSearchParams(window.location.search);
-    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'msclkid'];
+    // 'c' is the short campaign code printed on mailers (/home-value/?c=WV-2611).
+    const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'msclkid', 'c'];
     const stored = JSON.parse(sessionStorage.getItem('td_utm') || '{}');
     keys.forEach(function(k) {
       const v = params.get(k);
@@ -821,7 +822,10 @@ function initFormHandler(formId, successMessage) {
       else intentType = '';
     } else if (formId === 'home-value-form') {
       eventName = 'home_value_request';
-      intentType = 'seller';
+      intentType = formData.get('intent') === 'buying' ? 'buyer' : 'seller';
+    } else if (formId === 'property-form') {
+      eventName = 'commercial_property_request';
+      intentType = 'commercial_seller';
     } else if (formId === 'referral-form') {
       eventName = 'referral_submit';
       intentType = 'referral';
@@ -845,6 +849,13 @@ function initFormHandler(formId, successMessage) {
     if (formData.get('experience')) extra.experience = formData.get('experience');
     if (formData.get('interest')) extra.interest = formData.get('interest');
     if (formData.get('transaction_type')) extra.transaction_type = formData.get('transaction_type');
+    if (formData.get('intent')) extra.intent = formData.get('intent');
+    if (formData.get('situation')) extra.situation = formData.get('situation');
+    if (formData.get('property_type')) extra.property_type = formData.get('property_type');
+    // Landing pages carry these for the Outreach Engine sheet (Leads tab).
+    if (form.dataset.leadType) extra.lead_type = form.dataset.leadType;
+    if (form.querySelector('[name="email_updates"]')) extra.consent_email = formData.get('email_updates') === 'true';
+    if (utm.c) extra.campaign_code = utm.c;
 
     const payload = {
       name: fullName,
@@ -862,7 +873,7 @@ function initFormHandler(formId, successMessage) {
       event_name: eventName,
       utm_source: utm.utm_source || '',
       utm_medium: utm.utm_medium || '',
-      utm_campaign: utm.utm_campaign || '',
+      utm_campaign: utm.utm_campaign || utm.c || '',
       utm_content: utm.utm_content || '',
       utm_term: utm.utm_term || '',
       gclid: utm.gclid || '',
@@ -908,18 +919,18 @@ function initFormHandler(formId, successMessage) {
        * The contact form is replaced by a confirmation panel, so the visitor
        * is not left looking at an empty form and wondering whether it went.
        */
-      if (formId === 'contact-form') {
+      if (formId === 'contact-form' || form.dataset.confirmTitle) {
         const panel = document.createElement('div');
-        panel.id = 'contact-form-confirmation';
+        panel.id = formId + '-confirmation';
         panel.className = 'form-confirmation';
         panel.setAttribute('role', 'status');
         panel.setAttribute('tabindex', '-1');
         const lead = document.createElement('p');
         lead.className = 'form-confirmation-title';
-        lead.textContent = 'Thanks, your message is in.';
+        lead.textContent = form.dataset.confirmTitle || 'Thanks, your message is in.';
         const next = document.createElement('p');
         next.className = 'mb-0';
-        next.append('Travis will get back to you soon. If it is urgent, call ');
+        next.append((form.dataset.confirmText || 'Travis will get back to you soon.') + ' If it is urgent, call ');
         const tel = document.createElement('a');
         tel.href = 'tel:' + TD_CONFIG.contact.phoneRaw;
         tel.textContent = TD_CONFIG.contact.phone;
@@ -984,6 +995,11 @@ function initContactForm() {
 // ===== HOME VALUE FORM =====
 function initHomeValueForm() {
   initFormHandler('home-value-form', 'Request Sent!');
+}
+
+// ===== COMMERCIAL PROPERTY FORM (/environmental-property/) =====
+function initPropertyForm() {
+  initFormHandler('property-form', 'Request Sent!');
 }
 
 // ===== AGENT FORM =====
@@ -1232,6 +1248,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initProcessAccordion,
     initContactForm,
     initHomeValueForm,
+    initPropertyForm,
     initAgentForm,
     initReferralForm,
     initSmoothScroll,

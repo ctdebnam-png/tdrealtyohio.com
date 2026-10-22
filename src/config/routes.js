@@ -62,6 +62,28 @@ function buildRoutes() {
       service: { name: 'Home seller representation', serviceType: 'Real estate listing representation' },
       parent: '/'
     },
+    {
+      path: '/westerville-home-value/',
+      title: `What Is My Home Worth? Westerville Home Values | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Home Value',
+      description: 'Ask TD Realty Ohio for a free, no-obligation value on your Westerville-area home, built from recent nearby sales. Buying instead? Tell us what you need.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.7',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/'
+    },
+    {
+      path: '/environmental-property/',
+      title: `Selling a Gas Station, Dry Cleaner or Older Industrial Property | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Commercial Property',
+      description: 'TD Realty Ohio helps owners sell commercial property with a past: gas stations, dry cleaners, auto shops and older industrial sites. Free broker opinion of value.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/'
+    },
     { path: '/areas/', title: `Central Ohio Service Areas | ${BROKERAGE_FACTS.brandName}`, crumb: 'Central Ohio Areas', description: 'Area guides for Columbus, Dublin, Westerville, New Albany, Worthington, Upper Arlington, Hilliard, Gahanna, Powell, Delaware and Pickerington from TD Realty Ohio.', pageType: PAGE_TYPES.AREA, priority: '0.7', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
     { path: '/contact/', title: `Contact ${BROKERAGE_FACTS.brandName}`, description: `Contact ${BROKERAGE_FACTS.brandName} for buying, selling, or leasing representation in ${BROKERAGE_FACTS.serviceArea}.`, pageType: PAGE_TYPES.CONTACT, priority: '0.7', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
     { path: '/agents/', title: `Agents | ${BROKERAGE_FACTS.brandName}`, description: `Independent-agent brokerage in Central Ohio offering ${AGENT_SUPPORT.brokerAccess}, ${AGENT_SUPPORT.oversight}, and ${AGENT_SUPPORT.systems}.`, pageType: PAGE_TYPES.SERVICE, priority: '0.6', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
