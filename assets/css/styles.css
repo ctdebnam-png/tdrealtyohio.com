@@ -10413,3 +10413,56 @@ textarea:focus-visible {
   max-width: none;
   color: var(--on-navy-muted);
 }
+
+/* 404 page (moved from an inline style block, which the site CSP blocks) */
+.error-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1rem;
+}
+.error-code {
+  font-size: 8rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.error-title {
+  font-size: 2rem;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+.error-message {
+  color: var(--gray-600);
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+.error-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.error-contact {
+  background: var(--gray-100);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-md);
+  display: inline-block;
+}
+.error-contact p {
+  margin-bottom: 0.5rem;
+  color: var(--gray-600);
+}
+.error-contact a {
+  color: var(--navy);
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .error-code { font-size: 5rem; }
+  .error-title { font-size: 1.5rem; }
+}
+
