@@ -5,7 +5,7 @@
  * If any extra or missing links appear, this check fails.
  *
  * Header allowlist: /sellers/, /buyers/, /areas/, /about/, /agents/, /contact/
- * Footer nav allowlist: /sellers/, /buyers/, /areas/, /about/, /agents/, /contact/
+ * Footer nav allowlist: /sellers/, /buyers/, /areas/, /commercial/, /about/, /agents/, /contact/
  * Footer legal allowlist: /privacy/, /terms/, /fair-housing/
  */
 
@@ -21,7 +21,7 @@ const HEADER_ALLOWLIST = new Set([
 ]);
 
 const FOOTER_NAV_ALLOWLIST = new Set([
-  '/sellers/', '/buyers/', '/areas/', '/about/', '/agents/', '/contact/'
+  '/sellers/', '/buyers/', '/areas/', '/commercial/', '/about/', '/agents/', '/contact/'
 ]);
 
 const FOOTER_LEGAL_ALLOWLIST = new Set([

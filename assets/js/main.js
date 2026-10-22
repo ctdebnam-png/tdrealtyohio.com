@@ -825,7 +825,8 @@ function initFormHandler(formId, successMessage) {
       intentType = formData.get('intent') === 'buying' ? 'buyer' : 'seller';
     } else if (formId === 'property-form') {
       eventName = 'commercial_property_request';
-      intentType = 'commercial_seller';
+      // /commercial/ shares this form id; its "buying" option marks a buyer.
+      intentType = formData.get('situation') === 'buying' ? 'commercial_buyer' : 'commercial_seller';
     } else if (formId === 'referral-form') {
       eventName = 'referral_submit';
       intentType = 'referral';
