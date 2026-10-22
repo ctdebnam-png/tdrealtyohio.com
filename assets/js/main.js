@@ -422,8 +422,12 @@ function initLeadModal() {
           '<label for="lm-phone">Phone <span class="lead-modal-optional">(optional)</span></label>' +
           '<input type="tel" id="lm-phone" name="phone" autocomplete="tel">' +
         '</div>' +
+        '<div class="form-group form-consent">' +
+          '<input type="checkbox" id="lm-sms" name="sms_consent" value="true" class="form-checkbox">' +
+          '<label for="lm-sms">Text me about my request at the number above. Message frequency varies. Message and data rates may apply. Reply STOP to cancel or HELP for help. Consent is not a condition of any purchase or service.</label>' +
+        '</div>' +
         '<button type="submit" class="btn btn-primary btn-lg">Request Consultation</button>' +
-        '<p class="lead-modal-consent">By submitting, you agree to be contacted by TD Realty Ohio about your real estate needs. <a href="/privacy/">Privacy Policy</a></p>' +
+        '<p class="lead-modal-consent">By submitting, you agree to be contacted by TD Realty Ohio about your request. <a href="/privacy/">Privacy Policy</a></p>' +
         '<div class="form-status" id="lead-modal-status"></div>' +
       '</form>' +
     '</div>';
@@ -501,7 +505,8 @@ function initLeadModal() {
       email: email,
       phone: document.getElementById('lm-phone').value.trim(),
       consent_to_contact: true,
-      consent_text_version: '2025-01-28',
+      consent_text_version: '2026-10-22',
+      sms_consent: !!(document.getElementById('lm-sms') && document.getElementById('lm-sms').checked),
       privacy_ack: true,
       page_path: document.getElementById('lm-pagePath').value,
       page_title: document.title,
@@ -846,7 +851,8 @@ function initFormHandler(formId, successMessage) {
       email: formData.get('email') || '',
       phone: formData.get('phone') || '',
       consent_to_contact: consentCheckbox ? consentCheckbox.checked : true,
-      consent_text_version: '2025-01-28',
+      consent_text_version: '2026-10-22',
+      sms_consent: formData.get('sms_consent') === 'true',
       privacy_ack: true,
       page_path: window.location.pathname,
       page_title: document.title,
@@ -1576,7 +1582,7 @@ function initCookieConsent() {
   banner.setAttribute('role', 'dialog');
   banner.setAttribute('aria-label', 'Cookie consent');
   banner.innerHTML =
-    '<p>We use cookies and Google Analytics to improve your experience and measure site performance. ' +
+    '<p>We use a Google Ads tag that sets cookies to measure our ads and to show TD Realty Ohio ads on other sites. ' +
     '<a href="/privacy/">Privacy Policy</a></p>' +
     /*
      * btn-outline-white, not btn-outline. The banner is navy, and
