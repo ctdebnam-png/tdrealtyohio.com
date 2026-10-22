@@ -9,7 +9,8 @@ include_fragments = "full"
 
 # /api/* are Pages Functions, not files, so there is nothing on disk to find.
 # tel: and mailto: are not fetchable.
-exclude = ['^file://.*/api/', '^tel:', '^mailto:']
+# civ.ohio.gov answers 404 to automated checkers but loads in a browser (checked 2026-10-22).
+exclude = ['^file://.*/api/', '^tel:', '^mailto:', '^https://civ\.ohio\.gov/']
 
 # Directories that are not part of the site.
 exclude_path = ['node_modules', '\.playwright', '\.lighthouseci', 'tools', 'tests']
