@@ -1576,7 +1576,7 @@ function initCookieConsent() {
   banner.setAttribute('role', 'dialog');
   banner.setAttribute('aria-label', 'Cookie consent');
   banner.innerHTML =
-    '<p>We use cookies and Google Analytics to improve your experience and measure site performance. ' +
+    '<p>We use a Google Ads tag that sets cookies to measure our ads and to show TD Realty Ohio ads on other sites. ' +
     '<a href="/privacy/">Privacy Policy</a></p>' +
     /*
      * btn-outline-white, not btn-outline. The banner is navy, and
