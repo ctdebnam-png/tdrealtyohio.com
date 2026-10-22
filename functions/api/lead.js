@@ -159,6 +159,7 @@ export async function onRequestPost(context) {
     // Consent
     consent_to_contact: true,
     consent_text_version: body.consent_text_version || '2025-01-28',
+    sms_consent: body.sms_consent === true,
     privacy_ack: body.privacy_ack || false,
 
     // Form-specific extra fields (address, referred_by, experience, message, etc.)
