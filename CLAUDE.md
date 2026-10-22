@@ -38,8 +38,13 @@ npm test             # Playwright — 188 tests; also the last step of check:all
   such as `package.json` and `wrangler.toml`. `tests/repo-files.spec.js` asks
   for every tracked non-site file and expects 404.
 
-### Only two pages load main.js
-`404.html` and `/contact/`. The other twenty load only `nav.js` and
+### Only four pages load main.js
+`404.html`, `/contact/`, and the two mailer landing pages
+`/westerville-home-value/` and `/environmental-property/` (forms `home-value-form`
+and `property-form`; both carry `data-lead-type`, an "email updates" checkbox,
+and the mailer code from `?c=` into `extra.campaign_code`). `/home-value/` is
+on the 410 list as an offer-era URL, which is why the residential page is not
+there. The other twenty load only `nav.js` and
 `mobile-nav.js`, which build the phone menu and do nothing else. Apart from
 those two files, their only `<script>` is the `application/ld+json` block,
 which is data, not code. That is why:
