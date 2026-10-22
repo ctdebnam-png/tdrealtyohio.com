@@ -28,6 +28,42 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Commercial real estate brokerage",
+  "serviceType": "Commercial real estate brokerage",
+  "description": "TD Realty Ohio represents buyers and sellers of commercial, industrial, land and investment property in Franklin and Delaware counties, including properties with a past.",
+  "url": "https://tdrealtyohio.com/commercial/",
+  "provider": {
+    "@type": [
+      "RealEstateAgent",
+      "LocalBusiness"
+    ],
+    "@id": "https://tdrealtyohio.com/#realestateagent",
+    "name": "TD Realty Ohio, LLC"
+  },
+  "areaServed": [
+    {
+      "@type": "AdministrativeArea",
+      "name": "Franklin County",
+      "containedInPlace": {
+        "@type": "State",
+        "name": "Ohio"
+      }
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Delaware County",
+      "containedInPlace": {
+        "@type": "State",
+        "name": "Ohio"
+      }
+    }
+  ]
+}
+</script>
 <!-- /json-ld -->
 </head>
 <body>
@@ -66,6 +102,17 @@
     </section>
 
     <section class="section">
+      <div class="container">
+        <h2>Guides for owners and buyers</h2>
+        <div class="grid grid-3">
+          <article class="card"><div class="card-body"><h3 class="card-title"><a href="/commercial/market-report/">Commercial market report</a></h3><p class="card-text mb-0">What sold in Franklin and Delaware counties over the past year, by type and area.</p></div></article>
+          <article class="card"><div class="card-body"><h3 class="card-title"><a href="/commercial/selling-a-gas-station-ohio/">Selling a gas station</a></h3><p class="card-text mb-0">The tank records, letters and timing buyers and lenders ask about.</p></div></article>
+          <article class="card"><div class="card-body"><h3 class="card-title"><a href="/commercial/industrial-property-columbus/">Industrial and flex property</a></h3><p class="card-text mb-0">Who is buying older industrial buildings and what drives their value.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-off-white">
       <div class="container max-w-900">
         <h2>Tell us what you need</h2>
         <form id="property-form" class="form-standardized" method="post" action="/api/lead" novalidate data-lead-type="commercial" data-confirm-title="Thanks, we have your request." data-confirm-text="We'll get back to you within 2 business days.">

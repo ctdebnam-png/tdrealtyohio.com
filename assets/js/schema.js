@@ -266,7 +266,15 @@ function buildServiceSchema(opts) {
     name: TD_SCHEMA_CONFIG.areaServed
   };
 
-  if (opts.place) {
+  if (opts.counties) {
+    areaServed = opts.counties.map(function (county) {
+      return {
+        '@type': 'AdministrativeArea',
+        name: county,
+        containedInPlace: { '@type': 'State', name: 'Ohio' }
+      };
+    });
+  } else if (opts.place) {
     areaServed = {
       '@type': 'City',
       name: opts.place.name,
