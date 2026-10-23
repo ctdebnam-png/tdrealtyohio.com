@@ -77,7 +77,7 @@ function buildRoutes() {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
-      description: 'TD Realty Ohio represents buyers and sellers of commercial, industrial, land and investment property in Franklin and Delaware counties, including properties with a past.',
+      description: 'TD Realty Ohio represents buyers and sellers of office, retail, industrial, flex, land and investment property in Franklin and Delaware counties: selling, buying and leasing.',
       pageType: PAGE_TYPES.SERVICE,
       priority: '0.7',
       changefreq: 'monthly',
@@ -88,17 +88,6 @@ function buildRoutes() {
         counties: ['Franklin County', 'Delaware County']
       },
       parent: '/'
-    },
-    {
-      path: '/commercial/selling-a-gas-station-ohio/',
-      title: `Selling a Gas Station in Central Ohio | ${BROKERAGE_FACTS.brandName}`,
-      crumb: 'Selling a Gas Station',
-      description: 'What buyers and lenders ask when you sell a gas station or former fuel site in Franklin or Delaware County: tank records, closure letters, timing and price.',
-      pageType: PAGE_TYPES.SERVICE,
-      priority: '0.6',
-      changefreq: 'monthly',
-      schema: ['BreadcrumbList'],
-      parent: '/commercial/'
     },
     {
       path: '/commercial/industrial-property-columbus/',
@@ -121,17 +110,6 @@ function buildRoutes() {
       changefreq: 'monthly',
       schema: ['BreadcrumbList'],
       parent: '/commercial/'
-    },
-    {
-      path: '/environmental-property/',
-      title: `Selling a Gas Station, Dry Cleaner or Older Industrial Property | ${BROKERAGE_FACTS.brandName}`,
-      crumb: 'Commercial Property',
-      description: 'TD Realty Ohio helps owners sell commercial property with a past: gas stations, dry cleaners, auto shops and older industrial sites. Free broker opinion of value.',
-      pageType: PAGE_TYPES.SERVICE,
-      priority: '0.6',
-      changefreq: 'monthly',
-      schema: ['BreadcrumbList'],
-      parent: '/'
     },
     { path: '/areas/', title: `Central Ohio Service Areas | ${BROKERAGE_FACTS.brandName}`, crumb: 'Central Ohio Areas', description: 'Area guides for Columbus, Dublin, Westerville, New Albany, Worthington, Upper Arlington, Hilliard, Gahanna, Powell, Delaware and Pickerington from TD Realty Ohio.', pageType: PAGE_TYPES.AREA, priority: '0.7', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
     { path: '/contact/', title: `Contact ${BROKERAGE_FACTS.brandName}`, description: `Contact ${BROKERAGE_FACTS.brandName} for buying, selling, or leasing representation in ${BROKERAGE_FACTS.serviceArea}.`, pageType: PAGE_TYPES.CONTACT, priority: '0.7', changefreq: 'monthly', schema: ['BreadcrumbList'], parent: '/' },
