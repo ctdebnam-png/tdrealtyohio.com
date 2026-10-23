@@ -74,6 +74,17 @@ function buildRoutes() {
       parent: '/'
     },
     {
+      path: '/westerville-market-report/',
+      title: `Westerville Home Sales Report | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Westerville Market Report',
+      description: 'Westerville home sales over the past year from Franklin County records: number of sales, median price for homes and condos, price ranges and month-by-month trend.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
