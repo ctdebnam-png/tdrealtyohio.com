@@ -20,7 +20,7 @@
 #
 # Retirement rules are now anchored one segment DEEPER than the surviving
 # route (/areas/zip/*, /buyers/first-time/*, /sell/*, /buy/*), or name a
-# prefix no canonical route shares (/tools/, /blog/, /compare/, /lp/), or
+# prefix no canonical route shares (/tools/, /compare/, /lp/), or
 # are exact paths. `npm run check:routes` proves it: it serves the site
 # with `wrangler pages dev` and fails on a non-200 or a chain over one hop.
 # ─────────────────────────────────────────────────────────────────────────
@@ -58,7 +58,29 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /sell/*                 /sellers/               301
 /buy/*                  /buyers/                301
 /tools/*                /contact/               301
-/blog/*                 /about/                 301
+# /blog/ is live again (2026-11-02). Posts from the retired blog are listed
+# one by one so no rule can match a live post.
+# Two old slugs are matched by prefix (no live post may start with 1- or how-much-).
+/blog/1-*                                                   /about/                 301
+/blog/how-much-*                                            /about/                 301
+/blog/best-time-sell-house-columbus-ohio                    /about/                 301
+/blog/best-time-sell-house-columbus-ohio/*                  /about/                 301
+/blog/central-ohio-housing-market-2026                      /about/                 301
+/blog/central-ohio-housing-market-2026/*                    /about/                 301
+/blog/closing-costs-columbus-ohio                           /about/                 301
+/blog/closing-costs-columbus-ohio/*                         /about/                 301
+/blog/first-time-homebuyer-cash-back                        /about/                 301
+/blog/first-time-homebuyer-cash-back/*                      /about/                 301
+/blog/fsbo-vs-realtor-columbus                              /about/                 301
+/blog/fsbo-vs-realtor-columbus/*                            /about/                 301
+/blog/home-staging-tips-columbus                            /about/                 301
+/blog/home-staging-tips-columbus/*                          /about/                 301
+/blog/pre-listing-inspection-benefits                       /about/                 301
+/blog/pre-listing-inspection-benefits/*                     /about/                 301
+/blog/selling-home-westerville-ohio-2026                    /about/                 301
+/blog/selling-home-westerville-ohio-2026/*                  /about/                 301
+/blog/why-agents-leaving-traditional-brokerages-100-commission /about/                 301
+/blog/why-agents-leaving-traditional-brokerages-100-commission/* /about/                 301
 /compare/*              /sellers/               301
 /lp/*                   /                       301
 
@@ -91,7 +113,7 @@ https://www.tdrealtyohio.com/* https://tdrealtyohio.com/:splat 301
 /affordability/         /contact/               301
 /agents/join            /agents/                301
 /agents/join/           /agents/                301
-/blog                   /about/                 301
+/blog                   /blog/                  301
 /careers                /agents/                301
 /careers/               /agents/                301
 /compare                /sellers/               301
