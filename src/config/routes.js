@@ -107,6 +107,17 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/zoning-lookup-columbus-westerville/',
+      title: `How to Look Up Zoning in Columbus and Westerville | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Zoning Lookup',
+      description: 'Free ways to check zoning on a Columbus or Westerville commercial property before you sell or lease: city zoning maps, the two Columbus codes, overlays and who hears variances.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',

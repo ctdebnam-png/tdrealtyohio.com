@@ -158,13 +158,19 @@
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://tdrealtyohio.com/blog/ohio-conveyance-fee-franklin-delaware-county/</loc>
     <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://tdrealtyohio.com/blog/zoning-lookup-columbus-westerville/</loc>
+    <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
