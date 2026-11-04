@@ -24,7 +24,9 @@ permissions:
 # Cloudflare Pages builds and deploys this repo on push. It does not run these.
 jobs:
   gates:
-    runs-on: ubuntu-latest
+    # Pinned 2026-11-03: ubuntu-latest moved to 26.04, which Playwright's
+    # chromium install does not support yet (run 41548438198).
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
