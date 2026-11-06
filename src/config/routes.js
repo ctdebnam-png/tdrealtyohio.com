@@ -118,6 +118,17 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/ohio-residential-property-disclosure-form/',
+      title: `Ohio Residential Property Disclosure Form Guide | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Property Disclosure Form',
+      description: 'What Ohio home sellers disclose on the state Residential Property Disclosure Form, who is exempt, and the buyer\'s three-business-day right to rescind.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
