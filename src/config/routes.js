@@ -85,6 +85,39 @@ function buildRoutes() {
       parent: '/'
     },
     {
+      path: '/blog/',
+      title: `Blog: Central Ohio Real Estate Questions Answered | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Blog',
+      description: 'Plain answers for central Ohio buyers, sellers, landlords and commercial owners, with the public sources behind every number.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.6',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/'
+    },
+    {
+      path: '/blog/ohio-conveyance-fee-franklin-delaware-county/',
+      title: `Ohio Conveyance Fees in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Ohio Conveyance Fees',
+      description: 'What Ohio sellers pay in conveyance fees at closing in Franklin and Delaware counties: rates per $1,000, worked examples, the DTE 100 forms and common exemptions.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
+      path: '/blog/zoning-lookup-columbus-westerville/',
+      title: `How to Look Up Zoning in Columbus and Westerville | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Zoning Lookup',
+      description: 'Free ways to check zoning on a Columbus or Westerville commercial property before you sell or lease: city zoning maps, the two Columbus codes, overlays and who hears variances.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
