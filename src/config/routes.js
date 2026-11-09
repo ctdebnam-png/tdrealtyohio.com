@@ -129,6 +129,17 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/selling-commercial-land-central-ohio/',
+      title: `Selling Commercial Land in Central Ohio: Checklist | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Selling Commercial Land',
+      description: 'What to check before selling commercial land in Columbus, Westerville and central Ohio: zoning, CAUV recoupment, title, ALTA survey, flood maps and utilities.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
