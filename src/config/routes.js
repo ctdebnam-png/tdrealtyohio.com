@@ -140,6 +140,17 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/property-value-update-2026-franklin-delaware-county/',
+      title: `2026 Property Values in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
+      crumb: '2026 Property Values',
+      description: 'How to check your 2026 property value in Franklin or Delaware County, Ohio, and how to file a Board of Revision complaint by March 31, 2027.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
