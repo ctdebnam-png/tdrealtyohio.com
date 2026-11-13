@@ -151,6 +151,17 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/ohio-security-deposit-rules-landlords/',
+      title: `Ohio Security Deposit Rules for Landlords | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Ohio Security Deposit Rules',
+      description: 'Ohio security deposit law for landlords: the 30-day itemized notice, 5% interest on larger deposits, allowed deductions and the penalty for getting it wrong.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
