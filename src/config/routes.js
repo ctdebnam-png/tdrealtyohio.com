@@ -118,6 +118,50 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/ohio-residential-property-disclosure-form/',
+      title: `Ohio Residential Property Disclosure Form Guide | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Property Disclosure Form',
+      description: 'What Ohio home sellers disclose on the state Residential Property Disclosure Form, who is exempt, and the buyer\'s three-business-day right to rescind.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
+      path: '/blog/selling-commercial-land-central-ohio/',
+      title: `Selling Commercial Land in Central Ohio: Checklist | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Selling Commercial Land',
+      description: 'What to check before selling commercial land in Columbus, Westerville and central Ohio: zoning, CAUV recoupment, title, ALTA survey, flood maps and utilities.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
+      path: '/blog/property-value-update-2026-franklin-delaware-county/',
+      title: `2026 Property Values in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
+      crumb: '2026 Property Values',
+      description: 'How to check your 2026 property value in Franklin or Delaware County, Ohio, and how to file a Board of Revision complaint by March 31, 2027.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
+      path: '/blog/ohio-security-deposit-rules-landlords/',
+      title: `Ohio Security Deposit Rules for Landlords | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Ohio Security Deposit Rules',
+      description: 'Ohio security deposit law for landlords: the 30-day itemized notice, 5% interest on larger deposits, allowed deductions and the penalty for getting it wrong.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
