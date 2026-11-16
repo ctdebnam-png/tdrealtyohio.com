@@ -162,6 +162,17 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/commercial-lease-certificate-of-occupancy-columbus-westerville/',
+      title: `Commercial Leasing: Certificate of Occupancy in Columbus and Westerville | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Certificate of Occupancy',
+      description: 'Before you lease commercial space in Columbus or Westerville, check the certificate of occupancy and zoning. When a new tenant\'s use needs a permit, and how to find the existing CO.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
