@@ -173,6 +173,17 @@ function buildRoutes() {
       parent: '/blog/'
     },
     {
+      path: '/blog/ohio-owner-occupancy-credit-franklin-delaware-county/',
+      title: `Ohio Owner-Occupancy Credit: Franklin and Delaware County Guide | ${BROKERAGE_FACTS.brandName}`,
+      crumb: 'Owner-Occupancy Credit',
+      description: 'How Ohio\'s owner-occupancy property tax credit works in Franklin and Delaware counties, who qualifies, the DTE 105C form, and how HB 186 changes it starting in tax year 2026.',
+      pageType: PAGE_TYPES.SERVICE,
+      priority: '0.5',
+      changefreq: 'monthly',
+      schema: ['BreadcrumbList'],
+      parent: '/blog/'
+    },
+    {
       path: '/commercial/',
       title: `Commercial Real Estate in Franklin and Delaware Counties | ${BROKERAGE_FACTS.brandName}`,
       crumb: 'Commercial',
