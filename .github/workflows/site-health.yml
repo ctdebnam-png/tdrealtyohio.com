@@ -73,9 +73,11 @@ jobs:
 
       # The action's own uploadArtifacts option keeps results for the repo
       # default (90 days), and those reports filled the account's 0.5 GB of
-      # Actions storage in November 2026. Upload them here instead, for 7 days.
+      # Actions storage in November 2026. Upload them here instead, for 7 days,
+      # and only when the budgets fail: a passing run's report is about 100 MB
+      # per form factor and nobody reads it.
       - name: Upload the Lighthouse results
-        if: always()
+        if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: lighthouse-results-${{ matrix.preset }}
