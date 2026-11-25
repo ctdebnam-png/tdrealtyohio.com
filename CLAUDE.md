@@ -11,7 +11,7 @@ pages — the HTML in the repo is the HTML that ships.
 npm install
 npm run dev          # wrangler pages dev on port 8788
 npm run check:all    # every quality gate, in order
-npm test             # Playwright — 188 tests; also the last step of check:all
+npm test             # Playwright — 284 tests; also the last step of check:all
 ```
 
 ## Architecture
@@ -127,9 +127,20 @@ Lighthouse at 90 or better in all four categories on phone and desktop
 site.
 
 ## Testing
-Playwright 1.56.1, pinned, forced Chromium, two viewports (mobile 375x812 and
-desktop 1280x800). **188 tests in five specs, and `npm test` is the last step of
-`check:all`.**
+Playwright 1.63.0, pinned, forced Chromium, two viewports (mobile 375x812 and
+desktop 1280x800). **284 tests in six specs, and `npm test` is the last step of
+`check:all`.** 281 run and 3 skip: `repo-files.spec.js` guards itself with
+`test.skip(({ isMobile }) => isMobile)`, because its checks are plain requests
+and there is nothing for a second viewport to tell us.
+
+The pin is exact on purpose, and `.github/dependabot.yml` ignores updates to it.
+It is 1.63.0 rather than anything newer because that is the release whose
+browser revision (chromium 1243, Chrome 158) is the one the cloud container
+pre-installs at `/opt/pw-browsers`. A pin that disagrees with the image cannot
+run the suite in a cloud session at all; CI installs the browser itself, so it
+is satisfied either way. Moving the pin means re-running every test and
+`check:contrast`, which measures real rendered colour and so answers to the
+browser build.
 
 | spec | what it holds |
 | --- | --- |
@@ -138,6 +149,7 @@ desktop 1280x800). **188 tests in five specs, and `npm test` is the last step of
 | `contact-form.spec.js` | a failed capture is reported as a failure, not as success; success replaces the form with a confirmation; no red fields before they are touched |
 | `mobile-nav.spec.js` | the phone menu opens at 390px on every route, and is hidden on desktop |
 | `a11y.spec.js` | axe-core on every registered route |
+| `repo-files.spec.js` | every tracked non-site file answers 404, and site files still answer 200 |
 
 The previous four specs were deleted rather than repaired: they navigated routes
 that no longer exist, tested a hamburger menu absent from the shipped markup and
