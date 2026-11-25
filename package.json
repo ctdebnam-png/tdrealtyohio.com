@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@lhci/cli": "^0.16.1",
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.63.0",
     "cheerio": "^1.2.0",
     "glob": "^13.0.7",
     "wait-on": "^8.0.0",
