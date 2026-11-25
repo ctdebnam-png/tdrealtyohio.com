@@ -11,7 +11,7 @@ pages — the HTML in the repo is the HTML that ships.
 npm install
 npm run dev          # wrangler pages dev on port 8788
 npm run check:all    # every quality gate, in order
-npm test             # Playwright — 188 tests; also the last step of check:all
+npm test             # Playwright — 284 tests; also the last step of check:all
 ```
 
 ## Architecture
